@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests;
-using ClientModel.Tests.Mocks;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using ClientModel.Tests;
+using ClientModel.Tests.Mocks;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Pipeline;
 
@@ -127,6 +127,42 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         }
 
         Assert.AreEqual(501, message.Response!.Status);
+    }
+
+    [Test]
+    [TestCaseSource(nameof(RetryAfterTestValues))]
+    public void RespectsRetryAfterHeader(string headerName, string headerValue, double expected)
+    {
+        MockRetryPolicy retryPolicy = new();
+        MockPipelineMessage message = new();
+        MockPipelineResponse response = new();
+        response.SetHeader(headerName, headerValue);
+        message.SetResponse(response);
+
+        // Default delay with exponential backoff for second try is 1600 ms.
+        double delayMillis = retryPolicy.GetNextDelayMilliseconds(message, 2);
+        Assert.AreEqual(expected, delayMillis);
+    }
+
+    [Test]
+    public void RespectsRetryAfterDateHeader()
+    {
+        MockRetryPolicy retryPolicy = new();
+        MockPipelineMessage message = new();
+        MockPipelineResponse response = new();
+
+        // Retry after 100 seconds from now
+        response.SetHeader(
+            "Retry-After",
+            (DateTimeOffset.Now + TimeSpan.FromSeconds(100)).ToString("R"));
+        message.SetResponse(response);
+
+        // Default delay with exponential backoff for second try is 1600 ms.
+        double delayMillis = retryPolicy.GetNextDelayMilliseconds(message, 2);
+
+        // Retry-After header is larger - wait the Retry-After time, which
+        // should be approx 100s, so test for > 20s.
+        Assert.GreaterOrEqual(delayMillis, 20 * 1000);
     }
 
     [Test]
@@ -356,4 +392,26 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         Assert.ThrowsAsync<TaskCanceledException>(async () =>
             await retryPolicy.WaitSyncOrAsync(delay, cts.Token, IsAsync));
     }
+
+    #region Helpers
+    public static IEnumerable<object[]> RetryAfterTestValues()
+    {
+        // Retry-After header is larger - wait Retry-After time
+        yield return new object[] { "Retry-After", "5", 5000 };
+
+        // Retry-After header is smaller - wait exponential backoff time
+        yield return new object[] { "Retry-After", "1", 1600 };
+
+        // Not standard HTTP header - wait exponential backoff time
+        yield return new object[] { "retry-after-ms", "5", 1600 };
+
+        // No Retry-After header - wait exponential backoff time
+        yield return new object[] { "Content-Type", "application/json", 1600 };
+
+        // Retry-After header is smaller - wait exponential backoff
+        yield return new object[] { "Retry-After",
+            (DateTimeOffset.Now + TimeSpan.FromSeconds(1)).ToString("R"),
+            1600 };
+    }
+    #endregion
 }

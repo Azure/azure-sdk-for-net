@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<FunctionAppRuntimes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionAppRuntimes)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FunctionAppRuntimes IJsonModel<FunctionAppRuntimes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -120,29 +127,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxRuntimeSettings), out propertyOverride);
-            if (Optional.IsDefined(LinuxRuntimeSettings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  linuxRuntimeSettings: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinuxRuntimeSettings))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  linuxRuntimeSettings: ");
                     BicepSerializationHelpers.AppendChildObject(builder, LinuxRuntimeSettings, options, 2, false, "  linuxRuntimeSettings: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsRuntimeSettings), out propertyOverride);
-            if (Optional.IsDefined(WindowsRuntimeSettings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  windowsRuntimeSettings: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WindowsRuntimeSettings))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  windowsRuntimeSettings: ");
                     BicepSerializationHelpers.AppendChildObject(builder, WindowsRuntimeSettings, options, 2, false, "  windowsRuntimeSettings: ");
                 }
             }

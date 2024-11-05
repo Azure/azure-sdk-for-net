@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<RestorePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RestorePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestorePolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(Days))
@@ -59,7 +67,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RestorePolicy IJsonModel<RestorePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -143,56 +150,60 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
-            builder.Append("  enabled: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  enabled: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  enabled: ");
                 var boolValue = IsEnabled == true ? "true" : "false";
                 builder.AppendLine($"{boolValue}");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Days), out propertyOverride);
-            if (Optional.IsDefined(Days) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  days: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Days))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  days: ");
                     builder.AppendLine($"{Days.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastEnabledOn), out propertyOverride);
-            if (Optional.IsDefined(LastEnabledOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastEnabledTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastEnabledOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastEnabledTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastEnabledOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinRestoreOn), out propertyOverride);
-            if (Optional.IsDefined(MinRestoreOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minRestoreTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinRestoreOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minRestoreTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(MinRestoreOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

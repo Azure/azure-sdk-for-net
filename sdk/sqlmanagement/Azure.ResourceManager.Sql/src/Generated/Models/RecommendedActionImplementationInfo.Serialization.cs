@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Sql.Models
 
         void IJsonModel<RecommendedActionImplementationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionImplementationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecommendedActionImplementationInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.Sql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RecommendedActionImplementationInfo IJsonModel<RecommendedActionImplementationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,29 +123,31 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Method), out propertyOverride);
-            if (Optional.IsDefined(Method) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  method: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Method))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  method: ");
                     builder.AppendLine($"'{Method.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Script), out propertyOverride);
-            if (Optional.IsDefined(Script) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  script: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Script))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  script: ");
                     if (Script.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

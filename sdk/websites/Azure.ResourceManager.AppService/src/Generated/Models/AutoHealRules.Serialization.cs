@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<AutoHealRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoHealRules)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AutoHealRules IJsonModel<AutoHealRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -120,29 +127,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Triggers), out propertyOverride);
-            if (Optional.IsDefined(Triggers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  triggers: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Triggers))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  triggers: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Triggers, options, 2, false, "  triggers: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Actions), out propertyOverride);
-            if (Optional.IsDefined(Actions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  actions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Actions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  actions: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Actions, options, 2, false, "  actions: ");
                 }
             }

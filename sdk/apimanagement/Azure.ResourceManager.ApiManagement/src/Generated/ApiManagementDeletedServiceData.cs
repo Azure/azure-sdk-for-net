@@ -75,12 +75,16 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> API Management Service Master Location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Fully-qualified API Management Service Resource ID. </summary>
+        [WirePath("properties.serviceId")]
         public ResourceIdentifier ServiceId { get; set; }
         /// <summary> UTC Date and Time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
+        [WirePath("properties.scheduledPurgeDate")]
         public DateTimeOffset? ScheduledPurgeOn { get; set; }
         /// <summary> UTC Timestamp when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
+        [WirePath("properties.deletionDate")]
         public DateTimeOffset? DeletedOn { get; set; }
     }
 }

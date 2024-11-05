@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(EffectiveRouteState left, EffectiveRouteState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EffectiveRouteState"/> values are not the same. </summary>
         public static bool operator !=(EffectiveRouteState left, EffectiveRouteState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EffectiveRouteState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EffectiveRouteState"/>. </summary>
         public static implicit operator EffectiveRouteState(string value) => new EffectiveRouteState(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

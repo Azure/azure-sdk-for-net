@@ -1,17 +1,13 @@
 # Release History
 
-## 0.1.0-beta.2 (Unreleased)
+## 1.0.0 (2024-10-25)
 
 ### Features Added
 
-### Breaking Changes
+- The new Azure.Provisioning experience.
 
-### Bugs Fixed
-
-### Other Changes
-
-## 0.1.0-beta.1 (2024-04-04)
+## 1.0.0-beta.1 (2024-10-04)
 
 ### Features Added
 
-- Initial beta release of Azure.Provisioning.Search.
+- Preview of the new Azure.Provisioning experience.

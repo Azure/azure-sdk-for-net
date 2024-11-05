@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<FunctionAppMajorVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppMajorVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionAppMajorVersion)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(DisplayText))
             {
                 writer.WritePropertyName("displayText"u8);
@@ -63,7 +71,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FunctionAppMajorVersion IJsonModel<FunctionAppMajorVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -138,15 +145,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayText), out propertyOverride);
-            if (Optional.IsDefined(DisplayText) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  displayText: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayText))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  displayText: ");
                     if (DisplayText.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -160,15 +168,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  value: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Value))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  value: ");
                     if (Value.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -182,17 +191,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinorVersions), out propertyOverride);
-            if (Optional.IsCollectionDefined(MinorVersions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (MinorVersions.Any() || hasPropertyOverride)
+                builder.Append("  minorVersions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MinorVersions))
                 {
-                    builder.Append("  minorVersions: ");
-                    if (hasPropertyOverride)
+                    if (MinorVersions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  minorVersions: ");
                         builder.AppendLine("[");
                         foreach (var item in MinorVersions)
                         {

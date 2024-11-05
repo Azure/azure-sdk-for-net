@@ -16,23 +16,21 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [Test]
         public void Ctor()
         {
-            BlobSourceCheckpointData data = new(BlobType.Block);
+            BlobSourceCheckpointData data = new();
 
             Assert.AreEqual(DataMovementBlobConstants.SourceCheckpointData.SchemaVersion, data.Version);
-            Assert.AreEqual(BlobType.Block, data.BlobType);
         }
 
         [Test]
         public void Serialize()
         {
-            BlobSourceCheckpointData data = new(BlobType.Block);
+            BlobSourceCheckpointData data = new();
 
             byte[] expected;
             using (MemoryStream stream = new MemoryStream(DataMovementBlobConstants.SourceCheckpointData.DataSize))
             {
                 BinaryWriter writer = new BinaryWriter(stream);
                 writer.Write(DataMovementBlobConstants.SourceCheckpointData.SchemaVersion);
-                writer.Write((byte)BlobType.Block);
                 expected = stream.ToArray();
             }
 
@@ -52,16 +50,15 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [TestCase(BlobType.Append)]
         public void Deserialize(BlobType blobType)
         {
-            BlobSourceCheckpointData data = new(blobType);
+            BlobSourceCheckpointData data = new();
 
-            using (Stream stream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
+            using (Stream stream = new MemoryStream(DataMovementBlobConstants.SourceCheckpointData.DataSize))
             {
                 data.Serialize(stream);
                 stream.Position = 0;
                 BlobSourceCheckpointData deserialized = BlobSourceCheckpointData.Deserialize(stream);
 
                 Assert.AreEqual(DataMovementBlobConstants.SourceCheckpointData.SchemaVersion, deserialized.Version);
-                Assert.AreEqual(blobType, deserialized.BlobType);
             }
         }
     }

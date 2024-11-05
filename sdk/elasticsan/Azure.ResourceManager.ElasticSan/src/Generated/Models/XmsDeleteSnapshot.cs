@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static bool operator ==(XmsDeleteSnapshot left, XmsDeleteSnapshot right) => left.Equals(right);
         /// <summary> Determines if two <see cref="XmsDeleteSnapshot"/> values are not the same. </summary>
         public static bool operator !=(XmsDeleteSnapshot left, XmsDeleteSnapshot right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="XmsDeleteSnapshot"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="XmsDeleteSnapshot"/>. </summary>
         public static implicit operator XmsDeleteSnapshot(string value) => new XmsDeleteSnapshot(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

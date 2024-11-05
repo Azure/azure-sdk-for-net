@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Sql.Models
 
         void IJsonModel<ElasticPoolPerDatabaseSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerDatabaseSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.Sql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ElasticPoolPerDatabaseSettings IJsonModel<ElasticPoolPerDatabaseSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -120,29 +127,31 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinCapacity), out propertyOverride);
-            if (Optional.IsDefined(MinCapacity) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minCapacity: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinCapacity))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minCapacity: ");
                     builder.AppendLine($"'{MinCapacity.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxCapacity), out propertyOverride);
-            if (Optional.IsDefined(MaxCapacity) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxCapacity: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxCapacity))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxCapacity: ");
                     builder.AppendLine($"'{MaxCapacity.Value.ToString()}'");
                 }
             }

@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         void IJsonModel<OperationalInsightsWorkspaceSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceSku)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             if (Optional.IsDefined(CapacityReservationLevel))
@@ -54,7 +62,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         OperationalInsightsWorkspaceSku IJsonModel<OperationalInsightsWorkspaceSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -128,40 +135,43 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            builder.Append("  name: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  name: ");
                 builder.AppendLine($"'{Name.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapacityReservationLevel), out propertyOverride);
-            if (Optional.IsDefined(CapacityReservationLevel) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  capacityReservationLevel: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CapacityReservationLevel))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  capacityReservationLevel: ");
                     builder.AppendLine(CapacityReservationLevel.Value.ToString());
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastSkuUpdatedOn), out propertyOverride);
-            if (Optional.IsDefined(LastSkuUpdatedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastSkuUpdate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastSkuUpdatedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastSkuUpdate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastSkuUpdatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

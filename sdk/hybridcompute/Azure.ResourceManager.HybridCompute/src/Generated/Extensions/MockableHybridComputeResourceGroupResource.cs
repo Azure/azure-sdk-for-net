@@ -33,6 +33,75 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of HybridComputeLicenseResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HybridComputeLicenseResources and their operations over a HybridComputeLicenseResource. </returns>
+        public virtual HybridComputeLicenseCollection GetHybridComputeLicenses()
+        {
+            return GetCachedClient(client => new HybridComputeLicenseCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves information about the view of a license.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="licenseName"> The name of the license. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HybridComputeLicenseResource>> GetHybridComputeLicenseAsync(string licenseName, CancellationToken cancellationToken = default)
+        {
+            return await GetHybridComputeLicenses().GetAsync(licenseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves information about the view of a license.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="licenseName"> The name of the license. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HybridComputeLicenseResource> GetHybridComputeLicense(string licenseName, CancellationToken cancellationToken = default)
+        {
+            return GetHybridComputeLicenses().Get(licenseName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of HybridComputeMachineResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of HybridComputeMachineResources and their operations over a HybridComputeMachineResource. </returns>
         public virtual HybridComputeMachineCollection GetHybridComputeMachines()
@@ -53,7 +122,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-07-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -85,7 +154,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-07-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -124,7 +193,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-07-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -155,7 +224,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-07-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

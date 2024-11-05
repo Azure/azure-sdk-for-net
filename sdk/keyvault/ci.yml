@@ -39,3 +39,7 @@ extends:
       safeName: AzureSecurityKeyVaultKeys
     - name: Azure.Security.KeyVault.Secrets
       safeName: AzureSecurityKeyVaultSecrets
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.Security.KeyVault.Secrets
+      ExpectedWarningsFilepath: None

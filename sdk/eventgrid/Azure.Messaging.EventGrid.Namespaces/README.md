@@ -6,9 +6,7 @@ Use the client library for Azure Event Grid to:
 - Publish events to Event Grid topics using the Cloud Event schema
 - Consume and settle events
 
-[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
-
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://learn.microsoft.com/dotnet/api/overview/azure/messaging.eventgrid-readme?view=azure-dotnet) | [Product documentation](https://learn.microsoft.com/azure/event-grid/pull-delivery-overview) | [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/samples)
 
 ## Getting started
 
@@ -17,7 +15,7 @@ Use the client library for Azure Event Grid to:
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Messaging.EventGrid.Namespaces --prerelease
+dotnet add package Azure.Messaging.EventGrid.Namespaces
 ```
 
 ### Prerequisites
@@ -44,7 +42,7 @@ az eventgrid topic key list --name <your-resource-name> --resource-group <your-r
 Once you have your access key and topic endpoint, you can create the publisher client as follows:
 ```C# Snippet:CreateNamespaceClient
 // Construct the client using an Endpoint for a namespace as well as the shared access key
-var client = new EventGridClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey));
+var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new AzureKeyCredential(namespaceKey));
 ```
 
 #### Authenticate using an Entra ID
@@ -54,8 +52,8 @@ Azure Event Grid provides integration with Entra ID for identity-based authentic
 To send events to a topic or domain using Azure Active Directory, the authenticated identity should have the "EventGrid Data Sender" role assigned.
 
 ```C# Snippet:CreateNamespaceClientAAD
-// Construct the client using an Endpoint for a namespace as well as the DefaultAzureCredential
-var client = new EventGridClient(new Uri(namespaceTopicHost), new DefaultAzureCredential());
+// Construct the sender client using an Endpoint for a namespace as well as the DefaultAzureCredential
+var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new DefaultAzureCredential());
 ```
 
 ## Key concepts

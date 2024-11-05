@@ -992,7 +992,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -1064,7 +1064,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -1136,7 +1136,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -1187,7 +1187,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -1238,7 +1238,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -1389,7 +1389,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="options">
@@ -1445,7 +1445,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="options">
@@ -1501,7 +1501,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="sourceRange">
@@ -1584,7 +1584,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="sourceRange">
@@ -1667,7 +1667,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="sourceRange">
@@ -2840,9 +2840,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
         /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
         /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
-        /// in a request URI.  The source blob must either be public or must be authorized via a
-        /// shared access signature.  If the source blob is public, no authorization is required
-        /// to perform the operation.
+        /// in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         /// </param>
         /// <param name="overwrite">
         /// Whether the upload should overwrite the existing blob.  The
@@ -2884,9 +2884,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
         /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
         /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
-        /// in a request URI.  The source blob must either be public or must be authorized via a
-        /// shared access signature.  If the source blob is public, no authorization is required
-        /// to perform the operation.
+        /// in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         /// </param>
         /// <param name="overwrite">
         /// Whether the upload should overwrite the existing blob.  The
@@ -2928,9 +2928,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
         /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
         /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
-        /// in a request URI.  The source blob must either be public or must be authorized via a
-        /// shared access signature.  If the source blob is public, no authorization is required
-        /// to perform the operation.
+        /// in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -2970,9 +2970,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
         /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
         /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
-        /// in a request URI.  The source blob must either be public or must be authorized via a
-        /// shared access signature.  If the source blob is public, no authorization is required
-        /// to perform the operation.
+        /// in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -3012,9 +3012,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
         /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
         /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
-        /// in a request URI.  The source blob must either be public or must be authorized via a
-        /// shared access signature.  If the source blob is public, no authorization is required
-        /// to perform the operation.
+        /// in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -3238,14 +3238,18 @@ namespace Azure.Storage.Blobs.Specialized
                             LeaseId = args.Conditions.LeaseId
                         };
                     }
-                    await client.StageBlockInternal(
-                            Shared.StorageExtensions.GenerateBlockId(offset),
-                            content.ToStream(),
-                            validationOptions,
-                            conditions,
-                            progressHandler,
-                            async,
-                            cancellationToken).ConfigureAwait(false);
+
+                    using (var stream = content.ToStream())
+                    {
+                        await client.StageBlockInternal(
+                                Shared.StorageExtensions.GenerateBlockId(offset),
+                                stream,
+                                validationOptions,
+                                conditions,
+                                progressHandler,
+                                async,
+                                cancellationToken).ConfigureAwait(false);
+                    }
                 },
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(

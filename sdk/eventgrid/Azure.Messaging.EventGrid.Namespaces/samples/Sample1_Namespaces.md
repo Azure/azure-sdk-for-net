@@ -1,12 +1,12 @@
 # Using Namespace Topics
 
-Namespace topics are a new feature currently in public preview that allow you to publish and receive events directly from Azure Event Grid
+Namespace topics allow you to publish and receive events directly from Azure Event Grid
 without the need to integrate with another service such as Storage Queues or Service Bus for event delivery. Namespace topics can be
-interacted with using the `EventGridClient`.
+interacted with using the `EventGridSenderClient` and the `EventGridReceiverClient`.
 
 ```C# Snippet:CreateNamespaceClient
 // Construct the client using an Endpoint for a namespace as well as the shared access key
-var client = new EventGridClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey));
+var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new AzureKeyCredential(namespaceKey));
 ```
 
 Publishing CloudEvents is very similar to the experience of publishing to custom topics using the `EventGridPublisherClient`.
@@ -16,14 +16,13 @@ Publish a single CloudEvent:
 
 ```C# Snippet:PublishSingleEvent
 var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 });
-await client.PublishCloudEventAsync(topicName, evt);
+await senderClient.SendAsync(evt);
 ```
 
 Publish a batch of CloudEvents:
 
 ```C# Snippet:PublishBatchOfEvents
-await client.PublishCloudEventsAsync(
-    topicName,
+await senderClient.SendAsync(
     new[] {
         new CloudEvent("employee_source", "type", new TestModel { Name = "Tom", Age = 55 }),
         new CloudEvent("employee_source", "type", new TestModel { Name = "Alice", Age = 25 })
@@ -38,13 +37,15 @@ There are three different actions you can take on a received event:
 - Reject - this rejects the event and moves it to the dead letter queue, if configured.
 
 ```C# Snippet:ReceiveAndProcessEvents
-ReceiveResult result = await client.ReceiveCloudEventsAsync(topicName, subscriptionName, maxEvents: 3);
+// Construct the client using an Endpoint for a namespace as well as the shared access key
+var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey));
+ReceiveResult result = await receiverClient.ReceiveAsync(maxEvents: 3);
 
 // Iterate through the results and collect the lock tokens for events we want to release/acknowledge/result
 var toRelease = new List<string>();
 var toAcknowledge = new List<string>();
 var toReject = new List<string>();
-foreach (ReceiveDetails detail in result.Value)
+foreach (ReceiveDetails detail in result.Details)
 {
     CloudEvent @event = detail.Event;
     BrokerProperties brokerProperties = detail.BrokerProperties;
@@ -74,7 +75,7 @@ foreach (ReceiveDetails detail in result.Value)
 
 if (toRelease.Count > 0)
 {
-    ReleaseResult releaseResult = await client.ReleaseCloudEventsAsync(topicName, subscriptionName, new ReleaseOptions(toRelease));
+    ReleaseResult releaseResult = await receiverClient.ReleaseAsync(toRelease);
 
     // Inspect the Release result
     Console.WriteLine($"Failed count for Release: {releaseResult.FailedLockTokens.Count}");
@@ -94,7 +95,7 @@ if (toRelease.Count > 0)
 
 if (toAcknowledge.Count > 0)
 {
-    AcknowledgeResult acknowledgeResult = await client.AcknowledgeCloudEventsAsync(topicName, subscriptionName, new AcknowledgeOptions(toAcknowledge));
+    AcknowledgeResult acknowledgeResult = await receiverClient.AcknowledgeAsync(toAcknowledge);
 
     // Inspect the Acknowledge result
     Console.WriteLine($"Failed count for Acknowledge: {acknowledgeResult.FailedLockTokens.Count}");
@@ -114,7 +115,7 @@ if (toAcknowledge.Count > 0)
 
 if (toReject.Count > 0)
 {
-    RejectResult rejectResult = await client.RejectCloudEventsAsync(topicName, subscriptionName, new RejectOptions(toReject));
+    RejectResult rejectResult = await receiverClient.RejectAsync(toReject);
 
     // Inspect the Reject result
     Console.WriteLine($"Failed count for Reject: {rejectResult.FailedLockTokens.Count}");

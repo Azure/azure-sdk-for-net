@@ -48,7 +48,7 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator ==(TaskResourceState left, TaskResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TaskResourceState"/> values are not the same. </summary>
         public static bool operator !=(TaskResourceState left, TaskResourceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TaskResourceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TaskResourceState"/>. </summary>
         public static implicit operator TaskResourceState(string value) => new TaskResourceState(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

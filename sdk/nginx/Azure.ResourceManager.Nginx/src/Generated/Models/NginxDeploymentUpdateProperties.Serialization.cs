@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Nginx.Models
 
         void IJsonModel<NginxDeploymentUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(EnableDiagnosticsSupport))
             {
                 writer.WritePropertyName("enableDiagnosticsSupport"u8);
@@ -46,6 +54,16 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("userProfile"u8);
                 writer.WriteObjectValue(UserProfile, options);
             }
+            if (Optional.IsDefined(AutoUpgradeProfile))
+            {
+                writer.WritePropertyName("autoUpgradeProfile"u8);
+                writer.WriteObjectValue(AutoUpgradeProfile, options);
+            }
+            if (Optional.IsDefined(NginxAppProtect))
+            {
+                writer.WritePropertyName("nginxAppProtect"u8);
+                writer.WriteObjectValue(NginxAppProtect, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -61,7 +79,6 @@ namespace Azure.ResourceManager.Nginx.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NginxDeploymentUpdateProperties IJsonModel<NginxDeploymentUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -88,6 +105,8 @@ namespace Azure.ResourceManager.Nginx.Models
             NginxLogging logging = default;
             NginxDeploymentScalingProperties scalingProperties = default;
             NginxDeploymentUserProfile userProfile = default;
+            AutoUpgradeProfile autoUpgradeProfile = default;
+            NginxDeploymentUpdatePropertiesNginxAppProtect nginxAppProtect = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,13 +147,38 @@ namespace Azure.ResourceManager.Nginx.Models
                     userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("autoUpgradeProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoUpgradeProfile = AutoUpgradeProfile.DeserializeAutoUpgradeProfile(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("nginxAppProtect"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nginxAppProtect = NginxDeploymentUpdatePropertiesNginxAppProtect.DeserializeNginxDeploymentUpdatePropertiesNginxAppProtect(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NginxDeploymentUpdateProperties(enableDiagnosticsSupport, logging, scalingProperties, userProfile, serializedAdditionalRawData);
+            return new NginxDeploymentUpdateProperties(
+                enableDiagnosticsSupport,
+                logging,
+                scalingProperties,
+                userProfile,
+                autoUpgradeProfile,
+                nginxAppProtect,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentUpdateProperties>.Write(ModelReaderWriterOptions options)

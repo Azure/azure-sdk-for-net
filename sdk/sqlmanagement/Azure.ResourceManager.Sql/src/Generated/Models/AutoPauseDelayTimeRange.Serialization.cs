@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Sql.Models
 
         void IJsonModel<AutoPauseDelayTimeRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AutoPauseDelayTimeRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(MinValue))
             {
                 writer.WritePropertyName("minValue"u8);
@@ -72,7 +80,6 @@ namespace Azure.ResourceManager.Sql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AutoPauseDelayTimeRange IJsonModel<AutoPauseDelayTimeRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -187,85 +194,91 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinValue), out propertyOverride);
-            if (Optional.IsDefined(MinValue) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minValue: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinValue))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minValue: ");
                     builder.AppendLine($"{MinValue.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxValue), out propertyOverride);
-            if (Optional.IsDefined(MaxValue) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxValue: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxValue))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxValue: ");
                     builder.AppendLine($"{MaxValue.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepSize), out propertyOverride);
-            if (Optional.IsDefined(StepSize) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  stepSize: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StepSize))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  stepSize: ");
                     builder.AppendLine($"{StepSize.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Default), out propertyOverride);
-            if (Optional.IsDefined(Default) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  default: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Default))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  default: ");
                     builder.AppendLine($"{Default.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
-            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  unit: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Unit))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  unit: ");
                     builder.AppendLine($"'{Unit.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DoNotPauseValue), out propertyOverride);
-            if (Optional.IsDefined(DoNotPauseValue) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  doNotPauseValue: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DoNotPauseValue))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  doNotPauseValue: ");
                     builder.AppendLine($"{DoNotPauseValue.Value}");
                 }
             }

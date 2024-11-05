@@ -175,6 +175,92 @@ namespace Azure.Communication.Email.Tests
         }
 
         [Test]
+        [TestCaseSource(nameof(InvalidStringValues))]
+        public void SendEmailWithOperationIdOverload_InvalidToRecipient_Throws(string invalidStringValue)
+        {
+            EmailClient emailClient = CreateEmailClient();
+            EmailMessage emailMessage = DefaultEmailMessage();
+            Guid operationId = DefaultOperationId();
+            AsyncTestDelegate asyncCode = async () => await emailClient.SendAsync(
+                        WaitUntil.Started,
+                        emailMessage.SenderAddress,
+                        invalidStringValue,
+                        emailMessage.Content.Subject,
+                        emailMessage.Content.Html,
+                        operationId,
+                        emailMessage.Content.PlainText);
+            TestDelegate code = () => emailClient.Send(
+                        WaitUntil.Started,
+                        emailMessage.SenderAddress,
+                        invalidStringValue,
+                        emailMessage.Content.Subject,
+                        emailMessage.Content.Html,
+                        operationId,
+                        emailMessage.Content.PlainText);
+
+            SendEmailOverload_ExecuteTest(invalidStringValue, asyncCode, code);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(InvalidStringValues))]
+        public void SendEmailWithOperationIdOverload_InvalidSubject_Throws(string invalidStringValue)
+        {
+            EmailClient emailClient = CreateEmailClient();
+            EmailMessage emailMessage = DefaultEmailMessage();
+            Guid operationId = DefaultOperationId();
+            AsyncTestDelegate asyncCode = async () => await emailClient.SendAsync(
+                    WaitUntil.Started,
+                    emailMessage.SenderAddress,
+                    emailMessage.Recipients.To.First().Address,
+                    invalidStringValue,
+                    emailMessage.Content.Html,
+                    operationId,
+                    emailMessage.Content.PlainText);
+            TestDelegate code = () => emailClient.Send(
+                    WaitUntil.Started,
+                    emailMessage.SenderAddress,
+                    emailMessage.Recipients.To.First().Address,
+                    invalidStringValue,
+                    emailMessage.Content.Html,
+                    operationId,
+                    emailMessage.Content.PlainText);
+
+            SendEmailOverload_ExecuteTest(invalidStringValue, asyncCode, code);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(InvalidStringValues))]
+        public void SendEmailWithOperationIdOverload_InvalidContent_Throws(string invalidStringValue)
+        {
+            EmailClient emailClient = CreateEmailClient();
+            EmailMessage emailMessage = DefaultEmailMessage();
+            Guid operationId = DefaultOperationId();
+
+            if (IsAsync)
+            {
+                Assert.ThrowsAsync<ArgumentException>(async () => await emailClient.SendAsync(
+                    WaitUntil.Started,
+                    emailMessage.SenderAddress,
+                    emailMessage.Recipients.To.First().Address,
+                    emailMessage.Content.Subject,
+                    invalidStringValue,
+                    operationId,
+                    invalidStringValue));
+            }
+            else
+            {
+                Assert.Throws<ArgumentException>(() => emailClient.Send(
+                    WaitUntil.Started,
+                    emailMessage.SenderAddress,
+                    emailMessage.Recipients.To.First().Address,
+                    emailMessage.Content.Subject,
+                    invalidStringValue,
+                    operationId,
+                    invalidStringValue));
+            }
+        }
+
+        [Test]
         public void BadRequest_ThrowsException()
         {
             EmailClient emailClient = CreateEmailClient(HttpStatusCode.BadRequest);
@@ -626,6 +712,11 @@ namespace Azure.Communication.Email.Tests
                 DefaultSenderEmail(),
                 new EmailRecipients(DefaultRecipients()),
                 GetDefaultContent(DefaultSubject()));
+        }
+
+        private static Guid DefaultOperationId()
+        {
+            return new("5de3fab9-f45f-4114-aa7c-b7f550909af8");
         }
 
         private static string DefaultSenderEmail()

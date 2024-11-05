@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -23,7 +24,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Creating job part based on a single transfer job
         /// </summary>
-        private ServiceToServiceJobPart(ServiceToServiceTransferJob job, int partNumber)
+        private ServiceToServiceJobPart(TransferJobInternal job, int partNumber)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
@@ -49,7 +50,7 @@ namespace Azure.Storage.DataMovement
         /// Creating transfer job based on a storage resource created from listing.
         /// </summary>
         private ServiceToServiceJobPart(
-            ServiceToServiceTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -81,7 +82,7 @@ namespace Azure.Storage.DataMovement
         /// Creating transfer job based on a checkpoint file.
         /// </summary>
         private ServiceToServiceJobPart(
-            ServiceToServiceTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -120,8 +121,8 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Called when creating a job part from a single transfer.
         /// </summary>
-        public static async Task<ServiceToServiceJobPart> CreateJobPartAsync(
-            ServiceToServiceTransferJob job,
+        public static async Task<JobPartInternal> CreateJobPartAsync(
+            TransferJobInternal job,
             int partNumber)
         {
             // Create Job Part file as we're initializing the job part
@@ -133,20 +134,21 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Called when creating a job part from a container transfer.
         /// </summary>
-        public static async Task<ServiceToServiceJobPart> CreateJobPartAsync(
-            ServiceToServiceTransferJob job,
+        public static async Task<JobPartInternal> CreateJobPartAsync(
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
-            StorageResourceItem destinationResource,
-            long? length = default)
+            StorageResourceItem destinationResource)
         {
+            Argument.AssertNotNull(sourceResource, nameof(sourceResource));
+            Argument.AssertNotNull(destinationResource, nameof(destinationResource));
+
             // Create Job Part file as we're initializing the job part
             ServiceToServiceJobPart part = new ServiceToServiceJobPart(
                 job: job,
                 partNumber: partNumber,
                 sourceResource: sourceResource,
-                destinationResource: destinationResource,
-                length: length);
+                destinationResource: destinationResource);
             await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
             return part;
         }
@@ -155,7 +157,7 @@ namespace Azure.Storage.DataMovement
         /// Called when creating a job part from a checkpoint file on resume.
         /// </summary>
         public static ServiceToServiceJobPart CreateJobPartFromCheckpoint(
-            ServiceToServiceTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -179,11 +181,17 @@ namespace Azure.Storage.DataMovement
         {
             await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
 
-            long? fileLength = _sourceResource.Length;
+            long? fileLength = default;
             StorageResourceItemProperties sourceProperties = default;
             try
             {
+                fileLength = _sourceResource.Length;
                 sourceProperties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
+                await _destinationResource.SetPermissionsAsync(
+                    _sourceResource,
+                    sourceProperties,
+                    _cancellationToken).ConfigureAwait(false);
+
                 fileLength = sourceProperties.ResourceLength;
             }
             catch (Exception ex)
@@ -511,10 +519,7 @@ namespace Azure.Storage.DataMovement
             HttpAuthorization authorization = await _sourceResource.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
             if (authorization != null)
             {
-                options = new StorageResourceCopyFromUriOptions()
-                {
-                    SourceAuthentication = authorization
-                };
+                options.SourceAuthentication = authorization;
             }
             return options;
         }

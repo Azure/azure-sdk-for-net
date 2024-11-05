@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         void IJsonModel<ContainerRegistryPlatformProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPlatformProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryPlatformProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("os"u8);
             writer.WriteStringValue(OS.ToString());
             if (Optional.IsDefined(Architecture))
@@ -53,7 +62,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerRegistryPlatformProperties IJsonModel<ContainerRegistryPlatformProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -115,6 +123,63 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryPlatformProperties(os, architecture, variant, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OS), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  os: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  os: ");
+                builder.AppendLine($"'{OS.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Architecture), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  architecture: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Architecture))
+                {
+                    builder.Append("  architecture: ");
+                    builder.AppendLine($"'{Architecture.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Variant), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  variant: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Variant))
+                {
+                    builder.Append("  variant: ");
+                    builder.AppendLine($"'{Variant.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerRegistryPlatformProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPlatformProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,6 +188,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryPlatformProperties)} does not support writing '{options.Format}' format.");
             }

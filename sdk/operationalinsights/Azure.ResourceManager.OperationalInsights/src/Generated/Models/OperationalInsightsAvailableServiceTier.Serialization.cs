@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         void IJsonModel<OperationalInsightsAvailableServiceTier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsAvailableServiceTier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OperationalInsightsAvailableServiceTier)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ServiceTier))
             {
                 writer.WritePropertyName("serviceTier"u8);
@@ -77,7 +85,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         OperationalInsightsAvailableServiceTier IJsonModel<OperationalInsightsAvailableServiceTier>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -203,100 +210,107 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceTier), out propertyOverride);
-            if (Optional.IsDefined(ServiceTier) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serviceTier: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceTier))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serviceTier: ");
                     builder.AppendLine($"'{ServiceTier.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enabled: ");
                     var boolValue = IsEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumRetention), out propertyOverride);
-            if (Optional.IsDefined(MinimumRetention) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minimumRetention: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinimumRetention))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minimumRetention: ");
                     builder.AppendLine($"'{MinimumRetention.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumRetention), out propertyOverride);
-            if (Optional.IsDefined(MaximumRetention) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maximumRetention: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumRetention))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maximumRetention: ");
                     builder.AppendLine($"'{MaximumRetention.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultRetention), out propertyOverride);
-            if (Optional.IsDefined(DefaultRetention) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  defaultRetention: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultRetention))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  defaultRetention: ");
                     builder.AppendLine($"'{DefaultRetention.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapacityReservationLevel), out propertyOverride);
-            if (Optional.IsDefined(CapacityReservationLevel) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  capacityReservationLevel: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CapacityReservationLevel))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  capacityReservationLevel: ");
                     builder.AppendLine($"'{CapacityReservationLevel.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastSkuUpdatedOn), out propertyOverride);
-            if (Optional.IsDefined(LastSkuUpdatedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastSkuUpdate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastSkuUpdatedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastSkuUpdate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastSkuUpdatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

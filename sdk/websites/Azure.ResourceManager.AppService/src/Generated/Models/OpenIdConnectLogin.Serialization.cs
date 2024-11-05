@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<OpenIdConnectLogin>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<OpenIdConnectLogin>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OpenIdConnectLogin)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(NameClaimType))
             {
                 writer.WritePropertyName("nameClaimType"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         OpenIdConnectLogin IJsonModel<OpenIdConnectLogin>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,15 +134,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NameClaimType), out propertyOverride);
-            if (Optional.IsDefined(NameClaimType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nameClaimType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NameClaimType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nameClaimType: ");
                     if (NameClaimType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,17 +157,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scopes), out propertyOverride);
-            if (Optional.IsCollectionDefined(Scopes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Scopes.Any() || hasPropertyOverride)
+                builder.Append("  scopes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Scopes))
                 {
-                    builder.Append("  scopes: ");
-                    if (hasPropertyOverride)
+                    if (Scopes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  scopes: ");
                         builder.AppendLine("[");
                         foreach (var item in Scopes)
                         {

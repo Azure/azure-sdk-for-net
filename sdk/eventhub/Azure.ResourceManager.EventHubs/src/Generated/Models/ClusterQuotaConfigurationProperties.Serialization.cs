@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         void IJsonModel<ClusterQuotaConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterQuotaConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterQuotaConfigurationProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
@@ -54,7 +62,6 @@ namespace Azure.ResourceManager.EventHubs.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ClusterQuotaConfigurationProperties IJsonModel<ClusterQuotaConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -117,17 +124,18 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Settings), out propertyOverride);
-            if (Optional.IsCollectionDefined(Settings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Settings.Any() || hasPropertyOverride)
+                builder.Append("  settings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Settings))
                 {
-                    builder.Append("  settings: ");
-                    if (hasPropertyOverride)
+                    if (Settings.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  settings: ");
                         builder.AppendLine("{");
                         foreach (var item in Settings)
                         {

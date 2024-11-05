@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<HttpRequestHandlerMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<HttpRequestHandlerMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HttpRequestHandlerMapping)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         HttpRequestHandlerMapping IJsonModel<HttpRequestHandlerMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -123,15 +130,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Extension), out propertyOverride);
-            if (Optional.IsDefined(Extension) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  extension: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Extension))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  extension: ");
                     if (Extension.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -145,15 +153,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptProcessor), out propertyOverride);
-            if (Optional.IsDefined(ScriptProcessor) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scriptProcessor: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScriptProcessor))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scriptProcessor: ");
                     if (ScriptProcessor.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -167,15 +176,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Arguments), out propertyOverride);
-            if (Optional.IsDefined(Arguments) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  arguments: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Arguments))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  arguments: ");
                     if (Arguments.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

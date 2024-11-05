@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         void IJsonModel<ManagedHSMSecurityDomainProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedHSMSecurityDomainProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedHSMSecurityDomainProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ActivationStatus))
             {
                 writer.WritePropertyName("activationStatus"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagedHSMSecurityDomainProperties IJsonModel<ManagedHSMSecurityDomainProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,29 +123,31 @@ namespace Azure.ResourceManager.KeyVault.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActivationStatus), out propertyOverride);
-            if (Optional.IsDefined(ActivationStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  activationStatus: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActivationStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  activationStatus: ");
                     builder.AppendLine($"'{ActivationStatus.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActivationStatusMessage), out propertyOverride);
-            if (Optional.IsDefined(ActivationStatusMessage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  activationStatusMessage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActivationStatusMessage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  activationStatusMessage: ");
                     if (ActivationStatusMessage.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

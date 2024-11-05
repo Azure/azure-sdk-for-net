@@ -20,13 +20,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CosmosDBAccountKeyList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountKeyList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBAccountKeyList)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(PrimaryMasterKey))
             {
                 writer.WritePropertyName("primaryMasterKey"u8);
@@ -37,32 +46,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("secondaryMasterKey"u8);
                 writer.WriteStringValue(SecondaryMasterKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryReadonlyMasterKey))
-            {
-                writer.WritePropertyName("primaryReadonlyMasterKey"u8);
-                writer.WriteStringValue(PrimaryReadonlyMasterKey);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryReadonlyMasterKey))
-            {
-                writer.WritePropertyName("secondaryReadonlyMasterKey"u8);
-                writer.WriteStringValue(SecondaryReadonlyMasterKey);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         CosmosDBAccountKeyList IJsonModel<CosmosDBAccountKeyList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -134,15 +117,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryMasterKey), out propertyOverride);
-            if (Optional.IsDefined(PrimaryMasterKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  primaryMasterKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryMasterKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  primaryMasterKey: ");
                     if (PrimaryMasterKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -156,15 +140,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryMasterKey), out propertyOverride);
-            if (Optional.IsDefined(SecondaryMasterKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  secondaryMasterKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryMasterKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  secondaryMasterKey: ");
                     if (SecondaryMasterKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -178,15 +163,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryReadonlyMasterKey), out propertyOverride);
-            if (Optional.IsDefined(PrimaryReadonlyMasterKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  primaryReadonlyMasterKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryReadonlyMasterKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  primaryReadonlyMasterKey: ");
                     if (PrimaryReadonlyMasterKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -200,15 +186,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryReadonlyMasterKey), out propertyOverride);
-            if (Optional.IsDefined(SecondaryReadonlyMasterKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  secondaryReadonlyMasterKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryReadonlyMasterKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  secondaryReadonlyMasterKey: ");
                     if (SecondaryReadonlyMasterKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

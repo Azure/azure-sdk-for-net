@@ -21,33 +21,22 @@ namespace Azure.ResourceManager.Support
 
         void IJsonModel<SupportTicketData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SupportTicketData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SupportTicketData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SupportTicketId))
@@ -55,26 +44,17 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("supportTicketId"u8);
                 writer.WriteStringValue(SupportTicketId);
             }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(ProblemClassificationId))
-            {
-                writer.WritePropertyName("problemClassificationId"u8);
-                writer.WriteStringValue(ProblemClassificationId);
-            }
+            writer.WritePropertyName("description"u8);
+            writer.WriteStringValue(Description);
+            writer.WritePropertyName("problemClassificationId"u8);
+            writer.WriteStringValue(ProblemClassificationId);
             if (options.Format != "W" && Optional.IsDefined(ProblemClassificationDisplayName))
             {
                 writer.WritePropertyName("problemClassificationDisplayName"u8);
                 writer.WriteStringValue(ProblemClassificationDisplayName);
             }
-            if (Optional.IsDefined(Severity))
-            {
-                writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity.Value.ToString());
-            }
+            writer.WritePropertyName("severity"u8);
+            writer.WriteStringValue(Severity.ToString());
             if (Optional.IsDefined(EnrollmentId))
             {
                 writer.WritePropertyName("enrollmentId"u8);
@@ -85,11 +65,8 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("require24X7Response"u8);
                 writer.WriteBooleanValue(Require24X7Response.Value);
             }
-            if (Optional.IsDefined(AdvancedDiagnosticConsent))
-            {
-                writer.WritePropertyName("advancedDiagnosticConsent"u8);
-                writer.WriteStringValue(AdvancedDiagnosticConsent.Value.ToString());
-            }
+            writer.WritePropertyName("advancedDiagnosticConsent"u8);
+            writer.WriteStringValue(AdvancedDiagnosticConsent.ToString());
             if (Optional.IsDefined(ProblemScopingQuestions))
             {
                 writer.WritePropertyName("problemScopingQuestions"u8);
@@ -100,11 +77,8 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("supportPlanId"u8);
                 writer.WriteStringValue(SupportPlanId);
             }
-            if (Optional.IsDefined(ContactDetails))
-            {
-                writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails, options);
-            }
+            writer.WritePropertyName("contactDetails"u8);
+            writer.WriteObjectValue(ContactDetails, options);
             if (Optional.IsDefined(ServiceLevelAgreement))
             {
                 writer.WritePropertyName("serviceLevelAgreement"u8);
@@ -125,21 +99,15 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("supportPlanDisplayName"u8);
                 writer.WriteStringValue(SupportPlanDisplayName);
             }
-            if (Optional.IsDefined(Title))
-            {
-                writer.WritePropertyName("title"u8);
-                writer.WriteStringValue(Title);
-            }
+            writer.WritePropertyName("title"u8);
+            writer.WriteStringValue(Title);
             if (Optional.IsDefined(ProblemStartOn))
             {
                 writer.WritePropertyName("problemStartTime"u8);
                 writer.WriteStringValue(ProblemStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ServiceId))
-            {
-                writer.WritePropertyName("serviceId"u8);
-                writer.WriteStringValue(ServiceId);
-            }
+            writer.WritePropertyName("serviceId"u8);
+            writer.WriteStringValue(ServiceId);
             if (options.Format != "W" && Optional.IsDefined(ServiceDisplayName))
             {
                 writer.WritePropertyName("serviceDisplayName"u8);
@@ -165,6 +133,11 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("fileWorkspaceName"u8);
                 writer.WriteStringValue(FileWorkspaceName);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsTemporaryTicket))
+            {
+                writer.WritePropertyName("isTemporaryTicket"u8);
+                writer.WriteStringValue(IsTemporaryTicket.Value.ToString());
+            }
             if (Optional.IsDefined(TechnicalTicketDetails))
             {
                 writer.WritePropertyName("technicalTicketDetails"u8);
@@ -184,22 +157,6 @@ namespace Azure.ResourceManager.Support
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
             writer.WriteEndObject();
         }
@@ -232,10 +189,10 @@ namespace Azure.ResourceManager.Support
             string description = default;
             string problemClassificationId = default;
             string problemClassificationDisplayName = default;
-            SupportSeverityLevel? severity = default;
+            SupportSeverityLevel severity = default;
             string enrollmentId = default;
             bool? require24X7Response = default;
-            AdvancedDiagnosticConsent? advancedDiagnosticConsent = default;
+            AdvancedDiagnosticConsent advancedDiagnosticConsent = default;
             string problemScopingQuestions = default;
             string supportPlanId = default;
             SupportContactProfile contactDetails = default;
@@ -251,6 +208,7 @@ namespace Azure.ResourceManager.Support
             DateTimeOffset? createdDate = default;
             DateTimeOffset? modifiedDate = default;
             string fileWorkspaceName = default;
+            IsTemporaryTicket? isTemporaryTicket = default;
             TechnicalTicketDetails technicalTicketDetails = default;
             QuotaTicketDetails quotaTicketDetails = default;
             IList<SecondaryConsent> secondaryConsent = default;
@@ -313,10 +271,6 @@ namespace Azure.ResourceManager.Support
                         }
                         if (property0.NameEquals("severity"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             severity = new SupportSeverityLevel(property0.Value.GetString());
                             continue;
                         }
@@ -336,10 +290,6 @@ namespace Azure.ResourceManager.Support
                         }
                         if (property0.NameEquals("advancedDiagnosticConsent"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             advancedDiagnosticConsent = new AdvancedDiagnosticConsent(property0.Value.GetString());
                             continue;
                         }
@@ -355,10 +305,6 @@ namespace Azure.ResourceManager.Support
                         }
                         if (property0.NameEquals("contactDetails"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             contactDetails = SupportContactProfile.DeserializeSupportContactProfile(property0.Value, options);
                             continue;
                         }
@@ -442,6 +388,15 @@ namespace Azure.ResourceManager.Support
                             fileWorkspaceName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("isTemporaryTicket"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isTemporaryTicket = new IsTemporaryTicket(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("technicalTicketDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -511,6 +466,7 @@ namespace Azure.ResourceManager.Support
                 createdDate,
                 modifiedDate,
                 fileWorkspaceName,
+                isTemporaryTicket,
                 technicalTicketDetails,
                 quotaTicketDetails,
                 secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>(),

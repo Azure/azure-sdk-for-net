@@ -41,13 +41,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         public string SapProduct { get { throw null; } }
         public string SapProductVersion { get { throw null; } }
         public string ServerName { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SapDiscoveryServerInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class SapDiscoveryServerInstanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SapDiscoveryServerInstanceResource() { }
@@ -58,6 +59,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceResource> Update(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -86,13 +92,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         public string MasterSiteId { get { throw null; } set { } }
         public string MigrateProjectId { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SapDiscoverySiteResource : Azure.ResourceManager.ArmResource
+    public partial class SapDiscoverySiteResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SapDiscoverySiteResource() { }
@@ -114,6 +121,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteResource> Update(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoverySitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoverySitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -143,13 +155,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         public string LandscapeSid { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryProvisioningState? ProvisioningState { get { throw null; } }
         public string SystemSid { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SapInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class SapInstanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SapInstanceResource() { }
@@ -169,6 +182,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceResource> Update(Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -223,6 +241,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public int? TargetHanaRamSizeGB { get { throw null; } }
         public int? TotalDiskIops { get { throw null; } }
         public int? TotalDiskSizeGB { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.ConfigurationDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.ConfigurationDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.ConfigurationDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.ConfigurationDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.Models.ConfigurationDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -234,6 +253,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         internal ExcelPerformanceDetail() { }
         public int? MaxCpuLoad { get { throw null; } }
         public int? TotalSourceDbSizeGB { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.ExcelPerformanceDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.ExcelPerformanceDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.ExcelPerformanceDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.ExcelPerformanceDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.Models.ExcelPerformanceDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -243,6 +263,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     public partial class NativePerformanceDetail : Azure.ResourceManager.MigrationDiscoverySap.Models.PerformanceDetail, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.NativePerformanceDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.Models.NativePerformanceDetail>
     {
         internal NativePerformanceDetail() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.NativePerformanceDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.NativePerformanceDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.NativePerformanceDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.NativePerformanceDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.Models.NativePerformanceDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -252,6 +273,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     public abstract partial class PerformanceDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.PerformanceDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.Models.PerformanceDetail>
     {
         protected PerformanceDetail() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.PerformanceDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.PerformanceDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.PerformanceDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.PerformanceDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.Models.PerformanceDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -290,6 +312,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryErrorDetail> Details { get { throw null; } }
         public string Message { get { throw null; } }
         public string Recommendation { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryErrorDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryErrorDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryErrorDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryErrorDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryErrorDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -301,6 +324,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public SapDiscoveryExtendedLocation(string extendedLocationType, string name) { }
         public string ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryExtendedLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryExtendedLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryExtendedLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryExtendedLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryExtendedLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -357,6 +381,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     {
         public SapDiscoveryServerInstancePatch() { }
         public Azure.ResourceManager.MigrationDiscoverySap.Models.ServerInstanceProperties Properties { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryServerInstancePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryServerInstancePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryServerInstancePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryServerInstancePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryServerInstancePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -367,6 +392,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     {
         public SapDiscoverySitePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoverySitePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoverySitePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoverySitePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoverySitePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoverySitePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -401,6 +427,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     {
         public SapInstancePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstancePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstancePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstancePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstancePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstancePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -435,6 +462,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryErrorDetail> Details { get { throw null; } }
         public string Message { get { throw null; } }
         public string Recommendation { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.SapMigrateError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapMigrateError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapMigrateError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.SapMigrateError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.Models.SapMigrateError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -454,6 +482,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public string SapProduct { get { throw null; } }
         public string SapProductVersion { get { throw null; } }
         public string ServerName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.ServerInstanceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.ServerInstanceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.Models.ServerInstanceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MigrationDiscoverySap.Models.ServerInstanceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.Models.ServerInstanceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

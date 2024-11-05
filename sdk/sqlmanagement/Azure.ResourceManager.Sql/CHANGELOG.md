@@ -1,14 +1,38 @@
 # Release History
 
-## 1.3.0-beta.7 (Unreleased)
+## 1.3.0-beta.10 (Unreleased)
 
 ### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.9 (2024-07-15)
+
+### Features Added
+
+- Upgraded api-version tag to latest 'composite-v5'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f45a76fc39f033947ed12faf4b6416e1e19724cd/specification/sql/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.39.0 to 1.40.0
+
+## 1.3.0-beta.8 (2024-05-07)
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.3.0-beta.7 (2024-04-29)
+
+### Features Added
+
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ## 1.3.0-beta.6 (2024-03-26)
 
@@ -20,14 +44,14 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added TLS 1.3 to list of valid TLS versions. Also created custom classes needed since the type of MinimalTlsVersion was changed from String to Enum.
 
 ## 1.3.0-beta.4 (2023-11-21)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -53,7 +77,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 - Added support for `ManagedInstanceServerConfigurationOption`, `ManagedInstanceStartStopSchedule` and `ManagedLedgerDigestUpload` resources.
 - Added `filter` and `expand` parameters to `Get` and `Exists` methods of `RestorableDroppedDatabaseCollection` and `SqlDatabaseCollection`.
 - Added `filter` and `expand` parameters to `Get` methods of `RestorableDroppedDatabaseResource` and `SqlDatabaseResource`.
@@ -135,12 +159,12 @@ Polishing since last public beta release:
 
 ### Features Added
 
-- Add Update methods in resource classes.
+- Added Update methods in resource classes.
 
 ### Breaking Changes
 
-- Rename private endpoint resource names with `Sql` prefix.
-- Rename `PrivateLinkServiceConnectionState` properties to `ConnectionState`.
+- Renamed private endpoint resource names with `Sql` prefix.
+- Renamed `PrivateLinkServiceConnectionState` properties to `ConnectionState`.
 
 ### Bugs Fixed
 

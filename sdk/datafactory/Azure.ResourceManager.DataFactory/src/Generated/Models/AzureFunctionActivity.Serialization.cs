@@ -20,73 +20,33 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<AzureFunctionActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureFunctionActivity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
-            {
-                writer.WritePropertyName("linkedServiceName"u8);
-                JsonSerializer.Serialize(writer, LinkedServiceName);
-            }
-            if (Optional.IsDefined(Policy))
-            {
-                writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy, options);
-            }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Optional.IsDefined(OnInactiveMarkAs))
-            {
-                writer.WritePropertyName("onInactiveMarkAs"u8);
-                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(DependsOn))
-            {
-                writer.WritePropertyName("dependsOn"u8);
-                writer.WriteStartArray();
-                foreach (var item in DependsOn)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(UserProperties))
-            {
-                writer.WritePropertyName("userProperties"u8);
-                writer.WriteStartArray();
-                foreach (var item in UserProperties)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("functionName"u8);
             JsonSerializer.Serialize(writer, FunctionName);
-            if (Optional.IsCollectionDefined(Headers))
+            if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
-                foreach (var item in Headers)
+                foreach (var item in RequestHeaders)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -94,7 +54,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    JsonSerializer.Serialize(writer, item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -116,7 +83,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         AzureFunctionActivity IJsonModel<AzureFunctionActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -150,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<PipelineActivityUserProperty> userProperties = default;
             AzureFunctionActivityMethod method = default;
             DataFactoryElement<string> functionName = default;
-            IDictionary<string, DataFactoryElement<string>> headers = default;
+            IDictionary<string, BinaryData> headers = default;
             DataFactoryElement<string> body = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -260,7 +226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            Dictionary<string, DataFactoryElement<string>> dictionary = new Dictionary<string, DataFactoryElement<string>>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
                                 if (property1.Value.ValueKind == JsonValueKind.Null)
@@ -269,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 }
                                 else
                                 {
-                                    dictionary.Add(property1.Name, JsonSerializer.Deserialize<DataFactoryElement<string>>(property1.Value.GetRawText()));
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
                                 }
                             }
                             headers = dictionary;
@@ -303,7 +269,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 policy,
                 method,
                 functionName,
-                headers ?? new ChangeTrackingDictionary<string, DataFactoryElement<string>>(),
+                headers ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 body);
         }
 

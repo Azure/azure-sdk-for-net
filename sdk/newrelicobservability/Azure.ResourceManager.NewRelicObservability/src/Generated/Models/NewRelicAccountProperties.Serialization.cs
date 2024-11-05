@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         void IJsonModel<NewRelicAccountProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
@@ -61,7 +70,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NewRelicAccountProperties IJsonModel<NewRelicAccountProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -133,6 +141,92 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicAccountProperties(userId, accountInfo, organizationInfo, singleSignOnProperties, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserId))
+                {
+                    builder.Append("  userId: ");
+                    if (UserId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accountInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccountInfo))
+                {
+                    builder.Append("  accountInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AccountInfo, options, 2, false, "  accountInfo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("OrganizationId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  organizationInfo: ");
+                builder.AppendLine("{");
+                builder.Append("    organizationId: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(OrganizationInfo))
+                {
+                    builder.Append("  organizationInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, OrganizationInfo, options, 2, false, "  organizationInfo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SingleSignOnProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  singleSignOnProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SingleSignOnProperties))
+                {
+                    builder.Append("  singleSignOnProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SingleSignOnProperties, options, 2, false, "  singleSignOnProperties: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<NewRelicAccountProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +235,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support writing '{options.Format}' format.");
             }

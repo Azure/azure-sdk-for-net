@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<FunctionAppHostKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppHostKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionAppHostKeys)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(MasterKey))
             {
                 writer.WritePropertyName("masterKey"u8);
@@ -70,7 +78,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FunctionAppHostKeys IJsonModel<FunctionAppHostKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -154,15 +161,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MasterKey), out propertyOverride);
-            if (Optional.IsDefined(MasterKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  masterKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MasterKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  masterKey: ");
                     if (MasterKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -176,17 +184,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(FunctionKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (FunctionKeys.Any() || hasPropertyOverride)
+                builder.Append("  functionKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FunctionKeys))
                 {
-                    builder.Append("  functionKeys: ");
-                    if (hasPropertyOverride)
+                    if (FunctionKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  functionKeys: ");
                         builder.AppendLine("{");
                         foreach (var item in FunctionKeys)
                         {
@@ -212,17 +221,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(SystemKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SystemKeys.Any() || hasPropertyOverride)
+                builder.Append("  systemKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SystemKeys))
                 {
-                    builder.Append("  systemKeys: ");
-                    if (hasPropertyOverride)
+                    if (SystemKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  systemKeys: ");
                         builder.AppendLine("{");
                         foreach (var item in SystemKeys)
                         {

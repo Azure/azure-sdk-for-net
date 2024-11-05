@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<WebAppCookieExpiration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WebAppCookieExpiration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebAppCookieExpiration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Convention))
             {
                 writer.WritePropertyName("convention"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WebAppCookieExpiration IJsonModel<WebAppCookieExpiration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,29 +123,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Convention), out propertyOverride);
-            if (Optional.IsDefined(Convention) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  convention: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Convention))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  convention: ");
                     builder.AppendLine($"'{Convention.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeToExpiration), out propertyOverride);
-            if (Optional.IsDefined(TimeToExpiration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  timeToExpiration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeToExpiration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  timeToExpiration: ");
                     if (TimeToExpiration.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

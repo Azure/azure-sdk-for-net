@@ -28,33 +28,27 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         private ConcurrentDictionary<long, string> _blocks;
 
-        protected override string ResourceId => "BlockBlob";
+        protected override string ResourceId => DataMovementBlobConstants.ResourceId.BlockBlob;
 
         public override Uri Uri => BlobClient.Uri;
 
         public override string ProviderId => "blob";
 
-        /// <summary>
-        /// Defines the recommended Transfer Type of the storage resource.
-        /// </summary>
         protected override DataTransferOrder TransferType => DataTransferOrder.Unordered;
 
-        /// <summary>
-        /// Store Max Initial Size that a Put Blob can get to.
-        /// </summary>
-        internal static long _maxInitialSize => Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
+        protected override long MaxSupportedSingleTransferSize => Constants.Blob.Block.MaxUploadBytes;
 
-        /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
-        /// </summary>
         protected override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
 
-        /// <summary>
-        /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
-        ///
-        /// Will return default if the length was not set by a GetStorageResources API call.
-        /// </summary>
         protected override long? Length => ResourceProperties?.ResourceLength;
+
+        /// <summary>
+        /// For mocking.
+        /// </summary>
+        internal BlockBlobStorageResource()
+        {
+            _blocks = new ConcurrentDictionary<long, string>();
+        }
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
@@ -160,7 +154,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     DataMovementBlobsExtensions.GetBlobUploadOptions(
                         _options,
                         overwrite,
-                        _maxInitialSize,
+                        MaxSupportedSingleTransferSize,  // We don't want any internal partioning
                         options?.SourceProperties),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return;
@@ -354,13 +348,13 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            return new BlobSourceCheckpointData(BlobType.Block);
+            return new BlobSourceCheckpointData();
         }
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
-                blobType: BlobType.Block,
+                blobType: new(BlobType.Block),
                 contentType: _options?.ContentType,
                 contentEncoding: _options?.ContentEncoding,
                 contentLanguage: _options?.ContentLanguage,
@@ -370,5 +364,18 @@ namespace Azure.Storage.DataMovement.Blobs
                 metadata: _options?.Metadata,
                 tags: default);
         }
+
+        // no-op for get permissions
+        protected override Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult((string)default);
+
+        // no-op for set permissions
+        protected override Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
     }
 }

@@ -11,14 +11,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics
     internal class LiveMetricsLogProcessor : BaseProcessor<LogRecord>
     {
         private bool _disposed;
-        private LiveMetricsResource? _resource;
         private readonly Manager _manager;
-
-        internal LiveMetricsResource? LiveMetricsResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
         public LiveMetricsLogProcessor(Manager manager)
         {
             _manager = manager;
+
+            // Resource is not available at sdk initialization and must be read later.
+            manager.LiveMetricsResourceFunc ??= () => ParentProvider?.GetResource().CreateAzureMonitorResource();
         }
 
         public override void OnEnd(LogRecord data)
@@ -29,19 +29,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics
                 return;
             }
 
-            // Resource is not available at initialization and must be set later.
-            if (_manager.LiveMetricsResource == null && LiveMetricsResource != null)
-            {
-                _manager.LiveMetricsResource = LiveMetricsResource;
-            }
-
             if (data.Exception is null)
             {
                 _manager._documentBuffer.AddLogDocument(data);
             }
             else
             {
-                _manager._documentBuffer.AddExceptionDocument(data.Exception);
+                _manager._documentBuffer.AddExceptionDocument(data);
             }
         }
 

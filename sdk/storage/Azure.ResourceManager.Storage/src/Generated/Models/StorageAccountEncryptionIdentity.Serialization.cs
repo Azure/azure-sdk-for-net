@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<StorageAccountEncryptionIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageAccountEncryptionIdentity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(EncryptionUserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StorageAccountEncryptionIdentity IJsonModel<StorageAccountEncryptionIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -112,15 +119,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionUserAssignedIdentity), out propertyOverride);
-            if (Optional.IsDefined(EncryptionUserAssignedIdentity) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  userAssignedIdentity: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionUserAssignedIdentity))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  userAssignedIdentity: ");
                     if (EncryptionUserAssignedIdentity.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +142,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionFederatedIdentityClientId), out propertyOverride);
-            if (Optional.IsDefined(EncryptionFederatedIdentityClientId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  federatedIdentityClientId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionFederatedIdentityClientId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  federatedIdentityClientId: ");
                     if (EncryptionFederatedIdentityClientId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

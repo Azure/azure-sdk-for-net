@@ -9,8 +9,8 @@ azure-arm: true
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/b4506c0467cf68eeb9b0e966a3db1c9bedcd84c7/specification/cosmos-db/resource-manager/readme.md
-#tag: package-preview-2024-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/4d065866a422257746306b352cb34fd5c98d5754/specification/cosmos-db/resource-manager/readme.md
+#tag: package-preview-2024-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,6 +21,7 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
 use-model-reader-writer: true
+use-write-core: true
 enable-bicep-serialization: true
 
 #mgmt-debug:
@@ -357,6 +358,7 @@ prepend-rp-prefix:
 - ProvisioningState
 - Type
 - ConnectionString
+- ChaosFaultResource
 
 models-to-treat-empty-string-as-null:
   - CosmosDBAccountData
@@ -436,6 +438,10 @@ directive:
   transform: >
     $.restoreLocationParameter['x-ms-format'] = 'azure-location';
     $.instanceIdParameter['format'] = 'uuid';
+- from: cosmos-db.json
+  where: $.definitions
+  transform: >
+    $.ErrorResponse['x-ms-client-name'] = 'CosmosDBErrorResult';
 # Managed Cassandra
 - from: managedCassandra.json
   where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommandAsync']
@@ -455,6 +461,12 @@ directive:
   transform: >
     $.CommandPublicResource.properties.cassandraStopStart["x-ms-client-name"] = "shouldStopCassandraBeforeStart";
     $.CommandPublicResource.properties.readWrite["x-ms-client-name"] = "isReadWrite";
+- from: chaosFault.json
+  where: $.definitions
+  transform: >
+    $.chaosFaultProperties.properties.action['x-ms-client-name'] = "CosmosDBChaosFaultSupportedActions";
+    $.chaosFaultProperties.properties.action['x-ms-enum']['name'] = "CosmosDBChaosFaultSupportedActions";
+
 # Below is a workaround for ADO 6196
 - remove-operation:
   - DatabaseAccounts_GetReadOnlyKeys
@@ -655,5 +667,4 @@ directive:
 - rename-model:
     from: SqlRoleDefinitionCreateUpdateParameters
     to: CosmosDBSqlRoleDefinitionCreateUpdateData
-
 ```

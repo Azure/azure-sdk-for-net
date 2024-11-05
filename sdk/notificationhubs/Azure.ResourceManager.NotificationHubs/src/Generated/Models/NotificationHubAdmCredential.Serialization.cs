@@ -19,30 +19,29 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         void IJsonModel<NotificationHubAdmCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubAdmCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationHubAdmCredential)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
-            {
-                writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
-            }
-            if (Optional.IsDefined(ClientSecret))
-            {
-                writer.WritePropertyName("clientSecret"u8);
-                writer.WriteStringValue(ClientSecret);
-            }
-            if (Optional.IsDefined(AuthTokenUri))
-            {
-                writer.WritePropertyName("authTokenUrl"u8);
-                writer.WriteStringValue(AuthTokenUri.AbsoluteUri);
-            }
+            writer.WritePropertyName("clientId"u8);
+            writer.WriteStringValue(ClientId);
+            writer.WritePropertyName("clientSecret"u8);
+            writer.WriteStringValue(ClientSecret);
+            writer.WritePropertyName("authTokenUrl"u8);
+            writer.WriteStringValue(AuthTokenUri.AbsoluteUri);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +58,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NotificationHubAdmCredential IJsonModel<NotificationHubAdmCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -110,10 +108,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         }
                         if (property0.NameEquals("authTokenUrl"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             authTokenUrl = new Uri(property0.Value.GetString());
                             continue;
                         }

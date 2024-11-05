@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<DateAfterModification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DateAfterModification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DateAfterModification)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DaysAfterModificationGreaterThan))
             {
                 writer.WritePropertyName("daysAfterModificationGreaterThan"u8);
@@ -62,7 +70,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DateAfterModification IJsonModel<DateAfterModification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -150,57 +157,61 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterModificationGreaterThan), out propertyOverride);
-            if (Optional.IsDefined(DaysAfterModificationGreaterThan) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  daysAfterModificationGreaterThan: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaysAfterModificationGreaterThan))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  daysAfterModificationGreaterThan: ");
                     builder.AppendLine($"'{DaysAfterModificationGreaterThan.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterLastAccessTimeGreaterThan), out propertyOverride);
-            if (Optional.IsDefined(DaysAfterLastAccessTimeGreaterThan) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  daysAfterLastAccessTimeGreaterThan: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaysAfterLastAccessTimeGreaterThan))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  daysAfterLastAccessTimeGreaterThan: ");
                     builder.AppendLine($"'{DaysAfterLastAccessTimeGreaterThan.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterLastTierChangeGreaterThan), out propertyOverride);
-            if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  daysAfterLastTierChangeGreaterThan: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  daysAfterLastTierChangeGreaterThan: ");
                     builder.AppendLine($"'{DaysAfterLastTierChangeGreaterThan.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterCreationGreaterThan), out propertyOverride);
-            if (Optional.IsDefined(DaysAfterCreationGreaterThan) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  daysAfterCreationGreaterThan: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaysAfterCreationGreaterThan))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  daysAfterCreationGreaterThan: ");
                     builder.AppendLine($"'{DaysAfterCreationGreaterThan.Value.ToString()}'");
                 }
             }

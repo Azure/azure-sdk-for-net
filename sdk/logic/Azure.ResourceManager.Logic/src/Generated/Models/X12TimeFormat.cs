@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(X12TimeFormat left, X12TimeFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="X12TimeFormat"/> values are not the same. </summary>
         public static bool operator !=(X12TimeFormat left, X12TimeFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="X12TimeFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="X12TimeFormat"/>. </summary>
         public static implicit operator X12TimeFormat(string value) => new X12TimeFormat(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

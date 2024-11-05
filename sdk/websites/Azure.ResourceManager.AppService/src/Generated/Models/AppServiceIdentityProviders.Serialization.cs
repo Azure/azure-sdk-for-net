@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<AppServiceIdentityProviders>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceIdentityProviders>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppServiceIdentityProviders)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
@@ -94,7 +102,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppServiceIdentityProviders IJsonModel<AppServiceIdentityProviders>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -247,129 +254,138 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureActiveDirectory), out propertyOverride);
-            if (Optional.IsDefined(AzureActiveDirectory) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  azureActiveDirectory: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureActiveDirectory))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  azureActiveDirectory: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AzureActiveDirectory, options, 2, false, "  azureActiveDirectory: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Facebook), out propertyOverride);
-            if (Optional.IsDefined(Facebook) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  facebook: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Facebook))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  facebook: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Facebook, options, 2, false, "  facebook: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHub), out propertyOverride);
-            if (Optional.IsDefined(GitHub) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  gitHub: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GitHub))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  gitHub: ");
                     BicepSerializationHelpers.AppendChildObject(builder, GitHub, options, 2, false, "  gitHub: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Google), out propertyOverride);
-            if (Optional.IsDefined(Google) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  google: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Google))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  google: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Google, options, 2, false, "  google: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LegacyMicrosoftAccount), out propertyOverride);
-            if (Optional.IsDefined(LegacyMicrosoftAccount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  legacyMicrosoftAccount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LegacyMicrosoftAccount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  legacyMicrosoftAccount: ");
                     BicepSerializationHelpers.AppendChildObject(builder, LegacyMicrosoftAccount, options, 2, false, "  legacyMicrosoftAccount: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Twitter), out propertyOverride);
-            if (Optional.IsDefined(Twitter) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  twitter: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Twitter))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  twitter: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Twitter, options, 2, false, "  twitter: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Apple), out propertyOverride);
-            if (Optional.IsDefined(Apple) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  apple: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Apple))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  apple: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Apple, options, 2, false, "  apple: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureStaticWebApps), out propertyOverride);
-            if (Optional.IsDefined(AzureStaticWebApps) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  azureStaticWebApps: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureStaticWebApps))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  azureStaticWebApps: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AzureStaticWebApps, options, 2, false, "  azureStaticWebApps: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomOpenIdConnectProviders), out propertyOverride);
-            if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (CustomOpenIdConnectProviders.Any() || hasPropertyOverride)
+                builder.Append("  customOpenIdConnectProviders: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
                 {
-                    builder.Append("  customOpenIdConnectProviders: ");
-                    if (hasPropertyOverride)
+                    if (CustomOpenIdConnectProviders.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  customOpenIdConnectProviders: ");
                         builder.AppendLine("{");
                         foreach (var item in CustomOpenIdConnectProviders)
                         {

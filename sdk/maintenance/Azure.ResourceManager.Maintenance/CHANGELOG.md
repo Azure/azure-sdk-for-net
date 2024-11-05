@@ -1,16 +1,28 @@
 # Release History
 
-## 1.2.0-beta.8 (Unreleased)
+## 1.2.0-beta.9 (Unreleased)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.8 (2024-04-28)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2023-09' to 'package-preview-2023-10'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/741b0c8c71d90525a92bc4f2e45cb189c3affccd/specification/maintenance/resource-manager/readme.md.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.39.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.11.1
 
 ## 1.2.0-beta.7 (2023-12-08)
 

@@ -52,8 +52,16 @@ namespace Azure.ResourceManager.Support
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationData"/>. </summary>
-        public SupportTicketCommunicationData()
+        /// <param name="subject"> Subject of the communication. </param>
+        /// <param name="body"> Body of the communication. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subject"/> or <paramref name="body"/> is null. </exception>
+        public SupportTicketCommunicationData(string subject, string body)
         {
+            Argument.AssertNotNull(subject, nameof(subject));
+            Argument.AssertNotNull(body, nameof(body));
+
+            Subject = subject;
+            Body = body;
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationData"/>. </summary>
@@ -77,6 +85,11 @@ namespace Azure.ResourceManager.Support
             Body = body;
             CreatedOn = createdOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationData"/> for deserialization. </summary>
+        internal SupportTicketCommunicationData()
+        {
         }
 
         /// <summary> Communication type. </summary>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         public virtual Azure.NullableResponse<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementResource> GetIfExists(string publisherId, string offerId, string planId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementResource>> GetIfExistsAsync(string publisherId, string offerId, string planId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MarketplaceAgreementResource : Azure.ResourceManager.ArmResource
+    public partial class MarketplaceAgreementResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MarketplaceAgreementResource() { }
@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementResource> Sign(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementResource>> SignAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MarketplaceAgreementTermCollection : Azure.ResourceManager.ArmCollection
     {
@@ -50,13 +55,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         public string Publisher { get { throw null; } set { } }
         public System.DateTimeOffset? RetrievedOn { get { throw null; } set { } }
         public string Signature { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MarketplaceAgreementTermResource : Azure.ResourceManager.ArmResource
+    public partial class MarketplaceAgreementTermResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MarketplaceAgreementTermResource() { }
@@ -65,6 +71,11 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.ResourceManager.MarketplaceOrdering.Models.AgreementOfferType offerType, string publisherId, string offerId, string planId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

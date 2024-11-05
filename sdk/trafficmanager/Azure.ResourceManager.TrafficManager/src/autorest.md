@@ -16,6 +16,7 @@ sample-gen:
   clear-output-folder: true
 skip-csproj: true
 use-model-reader-writer: true
+use-write-core: true
 
 rename-mapping:
   CheckTrafficManagerRelativeDnsNameAvailabilityParameters: TrafficManagerRelativeDnsNameAvailabilityContent
@@ -83,7 +84,7 @@ acronym-mapping:
 
 override-operation-name:
   Profiles_CheckTrafficManagerRelativeDnsNameAvailability: CheckTrafficManagerRelativeDnsNameAvailability
-  Profiles_checkTrafficManagerNameAvailabilityV2: CheckTrafficManagerNameAvailabilityV2
+  Profiles_CheckTrafficManagerNameAvailabilityV2: CheckTrafficManagerNameAvailabilityV2
 
 directive:
   - from: trafficmanager.json

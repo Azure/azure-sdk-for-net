@@ -1,0 +1,101 @@
+# Generated code configuration
+
+Run `dotnet build /t:GenerateCode` to generate code.
+
+``` yaml
+azure-arm: true
+csharp: true
+library-name: DevOpsInfrastructure
+namespace: Azure.ResourceManager.DevOpsInfrastructure
+require: https://github.com/Azure/azure-rest-api-specs/blob/ae950a4d68bd5bae23f85a8d575a213e9b0442d3/specification/devopsinfrastructure/resource-manager/readme.md
+#tag: package-preview-2024-04
+output-folder: $(this-folder)/Generated
+clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+use-model-reader-writer: true
+enable-bicep-serialization: true
+
+#mgmt-debug:
+#  show-serialized-names: true
+
+rename-mapping:
+  ImageVersion: DevOpsImageVersion
+  Organization.url: OrganizationUri
+  GitHubOrganization.url: OrganizationUri
+  StorageAccountType: DevOpsStorageAccountType
+  StorageAccountType.Standard_LRS: StandardLrs
+  StorageAccountType.Premium_LRS: PremiumLrs
+  StorageAccountType.StandardSSD_LRS: StandardSsdLrs
+  StorageAccountType.Premium_ZRS: PremiumZrs
+  StorageAccountType.StandardSSD_ZRS: StandardSsdZrs
+  OsDiskStorageAccountType.StandardSSD: StandardSsd
+  Pool: DevOpsPool
+  PoolProperties: DevOpsPoolProperties
+  AgentProfile: DevOpsPoolAgentProfile
+  AzureDevOpsOrganizationProfile: DevOpsAzureOrganizationProfile
+  AzureDevOpsPermissionProfile: DevOpsAzurePermissionProfile
+  AzureDevOpsPermissionType: DevOpsAzurePermissionType
+  CachingType: DevOpsDataDiskCachingType
+  DataDisk: DevOpsDataDisk
+  FabricProfile: DevOpsFabricProfile
+  GitHubOrganization: DevOpsGitHubOrganization
+  GitHubOrganizationProfile: DevOpsGitHubOrganizationProfile
+  LogonType: DevOpsLogonType
+  NetworkProfile: DevOpsNetworkProfile
+  Organization: DevOpsOrganization
+  OrganizationProfile: DevOpsOrganizationProfile
+  OsProfile: DevOpsOSProfile
+  PoolImage: DevOpsPoolVmImage
+  ProvisioningState: DevOpsInfrastructureProvisioningState
+  Quota: DevOpsResourceQuota
+  QuotaName: DevOpsResourceQuotaName
+  ResourceDetailsObject: DevOpsResourceDetails
+  ResourceDetailsObjectProperties: DevOpsResourceDetailsProperties
+  ResourceStatus: DevOpsResourceStatus
+  ResourceSku: DevOpsResourceSku
+  ResourceSkuProperties: DevOpsResourceSkuProperties
+  Stateful: DevOpsStateful
+  StatelessAgentProfile: DevOpsStatelessAgentProfile
+  StorageProfile: DevOpsStorageProfile
+  VmssFabricProfile: DevOpsVmssFabricProfile
+
+override-operation-name:
+  SubscriptionUsages_Usages: GetUsages
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'ETag': 'etag'
+  'location': 'azure-location'
+  'locations': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+acronym-mapping:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs|ips
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
+  SSO: Sso
+  URI: Uri
+  Etag: ETag|etag
+
+```

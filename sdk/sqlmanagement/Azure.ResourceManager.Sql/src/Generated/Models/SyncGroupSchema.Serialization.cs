@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Sql.Models
 
         void IJsonModel<SyncGroupSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SyncGroupSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.Sql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SyncGroupSchema IJsonModel<SyncGroupSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,17 +134,18 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tables), out propertyOverride);
-            if (Optional.IsCollectionDefined(Tables) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Tables.Any() || hasPropertyOverride)
+                builder.Append("  tables: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tables))
                 {
-                    builder.Append("  tables: ");
-                    if (hasPropertyOverride)
+                    if (Tables.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  tables: ");
                         builder.AppendLine("[");
                         foreach (var item in Tables)
                         {
@@ -149,15 +157,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MasterSyncMemberName), out propertyOverride);
-            if (Optional.IsDefined(MasterSyncMemberName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  masterSyncMemberName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MasterSyncMemberName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  masterSyncMemberName: ");
                     if (MasterSyncMemberName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

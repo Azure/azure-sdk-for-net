@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VolumeGroupsGetOracle()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/VolumeGroups_Get_Oracle.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeGroups_Get_Oracle.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_VolumeGroupsGetOracle()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/VolumeGroups_Get_Oracle.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeGroups_Get_Oracle.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_VolumeGroupsGetOracle()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/VolumeGroups_Get_Oracle.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeGroups_Get_Oracle.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VolumeGroupsGetSapHana()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/VolumeGroups_Get_SapHana.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeGroups_Get_SapHana.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_VolumeGroupsGetSapHana()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/VolumeGroups_Get_SapHana.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeGroups_Get_SapHana.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_VolumeGroupsGetSapHana()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/VolumeGroups_Get_SapHana.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeGroups_Get_SapHana.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_VolumeGroupsCreateOracle()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/VolumeGroups_Create_Oracle.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeGroups_Create_Oracle.json
             // this example is just showing the usage of "VolumeGroups_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.NetApp.Samples
                 },
                 Volumes =
 {
-new NetAppVolumeGroupVolume("test-ora-data1",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+new NetAppVolumeGroupVolume("test-ora-data1",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data1",
 Zones =
@@ -305,7 +305,7 @@ ProtocolTypes =
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data1",
-},new NetAppVolumeGroupVolume("test-ora-data2",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-ora-data2",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data2",
 Zones =
@@ -340,7 +340,7 @@ ProtocolTypes =
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data2",
-},new NetAppVolumeGroupVolume("test-ora-data3",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-ora-data3",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data3",
 Zones =
@@ -375,7 +375,7 @@ ProtocolTypes =
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data3",
-},new NetAppVolumeGroupVolume("test-ora-data4",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-ora-data4",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data4",
 Zones =
@@ -410,7 +410,7 @@ ProtocolTypes =
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data4",
-},new NetAppVolumeGroupVolume("test-ora-data5",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-ora-data5",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data5",
 Zones =
@@ -445,7 +445,7 @@ ProtocolTypes =
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data5",
-},new NetAppVolumeGroupVolume("test-ora-data6",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-ora-data6",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data6",
 Zones =
@@ -480,7 +480,7 @@ ProtocolTypes =
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data6",
-},new NetAppVolumeGroupVolume("test-ora-data7",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-ora-data7",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data7",
 Zones =
@@ -515,7 +515,7 @@ ProtocolTypes =
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data7",
-},new NetAppVolumeGroupVolume("test-ora-data8",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-ora-data8",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data8",
 Zones =
@@ -550,7 +550,7 @@ ProtocolTypes =
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data8",
-},new NetAppVolumeGroupVolume("test-ora-log",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-ora-log",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-log",
 Zones =
@@ -585,7 +585,7 @@ ProtocolTypes =
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-log",
-},new NetAppVolumeGroupVolume("test-ora-log-mirror",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-ora-log-mirror",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-log-mirror",
 Zones =
@@ -620,7 +620,7 @@ ProtocolTypes =
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-log-mirror",
-},new NetAppVolumeGroupVolume("test-ora-binary",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-ora-binary",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-binary",
 Zones =
@@ -655,7 +655,7 @@ ProtocolTypes =
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-binary",
-},new NetAppVolumeGroupVolume("test-ora-backup",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-ora-backup",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-backup",
 Zones =
@@ -708,7 +708,7 @@ VolumeSpecName = "ora-backup",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_VolumeGroupsCreateSapHana()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/VolumeGroups_Create_SapHana.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeGroups_Create_SapHana.json
             // this example is just showing the usage of "VolumeGroups_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -740,7 +740,7 @@ VolumeSpecName = "ora-backup",
                 },
                 Volumes =
 {
-new NetAppVolumeGroupVolume("test-data-mnt00001",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+new NetAppVolumeGroupVolume("test-data-mnt00001",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-data-mnt00001",
 ServiceLevel = NetAppFileServiceLevel.Premium,
@@ -772,7 +772,7 @@ ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/cys_sjain_fcp_rg/providers/Microsoft.Compute/proximityPlacementGroups/svlqa_sjain_multivolume_ppg"),
 VolumeSpecName = "data",
-},new NetAppVolumeGroupVolume("test-log-mnt00001",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-log-mnt00001",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-log-mnt00001",
 ServiceLevel = NetAppFileServiceLevel.Premium,
@@ -804,7 +804,7 @@ ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/cys_sjain_fcp_rg/providers/Microsoft.Compute/proximityPlacementGroups/svlqa_sjain_multivolume_ppg"),
 VolumeSpecName = "log",
-},new NetAppVolumeGroupVolume("test-shared",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-shared",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-shared",
 ServiceLevel = NetAppFileServiceLevel.Premium,
@@ -836,7 +836,7 @@ ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/cys_sjain_fcp_rg/providers/Microsoft.Compute/proximityPlacementGroups/svlqa_sjain_multivolume_ppg"),
 VolumeSpecName = "shared",
-},new NetAppVolumeGroupVolume("test-data-backup",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-data-backup",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-data-backup",
 ServiceLevel = NetAppFileServiceLevel.Premium,
@@ -868,7 +868,7 @@ ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/cys_sjain_fcp_rg/providers/Microsoft.Compute/proximityPlacementGroups/svlqa_sjain_multivolume_ppg"),
 VolumeSpecName = "data-backup",
-},new NetAppVolumeGroupVolume("test-log-backup",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-log-backup",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-log-backup",
 ServiceLevel = NetAppFileServiceLevel.Premium,

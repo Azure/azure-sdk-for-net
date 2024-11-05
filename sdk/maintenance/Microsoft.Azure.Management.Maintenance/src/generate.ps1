@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "maintenance/resource-manager" -AutoRestCodeGenerationFlags " --override-client-name=MaintenanceManagementClient --title=MaintenanceManagementClient --csharp.output-folder='`$(csharp-sdks-folder)/maintenance/Microsoft.Azure.Management.Maintenance/src/Generated/'" -AutoRestVersion "v2" 

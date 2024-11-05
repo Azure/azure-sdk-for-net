@@ -19,19 +19,27 @@ namespace Azure.ResourceManager.Monitor.Models
 
         void IJsonModel<MonitorScaleCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorScaleCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MonitorScaleCapacity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("minimum"u8);
-            WriteMinimum(writer);
+            WriteMinimum(writer, options);
             writer.WritePropertyName("maximum"u8);
-            WriteMaximum(writer);
+            WriteMaximum(writer, options);
             writer.WritePropertyName("default"u8);
-            WriteDefault(writer);
+            WriteDefault(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.Monitor.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MonitorScaleCapacity IJsonModel<MonitorScaleCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

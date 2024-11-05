@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Search.Models
 
         void IJsonModel<SearchEncryptionWithCmk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SearchEncryptionWithCmk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchEncryptionWithCmk)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Enforcement))
             {
                 writer.WritePropertyName("enforcement"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.Search.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SearchEncryptionWithCmk IJsonModel<SearchEncryptionWithCmk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -120,29 +127,31 @@ namespace Azure.ResourceManager.Search.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enforcement), out propertyOverride);
-            if (Optional.IsDefined(Enforcement) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enforcement: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Enforcement))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enforcement: ");
                     builder.AppendLine($"'{Enforcement.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionComplianceStatus), out propertyOverride);
-            if (Optional.IsDefined(EncryptionComplianceStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  encryptionComplianceStatus: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionComplianceStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  encryptionComplianceStatus: ");
                     builder.AppendLine($"'{EncryptionComplianceStatus.Value.ToSerialString()}'");
                 }
             }

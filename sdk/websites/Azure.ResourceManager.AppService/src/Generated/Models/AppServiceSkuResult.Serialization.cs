@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<AppServiceSkuResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceSkuResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppServiceSkuResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppServiceSkuResult IJsonModel<AppServiceSkuResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -131,31 +138,33 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
-            if (Optional.IsDefined(ResourceType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resourceType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resourceType: ");
                     builder.AppendLine($"'{ResourceType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Skus), out propertyOverride);
-            if (Optional.IsCollectionDefined(Skus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Skus.Any() || hasPropertyOverride)
+                builder.Append("  skus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Skus))
                 {
-                    builder.Append("  skus: ");
-                    if (hasPropertyOverride)
+                    if (Skus.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  skus: ");
                         builder.AppendLine("[");
                         foreach (var item in Skus)
                         {

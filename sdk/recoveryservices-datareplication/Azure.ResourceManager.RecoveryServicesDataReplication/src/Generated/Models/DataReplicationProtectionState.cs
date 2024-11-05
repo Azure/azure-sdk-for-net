@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static bool operator ==(DataReplicationProtectionState left, DataReplicationProtectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataReplicationProtectionState"/> values are not the same. </summary>
         public static bool operator !=(DataReplicationProtectionState left, DataReplicationProtectionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataReplicationProtectionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReplicationProtectionState"/>. </summary>
         public static implicit operator DataReplicationProtectionState(string value) => new DataReplicationProtectionState(value);
 
         /// <inheritdoc />
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

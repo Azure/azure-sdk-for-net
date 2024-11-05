@@ -1,14 +1,23 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0-beta.4 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version tag from 'package-preview-2024-03' to 'package-preview-2024-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c3cc9abe085093ba880ee3eeb792edb4fa789553/specification/search/resource-manager/readme.md
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.3.0-beta.3 (2024-05-16)
 
 ### Bugs Fixed
 
-### Other Changes
+- Correct casing of SkuName when using the ArmSearchModelFactory.
+
+## 1.3.0-beta.2 (2024-04-29)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ## 1.3.0-beta.1 (2024-04-17)
 

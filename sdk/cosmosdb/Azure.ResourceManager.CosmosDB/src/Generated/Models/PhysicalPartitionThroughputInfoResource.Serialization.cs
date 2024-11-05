@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<PhysicalPartitionThroughputInfoResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PhysicalPartitionThroughputInfoResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PhysicalPartitionThroughputInfoResource)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             if (Optional.IsDefined(Throughput))
@@ -49,7 +57,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PhysicalPartitionThroughputInfoResource IJsonModel<PhysicalPartitionThroughputInfoResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -113,15 +120,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     if (Id.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -135,15 +143,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Throughput), out propertyOverride);
-            if (Optional.IsDefined(Throughput) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  throughput: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Throughput))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  throughput: ");
                     builder.AppendLine($"'{Throughput.Value.ToString()}'");
                 }
             }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static bool operator ==(IsCustomizable left, IsCustomizable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IsCustomizable"/> values are not the same. </summary>
         public static bool operator !=(IsCustomizable left, IsCustomizable right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IsCustomizable"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IsCustomizable"/>. </summary>
         public static implicit operator IsCustomizable(string value) => new IsCustomizable(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

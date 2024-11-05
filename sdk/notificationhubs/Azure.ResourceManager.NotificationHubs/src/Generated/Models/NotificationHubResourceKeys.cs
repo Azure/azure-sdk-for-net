@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Namespace/NotificationHub Connection String. </summary>
+    /// <summary> Response for the POST request that returns Namespace or NotificationHub access keys (connection strings). </summary>
     public partial class NotificationHubResourceKeys
     {
         /// <summary>
@@ -51,11 +51,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubResourceKeys"/>. </summary>
-        /// <param name="primaryConnectionString"> PrimaryConnectionString of the AuthorizationRule. </param>
-        /// <param name="secondaryConnectionString"> SecondaryConnectionString of the created AuthorizationRule. </param>
-        /// <param name="primaryKey"> PrimaryKey of the created AuthorizationRule. </param>
-        /// <param name="secondaryKey"> SecondaryKey of the created AuthorizationRule. </param>
-        /// <param name="keyName"> KeyName of the created AuthorizationRule. </param>
+        /// <param name="primaryConnectionString"> Gets or sets primaryConnectionString of the AuthorizationRule. </param>
+        /// <param name="secondaryConnectionString">
+        /// Gets or sets secondaryConnectionString of the created
+        /// AuthorizationRule
+        /// </param>
+        /// <param name="primaryKey"> Gets or sets primaryKey of the created AuthorizationRule. </param>
+        /// <param name="secondaryKey"> Gets or sets secondaryKey of the created AuthorizationRule. </param>
+        /// <param name="keyName"> Gets or sets keyName of the created AuthorizationRule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NotificationHubResourceKeys(string primaryConnectionString, string secondaryConnectionString, string primaryKey, string secondaryKey, string keyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,15 +70,18 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> PrimaryConnectionString of the AuthorizationRule. </summary>
+        /// <summary> Gets or sets primaryConnectionString of the AuthorizationRule. </summary>
         public string PrimaryConnectionString { get; }
-        /// <summary> SecondaryConnectionString of the created AuthorizationRule. </summary>
+        /// <summary>
+        /// Gets or sets secondaryConnectionString of the created
+        /// AuthorizationRule
+        /// </summary>
         public string SecondaryConnectionString { get; }
-        /// <summary> PrimaryKey of the created AuthorizationRule. </summary>
+        /// <summary> Gets or sets primaryKey of the created AuthorizationRule. </summary>
         public string PrimaryKey { get; }
-        /// <summary> SecondaryKey of the created AuthorizationRule. </summary>
+        /// <summary> Gets or sets secondaryKey of the created AuthorizationRule. </summary>
         public string SecondaryKey { get; }
-        /// <summary> KeyName of the created AuthorizationRule. </summary>
+        /// <summary> Gets or sets keyName of the created AuthorizationRule. </summary>
         public string KeyName { get; }
     }
 }

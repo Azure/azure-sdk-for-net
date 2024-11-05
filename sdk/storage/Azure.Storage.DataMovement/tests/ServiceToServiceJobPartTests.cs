@@ -24,43 +24,35 @@ namespace Azure.Storage.DataMovement.Tests
         private const string DefaultContentLanguage = "en-US";
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
+        private const string DefaultSourcePermissionKey = "anlfdjsgkljWLJITflo'fu903w8ueng";
         public ServiceToServiceJobPartTests() { }
-
-        private Mock<TransferJobInternal.QueueChunkTaskInternal> GetQueueChunkTask()
-        {
-            var mock = new Mock<TransferJobInternal.QueueChunkTaskInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsAny<Func<Task>>()))
-                .Returns(Task.CompletedTask);
-            return mock;
-        }
 
         private Mock<JobPartInternal.QueueChunkDelegate> GetPartQueueChunkTask()
         {
             var mock = new Mock<JobPartInternal.QueueChunkDelegate>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsAny<Func<Task>>()))
-                .Callback<Func<Task>>(
-                async(funcTask) =>
+            mock.Setup(del => del(It.IsAny<Func<Task>>(), It.IsAny<CancellationToken>()))
+                .Callback<Func<Task>, CancellationToken>(
+                async(funcTask, _) =>
                 {
                     await funcTask().ConfigureAwait(false);
                 })
-                .Returns(Task.CompletedTask);
+                .Returns(new ValueTask(Task.CompletedTask));
             return mock;
         }
 
         private StorageResourceItemProperties GetResourceProperties(int length)
         {
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
-                { "ContentType", DefaultContentType },
-                { "ContentEncoding", DefaultContentEncoding },
-                { "ContentLanguage", DefaultContentLanguage },
-                { "ContentDisposition", DefaultContentDisposition },
-                { "CacheControl", DefaultCacheControl },
-                { "Metadata", metadata },
-                { "Tags", tags }
+                { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
+                { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
+                { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
+                { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
+                { DataMovementConstants.ResourceProperties.Metadata, metadata },
+                { DataMovementConstants.ResourceProperties.SourceFilePermissionKey, DefaultSourcePermissionKey }
             };
             return new(
                     resourceLength: length,
@@ -130,13 +122,19 @@ namespace Azure.Storage.DataMovement.Tests
             // Set up source with properties
             Mock<StorageResourceItem> mockSource = GetStorageResourceItem(length);
             StorageResourceItemProperties properties = GetResourceProperties(length);
+            HttpAuthorization httpAuthorization = new("BearerScheme", "authtoken");
             mockSource.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(properties));
+            mockSource.Setup(r => r.GetCopyAuthorizationHeaderAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(httpAuthorization));
 
             // Set up Destination to copy in one shot with a large chunk size and smaller total length.
             Mock<StorageResourceItem> mockDestination = GetStorageResourceItem();
+            mockDestination.Setup(r => r.SetPermissionsAsync(It.IsAny<StorageResourceItem>(), It.IsAny<StorageResourceItemProperties>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
             mockDestination.Setup(resource => resource.CopyFromUriAsync(It.IsAny<StorageResourceItem>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<StorageResourceCopyFromUriOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
+            mockDestination.Setup(r => r.MaxSupportedSingleTransferSize).Returns(Constants.MB);
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(Constants.MB);
 
             // Set up default checkpointer with transfer job
@@ -146,24 +144,22 @@ namespace Azure.Storage.DataMovement.Tests
                 source: mockSource.Object,
                 destination: mockDestination.Object);
 
-            Mock<TransferJobInternal.QueueChunkTaskInternal> mockQueueChunkTask = GetQueueChunkTask();
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = GetPartQueueChunkTask();
 
-            ServiceToServiceTransferJob job = new(
-                new DataTransfer(
-                    id: transferId,
-                    transferManager: new TransferManager()),
+            TransferJobInternal job = new(
+                new DataTransfer(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
+                ServiceToServiceJobPart.CreateJobPartAsync,
+                ServiceToServiceJobPart.CreateJobPartAsync,
                 new DataTransferOptions(),
-                mockQueueChunkTask.Object,
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job,
-                1);
+                1) as ServiceToServiceJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             // Act
@@ -172,12 +168,19 @@ namespace Azure.Storage.DataMovement.Tests
             // Verify
             VerifyInvocation(
                 mockDestination,
+                resource => resource.SetPermissionsAsync(
+                    mockSource.Object,
+                    properties,
+                    It.IsAny<CancellationToken>()));
+            VerifyInvocation(
+                mockDestination,
                 resource => resource.CopyFromUriAsync(
                     mockSource.Object,
                     It.IsAny<bool>(),
                     length,
-                    It.Is<StorageResourceCopyFromUriOptions>( options =>
-                        options.SourceProperties.Equals(properties)),
+                    It.Is<StorageResourceCopyFromUriOptions>(options =>
+                        options.SourceProperties.Equals(properties) &&
+                        options.SourceAuthentication.Equals(httpAuthorization)),
                     It.IsAny<CancellationToken>()));
         }
 
@@ -201,6 +204,7 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns(Task.CompletedTask);
             mockDestination.Setup(resource => resource.CompleteTransferAsync(It.IsAny<bool>(), It.IsAny<StorageResourceCompleteTransferOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
+            mockDestination.Setup(r => r.MaxSupportedSingleTransferSize).Returns(length - 1);
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(chunkSize);
 
             // Set up default checkpointer with transfer job
@@ -210,28 +214,32 @@ namespace Azure.Storage.DataMovement.Tests
                 source: mockSource.Object,
                 destination: mockDestination.Object);
 
-            Mock<TransferJobInternal.QueueChunkTaskInternal> mockQueueChunkTask = GetQueueChunkTask();
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = GetPartQueueChunkTask();
 
-            ServiceToServiceTransferJob job = new(
-                new DataTransfer(
-                    id: transferId,
-                    transferManager: new TransferManager()),
+            TransferJobInternal job = new(
+                new DataTransfer(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
+                ServiceToServiceJobPart.CreateJobPartAsync,
+                ServiceToServiceJobPart.CreateJobPartAsync,
                 new DataTransferOptions(),
-                mockQueueChunkTask.Object,
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job,
-                1);
+                1) as ServiceToServiceJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             await jobPart.ProcessPartToChunkAsync();
 
+            VerifyInvocation(
+                mockDestination,
+                resource => resource.SetPermissionsAsync(
+                    mockSource.Object,
+                    properties,
+                    It.IsAny<CancellationToken>()));
             VerifyInvocation(
                 mockDestination,
                 resource => resource.CopyBlockFromUriAsync(

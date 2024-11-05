@@ -17,7 +17,7 @@ steps:
     inputs:
       useGlobalJson: true
       performMultiLevelLookup: true
-  - task: UseDotNet@2
+  - task: UseDotNet@2 # We need .NET 6 for azure-sdk-tools and the .NET 6 tests
     condition: and(succeeded(), ne(variables['Agent.OS'], 'Windows_NT')) # Windows supports MultiLevelLookup and doesn't need explicit framework installation
     displayName: 'Use .NET 6.0 SDK'
     retryCountOnTaskFailure: 3

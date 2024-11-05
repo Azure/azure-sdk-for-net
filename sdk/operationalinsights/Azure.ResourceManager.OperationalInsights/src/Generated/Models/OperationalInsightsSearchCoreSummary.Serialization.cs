@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         void IJsonModel<OperationalInsightsSearchCoreSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSearchCoreSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OperationalInsightsSearchCoreSummary)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -49,7 +57,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         OperationalInsightsSearchCoreSummary IJsonModel<OperationalInsightsSearchCoreSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -109,15 +116,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     if (Status.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -131,13 +139,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfDocuments), out propertyOverride);
-            builder.Append("  numberOfDocuments: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  numberOfDocuments: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  numberOfDocuments: ");
                 builder.AppendLine($"'{NumberOfDocuments.ToString()}'");
             }
 

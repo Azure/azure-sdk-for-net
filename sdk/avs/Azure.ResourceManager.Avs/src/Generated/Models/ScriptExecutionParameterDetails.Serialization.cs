@@ -19,17 +19,25 @@ namespace Azure.ResourceManager.Avs.Models
 
         void IJsonModel<ScriptExecutionParameterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ParameterType.ToString());
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -45,7 +53,6 @@ namespace Azure.ResourceManager.Avs.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ScriptExecutionParameterDetails IJsonModel<ScriptExecutionParameterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -51,7 +51,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static bool operator ==(ClinicalDocumentType left, ClinicalDocumentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClinicalDocumentType"/> values are not the same. </summary>
         public static bool operator !=(ClinicalDocumentType left, ClinicalDocumentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClinicalDocumentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClinicalDocumentType"/>. </summary>
         public static implicit operator ClinicalDocumentType(string value) => new ClinicalDocumentType(value);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

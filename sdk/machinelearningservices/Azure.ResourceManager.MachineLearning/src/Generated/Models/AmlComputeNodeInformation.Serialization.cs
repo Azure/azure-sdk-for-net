@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,13 +21,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<AmlComputeNodeInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodeInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(NodeId))
             {
                 writer.WritePropertyName("nodeId"u8);
@@ -93,7 +102,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AmlComputeNodeInformation IJsonModel<AmlComputeNodeInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -195,6 +203,127 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nodeId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NodeId))
+                {
+                    builder.Append("  nodeId: ");
+                    if (NodeId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NodeId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NodeId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateIPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  privateIpAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateIPAddress))
+                {
+                    builder.Append("  privateIpAddress: ");
+                    builder.AppendLine($"'{PrivateIPAddress.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicIPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  publicIpAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicIPAddress))
+                {
+                    builder.Append("  publicIpAddress: ");
+                    builder.AppendLine($"'{PublicIPAddress.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  port: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Port))
+                {
+                    builder.Append("  port: ");
+                    builder.AppendLine($"{Port.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nodeState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NodeState))
+                {
+                    builder.Append("  nodeState: ");
+                    builder.AppendLine($"'{NodeState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RunId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  runId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RunId))
+                {
+                    builder.Append("  runId: ");
+                    if (RunId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RunId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RunId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AmlComputeNodeInformation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodeInformation>)this).GetFormatFromOptions(options) : options.Format;
@@ -203,6 +332,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support writing '{options.Format}' format.");
             }

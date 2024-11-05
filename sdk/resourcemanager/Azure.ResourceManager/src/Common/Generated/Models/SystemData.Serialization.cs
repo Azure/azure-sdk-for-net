@@ -22,13 +22,21 @@ namespace Azure.ResourceManager.Models
 
         void IJsonModel<SystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SystemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SystemData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
@@ -59,7 +67,6 @@ namespace Azure.ResourceManager.Models
                 writer.WritePropertyName("lastModifiedAt"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            writer.WriteEndObject();
         }
 
         SystemData IJsonModel<SystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -158,15 +165,16 @@ namespace Azure.ResourceManager.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedBy), out propertyOverride);
-            if (Optional.IsDefined(CreatedBy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  createdBy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedBy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  createdBy: ");
                     if (CreatedBy.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -180,44 +188,47 @@ namespace Azure.ResourceManager.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedByType), out propertyOverride);
-            if (Optional.IsDefined(CreatedByType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  createdByType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedByType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  createdByType: ");
                     builder.AppendLine($"'{CreatedByType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
-            if (Optional.IsDefined(CreatedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  createdAt: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  createdAt: ");
                     var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedBy), out propertyOverride);
-            if (Optional.IsDefined(LastModifiedBy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastModifiedBy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastModifiedBy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastModifiedBy: ");
                     if (LastModifiedBy.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -231,29 +242,31 @@ namespace Azure.ResourceManager.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedByType), out propertyOverride);
-            if (Optional.IsDefined(LastModifiedByType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastModifiedByType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastModifiedByType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastModifiedByType: ");
                     builder.AppendLine($"'{LastModifiedByType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedOn), out propertyOverride);
-            if (Optional.IsDefined(LastModifiedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastModifiedAt: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastModifiedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastModifiedAt: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

@@ -22,13 +22,21 @@ namespace Azure.ResourceManager.Resources
 
         void IJsonModel<ResourceProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceProviderData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -79,7 +87,6 @@ namespace Azure.ResourceManager.Resources
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ResourceProviderData IJsonModel<ResourceProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -187,29 +194,31 @@ namespace Azure.ResourceManager.Resources
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Namespace), out propertyOverride);
-            if (Optional.IsDefined(Namespace) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  namespace: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Namespace))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  namespace: ");
                     if (Namespace.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -223,15 +232,16 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistrationState), out propertyOverride);
-            if (Optional.IsDefined(RegistrationState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  registrationState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegistrationState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  registrationState: ");
                     if (RegistrationState.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -245,15 +255,16 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistrationPolicy), out propertyOverride);
-            if (Optional.IsDefined(RegistrationPolicy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  registrationPolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegistrationPolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  registrationPolicy: ");
                     if (RegistrationPolicy.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -267,17 +278,18 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceTypes), out propertyOverride);
-            if (Optional.IsCollectionDefined(ResourceTypes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ResourceTypes.Any() || hasPropertyOverride)
+                builder.Append("  resourceTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ResourceTypes))
                 {
-                    builder.Append("  resourceTypes: ");
-                    if (hasPropertyOverride)
+                    if (ResourceTypes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  resourceTypes: ");
                         builder.AppendLine("[");
                         foreach (var item in ResourceTypes)
                         {
@@ -289,15 +301,16 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderAuthorizationConsentState), out propertyOverride);
-            if (Optional.IsDefined(ProviderAuthorizationConsentState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  providerAuthorizationConsentState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProviderAuthorizationConsentState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  providerAuthorizationConsentState: ");
                     builder.AppendLine($"'{ProviderAuthorizationConsentState.Value.ToString()}'");
                 }
             }

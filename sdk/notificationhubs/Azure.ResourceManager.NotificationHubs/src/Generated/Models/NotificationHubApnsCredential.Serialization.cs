@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         void IJsonModel<NotificationHubApnsCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubApnsCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationHubApnsCredential)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ApnsCertificate))
@@ -38,11 +46,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
-            if (Optional.IsDefined(Endpoint))
-            {
-                writer.WritePropertyName("endpoint"u8);
-                writer.WriteStringValue(Endpoint.AbsoluteUri);
-            }
+            writer.WritePropertyName("endpoint"u8);
+            writer.WriteStringValue(Endpoint.AbsoluteUri);
             if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
@@ -84,7 +89,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NotificationHubApnsCredential IJsonModel<NotificationHubApnsCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -140,10 +144,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         }
                         if (property0.NameEquals("endpoint"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             endpoint = new Uri(property0.Value.GetString());
                             continue;
                         }

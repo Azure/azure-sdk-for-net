@@ -31,13 +31,14 @@ namespace Azure.ResourceManager.PolicyInsights
         public Azure.Core.ResourceIdentifier PolicyAssignmentId { get { throw null; } set { } }
         public string PolicyDefinitionReferenceId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.PolicyAttestationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyAttestationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyAttestationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.PolicyAttestationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyAttestationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyAttestationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyAttestationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PolicyAttestationResource : Azure.ResourceManager.ArmResource
+    public partial class PolicyAttestationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyAttestationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyAttestationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PolicyAttestationResource() { }
@@ -48,6 +49,11 @@ namespace Azure.ResourceManager.PolicyInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PolicyInsights.PolicyAttestationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.PolicyAttestationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PolicyInsights.PolicyAttestationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyAttestationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyAttestationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PolicyInsights.PolicyAttestationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyAttestationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyAttestationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyAttestationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PolicyInsights.PolicyAttestationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PolicyInsights.PolicyAttestationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PolicyInsights.PolicyAttestationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PolicyInsights.PolicyAttestationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -152,13 +158,14 @@ namespace Azure.ResourceManager.PolicyInsights
         public string Owner { get { throw null; } }
         public string Requirements { get { throw null; } }
         public string Title { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.PolicyMetadataData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.PolicyMetadataData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PolicyMetadataResource : Azure.ResourceManager.ArmResource
+    public partial class PolicyMetadataResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PolicyMetadataResource() { }
@@ -167,6 +174,11 @@ namespace Azure.ResourceManager.PolicyInsights
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PolicyInsights.PolicyMetadataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.PolicyMetadataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PolicyInsights.PolicyMetadataData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PolicyInsights.PolicyMetadataData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PolicyRemediationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PolicyInsights.PolicyRemediationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.PolicyRemediationResource>, System.Collections.IEnumerable
     {
@@ -201,13 +213,14 @@ namespace Azure.ResourceManager.PolicyInsights
         public int? ResourceCount { get { throw null; } set { } }
         public Azure.ResourceManager.PolicyInsights.Models.ResourceDiscoveryMode? ResourceDiscoveryMode { get { throw null; } set { } }
         public string StatusMessage { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.PolicyRemediationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyRemediationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyRemediationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.PolicyRemediationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyRemediationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyRemediationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyRemediationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PolicyRemediationResource : Azure.ResourceManager.ArmResource
+    public partial class PolicyRemediationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyRemediationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyRemediationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PolicyRemediationResource() { }
@@ -222,6 +235,11 @@ namespace Azure.ResourceManager.PolicyInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.PolicyRemediationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.RemediationDeployment> GetDeployments(Azure.ResourceManager.PolicyInsights.Models.PolicyQuerySettings policyQuerySettings = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.RemediationDeployment> GetDeploymentsAsync(Azure.ResourceManager.PolicyInsights.Models.PolicyQuerySettings policyQuerySettings = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PolicyInsights.PolicyRemediationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyRemediationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyRemediationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PolicyInsights.PolicyRemediationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyRemediationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyRemediationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyRemediationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PolicyInsights.PolicyRemediationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PolicyInsights.PolicyRemediationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PolicyInsights.PolicyRemediationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PolicyInsights.PolicyRemediationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -405,6 +423,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public AttestationEvidence() { }
         public string Description { get { throw null; } set { } }
         public System.Uri SourceUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.AttestationEvidence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.AttestationEvidence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.AttestationEvidence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.AttestationEvidence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.AttestationEvidence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -416,6 +435,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public CheckManagementGroupPolicyRestrictionsContent() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.PolicyInsights.Models.PendingField> PendingFields { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails ResourceDetails { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.CheckManagementGroupPolicyRestrictionsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.CheckManagementGroupPolicyRestrictionsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.CheckManagementGroupPolicyRestrictionsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.CheckManagementGroupPolicyRestrictionsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.CheckManagementGroupPolicyRestrictionsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -427,6 +447,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public CheckPolicyRestrictionsContent(Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails resourceDetails) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.PolicyInsights.Models.PendingField> PendingFields { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails ResourceDetails { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -438,6 +459,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         internal CheckPolicyRestrictionsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.FieldRestrictions> FieldRestrictions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationResult> PolicyEvaluations { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -450,6 +472,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string ApiVersion { get { throw null; } set { } }
         public System.BinaryData ResourceContent { get { throw null; } }
         public string Scope { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -461,6 +484,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         internal ComplianceDetail() { }
         public string ComplianceState { get { throw null; } }
         public int? Count { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.ComplianceDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.ComplianceDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.ComplianceDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.ComplianceDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.ComplianceDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -475,6 +499,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string PrincipalOid { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.ComponentEventDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.ComponentEventDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.ComponentEventDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.ComponentEventDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.ComponentEventDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -487,6 +512,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public string ComplianceState { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.ComponentStateDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.ComponentStateDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.ComponentStateDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.ComponentStateDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.ComponentStateDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -503,6 +529,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string Path { get { throw null; } }
         public string Result { get { throw null; } }
         public System.BinaryData TargetValue { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.ExpressionEvaluationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.ExpressionEvaluationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.ExpressionEvaluationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.ExpressionEvaluationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.ExpressionEvaluationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -516,6 +543,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public Azure.ResourceManager.PolicyInsights.Models.PolicyReference Policy { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.FieldRestrictionResult? Result { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.FieldRestriction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.FieldRestriction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.FieldRestriction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.FieldRestriction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.FieldRestriction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -546,6 +574,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         internal FieldRestrictions() { }
         public string Field { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.FieldRestriction> Restrictions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.FieldRestrictions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.FieldRestrictions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.FieldRestrictions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.FieldRestrictions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.FieldRestrictions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -557,6 +586,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         internal IfNotExistsEvaluationDetails() { }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public int? TotalResources { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.IfNotExistsEvaluationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.IfNotExistsEvaluationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.IfNotExistsEvaluationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.IfNotExistsEvaluationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.IfNotExistsEvaluationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -568,6 +598,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public PendingField(string field) { }
         public string Field { get { throw null; } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PendingField System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PendingField>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PendingField>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PendingField System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.PendingField>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -582,6 +613,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.PolicyGroupSummary> PolicyGroups { get { throw null; } }
         public Azure.Core.ResourceIdentifier PolicySetDefinitionId { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults Results { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyAssignmentSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyAssignmentSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyAssignmentSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyAssignmentSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.PolicyAssignmentSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -615,6 +647,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public Azure.Core.ResourceIdentifier PolicyDefinitionId { get { throw null; } }
         public string PolicyDefinitionReferenceId { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults Results { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyDefinitionSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyDefinitionSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyDefinitionSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyDefinitionSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.PolicyDefinitionSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -630,6 +663,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public Azure.Core.ResourceIdentifier PolicyDefinitionId { get { throw null; } }
         public string PolicyDefinitionReferenceId { get { throw null; } }
         public Azure.Core.ResourceIdentifier PolicySetDefinitionId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.PolicyDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -641,6 +675,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         internal PolicyEvaluationDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.ExpressionEvaluationDetails> EvaluatedExpressions { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.IfNotExistsEvaluationDetails IfNotExistsDetails { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -653,6 +688,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationDetails EvaluationDetails { get { throw null; } }
         public string EvaluationResult { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.PolicyReference PolicyInfo { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -694,6 +730,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string SubscriptionId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyEvent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyEvent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -722,6 +759,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         internal PolicyGroupSummary() { }
         public string PolicyGroupName { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults Results { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyGroupSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyGroupSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyGroupSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyGroupSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.PolicyGroupSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -748,6 +786,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public Azure.Core.ResourceIdentifier PolicyDefinitionId { get { throw null; } }
         public string PolicyDefinitionReferenceId { get { throw null; } }
         public Azure.Core.ResourceIdentifier PolicySetDefinitionId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.PolicyReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -792,6 +831,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string ResourceTypeString { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.PolicyState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -840,6 +880,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string ODataId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.PolicyAssignmentSummary> PolicyAssignments { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults Results { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicySummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicySummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicySummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicySummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.PolicySummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -855,6 +896,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.ComplianceDetail> PolicyGroupDetails { get { throw null; } }
         public System.Uri QueryResultsUri { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.ComplianceDetail> ResourceDetails { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -869,6 +911,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public System.DateTimeOffset? LastUpdateOn { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.PolicyDetails PolicyDetails { get { throw null; } }
         public Azure.Core.ResourceIdentifier TrackedResourceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourceRecord System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourceRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourceRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourceRecord System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourceRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -902,6 +945,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public Azure.Core.ResourceIdentifier RemediatedResourceId { get { throw null; } }
         public Azure.Core.AzureLocation? ResourceLocation { get { throw null; } }
         public string Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.RemediationDeployment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.RemediationDeployment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.RemediationDeployment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.RemediationDeployment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.RemediationDeployment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -914,6 +958,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public int? FailedDeployments { get { throw null; } }
         public int? SuccessfulDeployments { get { throw null; } }
         public int? TotalDeployments { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.RemediationDeploymentSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.RemediationDeploymentSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.RemediationDeploymentSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.RemediationDeploymentSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.RemediationDeploymentSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -947,6 +992,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string MetadataId { get { throw null; } }
         public string Owner { get { throw null; } }
         public string Title { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -959,6 +1005,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public Azure.Core.ResourceIdentifier DeploymentId { get { throw null; } }
         public System.DateTimeOffset? DeploymentOn { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.PolicyDetails PolicyDetails { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.TrackedResourceModificationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.TrackedResourceModificationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.TrackedResourceModificationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PolicyInsights.Models.TrackedResourceModificationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.TrackedResourceModificationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

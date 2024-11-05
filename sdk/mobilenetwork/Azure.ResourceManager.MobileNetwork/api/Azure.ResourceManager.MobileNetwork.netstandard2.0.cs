@@ -14,13 +14,14 @@ namespace Azure.ResourceManager.MobileNetwork
     {
         public ExtendedUEInfoData(Azure.ResourceManager.MobileNetwork.Models.ExtendedUEInfoProperties properties) { }
         public Azure.ResourceManager.MobileNetwork.Models.ExtendedUEInfoProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExtendedUEInfoResource : Azure.ResourceManager.ArmResource
+    public partial class ExtendedUEInfoResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ExtendedUEInfoResource() { }
@@ -29,6 +30,11 @@ namespace Azure.ResourceManager.MobileNetwork
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string ueId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.ExtendedUEInfoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MobileAttachedDataNetworkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkResource>, System.Collections.IEnumerable
     {
@@ -56,13 +62,14 @@ namespace Azure.ResourceManager.MobileNetwork
         public System.Collections.Generic.IList<string> UserEquipmentAddressPoolPrefix { get { throw null; } }
         public System.Collections.Generic.IList<string> UserEquipmentStaticAddressPoolPrefix { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties UserPlaneDataInterface { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MobileAttachedDataNetworkResource : Azure.ResourceManager.ArmResource
+    public partial class MobileAttachedDataNetworkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MobileAttachedDataNetworkResource() { }
@@ -79,6 +86,11 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkResource> Update(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkResource>> UpdateAsync(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -104,13 +116,14 @@ namespace Azure.ResourceManager.MobileNetwork
         public MobileDataNetworkData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileDataNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileDataNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileDataNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileDataNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileDataNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileDataNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileDataNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MobileDataNetworkResource : Azure.ResourceManager.ArmResource
+    public partial class MobileDataNetworkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileDataNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileDataNetworkData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MobileDataNetworkResource() { }
@@ -127,6 +140,11 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileDataNetworkResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileDataNetworkResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileDataNetworkResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.MobileDataNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileDataNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileDataNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileDataNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileDataNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileDataNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileDataNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileDataNetworkResource> Update(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileDataNetworkResource>> UpdateAsync(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -155,6 +173,7 @@ namespace Azure.ResourceManager.MobileNetwork
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlmnId PublicLandMobileNetworkIdentifier { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.PublicLandMobileNetwork> PublicLandMobileNetworks { get { throw null; } }
         public string ServiceKey { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -184,13 +203,14 @@ namespace Azure.ResourceManager.MobileNetwork
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string Reason { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkDiagnosticsPackageStatus? Status { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MobileNetworkDiagnosticsPackageResource : Azure.ResourceManager.ArmResource
+    public partial class MobileNetworkDiagnosticsPackageResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MobileNetworkDiagnosticsPackageResource() { }
@@ -201,6 +221,11 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageResource> Update(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageResource>> UpdateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -214,6 +239,7 @@ namespace Azure.ResourceManager.MobileNetwork
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageResource GetMobileNetworkDiagnosticsPackageResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureResource GetMobileNetworkPacketCaptureResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkResource GetMobileNetworkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoResource GetMobileNetworkRoutingInfoResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkCollection GetMobileNetworks(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> GetMobileNetworks(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> GetMobileNetworksAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -273,13 +299,14 @@ namespace Azure.ResourceManager.MobileNetwork
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus? Status { get { throw null; } }
         public int? TimeLimitInSeconds { get { throw null; } set { } }
         public long? TotalBytesPerSession { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MobileNetworkPacketCaptureResource : Azure.ResourceManager.ArmResource
+    public partial class MobileNetworkPacketCaptureResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MobileNetworkPacketCaptureResource() { }
@@ -292,10 +319,15 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus> Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus>> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MobileNetworkResource : Azure.ResourceManager.ArmResource
+    public partial class MobileNetworkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MobileNetworkResource() { }
@@ -323,14 +355,49 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceResource> GetMobileNetworkSlice(string sliceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceResource>> GetMobileNetworkSliceAsync(string sliceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkSliceCollection GetMobileNetworkSlices() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource> GetSimGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource> GetSimGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> Update(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> Update(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkResource>> UpdateAsync(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkResource>> UpdateAsync(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MobileNetworkRoutingInfoData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>
+    {
+        public MobileNetworkRoutingInfoData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route> ControlPlaneAccessRoutes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route> UserPlaneAccessRoutes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.UserPlaneDataRoutesItem> UserPlaneDataRoutes { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MobileNetworkRoutingInfoResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MobileNetworkRoutingInfoResource() { }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MobileNetworkServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceResource>, System.Collections.IEnumerable
     {
@@ -356,13 +423,14 @@ namespace Azure.ResourceManager.MobileNetwork
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public int ServicePrecedence { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkQosPolicy ServiceQosPolicy { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MobileNetworkServiceResource : Azure.ResourceManager.ArmResource
+    public partial class MobileNetworkServiceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MobileNetworkServiceResource() { }
@@ -379,6 +447,11 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceResource> Update(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkServiceResource>> UpdateAsync(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -414,6 +487,7 @@ namespace Azure.ResourceManager.MobileNetwork
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.SimStaticIPProperties> StaticIPConfiguration { get { throw null; } }
         public string VendorKeyFingerprint { get { throw null; } }
         public string VendorName { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkSimData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkSimData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -444,13 +518,14 @@ namespace Azure.ResourceManager.MobileNetwork
         public Azure.Core.ResourceIdentifier MobileNetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity UserAssignedIdentity { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MobileNetworkSimGroupResource : Azure.ResourceManager.ArmResource
+    public partial class MobileNetworkSimGroupResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MobileNetworkSimGroupResource() { }
@@ -464,6 +539,8 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus>> BulkUploadEncryptedSimAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MobileNetwork.Models.EncryptedSimUploadList encryptedSimUploadList, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus> BulkUploadSim(Azure.WaitUntil waitUntil, Azure.ResourceManager.MobileNetwork.Models.SimUploadList simUploadList, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus>> BulkUploadSimAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MobileNetwork.Models.SimUploadList simUploadList, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus> CloneSim(Azure.WaitUntil waitUntil, Azure.ResourceManager.MobileNetwork.Models.SimCloneContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus>> CloneSimAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MobileNetwork.Models.SimCloneContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string simGroupName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -472,10 +549,17 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimResource> GetMobileNetworkSim(string simName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimResource>> GetMobileNetworkSimAsync(string simName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkSimCollection GetMobileNetworkSims() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus> MoveSim(Azure.WaitUntil waitUntil, Azure.ResourceManager.MobileNetwork.Models.SimMoveContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus>> MoveSimAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MobileNetwork.Models.SimMoveContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource> Update(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource>> UpdateAsync(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -508,13 +592,14 @@ namespace Azure.ResourceManager.MobileNetwork
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.MobileNetwork.Models.Ambr UeAmbr { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.Ambr UEAmbr { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MobileNetworkSimPolicyResource : Azure.ResourceManager.ArmResource
+    public partial class MobileNetworkSimPolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MobileNetworkSimPolicyResource() { }
@@ -531,10 +616,15 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyResource> Update(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyResource>> UpdateAsync(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MobileNetworkSimResource : Azure.ResourceManager.ArmResource
+    public partial class MobileNetworkSimResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MobileNetworkSimResource() { }
@@ -545,6 +635,11 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkSimData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkSimData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSimData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.MobileNetworkSimResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MobileNetwork.MobileNetworkSimData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.MobileNetworkSimResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MobileNetwork.MobileNetworkSimData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -570,13 +665,14 @@ namespace Azure.ResourceManager.MobileNetwork
         public MobileNetworkSiteData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> NetworkFunctions { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MobileNetworkSiteResource : Azure.ResourceManager.ArmResource
+    public partial class MobileNetworkSiteResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MobileNetworkSiteResource() { }
@@ -595,6 +691,11 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteResource> Update(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSiteResource>> UpdateAsync(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -621,13 +722,14 @@ namespace Azure.ResourceManager.MobileNetwork
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.Snssai Snssai { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MobileNetworkSliceResource : Azure.ResourceManager.ArmResource
+    public partial class MobileNetworkSliceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MobileNetworkSliceResource() { }
@@ -644,6 +746,11 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceResource> Update(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSliceResource>> UpdateAsync(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -667,6 +774,7 @@ namespace Azure.ResourceManager.MobileNetwork
     public partial class PacketCoreControlPlaneData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>
     {
         public PacketCoreControlPlaneData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess) { }
+        public bool? AllowSupportTelemetryAccess { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties ControlPlaneAccessInterface { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ControlPlaneAccessVirtualIPv4Addresses { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? CoreNetworkTechnology { get { throw null; } set { } }
@@ -681,6 +789,7 @@ namespace Azure.ResourceManager.MobileNetwork
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration Platform { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string RollbackVersion { get { throw null; } }
+        public Azure.ResourceManager.MobileNetwork.Models.PacketCoreSignalingConfiguration Signaling { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Sites { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku Sku { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -688,13 +797,14 @@ namespace Azure.ResourceManager.MobileNetwork
         public int? UEMtu { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity UserAssignedIdentity { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PacketCoreControlPlaneResource : Azure.ResourceManager.ArmResource
+    public partial class PacketCoreControlPlaneResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PacketCoreControlPlaneResource() { }
@@ -720,6 +830,7 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureResource> GetMobileNetworkPacketCapture(string packetCaptureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureResource>> GetMobileNetworkPacketCaptureAsync(string packetCaptureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureCollection GetMobileNetworkPacketCaptures() { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoResource GetMobileNetworkRoutingInfo() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneResource> GetPacketCoreDataPlane(string packetCoreDataPlaneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneResource>> GetPacketCoreDataPlaneAsync(string packetCoreDataPlaneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneCollection GetPacketCoreDataPlanes() { throw null; }
@@ -731,6 +842,11 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus>> RollbackAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneResource> Update(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneResource>> UpdateAsync(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -739,6 +855,7 @@ namespace Azure.ResourceManager.MobileNetwork
         public PacketCoreControlPlaneVersionData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatform> Platforms { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -768,13 +885,14 @@ namespace Azure.ResourceManager.MobileNetwork
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties UserPlaneAccessInterface { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> UserPlaneAccessVirtualIPv4Addresses { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PacketCoreDataPlaneResource : Azure.ResourceManager.ArmResource
+    public partial class PacketCoreDataPlaneResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PacketCoreDataPlaneResource() { }
@@ -794,6 +912,11 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneResource> Update(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneResource>> UpdateAsync(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -812,7 +935,7 @@ namespace Azure.ResourceManager.MobileNetwork
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MobileNetwork.SubscriptionPacketCoreControlPlaneVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.SubscriptionPacketCoreControlPlaneVersionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SubscriptionPacketCoreControlPlaneVersionResource : Azure.ResourceManager.ArmResource
+    public partial class SubscriptionPacketCoreControlPlaneVersionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SubscriptionPacketCoreControlPlaneVersionResource() { }
@@ -821,6 +944,11 @@ namespace Azure.ResourceManager.MobileNetwork
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string versionName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.SubscriptionPacketCoreControlPlaneVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.SubscriptionPacketCoreControlPlaneVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TenantPacketCoreControlPlaneVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource>, System.Collections.IEnumerable
     {
@@ -837,7 +965,7 @@ namespace Azure.ResourceManager.MobileNetwork
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TenantPacketCoreControlPlaneVersionResource : Azure.ResourceManager.ArmResource
+    public partial class TenantPacketCoreControlPlaneVersionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TenantPacketCoreControlPlaneVersionResource() { }
@@ -846,6 +974,11 @@ namespace Azure.ResourceManager.MobileNetwork
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string versionName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.MobileNetwork.Mocking
@@ -859,6 +992,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageResource GetMobileNetworkDiagnosticsPackageResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureResource GetMobileNetworkPacketCaptureResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkResource GetMobileNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoResource GetMobileNetworkRoutingInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkServiceResource GetMobileNetworkServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource GetMobileNetworkSimGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyResource GetMobileNetworkSimPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -911,6 +1045,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public Ambr(string uplink, string downlink) { }
         public string Downlink { get { throw null; } set { } }
         public string Uplink { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.Ambr System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.Ambr>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.Ambr>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.Ambr System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.Ambr>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -934,6 +1069,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData MobileNetworkPacketCaptureData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus? status, string reason, System.DateTimeOffset? captureStartOn, System.Collections.Generic.IEnumerable<string> networkInterfaces, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData MobileNetworkPacketCaptureData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus? status = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus?), string reason = null, System.DateTimeOffset? captureStartOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> networkInterfaces = null, long? bytesToCapturePerPacket = default(long?), long? totalBytesPerSession = default(long?), int? timeLimitInSeconds = default(int?), System.Collections.Generic.IEnumerable<string> outputFiles = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration MobileNetworkPlatformConfiguration(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType platformType = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType), Azure.Core.ResourceIdentifier azureStackEdgeDeviceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> azureStackEdgeDevices = null, Azure.Core.ResourceIdentifier azureStackHciClusterId = null, Azure.Core.ResourceIdentifier connectedClusterId = null, Azure.Core.ResourceIdentifier customLocationId = null) { throw null; }
+        public static Azure.ResourceManager.MobileNetwork.MobileNetworkRoutingInfoData MobileNetworkRoutingInfoData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route> controlPlaneAccessRoutes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route> userPlaneAccessRoutes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.UserPlaneDataRoutesItem> userPlaneDataRoutes = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData MobileNetworkServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), int servicePrecedence = 0, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkQosPolicy serviceQosPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.PccRuleConfiguration> pccRules = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkSimData MobileNetworkSimData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSimState? simState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSimState?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSiteProvisioningState> siteProvisioningState = null, string internationalMobileSubscriberIdentity = null, string integratedCircuitCardIdentifier = null, string deviceType = null, Azure.Core.ResourceIdentifier simPolicyId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.SimStaticIPProperties> staticIPConfiguration = null, string vendorName = null, string vendorKeyFingerprint = null, string authenticationKey = null, string operatorKeyCode = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupData MobileNetworkSimGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity userAssignedIdentity = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), System.Uri keyUri = null, Azure.Core.ResourceIdentifier mobileNetworkId = null) { throw null; }
@@ -942,8 +1078,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData MobileNetworkSliceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.Snssai snssai = null, string description = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData PacketCoreControlPlaneData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity userAssignedIdentity, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation installation, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku, int? ueMtu, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, System.Uri diagnosticsUploadStorageAccountContainerUri, System.BinaryData interopSettings) { throw null; }
+        public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData PacketCoreControlPlaneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity userAssignedIdentity = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation installation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? coreNetworkTechnology = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType?), string version = null, string installedVersion = null, string rollbackVersion = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface = null, System.Collections.Generic.IEnumerable<string> controlPlaneAccessVirtualIPv4Addresses = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku), int? ueMtu = default(int?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, System.Uri diagnosticsUploadStorageAccountContainerUri = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration eventHub = null, Azure.ResourceManager.MobileNetwork.Models.PacketCoreSignalingConfiguration signaling = null, System.BinaryData interopSettings = null, Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState? homeNetworkPrivateKeysProvisioningState = default(Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState?), bool? allowSupportTelemetryAccess = default(bool?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData PacketCoreControlPlaneData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity userAssignedIdentity, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation installation, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface, System.Collections.Generic.IEnumerable<string> controlPlaneAccessVirtualIPv4Addresses, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku, int? ueMtu, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, System.Uri diagnosticsUploadStorageAccountContainerUri, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration eventHub, int? nasRerouteMacroMmeGroupId, System.BinaryData interopSettings) { throw null; }
+        public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData PacketCoreControlPlaneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity userAssignedIdentity = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation installation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? coreNetworkTechnology = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType?), string version = null, string installedVersion = null, string rollbackVersion = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface = null, System.Collections.Generic.IEnumerable<string> controlPlaneAccessVirtualIPv4Addresses = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku), int? ueMtu = default(int?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, System.Uri diagnosticsUploadStorageAccountContainerUri = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration eventHub = null, int? nasRerouteMacroMmeGroupId = default(int?), System.BinaryData interopSettings = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData PacketCoreControlPlaneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity userAssignedIdentity = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation installation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? coreNetworkTechnology = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType?), string version = null, string installedVersion = null, string rollbackVersion = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface = null, System.Collections.Generic.IEnumerable<string> controlPlaneAccessVirtualIPv4Addresses = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku), int? ueMtu = default(int?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, System.Uri diagnosticsUploadStorageAccountContainerUri = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration eventHub = null, int? nasRerouteMacroMmeGroupId = default(int?), System.BinaryData interopSettings = null, Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState? homeNetworkPrivateKeysProvisioningState = default(Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData PacketCoreControlPlaneVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatform> platforms = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -965,6 +1103,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public string ResourceId { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.AsyncOperationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1003,6 +1142,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionCapability? PreemptionCapability { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionVulnerability? PreemptionVulnerability { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.Ambr SessionAmbr { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.DataNetworkConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.DataNetworkConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.DataNetworkConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.DataNetworkConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.DataNetworkConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1032,6 +1172,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public DnnIPPair() { }
         public string Dnn { get { throw null; } set { } }
         public string IPV4Addr { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.DnnIPPair System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.DnnIPPair>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.DnnIPPair>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.DnnIPPair System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.DnnIPPair>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1047,6 +1188,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.SimNameAndEncryptedProperties> Sims { get { throw null; } }
         public string VendorKeyFingerprint { get { throw null; } }
         public int Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.EncryptedSimUploadList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.EncryptedSimUploadList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.EncryptedSimUploadList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.EncryptedSimUploadList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.EncryptedSimUploadList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1057,6 +1199,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         protected ExtendedUEInfoProperties() { }
         public System.DateTimeOffset? LastReadOn { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.ExtendedUEInfoProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.ExtendedUEInfoProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.ExtendedUEInfoProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.ExtendedUEInfoProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.ExtendedUEInfoProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1087,6 +1230,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public HomeNetworkPublicKey(int id) { }
         public int Id { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPublicKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPublicKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPublicKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPublicKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPublicKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1137,6 +1281,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         internal MobileNetworkCertificateProvisioning() { }
         public string Reason { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.CertificateProvisioningState? State { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCertificateProvisioning System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCertificateProvisioning>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCertificateProvisioning>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCertificateProvisioning System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCertificateProvisioning>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1174,6 +1319,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public MobileNetworkEventHubConfiguration(Azure.Core.ResourceIdentifier id) { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public int? ReportingInterval { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1185,6 +1331,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public MobileNetworkHttpsServerCertificate(System.Uri certificateUri) { }
         public System.Uri CertificateUri { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCertificateProvisioning Provisioning { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkHttpsServerCertificate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkHttpsServerCertificate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkHttpsServerCertificate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkHttpsServerCertificate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkHttpsServerCertificate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1199,6 +1346,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason> Reasons { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkReinstallRequired? ReinstallRequired { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationState? State { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1258,21 +1406,50 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     public partial class MobileNetworkInterfaceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties>
     {
         public MobileNetworkInterfaceProperties() { }
+        public System.Collections.Generic.IList<string> BfdIPv4Endpoints { get { throw null; } }
         public string IPv4Address { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> IPv4AddressList { get { throw null; } }
         public string IPv4Gateway { get { throw null; } set { } }
         public string IPv4Subnet { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        public int? VlanId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MobileNetworkIPv4Route : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route>
+    {
+        public MobileNetworkIPv4Route() { }
+        public string Destination { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4RouteNextHop> NextHops { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MobileNetworkIPv4RouteNextHop : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4RouteNextHop>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4RouteNextHop>
+    {
+        public MobileNetworkIPv4RouteNextHop() { }
+        public string Address { get { throw null; } set { } }
+        public int? Priority { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4RouteNextHop System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4RouteNextHop>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4RouteNextHop>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4RouteNextHop System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4RouteNextHop>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4RouteNextHop>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4RouteNextHop>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MobileNetworkLocalDiagnosticsAccessConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration>
     {
         public MobileNetworkLocalDiagnosticsAccessConfiguration(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkAuthenticationType authenticationType) { }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkAuthenticationType AuthenticationType { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkHttpsServerCertificate HttpsServerCertificate { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1284,6 +1461,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public MobileNetworkManagedServiceIdentity(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentityType identityType) { }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentityType IdentityType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1306,6 +1484,25 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentityType left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentityType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentityType left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MobileNetworkNasEncryptionType : System.IEquatable<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MobileNetworkNasEncryptionType(string value) { throw null; }
+        public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType NEA0EEA0 { get { throw null; } }
+        public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType NEA1EEA1 { get { throw null; } }
+        public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType NEA2EEA2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1367,12 +1564,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     public partial class MobileNetworkPlatform : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatform>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatform>
     {
         public MobileNetworkPlatform() { }
+        public System.Collections.Generic.IList<string> HaUpgradesAvailable { get { throw null; } }
         public string MaximumPlatformSoftwareVersion { get { throw null; } set { } }
         public string MinimumPlatformSoftwareVersion { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkObsoleteVersion? ObsoleteVersion { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType? PlatformType { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkRecommendedVersion? RecommendedVersion { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkVersionState? VersionState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatform System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatform>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatform>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatform System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatform>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1388,6 +1587,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public Azure.Core.ResourceIdentifier ConnectedClusterId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CustomLocationId { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType PlatformType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1417,6 +1617,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public MobileNetworkPlmnId(string mcc, string mnc) { }
         public string Mcc { get { throw null; } set { } }
         public string Mnc { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlmnId System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlmnId>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlmnId>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlmnId System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlmnId>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1428,6 +1629,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public MobileNetworkPortRange() { }
         public int? MaxPort { get { throw null; } set { } }
         public int? MinPort { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPortRange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPortRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPortRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPortRange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPortRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1439,6 +1641,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public MobileNetworkPortReuseHoldTimes() { }
         public int? Tcp { get { throw null; } set { } }
         public int? Udp { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPortReuseHoldTimes System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPortReuseHoldTimes>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPortReuseHoldTimes>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPortReuseHoldTimes System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPortReuseHoldTimes>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1512,6 +1715,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public Azure.ResourceManager.MobileNetwork.Models.Ambr MaximumBitRate { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionCapability? PreemptionCapability { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionVulnerability? PreemptionVulnerability { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkQosPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkQosPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkQosPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkQosPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkQosPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1559,6 +1763,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public MobileNetworkResourcePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity UserAssignedIdentity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkResourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkResourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkResourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1592,6 +1797,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public System.Collections.Generic.IList<string> Protocol { get { throw null; } }
         public System.Collections.Generic.IList<string> RemoteIPList { get { throw null; } }
         public string TemplateName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkServiceDataFlowTemplate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkServiceDataFlowTemplate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkServiceDataFlowTemplate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkServiceDataFlowTemplate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkServiceDataFlowTemplate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1645,6 +1851,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.DataNetworkConfiguration> DataNetworkConfigurations { get { throw null; } }
         public Azure.Core.ResourceIdentifier DefaultDataNetworkId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SliceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSliceConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSliceConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSliceConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSliceConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSliceConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1655,6 +1862,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         public MobileNetworkTagsPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTagsPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1709,6 +1917,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public Azure.ResourceManager.MobileNetwork.Models.PinholeTimeouts PinholeTimeouts { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPortRange PortRange { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPortReuseHoldTimes PortReuseHoldTime { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.NaptConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.NaptConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.NaptConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.NaptConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.NaptConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1737,11 +1946,24 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         public PacketCoreControlPlaneCollectDiagnosticsPackage(System.Uri storageAccountBlobUri) { }
         public System.Uri StorageAccountBlobUri { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.PacketCoreControlPlaneCollectDiagnosticsPackage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PacketCoreControlPlaneCollectDiagnosticsPackage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PacketCoreControlPlaneCollectDiagnosticsPackage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.PacketCoreControlPlaneCollectDiagnosticsPackage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.PacketCoreControlPlaneCollectDiagnosticsPackage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.PacketCoreControlPlaneCollectDiagnosticsPackage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.PacketCoreControlPlaneCollectDiagnosticsPackage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PacketCoreSignalingConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PacketCoreSignalingConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.PacketCoreSignalingConfiguration>
+    {
+        public PacketCoreSignalingConfiguration() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType> NasEncryption { get { throw null; } }
+        public int? NasRerouteMacroMmeGroupId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.Models.PacketCoreSignalingConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PacketCoreSignalingConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PacketCoreSignalingConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.Models.PacketCoreSignalingConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.PacketCoreSignalingConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.PacketCoreSignalingConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.PacketCoreSignalingConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PccRuleConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PccRuleConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.PccRuleConfiguration>
     {
@@ -1751,6 +1973,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public Azure.ResourceManager.MobileNetwork.Models.PccRuleQosPolicy RuleQosPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkServiceDataFlowTemplate> ServiceDataFlowTemplates { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTrafficControlPermission? TrafficControl { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.PccRuleConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PccRuleConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PccRuleConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.PccRuleConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.PccRuleConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1761,6 +1984,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         public PccRuleQosPolicy(Azure.ResourceManager.MobileNetwork.Models.Ambr maximumBitRate) : base (default(Azure.ResourceManager.MobileNetwork.Models.Ambr)) { }
         public Azure.ResourceManager.MobileNetwork.Models.Ambr GuaranteedBitRate { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.PccRuleQosPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PccRuleQosPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PccRuleQosPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.PccRuleQosPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.PccRuleQosPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1790,6 +2014,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public int? Icmp { get { throw null; } set { } }
         public int? Tcp { get { throw null; } set { } }
         public int? Udp { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.PinholeTimeouts System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PinholeTimeouts>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PinholeTimeouts>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.PinholeTimeouts System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.PinholeTimeouts>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1800,6 +2025,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         public PublicLandMobileNetwork(string mcc, string mnc) : base (default(string), default(string)) { }
         public Azure.ResourceManager.MobileNetwork.Models.PublicLandMobileNetworkHomeNetworkPublicKeys HomeNetworkPublicKeys { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.PublicLandMobileNetwork System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PublicLandMobileNetwork>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PublicLandMobileNetwork>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.PublicLandMobileNetwork System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.PublicLandMobileNetwork>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1811,6 +2037,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public PublicLandMobileNetworkHomeNetworkPublicKeys() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPublicKey> ProfileA { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPublicKey> ProfileB { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.PublicLandMobileNetworkHomeNetworkPublicKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PublicLandMobileNetworkHomeNetworkPublicKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.PublicLandMobileNetworkHomeNetworkPublicKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.PublicLandMobileNetworkHomeNetworkPublicKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.PublicLandMobileNetworkHomeNetworkPublicKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1857,15 +2084,40 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator !=(Azure.ResourceManager.MobileNetwork.Models.RrcEstablishmentCause left, Azure.ResourceManager.MobileNetwork.Models.RrcEstablishmentCause right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SimCloneContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimCloneContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimCloneContent>
+    {
+        public SimCloneContent() { }
+        public System.Collections.Generic.IList<string> Sims { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetSimGroupIdId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.Models.SimCloneContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimCloneContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimCloneContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.Models.SimCloneContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimCloneContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimCloneContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimCloneContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SimDeleteList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimDeleteList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimDeleteList>
     {
         public SimDeleteList(System.Collections.Generic.IEnumerable<string> sims) { }
         public System.Collections.Generic.IList<string> Sims { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.SimDeleteList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimDeleteList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimDeleteList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.SimDeleteList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimDeleteList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimDeleteList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimDeleteList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SimMoveContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimMoveContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimMoveContent>
+    {
+        public SimMoveContent() { }
+        public System.Collections.Generic.IList<string> Sims { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetSimGroupIdId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.Models.SimMoveContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimMoveContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimMoveContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.Models.SimMoveContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimMoveContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimMoveContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimMoveContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SimNameAndEncryptedProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimNameAndEncryptedProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimNameAndEncryptedProperties>
     {
@@ -1882,6 +2134,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.SimStaticIPProperties> StaticIPConfiguration { get { throw null; } }
         public string VendorKeyFingerprint { get { throw null; } }
         public string VendorName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.SimNameAndEncryptedProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimNameAndEncryptedProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimNameAndEncryptedProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.SimNameAndEncryptedProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimNameAndEncryptedProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1904,6 +2157,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.SimStaticIPProperties> StaticIPConfiguration { get { throw null; } }
         public string VendorKeyFingerprint { get { throw null; } }
         public string VendorName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.SimNameAndProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimNameAndProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimNameAndProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.SimNameAndProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimNameAndProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1916,6 +2170,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public Azure.Core.ResourceIdentifier AttachedDataNetworkId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SliceId { get { throw null; } set { } }
         public string StaticIPIPv4Address { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.SimStaticIPProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimStaticIPProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimStaticIPProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.SimStaticIPProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimStaticIPProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1926,6 +2181,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         public SimUploadList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.SimNameAndProperties> sims) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.SimNameAndProperties> Sims { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.SimUploadList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimUploadList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SimUploadList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.SimUploadList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SimUploadList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1936,6 +2192,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         public SiteDeletePacketCore() { }
         public Azure.Core.ResourceIdentifier PacketCoreId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.SiteDeletePacketCore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SiteDeletePacketCore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.SiteDeletePacketCore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.SiteDeletePacketCore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.SiteDeletePacketCore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1947,6 +2204,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public Snssai(int sst) { }
         public string Sd { get { throw null; } set { } }
         public int Sst { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.Snssai System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.Snssai>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.Snssai>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.Snssai System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.Snssai>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1960,6 +2218,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public Azure.ResourceManager.MobileNetwork.Models.RatType RatType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.DnnIPPair> UEIPAddresses { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.UEState UEState { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.UEInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.UEInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2000,6 +2259,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public Azure.ResourceManager.MobileNetwork.Models.UEState? UEState { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.UEUsageSetting? UEUsageSetting { get { throw null; } set { } }
         public string WagfId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.UEInfo4G System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEInfo4G>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEInfo4G>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.UEInfo4G System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEInfo4G>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2041,6 +2301,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public Azure.ResourceManager.MobileNetwork.Models.UEState? UEState { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.UEUsageSetting? UEUsageSetting { get { throw null; } set { } }
         public string WagfId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.UEInfo5G System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEInfo5G>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEInfo5G>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.UEInfo5G System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEInfo5G>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2056,6 +2317,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public int Qfi { get { throw null; } set { } }
         public string UplinkGbrUplink { get { throw null; } set { } }
         public string UplinkMbrUplink { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.UEQosFlow System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEQosFlow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEQosFlow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.UEQosFlow System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEQosFlow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2069,6 +2331,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public int Ebi { get { throw null; } set { } }
         public string IPV4Addr { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.PdnType PdnType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.UESessionInfo4G System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UESessionInfo4G>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UESessionInfo4G>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.UESessionInfo4G System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UESessionInfo4G>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2087,6 +2350,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public string Sd { get { throw null; } set { } }
         public int Sst { get { throw null; } set { } }
         public string Uplink { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.UESessionInfo5G System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UESessionInfo5G>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UESessionInfo5G>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MobileNetwork.Models.UESessionInfo5G System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UESessionInfo5G>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2131,5 +2395,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.UEUsageSetting (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.MobileNetwork.Models.UEUsageSetting left, Azure.ResourceManager.MobileNetwork.Models.UEUsageSetting right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class UserPlaneDataRoutesItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UserPlaneDataRoutesItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UserPlaneDataRoutesItem>
+    {
+        public UserPlaneDataRoutesItem() { }
+        public Azure.Core.ResourceIdentifier AttachedDataNetworkId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkIPv4Route> Routes { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.Models.UserPlaneDataRoutesItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UserPlaneDataRoutesItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UserPlaneDataRoutesItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.Models.UserPlaneDataRoutesItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UserPlaneDataRoutesItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UserPlaneDataRoutesItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UserPlaneDataRoutesItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

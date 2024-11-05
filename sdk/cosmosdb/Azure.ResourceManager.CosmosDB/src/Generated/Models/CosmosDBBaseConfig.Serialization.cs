@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -21,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CosmosDBBaseConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBBaseConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBBaseConfig)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Throughput))
             {
                 writer.WritePropertyName("throughput"u8);
@@ -53,7 +60,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CosmosDBBaseConfig IJsonModel<CosmosDBBaseConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -118,60 +124,43 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Throughput), out propertyOverride);
-            if (Optional.IsDefined(Throughput) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  throughput: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Throughput))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  throughput: ");
                     builder.AppendLine($"{Throughput.Value}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoscaleSettings), out propertyOverride);
-            if (Optional.IsDefined(AutoscaleSettings) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AutoscaleMaxThroughput", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  autoscaleSettings: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    maxThroughput: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoscaleSettings))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  autoscaleSettings: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AutoscaleSettings, options, 2, false, "  autoscaleSettings: ");
                 }
             }
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "AutoscaleMaxThroughput":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("MaxThroughput", item.Value);
-                        bicepOptions.PropertyOverrides.Add(AutoscaleSettings, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<CosmosDBBaseConfig>.Write(ModelReaderWriterOptions options)

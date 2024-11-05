@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         void IJsonModel<PostgreSqlFlexibleServerSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerSku)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("tier"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PostgreSqlFlexibleServerSku IJsonModel<PostgreSqlFlexibleServerSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -106,15 +113,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -128,13 +136,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
-            builder.Append("  tier: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  tier: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  tier: ");
                 builder.AppendLine($"'{Tier.ToString()}'");
             }
 

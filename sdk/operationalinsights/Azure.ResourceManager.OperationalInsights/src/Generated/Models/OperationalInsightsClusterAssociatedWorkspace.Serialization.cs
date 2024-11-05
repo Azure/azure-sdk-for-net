@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         void IJsonModel<OperationalInsightsClusterAssociatedWorkspace>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsClusterAssociatedWorkspace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OperationalInsightsClusterAssociatedWorkspace)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
@@ -62,7 +70,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         OperationalInsightsClusterAssociatedWorkspace IJsonModel<OperationalInsightsClusterAssociatedWorkspace>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -146,29 +153,31 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceId), out propertyOverride);
-            if (Optional.IsDefined(WorkspaceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  workspaceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkspaceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  workspaceId: ");
                     builder.AppendLine($"'{WorkspaceId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceName), out propertyOverride);
-            if (Optional.IsDefined(WorkspaceName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  workspaceName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkspaceName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  workspaceName: ");
                     if (WorkspaceName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -182,29 +191,31 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
-            if (Optional.IsDefined(ResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resourceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resourceId: ");
                     builder.AppendLine($"'{ResourceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssociatedOn), out propertyOverride);
-            if (Optional.IsDefined(AssociatedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  associateDate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AssociatedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  associateDate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(AssociatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

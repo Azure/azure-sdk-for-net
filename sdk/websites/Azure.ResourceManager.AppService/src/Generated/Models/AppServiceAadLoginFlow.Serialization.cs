@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<AppServiceAadLoginFlow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceAadLoginFlow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppServiceAadLoginFlow)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LoginParameters))
             {
                 writer.WritePropertyName("loginParameters"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppServiceAadLoginFlow IJsonModel<AppServiceAadLoginFlow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -131,17 +138,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoginParameters), out propertyOverride);
-            if (Optional.IsCollectionDefined(LoginParameters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (LoginParameters.Any() || hasPropertyOverride)
+                builder.Append("  loginParameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LoginParameters))
                 {
-                    builder.Append("  loginParameters: ");
-                    if (hasPropertyOverride)
+                    if (LoginParameters.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  loginParameters: ");
                         builder.AppendLine("[");
                         foreach (var item in LoginParameters)
                         {
@@ -166,15 +174,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsWwwAuthenticateDisabled), out propertyOverride);
-            if (Optional.IsDefined(IsWwwAuthenticateDisabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  disableWWWAuthenticate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsWwwAuthenticateDisabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  disableWWWAuthenticate: ");
                     var boolValue = IsWwwAuthenticateDisabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

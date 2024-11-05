@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sphere.Models
         public static bool operator ==(SphereUpdatePolicy left, SphereUpdatePolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SphereUpdatePolicy"/> values are not the same. </summary>
         public static bool operator !=(SphereUpdatePolicy left, SphereUpdatePolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SphereUpdatePolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SphereUpdatePolicy"/>. </summary>
         public static implicit operator SphereUpdatePolicy(string value) => new SphereUpdatePolicy(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

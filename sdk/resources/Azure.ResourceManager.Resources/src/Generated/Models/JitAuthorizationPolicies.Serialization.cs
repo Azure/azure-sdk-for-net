@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<JitAuthorizationPolicies>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<JitAuthorizationPolicies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JitAuthorizationPolicies)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("roleDefinitionId"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         JitAuthorizationPolicies IJsonModel<JitAuthorizationPolicies>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -106,26 +113,28 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
-            builder.Append("  principalId: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  principalId: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  principalId: ");
                 builder.AppendLine($"'{PrincipalId.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinitionId), out propertyOverride);
-            if (Optional.IsDefined(RoleDefinitionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  roleDefinitionId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoleDefinitionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  roleDefinitionId: ");
                     if (RoleDefinitionId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

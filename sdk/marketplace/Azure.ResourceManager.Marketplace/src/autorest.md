@@ -19,6 +19,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -124,6 +125,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
 
 directive:
   - from: Marketplace.json

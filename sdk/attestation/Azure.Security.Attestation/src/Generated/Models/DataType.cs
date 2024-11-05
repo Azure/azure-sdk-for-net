@@ -33,7 +33,7 @@ namespace Azure.Security.Attestation
         public static bool operator ==(DataType left, DataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataType"/> values are not the same. </summary>
         public static bool operator !=(DataType left, DataType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataType"/>. </summary>
         public static implicit operator DataType(string value) => new DataType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Security.Attestation
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

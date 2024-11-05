@@ -19,41 +19,22 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         void IJsonModel<RadiologyInsightsInference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RadiologyInsightsInference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RadiologyInsightsInference)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
-            if (Optional.IsCollectionDefined(Extension))
-            {
-                writer.WritePropertyName("extension"u8);
-                writer.WriteStartArray();
-                foreach (var item in Extension)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         RadiologyInsightsInference IJsonModel<RadiologyInsightsInference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,7 +57,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            string kind = "Unknown";
+            RadiologyInsightsInferenceType kind = "Unknown";
             IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,7 +65,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new RadiologyInsightsInferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extension"u8))
@@ -153,7 +134,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<RadiologyInsightsInference>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

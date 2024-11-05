@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Sql.Models
 
         void IJsonModel<ManagedInstancePairInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePairInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryManagedInstanceId))
             {
                 writer.WritePropertyName("primaryManagedInstanceId"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.Sql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagedInstancePairInfo IJsonModel<ManagedInstancePairInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -120,29 +127,31 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryManagedInstanceId), out propertyOverride);
-            if (Optional.IsDefined(PrimaryManagedInstanceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  primaryManagedInstanceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryManagedInstanceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  primaryManagedInstanceId: ");
                     builder.AppendLine($"'{PrimaryManagedInstanceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerManagedInstanceId), out propertyOverride);
-            if (Optional.IsDefined(PartnerManagedInstanceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  partnerManagedInstanceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerManagedInstanceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  partnerManagedInstanceId: ");
                     builder.AppendLine($"'{PartnerManagedInstanceId.ToString()}'");
                 }
             }

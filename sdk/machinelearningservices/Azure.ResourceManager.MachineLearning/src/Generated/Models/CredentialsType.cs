@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string NoneValue = "None";
         private const string SasValue = "Sas";
         private const string ServicePrincipalValue = "ServicePrincipal";
-        private const string KerberosKeytabValue = "KerberosKeytab";
-        private const string KerberosPasswordValue = "KerberosPassword";
 
         /// <summary> AccountKey. </summary>
         public static CredentialsType AccountKey { get; } = new CredentialsType(AccountKeyValue);
@@ -40,15 +38,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static CredentialsType Sas { get; } = new CredentialsType(SasValue);
         /// <summary> ServicePrincipal. </summary>
         public static CredentialsType ServicePrincipal { get; } = new CredentialsType(ServicePrincipalValue);
-        /// <summary> KerberosKeytab. </summary>
-        public static CredentialsType KerberosKeytab { get; } = new CredentialsType(KerberosKeytabValue);
-        /// <summary> KerberosPassword. </summary>
-        public static CredentialsType KerberosPassword { get; } = new CredentialsType(KerberosPasswordValue);
         /// <summary> Determines if two <see cref="CredentialsType"/> values are the same. </summary>
         public static bool operator ==(CredentialsType left, CredentialsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CredentialsType"/> values are not the same. </summary>
         public static bool operator !=(CredentialsType left, CredentialsType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CredentialsType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CredentialsType"/>. </summary>
         public static implicit operator CredentialsType(string value) => new CredentialsType(value);
 
         /// <inheritdoc />
@@ -59,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

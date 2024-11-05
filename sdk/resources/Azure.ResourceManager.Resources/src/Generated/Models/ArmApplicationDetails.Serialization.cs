@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<ArmApplicationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmApplicationDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("oid"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ArmApplicationDetails IJsonModel<ArmApplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -131,29 +138,31 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObjectId), out propertyOverride);
-            if (Optional.IsDefined(ObjectId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  oid: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ObjectId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  oid: ");
                     builder.AppendLine($"'{ObjectId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Puid), out propertyOverride);
-            if (Optional.IsDefined(Puid) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  puid: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Puid))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  puid: ");
                     if (Puid.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -167,15 +176,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationId), out propertyOverride);
-            if (Optional.IsDefined(ApplicationId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  applicationId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  applicationId: ");
                     builder.AppendLine($"'{ApplicationId.Value.ToString()}'");
                 }
             }

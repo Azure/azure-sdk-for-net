@@ -45,7 +45,7 @@ namespace Azure.Communication.ShortCodes.Models
         public static bool operator ==(ProgramBriefStatus left, ProgramBriefStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProgramBriefStatus"/> values are not the same. </summary>
         public static bool operator !=(ProgramBriefStatus left, ProgramBriefStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProgramBriefStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProgramBriefStatus"/>. </summary>
         public static implicit operator ProgramBriefStatus(string value) => new ProgramBriefStatus(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.Communication.ShortCodes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

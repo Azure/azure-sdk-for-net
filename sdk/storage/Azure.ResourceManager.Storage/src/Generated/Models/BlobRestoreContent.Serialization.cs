@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<BlobRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BlobRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BlobRestoreContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("timetoRestore"u8);
             writer.WriteStringValue(TimeToRestore, "O");
             writer.WritePropertyName("blobRanges"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BlobRestoreContent IJsonModel<BlobRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -117,29 +124,31 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeToRestore), out propertyOverride);
-            builder.Append("  timetoRestore: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  timetoRestore: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  timetoRestore: ");
                 var formattedDateTimeString = TypeFormatters.ToString(TimeToRestore, "o");
                 builder.AppendLine($"'{formattedDateTimeString}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobRanges), out propertyOverride);
-            if (Optional.IsCollectionDefined(BlobRanges) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (BlobRanges.Any() || hasPropertyOverride)
+                builder.Append("  blobRanges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BlobRanges))
                 {
-                    builder.Append("  blobRanges: ");
-                    if (hasPropertyOverride)
+                    if (BlobRanges.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  blobRanges: ");
                         builder.AppendLine("[");
                         foreach (var item in BlobRanges)
                         {

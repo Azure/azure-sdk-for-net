@@ -33,43 +33,43 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             SanitizedHeaders.Add("ServiceBusSupplementaryAuthorization");
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
-                    "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E",
-                    $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E"));
+                    "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E")
+                    {
+                        Value = $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E"
+                    });
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
-                    "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E",
-                    $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E"));
+                    "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E")
+                    {
+                        Value = $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E"
+                    });
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
-                    "[^\\r](?<break>\\n)",
-                    "\r\n")
+                    "[^\\r](?<break>\\n)")
                 {
-                    GroupForReplace = "break"
+                    GroupForReplace = "break",
+                    Value = "\r\n"
                 });
             _serviceVersion = serviceVersion;
         }
 
-        private string GetConnectionString(bool premium = false) => premium ? TestEnvironment.ServiceBusPremiumNamespaceConnectionString : TestEnvironment.ServiceBusConnectionString;
+        private string GetNamespace(bool premium = false) => premium ? TestEnvironment.PremiumFullyQualifiedNamespace : TestEnvironment.FullyQualifiedNamespace;
 
         private ServiceBusAdministrationClientOptions CreateOptions() =>
             InstrumentClientOptions(new ServiceBusAdministrationClientOptions(_serviceVersion));
 
         private ServiceBusAdministrationClient CreateClient(bool premium = false) =>
-            InstrumentClient(
-                new ServiceBusAdministrationClient(
-                    GetConnectionString(premium),
-                    CreateOptions()));
+            InstrumentClient(new ServiceBusAdministrationClient(GetNamespace(premium), TestEnvironment.Credential, CreateOptions()));
 
-        private ServiceBusAdministrationClient CreateAADClient() =>
+        private ServiceBusAdministrationClient CreateConnectionStringClient() =>
             InstrumentClient(
                 new ServiceBusAdministrationClient(
-                    TestEnvironment.FullyQualifiedNamespace,
-                    GetTokenCredential(),
+                    TestEnvironment.ServiceBusConnectionString,
                     CreateOptions()));
 
         private ServiceBusAdministrationClient CreateSharedKeyTokenClient()
         {
-            var properties = ServiceBusConnectionStringProperties.Parse(GetConnectionString());
+            var properties = ServiceBusConnectionStringProperties.Parse(TestEnvironment.ServiceBusConnectionString);
             var credential = new AzureNamedKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
 
             return InstrumentClient(
@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
         private ServiceBusAdministrationClient CreateSasTokenClient()
         {
-            var properties = ServiceBusConnectionStringProperties.Parse(GetConnectionString());
+            var properties = ServiceBusConnectionStringProperties.Parse(TestEnvironment.ServiceBusConnectionString);
             var resource = ServiceBusAdministrationClient.BuildAudienceResource(TestEnvironment.FullyQualifiedNamespace);
             var signature = new SharedAccessSignature(resource, properties.SharedAccessKeyName, properties.SharedAccessKey);
             var credential = new AzureSasCredential(signature.Value);
@@ -505,7 +505,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         {
             var queueName = nameof(GetQueueRuntimeInfo).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var mgmtClient = CreateClient();
-            await using var sbClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            await using var sbClient = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
 
             QueueProperties queue = await mgmtClient.CreateQueueAsync(queueName);
             queue = await mgmtClient.GetQueueAsync(queueName);
@@ -565,7 +565,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var topicName = nameof(GetSubscriptionRuntimeInfoTest).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var client = CreateClient();
-            await using var sbClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            await using var sbClient = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
 
             await client.CreateTopicAsync(topicName);
 
@@ -830,7 +830,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                     ForwardTo = destinationName
                 });
 
-            await using var sbClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            await using var sbClient = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
             ServiceBusSender sender = sbClient.CreateSender(queueName);
             await sender.SendMessageAsync(new ServiceBusMessage() { MessageId = "mid" });
 
@@ -925,11 +925,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [RecordedTest]
-        public async Task AuthenticateWithAAD()
+        public async Task AuthenticateWithConnectionString()
         {
             var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var client = CreateAADClient();
+            var client = CreateConnectionStringClient();
 
             var queueOptions = new CreateQueueOptions(queueName);
             QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);

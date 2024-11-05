@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.Scenario
             _workspace = await CreateAOIWorkspace(_resourceGroup, Recording.GenerateAssetName("AopTestWorkspace"));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Get()
         {
             string tableName = "Alert";
@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.Scenario
             Assert.IsTrue(table.Value.Data.IsTotalRetentionInDaysAsDefault);
         }
 
-        [Test]
+        [RecordedTest]
+        [LiveOnly(Reason = "Test regularly times out during playback.")]
         public async Task GetAll()
         {
             var tables = await _workspace.GetOperationalInsightsTables().GetAllAsync().ToEnumerableAsync();

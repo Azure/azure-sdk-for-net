@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Redis.Models
 
         void IJsonModel<RedisAccessKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RedisAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisAccessKeys)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.Redis.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RedisAccessKeys IJsonModel<RedisAccessKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -112,15 +119,16 @@ namespace Azure.ResourceManager.Redis.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryKey), out propertyOverride);
-            if (Optional.IsDefined(PrimaryKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  primaryKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  primaryKey: ");
                     if (PrimaryKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +142,16 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryKey), out propertyOverride);
-            if (Optional.IsDefined(SecondaryKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  secondaryKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  secondaryKey: ");
                     if (SecondaryKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

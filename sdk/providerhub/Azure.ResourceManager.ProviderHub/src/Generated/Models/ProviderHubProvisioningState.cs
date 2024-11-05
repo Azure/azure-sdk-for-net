@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static bool operator ==(ProviderHubProvisioningState left, ProviderHubProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProviderHubProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ProviderHubProvisioningState left, ProviderHubProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProviderHubProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderHubProvisioningState"/>. </summary>
         public static implicit operator ProviderHubProvisioningState(string value) => new ProviderHubProvisioningState(value);
 
         /// <inheritdoc />
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

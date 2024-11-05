@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<PhysicalPartitionStorageInfoCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PhysicalPartitionStorageInfoCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PhysicalPartitionStorageInfoCollection)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsCollectionDefined(PhysicalPartitionStorageInfoCollectionValue))
             {
                 writer.WritePropertyName("physicalPartitionStorageInfoCollection"u8);
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PhysicalPartitionStorageInfoCollection IJsonModel<PhysicalPartitionStorageInfoCollection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,17 +123,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalPartitionStorageInfoCollectionValue), out propertyOverride);
-            if (Optional.IsCollectionDefined(PhysicalPartitionStorageInfoCollectionValue) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PhysicalPartitionStorageInfoCollectionValue.Any() || hasPropertyOverride)
+                builder.Append("  physicalPartitionStorageInfoCollection: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PhysicalPartitionStorageInfoCollectionValue))
                 {
-                    builder.Append("  physicalPartitionStorageInfoCollection: ");
-                    if (hasPropertyOverride)
+                    if (PhysicalPartitionStorageInfoCollectionValue.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  physicalPartitionStorageInfoCollection: ");
                         builder.AppendLine("[");
                         foreach (var item in PhysicalPartitionStorageInfoCollectionValue)
                         {

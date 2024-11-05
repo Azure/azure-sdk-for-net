@@ -16,7 +16,7 @@ $csprojContent = @"
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <PublishAot>true</PublishAot>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
     <IsTestSupportProject>true</IsTestSupportProject>
@@ -72,7 +72,7 @@ if ($LASTEXITCODE -ne 0)
     Set-Location -Path ..
     Remove-Item -Path "./$folderPath" -Recurse -Force
 
-    Write-Host "\nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
+    Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
     Exit 2
 }
 
@@ -104,7 +104,10 @@ if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
     $numWarnings = $warnings.Count
 
     if ($numWarnings -gt 0) {
-      Write-Host "Found $numWarnings additional warnings that were not expected:`n$warnings"
+      Write-Host "Found $numWarnings additional warnings that were not expected:"
+      foreach ($warning in $warnings) {
+        Write-Host $warning
+      }
     }
 
     Write-Host "Deleting test app files."
@@ -112,7 +115,7 @@ if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
     Set-Location -Path ..
     Remove-Item -Path "./$folderPath" -Recurse -Force
 
-    Write-Host "\nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
+    Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
 
     exit $warnings.Count
 }
@@ -126,7 +129,10 @@ Write-Host "Checking against the list of expected warnings. There are $numExpect
 $warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+' | select-string -pattern '##' -notmatch | select-string -pattern $expectedWarnings -notmatch
 $numWarnings = $warnings.Count
 if ($numWarnings -gt 0) {
-  Write-Host "Found $numWarnings additional warnings that were not expected:`n$warnings"
+  Write-Host "Found $numWarnings additional warnings that were not expected:"
+  foreach ($warning in $warnings) {
+    Write-Host $warning
+  }
 }
 
 ### Cleanup ###
@@ -138,9 +144,9 @@ Remove-Item -Path "./$folderPath" -Recurse -Force
 
 if ($numExpectedWarnings -ne $actualWarningCount) {
   Write-Host "The number of expected warnings ($numExpectedWarnings) was different than the actual warning count ($actualWarningCount)."
-  Write-Host "\nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
+  Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
   exit 2
 }
 
-Write-Host "\nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
+Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
 exit $warnings.Count

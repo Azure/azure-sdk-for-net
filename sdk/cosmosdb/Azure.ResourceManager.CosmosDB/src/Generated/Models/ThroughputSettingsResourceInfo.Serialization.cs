@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<ThroughputSettingsResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ThroughputSettingsResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Throughput))
             {
                 writer.WritePropertyName("throughput"u8);
@@ -72,7 +80,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ThroughputSettingsResourceInfo IJsonModel<ThroughputSettingsResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -171,43 +178,46 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Throughput), out propertyOverride);
-            if (Optional.IsDefined(Throughput) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  throughput: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Throughput))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  throughput: ");
                     builder.AppendLine($"{Throughput.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoscaleSettings), out propertyOverride);
-            if (Optional.IsDefined(AutoscaleSettings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  autoscaleSettings: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoscaleSettings))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  autoscaleSettings: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AutoscaleSettings, options, 2, false, "  autoscaleSettings: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumThroughput), out propertyOverride);
-            if (Optional.IsDefined(MinimumThroughput) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minimumThroughput: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinimumThroughput))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minimumThroughput: ");
                     if (MinimumThroughput.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -221,15 +231,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OfferReplacePending), out propertyOverride);
-            if (Optional.IsDefined(OfferReplacePending) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  offerReplacePending: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OfferReplacePending))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  offerReplacePending: ");
                     if (OfferReplacePending.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -243,15 +254,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstantMaximumThroughput), out propertyOverride);
-            if (Optional.IsDefined(InstantMaximumThroughput) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  instantMaximumThroughput: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstantMaximumThroughput))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  instantMaximumThroughput: ");
                     if (InstantMaximumThroughput.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -265,15 +277,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SoftAllowedMaximumThroughput), out propertyOverride);
-            if (Optional.IsDefined(SoftAllowedMaximumThroughput) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  softAllowedMaximumThroughput: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SoftAllowedMaximumThroughput))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  softAllowedMaximumThroughput: ");
                     if (SoftAllowedMaximumThroughput.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<AccountKeyMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AccountKeyMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AccountKeyMetadata)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(GeneratedOn))
             {
                 writer.WritePropertyName("generationTime"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AccountKeyMetadata IJsonModel<AccountKeyMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -105,15 +112,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeneratedOn), out propertyOverride);
-            if (Optional.IsDefined(GeneratedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  generationTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GeneratedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  generationTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(GeneratedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

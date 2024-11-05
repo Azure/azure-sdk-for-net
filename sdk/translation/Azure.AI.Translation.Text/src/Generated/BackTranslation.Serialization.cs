@@ -19,19 +19,27 @@ namespace Azure.AI.Translation.Text
 
         void IJsonModel<BackTranslation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BackTranslation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackTranslation)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("normalizedText"u8);
             writer.WriteStringValue(NormalizedText);
             writer.WritePropertyName("displayText"u8);
             writer.WriteStringValue(DisplayText);
             writer.WritePropertyName("numExamples"u8);
-            writer.WriteNumberValue(NumExamples);
+            writer.WriteNumberValue(ExamplesCount);
             writer.WritePropertyName("frequencyCount"u8);
             writer.WriteNumberValue(FrequencyCount);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -49,7 +57,6 @@ namespace Azure.AI.Translation.Text
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BackTranslation IJsonModel<BackTranslation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

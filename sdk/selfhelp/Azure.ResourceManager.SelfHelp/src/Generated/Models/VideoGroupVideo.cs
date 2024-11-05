@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VideoGroupVideo"/>. </summary>
-        public VideoGroupVideo()
+        internal VideoGroupVideo()
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Link to the video. </summary>
-        public string Src { get; set; }
+        public string Src { get; }
         /// <summary> Title of the video. </summary>
-        public string Title { get; set; }
+        public string Title { get; }
     }
 }

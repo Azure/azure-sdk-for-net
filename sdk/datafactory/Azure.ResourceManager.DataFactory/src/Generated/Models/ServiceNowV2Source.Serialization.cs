@@ -20,56 +20,31 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<ServiceNowV2Source>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceNowV2Source>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceNowV2Source)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteObjectValue(Expression, options);
             }
-            if (Optional.IsDefined(QueryTimeout))
+            if (Optional.IsDefined(PageSize))
             {
-                writer.WritePropertyName("queryTimeout"u8);
-                JsonSerializer.Serialize(writer, QueryTimeout);
-            }
-            if (Optional.IsDefined(AdditionalColumns))
-            {
-                writer.WritePropertyName("additionalColumns"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AdditionalColumns);
-#else
-                using (JsonDocument document = JsonDocument.Parse(AdditionalColumns))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CopySourceType);
-            if (Optional.IsDefined(SourceRetryCount))
-            {
-                writer.WritePropertyName("sourceRetryCount"u8);
-                JsonSerializer.Serialize(writer, SourceRetryCount);
-            }
-            if (Optional.IsDefined(SourceRetryWait))
-            {
-                writer.WritePropertyName("sourceRetryWait"u8);
-                JsonSerializer.Serialize(writer, SourceRetryWait);
-            }
-            if (Optional.IsDefined(MaxConcurrentConnections))
-            {
-                writer.WritePropertyName("maxConcurrentConnections"u8);
-                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
-            }
-            if (Optional.IsDefined(DisableMetricsCollection))
-            {
-                writer.WritePropertyName("disableMetricsCollection"u8);
-                JsonSerializer.Serialize(writer, DisableMetricsCollection);
+                writer.WritePropertyName("pageSize"u8);
+                JsonSerializer.Serialize(writer, PageSize);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -83,7 +58,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         ServiceNowV2Source IJsonModel<ServiceNowV2Source>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -107,6 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryExpressionV2 expression = default;
+            DataFactoryElement<int> pageSize = default;
             DataFactoryElement<string> queryTimeout = default;
             BinaryData additionalColumns = default;
             string type = default;
@@ -125,6 +100,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     expression = DataFactoryExpressionV2.DeserializeDataFactoryExpressionV2(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("pageSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pageSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))
@@ -198,7 +182,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties,
                 queryTimeout,
                 additionalColumns,
-                expression);
+                expression,
+                pageSize);
         }
 
         BinaryData IPersistableModel<ServiceNowV2Source>.Write(ModelReaderWriterOptions options)

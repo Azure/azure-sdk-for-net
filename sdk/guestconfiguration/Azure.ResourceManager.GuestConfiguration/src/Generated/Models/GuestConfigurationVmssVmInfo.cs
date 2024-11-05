@@ -69,14 +69,19 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> UUID of the VM. </summary>
+        [WirePath("vmId")]
         public Guid? VmId { get; }
         /// <summary> Azure resource Id of the VM. </summary>
+        [WirePath("vmResourceId")]
         public ResourceIdentifier VmResourceId { get; }
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
+        [WirePath("complianceStatus")]
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
         /// <summary> Id of the latest report for the guest configuration assignment. </summary>
+        [WirePath("latestReportId")]
         public Guid? LatestReportId { get; }
         /// <summary> Date and time when last compliance status was checked. </summary>
+        [WirePath("lastComplianceChecked")]
         public DateTimeOffset? LastComplianceCheckedOn { get; }
     }
 }

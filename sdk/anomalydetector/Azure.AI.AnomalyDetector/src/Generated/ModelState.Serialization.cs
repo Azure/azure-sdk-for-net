@@ -19,13 +19,21 @@ namespace Azure.AI.AnomalyDetector
 
         void IJsonModel<ModelState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ModelState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ModelState)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(EpochIds))
             {
                 writer.WritePropertyName("epochIds"u8);
@@ -81,7 +89,6 @@ namespace Azure.AI.AnomalyDetector
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ModelState IJsonModel<ModelState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -104,10 +111,10 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            IList<int> epochIds = default;
-            IList<float> trainLosses = default;
-            IList<float> validationLosses = default;
-            IList<float> latenciesInSeconds = default;
+            IReadOnlyList<int> epochIds = default;
+            IReadOnlyList<float> trainLosses = default;
+            IReadOnlyList<float> validationLosses = default;
+            IReadOnlyList<float> latenciesInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

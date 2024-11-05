@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <Description>This is a dummy project used to restore nuget packages used for doc generation</Description>
     <AssemblyTitle>Doc generation Packages</AssemblyTitle>
   </PropertyGroup>

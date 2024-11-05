@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<LegalHoldProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<LegalHoldProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LegalHoldProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(HasLegalHold))
             {
                 writer.WritePropertyName("hasLegalHold"u8);
@@ -63,7 +71,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         LegalHoldProperties IJsonModel<LegalHoldProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -146,32 +153,34 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasLegalHold), out propertyOverride);
-            if (Optional.IsDefined(HasLegalHold) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  hasLegalHold: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HasLegalHold))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  hasLegalHold: ");
                     var boolValue = HasLegalHold.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (Optional.IsCollectionDefined(Tags) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Tags.Any() || hasPropertyOverride)
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
                 {
-                    builder.Append("  tags: ");
-                    if (hasPropertyOverride)
+                    if (Tags.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  tags: ");
                         builder.AppendLine("[");
                         foreach (var item in Tags)
                         {
@@ -183,15 +192,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProtectedAppendWritesHistory), out propertyOverride);
-            if (Optional.IsDefined(ProtectedAppendWritesHistory) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  protectedAppendWritesHistory: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProtectedAppendWritesHistory))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  protectedAppendWritesHistory: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ProtectedAppendWritesHistory, options, 2, false, "  protectedAppendWritesHistory: ");
                 }
             }

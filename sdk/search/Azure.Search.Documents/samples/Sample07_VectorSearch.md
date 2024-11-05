@@ -22,3 +22,4 @@ Here's the list of samples that will show you how to index the vector fields and
      * [Multi-field Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizableTextQuery.md#multi-field-vector-search)
 * [Vector Semantic Hybrid Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingSemanticHybridQuery.md)
 * [Vector Search Using Field Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingFieldBuilder.md)
+* [Vector Search Using Reduced Embeddings](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingReducedEmbeddings.md)

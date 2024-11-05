@@ -19,17 +19,25 @@ namespace Azure.AI.Translation.Text
 
         void IJsonModel<DetectedLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DetectedLanguage)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
             writer.WritePropertyName("score"u8);
-            writer.WriteNumberValue(Score);
+            writer.WriteNumberValue(Confidence);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -45,7 +53,6 @@ namespace Azure.AI.Translation.Text
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DetectedLanguage IJsonModel<DetectedLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

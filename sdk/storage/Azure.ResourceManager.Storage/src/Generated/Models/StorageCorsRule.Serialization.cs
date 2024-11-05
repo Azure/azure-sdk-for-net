@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<StorageCorsRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StorageCorsRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageCorsRule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("allowedOrigins"u8);
             writer.WriteStartArray();
             foreach (var item in AllowedOrigins)
@@ -73,7 +81,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StorageCorsRule IJsonModel<StorageCorsRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -177,17 +184,18 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedOrigins), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedOrigins) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedOrigins.Any() || hasPropertyOverride)
+                builder.Append("  allowedOrigins: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedOrigins))
                 {
-                    builder.Append("  allowedOrigins: ");
-                    if (hasPropertyOverride)
+                    if (AllowedOrigins.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedOrigins: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedOrigins)
                         {
@@ -212,17 +220,18 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedMethods), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedMethods) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedMethods.Any() || hasPropertyOverride)
+                builder.Append("  allowedMethods: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedMethods))
                 {
-                    builder.Append("  allowedMethods: ");
-                    if (hasPropertyOverride)
+                    if (AllowedMethods.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedMethods: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedMethods)
                         {
@@ -234,28 +243,30 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxAgeInSeconds), out propertyOverride);
-            builder.Append("  maxAgeInSeconds: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  maxAgeInSeconds: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  maxAgeInSeconds: ");
                 builder.AppendLine($"{MaxAgeInSeconds}");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExposedHeaders), out propertyOverride);
-            if (Optional.IsCollectionDefined(ExposedHeaders) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ExposedHeaders.Any() || hasPropertyOverride)
+                builder.Append("  exposedHeaders: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExposedHeaders))
                 {
-                    builder.Append("  exposedHeaders: ");
-                    if (hasPropertyOverride)
+                    if (ExposedHeaders.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  exposedHeaders: ");
                         builder.AppendLine("[");
                         foreach (var item in ExposedHeaders)
                         {
@@ -280,17 +291,18 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedHeaders), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedHeaders) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedHeaders.Any() || hasPropertyOverride)
+                builder.Append("  allowedHeaders: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedHeaders))
                 {
-                    builder.Append("  allowedHeaders: ");
-                    if (hasPropertyOverride)
+                    if (AllowedHeaders.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedHeaders: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedHeaders)
                         {

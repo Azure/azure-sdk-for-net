@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="capacity"> The object that represents all properties related to capacity enforcement on an account. </param>
+        /// <param name="capacityMode"> Indicates the capacityMode of the Cosmos DB account. </param>
         /// <param name="enableMaterializedViews"> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </param>
         /// <param name="keysMetadata"> This property is ignored during the update/create operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </param>
         /// <param name="enablePartitionMerge"> Flag to indicate enabling/disabling of Partition Merge feature on the account. </param>
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, string customerManagedKeyStatus, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel, bool? enablePerRegionPerPartitionAutoscale, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity, CapacityMode? capacityMode, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, string customerManagedKeyStatus, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel, bool? enablePerRegionPerPartitionAutoscale, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ConsistencyPolicy = consistencyPolicy;
@@ -147,6 +148,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DisableLocalAuth = disableLocalAuth;
             RestoreParameters = restoreParameters;
             Capacity = capacity;
+            CapacityMode = capacityMode;
             EnableMaterializedViews = enableMaterializedViews;
             KeysMetadata = keysMetadata;
             EnablePartitionMerge = enablePartitionMerge;
@@ -215,7 +217,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? IsFreeTierEnabled { get; set; }
         /// <summary> API specific properties. Currently, supported only for MongoDB API. </summary>
         internal ApiProperties ApiProperties { get; set; }
-        /// <summary> Describes the ServerVersion of an a MongoDB account. </summary>
+        /// <summary> Describes the version of the MongoDB account. </summary>
         [WirePath("properties.apiProperties.serverVersion")]
         public CosmosDBServerVersion? ApiServerVersion
         {
@@ -301,6 +303,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
+        /// <summary> Indicates the capacityMode of the Cosmos DB account. </summary>
+        [WirePath("properties.capacityMode")]
+        public CapacityMode? CapacityMode { get; set; }
         /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
         [WirePath("properties.enableMaterializedViews")]
         public bool? EnableMaterializedViews { get; set; }

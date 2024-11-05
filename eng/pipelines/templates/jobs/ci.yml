@@ -57,10 +57,14 @@ jobs:
       Codeql.Enabled: true
       Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
       Codeql.SkipTaskAutoInjection: false
+      SDKType: ${{ parameters.SDKType }}
 
     steps:
-      - checkout: self
-        fetchDepth: 0
+      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+        parameters:
+          Paths:
+            - "/*"
+            - "!SessionRecords"
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
         parameters:
@@ -124,6 +128,17 @@ jobs:
           pwsh: true
           workingDirectory: $(Pipeline.Workspace)
         displayName: Update package properties with dev version
+
+      - task: Powershell@2
+        inputs:
+          filePath: $(Build.SourcesDirectory)/eng/scripts/Save-Package-Namespaces-Property.ps1
+          arguments: >
+            -RepoRoot $(Build.SourcesDirectory)
+            -PackageInfoDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
+            -BuildConfiguration $(BuildConfiguration)
+          pwsh: true
+          workingDirectory: $(Pipeline.Workspace)
+        displayName: Update package properties with namespaces
 
       - template: ../steps/archetype-sdk-docs.yml
         parameters:
@@ -330,4 +345,3 @@ jobs:
             TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
             # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
             ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
-

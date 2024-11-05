@@ -1,16 +1,38 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2024-10-30)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-01-01-preview' to 'package-2024-06-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/eea7584434f9225cad0327d83d5c6d84257a4d7d/specification/nginx/resource-manager/readme.md
+    - Added NGINX App Protect Web Application Firewall (WAF) support.
+
+### Other Changes
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.1.0-beta.1 (2024-05-17)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-04-01' to 'package-2024-01-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/d1f4d6fcf1bbb2e71a32bb2079de12f17fedf56a/specification/nginx/resource-manager/readme.md
+    - Added AutoScaling and AutoUpgrade
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.39.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
 
 ## 1.0.0 (2024-01-04)
 

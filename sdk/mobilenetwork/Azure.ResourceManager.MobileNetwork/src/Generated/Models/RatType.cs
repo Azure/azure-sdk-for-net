@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> RAT Type. </summary>
+    /// <summary>
+    /// RAT Type
+    /// Serialized Name: RatType
+    /// </summary>
     public readonly partial struct RatType : IEquatable<RatType>
     {
         private readonly string _value;
@@ -25,15 +28,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string FourGValue = "4G";
         private const string FiveGValue = "5G";
 
-        /// <summary> 4G. </summary>
+        /// <summary>
+        /// 4G
+        /// Serialized Name: RatType.4G
+        /// </summary>
         public static RatType FourG { get; } = new RatType(FourGValue);
-        /// <summary> 5G. </summary>
+        /// <summary>
+        /// 5G
+        /// Serialized Name: RatType.5G
+        /// </summary>
         public static RatType FiveG { get; } = new RatType(FiveGValue);
         /// <summary> Determines if two <see cref="RatType"/> values are the same. </summary>
         public static bool operator ==(RatType left, RatType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RatType"/> values are not the same. </summary>
         public static bool operator !=(RatType left, RatType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RatType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RatType"/>. </summary>
         public static implicit operator RatType(string value) => new RatType(value);
 
         /// <inheritdoc />
@@ -44,7 +53,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

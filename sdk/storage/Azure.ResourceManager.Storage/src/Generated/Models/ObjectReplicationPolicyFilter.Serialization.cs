@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<ObjectReplicationPolicyFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ObjectReplicationPolicyFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ObjectReplicationPolicyFilter)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PrefixMatch))
             {
                 writer.WritePropertyName("prefixMatch"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ObjectReplicationPolicyFilter IJsonModel<ObjectReplicationPolicyFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,17 +134,18 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrefixMatch), out propertyOverride);
-            if (Optional.IsCollectionDefined(PrefixMatch) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PrefixMatch.Any() || hasPropertyOverride)
+                builder.Append("  prefixMatch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrefixMatch))
                 {
-                    builder.Append("  prefixMatch: ");
-                    if (hasPropertyOverride)
+                    if (PrefixMatch.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  prefixMatch: ");
                         builder.AppendLine("[");
                         foreach (var item in PrefixMatch)
                         {
@@ -162,15 +170,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinCreationTime), out propertyOverride);
-            if (Optional.IsDefined(MinCreationTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minCreationTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinCreationTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minCreationTime: ");
                     if (MinCreationTime.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 namespace Azure.AI.Translation.Document
 {
@@ -107,5 +108,20 @@ namespace Azure.AI.Translation.Document
             return new TranslationStatusResult(id, createdOn, lastModified, status, errorJson, newSummary);
         }
         #endregion Statuses
+
+        /// <summary> Initializes a new instance of <see cref="Document.DocumentTranslateContent"/>. </summary>
+        /// <param name="document"> Document to be translated in the form. </param>
+        /// <param name="glossary"> Glossary-translation memory will be used during translation in the form. </param>
+        /// <returns> A new <see cref="Document.DocumentTranslateContent"/> instance for mocking. </returns>
+        public static DocumentTranslateContent DocumentTranslateContent(Stream document = null, IEnumerable<Stream> glossary = null)
+        {
+            glossary ??= new List<Stream>();
+            var multipartGlossary = new List<MultipartFormFileData>();
+            foreach (var item in glossary) {
+                multipartGlossary.Add(new MultipartFormFileData(null, item, null));
+            }
+
+            return new DocumentTranslateContent(new MultipartFormFileData(null, document, null), multipartGlossary, serializedAdditionalRawData: null);
+        }
     }
 }

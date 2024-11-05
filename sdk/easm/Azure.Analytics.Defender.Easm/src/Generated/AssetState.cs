@@ -48,7 +48,7 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator ==(AssetState left, AssetState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssetState"/> values are not the same. </summary>
         public static bool operator !=(AssetState left, AssetState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AssetState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AssetState"/>. </summary>
         public static implicit operator AssetState(string value) => new AssetState(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

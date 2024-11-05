@@ -37,12 +37,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             try
             {
                 {
-                    TokenCredential tokenCredential =
-                    new ClientSecretCredential(
-                        ActiveDirectoryTenantId,
-                        ActiveDirectoryApplicationId,
-                        ActiveDirectoryApplicationSecret,
-                        new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+                    TokenCredential tokenCredential = new DefaultAzureCredential();
 
                     TransferManager transferManager = new TransferManager();
 
@@ -57,11 +52,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     // Construct simple blob resources for data movement
                     #region Snippet:ResourceConstruction_Shares
                     StorageResource directory = shares.FromDirectory(
-                        "http://myaccount.files.core.windows.net/share/path/to/directory");
+                        new Uri("http://myaccount.files.core.windows.net/share/path/to/directory"));
                     StorageResource rootDirectory = shares.FromDirectory(
-                        "http://myaccount.files.core.windows.net/share");
+                        new Uri("http://myaccount.files.core.windows.net/share"));
                     StorageResource file = shares.FromFile(
-                        "http://myaccount.files.core.windows.net/share/path/to/file.txt");
+                        new Uri("http://myaccount.files.core.windows.net/share/path/to/file.txt"));
                     #endregion
                 }
                 {
@@ -76,11 +71,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     StorageSharedKeyCredential sharedKeyCredential = new(StorageAccountName, StorageAccountKey);
                     // Get blobs provider with credential
-                    AzureSasCredential GenerateSas(string uri, bool readOnly)
+                    AzureSasCredential GenerateSas(Uri uri, bool readOnly)
                     {
                         // Quick sample demonstrating minimal steps
                         // Construct your SAS according to your needs
-                        ShareUriBuilder pathUri = new(new Uri(uri));
+                        ShareUriBuilder pathUri = new(uri);
                         ShareSasBuilder sas = new(ShareSasPermissions.All, DateTimeOffset.Now.AddHours(1))
                         {
                             ShareName = pathUri.ShareName,
@@ -115,8 +110,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 LocalFilesStorageResourceProvider files = new();
 
                 // Get a reference to a destination blobs
-                string destinationFolderUri = share.GetDirectoryClient("sample-directory").Uri.ToString();
-                string destinationFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file").Uri.ToString();
+                Uri destinationFolderUri = share.GetDirectoryClient("sample-directory").Uri;
+                Uri destinationFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file").Uri;
                 TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 
                 // Create simple transfer single blob upload job
@@ -129,7 +124,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 #region Snippet:SimpleDirectoryUpload_Shares
                 DataTransfer folderTransfer = await transferManager.StartTransferAsync(
-                    sourceResource: files.FromFile(sourceLocalDirectory),
+                    sourceResource: files.FromDirectory(sourceLocalDirectory),
                     destinationResource: shares.FromDirectory(destinationFolderUri));
                 await folderTransfer.WaitForCompletionAsync();
                 #endregion
@@ -158,8 +153,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 LocalFilesStorageResourceProvider files = new();
 
                 // Get a reference to a destination blobs
-                string sourceDirectoryUri = share.GetDirectoryClient("sample-directory").Uri.ToString();
-                string sourceFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file").Uri.ToString();
+                Uri sourceDirectoryUri = share.GetDirectoryClient("sample-directory").Uri;
+                Uri sourceFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file").Uri;
                 TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 
                 // Create simple transfer single blob upload job
@@ -197,10 +192,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 ShareFilesStorageResourceProvider shares = new(new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey));
 
                 // Get a reference to a destination blobs
-                string sourceDirectoryUri = share.GetDirectoryClient("sample-directory-1").Uri.ToString();
-                string destinationDirectoryUri = share.GetDirectoryClient("sample-directory-2").Uri.ToString();
-                string sourceFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file-1").Uri.ToString();
-                string destinationFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file-2").Uri.ToString();
+                Uri sourceDirectoryUri = share.GetDirectoryClient("sample-directory-1").Uri;
+                Uri destinationDirectoryUri = share.GetDirectoryClient("sample-directory-2").Uri;
+                Uri sourceFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file-1").Uri;
+                Uri destinationFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file-2").Uri;
                 TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 
                 // Create simple transfer single blob upload job

@@ -47,21 +47,21 @@ namespace Azure.Messaging.EventGrid.Namespaces
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ReceiveResult"/>. </summary>
-        /// <param name="value"> Array of receive responses, one per cloud event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ReceiveResult(IEnumerable<ReceiveDetails> value)
+        /// <param name="details"> Array of receive responses, one per cloud event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        internal ReceiveResult(IEnumerable<ReceiveDetails> details)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(details, nameof(details));
 
-            Value = value.ToList();
+            Details = details.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ReceiveResult"/>. </summary>
-        /// <param name="value"> Array of receive responses, one per cloud event. </param>
+        /// <param name="details"> Array of receive responses, one per cloud event. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReceiveResult(IReadOnlyList<ReceiveDetails> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReceiveResult(IReadOnlyList<ReceiveDetails> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
+            Details = details;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,6 +71,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         /// <summary> Array of receive responses, one per cloud event. </summary>
-        public IReadOnlyList<ReceiveDetails> Value { get; }
+        public IReadOnlyList<ReceiveDetails> Details { get; }
     }
 }

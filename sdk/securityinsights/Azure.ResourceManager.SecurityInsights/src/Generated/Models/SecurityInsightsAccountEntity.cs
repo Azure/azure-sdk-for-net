@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="displayName"> The display name of the account. </param>
         /// <param name="hostEntityId"> The Host entity id that contains the account in case it is a local account (not domain joined). </param>
         /// <param name="isDomainJoined"> Determines whether this is a domain account. </param>
-        /// <param name="ntDomain"> The NetBIOS domain name as it appears in the alert format - domain\username. Examples: NT AUTHORITY. </param>
+        /// <param name="ntDomain"> The NetBIOS domain name as it appears in the alert format domain/username. Examples: NT AUTHORITY. </param>
         /// <param name="objectGuid"> The objectGUID attribute is a single-value attribute that is the unique identifier for the object, assigned by active directory. </param>
         /// <param name="puid"> The Azure Active Directory Passport User ID. </param>
         /// <param name="sid"> The account security identifier, e.g. S-1-5-18. </param>
@@ -92,32 +92,46 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The Azure Active Directory tenant id. </summary>
+        [WirePath("properties.aadTenantId")]
         public string AadTenantId { get; }
         /// <summary> The Azure Active Directory user id. </summary>
+        [WirePath("properties.aadUserId")]
         public string AadUserId { get; }
         /// <summary> The name of the account. This field should hold only the name without any domain added to it, i.e. administrator. </summary>
+        [WirePath("properties.accountName")]
         public string AccountName { get; }
         /// <summary> The display name of the account. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> The Host entity id that contains the account in case it is a local account (not domain joined). </summary>
+        [WirePath("properties.hostEntityId")]
         public string HostEntityId { get; }
         /// <summary> Determines whether this is a domain account. </summary>
+        [WirePath("properties.isDomainJoined")]
         public bool? IsDomainJoined { get; }
-        /// <summary> The NetBIOS domain name as it appears in the alert format - domain\username. Examples: NT AUTHORITY. </summary>
+        /// <summary> The NetBIOS domain name as it appears in the alert format domain/username. Examples: NT AUTHORITY. </summary>
+        [WirePath("properties.ntDomain")]
         public string NtDomain { get; }
         /// <summary> The objectGUID attribute is a single-value attribute that is the unique identifier for the object, assigned by active directory. </summary>
+        [WirePath("properties.objectGuid")]
         public Guid? ObjectGuid { get; }
         /// <summary> The Azure Active Directory Passport User ID. </summary>
+        [WirePath("properties.puid")]
         public string Puid { get; }
         /// <summary> The account security identifier, e.g. S-1-5-18. </summary>
+        [WirePath("properties.sid")]
         public string Sid { get; }
         /// <summary> The user principal name suffix for the account, in some cases it is also the domain name. Examples: contoso.com. </summary>
+        [WirePath("properties.upnSuffix")]
         public string UpnSuffix { get; }
         /// <summary> The fully qualified domain DNS name. </summary>
+        [WirePath("properties.dnsDomain")]
         public string DnsDomain { get; }
     }
 }

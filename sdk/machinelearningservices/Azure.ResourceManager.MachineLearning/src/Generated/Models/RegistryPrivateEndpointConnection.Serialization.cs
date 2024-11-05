@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +21,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<RegistryPrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RegistryPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RegistryPrivateEndpointConnection)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
                 if (Id != null)
@@ -81,16 +91,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("privateEndpoint");
                 }
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(RegistryPrivateLinkServiceConnectionState))
             {
-                if (PrivateLinkServiceConnectionState != null)
+                if (RegistryPrivateLinkServiceConnectionState != null)
                 {
-                    writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                    writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                    writer.WritePropertyName("registryPrivateLinkServiceConnectionState"u8);
+                    writer.WriteObjectValue(RegistryPrivateLinkServiceConnectionState, options);
                 }
                 else
                 {
-                    writer.WriteNull("privateLinkServiceConnectionState");
+                    writer.WriteNull("registryPrivateLinkServiceConnectionState");
                 }
             }
             if (Optional.IsDefined(ProvisioningState))
@@ -121,7 +131,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RegistryPrivateEndpointConnection IJsonModel<RegistryPrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -148,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             AzureLocation? location = default;
             IList<string> groupIds = default;
             RegistryPrivateEndpoint privateEndpoint = default;
-            RegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -208,14 +217,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             privateEndpoint = RegistryPrivateEndpoint.DeserializeRegistryPrivateEndpoint(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkServiceConnectionState"u8))
+                        if (property0.NameEquals("registryPrivateLinkServiceConnectionState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                privateLinkServiceConnectionState = null;
+                                registryPrivateLinkServiceConnectionState = null;
                                 continue;
                             }
-                            privateLinkServiceConnectionState = RegistryPrivateLinkServiceConnectionState.DeserializeRegistryPrivateLinkServiceConnectionState(property0.Value, options);
+                            registryPrivateLinkServiceConnectionState = RegistryPrivateLinkServiceConnectionState.DeserializeRegistryPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -242,9 +251,146 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 location,
                 groupIds ?? new ChangeTrackingList<string>(),
                 privateEndpoint,
-                privateLinkServiceConnectionState,
+                registryPrivateLinkServiceConnectionState,
                 provisioningState,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupIds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    groupIds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(GroupIds))
+                {
+                    if (GroupIds.Any())
+                    {
+                        builder.Append("    groupIds: ");
+                        builder.AppendLine("[");
+                        foreach (var item in GroupIds)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateEndpoint))
+                {
+                    builder.Append("    privateEndpoint: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PrivateEndpoint, options, 4, false, "    privateEndpoint: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistryPrivateLinkServiceConnectionState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    registryPrivateLinkServiceConnectionState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegistryPrivateLinkServiceConnectionState))
+                {
+                    builder.Append("    registryPrivateLinkServiceConnectionState: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RegistryPrivateLinkServiceConnectionState, options, 4, false, "    registryPrivateLinkServiceConnectionState: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    if (ProvisioningState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProvisioningState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProvisioningState}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<RegistryPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)
@@ -255,6 +401,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RegistryPrivateEndpointConnection)} does not support writing '{options.Format}' format.");
             }

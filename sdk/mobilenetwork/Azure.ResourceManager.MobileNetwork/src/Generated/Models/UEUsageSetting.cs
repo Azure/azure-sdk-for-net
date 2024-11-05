@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The UE's usage setting. </summary>
+    /// <summary>
+    /// The UE's usage setting
+    /// Serialized Name: UeUsageSetting
+    /// </summary>
     public readonly partial struct UEUsageSetting : IEquatable<UEUsageSetting>
     {
         private readonly string _value;
@@ -25,15 +28,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string VoiceCentricValue = "VoiceCentric";
         private const string DataCentricValue = "DataCentric";
 
-        /// <summary> VoiceCentric. </summary>
+        /// <summary>
+        /// VoiceCentric
+        /// Serialized Name: UeUsageSetting.VoiceCentric
+        /// </summary>
         public static UEUsageSetting VoiceCentric { get; } = new UEUsageSetting(VoiceCentricValue);
-        /// <summary> DataCentric. </summary>
+        /// <summary>
+        /// DataCentric
+        /// Serialized Name: UeUsageSetting.DataCentric
+        /// </summary>
         public static UEUsageSetting DataCentric { get; } = new UEUsageSetting(DataCentricValue);
         /// <summary> Determines if two <see cref="UEUsageSetting"/> values are the same. </summary>
         public static bool operator ==(UEUsageSetting left, UEUsageSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UEUsageSetting"/> values are not the same. </summary>
         public static bool operator !=(UEUsageSetting left, UEUsageSetting right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UEUsageSetting"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UEUsageSetting"/>. </summary>
         public static implicit operator UEUsageSetting(string value) => new UEUsageSetting(value);
 
         /// <inheritdoc />
@@ -44,7 +53,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

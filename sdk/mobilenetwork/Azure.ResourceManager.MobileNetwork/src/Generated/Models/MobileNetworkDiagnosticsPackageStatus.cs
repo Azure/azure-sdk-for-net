@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The status of the diagnostics package collection. </summary>
+    /// <summary>
+    /// The status of the diagnostics package collection.
+    /// Serialized Name: DiagnosticsPackageStatus
+    /// </summary>
     public readonly partial struct MobileNetworkDiagnosticsPackageStatus : IEquatable<MobileNetworkDiagnosticsPackageStatus>
     {
         private readonly string _value;
@@ -27,19 +30,31 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string CollectedValue = "Collected";
         private const string ErrorValue = "Error";
 
-        /// <summary> NotStarted. </summary>
+        /// <summary>
+        /// NotStarted
+        /// Serialized Name: DiagnosticsPackageStatus.NotStarted
+        /// </summary>
         public static MobileNetworkDiagnosticsPackageStatus NotStarted { get; } = new MobileNetworkDiagnosticsPackageStatus(NotStartedValue);
-        /// <summary> Collecting. </summary>
+        /// <summary>
+        /// Collecting
+        /// Serialized Name: DiagnosticsPackageStatus.Collecting
+        /// </summary>
         public static MobileNetworkDiagnosticsPackageStatus Collecting { get; } = new MobileNetworkDiagnosticsPackageStatus(CollectingValue);
-        /// <summary> Collected. </summary>
+        /// <summary>
+        /// Collected
+        /// Serialized Name: DiagnosticsPackageStatus.Collected
+        /// </summary>
         public static MobileNetworkDiagnosticsPackageStatus Collected { get; } = new MobileNetworkDiagnosticsPackageStatus(CollectedValue);
-        /// <summary> Error. </summary>
+        /// <summary>
+        /// Error
+        /// Serialized Name: DiagnosticsPackageStatus.Error
+        /// </summary>
         public static MobileNetworkDiagnosticsPackageStatus Error { get; } = new MobileNetworkDiagnosticsPackageStatus(ErrorValue);
         /// <summary> Determines if two <see cref="MobileNetworkDiagnosticsPackageStatus"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkDiagnosticsPackageStatus left, MobileNetworkDiagnosticsPackageStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkDiagnosticsPackageStatus"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkDiagnosticsPackageStatus left, MobileNetworkDiagnosticsPackageStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkDiagnosticsPackageStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkDiagnosticsPackageStatus"/>. </summary>
         public static implicit operator MobileNetworkDiagnosticsPackageStatus(string value) => new MobileNetworkDiagnosticsPackageStatus(value);
 
         /// <inheritdoc />
@@ -50,7 +65,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -174,7 +174,7 @@ namespace Azure.Storage.Files.Shares
             if (!string.IsNullOrEmpty(uri.AbsolutePath))
             {
                 // If path starts with a slash, remove it
-                var path = uri.GetPath();
+                var path = string.Concat(uri.GetPath(), uri.Fragment);
 
                 var startIndex = 0;
 

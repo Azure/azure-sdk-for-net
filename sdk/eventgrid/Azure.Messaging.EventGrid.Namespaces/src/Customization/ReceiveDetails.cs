@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
@@ -14,7 +15,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public Azure.Messaging.CloudEvent Event { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteEvent(Utf8JsonWriter writer)
+        internal void WriteEvent(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             JsonSerializer.Serialize(writer, Event);
         }

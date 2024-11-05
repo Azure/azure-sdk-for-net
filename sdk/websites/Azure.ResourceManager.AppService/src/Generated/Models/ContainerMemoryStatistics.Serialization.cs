@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<ContainerMemoryStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerMemoryStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerMemoryStatistics IJsonModel<ContainerMemoryStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -135,43 +142,46 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Usage), out propertyOverride);
-            if (Optional.IsDefined(Usage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  usage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Usage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  usage: ");
                     builder.AppendLine($"'{Usage.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxUsage), out propertyOverride);
-            if (Optional.IsDefined(MaxUsage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxUsage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxUsage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxUsage: ");
                     builder.AppendLine($"'{MaxUsage.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Limit), out propertyOverride);
-            if (Optional.IsDefined(Limit) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  limit: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Limit))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  limit: ");
                     builder.AppendLine($"'{Limit.Value.ToString()}'");
                 }
             }

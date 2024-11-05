@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<DefaultAuthorizationPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DefaultAuthorizationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DefaultAuthorizationPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(AllowedPrincipals))
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DefaultAuthorizationPolicy IJsonModel<DefaultAuthorizationPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -131,31 +138,33 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedPrincipals), out propertyOverride);
-            if (Optional.IsDefined(AllowedPrincipals) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  allowedPrincipals: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowedPrincipals))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  allowedPrincipals: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AllowedPrincipals, options, 2, false, "  allowedPrincipals: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedApplications), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedApplications) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedApplications.Any() || hasPropertyOverride)
+                builder.Append("  allowedApplications: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedApplications))
                 {
-                    builder.Append("  allowedApplications: ");
-                    if (hasPropertyOverride)
+                    if (AllowedApplications.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedApplications: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedApplications)
                         {

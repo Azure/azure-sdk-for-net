@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<DataTableResponseObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataTableResponseObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
@@ -78,7 +86,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataTableResponseObject IJsonModel<DataTableResponseObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -174,15 +181,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
-            if (Optional.IsDefined(TableName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tableName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TableName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tableName: ");
                     if (TableName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -196,17 +204,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Columns), out propertyOverride);
-            if (Optional.IsCollectionDefined(Columns) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Columns.Any() || hasPropertyOverride)
+                builder.Append("  columns: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Columns))
                 {
-                    builder.Append("  columns: ");
-                    if (hasPropertyOverride)
+                    if (Columns.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  columns: ");
                         builder.AppendLine("[");
                         foreach (var item in Columns)
                         {
@@ -218,17 +227,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rows), out propertyOverride);
-            if (Optional.IsCollectionDefined(Rows) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Rows.Any() || hasPropertyOverride)
+                builder.Append("  rows: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Rows))
                 {
-                    builder.Append("  rows: ");
-                    if (hasPropertyOverride)
+                    if (Rows.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  rows: ");
                         builder.AppendLine("[");
                         foreach (var item in Rows)
                         {

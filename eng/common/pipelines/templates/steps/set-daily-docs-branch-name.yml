@@ -6,8 +6,8 @@ parameters:
 steps:
   - pwsh: |
       $branchName = $env:DAILYDOCSBRANCHNAMEOVERRIDE
-      if (!$branchName) { 
-        $branchName = "daily/$(Get-Date -Format 'yyyy-MM-dd')"
+      if (!$branchName) {
+        $branchName = "daily/$(Get-Date -Format 'yyyy-MM-dd')-ignore-build"
       }
       Write-Host "Daily Branch Name: $branchName"
       Write-Host "##vso[task.setvariable variable=${{ parameters.DailyBranchVariableName }};]$branchName"

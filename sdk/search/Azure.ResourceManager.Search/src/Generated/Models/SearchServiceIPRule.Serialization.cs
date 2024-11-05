@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Search.Models
 
         void IJsonModel<SearchServiceIPRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SearchServiceIPRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchServiceIPRule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.Search.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SearchServiceIPRule IJsonModel<SearchServiceIPRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -101,15 +108,16 @@ namespace Azure.ResourceManager.Search.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  value: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Value))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  value: ");
                     if (Value.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

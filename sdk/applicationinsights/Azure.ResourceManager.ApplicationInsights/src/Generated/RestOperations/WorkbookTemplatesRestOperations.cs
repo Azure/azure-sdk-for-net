@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<WorkbookTemplateData>>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ApplicationInsightsWorkbookTemplateData>>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<WorkbookTemplateData> value = default;
+                        IReadOnlyList<ApplicationInsightsWorkbookTemplateData> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<WorkbookTemplateData> array = new List<WorkbookTemplateData>();
+                        List<ApplicationInsightsWorkbookTemplateData> array = new List<ApplicationInsightsWorkbookTemplateData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WorkbookTemplateData.DeserializeWorkbookTemplateData(item));
+                            array.Add(ApplicationInsightsWorkbookTemplateData.DeserializeApplicationInsightsWorkbookTemplateData(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<WorkbookTemplateData>> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ApplicationInsightsWorkbookTemplateData>> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<WorkbookTemplateData> value = default;
+                        IReadOnlyList<ApplicationInsightsWorkbookTemplateData> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<WorkbookTemplateData> array = new List<WorkbookTemplateData>();
+                        List<ApplicationInsightsWorkbookTemplateData> array = new List<ApplicationInsightsWorkbookTemplateData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WorkbookTemplateData.DeserializeWorkbookTemplateData(item));
+                            array.Add(ApplicationInsightsWorkbookTemplateData.DeserializeApplicationInsightsWorkbookTemplateData(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkbookTemplateData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationInsightsWorkbookTemplateData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -186,13 +186,13 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        WorkbookTemplateData value = default;
+                        ApplicationInsightsWorkbookTemplateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkbookTemplateData.DeserializeWorkbookTemplateData(document.RootElement);
+                        value = ApplicationInsightsWorkbookTemplateData.DeserializeApplicationInsightsWorkbookTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkbookTemplateData)null, message.Response);
+                    return Response.FromValue((ApplicationInsightsWorkbookTemplateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkbookTemplateData> Get(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<ApplicationInsightsWorkbookTemplateData> Get(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -217,13 +217,13 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        WorkbookTemplateData value = default;
+                        ApplicationInsightsWorkbookTemplateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkbookTemplateData.DeserializeWorkbookTemplateData(document.RootElement);
+                        value = ApplicationInsightsWorkbookTemplateData.DeserializeApplicationInsightsWorkbookTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkbookTemplateData)null, message.Response);
+                    return Response.FromValue((ApplicationInsightsWorkbookTemplateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, WorkbookTemplateData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsWorkbookTemplateData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, WorkbookTemplateData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsWorkbookTemplateData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkbookTemplateData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, WorkbookTemplateData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationInsightsWorkbookTemplateData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsWorkbookTemplateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -373,9 +373,9 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                 case 201:
                     {
-                        WorkbookTemplateData value = default;
+                        ApplicationInsightsWorkbookTemplateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkbookTemplateData.DeserializeWorkbookTemplateData(document.RootElement);
+                        value = ApplicationInsightsWorkbookTemplateData.DeserializeApplicationInsightsWorkbookTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkbookTemplateData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string resourceName, WorkbookTemplateData data, CancellationToken cancellationToken = default)
+        public Response<ApplicationInsightsWorkbookTemplateData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsWorkbookTemplateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -405,9 +405,9 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                 case 201:
                     {
-                        WorkbookTemplateData value = default;
+                        ApplicationInsightsWorkbookTemplateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkbookTemplateData.DeserializeWorkbookTemplateData(document.RootElement);
+                        value = ApplicationInsightsWorkbookTemplateData.DeserializeApplicationInsightsWorkbookTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, WorkbookTemplatePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsWorkbookTemplatePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, WorkbookTemplatePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsWorkbookTemplatePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkbookTemplateData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, WorkbookTemplatePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationInsightsWorkbookTemplateData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsWorkbookTemplatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -474,9 +474,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        WorkbookTemplateData value = default;
+                        ApplicationInsightsWorkbookTemplateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkbookTemplateData.DeserializeWorkbookTemplateData(document.RootElement);
+                        value = ApplicationInsightsWorkbookTemplateData.DeserializeApplicationInsightsWorkbookTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkbookTemplateData> Update(string subscriptionId, string resourceGroupName, string resourceName, WorkbookTemplatePatch patch, CancellationToken cancellationToken = default)
+        public Response<ApplicationInsightsWorkbookTemplateData> Update(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsWorkbookTemplatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -505,9 +505,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        WorkbookTemplateData value = default;
+                        ApplicationInsightsWorkbookTemplateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkbookTemplateData.DeserializeWorkbookTemplateData(document.RootElement);
+                        value = ApplicationInsightsWorkbookTemplateData.DeserializeApplicationInsightsWorkbookTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

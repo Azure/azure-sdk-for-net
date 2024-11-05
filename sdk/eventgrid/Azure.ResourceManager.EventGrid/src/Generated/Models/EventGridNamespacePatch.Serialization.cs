@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         void IJsonModel<EventGridNamespacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EventGridNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -54,6 +62,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 writer.WritePropertyName("topicSpacesConfiguration"u8);
                 writer.WriteObjectValue(TopicSpacesConfiguration, options);
+            }
+            if (Optional.IsDefined(TopicsConfiguration))
+            {
+                writer.WritePropertyName("topicsConfiguration"u8);
+                writer.WriteObjectValue(TopicsConfiguration, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -86,7 +99,6 @@ namespace Azure.ResourceManager.EventGrid.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EventGridNamespacePatch IJsonModel<EventGridNamespacePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -113,6 +125,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             ManagedServiceIdentity identity = default;
             NamespaceSku sku = default;
             UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration = default;
+            UpdateTopicsConfigurationInfo topicsConfiguration = default;
             EventGridPublicNetworkAccess? publicNetworkAccess = default;
             IList<EventGridInboundIPRule> inboundIPRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -169,6 +182,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                             topicSpacesConfiguration = UpdateTopicSpacesConfigurationInfo.DeserializeUpdateTopicSpacesConfigurationInfo(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("topicsConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            topicsConfiguration = UpdateTopicsConfigurationInfo.DeserializeUpdateTopicsConfigurationInfo(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -206,6 +228,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 identity,
                 sku,
                 topicSpacesConfiguration,
+                topicsConfiguration,
                 publicNetworkAccess,
                 inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
                 serializedAdditionalRawData);

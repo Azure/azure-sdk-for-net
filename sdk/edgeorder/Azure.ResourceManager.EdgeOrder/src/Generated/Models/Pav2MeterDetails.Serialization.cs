@@ -19,46 +19,27 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         void IJsonModel<Pav2MeterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<Pav2MeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(MeterGuid))
             {
                 writer.WritePropertyName("meterGuid"u8);
                 writer.WriteStringValue(MeterGuid.Value);
             }
-            writer.WritePropertyName("billingType"u8);
-            writer.WriteStringValue(BillingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Multiplier))
-            {
-                writer.WritePropertyName("multiplier"u8);
-                writer.WriteNumberValue(Multiplier.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ChargingType))
-            {
-                writer.WritePropertyName("chargingType"u8);
-                writer.WriteStringValue(ChargingType.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         Pav2MeterDetails IJsonModel<Pav2MeterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

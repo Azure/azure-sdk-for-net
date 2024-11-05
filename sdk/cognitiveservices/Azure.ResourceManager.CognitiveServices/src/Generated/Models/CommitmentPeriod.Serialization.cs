@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         void IJsonModel<CommitmentPeriod>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CommitmentPeriod>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CommitmentPeriod)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
@@ -67,7 +75,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CommitmentPeriod IJsonModel<CommitmentPeriod>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -167,15 +174,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
-            if (Optional.IsDefined(Tier) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tier: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Tier))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tier: ");
                     if (Tier.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -189,58 +197,62 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Count), out propertyOverride);
-            if (Optional.IsDefined(Count) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  count: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Count))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  count: ");
                     builder.AppendLine($"{Count.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Quota), out propertyOverride);
-            if (Optional.IsDefined(Quota) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  quota: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Quota))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  quota: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Quota, options, 2, false, "  quota: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (Optional.IsDefined(StartOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  startDate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  startDate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
-            if (Optional.IsDefined(EndOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  endDate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  endDate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

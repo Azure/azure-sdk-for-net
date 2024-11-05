@@ -24,16 +24,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         private const string FullValue = "Full";
         private const string NodeImageOnlyValue = "NodeImageOnly";
+        private const string ControlPlaneOnlyValue = "ControlPlaneOnly";
 
-        /// <summary> Full upgrades the control plane and all agent pools of the target ManagedClusters. </summary>
+        /// <summary> Full upgrades the control plane and all agent pools of the target ManagedClusters. Requires the ManagedClusterUpgradeSpec.KubernetesVersion property to be set. </summary>
         public static ContainerServiceFleetManagedClusterUpgradeType Full { get; } = new ContainerServiceFleetManagedClusterUpgradeType(FullValue);
-        /// <summary> NodeImageOnly upgrades only the node images of the target ManagedClusters. </summary>
+        /// <summary> NodeImageOnly upgrades only the node images of the target ManagedClusters. Requires the ManagedClusterUpgradeSpec.KubernetesVersion property to NOT be set. </summary>
         public static ContainerServiceFleetManagedClusterUpgradeType NodeImageOnly { get; } = new ContainerServiceFleetManagedClusterUpgradeType(NodeImageOnlyValue);
+        /// <summary> ControlPlaneOnly upgrades only targets the KubernetesVersion of the ManagedClusters and will not be applied to the AgentPool. Requires the ManagedClusterUpgradeSpec.KubernetesVersion property to be set. </summary>
+        public static ContainerServiceFleetManagedClusterUpgradeType ControlPlaneOnly { get; } = new ContainerServiceFleetManagedClusterUpgradeType(ControlPlaneOnlyValue);
         /// <summary> Determines if two <see cref="ContainerServiceFleetManagedClusterUpgradeType"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceFleetManagedClusterUpgradeType left, ContainerServiceFleetManagedClusterUpgradeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceFleetManagedClusterUpgradeType"/> values are not the same. </summary>
         public static bool operator !=(ContainerServiceFleetManagedClusterUpgradeType left, ContainerServiceFleetManagedClusterUpgradeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerServiceFleetManagedClusterUpgradeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceFleetManagedClusterUpgradeType"/>. </summary>
         public static implicit operator ContainerServiceFleetManagedClusterUpgradeType(string value) => new ContainerServiceFleetManagedClusterUpgradeType(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

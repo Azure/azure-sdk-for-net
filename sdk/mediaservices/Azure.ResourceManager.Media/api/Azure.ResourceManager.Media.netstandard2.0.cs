@@ -25,13 +25,14 @@ namespace Azure.ResourceManager.Media
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.ContentKeyPolicyOption> Options { get { throw null; } }
         public System.Guid? PolicyId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.ContentKeyPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.ContentKeyPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.ContentKeyPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.ContentKeyPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.ContentKeyPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.ContentKeyPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.ContentKeyPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ContentKeyPolicyResource : Azure.ResourceManager.ArmResource
+    public partial class ContentKeyPolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.ContentKeyPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.ContentKeyPolicyData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ContentKeyPolicyResource() { }
@@ -44,6 +45,11 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.ContentKeyPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.Models.ContentKeyPolicyProperties> GetPolicyPropertiesWithSecrets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.ContentKeyPolicyProperties>> GetPolicyPropertiesWithSecretsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.ContentKeyPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.ContentKeyPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.ContentKeyPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.ContentKeyPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.ContentKeyPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.ContentKeyPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.ContentKeyPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.ContentKeyPolicyResource> Update(Azure.ResourceManager.Media.ContentKeyPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.ContentKeyPolicyResource>> UpdateAsync(Azure.ResourceManager.Media.ContentKeyPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -76,6 +82,7 @@ namespace Azure.ResourceManager.Media
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string StorageAccountName { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaAssetStorageEncryptionFormat? StorageEncryptionFormat { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaAssetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaAssetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -105,13 +112,14 @@ namespace Azure.ResourceManager.Media
         public int? FirstQualityBitrate { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.PresentationTimeRange PresentationTimeRange { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.FilterTrackSelection> Tracks { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaAssetFilterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetFilterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetFilterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaAssetFilterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetFilterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetFilterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetFilterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MediaAssetFilterResource : Azure.ResourceManager.ArmResource
+    public partial class MediaAssetFilterResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetFilterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetFilterData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MediaAssetFilterResource() { }
@@ -122,10 +130,15 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetFilterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetFilterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.MediaAssetFilterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetFilterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetFilterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.MediaAssetFilterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetFilterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetFilterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetFilterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetFilterResource> Update(Azure.ResourceManager.Media.MediaAssetFilterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetFilterResource>> UpdateAsync(Azure.ResourceManager.Media.MediaAssetFilterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MediaAssetResource : Azure.ResourceManager.ArmResource
+    public partial class MediaAssetResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MediaAssetResource() { }
@@ -148,6 +161,11 @@ namespace Azure.ResourceManager.Media
         public virtual Azure.AsyncPageable<System.Uri> GetStorageContainerUrisAsync(Azure.ResourceManager.Media.Models.MediaAssetStorageContainerSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Media.Models.MediaAssetStreamingLocator> GetStreamingLocators(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.Models.MediaAssetStreamingLocator> GetStreamingLocatorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.MediaAssetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.MediaAssetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetResource> Update(Azure.ResourceManager.Media.MediaAssetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetResource>> UpdateAsync(Azure.ResourceManager.Media.MediaAssetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -173,13 +191,14 @@ namespace Azure.ResourceManager.Media
         public MediaAssetTrackData() { }
         public Azure.ResourceManager.Media.Models.MediaServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaAssetTrackBase Track { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaAssetTrackData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetTrackData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetTrackData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaAssetTrackData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetTrackData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetTrackData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetTrackData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MediaAssetTrackResource : Azure.ResourceManager.ArmResource
+    public partial class MediaAssetTrackResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetTrackData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetTrackData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MediaAssetTrackResource() { }
@@ -190,6 +209,11 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.MediaAssetTrackData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetTrackData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaAssetTrackData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.MediaAssetTrackData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetTrackData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetTrackData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaAssetTrackData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaAssetTrackResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.MediaAssetTrackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaAssetTrackResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.MediaAssetTrackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation UpdateTrackData(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -250,13 +274,14 @@ namespace Azure.ResourceManager.Media
         public Azure.ResourceManager.Media.Models.MediaJobPriority? Priority { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaJobState? State { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MediaJobResource : Azure.ResourceManager.ArmResource
+    public partial class MediaJobResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaJobData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MediaJobResource() { }
@@ -269,6 +294,11 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.MediaJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.MediaJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaJobResource> Update(Azure.ResourceManager.Media.MediaJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaJobResource>> UpdateAsync(Azure.ResourceManager.Media.MediaJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -305,13 +335,14 @@ namespace Azure.ResourceManager.Media
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.StreamOptionsFlag> StreamOptions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.LiveEventTranscription> Transcriptions { get { throw null; } }
         public bool? UseStaticHostname { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaLiveEventData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaLiveEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaLiveEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaLiveEventData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MediaLiveEventResource : Azure.ResourceManager.ArmResource
+    public partial class MediaLiveEventResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaLiveEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveEventData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MediaLiveEventResource() { }
@@ -339,6 +370,11 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.Models.LiveEventActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.Models.LiveEventActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.MediaLiveEventData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaLiveEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaLiveEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.MediaLiveEventData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaLiveEventResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.MediaLiveEventData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaLiveEventResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.MediaLiveEventData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -373,13 +409,14 @@ namespace Azure.ResourceManager.Media
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Media.Models.LiveOutputResourceState? ResourceState { get { throw null; } }
         public System.TimeSpan? RewindWindowLength { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaLiveOutputData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaLiveOutputData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaLiveOutputData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaLiveOutputData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveOutputData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveOutputData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveOutputData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MediaLiveOutputResource : Azure.ResourceManager.ArmResource
+    public partial class MediaLiveOutputResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaLiveOutputData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveOutputData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MediaLiveOutputResource() { }
@@ -390,6 +427,11 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaLiveOutputResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaLiveOutputResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.MediaLiveOutputData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaLiveOutputData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaLiveOutputData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.MediaLiveOutputData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveOutputData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveOutputData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaLiveOutputData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaLiveOutputResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.MediaLiveOutputData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaLiveOutputResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.MediaLiveOutputData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -423,6 +465,7 @@ namespace Azure.ResourceManager.Media
         public Azure.ResourceManager.Media.Models.MediaServicesPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaServicesStorageAccount> StorageAccounts { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaStorageAuthentication? StorageAuthentication { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaServicesAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaServicesAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -452,13 +495,14 @@ namespace Azure.ResourceManager.Media
         public int? FirstQualityBitrate { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.PresentationTimeRange PresentationTimeRange { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.FilterTrackSelection> Tracks { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaServicesAccountFilterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesAccountFilterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesAccountFilterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaServicesAccountFilterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesAccountFilterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesAccountFilterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesAccountFilterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MediaServicesAccountFilterResource : Azure.ResourceManager.ArmResource
+    public partial class MediaServicesAccountFilterResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesAccountFilterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesAccountFilterData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MediaServicesAccountFilterResource() { }
@@ -469,10 +513,15 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaServicesAccountFilterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServicesAccountFilterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.MediaServicesAccountFilterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesAccountFilterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesAccountFilterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.MediaServicesAccountFilterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesAccountFilterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesAccountFilterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesAccountFilterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaServicesAccountFilterResource> Update(Azure.ResourceManager.Media.MediaServicesAccountFilterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServicesAccountFilterResource>> UpdateAsync(Azure.ResourceManager.Media.MediaServicesAccountFilterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MediaServicesAccountResource : Azure.ResourceManager.ArmResource
+    public partial class MediaServicesAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesAccountData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MediaServicesAccountResource() { }
@@ -523,6 +572,11 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServicesAccountResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SyncStorageKeys(Azure.ResourceManager.Media.Models.SyncStorageKeysContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SyncStorageKeysAsync(Azure.ResourceManager.Media.Models.SyncStorageKeysContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.MediaServicesAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.MediaServicesAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaServicesAccountResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.Models.MediaServicesAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaServicesAccountResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.Models.MediaServicesAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -549,13 +603,14 @@ namespace Azure.ResourceManager.Media
         public Azure.ResourceManager.Media.Models.MediaPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MediaServicesPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
+    public partial class MediaServicesPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MediaServicesPrivateEndpointConnectionResource() { }
@@ -566,10 +621,15 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MediaServicesPrivateLinkResource : Azure.ResourceManager.ArmResource
+    public partial class MediaServicesPrivateLinkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MediaServicesPrivateLinkResource() { }
@@ -578,6 +638,11 @@ namespace Azure.ResourceManager.Media
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string name) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaServicesPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServicesPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MediaServicesPrivateLinkResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.MediaServicesPrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.MediaServicesPrivateLinkResource>, System.Collections.IEnumerable
     {
@@ -600,6 +665,7 @@ namespace Azure.ResourceManager.Media
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaServicesPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -630,13 +696,14 @@ namespace Azure.ResourceManager.Media
         public string Description { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaTransformOutput> Outputs { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaTransformData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaTransformData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaTransformData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.MediaTransformData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaTransformData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaTransformData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaTransformData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MediaTransformResource : Azure.ResourceManager.ArmResource
+    public partial class MediaTransformResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaTransformData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaTransformData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MediaTransformResource() { }
@@ -650,6 +717,11 @@ namespace Azure.ResourceManager.Media
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaJobResource> GetMediaJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaJobResource>> GetMediaJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Media.MediaJobCollection GetMediaJobs() { throw null; }
+        Azure.ResourceManager.Media.MediaTransformData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaTransformData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.MediaTransformData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.MediaTransformData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaTransformData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaTransformData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.MediaTransformData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaTransformResource> Update(Azure.ResourceManager.Media.MediaTransformData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaTransformResource>> UpdateAsync(Azure.ResourceManager.Media.MediaTransformData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -690,13 +762,14 @@ namespace Azure.ResourceManager.Media
         public Azure.ResourceManager.Media.Models.StreamingEndpointResourceState? ResourceState { get { throw null; } }
         public int? ScaleUnits { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.StreamingEndpointCurrentSku Sku { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.StreamingEndpointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.StreamingEndpointData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingEndpointData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StreamingEndpointResource : Azure.ResourceManager.ArmResource
+    public partial class StreamingEndpointResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingEndpointData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingEndpointData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StreamingEndpointResource() { }
@@ -721,6 +794,11 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.StreamingEndpointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.StreamingEndpointData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingEndpointData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.StreamingEndpointResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.StreamingEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.StreamingEndpointResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.StreamingEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -754,13 +832,14 @@ namespace Azure.ResourceManager.Media
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.Guid? StreamingLocatorId { get { throw null; } set { } }
         public string StreamingPolicyName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.StreamingLocatorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingLocatorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingLocatorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.StreamingLocatorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingLocatorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingLocatorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingLocatorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StreamingLocatorResource : Azure.ResourceManager.ArmResource
+    public partial class StreamingLocatorResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingLocatorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingLocatorData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StreamingLocatorResource() { }
@@ -775,6 +854,11 @@ namespace Azure.ResourceManager.Media
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.Models.StreamingLocatorContentKey> GetContentKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.Models.StreamingPathsResult> GetStreamingPaths(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.StreamingPathsResult>> GetStreamingPathsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.StreamingLocatorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingLocatorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingLocatorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.StreamingLocatorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingLocatorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingLocatorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingLocatorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.StreamingLocatorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.StreamingLocatorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.StreamingLocatorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.StreamingLocatorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -804,13 +888,14 @@ namespace Azure.ResourceManager.Media
         public string DefaultContentKeyPolicyName { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.EnvelopeEncryption EnvelopeEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaEnabledProtocols NoEncryptionEnabledProtocols { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.StreamingPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.StreamingPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StreamingPolicyResource : Azure.ResourceManager.ArmResource
+    public partial class StreamingPolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingPolicyData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StreamingPolicyResource() { }
@@ -821,6 +906,11 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.StreamingPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.StreamingPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Media.StreamingPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.StreamingPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Media.StreamingPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.StreamingPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.StreamingPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.StreamingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.StreamingPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.StreamingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -868,6 +958,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public AacAudio() { }
         public Azure.ResourceManager.Media.Models.AacAudioProfile? Profile { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AacAudio System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AacAudio>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AacAudio>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AacAudio System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.AacAudio>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -897,6 +988,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public AbsoluteClipTime(System.TimeSpan time) { }
         public System.TimeSpan Time { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AbsoluteClipTime System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AbsoluteClipTime>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AbsoluteClipTime>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AbsoluteClipTime System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.AbsoluteClipTime>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -910,6 +1002,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.AccountEncryptionKeyType KeyType { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.KeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public string Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AccountEncryption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AccountEncryption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AccountEncryption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AccountEncryption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.AccountEncryption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -940,6 +1033,7 @@ namespace Azure.ResourceManager.Media.Models
         public string Base64Key { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AkamaiSignatureHeaderAuthenticationKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AkamaiSignatureHeaderAuthenticationKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AkamaiSignatureHeaderAuthenticationKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AkamaiSignatureHeaderAuthenticationKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.AkamaiSignatureHeaderAuthenticationKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1013,6 +1107,7 @@ namespace Azure.ResourceManager.Media.Models
         public string AudioLanguage { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> ExperimentalOptions { get { throw null; } }
         public Azure.ResourceManager.Media.Models.AudioAnalysisMode? Mode { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AudioAnalyzerPreset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AudioAnalyzerPreset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AudioAnalyzerPreset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AudioAnalyzerPreset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.AudioAnalyzerPreset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1022,6 +1117,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class AudioOverlay : Azure.ResourceManager.Media.Models.MediaOverlayBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AudioOverlay>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.AudioOverlay>
     {
         public AudioOverlay(string inputLabel) : base (default(string)) { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AudioOverlay System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AudioOverlay>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AudioOverlay>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AudioOverlay System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.AudioOverlay>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1038,6 +1134,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.HlsSettings HlsSettings { get { throw null; } set { } }
         public string LanguageCode { get { throw null; } set { } }
         public int? Mpeg4TrackId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AudioTrack System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AudioTrack>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AudioTrack>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AudioTrack System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.AudioTrack>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1048,6 +1145,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public AudioTrackDescriptor() { }
         public Azure.ResourceManager.Media.Models.ChannelMapping? ChannelMapping { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AudioTrackDescriptor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AudioTrackDescriptor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.AudioTrackDescriptor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.AudioTrackDescriptor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.AudioTrackDescriptor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1059,6 +1157,7 @@ namespace Azure.ResourceManager.Media.Models
         public BuiltInStandardEncoderPreset(Azure.ResourceManager.Media.Models.EncoderNamedPreset presetName) { }
         public Azure.ResourceManager.Media.Models.EncoderPresetConfigurations Configurations { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.EncoderNamedPreset PresetName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.BuiltInStandardEncoderPreset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.BuiltInStandardEncoderPreset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.BuiltInStandardEncoderPreset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.BuiltInStandardEncoderPreset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.BuiltInStandardEncoderPreset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1071,6 +1170,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.StreamingPolicyFairPlayConfiguration FairPlay { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.StreamingPolicyPlayReadyConfiguration PlayReady { get { throw null; } set { } }
         public string WidevineCustomLicenseAcquisitionUriTemplate { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CbcsDrmConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CbcsDrmConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CbcsDrmConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CbcsDrmConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.CbcsDrmConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1082,6 +1182,7 @@ namespace Azure.ResourceManager.Media.Models
         public CencDrmConfiguration() { }
         public Azure.ResourceManager.Media.Models.StreamingPolicyPlayReadyConfiguration PlayReady { get { throw null; } set { } }
         public string WidevineCustomLicenseAcquisitionUriTemplate { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CencDrmConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CencDrmConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CencDrmConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CencDrmConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.CencDrmConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1115,6 +1216,7 @@ namespace Azure.ResourceManager.Media.Models
     public abstract partial class ClipTime : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ClipTime>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ClipTime>
     {
         protected ClipTime() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ClipTime System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ClipTime>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ClipTime>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ClipTime System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ClipTime>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1124,6 +1226,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class CodecCopyAudio : Azure.ResourceManager.Media.Models.MediaCodecBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CodecCopyAudio>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.CodecCopyAudio>
     {
         public CodecCopyAudio() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CodecCopyAudio System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CodecCopyAudio>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CodecCopyAudio>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CodecCopyAudio System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.CodecCopyAudio>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1133,6 +1236,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class CodecCopyVideo : Azure.ResourceManager.Media.Models.MediaCodecBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CodecCopyVideo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.CodecCopyVideo>
     {
         public CodecCopyVideo() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CodecCopyVideo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CodecCopyVideo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CodecCopyVideo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CodecCopyVideo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.CodecCopyVideo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1147,6 +1251,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.StreamingPolicyContentKeys ContentKeys { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.CbcsDrmConfiguration Drm { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaEnabledProtocols EnabledProtocols { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CommonEncryptionCbcs System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CommonEncryptionCbcs>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CommonEncryptionCbcs>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CommonEncryptionCbcs System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.CommonEncryptionCbcs>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1161,6 +1266,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.StreamingPolicyContentKeys ContentKeys { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.CencDrmConfiguration Drm { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaEnabledProtocols EnabledProtocols { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CommonEncryptionCenc System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CommonEncryptionCenc>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CommonEncryptionCenc>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CommonEncryptionCenc System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.CommonEncryptionCenc>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1170,6 +1276,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class ContentKeyPolicyClearKeyConfiguration : Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyClearKeyConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyClearKeyConfiguration>
     {
         public ContentKeyPolicyClearKeyConfiguration() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyClearKeyConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyClearKeyConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyClearKeyConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyClearKeyConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyClearKeyConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1179,6 +1286,7 @@ namespace Azure.ResourceManager.Media.Models
     public abstract partial class ContentKeyPolicyConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration>
     {
         protected ContentKeyPolicyConfiguration() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1194,6 +1302,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayOfflineRentalConfiguration OfflineRentalConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayRentalAndLeaseKeyType RentalAndLeaseKeyType { get { throw null; } set { } }
         public long RentalDuration { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1205,6 +1314,7 @@ namespace Azure.ResourceManager.Media.Models
         public ContentKeyPolicyFairPlayOfflineRentalConfiguration(long playbackDurationInSeconds, long storageDurationInSeconds) { }
         public long PlaybackDurationInSeconds { get { throw null; } set { } }
         public long StorageDurationInSeconds { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayOfflineRentalConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayOfflineRentalConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayOfflineRentalConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayOfflineRentalConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayOfflineRentalConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1235,6 +1345,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class ContentKeyPolicyOpenRestriction : Azure.ResourceManager.Media.Models.ContentKeyPolicyRestriction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyOpenRestriction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyOpenRestriction>
     {
         public ContentKeyPolicyOpenRestriction() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyOpenRestriction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyOpenRestriction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyOpenRestriction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyOpenRestriction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyOpenRestriction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1248,6 +1359,7 @@ namespace Azure.ResourceManager.Media.Models
         public string Name { get { throw null; } set { } }
         public System.Guid? PolicyOptionId { get { throw null; } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyRestriction Restriction { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyOption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyOption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyOption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyOption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyOption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1259,6 +1371,7 @@ namespace Azure.ResourceManager.Media.Models
         public ContentKeyPolicyPlayReadyConfiguration(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicense> licenses) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicense> Licenses { get { throw null; } }
         public System.BinaryData ResponseCustomData { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1268,6 +1381,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader : Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentKeyLocation, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader>
     {
         public ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1278,6 +1392,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(System.Guid? keyId) { }
         public System.Guid? KeyId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1287,6 +1402,7 @@ namespace Azure.ResourceManager.Media.Models
     public abstract partial class ContentKeyPolicyPlayReadyContentKeyLocation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentKeyLocation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentKeyLocation>
     {
         protected ContentKeyPolicyPlayReadyContentKeyLocation() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentKeyLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentKeyLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentKeyLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentKeyLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentKeyLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1318,6 +1434,7 @@ namespace Azure.ResourceManager.Media.Models
         public ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(bool isBestEffort, int configurationData) { }
         public int ConfigurationData { get { throw null; } set { } }
         public bool IsBestEffort { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1338,6 +1455,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.TimeSpan? RelativeBeginDate { get { throw null; } set { } }
         public System.TimeSpan? RelativeExpirationDate { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.PlayReadySecurityLevel? SecurityLevel { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicense System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicense>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicense>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicense System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicense>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1379,6 +1497,7 @@ namespace Azure.ResourceManager.Media.Models
         public int? ScmsRestriction { get { throw null; } set { } }
         public int? UncompressedDigitalAudioOutputProtectionLevel { get { throw null; } set { } }
         public int? UncompressedDigitalVideoOutputProtectionLevel { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyPlayRight System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyPlayRight>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyPlayRight>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyPlayRight System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyPlayRight>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1413,6 +1532,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.ContentKeyPolicyOption> Options { get { throw null; } }
         public System.Guid? PolicyId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1422,6 +1542,7 @@ namespace Azure.ResourceManager.Media.Models
     public abstract partial class ContentKeyPolicyRestriction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyRestriction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyRestriction>
     {
         protected ContentKeyPolicyRestriction() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyRestriction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyRestriction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyRestriction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyRestriction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyRestriction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1431,6 +1552,7 @@ namespace Azure.ResourceManager.Media.Models
     public abstract partial class ContentKeyPolicyRestrictionTokenKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenKey>
     {
         protected ContentKeyPolicyRestrictionTokenKey() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1461,6 +1583,7 @@ namespace Azure.ResourceManager.Media.Models
         public ContentKeyPolicyRsaTokenKey(byte[] exponent, byte[] modulus) { }
         public byte[] Exponent { get { throw null; } set { } }
         public byte[] Modulus { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyRsaTokenKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyRsaTokenKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyRsaTokenKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyRsaTokenKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyRsaTokenKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1471,6 +1594,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public ContentKeyPolicySymmetricTokenKey(byte[] keyValue) { }
         public byte[] KeyValue { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicySymmetricTokenKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicySymmetricTokenKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicySymmetricTokenKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicySymmetricTokenKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicySymmetricTokenKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1482,6 +1606,7 @@ namespace Azure.ResourceManager.Media.Models
         public ContentKeyPolicyTokenClaim() { }
         public string ClaimType { get { throw null; } set { } }
         public string ClaimValue { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyTokenClaim System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyTokenClaim>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyTokenClaim>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyTokenClaim System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyTokenClaim>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1498,6 +1623,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenKey PrimaryVerificationKey { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.ContentKeyPolicyTokenClaim> RequiredClaims { get { throw null; } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenType RestrictionTokenType { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyTokenRestriction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyTokenRestriction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyTokenRestriction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyTokenRestriction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyTokenRestriction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1507,6 +1633,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class ContentKeyPolicyUnknownConfiguration : Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownConfiguration>
     {
         public ContentKeyPolicyUnknownConfiguration() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1516,6 +1643,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class ContentKeyPolicyUnknownRestriction : Azure.ResourceManager.Media.Models.ContentKeyPolicyRestriction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownRestriction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownRestriction>
     {
         public ContentKeyPolicyUnknownRestriction() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownRestriction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownRestriction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownRestriction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownRestriction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyUnknownRestriction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1526,6 +1654,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public ContentKeyPolicyWidevineConfiguration(string widevineTemplate) { }
         public string WidevineTemplate { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyWidevineConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyWidevineConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyWidevineConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyWidevineConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyWidevineConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1536,6 +1665,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public ContentKeyPolicyX509CertificateTokenKey(byte[] rawBody) { }
         public byte[] RawBody { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyX509CertificateTokenKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyX509CertificateTokenKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyX509CertificateTokenKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ContentKeyPolicyX509CertificateTokenKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ContentKeyPolicyX509CertificateTokenKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1547,6 +1677,7 @@ namespace Azure.ResourceManager.Media.Models
         public CrossSiteAccessPolicies() { }
         public string ClientAccessPolicy { get { throw null; } set { } }
         public string CrossDomainPolicy { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CrossSiteAccessPolicies System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CrossSiteAccessPolicies>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.CrossSiteAccessPolicies>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.CrossSiteAccessPolicies System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.CrossSiteAccessPolicies>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1556,6 +1687,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class DDAudio : Azure.ResourceManager.Media.Models.MediaAudioBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.DDAudio>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.DDAudio>
     {
         public DDAudio() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.DDAudio System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.DDAudio>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.DDAudio>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.DDAudio System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.DDAudio>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1604,6 +1736,7 @@ namespace Azure.ResourceManager.Media.Models
         public DeinterlaceSettings() { }
         public Azure.ResourceManager.Media.Models.DeinterlaceMode? Mode { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.DeinterlaceParity? Parity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.DeinterlaceSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.DeinterlaceSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.DeinterlaceSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.DeinterlaceSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.DeinterlaceSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1614,6 +1747,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public EdgePoliciesRequestContent() { }
         public string DeviceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.EdgePoliciesRequestContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.EdgePoliciesRequestContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.EdgePoliciesRequestContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.EdgePoliciesRequestContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.EdgePoliciesRequestContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1627,6 +1761,7 @@ namespace Azure.ResourceManager.Media.Models
         public string DataReportingFrequency { get { throw null; } }
         public Azure.ResourceManager.Media.Models.EdgeUsageDataEventHub EventHubDetails { get { throw null; } }
         public System.TimeSpan? MaxAllowedUnreportedUsageDuration { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.EdgeUsageDataCollectionPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.EdgeUsageDataCollectionPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.EdgeUsageDataCollectionPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.EdgeUsageDataCollectionPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.EdgeUsageDataCollectionPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1639,6 +1774,7 @@ namespace Azure.ResourceManager.Media.Models
         public string Name { get { throw null; } }
         public string Namespace { get { throw null; } }
         public string Token { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.EdgeUsageDataEventHub System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.EdgeUsageDataEventHub>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.EdgeUsageDataEventHub>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.EdgeUsageDataEventHub System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.EdgeUsageDataEventHub>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1689,6 +1825,7 @@ namespace Azure.ResourceManager.Media.Models
         public int? MaxLayers { get { throw null; } set { } }
         public int? MinBitrateBps { get { throw null; } set { } }
         public int? MinHeight { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.EncoderPresetConfigurations System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.EncoderPresetConfigurations>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.EncoderPresetConfigurations>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.EncoderPresetConfigurations System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.EncoderPresetConfigurations>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1719,6 +1856,7 @@ namespace Azure.ResourceManager.Media.Models
         public EncryptionSchemeDefaultKey() { }
         public string Label { get { throw null; } set { } }
         public string PolicyName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.EncryptionSchemeDefaultKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.EncryptionSchemeDefaultKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.EncryptionSchemeDefaultKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.EncryptionSchemeDefaultKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.EncryptionSchemeDefaultKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1732,6 +1870,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.StreamingPolicyContentKeys ContentKeys { get { throw null; } set { } }
         public string CustomKeyAcquisitionUriTemplate { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaEnabledProtocols EnabledProtocols { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.EnvelopeEncryption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.EnvelopeEncryption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.EnvelopeEncryption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.EnvelopeEncryption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.EnvelopeEncryption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1744,6 +1883,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.TimeSpan Duration { get { throw null; } set { } }
         public string FadeColor { get { throw null; } set { } }
         public string Start { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.FadeOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FadeOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FadeOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.FadeOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.FadeOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1759,6 +1899,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.FadeOptions FadeOut { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaOverlayBase> Overlays { get { throw null; } }
         public Azure.ResourceManager.Media.Models.RotationSetting? Rotation { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.FilteringOperations System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FilteringOperations>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FilteringOperations>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.FilteringOperations System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.FilteringOperations>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1789,6 +1930,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.FilterTrackPropertyCompareOperation Operation { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.FilterTrackPropertyType Property { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.FilterTrackPropertyCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FilterTrackPropertyCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FilterTrackPropertyCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.FilterTrackPropertyCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.FilterTrackPropertyCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1821,6 +1963,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public FilterTrackSelection(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.FilterTrackPropertyCondition> trackSelections) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.FilterTrackPropertyCondition> TrackSelections { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.FilterTrackSelection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FilterTrackSelection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FilterTrackSelection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.FilterTrackSelection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.FilterTrackSelection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1830,6 +1973,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class FromAllInputFile : Azure.ResourceManager.Media.Models.MediaJobInputDefinition, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FromAllInputFile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.FromAllInputFile>
     {
         public FromAllInputFile() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.FromAllInputFile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FromAllInputFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FromAllInputFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.FromAllInputFile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.FromAllInputFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1839,6 +1983,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class FromEachInputFile : Azure.ResourceManager.Media.Models.MediaJobInputDefinition, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FromEachInputFile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.FromEachInputFile>
     {
         public FromEachInputFile() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.FromEachInputFile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FromEachInputFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.FromEachInputFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.FromEachInputFile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.FromEachInputFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1873,6 +2018,7 @@ namespace Azure.ResourceManager.Media.Models
         public string Level { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.H264VideoProfile? Profile { get { throw null; } set { } }
         public int? ReferenceFrames { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.H264Layer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.H264Layer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.H264Layer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.H264Layer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.H264Layer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1905,6 +2051,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.H264Layer> Layers { get { throw null; } }
         public Azure.ResourceManager.Media.Models.H264RateControlMode? RateControlMode { get { throw null; } set { } }
         public bool? UseSceneChangeDetection { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.H264Video System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.H264Video>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.H264Video>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.H264Video System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.H264Video>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1960,6 +2107,7 @@ namespace Azure.ResourceManager.Media.Models
         public string Level { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.H265VideoProfile? Profile { get { throw null; } set { } }
         public int? ReferenceFrames { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.H265Layer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.H265Layer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.H265Layer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.H265Layer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.H265Layer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1972,6 +2120,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.H265Complexity? Complexity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.H265Layer> Layers { get { throw null; } }
         public bool? UseSceneChangeDetection { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.H265Video System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.H265Video>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.H265Video>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.H265Video System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.H265Video>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1987,6 +2136,7 @@ namespace Azure.ResourceManager.Media.Models
         public int? MaxBitrate { get { throw null; } set { } }
         public int? Slices { get { throw null; } set { } }
         public bool? UseAdaptiveBFrame { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.H265VideoLayer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.H265VideoLayer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.H265VideoLayer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.H265VideoLayer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.H265VideoLayer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2018,6 +2168,7 @@ namespace Azure.ResourceManager.Media.Models
         public string Characteristics { get { throw null; } set { } }
         public bool? IsDefault { get { throw null; } set { } }
         public bool? IsForced { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.HlsSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.HlsSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.HlsSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.HlsSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.HlsSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2104,6 +2255,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.Net.IPAddress Address { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public int? SubnetPrefixLength { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.IPRange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.IPRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.IPRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.IPRange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.IPRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2113,6 +2265,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class JpgFormat : Azure.ResourceManager.Media.Models.OutputImageFileFormat, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.JpgFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.JpgFormat>
     {
         public JpgFormat(string filenamePattern) : base (default(string)) { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.JpgFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.JpgFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.JpgFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.JpgFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.JpgFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2124,6 +2277,7 @@ namespace Azure.ResourceManager.Media.Models
         public JpgImage(string start) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.JpgLayer> Layers { get { throw null; } }
         public int? SpriteColumn { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.JpgImage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.JpgImage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.JpgImage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.JpgImage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.JpgImage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2134,6 +2288,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public JpgLayer() { }
         public int? Quality { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.JpgLayer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.JpgLayer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.JpgLayer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.JpgLayer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.JpgLayer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2145,6 +2300,7 @@ namespace Azure.ResourceManager.Media.Models
         public KeyVaultProperties() { }
         public string CurrentKeyIdentifier { get { throw null; } }
         public string KeyIdentifier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.KeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.KeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.KeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.KeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.KeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2173,6 +2329,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public LiveEventActionContent() { }
         public bool? RemoveOutputsOnStop { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.LiveEventActionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.LiveEventActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.LiveEventActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.LiveEventActionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.LiveEventActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2186,6 +2343,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.TimeSpan? KeyFrameInterval { get { throw null; } set { } }
         public string PresetName { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.InputVideoStretchMode? StretchMode { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.LiveEventEncoding System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.LiveEventEncoding>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.LiveEventEncoding>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.LiveEventEncoding System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.LiveEventEncoding>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2218,6 +2376,7 @@ namespace Azure.ResourceManager.Media.Models
         public LiveEventEndpoint() { }
         public string Protocol { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.LiveEventEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.LiveEventEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.LiveEventEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.LiveEventEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.LiveEventEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2262,6 +2421,7 @@ namespace Azure.ResourceManager.Media.Models
         public string Operation { get { throw null; } set { } }
         public string Property { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.LiveEventInputTrackSelection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.LiveEventInputTrackSelection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.LiveEventInputTrackSelection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.LiveEventInputTrackSelection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.LiveEventInputTrackSelection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2276,6 +2436,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.IPRange> IPAllowedIPs { get { throw null; } }
         public string PreviewLocator { get { throw null; } set { } }
         public string StreamingPolicyName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.LiveEventPreview System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.LiveEventPreview>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.LiveEventPreview>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.LiveEventPreview System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.LiveEventPreview>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2311,6 +2472,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.LiveEventInputTrackSelection> InputTrackSelection { get { throw null; } }
         public string Language { get { throw null; } set { } }
         public string TrackName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.LiveEventTranscription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.LiveEventTranscription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.LiveEventTranscription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.LiveEventTranscription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.LiveEventTranscription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2341,6 +2503,7 @@ namespace Azure.ResourceManager.Media.Models
         public MediaAccessControl() { }
         public Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Net.IPAddress> IPAllowList { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaAccessControl System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaAccessControl>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaAccessControl>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaAccessControl System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaAccessControl>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2372,6 +2535,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.Guid AssetFileId { get { throw null; } }
         public string AssetFileName { get { throw null; } }
         public string InitializationVector { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaAssetFileEncryptionMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaAssetFileEncryptionMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaAssetFileEncryptionMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaAssetFileEncryptionMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaAssetFileEncryptionMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2383,6 +2547,7 @@ namespace Azure.ResourceManager.Media.Models
         public MediaAssetStorageContainerSasContent() { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaAssetContainerPermission? Permissions { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaAssetStorageContainerSasContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaAssetStorageContainerSasContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaAssetStorageContainerSasContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaAssetStorageContainerSasContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaAssetStorageContainerSasContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2418,6 +2583,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public System.Guid? StreamingLocatorId { get { throw null; } }
         public string StreamingPolicyName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaAssetStreamingLocator System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaAssetStreamingLocator>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaAssetStreamingLocator>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaAssetStreamingLocator System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaAssetStreamingLocator>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2427,6 +2593,7 @@ namespace Azure.ResourceManager.Media.Models
     public abstract partial class MediaAssetTrackBase : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaAssetTrackBase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaAssetTrackBase>
     {
         protected MediaAssetTrackBase() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaAssetTrackBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaAssetTrackBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaAssetTrackBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaAssetTrackBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaAssetTrackBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2439,6 +2606,7 @@ namespace Azure.ResourceManager.Media.Models
         public int? Bitrate { get { throw null; } set { } }
         public int? Channels { get { throw null; } set { } }
         public int? SamplingRate { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaAudioBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaAudioBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaAudioBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaAudioBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaAudioBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2449,6 +2617,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         protected MediaCodecBase() { }
         public string Label { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaCodecBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaCodecBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaCodecBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaCodecBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaCodecBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2462,6 +2631,7 @@ namespace Azure.ResourceManager.Media.Models
         public bool IsDownloadEnabled { get { throw null; } set { } }
         public bool IsHlsEnabled { get { throw null; } set { } }
         public bool IsSmoothStreamingEnabled { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaEnabledProtocols System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaEnabledProtocols>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaEnabledProtocols>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaEnabledProtocols System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaEnabledProtocols>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2472,6 +2642,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         protected MediaFormatBase(string filenamePattern) { }
         public string FilenamePattern { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaFormatBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaFormatBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaFormatBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaFormatBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaFormatBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2484,6 +2655,7 @@ namespace Azure.ResourceManager.Media.Models
         public string Range { get { throw null; } set { } }
         public string Start { get { throw null; } set { } }
         public string Step { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaImageBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaImageBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaImageBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaImageBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaImageBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2498,6 +2670,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.MediaJobErrorDetail> Details { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaJobRetry? Retry { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaJobError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2557,6 +2730,7 @@ namespace Azure.ResourceManager.Media.Models
         internal MediaJobErrorDetail() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobErrorDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobErrorDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobErrorDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobErrorDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaJobErrorDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2567,6 +2741,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public MediaJobInputAsset(string assetName) { }
         public string AssetName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputAsset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputAsset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaJobInputAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2576,6 +2751,7 @@ namespace Azure.ResourceManager.Media.Models
     public abstract partial class MediaJobInputBasicProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputBasicProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaJobInputBasicProperties>
     {
         protected MediaJobInputBasicProperties() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputBasicProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputBasicProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputBasicProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputBasicProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaJobInputBasicProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2590,6 +2766,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaJobInputDefinition> InputDefinitions { get { throw null; } }
         public string Label { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ClipTime Start { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputClip System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputClip>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputClip>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputClip System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaJobInputClip>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2600,6 +2777,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         protected MediaJobInputDefinition() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.TrackDescriptor> IncludedTracks { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaJobInputDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2610,6 +2788,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public MediaJobInputFile() { }
         public string Filename { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputFile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputFile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaJobInputFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2620,6 +2799,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public MediaJobInputHttp() { }
         public System.Uri BaseUri { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputHttp System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputHttp>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputHttp>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputHttp System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaJobInputHttp>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2630,6 +2810,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public MediaJobInputs() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaJobInputBasicProperties> Inputs { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputs System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputs>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputs>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputs System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaJobInputs>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2640,6 +2821,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public MediaJobInputSequence() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaJobInputClip> Inputs { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputSequence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputSequence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobInputSequence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobInputSequence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaJobInputSequence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2656,6 +2838,7 @@ namespace Azure.ResourceManager.Media.Models
         public int? Progress { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaJobState? State { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobOutput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobOutput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaJobOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2666,6 +2849,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public MediaJobOutputAsset(string assetName) { }
         public string AssetName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobOutputAsset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobOutputAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaJobOutputAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaJobOutputAsset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaJobOutputAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2738,6 +2922,7 @@ namespace Azure.ResourceManager.Media.Models
         public string Height { get { throw null; } set { } }
         public string Label { get { throw null; } set { } }
         public string Width { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaLayerBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaLayerBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaLayerBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaLayerBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaLayerBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2748,6 +2933,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public MediaOutputFile(System.Collections.Generic.IEnumerable<string> labels) { }
         public System.Collections.Generic.IList<string> Labels { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaOutputFile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaOutputFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaOutputFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaOutputFile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaOutputFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2763,6 +2949,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.TimeSpan? FadeOutDuration { get { throw null; } set { } }
         public string InputLabel { get { throw null; } set { } }
         public System.TimeSpan? Start { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaOverlayBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaOverlayBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaOverlayBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaOverlayBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaOverlayBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2814,6 +3001,7 @@ namespace Azure.ResourceManager.Media.Models
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2834,6 +3022,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaServicesStorageAccount> StorageAccounts { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaStorageAuthentication? StorageAuthentication { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaServicesAccountPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaServicesAccountPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaServicesAccountPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaServicesAccountPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaServicesAccountPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2844,6 +3033,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal MediaServicesEdgePolicies() { }
         public Azure.ResourceManager.Media.Models.EdgeUsageDataCollectionPolicy UsageDataCollectionPolicy { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaServicesEdgePolicies System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaServicesEdgePolicies>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaServicesEdgePolicies>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaServicesEdgePolicies System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaServicesEdgePolicies>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2875,6 +3065,7 @@ namespace Azure.ResourceManager.Media.Models
         public MediaServicesNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2887,6 +3078,7 @@ namespace Azure.ResourceManager.Media.Models
         public bool IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2937,6 +3129,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ResourceIdentity Identity { get { throw null; } set { } }
         public string Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaServicesStorageAccount System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaServicesStorageAccount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaServicesStorageAccount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaServicesStorageAccount System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaServicesStorageAccount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2983,6 +3176,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public MediaTrackSelection() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.TrackPropertyCondition> TrackSelections { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaTrackSelection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaTrackSelection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaTrackSelection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaTrackSelection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaTrackSelection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3013,6 +3207,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.MediaTransformOnErrorType? OnError { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaTransformPreset Preset { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaJobPriority? RelativePriority { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaTransformOutput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaTransformOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaTransformOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaTransformOutput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaTransformOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3022,6 +3217,7 @@ namespace Azure.ResourceManager.Media.Models
     public abstract partial class MediaTransformPreset : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaTransformPreset>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaTransformPreset>
     {
         protected MediaTransformPreset() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaTransformPreset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaTransformPreset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaTransformPreset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaTransformPreset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaTransformPreset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3034,6 +3230,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.TimeSpan? KeyFrameInterval { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.InputVideoStretchMode? StretchMode { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.VideoSyncMode? SyncMode { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaVideoBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaVideoBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MediaVideoBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MediaVideoBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MediaVideoBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3043,6 +3240,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class Mp4Format : Azure.ResourceManager.Media.Models.MultiBitrateFormat, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.Mp4Format>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.Mp4Format>
     {
         public Mp4Format(string filenamePattern) : base (default(string)) { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.Mp4Format System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.Mp4Format>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.Mp4Format>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.Mp4Format System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.Mp4Format>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3053,6 +3251,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public MultiBitrateFormat(string filenamePattern) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaOutputFile> OutputFiles { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MultiBitrateFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MultiBitrateFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.MultiBitrateFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.MultiBitrateFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.MultiBitrateFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3062,6 +3261,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class OutputImageFileFormat : Azure.ResourceManager.Media.Models.MediaFormatBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.OutputImageFileFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.OutputImageFileFormat>
     {
         public OutputImageFileFormat(string filenamePattern) : base (default(string)) { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.OutputImageFileFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.OutputImageFileFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.OutputImageFileFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.OutputImageFileFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.OutputImageFileFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3109,6 +3309,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class PngFormat : Azure.ResourceManager.Media.Models.OutputImageFileFormat, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.PngFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.PngFormat>
     {
         public PngFormat(string filenamePattern) : base (default(string)) { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.PngFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.PngFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.PngFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.PngFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.PngFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3119,6 +3320,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public PngImage(string start) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.PngLayer> Layers { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.PngImage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.PngImage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.PngImage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.PngImage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.PngImage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3128,6 +3330,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class PngLayer : Azure.ResourceManager.Media.Models.MediaLayerBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.PngLayer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.PngLayer>
     {
         public PngLayer() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.PngLayer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.PngLayer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.PngLayer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.PngLayer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.PngLayer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3143,6 +3346,7 @@ namespace Azure.ResourceManager.Media.Models
         public long? PresentationWindowDuration { get { throw null; } set { } }
         public long? StartTimestamp { get { throw null; } set { } }
         public long? Timescale { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.PresentationTimeRange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.PresentationTimeRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.PresentationTimeRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.PresentationTimeRange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.PresentationTimeRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3156,6 +3360,7 @@ namespace Azure.ResourceManager.Media.Models
         public string Left { get { throw null; } set { } }
         public string Top { get { throw null; } set { } }
         public string Width { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.RectangularWindow System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.RectangularWindow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.RectangularWindow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.RectangularWindow System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.RectangularWindow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3167,6 +3372,7 @@ namespace Azure.ResourceManager.Media.Models
         public ResourceIdentity(bool useSystemAssignedIdentity) { }
         public string UserAssignedIdentity { get { throw null; } set { } }
         public bool UseSystemAssignedIdentity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ResourceIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ResourceIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.ResourceIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.ResourceIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.ResourceIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3201,6 +3407,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.TrackAttribute Attribute { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.TrackAttributeFilter Filter { get { throw null; } set { } }
         public string FilterValue { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.SelectAudioTrackByAttribute System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.SelectAudioTrackByAttribute>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.SelectAudioTrackByAttribute>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.SelectAudioTrackByAttribute System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.SelectAudioTrackByAttribute>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3211,6 +3418,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public SelectAudioTrackById(long trackId) { }
         public long TrackId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.SelectAudioTrackById System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.SelectAudioTrackById>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.SelectAudioTrackById>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.SelectAudioTrackById System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.SelectAudioTrackById>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3223,6 +3431,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.TrackAttribute Attribute { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.TrackAttributeFilter Filter { get { throw null; } set { } }
         public string FilterValue { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.SelectVideoTrackByAttribute System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.SelectVideoTrackByAttribute>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.SelectVideoTrackByAttribute>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.SelectVideoTrackByAttribute System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.SelectVideoTrackByAttribute>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3233,6 +3442,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public SelectVideoTrackById(long trackId) { }
         public long TrackId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.SelectVideoTrackById System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.SelectVideoTrackById>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.SelectVideoTrackById>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.SelectVideoTrackById System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.SelectVideoTrackById>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3246,6 +3456,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.Collections.Generic.IDictionary<string, string> ExperimentalOptions { get { throw null; } }
         public Azure.ResourceManager.Media.Models.FilteringOperations Filters { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaFormatBase> Formats { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StandardEncoderPreset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StandardEncoderPreset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StandardEncoderPreset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StandardEncoderPreset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StandardEncoderPreset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3257,6 +3468,7 @@ namespace Azure.ResourceManager.Media.Models
         internal StorageEncryptedAssetDecryptionInfo() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.MediaAssetFileEncryptionMetadata> AssetFileEncryptionMetadata { get { throw null; } }
         public byte[] Key { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StorageEncryptedAssetDecryptionInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StorageEncryptedAssetDecryptionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StorageEncryptedAssetDecryptionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StorageEncryptedAssetDecryptionInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StorageEncryptedAssetDecryptionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3268,6 +3480,7 @@ namespace Azure.ResourceManager.Media.Models
         public StreamingEndpointAccessControl() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.AkamaiSignatureHeaderAuthenticationKey> AkamaiSignatureHeaderAuthenticationKeyList { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.IPRange> AllowedIPs { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingEndpointAccessControl System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingEndpointAccessControl>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingEndpointAccessControl>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingEndpointAccessControl System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StreamingEndpointAccessControl>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3281,6 +3494,7 @@ namespace Azure.ResourceManager.Media.Models
         public int? Maximum { get { throw null; } }
         public int? Minimum { get { throw null; } }
         public string ScaleType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingEndpointCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingEndpointCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingEndpointCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingEndpointCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StreamingEndpointCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3292,6 +3506,7 @@ namespace Azure.ResourceManager.Media.Models
         public StreamingEndpointCurrentSku() { }
         public int? Capacity { get { throw null; } set { } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingEndpointCurrentSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingEndpointCurrentSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingEndpointCurrentSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingEndpointCurrentSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StreamingEndpointCurrentSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3326,6 +3541,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.StreamingEndpointCapacity Capacity { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public string SkuName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingEndpointSkuInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingEndpointSkuInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingEndpointSkuInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingEndpointSkuInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StreamingEndpointSkuInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3336,6 +3552,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public StreamingEntityScaleUnit() { }
         public int? ScaleUnit { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingEntityScaleUnit System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingEntityScaleUnit>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingEntityScaleUnit>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingEntityScaleUnit System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StreamingEntityScaleUnit>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3351,6 +3568,7 @@ namespace Azure.ResourceManager.Media.Models
         public string PolicyName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.MediaTrackSelection> Tracks { get { throw null; } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingLocatorContentKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingLocatorContentKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingLocatorContentKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingLocatorContentKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StreamingLocatorContentKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3382,6 +3600,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme EncryptionScheme { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Paths { get { throw null; } }
         public Azure.ResourceManager.Media.Models.StreamingPolicyStreamingProtocol StreamingProtocol { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingPath System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingPath>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingPath>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingPath System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StreamingPath>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3413,6 +3632,7 @@ namespace Azure.ResourceManager.Media.Models
         internal StreamingPathsResult() { }
         public System.Collections.Generic.IReadOnlyList<string> DownloadPaths { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.StreamingPath> StreamingPaths { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingPathsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingPathsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingPathsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingPathsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StreamingPathsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3425,6 +3645,7 @@ namespace Azure.ResourceManager.Media.Models
         public string Label { get { throw null; } set { } }
         public string PolicyName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaTrackSelection> Tracks { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingPolicyContentKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingPolicyContentKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingPolicyContentKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingPolicyContentKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StreamingPolicyContentKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3436,6 +3657,7 @@ namespace Azure.ResourceManager.Media.Models
         public StreamingPolicyContentKeys() { }
         public Azure.ResourceManager.Media.Models.EncryptionSchemeDefaultKey DefaultKey { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.StreamingPolicyContentKey> KeyToTrackMappings { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingPolicyContentKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingPolicyContentKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingPolicyContentKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingPolicyContentKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StreamingPolicyContentKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3447,6 +3669,7 @@ namespace Azure.ResourceManager.Media.Models
         public StreamingPolicyFairPlayConfiguration(bool allowPersistentLicense) { }
         public bool AllowPersistentLicense { get { throw null; } set { } }
         public string CustomLicenseAcquisitionUriTemplate { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingPolicyFairPlayConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingPolicyFairPlayConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingPolicyFairPlayConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingPolicyFairPlayConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StreamingPolicyFairPlayConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3458,6 +3681,7 @@ namespace Azure.ResourceManager.Media.Models
         public StreamingPolicyPlayReadyConfiguration() { }
         public string CustomLicenseAcquisitionUriTemplate { get { throw null; } set { } }
         public string PlayReadyCustomAttributes { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingPolicyPlayReadyConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingPolicyPlayReadyConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.StreamingPolicyPlayReadyConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.StreamingPolicyPlayReadyConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.StreamingPolicyPlayReadyConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3507,6 +3731,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public SyncStorageKeysContent() { }
         public string Id { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.SyncStorageKeysContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.SyncStorageKeysContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.SyncStorageKeysContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.SyncStorageKeysContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.SyncStorageKeysContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3521,6 +3746,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.HlsSettings HlsSettings { get { throw null; } set { } }
         public string LanguageCode { get { throw null; } }
         public Azure.ResourceManager.Media.Models.PlayerVisibility? PlayerVisibility { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.TextTrack System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.TextTrack>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.TextTrack>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.TextTrack System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.TextTrack>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3568,6 +3794,7 @@ namespace Azure.ResourceManager.Media.Models
     public abstract partial class TrackDescriptor : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.TrackDescriptor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.TrackDescriptor>
     {
         protected TrackDescriptor() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.TrackDescriptor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.TrackDescriptor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.TrackDescriptor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.TrackDescriptor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.TrackDescriptor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3598,6 +3825,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.TrackPropertyCompareOperation Operation { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.TrackPropertyType Property { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.TrackPropertyCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.TrackPropertyCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.TrackPropertyCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.TrackPropertyCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.TrackPropertyCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3625,6 +3853,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class TransportStreamFormat : Azure.ResourceManager.Media.Models.MultiBitrateFormat, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.TransportStreamFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.TransportStreamFormat>
     {
         public TransportStreamFormat(string filenamePattern) : base (default(string)) { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.TransportStreamFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.TransportStreamFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.TransportStreamFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.TransportStreamFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.TransportStreamFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3635,6 +3864,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public UtcClipTime(System.DateTimeOffset time) { }
         public System.DateTimeOffset Time { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.UtcClipTime System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.UtcClipTime>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.UtcClipTime>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.UtcClipTime System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.UtcClipTime>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3645,6 +3875,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public VideoAnalyzerPreset() { }
         public Azure.ResourceManager.Media.Models.InsightsType? InsightsToExtract { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.VideoAnalyzerPreset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.VideoAnalyzerPreset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.VideoAnalyzerPreset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.VideoAnalyzerPreset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.VideoAnalyzerPreset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3660,6 +3891,7 @@ namespace Azure.ResourceManager.Media.Models
         public int? MaxBitrate { get { throw null; } set { } }
         public int? Slices { get { throw null; } set { } }
         public bool? UseAdaptiveBFrame { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.VideoLayer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.VideoLayer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.VideoLayer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.VideoLayer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.VideoLayer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3672,6 +3904,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.RectangularWindow CropRectangle { get { throw null; } set { } }
         public double? Opacity { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.RectangularWindow Position { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.VideoOverlay System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.VideoOverlay>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.VideoOverlay>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.VideoOverlay System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.VideoOverlay>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3701,6 +3934,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class VideoTrack : Azure.ResourceManager.Media.Models.MediaAssetTrackBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.VideoTrack>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.VideoTrack>
     {
         public VideoTrack() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.VideoTrack System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.VideoTrack>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.VideoTrack>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.VideoTrack System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.VideoTrack>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3710,6 +3944,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class VideoTrackDescriptor : Azure.ResourceManager.Media.Models.TrackDescriptor, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.VideoTrackDescriptor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.VideoTrackDescriptor>
     {
         public VideoTrackDescriptor() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.VideoTrackDescriptor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.VideoTrackDescriptor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Media.Models.VideoTrackDescriptor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Media.Models.VideoTrackDescriptor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Media.Models.VideoTrackDescriptor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

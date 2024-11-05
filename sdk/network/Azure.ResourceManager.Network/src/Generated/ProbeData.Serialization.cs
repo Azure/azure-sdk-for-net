@@ -21,32 +21,26 @@ namespace Azure.ResourceManager.Network
 
         void IJsonModel<ProbeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ProbeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProbeData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -75,6 +69,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
+            if (Optional.IsDefined(NoHealthyBackendsBehavior))
+            {
+                writer.WritePropertyName("noHealthyBackendsBehavior"u8);
+                writer.WriteStringValue(NoHealthyBackendsBehavior.Value.ToString());
+            }
             if (Optional.IsDefined(NumberOfProbes))
             {
                 writer.WritePropertyName("numberOfProbes"u8);
@@ -94,22 +93,6 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
             writer.WriteEndObject();
         }
@@ -142,6 +125,7 @@ namespace Azure.ResourceManager.Network
             ProbeProtocol? protocol = default;
             int? port = default;
             int? intervalInSeconds = default;
+            ProbeNoHealthyBackendsBehavior? noHealthyBackendsBehavior = default;
             int? numberOfProbes = default;
             int? probeThreshold = default;
             string requestPath = default;
@@ -232,6 +216,15 @@ namespace Azure.ResourceManager.Network
                             intervalInSeconds = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("noHealthyBackendsBehavior"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            noHealthyBackendsBehavior = new ProbeNoHealthyBackendsBehavior(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("numberOfProbes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -283,6 +276,7 @@ namespace Azure.ResourceManager.Network
                 protocol,
                 port,
                 intervalInSeconds,
+                noHealthyBackendsBehavior,
                 numberOfProbes,
                 probeThreshold,
                 requestPath,

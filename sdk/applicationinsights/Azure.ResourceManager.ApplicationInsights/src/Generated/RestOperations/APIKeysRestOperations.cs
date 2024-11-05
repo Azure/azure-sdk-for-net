@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationInsightsComponentAPIKeyListResult>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationInsightsComponentApiKeyListResult>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        ApplicationInsightsComponentAPIKeyListResult value = default;
+                        ApplicationInsightsComponentApiKeyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationInsightsComponentAPIKeyListResult.DeserializeApplicationInsightsComponentAPIKeyListResult(document.RootElement);
+                        value = ApplicationInsightsComponentApiKeyListResult.DeserializeApplicationInsightsComponentApiKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationInsightsComponentAPIKeyListResult> List(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<ApplicationInsightsComponentApiKeyListResult> List(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        ApplicationInsightsComponentAPIKeyListResult value = default;
+                        ApplicationInsightsComponentApiKeyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationInsightsComponentAPIKeyListResult.DeserializeApplicationInsightsComponentAPIKeyListResult(document.RootElement);
+                        value = ApplicationInsightsComponentApiKeyListResult.DeserializeApplicationInsightsComponentApiKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, APIKeyContent content)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsApiKeyContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, APIKeyContent content)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsApiKeyContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationInsightsComponentAPIKey>> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, APIKeyContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationInsightsComponentApiKey>> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsApiKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        ApplicationInsightsComponentAPIKey value = default;
+                        ApplicationInsightsComponentApiKey value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(document.RootElement);
+                        value = ApplicationInsightsComponentApiKey.DeserializeApplicationInsightsComponentApiKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationInsightsComponentAPIKey> Create(string subscriptionId, string resourceGroupName, string resourceName, APIKeyContent content, CancellationToken cancellationToken = default)
+        public Response<ApplicationInsightsComponentApiKey> Create(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsApiKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,9 +222,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        ApplicationInsightsComponentAPIKey value = default;
+                        ApplicationInsightsComponentApiKey value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(document.RootElement);
+                        value = ApplicationInsightsComponentApiKey.DeserializeApplicationInsightsComponentApiKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="keyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="keyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationInsightsComponentAPIKey>> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string keyId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationInsightsComponentApiKey>> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -291,9 +291,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        ApplicationInsightsComponentAPIKey value = default;
+                        ApplicationInsightsComponentApiKey value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(document.RootElement);
+                        value = ApplicationInsightsComponentApiKey.DeserializeApplicationInsightsComponentApiKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="keyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="keyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationInsightsComponentAPIKey> Delete(string subscriptionId, string resourceGroupName, string resourceName, string keyId, CancellationToken cancellationToken = default)
+        public Response<ApplicationInsightsComponentApiKey> Delete(string subscriptionId, string resourceGroupName, string resourceName, string keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -322,9 +322,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        ApplicationInsightsComponentAPIKey value = default;
+                        ApplicationInsightsComponentApiKey value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(document.RootElement);
+                        value = ApplicationInsightsComponentApiKey.DeserializeApplicationInsightsComponentApiKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="keyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="keyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationInsightsComponentAPIKey>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string keyId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationInsightsComponentApiKey>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -391,9 +391,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        ApplicationInsightsComponentAPIKey value = default;
+                        ApplicationInsightsComponentApiKey value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(document.RootElement);
+                        value = ApplicationInsightsComponentApiKey.DeserializeApplicationInsightsComponentApiKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="keyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="keyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationInsightsComponentAPIKey> Get(string subscriptionId, string resourceGroupName, string resourceName, string keyId, CancellationToken cancellationToken = default)
+        public Response<ApplicationInsightsComponentApiKey> Get(string subscriptionId, string resourceGroupName, string resourceName, string keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -422,9 +422,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        ApplicationInsightsComponentAPIKey value = default;
+                        ApplicationInsightsComponentApiKey value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(document.RootElement);
+                        value = ApplicationInsightsComponentApiKey.DeserializeApplicationInsightsComponentApiKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

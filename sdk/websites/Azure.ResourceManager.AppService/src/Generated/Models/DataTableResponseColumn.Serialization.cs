@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<DataTableResponseColumn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataTableResponseColumn>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataTableResponseColumn)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("columnName"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataTableResponseColumn IJsonModel<DataTableResponseColumn>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -123,15 +130,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ColumnName), out propertyOverride);
-            if (Optional.IsDefined(ColumnName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  columnName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ColumnName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  columnName: ");
                     if (ColumnName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -145,15 +153,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataType), out propertyOverride);
-            if (Optional.IsDefined(DataType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dataType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dataType: ");
                     if (DataType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -167,15 +176,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ColumnType), out propertyOverride);
-            if (Optional.IsDefined(ColumnType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  columnType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ColumnType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  columnType: ");
                     if (ColumnType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

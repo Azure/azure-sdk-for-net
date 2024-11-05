@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         void IJsonModel<PostgreSqlMigrationSecretParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationSecretParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PostgreSqlMigrationSecretParameters)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("adminCredentials"u8);
             writer.WriteObjectValue(AdminCredentials, options);
             if (Optional.IsDefined(SourceServerUsername))
@@ -54,7 +62,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PostgreSqlMigrationSecretParameters IJsonModel<PostgreSqlMigrationSecretParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -120,29 +127,31 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdminCredentials), out propertyOverride);
-            if (Optional.IsDefined(AdminCredentials) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  adminCredentials: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdminCredentials))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  adminCredentials: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AdminCredentials, options, 2, false, "  adminCredentials: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceServerUsername), out propertyOverride);
-            if (Optional.IsDefined(SourceServerUsername) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sourceServerUsername: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceServerUsername))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sourceServerUsername: ");
                     if (SourceServerUsername.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -156,15 +165,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetServerUsername), out propertyOverride);
-            if (Optional.IsDefined(TargetServerUsername) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  targetServerUsername: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetServerUsername))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  targetServerUsername: ");
                     if (TargetServerUsername.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

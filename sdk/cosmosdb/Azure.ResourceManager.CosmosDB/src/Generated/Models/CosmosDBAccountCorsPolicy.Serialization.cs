@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CosmosDBAccountCorsPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountCorsPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBAccountCorsPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("allowedOrigins"u8);
             writer.WriteStringValue(AllowedOrigins);
             if (Optional.IsDefined(AllowedMethods))
@@ -64,7 +72,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CosmosDBAccountCorsPolicy IJsonModel<CosmosDBAccountCorsPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -152,15 +159,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedOrigins), out propertyOverride);
-            if (Optional.IsDefined(AllowedOrigins) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  allowedOrigins: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowedOrigins))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  allowedOrigins: ");
                     if (AllowedOrigins.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -174,15 +182,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedMethods), out propertyOverride);
-            if (Optional.IsDefined(AllowedMethods) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  allowedMethods: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowedMethods))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  allowedMethods: ");
                     if (AllowedMethods.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -196,15 +205,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedHeaders), out propertyOverride);
-            if (Optional.IsDefined(AllowedHeaders) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  allowedHeaders: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowedHeaders))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  allowedHeaders: ");
                     if (AllowedHeaders.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -218,15 +228,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExposedHeaders), out propertyOverride);
-            if (Optional.IsDefined(ExposedHeaders) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  exposedHeaders: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExposedHeaders))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  exposedHeaders: ");
                     if (ExposedHeaders.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -240,15 +251,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxAgeInSeconds), out propertyOverride);
-            if (Optional.IsDefined(MaxAgeInSeconds) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxAgeInSeconds: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxAgeInSeconds))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxAgeInSeconds: ");
                     builder.AppendLine($"'{MaxAgeInSeconds.Value.ToString()}'");
                 }
             }

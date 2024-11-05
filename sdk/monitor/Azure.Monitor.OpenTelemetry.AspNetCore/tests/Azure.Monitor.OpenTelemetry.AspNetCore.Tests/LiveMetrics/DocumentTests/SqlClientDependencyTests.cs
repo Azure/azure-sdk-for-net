@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
             // TODO: Replace this ActivityListener with an OpenTelemetry provider.
-            var listener = new ActivityListener
+            using var listener = new ActivityListener
             {
                 ShouldListenTo = _ => true,
                 Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
@@ -46,12 +46,23 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             ActivitySource.AddActivityListener(listener);
 
             // ACT
-            using var dependencyActivity = activitySource.StartActivity(name: "HelloWorld", kind: ActivityKind.Client);
+            using var dependencyActivity = activitySource.StartActivity(name: "TestActivityName", kind: ActivityKind.Client);
             Assert.NotNull(dependencyActivity);
             dependencyActivity.SetTag("db.system", "mssql");
             dependencyActivity.SetTag("db.name", "MyDatabase");
             dependencyActivity.SetTag("peer.service", "(localdb)\\MSSQLLocalDB");
             dependencyActivity.SetTag("db.statement", "select * from sys.databases");
+            dependencyActivity.SetTag("customKey1", "customValue1");
+            dependencyActivity.SetTag("customKey2", "customValue2");
+            dependencyActivity.SetTag("customKey3", "customValue3");
+            dependencyActivity.SetTag("customKey4", "customValue4");
+            dependencyActivity.SetTag("customKey5", "customValue5");
+            dependencyActivity.SetTag("customKey6", "customValue6");
+            dependencyActivity.SetTag("customKey7", "customValue7");
+            dependencyActivity.SetTag("customKey8", "customValue8");
+            dependencyActivity.SetTag("customKey9", "customValue9");
+            dependencyActivity.SetTag("customKey10", "customValue10");
+            dependencyActivity.SetTag("customKey11", "customValue11");
             dependencyActivity.Stop();
 
             var dependencyDocument = DocumentHelper.ConvertToDependencyDocument(dependencyActivity);
@@ -60,14 +71,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal("select * from sys.databases", dependencyDocument.CommandName);
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
-            Assert.Equal("(localdb)\\MSSQLLocalDB | MyDatabase", dependencyDocument.Name);
+            Assert.Equal("TestActivityName", dependencyDocument.Name);
+
+            VerifyCustomProperties(dependencyDocument);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
             Assert.True(dependencyDocument.Extension_IsSuccess);
         }
 
-        [Theory(Skip = "This test is leaky and needs to be rewritten using WebApplicationFactory (same as OTel repo).")]
+        [Theory]
         [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataAfterExecuteCommand, CommandType.StoredProcedure, "SP_GetOrders")]
         [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataAfterExecuteCommand, CommandType.Text, "select * from sys.databases")]
         public void VerifySqlClientDependency(
@@ -82,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             var fakeSqlClientDiagnosticSource = new FakeSqlClientDiagnosticSource();
 
             var exportedActivities = new List<Activity>();
-            using (Sdk.CreateTracerProviderBuilder()
+            using (var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSqlClientInstrumentation(options =>
                 {
                     options.SetDbStatementForText = true;
@@ -117,6 +130,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
                     afterCommand,
                     afterExecuteEventData);
 
+                tracerProvider.ForceFlush();
                 WaitForActivityExport(exportedActivities);
             }
 
@@ -127,14 +141,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal(commandText, dependencyDocument.CommandName);
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
-            Assert.Equal("(localdb)\\MSSQLLocalDB | MyDatabase", dependencyDocument.Name);
+            Assert.Equal("MyDatabase", dependencyDocument.Name);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
             Assert.True(dependencyDocument.Extension_IsSuccess);
         }
 
-        [Theory(Skip = "This test is leaky and needs to be rewritten using WebApplicationFactory (same as OTel repo).")]
+        [Theory]
         [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataWriteCommandError, CommandType.StoredProcedure, "SP_GetOrders")]
         [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataWriteCommandError, CommandType.Text, "select * from sys.databases")]
         [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataWriteCommandError, CommandType.StoredProcedure, "SP_GetOrders", true)]
@@ -152,7 +166,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             var fakeSqlClientDiagnosticSource = new FakeSqlClientDiagnosticSource();
 
             var exportedActivities = new List<Activity>();
-            using (Sdk.CreateTracerProviderBuilder()
+            using (var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSqlClientInstrumentation(options =>
                 {
                     options.SetDbStatementForText = true;
@@ -189,6 +203,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
                     errorCommand,
                     commandErrorEventData);
 
+                tracerProvider.ForceFlush();
                 WaitForActivityExport(exportedActivities);
             }
 
@@ -199,7 +214,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal(commandText, dependencyDocument.CommandName);
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
-            Assert.Equal("(localdb)\\MSSQLLocalDB | MyDatabase", dependencyDocument.Name);
+            Assert.Equal("MyDatabase", dependencyDocument.Name);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);

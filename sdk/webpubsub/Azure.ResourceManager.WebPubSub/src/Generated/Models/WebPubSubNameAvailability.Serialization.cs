@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         void IJsonModel<WebPubSubNameAvailability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubNameAvailability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebPubSubNameAvailability)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(NameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WebPubSubNameAvailability IJsonModel<WebPubSubNameAvailability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,30 +134,32 @@ namespace Azure.ResourceManager.WebPubSub.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NameAvailable), out propertyOverride);
-            if (Optional.IsDefined(NameAvailable) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nameAvailable: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NameAvailable))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nameAvailable: ");
                     var boolValue = NameAvailable.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  reason: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Reason))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  reason: ");
                     if (Reason.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -164,15 +173,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
-            if (Optional.IsDefined(Message) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  message: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Message))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  message: ");
                     if (Message.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

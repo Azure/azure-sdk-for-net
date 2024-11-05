@@ -36,13 +36,14 @@ namespace Azure.ResourceManager.EdgeZones
         public string RegionCategory { get { throw null; } }
         public string RegionType { get { throw null; } }
         public Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState? RegistrationState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.EdgeZones.ExtendedZoneData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.EdgeZones.ExtendedZoneData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExtendedZoneResource : Azure.ResourceManager.ArmResource
+    public partial class ExtendedZoneResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ExtendedZoneResource() { }
@@ -53,6 +54,11 @@ namespace Azure.ResourceManager.EdgeZones
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> Register(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>> RegisterAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EdgeZones.ExtendedZoneData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeZones.ExtendedZoneData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> Unregister(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>> UnregisterAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

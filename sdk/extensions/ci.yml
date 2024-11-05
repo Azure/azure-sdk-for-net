@@ -9,8 +9,6 @@ trigger:
   paths:
     include:
     - sdk/extensions/
-    exclude:
-    - sdk/extensions/wcf/
 
 pr:
   branches:
@@ -22,13 +20,10 @@ pr:
   paths:
     include:
     - sdk/extensions/
-    exclude:
-    - sdk/extensions/wcf/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SDKType: client
     ServiceDirectory: extensions
     ArtifactName: packages
     Artifacts:

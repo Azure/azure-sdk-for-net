@@ -20,14 +20,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         void IJsonModel<PostgreSqlFlexibleServerNetwork>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerNetwork)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PostgreSqlFlexibleServerNetwork IJsonModel<PostgreSqlFlexibleServerNetwork>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -135,43 +142,46 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
-            if (Optional.IsDefined(PublicNetworkAccess) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  publicNetworkAccess: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccess))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  publicNetworkAccess: ");
                     builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DelegatedSubnetResourceId), out propertyOverride);
-            if (Optional.IsDefined(DelegatedSubnetResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  delegatedSubnetResourceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DelegatedSubnetResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  delegatedSubnetResourceId: ");
                     builder.AppendLine($"'{DelegatedSubnetResourceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateDnsZoneArmResourceId), out propertyOverride);
-            if (Optional.IsDefined(PrivateDnsZoneArmResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  privateDnsZoneArmResourceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateDnsZoneArmResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  privateDnsZoneArmResourceId: ");
                     builder.AppendLine($"'{PrivateDnsZoneArmResourceId.ToString()}'");
                 }
             }

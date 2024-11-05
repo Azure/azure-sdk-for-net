@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSkus_SkuList()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/SKUList.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/SKUList.json
             // this example is just showing the usage of "Skus_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetUsagesByLocation_UsageList()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountListLocationUsage.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountListLocationUsage.json
             // this example is just showing the usage of "Usages_ListByLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

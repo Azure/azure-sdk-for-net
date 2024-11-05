@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<StackMinorVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StackMinorVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StackMinorVersion)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DisplayVersion))
             {
                 writer.WritePropertyName("displayVersion"u8);
@@ -62,7 +70,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StackMinorVersion IJsonModel<StackMinorVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -142,15 +149,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayVersion), out propertyOverride);
-            if (Optional.IsDefined(DisplayVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  displayVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  displayVersion: ");
                     if (DisplayVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -164,15 +172,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeVersion), out propertyOverride);
-            if (Optional.IsDefined(RuntimeVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  runtimeVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuntimeVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  runtimeVersion: ");
                     if (RuntimeVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -186,30 +195,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefault), out propertyOverride);
-            if (Optional.IsDefined(IsDefault) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isDefault: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDefault))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isDefault: ");
                     var boolValue = IsDefault.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRemoteDebuggingEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsRemoteDebuggingEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isRemoteDebuggingEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRemoteDebuggingEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isRemoteDebuggingEnabled: ");
                     var boolValue = IsRemoteDebuggingEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

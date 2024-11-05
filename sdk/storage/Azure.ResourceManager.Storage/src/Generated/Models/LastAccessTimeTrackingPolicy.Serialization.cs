@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<LastAccessTimeTrackingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<LastAccessTimeTrackingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LastAccessTimeTrackingPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("enable"u8);
             writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(Name))
@@ -65,7 +73,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         LastAccessTimeTrackingPolicy IJsonModel<LastAccessTimeTrackingPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -154,57 +161,61 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
-            builder.Append("  enable: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  enable: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  enable: ");
                 var boolValue = IsEnabled == true ? "true" : "false";
                 builder.AppendLine($"{boolValue}");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     builder.AppendLine($"'{Name.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrackingGranularityInDays), out propertyOverride);
-            if (Optional.IsDefined(TrackingGranularityInDays) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  trackingGranularityInDays: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TrackingGranularityInDays))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  trackingGranularityInDays: ");
                     builder.AppendLine($"{TrackingGranularityInDays.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobType), out propertyOverride);
-            if (Optional.IsCollectionDefined(BlobType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (BlobType.Any() || hasPropertyOverride)
+                builder.Append("  blobType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BlobType))
                 {
-                    builder.Append("  blobType: ");
-                    if (hasPropertyOverride)
+                    if (BlobType.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  blobType: ");
                         builder.AppendLine("[");
                         foreach (var item in BlobType)
                         {

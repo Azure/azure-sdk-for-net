@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             string resourceName = "my-component";
             ApplicationInsightsComponentData data = new ApplicationInsightsComponentData(new AzureLocation("South Central US"), "web")
             {
-                ApplicationType = ApplicationType.Web,
-                FlowType = FlowType.Bluefield,
-                RequestSource = RequestSource.Rest,
-                WorkspaceResourceId = "/subscriptions/subid/resourcegroups/my-resource-group/providers/microsoft.operationalinsights/workspaces/my-workspace",
+                ApplicationType = ApplicationInsightsApplicationType.Web,
+                FlowType = ComponentFlowType.Bluefield,
+                RequestSource = ComponentRequestSource.Rest,
+                WorkspaceResourceId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/my-resource-group/providers/microsoft.operationalinsights/workspaces/my-workspace"),
             };
             ArmOperation<ApplicationInsightsComponentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
             ApplicationInsightsComponentResource result = lro.Value;

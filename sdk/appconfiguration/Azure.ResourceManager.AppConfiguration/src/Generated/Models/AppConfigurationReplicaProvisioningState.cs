@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static bool operator ==(AppConfigurationReplicaProvisioningState left, AppConfigurationReplicaProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppConfigurationReplicaProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AppConfigurationReplicaProvisioningState left, AppConfigurationReplicaProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppConfigurationReplicaProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppConfigurationReplicaProvisioningState"/>. </summary>
         public static implicit operator AppConfigurationReplicaProvisioningState(string value) => new AppConfigurationReplicaProvisioningState(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -41,6 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "BinaryReadSettings": return BinaryReadSettings.DeserializeBinaryReadSettings(element);
                     case "DelimitedTextReadSettings": return DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(element);
                     case "JsonReadSettings": return JsonReadSettings.DeserializeJsonReadSettings(element);
+                    case "ParquetReadSettings": return ParquetReadSettings.DeserializeParquetReadSettings(element);
                     case "XmlReadSettings": return XmlReadSettings.DeserializeXmlReadSettings(element);
                 }
             }

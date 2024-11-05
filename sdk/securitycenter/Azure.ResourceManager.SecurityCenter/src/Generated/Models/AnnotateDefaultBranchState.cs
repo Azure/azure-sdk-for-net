@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(AnnotateDefaultBranchState left, AnnotateDefaultBranchState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnnotateDefaultBranchState"/> values are not the same. </summary>
         public static bool operator !=(AnnotateDefaultBranchState left, AnnotateDefaultBranchState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnnotateDefaultBranchState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AnnotateDefaultBranchState"/>. </summary>
         public static implicit operator AnnotateDefaultBranchState(string value) => new AnnotateDefaultBranchState(value);
 
         /// <inheritdoc />
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

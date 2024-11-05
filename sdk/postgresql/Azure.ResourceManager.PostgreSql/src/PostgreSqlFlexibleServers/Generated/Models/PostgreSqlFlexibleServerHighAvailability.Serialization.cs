@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         void IJsonModel<PostgreSqlFlexibleServerHighAvailability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerHighAvailability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerHighAvailability)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PostgreSqlFlexibleServerHighAvailability IJsonModel<PostgreSqlFlexibleServerHighAvailability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -131,43 +138,46 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
-            if (Optional.IsDefined(Mode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  mode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Mode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  mode: ");
                     builder.AppendLine($"'{Mode.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (Optional.IsDefined(State) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  state: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  state: ");
                     builder.AppendLine($"'{State.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StandbyAvailabilityZone), out propertyOverride);
-            if (Optional.IsDefined(StandbyAvailabilityZone) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  standbyAvailabilityZone: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StandbyAvailabilityZone))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  standbyAvailabilityZone: ");
                     if (StandbyAvailabilityZone.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

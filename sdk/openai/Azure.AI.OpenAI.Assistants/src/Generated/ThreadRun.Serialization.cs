@@ -19,13 +19,21 @@ namespace Azure.AI.OpenAI.Assistants
 
         void IJsonModel<ThreadRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ThreadRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreadRun)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("object"u8);
@@ -80,7 +88,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (ExpiresAt != null)
             {
                 writer.WritePropertyName("expires_at"u8);
-                writer.WriteStringValue(ExpiresAt.Value, "O");
+                writer.WriteNumberValue(ExpiresAt.Value, "U");
             }
             else
             {
@@ -89,7 +97,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (StartedAt != null)
             {
                 writer.WritePropertyName("started_at"u8);
-                writer.WriteStringValue(StartedAt.Value, "O");
+                writer.WriteNumberValue(StartedAt.Value, "U");
             }
             else
             {
@@ -98,7 +106,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (CompletedAt != null)
             {
                 writer.WritePropertyName("completed_at"u8);
-                writer.WriteStringValue(CompletedAt.Value, "O");
+                writer.WriteNumberValue(CompletedAt.Value, "U");
             }
             else
             {
@@ -107,7 +115,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (CancelledAt != null)
             {
                 writer.WritePropertyName("cancelled_at"u8);
-                writer.WriteStringValue(CancelledAt.Value, "O");
+                writer.WriteNumberValue(CancelledAt.Value, "U");
             }
             else
             {
@@ -116,7 +124,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (FailedAt != null)
             {
                 writer.WritePropertyName("failed_at"u8);
-                writer.WriteStringValue(FailedAt.Value, "O");
+                writer.WriteNumberValue(FailedAt.Value, "U");
             }
             else
             {
@@ -152,7 +160,6 @@ namespace Azure.AI.OpenAI.Assistants
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ThreadRun IJsonModel<ThreadRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

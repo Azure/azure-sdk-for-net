@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         void IJsonModel<ServiceBusClientAffineProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusClientAffineProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceBusClientAffineProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServiceBusClientAffineProperties IJsonModel<ServiceBusClientAffineProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -131,15 +138,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
-            if (Optional.IsDefined(ClientId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  clientId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  clientId: ");
                     if (ClientId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -153,30 +161,32 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDurable), out propertyOverride);
-            if (Optional.IsDefined(IsDurable) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isDurable: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDurable))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isDurable: ");
                     var boolValue = IsDurable.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsShared), out propertyOverride);
-            if (Optional.IsDefined(IsShared) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isShared: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsShared))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isShared: ");
                     var boolValue = IsShared.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

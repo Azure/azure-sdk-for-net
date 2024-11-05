@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CassandraClusterBackupSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterBackupSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ScheduleName))
             {
                 writer.WritePropertyName("scheduleName"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CassandraClusterBackupSchedule IJsonModel<CassandraClusterBackupSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,15 +134,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduleName), out propertyOverride);
-            if (Optional.IsDefined(ScheduleName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scheduleName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScheduleName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scheduleName: ");
                     if (ScheduleName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,15 +157,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CronExpression), out propertyOverride);
-            if (Optional.IsDefined(CronExpression) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  cronExpression: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CronExpression))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  cronExpression: ");
                     if (CronExpression.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -171,15 +180,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionInHours), out propertyOverride);
-            if (Optional.IsDefined(RetentionInHours) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  retentionInHours: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionInHours))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  retentionInHours: ");
                     builder.AppendLine($"{RetentionInHours.Value}");
                 }
             }

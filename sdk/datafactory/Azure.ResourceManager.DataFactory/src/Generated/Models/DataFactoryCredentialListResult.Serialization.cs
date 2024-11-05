@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<DataFactoryCredentialListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryCredentialListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryCredentialListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
             foreach (var item in Value)
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataFactoryCredentialListResult IJsonModel<DataFactoryCredentialListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            IReadOnlyList<DataFactoryManagedIdentityCredentialData> value = default;
+            IReadOnlyList<DataFactoryServiceCredentialData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +91,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DataFactoryManagedIdentityCredentialData> array = new List<DataFactoryManagedIdentityCredentialData>();
+                    List<DataFactoryServiceCredentialData> array = new List<DataFactoryServiceCredentialData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryManagedIdentityCredentialData.DeserializeDataFactoryManagedIdentityCredentialData(item, options));
+                        array.Add(DataFactoryServiceCredentialData.DeserializeDataFactoryServiceCredentialData(item, options));
                     }
                     value = array;
                     continue;

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         void IJsonModel<SolutionsDiagnostic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SolutionId))
             {
                 writer.WritePropertyName("solutionId"u8);
@@ -45,6 +53,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
+            }
+            if (Optional.IsDefined(EstimatedCompletionTime))
+            {
+                writer.WritePropertyName("estimatedCompletionTime"u8);
+                writer.WriteStringValue(EstimatedCompletionTime);
             }
             if (Optional.IsCollectionDefined(RequiredParameters))
             {
@@ -81,7 +94,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SolutionsDiagnostic IJsonModel<SolutionsDiagnostic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -108,8 +120,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             SelfHelpDiagnosticStatus? status = default;
             string statusDetails = default;
             string replacementKey = default;
-            IList<string> requiredParameters = default;
-            IList<SelfHelpDiagnosticInsight> insights = default;
+            string estimatedCompletionTime = default;
+            IReadOnlyList<string> requiredParameters = default;
+            IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,6 +149,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 if (property.NameEquals("replacementKey"u8))
                 {
                     replacementKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("estimatedCompletionTime"u8))
+                {
+                    estimatedCompletionTime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("requiredParameters"u8))
@@ -177,6 +195,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 status,
                 statusDetails,
                 replacementKey,
+                estimatedCompletionTime,
                 requiredParameters ?? new ChangeTrackingList<string>(),
                 insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
                 serializedAdditionalRawData);

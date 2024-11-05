@@ -19,13 +19,26 @@ namespace Azure.ResourceManager.NetApp.Models
 
         void IJsonModel<NetAppVolumeDataProtection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeDataProtection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppVolumeDataProtection)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            if (Optional.IsDefined(Backup))
+            {
+                writer.WritePropertyName("backup"u8);
+                writer.WriteObjectValue(Backup, options);
+            }
             if (Optional.IsDefined(Replication))
             {
                 writer.WritePropertyName("replication"u8);
@@ -56,7 +69,6 @@ namespace Azure.ResourceManager.NetApp.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NetAppVolumeDataProtection IJsonModel<NetAppVolumeDataProtection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -79,6 +91,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
+            NetAppVolumeBackupConfiguration backup = default;
             NetAppReplicationObject replication = default;
             VolumeSnapshotProperties snapshot = default;
             NetAppVolumeRelocationProperties volumeRelocation = default;
@@ -86,6 +99,15 @@ namespace Azure.ResourceManager.NetApp.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("backup"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backup = NetAppVolumeBackupConfiguration.DeserializeNetAppVolumeBackupConfiguration(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("replication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -119,7 +141,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetAppVolumeDataProtection(replication, snapshot, volumeRelocation, serializedAdditionalRawData);
+            return new NetAppVolumeDataProtection(backup, replication, snapshot, volumeRelocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeDataProtection>.Write(ModelReaderWriterOptions options)

@@ -60,7 +60,7 @@ namespace Azure.Storage.Files.Shares.Models
                 LastModified = lastModified,
                 SmbProperties = new FileSmbProperties
                 {
-                    FileAttributes = ShareExtensions.ToFileAttributes(fileAttributes),
+                    FileAttributes = ShareModelExtensions.ToFileAttributes(fileAttributes),
                     FilePermissionKey = filePermissionKey,
                     FileCreatedOn = fileCreationTime,
                     FileLastWrittenOn = fileLastWriteTime,

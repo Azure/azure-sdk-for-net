@@ -16,35 +16,59 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHybridComputeModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeOSProfile"/>. </summary>
-        /// <param name="computerName"> Specifies the host OS name of the hybrid machine. </param>
-        /// <param name="windowsConfiguration"> Specifies the windows configuration for update management. </param>
-        /// <param name="linuxConfiguration"> Specifies the linux configuration for update management. </param>
-        /// <returns> A new <see cref="Models.HybridComputeOSProfile"/> instance for mocking. </returns>
-        public static HybridComputeOSProfile HybridComputeOSProfile(string computerName = null, HybridComputeWindowsConfiguration windowsConfiguration = null, HybridComputeLinuxConfiguration linuxConfiguration = null)
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeLicenseData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="tenantId"> Describes the tenant id. </param>
+        /// <param name="licenseType"> The type of the license resource. </param>
+        /// <param name="licenseDetails"> Describes the properties of a License. </param>
+        /// <returns> A new <see cref="HybridCompute.HybridComputeLicenseData"/> instance for mocking. </returns>
+        public static HybridComputeLicenseData HybridComputeLicenseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, Guid? tenantId = null, HybridComputeLicenseType? licenseType = null, HybridComputeLicenseDetails licenseDetails = null)
         {
-            return new HybridComputeOSProfile(computerName, windowsConfiguration, linuxConfiguration, serializedAdditionalRawData: null);
+            tags ??= new Dictionary<string, string>();
+
+            return new HybridComputeLicenseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                tenantId,
+                licenseType,
+                licenseDetails,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AgentUpgrade"/>. </summary>
-        /// <param name="desiredVersion"> Specifies the version info w.r.t AgentUpgrade for the machine. </param>
-        /// <param name="correlationId"> The correlation ID passed in from RSM per upgrade. </param>
-        /// <param name="isAutomaticUpgradeEnabled"> Specifies if RSM should try to upgrade this machine. </param>
-        /// <param name="lastAttemptDesiredVersion"> Specifies the version of the last attempt. </param>
-        /// <param name="lastAttemptedOn"> Timestamp of last upgrade attempt. </param>
-        /// <param name="lastAttemptStatus"> Specifies the status of Agent Upgrade. </param>
-        /// <param name="lastAttemptMessage"> Failure message of last upgrade attempt if any. </param>
-        /// <returns> A new <see cref="Models.AgentUpgrade"/> instance for mocking. </returns>
-        public static AgentUpgrade AgentUpgrade(string desiredVersion = null, Guid? correlationId = null, bool? isAutomaticUpgradeEnabled = null, string lastAttemptDesiredVersion = null, DateTimeOffset? lastAttemptedOn = null, LastAttemptStatusEnum? lastAttemptStatus = null, string lastAttemptMessage = null)
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeLicenseDetails"/>. </summary>
+        /// <param name="state"> Describes the state of the license. </param>
+        /// <param name="target"> Describes the license target server. </param>
+        /// <param name="edition"> Describes the edition of the license. The values are either Standard or Datacenter. </param>
+        /// <param name="licenseCoreType"> Describes the license core type (pCore or vCore). </param>
+        /// <param name="processors"> Describes the number of processors. </param>
+        /// <param name="assignedLicenses"> Describes the number of assigned licenses. </param>
+        /// <param name="immutableId"> Describes the immutable id. </param>
+        /// <param name="volumeLicenseDetails"> A list of volume license details. </param>
+        /// <returns> A new <see cref="Models.HybridComputeLicenseDetails"/> instance for mocking. </returns>
+        public static HybridComputeLicenseDetails HybridComputeLicenseDetails(HybridComputeLicenseState? state = null, HybridComputeLicenseTarget? target = null, HybridComputeLicenseEdition? edition = null, LicenseCoreType? licenseCoreType = null, int? processors = null, int? assignedLicenses = null, string immutableId = null, IEnumerable<VolumeLicenseDetails> volumeLicenseDetails = null)
         {
-            return new AgentUpgrade(
-                desiredVersion,
-                correlationId,
-                isAutomaticUpgradeEnabled,
-                lastAttemptDesiredVersion,
-                lastAttemptedOn,
-                lastAttemptStatus,
-                lastAttemptMessage,
+            volumeLicenseDetails ??= new List<VolumeLicenseDetails>();
+
+            return new HybridComputeLicenseDetails(
+                state,
+                target,
+                edition,
+                licenseCoreType,
+                processors,
+                assignedLicenses,
+                immutableId,
+                volumeLicenseDetails?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -181,19 +205,84 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeConfigurationExtension(publisher, configurationExtensionType, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.AgentUpgrade"/>. </summary>
+        /// <param name="desiredVersion"> Specifies the version info w.r.t AgentUpgrade for the machine. </param>
+        /// <param name="correlationId"> The correlation ID passed in from RSM per upgrade. </param>
+        /// <param name="isAutomaticUpgradeEnabled"> Specifies if RSM should try to upgrade this machine. </param>
+        /// <param name="lastAttemptDesiredVersion"> Specifies the version of the last attempt. </param>
+        /// <param name="lastAttemptedOn"> Timestamp of last upgrade attempt. </param>
+        /// <param name="lastAttemptStatus"> Specifies the status of Agent Upgrade. </param>
+        /// <param name="lastAttemptMessage"> Failure message of last upgrade attempt if any. </param>
+        /// <returns> A new <see cref="Models.AgentUpgrade"/> instance for mocking. </returns>
+        public static AgentUpgrade AgentUpgrade(string desiredVersion = null, Guid? correlationId = null, bool? isAutomaticUpgradeEnabled = null, string lastAttemptDesiredVersion = null, DateTimeOffset? lastAttemptedOn = null, LastAttemptStatusEnum? lastAttemptStatus = null, string lastAttemptMessage = null)
+        {
+            return new AgentUpgrade(
+                desiredVersion,
+                correlationId,
+                isAutomaticUpgradeEnabled,
+                lastAttemptDesiredVersion,
+                lastAttemptedOn,
+                lastAttemptStatus,
+                lastAttemptMessage,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeOSProfile"/>. </summary>
+        /// <param name="computerName"> Specifies the host OS name of the hybrid machine. </param>
+        /// <param name="windowsConfiguration"> Specifies the windows configuration for update management. </param>
+        /// <param name="linuxConfiguration"> Specifies the linux configuration for update management. </param>
+        /// <returns> A new <see cref="Models.HybridComputeOSProfile"/> instance for mocking. </returns>
+        public static HybridComputeOSProfile HybridComputeOSProfile(string computerName = null, HybridComputeWindowsConfiguration windowsConfiguration = null, HybridComputeLinuxConfiguration linuxConfiguration = null)
+        {
+            return new HybridComputeOSProfile(computerName, windowsConfiguration, linuxConfiguration, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeWindowsConfiguration"/>. </summary>
+        /// <param name="assessmentMode"> Specifies the assessment mode. </param>
+        /// <param name="patchMode"> Specifies the patch mode. </param>
+        /// <param name="isHotpatchingEnabled"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
+        /// <param name="status"> Status of the hotpatch capability enrollment or disenrollment. </param>
+        /// <returns> A new <see cref="Models.HybridComputeWindowsConfiguration"/> instance for mocking. </returns>
+        public static HybridComputeWindowsConfiguration HybridComputeWindowsConfiguration(AssessmentModeType? assessmentMode = null, PatchModeType? patchMode = null, bool? isHotpatchingEnabled = null, HybridComputePatchSettingsStatus status = null)
+        {
+            return new HybridComputeWindowsConfiguration(assessmentMode, patchMode, isHotpatchingEnabled, status, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputePatchSettingsStatus"/>. </summary>
+        /// <param name="hotpatchEnablementStatus"> Indicates the current status of the hotpatch being enabled or disabled. </param>
+        /// <param name="error"> The errors that were encountered during the hotpatch capability enrollment or disenrollment. </param>
+        /// <returns> A new <see cref="Models.HybridComputePatchSettingsStatus"/> instance for mocking. </returns>
+        public static HybridComputePatchSettingsStatus HybridComputePatchSettingsStatus(HotpatchEnablementStatus? hotpatchEnablementStatus = null, ResponseError error = null)
+        {
+            return new HybridComputePatchSettingsStatus(hotpatchEnablementStatus, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeLinuxConfiguration"/>. </summary>
+        /// <param name="assessmentMode"> Specifies the assessment mode. </param>
+        /// <param name="patchMode"> Specifies the patch mode. </param>
+        /// <param name="isHotpatchingEnabled"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
+        /// <param name="status"> Status of the hotpatch capability enrollment or disenrollment. </param>
+        /// <returns> A new <see cref="Models.HybridComputeLinuxConfiguration"/> instance for mocking. </returns>
+        public static HybridComputeLinuxConfiguration HybridComputeLinuxConfiguration(AssessmentModeType? assessmentMode = null, PatchModeType? patchMode = null, bool? isHotpatchingEnabled = null, HybridComputePatchSettingsStatus status = null)
+        {
+            return new HybridComputeLinuxConfiguration(assessmentMode, patchMode, isHotpatchingEnabled, status, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.LicenseProfileMachineInstanceView"/>. </summary>
         /// <param name="licenseStatus"> Indicates the license status of the OS. </param>
         /// <param name="licenseChannel"> Indicates the license channel. </param>
         /// <param name="esuProfile"> Properties for the Machine ESU profile. </param>
         /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
         /// <param name="productType"> Indicates the product type of the license. </param>
-        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
         /// <param name="enrollmentOn"> The timestamp in UTC when the user enrolls the feature. </param>
+        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
         /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
+        /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
+        /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
         /// <param name="productFeatures"> The list of product features. </param>
         /// <param name="isSoftwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
         /// <returns> A new <see cref="Models.LicenseProfileMachineInstanceView"/> instance for mocking. </returns>
-        public static LicenseProfileMachineInstanceView LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus = null, string licenseChannel = null, LicenseProfileMachineInstanceViewEsuProperties esuProfile = null, LicenseProfileSubscriptionStatus? subscriptionStatus = null, LicenseProfileProductType? productType = null, DateTimeOffset? billingStartOn = null, DateTimeOffset? enrollmentOn = null, DateTimeOffset? disenrollmentOn = null, IEnumerable<HybridComputeProductFeature> productFeatures = null, bool? isSoftwareAssuranceCustomer = null)
+        public static LicenseProfileMachineInstanceView LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus = null, string licenseChannel = null, LicenseProfileMachineInstanceViewEsuProperties esuProfile = null, LicenseProfileSubscriptionStatus? subscriptionStatus = null, LicenseProfileProductType? productType = null, DateTimeOffset? enrollmentOn = null, DateTimeOffset? billingStartOn = null, DateTimeOffset? disenrollmentOn = null, DateTimeOffset? billingEndOn = null, ResponseError error = null, IEnumerable<HybridComputeProductFeature> productFeatures = null, bool? isSoftwareAssuranceCustomer = null)
         {
             productFeatures ??= new List<HybridComputeProductFeature>();
 
@@ -203,9 +292,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 esuProfile,
                 subscriptionStatus,
                 productType,
-                billingStartOn,
                 enrollmentOn,
+                billingStartOn,
                 disenrollmentOn,
+                billingEndOn,
+                error,
                 productFeatures?.ToList(),
                 isSoftwareAssuranceCustomer,
                 serializedAdditionalRawData: null);
@@ -220,7 +311,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="assignedLicense"> The assigned license resource. </param>
         /// <param name="licenseAssignmentState"> Describes the license assignment state (Assigned or NotAssigned). </param>
         /// <returns> A new <see cref="Models.LicenseProfileMachineInstanceViewEsuProperties"/> instance for mocking. </returns>
-        public static LicenseProfileMachineInstanceViewEsuProperties LicenseProfileMachineInstanceViewEsuProperties(Guid? assignedLicenseImmutableId = null, IEnumerable<EsuKey> esuKeys = null, EsuServerType? serverType = null, EsuEligibility? esuEligibility = null, EsuKeyState? esuKeyState = null, HybridComputeLicense assignedLicense = null, LicenseAssignmentState? licenseAssignmentState = null)
+        public static LicenseProfileMachineInstanceViewEsuProperties LicenseProfileMachineInstanceViewEsuProperties(Guid? assignedLicenseImmutableId = null, IEnumerable<EsuKey> esuKeys = null, EsuServerType? serverType = null, EsuEligibility? esuEligibility = null, EsuKeyState? esuKeyState = null, HybridComputeLicenseData assignedLicense = null, LicenseAssignmentState? licenseAssignmentState = null)
         {
             esuKeys ??= new List<EsuKey>();
 
@@ -233,58 +324,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 esuKeyState,
                 assignedLicense,
                 licenseAssignmentState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeLicense"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="tenantId"> Describes the tenant id. </param>
-        /// <param name="licenseType"> The type of the license resource. </param>
-        /// <param name="licenseDetails"> Describes the properties of a License. </param>
-        /// <returns> A new <see cref="Models.HybridComputeLicense"/> instance for mocking. </returns>
-        public static HybridComputeLicense HybridComputeLicense(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, Guid? tenantId = null, HybridComputeLicenseType? licenseType = null, HybridComputeLicenseDetails licenseDetails = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new HybridComputeLicense(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                provisioningState,
-                tenantId,
-                licenseType,
-                licenseDetails,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeLicenseDetails"/>. </summary>
-        /// <param name="state"> Describes the state of the license. </param>
-        /// <param name="target"> Describes the license target server. </param>
-        /// <param name="edition"> Describes the edition of the license. The values are either Standard or Datacenter. </param>
-        /// <param name="licenseCoreType"> Describes the license core type (pCore or vCore). </param>
-        /// <param name="processors"> Describes the number of processors. </param>
-        /// <param name="assignedLicenses"> Describes the number of assigned licenses. </param>
-        /// <param name="immutableId"> Describes the immutable id. </param>
-        /// <returns> A new <see cref="Models.HybridComputeLicenseDetails"/> instance for mocking. </returns>
-        public static HybridComputeLicenseDetails HybridComputeLicenseDetails(HybridComputeLicenseState? state = null, HybridComputeLicenseTarget? target = null, HybridComputeLicenseEdition? edition = null, LicenseCoreType? licenseCoreType = null, int? processors = null, int? assignedLicenses = null, string immutableId = null)
-        {
-            return new HybridComputeLicenseDetails(
-                state,
-                target,
-                edition,
-                licenseCoreType,
-                processors,
-                assignedLicenses,
-                immutableId,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LicenseProfileArmEsuPropertiesWithoutAssignedLicense"/>. </summary>
@@ -320,9 +359,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.EsuKey"/>. </summary>
         /// <param name="sku"> SKU number. </param>
-        /// <param name="licenseStatus"> The current status of the license profile key. </param>
+        /// <param name="licenseStatus"> The current status of the license profile key. Represented by the same integer value that is presented on the machine itself when querying the license key status. </param>
         /// <returns> A new <see cref="Models.EsuKey"/> instance for mocking. </returns>
-        public static EsuKey EsuKey(string sku = null, string licenseStatus = null)
+        public static EsuKey EsuKey(string sku = null, int? licenseStatus = null)
         {
             return new EsuKey(sku, licenseStatus, serializedAdditionalRawData: null);
         }
@@ -330,18 +369,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="Models.HybridComputeProductFeature"/>. </summary>
         /// <param name="name"> Product feature name. </param>
         /// <param name="subscriptionStatus"> Indicates the current status of the product features. </param>
-        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
         /// <param name="enrollmentOn"> The timestamp in UTC when the user enrolls the feature. </param>
+        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
         /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
+        /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
+        /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
         /// <returns> A new <see cref="Models.HybridComputeProductFeature"/> instance for mocking. </returns>
-        public static HybridComputeProductFeature HybridComputeProductFeature(string name = null, LicenseProfileSubscriptionStatus? subscriptionStatus = null, DateTimeOffset? billingStartOn = null, DateTimeOffset? enrollmentOn = null, DateTimeOffset? disenrollmentOn = null)
+        public static HybridComputeProductFeature HybridComputeProductFeature(string name = null, LicenseProfileSubscriptionStatus? subscriptionStatus = null, DateTimeOffset? enrollmentOn = null, DateTimeOffset? billingStartOn = null, DateTimeOffset? disenrollmentOn = null, DateTimeOffset? billingEndOn = null, ResponseError error = null)
         {
             return new HybridComputeProductFeature(
                 name,
                 subscriptionStatus,
-                billingStartOn,
                 enrollmentOn,
+                billingStartOn,
                 disenrollmentOn,
+                billingEndOn,
+                error,
                 serializedAdditionalRawData: null);
         }
 
@@ -427,6 +470,62 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 protectedSettings,
                 provisioningState,
                 instanceView,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeLicenseProfileData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
+        /// <param name="productType"> Indicates the product type of the license. </param>
+        /// <param name="enrollmentOn"> The timestamp in UTC when the user enrolls the feature. </param>
+        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
+        /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
+        /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
+        /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
+        /// <param name="productFeatures"> The list of product features. </param>
+        /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
+        /// <param name="esuKeys"> The list of ESU keys. </param>
+        /// <param name="serverType"> The type of the Esu servers. </param>
+        /// <param name="esuEligibility"> Indicates the eligibility state of Esu. </param>
+        /// <param name="esuKeyState"> Indicates whether there is an ESU Key currently active for the machine. </param>
+        /// <param name="assignedLicense"> The resource id of the license. </param>
+        /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
+        /// <returns> A new <see cref="HybridCompute.HybridComputeLicenseProfileData"/> instance for mocking. </returns>
+        public static HybridComputeLicenseProfileData HybridComputeLicenseProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, LicenseProfileSubscriptionStatus? subscriptionStatus = null, LicenseProfileProductType? productType = null, DateTimeOffset? enrollmentOn = null, DateTimeOffset? billingStartOn = null, DateTimeOffset? disenrollmentOn = null, DateTimeOffset? billingEndOn = null, ResponseError error = null, IEnumerable<HybridComputeProductFeature> productFeatures = null, Guid? assignedLicenseImmutableId = null, IEnumerable<EsuKey> esuKeys = null, EsuServerType? serverType = null, EsuEligibility? esuEligibility = null, EsuKeyState? esuKeyState = null, string assignedLicense = null, bool? softwareAssuranceCustomer = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            productFeatures ??= new List<HybridComputeProductFeature>();
+            esuKeys ??= new List<EsuKey>();
+
+            return new HybridComputeLicenseProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                subscriptionStatus,
+                productType,
+                enrollmentOn,
+                billingStartOn,
+                disenrollmentOn,
+                billingEndOn,
+                error,
+                productFeatures?.ToList(),
+                assignedLicenseImmutableId,
+                esuKeys?.ToList(),
+                serverType,
+                esuEligibility,
+                esuKeyState,
+                assignedLicense,
+                softwareAssuranceCustomer,
                 serializedAdditionalRawData: null);
         }
 
@@ -552,100 +651,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 version,
                 extensionType,
                 publisher,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HybridCompute.MachineRunCommandData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="source"> The source of the run command script. </param>
-        /// <param name="parameters"> The parameters used by the script. </param>
-        /// <param name="protectedParameters"> The parameters used by the script. </param>
-        /// <param name="asyncExecution"> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </param>
-        /// <param name="runAsUser"> Specifies the user account on the machine when executing the run command. </param>
-        /// <param name="runAsPassword"> Specifies the user account password on the machine when executing the run command. </param>
-        /// <param name="timeoutInSeconds"> The timeout in seconds to execute the run command. </param>
-        /// <param name="outputBlobUri"> Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer outputBlobManagedIdentity parameter. </param>
-        /// <param name="errorBlobUri"> Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer errorBlobManagedIdentity parameter. </param>
-        /// <param name="outputBlobManagedIdentity"> User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </param>
-        /// <param name="errorBlobManagedIdentity"> User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="instanceView"> The machine run command instance view. </param>
-        /// <returns> A new <see cref="HybridCompute.MachineRunCommandData"/> instance for mocking. </returns>
-        public static MachineRunCommandData MachineRunCommandData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MachineRunCommandScriptSource source = null, IEnumerable<RunCommandInputParameter> parameters = null, IEnumerable<RunCommandInputParameter> protectedParameters = null, bool? asyncExecution = null, string runAsUser = null, string runAsPassword = null, int? timeoutInSeconds = null, Uri outputBlobUri = null, Uri errorBlobUri = null, RunCommandManagedIdentity outputBlobManagedIdentity = null, RunCommandManagedIdentity errorBlobManagedIdentity = null, string provisioningState = null, MachineRunCommandInstanceView instanceView = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            parameters ??= new List<RunCommandInputParameter>();
-            protectedParameters ??= new List<RunCommandInputParameter>();
-
-            return new MachineRunCommandData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                source,
-                parameters?.ToList(),
-                protectedParameters?.ToList(),
-                asyncExecution,
-                runAsUser,
-                runAsPassword,
-                timeoutInSeconds,
-                outputBlobUri,
-                errorBlobUri,
-                outputBlobManagedIdentity,
-                errorBlobManagedIdentity,
-                provisioningState,
-                instanceView,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineRunCommandInstanceView"/>. </summary>
-        /// <param name="executionState"> Script execution status. </param>
-        /// <param name="executionMessage"> Communicate script configuration errors or execution messages. </param>
-        /// <param name="exitCode"> Exit code returned from script execution. </param>
-        /// <param name="output"> Script output stream. </param>
-        /// <param name="error"> Script error stream. </param>
-        /// <param name="startOn"> Script start time. </param>
-        /// <param name="endOn"> Script end time. </param>
-        /// <param name="statuses"> The  status information. </param>
-        /// <returns> A new <see cref="Models.MachineRunCommandInstanceView"/> instance for mocking. </returns>
-        public static MachineRunCommandInstanceView MachineRunCommandInstanceView(HybridComputeExecutionState? executionState = null, string executionMessage = null, int? exitCode = null, string output = null, string error = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<ExtensionsResourceStatus> statuses = null)
-        {
-            statuses ??= new List<ExtensionsResourceStatus>();
-
-            return new MachineRunCommandInstanceView(
-                executionState,
-                executionMessage,
-                exitCode,
-                output,
-                error,
-                startOn,
-                endOn,
-                statuses?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtensionsResourceStatus"/>. </summary>
-        /// <param name="code"> The status code. </param>
-        /// <param name="level"> The level code. </param>
-        /// <param name="displayStatus"> The short localizable label for the status. </param>
-        /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
-        /// <param name="time"> The time of the status. </param>
-        /// <returns> A new <see cref="Models.ExtensionsResourceStatus"/> instance for mocking. </returns>
-        public static ExtensionsResourceStatus ExtensionsResourceStatus(string code = null, ExtensionsStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
-        {
-            return new ExtensionsResourceStatus(
-                code,
-                level,
-                displayStatus,
-                message,
-                time,
                 serializedAdditionalRawData: null);
         }
 
@@ -804,6 +809,117 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 groupId,
                 memberName,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.NetworkSecurityPerimeterConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Current state of this NetworkSecurityPerimeter: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
+        /// <param name="provisioningIssues"> Provisioning issues. </param>
+        /// <param name="networkSecurityPerimeter"> The Network Security Perimeter associated with this configuration. </param>
+        /// <param name="resourceAssociation"> The Resource Association. </param>
+        /// <param name="profile"> Network Security Perimeter profile. </param>
+        /// <returns> A new <see cref="HybridCompute.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, IEnumerable<HybridComputeProvisioningIssue> provisioningIssues = null, NetworkSecurityPerimeter networkSecurityPerimeter = null, HybridComputeResourceAssociation resourceAssociation = null, NetworkSecurityPerimeterProfile profile = null)
+        {
+            provisioningIssues ??= new List<HybridComputeProvisioningIssue>();
+
+            return new NetworkSecurityPerimeterConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                provisioningIssues?.ToList(),
+                networkSecurityPerimeter,
+                resourceAssociation,
+                profile,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeProvisioningIssue"/>. </summary>
+        /// <param name="name"> Name of the provisioning issue. </param>
+        /// <param name="issueType"> Issue type. </param>
+        /// <param name="severity"> Severity of the provisioning issue. </param>
+        /// <param name="description"> Description of the provisioning issue. </param>
+        /// <param name="suggestedResourceIds"> ARM Ids of the resources that can be associated to the same perimeter to remediate the issue. </param>
+        /// <param name="suggestedAccessRules"> Access rules that can be added to the perimeter to remediate the issue. </param>
+        /// <returns> A new <see cref="Models.HybridComputeProvisioningIssue"/> instance for mocking. </returns>
+        public static HybridComputeProvisioningIssue HybridComputeProvisioningIssue(string name = null, HybridComputeProvisioningIssueType? issueType = null, HybridComputeProvisioningIssueSeverity? severity = null, string description = null, IEnumerable<string> suggestedResourceIds = null, IEnumerable<HybridComputeAccessRule> suggestedAccessRules = null)
+        {
+            suggestedResourceIds ??= new List<string>();
+            suggestedAccessRules ??= new List<HybridComputeAccessRule>();
+
+            return new HybridComputeProvisioningIssue(
+                name,
+                issueType,
+                severity,
+                description,
+                suggestedResourceIds?.ToList(),
+                suggestedAccessRules?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeAccessRule"/>. </summary>
+        /// <param name="name"> Name of the access rule. </param>
+        /// <param name="direction"> Direction of the access rule. </param>
+        /// <param name="addressPrefixes"> Address prefixes that are allowed access. </param>
+        /// <returns> A new <see cref="Models.HybridComputeAccessRule"/> instance for mocking. </returns>
+        public static HybridComputeAccessRule HybridComputeAccessRule(string name = null, HybridComputeAccessRuleDirection? direction = null, IEnumerable<string> addressPrefixes = null)
+        {
+            addressPrefixes ??= new List<string>();
+
+            return new HybridComputeAccessRule(name, direction, addressPrefixes?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeter"/>. </summary>
+        /// <param name="id"> Azure resource Id. </param>
+        /// <param name="perimeterGuid"> Guid of the Network Security Perimeter. </param>
+        /// <param name="location"> Regional location of the perimeter. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeter"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(string id = null, string perimeterGuid = null, AzureLocation? location = null)
+        {
+            return new NetworkSecurityPerimeter(id, perimeterGuid, location, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeResourceAssociation"/>. </summary>
+        /// <param name="name"> Name of the Resource Association. </param>
+        /// <param name="accessMode"> The access mode. </param>
+        /// <returns> A new <see cref="Models.HybridComputeResourceAssociation"/> instance for mocking. </returns>
+        public static HybridComputeResourceAssociation HybridComputeResourceAssociation(string name = null, HybridComputeAccessMode? accessMode = null)
+        {
+            return new HybridComputeResourceAssociation(name, accessMode, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterProfile"/>. </summary>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="accessRulesVersion"> Access rules version number. </param>
+        /// <param name="accessRules"> Collection of access rules for the profile. </param>
+        /// <param name="diagnosticSettingsVersion"> Diagnostic settings version number. </param>
+        /// <param name="enabledLogCategories"> Collection of enabled log categories for the profile. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterProfile"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterProfile NetworkSecurityPerimeterProfile(string name = null, int? accessRulesVersion = null, IEnumerable<HybridComputeAccessRule> accessRules = null, int? diagnosticSettingsVersion = null, IEnumerable<string> enabledLogCategories = null)
+        {
+            accessRules ??= new List<HybridComputeAccessRule>();
+            enabledLogCategories ??= new List<string>();
+
+            return new NetworkSecurityPerimeterProfile(
+                name,
+                accessRulesVersion,
+                accessRules?.ToList(),
+                diagnosticSettingsVersion,
+                enabledLogCategories?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterConfigurationReconcileResult"/>. </summary>
+        /// <param name="location"> The URL of the resource used to check the status of the asynchronous operation. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationReconcileResult"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterConfigurationReconcileResult NetworkSecurityPerimeterConfigurationReconcileResult(AzureLocation? location = null)
+        {
+            return new NetworkSecurityPerimeterConfigurationReconcileResult(location, serializedAdditionalRawData: null);
         }
     }
 }

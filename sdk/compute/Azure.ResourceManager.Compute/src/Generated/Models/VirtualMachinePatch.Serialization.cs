@@ -21,13 +21,22 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<VirtualMachinePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachinePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachinePatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
@@ -48,23 +57,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile, options);
+            }
+            if (Optional.IsDefined(ScheduledEventsPolicy))
+            {
+                writer.WritePropertyName("scheduledEventsPolicy"u8);
+                writer.WriteObjectValue(ScheduledEventsPolicy, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
@@ -192,22 +195,6 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         VirtualMachinePatch IJsonModel<VirtualMachinePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -235,6 +222,7 @@ namespace Azure.ResourceManager.Compute.Models
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
             VirtualMachineHardwareProfile hardwareProfile = default;
+            ScheduledEventsPolicy scheduledEventsPolicy = default;
             VirtualMachineStorageProfile storageProfile = default;
             AdditionalCapabilities additionalCapabilities = default;
             VirtualMachineOSProfile osProfile = default;
@@ -326,6 +314,15 @@ namespace Azure.ResourceManager.Compute.Models
                                 continue;
                             }
                             hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("scheduledEventsPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -549,6 +546,7 @@ namespace Azure.ResourceManager.Compute.Models
                 identity,
                 zones ?? new ChangeTrackingList<string>(),
                 hardwareProfile,
+                scheduledEventsPolicy,
                 storageProfile,
                 additionalCapabilities,
                 osProfile,

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public static bool operator ==(NginxProvisioningState left, NginxProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NginxProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(NginxProvisioningState left, NginxProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NginxProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NginxProvisioningState"/>. </summary>
         public static implicit operator NginxProvisioningState(string value) => new NginxProvisioningState(value);
 
         /// <inheritdoc />
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

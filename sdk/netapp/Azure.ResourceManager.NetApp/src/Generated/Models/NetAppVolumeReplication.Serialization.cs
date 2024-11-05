@@ -19,13 +19,26 @@ namespace Azure.ResourceManager.NetApp.Models
 
         void IJsonModel<NetAppVolumeReplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeReplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppVolumeReplication)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ReplicationId))
+            {
+                writer.WritePropertyName("replicationId"u8);
+                writer.WriteStringValue(ReplicationId);
+            }
             if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("endpointType"u8);
@@ -58,7 +71,6 @@ namespace Azure.ResourceManager.NetApp.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NetAppVolumeReplication IJsonModel<NetAppVolumeReplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -81,6 +93,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
+            string replicationId = default;
             NetAppEndpointType? endpointType = default;
             NetAppReplicationSchedule? replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
@@ -89,6 +102,11 @@ namespace Azure.ResourceManager.NetApp.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("replicationId"u8))
+                {
+                    replicationId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("endpointType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -123,7 +141,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetAppVolumeReplication(endpointType, replicationSchedule, remoteVolumeResourceId, remoteVolumeRegion, serializedAdditionalRawData);
+            return new NetAppVolumeReplication(
+                replicationId,
+                endpointType,
+                replicationSchedule,
+                remoteVolumeResourceId,
+                remoteVolumeRegion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeReplication>.Write(ModelReaderWriterOptions options)

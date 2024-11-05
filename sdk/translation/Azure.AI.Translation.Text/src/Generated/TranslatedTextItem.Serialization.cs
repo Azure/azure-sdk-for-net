@@ -19,13 +19,21 @@ namespace Azure.AI.Translation.Text
 
         void IJsonModel<TranslatedTextItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TranslatedTextItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
@@ -58,7 +66,6 @@ namespace Azure.AI.Translation.Text
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TranslatedTextItem IJsonModel<TranslatedTextItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -82,7 +89,7 @@ namespace Azure.AI.Translation.Text
                 return null;
             }
             DetectedLanguage detectedLanguage = default;
-            IReadOnlyList<Translation> translations = default;
+            IReadOnlyList<TranslationText> translations = default;
             SourceText sourceText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -99,10 +106,10 @@ namespace Azure.AI.Translation.Text
                 }
                 if (property.NameEquals("translations"u8))
                 {
-                    List<Translation> array = new List<Translation>();
+                    List<TranslationText> array = new List<TranslationText>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Translation.DeserializeTranslation(item, options));
+                        array.Add(TranslationText.DeserializeTranslationText(item, options));
                     }
                     translations = array;
                     continue;

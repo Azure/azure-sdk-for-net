@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         void IJsonModel<CognitiveServicesSkuChangeInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSkuChangeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(CountOfDowngrades))
             {
                 writer.WritePropertyName("countOfDowngrades"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CognitiveServicesSkuChangeInfo IJsonModel<CognitiveServicesSkuChangeInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -135,43 +142,46 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountOfDowngrades), out propertyOverride);
-            if (Optional.IsDefined(CountOfDowngrades) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  countOfDowngrades: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CountOfDowngrades))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  countOfDowngrades: ");
                     builder.AppendLine($"'{CountOfDowngrades.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountOfUpgradesAfterDowngrades), out propertyOverride);
-            if (Optional.IsDefined(CountOfUpgradesAfterDowngrades) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  countOfUpgradesAfterDowngrades: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CountOfUpgradesAfterDowngrades))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  countOfUpgradesAfterDowngrades: ");
                     builder.AppendLine($"'{CountOfUpgradesAfterDowngrades.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastChangedOn), out propertyOverride);
-            if (Optional.IsDefined(LastChangedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastChangeDate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastChangedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastChangeDate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastChangedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Blobs.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -567,7 +568,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
             return new BlobStorageResourceContainerOptions()
             {
-                BlobType = checkpointData.BlobType,
+                BlobType = default,
                 BlobDirectoryPrefix = directoryPrefix,
                 BlobOptions = baseOptions,
             };
@@ -576,7 +577,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static BlobStorageResourceContainerOptions DeepCopy(this BlobStorageResourceContainerOptions options)
             => new BlobStorageResourceContainerOptions()
             {
-                BlobType = options?.BlobType ?? BlobType.Block,
+                BlobType = options?.BlobType,
                 BlobDirectoryPrefix = options?.BlobDirectoryPrefix,
                 BlobOptions = new BlobStorageResourceOptions()
                 {
@@ -637,6 +638,22 @@ namespace Azure.Storage.DataMovement.Blobs
                 properties: properties);
         }
 
+        private static string ConvertContentPropertyObjectToString(string contentPropertyName, object contentPropertyValue)
+        {
+            if (contentPropertyValue is string)
+            {
+                return contentPropertyValue as string;
+            }
+            else if (contentPropertyValue is string[])
+            {
+                return string.Join(",", (string[])contentPropertyValue);
+            }
+            else
+            {
+                throw Errors.UnexpectedPropertyType(contentPropertyName, DataMovementConstants.StringTypeStr, DataMovementConstants.StringArrayTypeStr);
+            }
+        }
+
         private static BlobHttpHeaders GetHttpHeaders(
             BlobStorageResourceOptions options,
             Dictionary<string, object> properties)
@@ -649,12 +666,12 @@ namespace Azure.Storage.DataMovement.Blobs
                     : options?.ContentType?.Value,
                 ContentEncoding = (options?.ContentEncoding?.Preserve ?? true)
                     ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentEncoding, out object contentEncoding) == true
-                        ? (string) contentEncoding
+                        ? ConvertContentPropertyObjectToString(DataMovementConstants.ResourceProperties.ContentEncoding, contentEncoding)
                         : default
                     : options?.ContentEncoding?.Value,
                 ContentLanguage = (options?.ContentLanguage?.Preserve ?? true)
                     ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentLanguage, out object contentLanguage) == true
-                        ? (string) contentLanguage
+                        ? ConvertContentPropertyObjectToString(DataMovementConstants.ResourceProperties.ContentLanguage, contentLanguage)
                         : default
                     : options?.ContentLanguage?.Value,
                 ContentDisposition = (options?.ContentDisposition?.Preserve ?? true)

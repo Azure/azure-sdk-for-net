@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CosmosDBSqlClientEncryptionKeyResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlClientEncryptionKeyResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyResourceInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -62,7 +70,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CosmosDBSqlClientEncryptionKeyResourceInfo IJsonModel<CosmosDBSqlClientEncryptionKeyResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -142,15 +149,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     if (Id.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -164,15 +172,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionAlgorithm), out propertyOverride);
-            if (Optional.IsDefined(EncryptionAlgorithm) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  encryptionAlgorithm: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionAlgorithm))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  encryptionAlgorithm: ");
                     if (EncryptionAlgorithm.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -186,29 +195,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WrappedDataEncryptionKey), out propertyOverride);
-            if (Optional.IsDefined(WrappedDataEncryptionKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  wrappedDataEncryptionKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WrappedDataEncryptionKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  wrappedDataEncryptionKey: ");
                     builder.AppendLine($"'{WrappedDataEncryptionKey.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyWrapMetadata), out propertyOverride);
-            if (Optional.IsDefined(KeyWrapMetadata) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  keyWrapMetadata: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyWrapMetadata))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  keyWrapMetadata: ");
                     BicepSerializationHelpers.AppendChildObject(builder, KeyWrapMetadata, options, 2, false, "  keyWrapMetadata: ");
                 }
             }

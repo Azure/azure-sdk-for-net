@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ScVmm
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InventoryItems_ListByVMMServer</description>
+        /// <description>InventoryItems_ListByVmmServer</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ScVmm
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InventoryItems_ListByVMMServer</description>
+        /// <description>InventoryItems_ListByVmmServer</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

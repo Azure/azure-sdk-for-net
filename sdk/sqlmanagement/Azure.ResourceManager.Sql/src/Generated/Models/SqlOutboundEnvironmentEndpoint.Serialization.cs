@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Sql.Models
 
         void IJsonModel<SqlOutboundEnvironmentEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SqlOutboundEnvironmentEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlOutboundEnvironmentEndpoint)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.Sql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SqlOutboundEnvironmentEndpoint IJsonModel<SqlOutboundEnvironmentEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,15 +134,16 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
-            if (Optional.IsDefined(Category) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  category: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Category))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  category: ");
                     if (Category.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,17 +157,18 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoints), out propertyOverride);
-            if (Optional.IsCollectionDefined(Endpoints) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Endpoints.Any() || hasPropertyOverride)
+                builder.Append("  endpoints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Endpoints))
                 {
-                    builder.Append("  endpoints: ");
-                    if (hasPropertyOverride)
+                    if (Endpoints.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  endpoints: ");
                         builder.AppendLine("[");
                         foreach (var item in Endpoints)
                         {

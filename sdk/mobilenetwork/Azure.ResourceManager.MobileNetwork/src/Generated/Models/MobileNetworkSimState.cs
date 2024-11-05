@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The state of the SIM resource. </summary>
+    /// <summary>
+    /// The state of the SIM resource.
+    /// Serialized Name: SimState
+    /// </summary>
     public readonly partial struct MobileNetworkSimState : IEquatable<MobileNetworkSimState>
     {
         private readonly string _value;
@@ -26,17 +29,26 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string EnabledValue = "Enabled";
         private const string InvalidValue = "Invalid";
 
-        /// <summary> The SIM is disabled because not all configuration required for enabling is present. </summary>
+        /// <summary>
+        /// The SIM is disabled because not all configuration required for enabling is present.
+        /// Serialized Name: SimState.Disabled
+        /// </summary>
         public static MobileNetworkSimState Disabled { get; } = new MobileNetworkSimState(DisabledValue);
-        /// <summary> The SIM is enabled. </summary>
+        /// <summary>
+        /// The SIM is enabled.
+        /// Serialized Name: SimState.Enabled
+        /// </summary>
         public static MobileNetworkSimState Enabled { get; } = new MobileNetworkSimState(EnabledValue);
-        /// <summary> The SIM cannot be enabled because some of the associated configuration is invalid. </summary>
+        /// <summary>
+        /// The SIM cannot be enabled because some of the associated configuration is invalid.
+        /// Serialized Name: SimState.Invalid
+        /// </summary>
         public static MobileNetworkSimState Invalid { get; } = new MobileNetworkSimState(InvalidValue);
         /// <summary> Determines if two <see cref="MobileNetworkSimState"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkSimState left, MobileNetworkSimState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkSimState"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkSimState left, MobileNetworkSimState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkSimState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkSimState"/>. </summary>
         public static implicit operator MobileNetworkSimState(string value) => new MobileNetworkSimState(value);
 
         /// <inheritdoc />
@@ -47,7 +59,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

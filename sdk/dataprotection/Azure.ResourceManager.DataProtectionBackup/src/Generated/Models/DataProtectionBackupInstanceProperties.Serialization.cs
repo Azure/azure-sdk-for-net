@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         void IJsonModel<DataProtectionBackupInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataProtectionBackupInstanceProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
@@ -40,6 +48,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             writer.WritePropertyName("policyInfo"u8);
             writer.WriteObjectValue(PolicyInfo, options);
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            {
+                writer.WritePropertyName("resourceGuardOperationRequests"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceGuardOperationRequests)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
@@ -92,7 +110,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataProtectionBackupInstanceProperties IJsonModel<DataProtectionBackupInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -119,6 +136,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DataSourceInfo dataSourceInfo = default;
             DataSourceSetInfo dataSourceSetInfo = default;
             BackupInstancePolicyInfo policyInfo = default;
+            IList<string> resourceGuardOperationRequests = default;
             BackupInstanceProtectionStatusDetails protectionStatus = default;
             CurrentProtectionState? currentProtectionState = default;
             ResponseError protectionErrorDetails = default;
@@ -153,6 +171,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 if (property.NameEquals("policyInfo"u8))
                 {
                     policyInfo = BackupInstancePolicyInfo.DeserializeBackupInstancePolicyInfo(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    resourceGuardOperationRequests = array;
                     continue;
                 }
                 if (property.NameEquals("protectionStatus"u8))
@@ -230,6 +262,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 dataSourceInfo,
                 dataSourceSetInfo,
                 policyInfo,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 protectionStatus,
                 currentProtectionState,
                 protectionErrorDetails,

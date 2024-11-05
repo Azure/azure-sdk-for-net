@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static bool operator ==(DiagnosticStorageAuthenticationType left, DiagnosticStorageAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiagnosticStorageAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(DiagnosticStorageAuthenticationType left, DiagnosticStorageAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiagnosticStorageAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiagnosticStorageAuthenticationType"/>. </summary>
         public static implicit operator DiagnosticStorageAuthenticationType(string value) => new DiagnosticStorageAuthenticationType(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

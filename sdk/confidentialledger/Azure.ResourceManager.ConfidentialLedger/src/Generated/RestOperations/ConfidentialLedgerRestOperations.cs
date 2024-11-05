@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-01-26-preview";
+            _apiVersion = apiVersion ?? "2023-06-28-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

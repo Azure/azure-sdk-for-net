@@ -19,6 +19,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 rename-mapping:
   Job: BackupGenericJob
@@ -326,6 +327,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
   IaaSVM: IaasVm
   Iaasvm: IaasVm
   Sqldb: SqlDB

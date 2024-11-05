@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<StorageAccountCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageAccountCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             writer.WritePropertyName("kind"u8);
@@ -118,6 +126,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("isLocalUserEnabled"u8);
                 writer.WriteBooleanValue(IsLocalUserEnabled.Value);
             }
+            if (Optional.IsDefined(IsExtendedGroupEnabled))
+            {
+                writer.WritePropertyName("enableExtendedGroups"u8);
+                writer.WriteBooleanValue(IsExtendedGroupEnabled.Value);
+            }
             if (Optional.IsDefined(IsHnsEnabled))
             {
                 writer.WritePropertyName("isHnsEnabled"u8);
@@ -189,7 +202,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StorageAccountCreateOrUpdateContent IJsonModel<StorageAccountCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -230,6 +242,7 @@ namespace Azure.ResourceManager.Storage.Models
             bool? supportsHttpsTrafficOnly = default;
             bool? isSftpEnabled = default;
             bool? isLocalUserEnabled = default;
+            bool? enableExtendedGroups = default;
             bool? isHnsEnabled = default;
             LargeFileSharesState? largeFileSharesState = default;
             StorageRoutingPreference routingPreference = default;
@@ -410,6 +423,15 @@ namespace Azure.ResourceManager.Storage.Models
                             isLocalUserEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("enableExtendedGroups"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableExtendedGroups = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("isHnsEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -537,6 +559,7 @@ namespace Azure.ResourceManager.Storage.Models
                 supportsHttpsTrafficOnly,
                 isSftpEnabled,
                 isLocalUserEnabled,
+                enableExtendedGroups,
                 isHnsEnabled,
                 largeFileSharesState,
                 routingPreference,

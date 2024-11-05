@@ -197,6 +197,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int RunOperationExceptionVerboseEvent = 114;
         internal const int ReceiveMessageCanceledEvent = 115;
 
+        internal const int DeleteMessagesStartEvent = 116;
+        internal const int DeleteMessagesCompleteEvent = 117;
+        internal const int DeleteMessagesExceptionEvent = 118;
+        internal const int PurgeMessagesStartEvent = 119;
+        internal const int PurgeMessagesCompleteEvent = 120;
+        internal const int PurgeMessagesExceptionEvent = 121;
+
+        internal const int ReceiverAcceptSessionTimeoutEvent = 122;
+        internal const int ReceiverAcceptSessionCanceledEvent = 123;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -338,6 +348,27 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(ReceiveDeferredMessageExceptionEvent, identifier, exception);
+            }
+        }
+
+        [Event(ReceiverAcceptSessionCanceledEvent, Level = EventLevel.Verbose, Message = "An accept session operation for a receiver was canceled. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
+        public void ReceiverAcceptSessionCanceled(string fullyQualifiedNamespace, string entityPath, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ReceiverAcceptSessionCanceledEvent, fullyQualifiedNamespace, entityPath, exception);
+            }
+        }
+
+        [Event(ReceiverAcceptSessionTimeoutEvent, Level = EventLevel.Verbose, Message = "The receiver accept session call timed out. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
+        public virtual void ReceiverAcceptSessionTimeout(
+            string fullyQualifiedNamespace,
+            string entityPath,
+            string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ReceiverAcceptSessionTimeoutEvent, fullyQualifiedNamespace, entityPath, exception);
             }
         }
         #endregion
@@ -639,6 +670,100 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             WriteEvent(DeadLetterMessageExceptionEvent, identifier, exception, lockToken);
         }
+        #endregion
+
+        #region Batch delete
+
+        [NonEvent]
+        public virtual void DeleteMessagesStart(string identifier, int maxMessages, DateTimeOffset enqueuedTimeUtcOlderThan)
+        {
+            if (IsEnabled())
+            {
+                DeleteMessagesStartCore(identifier, maxMessages, enqueuedTimeUtcOlderThan.ToString());
+            }
+        }
+
+        [Event(DeleteMessagesStartEvent, Level = EventLevel.Informational, Message = "{0}: DeleteMessagesAsync start. MaxMessages = {1}, EnqueuedTimeUtcOlderThan = {2}")]
+        private void DeleteMessagesStartCore(string identifier, int messageCount, string enqueuedTimeUtcOlderThan)
+        {
+            WriteEvent(DeleteMessagesStartEvent, identifier, messageCount, enqueuedTimeUtcOlderThan);
+        }
+
+        [NonEvent]
+        public virtual void DeleteMessagesComplete(string identifier, int messagesDeleted)
+        {
+            if (IsEnabled())
+            {
+                DeleteMessagesCompleteCore(identifier, messagesDeleted);
+            }
+        }
+
+        [Event(DeleteMessagesCompleteEvent, Level = EventLevel.Informational, Message = "{0}: DeleteMessagesAsync done. Deleted '{1}' message(s).")]
+        private void DeleteMessagesCompleteCore(string identifier, int messagesDeleted)
+        {
+            WriteEvent(DeleteMessagesCompleteEvent, identifier, messagesDeleted);
+        }
+
+        [NonEvent]
+        public virtual void DeleteMessagesException(string identifier, string exception)
+        {
+            if (IsEnabled())
+            {
+                DeleteMessagesExceptionCore(identifier, exception);
+            }
+        }
+
+        [Event(DeleteMessagesExceptionEvent, Level = EventLevel.Error, Message = "{0}: DeleteMessagesAsync Exception: {1}.")]
+        private void DeleteMessagesExceptionCore(string identifier, string exception)
+        {
+            WriteEvent(DeleteMessagesExceptionEvent, identifier, exception);
+        }
+
+        [NonEvent]
+        public virtual void PurgeMessagesStart(string identifier, DateTimeOffset enqueuedTimeUtcOlderThan)
+        {
+            if (IsEnabled())
+            {
+                PurgeMessagesStartCore(identifier, enqueuedTimeUtcOlderThan.ToString());
+            }
+        }
+
+        [Event(PurgeMessagesStartEvent, Level = EventLevel.Informational, Message = "{0}: PurgeMessagesAsync start. EnqueuedTimeUtcOlderThan = {1}")]
+        private void PurgeMessagesStartCore(string identifier, string enqueuedTimeUtcOlderThan)
+        {
+            WriteEvent(PurgeMessagesStartEvent, identifier, enqueuedTimeUtcOlderThan);
+        }
+
+        [NonEvent]
+        public virtual void PurgeMessagesComplete(string identifier, int messagesPurged)
+        {
+            if (IsEnabled())
+            {
+                PurgeMessagesCompleteCore(identifier, messagesPurged);
+            }
+        }
+
+        [Event(PurgeMessagesCompleteEvent, Level = EventLevel.Informational, Message = "{0}: PurgeMessagesAsync done. Purged '{1}' message(s).")]
+        private void PurgeMessagesCompleteCore(string identifier, int messagesPurged)
+        {
+            WriteEvent(PurgeMessagesCompleteEvent, identifier, messagesPurged);
+        }
+
+        [NonEvent]
+        public virtual void PurgeMessagesException(string identifier, string exception)
+        {
+            if (IsEnabled())
+            {
+                PurgeMessagesExceptionCore(identifier, exception);
+            }
+        }
+
+        [Event(PurgeMessagesExceptionEvent, Level = EventLevel.Error, Message = "{0}: PurgeMessagesAsync Exception: {1}.")]
+        private void PurgeMessagesExceptionCore(string identifier, string exception)
+        {
+            WriteEvent(PurgeMessagesExceptionEvent, identifier, exception);
+        }
+
         #endregion
 
         #region Lock renewal

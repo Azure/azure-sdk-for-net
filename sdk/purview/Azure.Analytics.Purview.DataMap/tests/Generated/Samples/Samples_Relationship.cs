@@ -18,13 +18,37 @@ namespace Azure.Analytics.Purview.DataMap.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_Create_ShortVersion()
+        public void Example_Relationship_Create_RelationshipCreate()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                typeName = "AtlasGlossarySynonym",
+                attributes = new
+                {
+                    expression = "Example Expression",
+                    steward = "Example Steward",
+                    description = "Example Description",
+                },
+                end1 = new
+                {
+                    guid = "856d31e6-e342-a1ce-6273-22ddb77029c6",
+                    typeName = "AtlasGlossaryTerm",
+                },
+                end2 = new
+                {
+                    guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+                    typeName = "AtlasGlossaryTerm",
+                },
+                label = "r:AtlasGlossarySynonym",
+                status = "ACTIVE",
+                createdBy = "ExampleCreator",
+                updatedBy = "ExampleUpdator",
+                version = 0L,
+            });
             Response response = client.Create(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -33,13 +57,37 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_Create_ShortVersion_Async()
+        public async Task Example_Relationship_Create_RelationshipCreate_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                typeName = "AtlasGlossarySynonym",
+                attributes = new
+                {
+                    expression = "Example Expression",
+                    steward = "Example Steward",
+                    description = "Example Description",
+                },
+                end1 = new
+                {
+                    guid = "856d31e6-e342-a1ce-6273-22ddb77029c6",
+                    typeName = "AtlasGlossaryTerm",
+                },
+                end2 = new
+                {
+                    guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+                    typeName = "AtlasGlossaryTerm",
+                },
+                label = "r:AtlasGlossarySynonym",
+                status = "ACTIVE",
+                createdBy = "ExampleCreator",
+                updatedBy = "ExampleUpdator",
+                version = 0L,
+            });
             Response response = await client.CreateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -48,237 +96,114 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_Create_ShortVersion_Convenience()
+        public void Example_Relationship_Create_RelationshipCreate_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship();
-            Response<AtlasRelationship> response = client.Create(atlasRelationship);
+            AtlasRelationship body = new AtlasRelationship
+            {
+                Attributes =
+{
+["expression"] = BinaryData.FromObjectAsJson("Example Expression"),
+["steward"] = BinaryData.FromObjectAsJson("Example Steward"),
+["description"] = BinaryData.FromObjectAsJson("Example Description"),
+["source"] = null,
+["status"] = null
+},
+                TypeName = "AtlasGlossarySynonym",
+                CreatedBy = "ExampleCreator",
+                End1 = new AtlasObjectId
+                {
+                    Guid = "856d31e6-e342-a1ce-6273-22ddb77029c6",
+                    TypeName = "AtlasGlossaryTerm",
+                },
+                End2 = new AtlasObjectId
+                {
+                    Guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+                    TypeName = "AtlasGlossaryTerm",
+                },
+                Label = "r:AtlasGlossarySynonym",
+                Status = StatusAtlasRelationship.Active,
+                UpdatedBy = "ExampleUpdator",
+                Version = 0L,
+            };
+            Response<AtlasRelationship> response = client.Create(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_Create_ShortVersion_Convenience_Async()
+        public async Task Example_Relationship_Create_RelationshipCreate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship();
-            Response<AtlasRelationship> response = await client.CreateAsync(atlasRelationship);
+            AtlasRelationship body = new AtlasRelationship
+            {
+                Attributes =
+{
+["expression"] = BinaryData.FromObjectAsJson("Example Expression"),
+["steward"] = BinaryData.FromObjectAsJson("Example Steward"),
+["description"] = BinaryData.FromObjectAsJson("Example Description"),
+["source"] = null,
+["status"] = null
+},
+                TypeName = "AtlasGlossarySynonym",
+                CreatedBy = "ExampleCreator",
+                End1 = new AtlasObjectId
+                {
+                    Guid = "856d31e6-e342-a1ce-6273-22ddb77029c6",
+                    TypeName = "AtlasGlossaryTerm",
+                },
+                End2 = new AtlasObjectId
+                {
+                    Guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+                    TypeName = "AtlasGlossaryTerm",
+                },
+                Label = "r:AtlasGlossarySynonym",
+                Status = StatusAtlasRelationship.Active,
+                UpdatedBy = "ExampleUpdator",
+                Version = 0L,
+            };
+            Response<AtlasRelationship> response = await client.CreateAsync(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_Create_AllParameters()
+        public void Example_Relationship_Update_RelationshipUpdate()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             using RequestContent content = RequestContent.Create(new
             {
+                typeName = "AtlasGlossarySynonym",
                 attributes = new
                 {
-                    key = new object(),
+                    expression = "Example Expression",
+                    steward = "Example Steward",
+                    description = "Example Description",
                 },
-                typeName = "<typeName>",
-                lastModifiedTS = "<lastModifiedTS>",
-                createTime = 1234L,
-                createdBy = "<createdBy>",
+                guid = "b2810301-293f-493f-88f1-7ac8784fb1fd",
                 end1 = new
                 {
-                    guid = "<guid>",
-                    typeName = "<typeName>",
-                    uniqueAttributes = new
-                    {
-                        key = new object(),
-                    },
+                    guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+                    typeName = "AtlasGlossaryTerm",
                 },
-                guid = "<guid>",
-                homeId = "<homeId>",
-                label = "<label>",
-                provenanceType = 1234,
+                end2 = new
+                {
+                    guid = "b0942506-2d7d-1f45-d286-c29ca9e7f2ef",
+                    typeName = "AtlasGlossaryTerm",
+                },
+                label = "r:AtlasGlossarySynonym",
                 status = "ACTIVE",
-                updateTime = 1234L,
-                updatedBy = "<updatedBy>",
-                version = 1234L,
+                createdBy = "ExampleCreator",
+                updatedBy = "ExampleUpdator",
+                version = 0L,
             });
-            Response response = client.Create(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("label").ToString());
-            Console.WriteLine(result.GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_Create_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                attributes = new
-                {
-                    key = new object(),
-                },
-                typeName = "<typeName>",
-                lastModifiedTS = "<lastModifiedTS>",
-                createTime = 1234L,
-                createdBy = "<createdBy>",
-                end1 = new
-                {
-                    guid = "<guid>",
-                    typeName = "<typeName>",
-                    uniqueAttributes = new
-                    {
-                        key = new object(),
-                    },
-                },
-                guid = "<guid>",
-                homeId = "<homeId>",
-                label = "<label>",
-                provenanceType = 1234,
-                status = "ACTIVE",
-                updateTime = 1234L,
-                updatedBy = "<updatedBy>",
-                version = 1234L,
-            });
-            Response response = await client.CreateAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("label").ToString());
-            Console.WriteLine(result.GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_Create_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            AtlasRelationship atlasRelationship = new AtlasRelationship
-            {
-                Attributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-                TypeName = "<typeName>",
-                LastModifiedTS = "<lastModifiedTS>",
-                CreateTime = 1234L,
-                CreatedBy = "<createdBy>",
-                End1 = new AtlasObjectId
-                {
-                    Guid = "<guid>",
-                    TypeName = "<typeName>",
-                    UniqueAttributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-                },
-                End2 = default,
-                Guid = "<guid>",
-                HomeId = "<homeId>",
-                Label = "<label>",
-                ProvenanceType = 1234,
-                Status = StatusAtlasRelationship.Active,
-                UpdateTime = 1234L,
-                UpdatedBy = "<updatedBy>",
-                Version = 1234L,
-            };
-            Response<AtlasRelationship> response = client.Create(atlasRelationship);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_Create_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            AtlasRelationship atlasRelationship = new AtlasRelationship
-            {
-                Attributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-                TypeName = "<typeName>",
-                LastModifiedTS = "<lastModifiedTS>",
-                CreateTime = 1234L,
-                CreatedBy = "<createdBy>",
-                End1 = new AtlasObjectId
-                {
-                    Guid = "<guid>",
-                    TypeName = "<typeName>",
-                    UniqueAttributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-                },
-                End2 = default,
-                Guid = "<guid>",
-                HomeId = "<homeId>",
-                Label = "<label>",
-                ProvenanceType = 1234,
-                Status = StatusAtlasRelationship.Active,
-                UpdateTime = 1234L,
-                UpdatedBy = "<updatedBy>",
-                Version = 1234L,
-            };
-            Response<AtlasRelationship> response = await client.CreateAsync(atlasRelationship);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_Update_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            using RequestContent content = RequestContent.Create(new object());
             Response response = client.Update(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -287,13 +212,38 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_Update_ShortVersion_Async()
+        public async Task Example_Relationship_Update_RelationshipUpdate_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                typeName = "AtlasGlossarySynonym",
+                attributes = new
+                {
+                    expression = "Example Expression",
+                    steward = "Example Steward",
+                    description = "Example Description",
+                },
+                guid = "b2810301-293f-493f-88f1-7ac8784fb1fd",
+                end1 = new
+                {
+                    guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+                    typeName = "AtlasGlossaryTerm",
+                },
+                end2 = new
+                {
+                    guid = "b0942506-2d7d-1f45-d286-c29ca9e7f2ef",
+                    typeName = "AtlasGlossaryTerm",
+                },
+                label = "r:AtlasGlossarySynonym",
+                status = "ACTIVE",
+                createdBy = "ExampleCreator",
+                updatedBy = "ExampleUpdator",
+                version = 0L,
+            });
             Response response = await client.UpdateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -302,237 +252,91 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_Update_ShortVersion_Convenience()
+        public void Example_Relationship_Update_RelationshipUpdate_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship();
-            Response<AtlasRelationship> response = client.Update(atlasRelationship);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_Update_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            AtlasRelationship atlasRelationship = new AtlasRelationship();
-            Response<AtlasRelationship> response = await client.UpdateAsync(atlasRelationship);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_Update_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                attributes = new
-                {
-                    key = new object(),
-                },
-                typeName = "<typeName>",
-                lastModifiedTS = "<lastModifiedTS>",
-                createTime = 1234L,
-                createdBy = "<createdBy>",
-                end1 = new
-                {
-                    guid = "<guid>",
-                    typeName = "<typeName>",
-                    uniqueAttributes = new
-                    {
-                        key = new object(),
-                    },
-                },
-                guid = "<guid>",
-                homeId = "<homeId>",
-                label = "<label>",
-                provenanceType = 1234,
-                status = "ACTIVE",
-                updateTime = 1234L,
-                updatedBy = "<updatedBy>",
-                version = 1234L,
-            });
-            Response response = client.Update(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("label").ToString());
-            Console.WriteLine(result.GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_Update_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                attributes = new
-                {
-                    key = new object(),
-                },
-                typeName = "<typeName>",
-                lastModifiedTS = "<lastModifiedTS>",
-                createTime = 1234L,
-                createdBy = "<createdBy>",
-                end1 = new
-                {
-                    guid = "<guid>",
-                    typeName = "<typeName>",
-                    uniqueAttributes = new
-                    {
-                        key = new object(),
-                    },
-                },
-                guid = "<guid>",
-                homeId = "<homeId>",
-                label = "<label>",
-                provenanceType = 1234,
-                status = "ACTIVE",
-                updateTime = 1234L,
-                updatedBy = "<updatedBy>",
-                version = 1234L,
-            });
-            Response response = await client.UpdateAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("label").ToString());
-            Console.WriteLine(result.GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_Update_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            AtlasRelationship atlasRelationship = new AtlasRelationship
+            AtlasRelationship body = new AtlasRelationship
             {
                 Attributes =
 {
-["key"] = BinaryData.FromObjectAsJson(new object())
+["expression"] = BinaryData.FromObjectAsJson("Example Expression"),
+["steward"] = BinaryData.FromObjectAsJson("Example Steward"),
+["description"] = BinaryData.FromObjectAsJson("Example Description"),
+["source"] = null,
+["status"] = null
 },
-                TypeName = "<typeName>",
-                LastModifiedTS = "<lastModifiedTS>",
-                CreateTime = 1234L,
-                CreatedBy = "<createdBy>",
+                TypeName = "AtlasGlossarySynonym",
+                CreatedBy = "ExampleCreator",
                 End1 = new AtlasObjectId
                 {
-                    Guid = "<guid>",
-                    TypeName = "<typeName>",
-                    UniqueAttributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
+                    Guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+                    TypeName = "AtlasGlossaryTerm",
                 },
-                End2 = default,
-                Guid = "<guid>",
-                HomeId = "<homeId>",
-                Label = "<label>",
-                ProvenanceType = 1234,
+                End2 = new AtlasObjectId
+                {
+                    Guid = "b0942506-2d7d-1f45-d286-c29ca9e7f2ef",
+                    TypeName = "AtlasGlossaryTerm",
+                },
+                Guid = "b2810301-293f-493f-88f1-7ac8784fb1fd",
+                Label = "r:AtlasGlossarySynonym",
                 Status = StatusAtlasRelationship.Active,
-                UpdateTime = 1234L,
-                UpdatedBy = "<updatedBy>",
-                Version = 1234L,
+                UpdatedBy = "ExampleUpdator",
+                Version = 0L,
             };
-            Response<AtlasRelationship> response = client.Update(atlasRelationship);
+            Response<AtlasRelationship> response = client.Update(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_Update_AllParameters_Convenience_Async()
+        public async Task Example_Relationship_Update_RelationshipUpdate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship
+            AtlasRelationship body = new AtlasRelationship
             {
                 Attributes =
 {
-["key"] = BinaryData.FromObjectAsJson(new object())
+["expression"] = BinaryData.FromObjectAsJson("Example Expression"),
+["steward"] = BinaryData.FromObjectAsJson("Example Steward"),
+["description"] = BinaryData.FromObjectAsJson("Example Description"),
+["source"] = null,
+["status"] = null
 },
-                TypeName = "<typeName>",
-                LastModifiedTS = "<lastModifiedTS>",
-                CreateTime = 1234L,
-                CreatedBy = "<createdBy>",
+                TypeName = "AtlasGlossarySynonym",
+                CreatedBy = "ExampleCreator",
                 End1 = new AtlasObjectId
                 {
-                    Guid = "<guid>",
-                    TypeName = "<typeName>",
-                    UniqueAttributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
+                    Guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+                    TypeName = "AtlasGlossaryTerm",
                 },
-                End2 = default,
-                Guid = "<guid>",
-                HomeId = "<homeId>",
-                Label = "<label>",
-                ProvenanceType = 1234,
+                End2 = new AtlasObjectId
+                {
+                    Guid = "b0942506-2d7d-1f45-d286-c29ca9e7f2ef",
+                    TypeName = "AtlasGlossaryTerm",
+                },
+                Guid = "b2810301-293f-493f-88f1-7ac8784fb1fd",
+                Label = "r:AtlasGlossarySynonym",
                 Status = StatusAtlasRelationship.Active,
-                UpdateTime = 1234L,
-                UpdatedBy = "<updatedBy>",
-                Version = 1234L,
+                UpdatedBy = "ExampleUpdator",
+                Version = 0L,
             };
-            Response<AtlasRelationship> response = await client.UpdateAsync(atlasRelationship);
+            Response<AtlasRelationship> response = await client.UpdateAsync(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_GetRelationship_ShortVersion()
+        public void Example_Relationship_GetRelationship_RelationshipGet()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            Response response = client.GetRelationship("<guid>", null, null);
+            Response response = client.GetRelationship("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -540,13 +344,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_GetRelationship_ShortVersion_Async()
+        public async Task Example_Relationship_GetRelationship_RelationshipGet_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            Response response = await client.GetRelationshipAsync("<guid>", null, null);
+            Response response = await client.GetRelationshipAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -554,216 +358,48 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_GetRelationship_ShortVersion_Convenience()
+        public void Example_Relationship_GetRelationship_RelationshipGet_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            Response<AtlasRelationshipWithExtInfo> response = client.GetRelationship("<guid>");
+            Response<AtlasRelationshipWithExtInfo> response = client.GetRelationship("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_GetRelationship_ShortVersion_Convenience_Async()
+        public async Task Example_Relationship_GetRelationship_RelationshipGet_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            Response<AtlasRelationshipWithExtInfo> response = await client.GetRelationshipAsync("<guid>");
+            Response<AtlasRelationshipWithExtInfo> response = await client.GetRelationshipAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_GetRelationship_AllParameters()
+        public void Example_Relationship_Delete_RelationshipDelete()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            Response response = client.GetRelationship("<guid>", true, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("label").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("version").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_GetRelationship_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            Response response = await client.GetRelationshipAsync("<guid>", true, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("label").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("version").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_GetRelationship_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            Response<AtlasRelationshipWithExtInfo> response = client.GetRelationship("<guid>", extendedInfo: true);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_GetRelationship_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            Response<AtlasRelationshipWithExtInfo> response = await client.GetRelationshipAsync("<guid>", extendedInfo: true);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_Delete_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            Response response = client.Delete("<guid>");
+            Response response = client.Delete("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_Delete_ShortVersion_Async()
+        public async Task Example_Relationship_Delete_RelationshipDelete_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            Response response = await client.DeleteAsync("<guid>");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Relationship_Delete_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            Response response = client.Delete("<guid>");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Relationship_Delete_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
-
-            Response response = await client.DeleteAsync("<guid>");
+            Response response = await client.DeleteAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
 
             Console.WriteLine(response.Status);
         }

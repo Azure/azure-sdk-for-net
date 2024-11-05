@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<AppServiceDeploymentLocations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceDeploymentLocations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
@@ -73,7 +81,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppServiceDeploymentLocations IJsonModel<AppServiceDeploymentLocations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -166,17 +173,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
-            if (Optional.IsCollectionDefined(Locations) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Locations.Any() || hasPropertyOverride)
+                builder.Append("  locations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Locations))
                 {
-                    builder.Append("  locations: ");
-                    if (hasPropertyOverride)
+                    if (Locations.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  locations: ");
                         builder.AppendLine("[");
                         foreach (var item in Locations)
                         {
@@ -188,17 +196,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironments), out propertyOverride);
-            if (Optional.IsCollectionDefined(HostingEnvironments) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (HostingEnvironments.Any() || hasPropertyOverride)
+                builder.Append("  hostingEnvironments: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(HostingEnvironments))
                 {
-                    builder.Append("  hostingEnvironments: ");
-                    if (hasPropertyOverride)
+                    if (HostingEnvironments.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  hostingEnvironments: ");
                         builder.AppendLine("[");
                         foreach (var item in HostingEnvironments)
                         {
@@ -210,17 +219,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironmentDeploymentInfos), out propertyOverride);
-            if (Optional.IsCollectionDefined(HostingEnvironmentDeploymentInfos) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (HostingEnvironmentDeploymentInfos.Any() || hasPropertyOverride)
+                builder.Append("  hostingEnvironmentDeploymentInfos: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(HostingEnvironmentDeploymentInfos))
                 {
-                    builder.Append("  hostingEnvironmentDeploymentInfos: ");
-                    if (hasPropertyOverride)
+                    if (HostingEnvironmentDeploymentInfos.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  hostingEnvironmentDeploymentInfos: ");
                         builder.AppendLine("[");
                         foreach (var item in HostingEnvironmentDeploymentInfos)
                         {

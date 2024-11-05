@@ -19,31 +19,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CosmosDBServiceCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBServiceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBServiceCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(InstanceSize))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("instanceSize"u8);
-                writer.WriteStringValue(InstanceSize.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(InstanceCount))
-            {
-                writer.WritePropertyName("instanceCount"u8);
-                writer.WriteNumberValue(InstanceCount.Value);
-            }
-            if (Optional.IsDefined(ServiceType))
-            {
-                writer.WritePropertyName("serviceType"u8);
-                writer.WriteStringValue(ServiceType.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -59,7 +54,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CosmosDBServiceCreateOrUpdateContent IJsonModel<CosmosDBServiceCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -82,9 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            CosmosDBServiceSize? instanceSize = default;
-            int? instanceCount = default;
-            CosmosDBServiceType? serviceType = default;
+            ServiceResourceCreateUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,39 +85,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("instanceSize"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            instanceSize = new CosmosDBServiceSize(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("instanceCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            instanceCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serviceType = new CosmosDBServiceType(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = ServiceResourceCreateUpdateProperties.DeserializeServiceResourceCreateUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CosmosDBServiceCreateOrUpdateContent(instanceSize, instanceCount, serviceType, serializedAdditionalRawData);
+            return new CosmosDBServiceCreateOrUpdateContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBServiceCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

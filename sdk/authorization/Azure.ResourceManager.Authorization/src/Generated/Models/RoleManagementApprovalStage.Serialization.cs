@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Authorization.Models
 
         void IJsonModel<RoleManagementApprovalStage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementApprovalStage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoleManagementApprovalStage)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ApprovalStageTimeOutInDays))
             {
                 writer.WritePropertyName("approvalStageTimeOutInDays"u8);
@@ -83,7 +91,6 @@ namespace Azure.ResourceManager.Authorization.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RoleManagementApprovalStage IJsonModel<RoleManagementApprovalStage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -208,60 +215,64 @@ namespace Azure.ResourceManager.Authorization.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApprovalStageTimeOutInDays), out propertyOverride);
-            if (Optional.IsDefined(ApprovalStageTimeOutInDays) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  approvalStageTimeOutInDays: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApprovalStageTimeOutInDays))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  approvalStageTimeOutInDays: ");
                     builder.AppendLine($"{ApprovalStageTimeOutInDays.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApproverJustificationRequired), out propertyOverride);
-            if (Optional.IsDefined(IsApproverJustificationRequired) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isApproverJustificationRequired: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsApproverJustificationRequired))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isApproverJustificationRequired: ");
                     var boolValue = IsApproverJustificationRequired.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EscalationTimeInMinutes), out propertyOverride);
-            if (Optional.IsDefined(EscalationTimeInMinutes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  escalationTimeInMinutes: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EscalationTimeInMinutes))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  escalationTimeInMinutes: ");
                     builder.AppendLine($"{EscalationTimeInMinutes.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryApprovers), out propertyOverride);
-            if (Optional.IsCollectionDefined(PrimaryApprovers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PrimaryApprovers.Any() || hasPropertyOverride)
+                builder.Append("  primaryApprovers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrimaryApprovers))
                 {
-                    builder.Append("  primaryApprovers: ");
-                    if (hasPropertyOverride)
+                    if (PrimaryApprovers.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  primaryApprovers: ");
                         builder.AppendLine("[");
                         foreach (var item in PrimaryApprovers)
                         {
@@ -273,32 +284,34 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEscalationEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsEscalationEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isEscalationEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEscalationEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isEscalationEnabled: ");
                     var boolValue = IsEscalationEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EscalationApprovers), out propertyOverride);
-            if (Optional.IsCollectionDefined(EscalationApprovers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (EscalationApprovers.Any() || hasPropertyOverride)
+                builder.Append("  escalationApprovers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EscalationApprovers))
                 {
-                    builder.Append("  escalationApprovers: ");
-                    if (hasPropertyOverride)
+                    if (EscalationApprovers.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  escalationApprovers: ");
                         builder.AppendLine("[");
                         foreach (var item in EscalationApprovers)
                         {

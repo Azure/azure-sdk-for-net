@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<ArmApplicationDeploymentPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationDeploymentPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmApplicationDeploymentPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("deploymentMode"u8);
             writer.WriteStringValue(DeploymentMode.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -44,7 +52,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ArmApplicationDeploymentPolicy IJsonModel<ArmApplicationDeploymentPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -98,13 +105,14 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentMode), out propertyOverride);
-            builder.Append("  deploymentMode: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  deploymentMode: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  deploymentMode: ");
                 builder.AppendLine($"'{DeploymentMode.ToString()}'");
             }
 

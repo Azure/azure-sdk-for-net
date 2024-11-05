@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<WebAppRuntimeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WebAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebAppRuntimeSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
@@ -92,7 +100,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WebAppRuntimeSettings IJsonModel<WebAppRuntimeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -247,15 +254,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeVersion), out propertyOverride);
-            if (Optional.IsDefined(RuntimeVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  runtimeVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuntimeVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  runtimeVersion: ");
                     if (RuntimeVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -269,133 +277,142 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRemoteDebuggingSupported), out propertyOverride);
-            if (Optional.IsDefined(IsRemoteDebuggingSupported) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  remoteDebuggingSupported: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRemoteDebuggingSupported))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  remoteDebuggingSupported: ");
                     var boolValue = IsRemoteDebuggingSupported.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppInsightsSettings), out propertyOverride);
-            if (Optional.IsDefined(AppInsightsSettings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  appInsightsSettings: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppInsightsSettings))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  appInsightsSettings: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AppInsightsSettings, options, 2, false, "  appInsightsSettings: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubActionSettings), out propertyOverride);
-            if (Optional.IsDefined(GitHubActionSettings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  gitHubActionSettings: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GitHubActionSettings))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  gitHubActionSettings: ");
                     BicepSerializationHelpers.AppendChildObject(builder, GitHubActionSettings, options, 2, false, "  gitHubActionSettings: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPreview), out propertyOverride);
-            if (Optional.IsDefined(IsPreview) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isPreview: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsPreview))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isPreview: ");
                     var boolValue = IsPreview.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDeprecated), out propertyOverride);
-            if (Optional.IsDefined(IsDeprecated) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isDeprecated: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDeprecated))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isDeprecated: ");
                     var boolValue = IsDeprecated.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHidden), out propertyOverride);
-            if (Optional.IsDefined(IsHidden) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isHidden: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsHidden))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isHidden: ");
                     var boolValue = IsHidden.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOfLifeOn), out propertyOverride);
-            if (Optional.IsDefined(EndOfLifeOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  endOfLifeDate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndOfLifeOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  endOfLifeDate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(EndOfLifeOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAutoUpdate), out propertyOverride);
-            if (Optional.IsDefined(IsAutoUpdate) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isAutoUpdate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAutoUpdate))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isAutoUpdate: ");
                     var boolValue = IsAutoUpdate.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEarlyAccess), out propertyOverride);
-            if (Optional.IsDefined(IsEarlyAccess) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isEarlyAccess: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEarlyAccess))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isEarlyAccess: ");
                     var boolValue = IsEarlyAccess.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

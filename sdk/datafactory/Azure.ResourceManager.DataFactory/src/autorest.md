@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
-require: https://github.com/Azure/azure-rest-api-specs/blob/98df3588284c0b77389e981ef04aa93fed89037e/specification/datafactory/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/b2d15ba74c547ac29ca371932fd8117707c98524/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,6 +20,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -59,6 +60,7 @@ acronym-mapping:
   URI: Uri
   MWS: Mws
   Etag: ETag|etag
+  ETag: ETag|eTag
   Db: DB|db
   CMK: Cmk
   ASC: Asc
@@ -70,6 +72,7 @@ acronym-mapping:
   Ml: ML
   VNet: Vnet
   Bw: BW
+  SQL: Sql
 
 keep-plural-enums:
   - ActivityOnInactiveMarkAs
@@ -147,6 +150,7 @@ rename-mapping:
   GlobalParameterSpecification.type: GlobalParameterType
   HDInsightActivityDebugInfoOption: HDInsightActivityDebugInfoOptionSetting
   HDInsightOnDemandLinkedService.typeProperties.timeToLive: TimeToLiveExpression
+  HDInsightOnDemandLinkedService.typeProperties.version: Version
   HttpSource: DataFactoryHttpFileSource
   IntegrationRuntime: DataFactoryIntegrationRuntimeProperties
   IntegrationRuntimeAutoUpdate: IntegrationRuntimeAutoUpdateState
@@ -174,7 +178,6 @@ rename-mapping:
   LinkedServiceResource: DataFactoryLinkedService
   ManagedIdentityCredential: DataFactoryManagedIdentityCredentialProperties
   ManagedIdentityCredential.typeProperties.resourceId: -|arm-id
-  ManagedIdentityCredentialResource: DataFactoryManagedIdentityCredential
   ManagedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
   ManagedPrivateEndpoint: DataFactoryPrivateEndpointProperties
   ManagedPrivateEndpoint.privateLinkResourceId: -|arm-id
@@ -210,7 +213,7 @@ rename-mapping:
   QueryDataFlowDebugSessionsResponse: DataFlowDebugSessionInfoListResult
   ScriptActivityParameterType.Timespan: TimeSpan
   ScriptActivityTypePropertiesLogSettings: ScriptActivityTypeLogSettings
-  ScriptActivityScriptBlock.type: ScriptType
+  ScriptActivityScriptBlock.type: QueryType
   SecretBase: DataFactorySecret
   SecureInputOutputPolicy.secureInput: IsSecureInputEnabled
   SecureInputOutputPolicy.secureOutput: IsSecureOutputEnabled
@@ -246,6 +249,11 @@ rename-mapping:
   VariableType: PipelineVariableType
   WranglingDataFlow: DataFactoryWranglingDataFlowProperties
   XmlDataset.typeProperties.location: DataLocation
+  CredentialResource: DataFactoryServiceCredential
+  AzureFunctionActivity.typeProperties.headers: RequestHeaders
+  WebActivity.typeProperties.headers: RequestHeaders
+  WebHookActivity.typeProperties.headers: RequestHeaders
+  LinkedService.version: LinkedServiceVersion
 
 prepend-rp-prefix:
   - BlobEventsTrigger

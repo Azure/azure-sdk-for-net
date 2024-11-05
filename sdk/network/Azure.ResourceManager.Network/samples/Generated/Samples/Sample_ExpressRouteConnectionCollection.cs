@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ExpressRouteConnectionCreate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/ExpressRouteConnectionCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteConnectionCreate.json
             // this example is just showing the usage of "ExpressRouteConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ExpressRouteConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/ExpressRouteConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteConnectionGet.json
             // this example is just showing the usage of "ExpressRouteConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +126,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ExpressRouteConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/ExpressRouteConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteConnectionGet.json
             // this example is just showing the usage of "ExpressRouteConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,7 +157,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_ExpressRouteConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/ExpressRouteConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteConnectionGet.json
             // this example is just showing the usage of "ExpressRouteConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -200,7 +200,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ExpressRouteConnectionList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/ExpressRouteConnectionList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteConnectionList.json
             // this example is just showing the usage of "ExpressRouteConnections_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

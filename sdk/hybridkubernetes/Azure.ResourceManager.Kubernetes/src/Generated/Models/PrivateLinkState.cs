@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static bool operator ==(PrivateLinkState left, PrivateLinkState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateLinkState"/> values are not the same. </summary>
         public static bool operator !=(PrivateLinkState left, PrivateLinkState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PrivateLinkState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateLinkState"/>. </summary>
         public static implicit operator PrivateLinkState(string value) => new PrivateLinkState(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

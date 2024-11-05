@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Search.Models
         public static bool operator ==(SearchDisabledDataExfiltrationOption left, SearchDisabledDataExfiltrationOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchDisabledDataExfiltrationOption"/> values are not the same. </summary>
         public static bool operator !=(SearchDisabledDataExfiltrationOption left, SearchDisabledDataExfiltrationOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchDisabledDataExfiltrationOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchDisabledDataExfiltrationOption"/>. </summary>
         public static implicit operator SearchDisabledDataExfiltrationOption(string value) => new SearchDisabledDataExfiltrationOption(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

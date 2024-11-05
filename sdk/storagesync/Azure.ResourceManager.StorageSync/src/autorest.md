@@ -19,6 +19,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -97,7 +98,7 @@ rename-mapping:
   ServerEndpointCloudTieringStatus.healthLastUpdatedTimestamp: HealthLastUpdatedOn
 
 override-operation-name:
-  CloudEndpoints_restoreheartbeat: RestoreHeartbeat
+  CloudEndpoints_Restoreheartbeat: RestoreHeartbeat
   StorageSyncServices_CheckNameAvailability: CheckStorageSyncNameAvailability
 
 directive:

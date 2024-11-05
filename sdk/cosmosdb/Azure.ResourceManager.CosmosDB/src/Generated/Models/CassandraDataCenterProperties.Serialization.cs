@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CassandraDataCenterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraDataCenterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -128,7 +136,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CassandraDataCenterProperties IJsonModel<CassandraDataCenterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -342,73 +349,78 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  provisioningState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  provisioningState: ");
                     builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataCenterLocation), out propertyOverride);
-            if (Optional.IsDefined(DataCenterLocation) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dataCenterLocation: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataCenterLocation))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dataCenterLocation: ");
                     builder.AppendLine($"'{DataCenterLocation.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DelegatedSubnetId), out propertyOverride);
-            if (Optional.IsDefined(DelegatedSubnetId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  delegatedSubnetId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DelegatedSubnetId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  delegatedSubnetId: ");
                     builder.AppendLine($"'{DelegatedSubnetId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeCount), out propertyOverride);
-            if (Optional.IsDefined(NodeCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nodeCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NodeCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nodeCount: ");
                     builder.AppendLine($"{NodeCount.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SeedNodes), out propertyOverride);
-            if (Optional.IsCollectionDefined(SeedNodes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SeedNodes.Any() || hasPropertyOverride)
+                builder.Append("  seedNodes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SeedNodes))
                 {
-                    builder.Append("  seedNodes: ");
-                    if (hasPropertyOverride)
+                    if (SeedNodes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  seedNodes: ");
                         builder.AppendLine("[");
                         foreach (var item in SeedNodes)
                         {
@@ -420,15 +432,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Base64EncodedCassandraYamlFragment), out propertyOverride);
-            if (Optional.IsDefined(Base64EncodedCassandraYamlFragment) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  base64EncodedCassandraYamlFragment: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Base64EncodedCassandraYamlFragment))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  base64EncodedCassandraYamlFragment: ");
                     if (Base64EncodedCassandraYamlFragment.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -442,43 +455,46 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedDiskCustomerKeyUri), out propertyOverride);
-            if (Optional.IsDefined(ManagedDiskCustomerKeyUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  managedDiskCustomerKeyUri: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedDiskCustomerKeyUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  managedDiskCustomerKeyUri: ");
                     builder.AppendLine($"'{ManagedDiskCustomerKeyUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageCustomerKeyUri), out propertyOverride);
-            if (Optional.IsDefined(BackupStorageCustomerKeyUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  backupStorageCustomerKeyUri: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupStorageCustomerKeyUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  backupStorageCustomerKeyUri: ");
                     builder.AppendLine($"'{BackupStorageCustomerKeyUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
-            if (Optional.IsDefined(Sku) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sku: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sku))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sku: ");
                     if (Sku.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -492,15 +508,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskSku), out propertyOverride);
-            if (Optional.IsDefined(DiskSku) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  diskSku: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiskSku))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  diskSku: ");
                     if (DiskSku.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -514,87 +531,93 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskCapacity), out propertyOverride);
-            if (Optional.IsDefined(DiskCapacity) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  diskCapacity: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiskCapacity))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  diskCapacity: ");
                     builder.AppendLine($"{DiskCapacity.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DoesSupportAvailabilityZone), out propertyOverride);
-            if (Optional.IsDefined(DoesSupportAvailabilityZone) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  availabilityZone: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DoesSupportAvailabilityZone))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  availabilityZone: ");
                     var boolValue = DoesSupportAvailabilityZone.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationMethodLdapProperties), out propertyOverride);
-            if (Optional.IsDefined(AuthenticationMethodLdapProperties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  authenticationMethodLdapProperties: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthenticationMethodLdapProperties))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  authenticationMethodLdapProperties: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AuthenticationMethodLdapProperties, options, 2, false, "  authenticationMethodLdapProperties: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Deallocated), out propertyOverride);
-            if (Optional.IsDefined(Deallocated) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  deallocated: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Deallocated))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  deallocated: ");
                     var boolValue = Deallocated.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisionError), out propertyOverride);
-            if (Optional.IsDefined(ProvisionError) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  provisionError: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisionError))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  provisionError: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ProvisionError, options, 2, false, "  provisionError: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointIPAddress), out propertyOverride);
-            if (Optional.IsDefined(PrivateEndpointIPAddress) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  privateEndpointIpAddress: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateEndpointIPAddress))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  privateEndpointIpAddress: ");
                     if (PrivateEndpointIPAddress.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

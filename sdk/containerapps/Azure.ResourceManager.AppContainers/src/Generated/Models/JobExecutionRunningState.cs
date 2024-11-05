@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator ==(JobExecutionRunningState left, JobExecutionRunningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobExecutionRunningState"/> values are not the same. </summary>
         public static bool operator !=(JobExecutionRunningState left, JobExecutionRunningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobExecutionRunningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobExecutionRunningState"/>. </summary>
         public static implicit operator JobExecutionRunningState(string value) => new JobExecutionRunningState(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Sql.Tests
 {
     [ClientTestFixture]
     [NonParallelizable]
-    [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43386")]
     public abstract class SqlManagementTestBase : ManagementRecordedTestBase<SqlManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }

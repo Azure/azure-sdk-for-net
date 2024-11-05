@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(SapNamingPatternType left, SapNamingPatternType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapNamingPatternType"/> values are not the same. </summary>
         public static bool operator !=(SapNamingPatternType left, SapNamingPatternType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapNamingPatternType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapNamingPatternType"/>. </summary>
         public static implicit operator SapNamingPatternType(string value) => new SapNamingPatternType(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

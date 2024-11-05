@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<AppServiceVirtualNetworkProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppServiceVirtualNetworkProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(VnetResourceId))
             {
                 writer.WritePropertyName("vnetResourceId"u8);
@@ -83,7 +91,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppServiceVirtualNetworkProperties IJsonModel<AppServiceVirtualNetworkProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -202,29 +209,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetResourceId), out propertyOverride);
-            if (Optional.IsDefined(VnetResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  vnetResourceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VnetResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  vnetResourceId: ");
                     builder.AppendLine($"'{VnetResourceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertThumbprintString), out propertyOverride);
-            if (Optional.IsDefined(CertThumbprintString) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  certThumbprint: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CertThumbprintString))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  certThumbprint: ");
                     if (CertThumbprintString.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -238,15 +247,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertBlob), out propertyOverride);
-            if (Optional.IsDefined(CertBlob) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  certBlob: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CertBlob))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  certBlob: ");
                     if (CertBlob.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -260,17 +270,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Routes), out propertyOverride);
-            if (Optional.IsCollectionDefined(Routes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Routes.Any() || hasPropertyOverride)
+                builder.Append("  routes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Routes))
                 {
-                    builder.Append("  routes: ");
-                    if (hasPropertyOverride)
+                    if (Routes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  routes: ");
                         builder.AppendLine("[");
                         foreach (var item in Routes)
                         {
@@ -282,30 +293,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsResyncRequired), out propertyOverride);
-            if (Optional.IsDefined(IsResyncRequired) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resyncRequired: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsResyncRequired))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resyncRequired: ");
                     var boolValue = IsResyncRequired.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsServers), out propertyOverride);
-            if (Optional.IsDefined(DnsServers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dnsServers: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DnsServers))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dnsServers: ");
                     if (DnsServers.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -319,15 +332,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSwift), out propertyOverride);
-            if (Optional.IsDefined(IsSwift) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isSwift: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsSwift))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isSwift: ");
                     var boolValue = IsSwift.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<GitHubActionContainerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<GitHubActionContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GitHubActionContainerConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("serverUrl"u8);
@@ -62,7 +70,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         GitHubActionContainerConfiguration IJsonModel<GitHubActionContainerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -138,29 +145,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerUri), out propertyOverride);
-            if (Optional.IsDefined(ServerUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serverUrl: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serverUrl: ");
                     builder.AppendLine($"'{ServerUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImageName), out propertyOverride);
-            if (Optional.IsDefined(ImageName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  imageName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImageName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  imageName: ");
                     if (ImageName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -174,15 +183,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Username), out propertyOverride);
-            if (Optional.IsDefined(Username) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  username: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Username))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  username: ");
                     if (Username.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -196,15 +206,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Password), out propertyOverride);
-            if (Optional.IsDefined(Password) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  password: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Password))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  password: ");
                     if (Password.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

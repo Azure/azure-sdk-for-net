@@ -22,13 +22,14 @@ namespace Azure.ResourceManager.Reservations
         public Azure.ResourceManager.Reservations.Models.QuotaRequestState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SubContent> QuotaRequestValue { get { throw null; } }
         public System.DateTimeOffset? RequestSubmitOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.QuotaRequestDetailData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.QuotaRequestDetailData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QuotaRequestDetailResource : Azure.ResourceManager.ArmResource
+    public partial class QuotaRequestDetailResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected QuotaRequestDetailResource() { }
@@ -37,6 +38,11 @@ namespace Azure.ResourceManager.Reservations
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, Azure.Core.AzureLocation location, System.Guid id) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Reservations.QuotaRequestDetailResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.QuotaRequestDetailResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Reservations.QuotaRequestDetailData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.QuotaRequestDetailData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ReservationDetailCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Reservations.ReservationDetailResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Reservations.ReservationDetailResource>, System.Collections.IEnumerable
     {
@@ -63,13 +69,14 @@ namespace Azure.ResourceManager.Reservations
         public Azure.ResourceManager.Reservations.Models.ReservationProperties Properties { get { throw null; } }
         public string SkuName { get { throw null; } }
         public int? Version { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.ReservationDetailData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.ReservationDetailData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationDetailData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationDetailData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationDetailData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationDetailResource : Azure.ResourceManager.ArmResource
+    public partial class ReservationDetailResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationDetailData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationDetailData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ReservationDetailResource() { }
@@ -82,6 +89,11 @@ namespace Azure.ResourceManager.Reservations
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.ReservationDetailResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.Models.AvailableScopesProperties> GetAvailableScopes(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.AvailableScopesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.Models.AvailableScopesProperties>> GetAvailableScopesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.AvailableScopesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Reservations.ReservationDetailData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.ReservationDetailData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationDetailData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationDetailData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationDetailData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response Unarchive(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UnarchiveAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationDetailResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.ReservationDetailPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -121,13 +133,14 @@ namespace Azure.ResourceManager.Reservations
         public System.DateTimeOffset? ReviewOn { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationTerm? Term { get { throw null; } }
         public int? Version { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.ReservationOrderData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationOrderData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationOrderData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.ReservationOrderData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationOrderData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationOrderData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationOrderData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationOrderResource : Azure.ResourceManager.ArmResource
+    public partial class ReservationOrderResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationOrderData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationOrderData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ReservationOrderResource() { }
@@ -153,6 +166,11 @@ namespace Azure.ResourceManager.Reservations
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResource>> ReturnAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.ReservationRefundContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.Reservations.ReservationDetailData>> SplitReservation(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.SplitContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.Reservations.ReservationDetailData>>> SplitReservationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.SplitContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Reservations.ReservationOrderData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationOrderData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationOrderData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.ReservationOrderData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationOrderData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationOrderData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationOrderData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -177,13 +195,14 @@ namespace Azure.ResourceManager.Reservations
     {
         public ReservationQuotaData() { }
         public Azure.ResourceManager.Reservations.Models.QuotaProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.ReservationQuotaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.ReservationQuotaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationQuotaResource : Azure.ResourceManager.ArmResource
+    public partial class ReservationQuotaResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationQuotaData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationQuotaData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ReservationQuotaResource() { }
@@ -192,6 +211,11 @@ namespace Azure.ResourceManager.Reservations
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, Azure.Core.AzureLocation location, string resourceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Reservations.ReservationQuotaResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.ReservationQuotaResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Reservations.ReservationQuotaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.ReservationQuotaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationQuotaResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.ReservationQuotaData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationQuotaResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.ReservationQuotaData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -278,6 +302,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal AppliedReservationData() { }
         public Azure.ResourceManager.Reservations.Models.AppliedReservationList ReservationOrderIds { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.AppliedReservationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedReservationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedReservationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.AppliedReservationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedReservationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -289,6 +314,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal AppliedReservationList() { }
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.AppliedReservationList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedReservationList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedReservationList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.AppliedReservationList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedReservationList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -303,6 +329,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.Core.ResourceIdentifier ResourceGroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubscriptionId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.AppliedScopeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedScopeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedScopeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.AppliedScopeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedScopeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -388,6 +415,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         public AvailableScopesContent() { }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.AvailableScopesContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.AvailableScopesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.AvailableScopesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.AvailableScopesContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.AvailableScopesContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -398,6 +426,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal AvailableScopesProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ScopeProperties> Scopes { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.AvailableScopesProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.AvailableScopesProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.AvailableScopesProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.AvailableScopesProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.AvailableScopesProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -408,6 +437,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         public BenefitsCommitment() { }
         public Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain? Grain { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.BenefitsCommitment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.BenefitsCommitment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.BenefitsCommitment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.BenefitsCommitment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.BenefitsCommitment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -437,6 +467,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyProratedAmount { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyRemainingCommitmentAmount { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyTotalPaidAmount { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.BillingInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.BillingInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.BillingInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.BillingInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.BillingInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -447,6 +478,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         public CalculateExchangeContent() { }
         public Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties Properties { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculateExchangeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculateExchangeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -459,6 +491,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Reservations.Models.ReservationToReturn> ReservationsToExchange { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent> ReservationsToPurchase { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase> SavingsPlansToPurchase { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -493,6 +526,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties Properties { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.CalculateExchangeOperationResultStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculateExchangeResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculateExchangeResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -510,6 +544,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange> ReservationsToPurchase { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange> SavingsPlansToPurchase { get { throw null; } }
         public System.Guid? SessionId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -520,6 +555,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal CalculatePriceResult() { }
         public Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties Properties { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculatePriceResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculatePriceResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -540,6 +576,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string SkuDescription { get { throw null; } }
         public string SkuTitle { get { throw null; } }
         public double? TaxTotal { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -551,6 +588,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal CalculatePriceResultPropertiesBillingCurrencyTotal() { }
         public double? Amount { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -562,6 +600,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal CalculatePriceResultPropertiesPricingCurrencyTotal() { }
         public float? Amount { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -572,6 +611,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         public ChangeDirectoryContent() { }
         public System.Guid? DestinationTenantId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -583,6 +623,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal ChangeDirectoryDetail() { }
         public Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult ReservationOrder { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult> Reservations { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -596,6 +637,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.Guid? Id { get { throw null; } }
         public bool? IsSucceeded { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -606,6 +648,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         public ExchangeContent() { }
         public System.Guid? ExchangeRequestSessionId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ExchangeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ExchangeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -638,6 +681,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal ExchangePolicyError() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ExchangePolicyError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangePolicyError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangePolicyError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ExchangePolicyError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangePolicyError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -652,6 +696,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ExchangeResultProperties Properties { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ExchangeOperationResultStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ExchangeResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ExchangeResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -669,6 +714,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange> ReservationsToPurchase { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange> SavingsPlansToPurchase { get { throw null; } }
         public System.Guid? SessionId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ExchangeResultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeResultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeResultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ExchangeResultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeResultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -680,6 +726,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal ExtendedStatusInfo() { }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationStatusCode? StatusCode { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -708,6 +755,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         public MergeContent() { }
         public System.Collections.Generic.IList<string> Sources { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.MergeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.MergeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.MergeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.MergeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.MergeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -719,6 +767,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal OperationResultError() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.OperationResultError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.OperationResultError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.OperationResultError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.OperationResultError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.OperationResultError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -735,6 +784,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.DateTimeOffset? PayOn { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice PricingCurrencyTotal { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PaymentStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.PaymentDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.PaymentDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.PaymentDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.PaymentDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.PaymentDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -766,6 +816,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public PurchasePrice() { }
         public double? Amount { get { throw null; } set { } }
         public string CurrencyCode { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.PurchasePrice System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.PurchasePrice>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.PurchasePrice>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.PurchasePrice System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.PurchasePrice>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -782,6 +833,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.ReservationResourceName ResourceName { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.ResourceTypeName? ResourceTypeName { get { throw null; } set { } }
         public string Unit { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.QuotaProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.QuotaProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.QuotaProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.QuotaProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.QuotaProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -815,6 +867,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal BillingCurrencyTotal { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal PricingCurrencyTotal { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent PurchaseProperties { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.RenewProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.RenewProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -826,6 +879,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal RenewPropertiesBillingCurrencyTotal() { }
         public float? Amount { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -837,6 +891,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal RenewPropertiesPricingCurrencyTotal() { }
         public float? Amount { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -866,6 +921,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public ReservationCalculateRefundContent() { }
         public string Id { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties Properties { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -877,6 +933,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public ReservationCalculateRefundRequestProperties() { }
         public Azure.ResourceManager.Reservations.Models.ReservationToReturn ReservationToReturn { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -888,6 +945,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal ReservationCalculateRefundResult() { }
         public string Id { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties Properties { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -910,6 +968,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SkuProperty> SkuProperties { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ReservationTerm> Terms { get { throw null; } }
         public string Tier { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationCatalog System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCatalog>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCatalog>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationCatalog System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCatalog>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -922,6 +981,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.PurchasePrice P1Y { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice P3Y { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice P5Y { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -939,6 +999,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent RenewPurchaseProperties { get { throw null; } set { } }
         public System.DateTimeOffset? ReviewOn { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationDetailPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationDetailPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationDetailPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationDetailPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationDetailPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1041,6 +1102,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal ReservationMergeProperties() { }
         public string MergeDestination { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> MergeSources { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationMergeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationMergeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationMergeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationMergeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationMergeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1074,6 +1136,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.PurchasePrice PricingCurrencyTotal { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.PaymentDetail> Transactions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1118,6 +1181,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string UserFriendlyAppliedScopeType { get { throw null; } }
         public string UserFriendlyRenewState { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization Utilization { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1129,6 +1193,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal ReservationPropertiesUtilization() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates> Aggregates { get { throw null; } }
         public string Trend { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1181,6 +1246,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.DateTimeOffset? ReviewOn { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.ReservationTerm? Term { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1196,6 +1262,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.ReservationBillingPlan? BillingPlan { get { throw null; } }
         public int? CompletedTransactions { get { throw null; } }
         public int? TotalTransactions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1206,6 +1273,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         public ReservationRefundContent() { }
         public Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties Properties { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1217,6 +1285,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal ReservationRefundPolicyError() { }
         public Azure.ResourceManager.Reservations.Models.ReservationErrorResponseCode? Code { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1229,6 +1298,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.PurchasePrice ConsumedRefundsTotal { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice MaxRefundLimit { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError> PolicyErrors { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1242,6 +1312,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string ReturnReason { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
         public System.Guid? SessionId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1257,6 +1328,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.PurchasePrice PricingRefundAmount { get { throw null; } }
         public int? Quantity { get { throw null; } }
         public System.Guid? SessionId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1269,6 +1341,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal ReservationRefundResult() { }
         public string Id { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties Properties { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationRefundResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1280,6 +1353,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public ReservationResourceName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationResourceName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationResourceName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationResourceName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationResourceName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationResourceName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1291,6 +1365,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal ReservationSplitProperties() { }
         public System.Collections.Generic.IReadOnlyList<string> SplitDestinations { get { throw null; } }
         public string SplitSource { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationSplitProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationSplitProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationSplitProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationSplitProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationSplitProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1328,6 +1403,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal ReservationSwapProperties() { }
         public string SwapDestination { get { throw null; } }
         public string SwapSource { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationSwapProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationSwapProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationSwapProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationSwapProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationSwapProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1360,6 +1436,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingRefundAmount { get { throw null; } }
         public int? Quantity { get { throw null; } }
         public Azure.Core.ResourceIdentifier ReservationId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationToExchange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToExchange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToExchange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationToExchange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToExchange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1371,6 +1448,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal ReservationToPurchaseCalculateExchange() { }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyTotal { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent Properties { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1385,6 +1463,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.Core.ResourceIdentifier ReservationId { get { throw null; } }
         public Azure.Core.ResourceIdentifier ReservationOrderId { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationOperationStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1396,6 +1475,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public ReservationToReturn() { }
         public int? Quantity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ReservationId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationToReturn System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToReturn>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToReturn>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationToReturn System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToReturn>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1410,6 +1490,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public int? Quantity { get { throw null; } }
         public Azure.Core.ResourceIdentifier ReservationId { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationOperationStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1423,6 +1504,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string GrainUnit { get { throw null; } }
         public float? Value { get { throw null; } }
         public string ValueUnit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1520,6 +1602,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string DisplayName { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.SavingsPlanTerm? Term { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1549,6 +1632,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal SavingsPlanToPurchaseCalculateExchange() { }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyTotal { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase Properties { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1563,6 +1647,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string SavingsPlanId { get { throw null; } }
         public string SavingsPlanOrderId { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationOperationStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1574,6 +1659,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal ScopeProperties() { }
         public bool? IsValid { get { throw null; } }
         public string Scope { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ScopeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ScopeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ScopeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.ScopeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ScopeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1585,6 +1671,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal SkuCapability() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SkuCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SkuCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1596,6 +1683,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal SkuProperty() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SkuProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SkuProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1608,6 +1696,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string ReasonCode { get { throw null; } }
         public string SkuRestrictionType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SkuRestriction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuRestriction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuRestriction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SkuRestriction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuRestriction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1619,6 +1708,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public SplitContent() { }
         public System.Collections.Generic.IList<int> Quantities { get { throw null; } }
         public Azure.Core.ResourceIdentifier ReservationId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SplitContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SplitContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SplitContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SplitContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.SplitContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1635,6 +1725,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string ResourceType { get { throw null; } }
         public System.Guid? SubRequestId { get { throw null; } }
         public string Unit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SubContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SubContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.SubContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Reservations.Models.SubContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.SubContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

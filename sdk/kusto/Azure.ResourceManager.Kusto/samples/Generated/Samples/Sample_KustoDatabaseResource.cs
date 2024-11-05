@@ -411,7 +411,7 @@ AppId = "some_guid_app_id",
         public async Task ValidateDataConnection_KustoDataConnectionEventGridValidation()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDataConnectionEventGridValidationAsync.json
-            // this example is just showing the usage of "DataConnections_dataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DataConnections_DataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -458,7 +458,7 @@ AppId = "some_guid_app_id",
         public async Task ValidateDataConnection_KustoDataConnectionValidation()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDataConnectionValidationAsync.json
-            // this example is just showing the usage of "DataConnections_dataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DataConnections_DataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

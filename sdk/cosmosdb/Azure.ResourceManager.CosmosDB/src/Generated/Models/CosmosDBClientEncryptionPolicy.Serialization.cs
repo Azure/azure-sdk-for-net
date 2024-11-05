@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CosmosDBClientEncryptionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBClientEncryptionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBClientEncryptionPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("includedPaths"u8);
             writer.WriteStartArray();
             foreach (var item in IncludedPaths)
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CosmosDBClientEncryptionPolicy IJsonModel<CosmosDBClientEncryptionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -117,17 +124,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedPaths), out propertyOverride);
-            if (Optional.IsCollectionDefined(IncludedPaths) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (IncludedPaths.Any() || hasPropertyOverride)
+                builder.Append("  includedPaths: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IncludedPaths))
                 {
-                    builder.Append("  includedPaths: ");
-                    if (hasPropertyOverride)
+                    if (IncludedPaths.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  includedPaths: ");
                         builder.AppendLine("[");
                         foreach (var item in IncludedPaths)
                         {
@@ -139,13 +147,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyFormatVersion), out propertyOverride);
-            builder.Append("  policyFormatVersion: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  policyFormatVersion: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  policyFormatVersion: ");
                 builder.AppendLine($"{PolicyFormatVersion}");
             }
 

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.CosmosDB
         public CassandraClusterData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraClusterProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CassandraClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CassandraClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CassandraClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CassandraClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CassandraClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         public CassandraDataCenterData() { }
         public Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CassandraDataCenterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CassandraDataCenterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CassandraDataCenterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CassandraDataCenterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CassandraDataCenterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -145,6 +147,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraKeyspacePropertiesConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraKeyspaceResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CassandraKeyspaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CassandraKeyspaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CassandraKeyspaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CassandraKeyspaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CassandraKeyspaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -233,6 +236,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraTablePropertiesConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraTableResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CassandraTableData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CassandraTableData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CassandraTableData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CassandraTableData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CassandraTableData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -315,6 +319,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesOptions Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesResource Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CassandraViewGetResultData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CassandraViewGetResultData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CassandraViewGetResultData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CassandraViewGetResultData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CassandraViewGetResultData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -398,6 +403,8 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion? ApiServerVersion { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy BackupPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability> Capabilities { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.CapacityMode? CapacityMode { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.CapacityModeChangeTransitionState CapacityModeChangeTransitionState { get { throw null; } set { } }
         public int? CapacityTotalThroughputLimit { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ConnectorOffer? ConnectorOffer { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy ConsistencyPolicy { get { throw null; } set { } }
@@ -440,6 +447,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRestoreParameters RestoreParameters { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation> WriteLocations { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -466,6 +474,9 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Azure.ResourceManager.CosmosDB.CassandraKeyspaceCollection GetCassandraKeyspaces() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountConnectionString> GetConnectionStrings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountConnectionString> GetConnectionStringsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource> GetCosmosDBChaosFaultResource(string chaosFault, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource>> GetCosmosDBChaosFaultResourceAsync(string chaosFault, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceCollection GetCosmosDBChaosFaultResources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionResource> GetCosmosDBPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionResource>> GetCosmosDBPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionCollection GetCosmosDBPrivateEndpointConnections() { throw null; }
@@ -537,6 +548,9 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionResource> GetMongoDBUserDefinition(string mongoUserDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionResource>> GetMongoDBUserDefinitionAsync(string mongoUserDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionCollection GetMongoDBUserDefinitions() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource>> GetNetworkSecurityPerimeterConfigurationAsync(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountReadOnlyKeyList> GetReadOnlyKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountReadOnlyKeyList>> GetReadOnlyKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage> GetUsages(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -565,6 +579,55 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBAccountResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBAccountResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class CosmosDBChaosFaultResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected CosmosDBChaosFaultResource() { }
+        public virtual Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string chaosFault) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class CosmosDBChaosFaultResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource>, System.Collections.IEnumerable
+    {
+        protected CosmosDBChaosFaultResourceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string chaosFault, Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string chaosFault, Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string chaosFault, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string chaosFault, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource> Get(string chaosFault, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource>> GetAsync(string chaosFault, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource> GetIfExists(string chaosFault, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource>> GetIfExistsAsync(string chaosFault, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class CosmosDBChaosFaultResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>
+    {
+        public CosmosDBChaosFaultResourceData() { }
+        public string ContainerName { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBChaosFaultSupportedAction? CosmosDBChaosFaultSupportedActions { get { throw null; } set { } }
+        public string DatabaseName { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } }
+        public string Region { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public static partial class CosmosDBExtensions
     {
         public static Azure.Response<bool> CheckNameExistsDatabaseAccount(this Azure.ResourceManager.Resources.TenantResource tenantResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -588,7 +651,7 @@ namespace Azure.ResourceManager.CosmosDB
         public static Azure.ResourceManager.CosmosDB.CosmosDBAccountCollection GetCosmosDBAccounts(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.CosmosDB.CosmosDBAccountResource> GetCosmosDBAccounts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.CosmosDBAccountResource> GetCosmosDBAccountsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource GetCosmosDBFirewallRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource GetCosmosDBChaosFaultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBLocationResource> GetCosmosDBLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBLocationResource>> GetCosmosDBLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CosmosDBLocationResource GetCosmosDBLocationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -621,69 +684,16 @@ namespace Azure.ResourceManager.CosmosDB
         public static Azure.ResourceManager.CosmosDB.GremlinDatabaseThroughputSettingResource GetGremlinDatabaseThroughputSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.GremlinGraphResource GetGremlinGraphResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.GremlinGraphThroughputSettingResource GetGremlinGraphThroughputSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource> GetMongoCluster(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string mongoClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource>> GetMongoClusterAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string mongoClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.MongoClusterResource GetMongoClusterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.MongoClusterCollection GetMongoClusters(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.CosmosDB.MongoClusterResource> GetMongoClusters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.MongoClusterResource> GetMongoClustersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.MongoDBCollectionResource GetMongoDBCollectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.MongoDBCollectionThroughputSettingResource GetMongoDBCollectionThroughputSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.MongoDBDatabaseResource GetMongoDBDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.MongoDBDatabaseThroughputSettingResource GetMongoDBDatabaseThroughputSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.MongoDBRoleDefinitionResource GetMongoDBRoleDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionResource GetMongoDBUserDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource GetRestorableCosmosDBAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccounts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccountsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class CosmosDBFirewallRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource>, System.Collections.IEnumerable
-    {
-        protected CosmosDBFirewallRuleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string firewallRuleName, Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string firewallRuleName, Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string firewallRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string firewallRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource> Get(string firewallRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource>> GetAsync(string firewallRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource> GetIfExists(string firewallRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource>> GetIfExistsAsync(string firewallRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class CosmosDBFirewallRuleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>
-    {
-        public CosmosDBFirewallRuleData(string startIPAddress, string endIPAddress) { }
-        public string EndIPAddress { get { throw null; } set { } }
-        public Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState? ProvisioningState { get { throw null; } }
-        public string StartIPAddress { get { throw null; } set { } }
-        Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CosmosDBFirewallRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected CosmosDBFirewallRuleResource() { }
-        public virtual Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mongoClusterName, string firewallRuleName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CosmosDBLocationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBLocationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBLocationResource>, System.Collections.IEnumerable
     {
@@ -704,6 +714,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         public CosmosDBLocationData() { }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBLocationProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBLocationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBLocationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBLocationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBLocationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBLocationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -716,8 +727,6 @@ namespace Azure.ResourceManager.CosmosDB
         protected CosmosDBLocationResource() { }
         public virtual Azure.ResourceManager.CosmosDB.CosmosDBLocationData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityResponse> CheckMongoClusterNameAailability(Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityResponse>> CheckMongoClusterNameAailabilityAsync(Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBLocationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBLocationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -754,6 +763,7 @@ namespace Azure.ResourceManager.CosmosDB
         public string GroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -815,6 +825,7 @@ namespace Azure.ResourceManager.CosmosDB
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -842,6 +853,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         public CosmosDBServiceData() { }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -888,6 +900,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         public CosmosDBSqlClientEncryptionKeyData() { }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyProperties Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlClientEncryptionKeyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -934,6 +947,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerPropertiesConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlContainerResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlContainerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlContainerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlContainerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlContainerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlContainerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1033,6 +1047,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabasePropertiesConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlDatabaseResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlDatabaseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlDatabaseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlDatabaseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlDatabaseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlDatabaseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1127,6 +1142,7 @@ namespace Azure.ResourceManager.CosmosDB
         public System.Guid? PrincipalId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlRoleAssignmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlRoleAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlRoleAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlRoleAssignmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlRoleAssignmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1176,6 +1192,7 @@ namespace Azure.ResourceManager.CosmosDB
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRolePermission> Permissions { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRoleDefinitionType? RoleDefinitionType { get { throw null; } set { } }
         public string RoleName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlRoleDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlRoleDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlRoleDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlRoleDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlRoleDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1223,6 +1240,7 @@ namespace Azure.ResourceManager.CosmosDB
         public CosmosDBSqlStoredProcedureData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlStoredProcedureResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlStoredProcedureData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlStoredProcedureData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlStoredProcedureData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlStoredProcedureData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlStoredProcedureData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1276,6 +1294,7 @@ namespace Azure.ResourceManager.CosmosDB
         public CosmosDBSqlTriggerData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlTriggerResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlTriggerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlTriggerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlTriggerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlTriggerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlTriggerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1329,6 +1348,7 @@ namespace Azure.ResourceManager.CosmosDB
         public CosmosDBSqlUserDefinedFunctionData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlUserDefinedFunctionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlUserDefinedFunctionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlUserDefinedFunctionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBSqlUserDefinedFunctionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBSqlUserDefinedFunctionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1383,6 +1403,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesOptions Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesResource Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBTableData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBTableData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBTableData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBTableData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBTableData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1441,6 +1462,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.Core.AzureLocation? AccountLocation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier AccountResourceIdentifier { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBStatus? ProvisioningState { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1488,6 +1510,7 @@ namespace Azure.ResourceManager.CosmosDB
         public CosmosDBThroughputPoolData(Azure.Core.AzureLocation location) { }
         public int? MaxThroughput { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBStatus? ProvisioningState { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1565,7 +1588,7 @@ namespace Azure.ResourceManager.CosmosDB
         public DataTransferJobGetResultData() { }
         public Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink Destination { get { throw null; } set { } }
         public System.TimeSpan? Duration { get { throw null; } }
-        public Azure.ResourceManager.CosmosDB.Models.ErrorResponse Error { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult Error { get { throw null; } }
         public string JobName { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedUtcOn { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.DataTransferJobMode? Mode { get { throw null; } set { } }
@@ -1574,6 +1597,7 @@ namespace Azure.ResourceManager.CosmosDB
         public string Status { get { throw null; } }
         public long? TotalCount { get { throw null; } }
         public int? WorkerCount { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.DataTransferJobGetResultData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.DataTransferJobGetResultData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.DataTransferJobGetResultData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.DataTransferJobGetResultData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.DataTransferJobGetResultData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1628,6 +1652,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.GraphResourceGetPropertiesOptions Options { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.GraphResourceGetResultData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.GraphResourceGetResultData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.GraphResourceGetResultData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.GraphResourceGetResultData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.GraphResourceGetResultData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1682,6 +1707,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.GremlinDatabasePropertiesConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinDatabaseResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.GremlinDatabaseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.GremlinDatabaseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.GremlinDatabaseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.GremlinDatabaseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.GremlinDatabaseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1767,6 +1793,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.GremlinGraphPropertiesConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinGraphResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.GremlinGraphData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.GremlinGraphData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.GremlinGraphData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.GremlinGraphData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.GremlinGraphData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1828,72 +1855,6 @@ namespace Azure.ResourceManager.CosmosDB
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.ThroughputSettingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.ThroughputSettingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MongoClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.MongoClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.MongoClusterResource>, System.Collections.IEnumerable
-    {
-        protected MongoClusterCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.MongoClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string mongoClusterName, Azure.ResourceManager.CosmosDB.MongoClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.MongoClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string mongoClusterName, Azure.ResourceManager.CosmosDB.MongoClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string mongoClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string mongoClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource> Get(string mongoClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.MongoClusterResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.MongoClusterResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource>> GetAsync(string mongoClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.CosmosDB.MongoClusterResource> GetIfExists(string mongoClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CosmosDB.MongoClusterResource>> GetIfExistsAsync(string mongoClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CosmosDB.MongoClusterResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.MongoClusterResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.MongoClusterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.MongoClusterResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class MongoClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.MongoClusterData>
-    {
-        public MongoClusterData(Azure.Core.AzureLocation location) { }
-        public string AdministratorLogin { get { throw null; } set { } }
-        public string AdministratorLoginPassword { get { throw null; } set { } }
-        public Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus? ClusterStatus { get { throw null; } }
-        public string ConnectionString { get { throw null; } }
-        public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode? CreateMode { get { throw null; } set { } }
-        public string EarliestRestoreTime { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.NodeGroupSpec> NodeGroupSpecs { get { throw null; } }
-        public Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.CosmosDB.Models.MongoClusterRestoreParameters RestoreParameters { get { throw null; } set { } }
-        public string ServerVersion { get { throw null; } set { } }
-        Azure.ResourceManager.CosmosDB.MongoClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDB.MongoClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.MongoClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.MongoClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.MongoClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MongoClusterResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.MongoClusterData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected MongoClusterResource() { }
-        public virtual Azure.ResourceManager.CosmosDB.MongoClusterData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mongoClusterName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.Models.ListConnectionStringsResult> GetConnectionStrings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.Models.ListConnectionStringsResult>> GetConnectionStringsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource> GetCosmosDBFirewallRule(string firewallRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource>> GetCosmosDBFirewallRuleAsync(string firewallRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleCollection GetCosmosDBFirewallRules() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.CosmosDB.MongoClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDB.MongoClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.MongoClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.MongoClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.MongoClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.MongoClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.MongoClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.MongoClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.MongoClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class MongoDBCollectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.MongoDBCollectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.MongoDBCollectionResource>, System.Collections.IEnumerable
     {
         protected MongoDBCollectionCollection() { }
@@ -1917,6 +1878,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionPropertiesConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBCollectionResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.MongoDBCollectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoDBCollectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoDBCollectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.MongoDBCollectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.MongoDBCollectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2007,6 +1969,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.MongoDBDatabasePropertiesConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBDatabaseResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.MongoDBDatabaseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoDBDatabaseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoDBDatabaseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.MongoDBDatabaseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.MongoDBDatabaseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2100,6 +2063,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.CosmosDB.Models.MongoDBRoleDefinitionType? RoleDefinitionType { get { throw null; } set { } }
         public string RoleName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.MongoDBRole> Roles { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.MongoDBRoleDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoDBRoleDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoDBRoleDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.MongoDBRoleDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.MongoDBRoleDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2151,6 +2115,7 @@ namespace Azure.ResourceManager.CosmosDB
         public string Password { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.MongoDBRole> Roles { get { throw null; } }
         public string UserName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2175,6 +2140,49 @@ namespace Azure.ResourceManager.CosmosDB
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.MongoDBUserDefinitionCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.MongoDBUserDefinitionCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkSecurityPerimeterConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource>, System.Collections.IEnumerable
+    {
+        protected NetworkSecurityPerimeterConfigurationCollection() { }
+        public virtual Azure.Response<bool> Exists(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource> Get(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource>> GetAsync(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource> GetIfExists(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource>> GetIfExistsAsync(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class NetworkSecurityPerimeterConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>
+    {
+        public NetworkSecurityPerimeterConfigurationData() { }
+        public Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetworkSecurityPerimeterConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected NetworkSecurityPerimeterConfigurationResource() { }
+        public virtual Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string networkSecurityPerimeterConfigurationName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Reconcile(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReconcileAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RestorableCosmosDBAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource>, System.Collections.IEnumerable
     {
@@ -2201,6 +2209,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.DateTimeOffset? OldestRestorableOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.RestorableLocationResourceInfo> RestorableLocations { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2263,6 +2272,7 @@ namespace Azure.ResourceManager.CosmosDB
         public ThroughputSettingData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedThroughputSettingsResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.ThroughputSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.ThroughputSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.ThroughputSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.ThroughputSettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.ThroughputSettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2284,7 +2294,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         public virtual Azure.ResourceManager.CosmosDB.CassandraViewGetResultResource GetCassandraViewGetResultResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CassandraViewThroughputSettingResource GetCassandraViewThroughputSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CosmosDBAccountResource GetCosmosDBAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleResource GetCosmosDBFirewallRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResource GetCosmosDBChaosFaultResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CosmosDBLocationResource GetCosmosDBLocationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionResource GetCosmosDBPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CosmosDBPrivateLinkResource GetCosmosDBPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2309,13 +2319,13 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         public virtual Azure.ResourceManager.CosmosDB.GremlinDatabaseThroughputSettingResource GetGremlinDatabaseThroughputSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.GremlinGraphResource GetGremlinGraphResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.GremlinGraphThroughputSettingResource GetGremlinGraphThroughputSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.CosmosDB.MongoClusterResource GetMongoClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.MongoDBCollectionResource GetMongoDBCollectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.MongoDBCollectionThroughputSettingResource GetMongoDBCollectionThroughputSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.MongoDBDatabaseResource GetMongoDBDatabaseResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.MongoDBDatabaseThroughputSettingResource GetMongoDBDatabaseThroughputSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.MongoDBRoleDefinitionResource GetMongoDBRoleDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionResource GetMongoDBUserDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource GetRestorableCosmosDBAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableCosmosDBResourceGroupResource : Azure.ResourceManager.ArmResource
@@ -2330,9 +2340,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolResource> GetCosmosDBThroughputPool(string throughputPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolResource>> GetCosmosDBThroughputPoolAsync(string throughputPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolCollection GetCosmosDBThroughputPools() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource> GetMongoCluster(string mongoClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource>> GetMongoClusterAsync(string mongoClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CosmosDB.MongoClusterCollection GetMongoClusters() { throw null; }
     }
     public partial class MockableCosmosDBSubscriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -2346,8 +2353,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         public virtual Azure.ResourceManager.CosmosDB.CosmosDBLocationCollection GetCosmosDBLocations() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolResource> GetCosmosDBThroughputPools(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolResource> GetCosmosDBThroughputPoolsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.MongoClusterResource> GetMongoClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.MongoClusterResource> GetMongoClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -2360,6 +2365,53 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
 }
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    public partial class AccessRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.AccessRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.AccessRule>
+    {
+        public AccessRule() { }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.AccessRuleProperties Properties { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.AccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.AccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.AccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.AccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.AccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.AccessRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.AccessRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AccessRuleDirection : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.AccessRuleDirection>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AccessRuleDirection(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.AccessRuleDirection Inbound { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.AccessRuleDirection Outbound { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDB.Models.AccessRuleDirection other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.AccessRuleDirection left, Azure.ResourceManager.CosmosDB.Models.AccessRuleDirection right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDB.Models.AccessRuleDirection (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.AccessRuleDirection left, Azure.ResourceManager.CosmosDB.Models.AccessRuleDirection right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AccessRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.AccessRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.AccessRuleProperties>
+    {
+        public AccessRuleProperties() { }
+        public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.AccessRuleDirection? Direction { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> EmailAddresses { get { throw null; } }
+        public System.Collections.Generic.IList<string> FullyQualifiedDomainNames { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
+        public System.Collections.Generic.IList<string> PhoneNumbers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Subscriptions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.AccessRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.AccessRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.AccessRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.AccessRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.AccessRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.AccessRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.AccessRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AnalyticalStorageSchemaType : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType>
     {
@@ -2381,6 +2433,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public static partial class ArmCosmosDBModelFactory
     {
         public static Azure.ResourceManager.CosmosDB.Models.AutoscaleSettingsResourceInfo AutoscaleSettingsResourceInfo(int maxThroughput = 0, Azure.ResourceManager.CosmosDB.Models.ThroughputPolicyResourceInfo autoUpgradeThroughputPolicy = null, int? targetMaxThroughput = default(int?)) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.CapacityModeChangeTransitionState CapacityModeChangeTransitionState(Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus? capacityModeTransitionStatus = default(Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus?), Azure.ResourceManager.CosmosDB.Models.CapacityMode? currentCapacityMode = default(Azure.ResourceManager.CosmosDB.Models.CapacityMode?), Azure.ResourceManager.CosmosDB.Models.CapacityMode? previousCapacityMode = default(Azure.ResourceManager.CosmosDB.Models.CapacityMode?), System.DateTimeOffset? capacityModeTransitionBeginTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? capacityModeTransitionEndTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? capacityModeLastSuccessfulTransitionEndTimestamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupResourceInfo CassandraClusterBackupResourceInfo(string backupId = null, Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupState? backupState = default(Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupState?), System.DateTimeOffset? backupStartTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? backupStopTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? backupExpiryTimestamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CassandraClusterCommand CassandraClusterCommand(string command = null, string commandId = null, System.BinaryData arguments = null, string host = null, bool? isAdmin = default(bool?), bool? shouldStopCassandraBeforeStart = default(bool?), bool? isReadWrite = default(bool?), string result = null, Azure.ResourceManager.CosmosDB.Models.CassandraClusterCommandStatus? status = default(Azure.ResourceManager.CosmosDB.Models.CassandraClusterCommandStatus?), string outputFile = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CassandraClusterData CassandraClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.CassandraClusterProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
@@ -2401,21 +2454,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesResource CassandraViewGetPropertiesResource(string id = null, string viewDefinition = null, string rid = null, float? timestamp = default(float?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CassandraViewGetResultCreateOrUpdateContent CassandraViewGetResultCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.CassandraViewResource resource = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig options = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CassandraViewGetResultData CassandraViewGetResultData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesResource resource = null, Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesOptions options = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityResponse CheckCosmosDBNameAvailabilityResponse(bool? nameAvailable = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBNameUnavailableReason? reason = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBNameUnavailableReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountConnectionString CosmosDBAccountConnectionString(string connectionString = null, string description = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBKind? keyKind = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBKind?), Azure.ResourceManager.CosmosDB.Models.CosmosDBType? keyType = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBType?)) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateOrUpdateContent CosmosDBAccountCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKind? kind = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKind?), Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy consistencyPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation> locations = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountOfferType databaseAccountOfferType = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountOfferType), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability> capabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule> virtualNetworkRules = null, bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), Azure.ResourceManager.CosmosDB.Models.ConnectorOffer? connectorOffer = default(Azure.ResourceManager.CosmosDB.Models.ConnectorOffer?), bool? disableKeyBasedMetadataWriteAccess = default(bool?), System.Uri keyVaultKeyUri = null, string defaultIdentity = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess?), bool? isFreeTierEnabled = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion? apiServerVersion = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion?), bool? isAnalyticalStorageEnabled = default(bool?), Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType? analyticalStorageSchemaType = default(Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType?), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode? createMode = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode?), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy backupPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCorsPolicy> cors = null, Azure.ResourceManager.CosmosDB.Models.NetworkAclBypass? networkAclBypass = default(Azure.ResourceManager.CosmosDB.Models.NetworkAclBypass?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> networkAclBypassResourceIds = null, Azure.ResourceManager.CosmosDB.Models.EnableFullTextQuery? diagnosticLogEnableFullTextQuery = default(Azure.ResourceManager.CosmosDB.Models.EnableFullTextQuery?), bool? disableLocalAuth = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRestoreParameters restoreParameters = null, int? capacityTotalThroughputLimit = default(int?), bool? enableMaterializedViews = default(bool?), Azure.ResourceManager.CosmosDB.Models.DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = default(bool?), bool? enableBurstCapacity = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion? minimalTlsVersion = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion?), string customerManagedKeyStatus = null, bool? enablePriorityBasedExecution = default(bool?), Azure.ResourceManager.CosmosDB.Models.DefaultPriorityLevel? defaultPriorityLevel = default(Azure.ResourceManager.CosmosDB.Models.DefaultPriorityLevel?), bool? enablePerRegionPerPartitionAutoscale = default(bool?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.CosmosDBAccountData CosmosDBAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKind? kind = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKind?), string provisioningState = null, string documentEndpoint = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountOfferType? databaseAccountOfferType = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountOfferType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy consistencyPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability> capabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation> writeLocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation> readLocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy> failoverPolicies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule> virtualNetworkRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionData> privateEndpointConnections = null, bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), Azure.ResourceManager.CosmosDB.Models.ConnectorOffer? connectorOffer = default(Azure.ResourceManager.CosmosDB.Models.ConnectorOffer?), bool? disableKeyBasedMetadataWriteAccess = default(bool?), System.Uri keyVaultKeyUri = null, string defaultIdentity = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess?), bool? isFreeTierEnabled = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion? apiServerVersion = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion?), bool? isAnalyticalStorageEnabled = default(bool?), Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType? analyticalStorageSchemaType = default(Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType?), System.Guid? instanceId = default(System.Guid?), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode? createMode = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode?), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRestoreParameters restoreParameters = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy backupPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCorsPolicy> cors = null, Azure.ResourceManager.CosmosDB.Models.NetworkAclBypass? networkAclBypass = default(Azure.ResourceManager.CosmosDB.Models.NetworkAclBypass?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> networkAclBypassResourceIds = null, Azure.ResourceManager.CosmosDB.Models.EnableFullTextQuery? diagnosticLogEnableFullTextQuery = default(Azure.ResourceManager.CosmosDB.Models.EnableFullTextQuery?), bool? disableLocalAuth = default(bool?), int? capacityTotalThroughputLimit = default(int?), bool? enableMaterializedViews = default(bool?), Azure.ResourceManager.CosmosDB.Models.DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = default(bool?), bool? enableBurstCapacity = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion? minimalTlsVersion = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion?), string customerManagedKeyStatus = null, bool? enablePriorityBasedExecution = default(bool?), Azure.ResourceManager.CosmosDB.Models.DefaultPriorityLevel? defaultPriorityLevel = default(Azure.ResourceManager.CosmosDB.Models.DefaultPriorityLevel?), bool? enablePerRegionPerPartitionAutoscale = default(bool?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateOrUpdateContent CosmosDBAccountCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKind? kind = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKind?), Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy consistencyPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation> locations = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountOfferType databaseAccountOfferType = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountOfferType), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability> capabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule> virtualNetworkRules = null, bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), Azure.ResourceManager.CosmosDB.Models.ConnectorOffer? connectorOffer = default(Azure.ResourceManager.CosmosDB.Models.ConnectorOffer?), bool? disableKeyBasedMetadataWriteAccess = default(bool?), System.Uri keyVaultKeyUri = null, string defaultIdentity = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess?), bool? isFreeTierEnabled = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion? apiServerVersion = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion?), bool? isAnalyticalStorageEnabled = default(bool?), Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType? analyticalStorageSchemaType = default(Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType?), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode? createMode = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode?), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy backupPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCorsPolicy> cors = null, Azure.ResourceManager.CosmosDB.Models.NetworkAclBypass? networkAclBypass = default(Azure.ResourceManager.CosmosDB.Models.NetworkAclBypass?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> networkAclBypassResourceIds = null, Azure.ResourceManager.CosmosDB.Models.EnableFullTextQuery? diagnosticLogEnableFullTextQuery = default(Azure.ResourceManager.CosmosDB.Models.EnableFullTextQuery?), bool? disableLocalAuth = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRestoreParameters restoreParameters = null, int? capacityTotalThroughputLimit = default(int?), Azure.ResourceManager.CosmosDB.Models.CapacityMode? capacityMode = default(Azure.ResourceManager.CosmosDB.Models.CapacityMode?), bool? enableMaterializedViews = default(bool?), Azure.ResourceManager.CosmosDB.Models.DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = default(bool?), bool? enableBurstCapacity = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion? minimalTlsVersion = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion?), string customerManagedKeyStatus = null, bool? enablePriorityBasedExecution = default(bool?), Azure.ResourceManager.CosmosDB.Models.DefaultPriorityLevel? defaultPriorityLevel = default(Azure.ResourceManager.CosmosDB.Models.DefaultPriorityLevel?), bool? enablePerRegionPerPartitionAutoscale = default(bool?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.CosmosDBAccountData CosmosDBAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKind? kind = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKind?), string provisioningState = null, string documentEndpoint = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountOfferType? databaseAccountOfferType = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountOfferType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy consistencyPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability> capabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation> writeLocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation> readLocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy> failoverPolicies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule> virtualNetworkRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionData> privateEndpointConnections = null, bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), Azure.ResourceManager.CosmosDB.Models.ConnectorOffer? connectorOffer = default(Azure.ResourceManager.CosmosDB.Models.ConnectorOffer?), bool? disableKeyBasedMetadataWriteAccess = default(bool?), System.Uri keyVaultKeyUri = null, string defaultIdentity = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess?), bool? isFreeTierEnabled = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion? apiServerVersion = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion?), bool? isAnalyticalStorageEnabled = default(bool?), Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType? analyticalStorageSchemaType = default(Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType?), System.Guid? instanceId = default(System.Guid?), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode? createMode = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode?), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRestoreParameters restoreParameters = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy backupPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCorsPolicy> cors = null, Azure.ResourceManager.CosmosDB.Models.NetworkAclBypass? networkAclBypass = default(Azure.ResourceManager.CosmosDB.Models.NetworkAclBypass?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> networkAclBypassResourceIds = null, Azure.ResourceManager.CosmosDB.Models.EnableFullTextQuery? diagnosticLogEnableFullTextQuery = default(Azure.ResourceManager.CosmosDB.Models.EnableFullTextQuery?), bool? disableLocalAuth = default(bool?), int? capacityTotalThroughputLimit = default(int?), Azure.ResourceManager.CosmosDB.Models.CapacityMode? capacityMode = default(Azure.ResourceManager.CosmosDB.Models.CapacityMode?), Azure.ResourceManager.CosmosDB.Models.CapacityModeChangeTransitionState capacityModeChangeTransitionState = null, bool? enableMaterializedViews = default(bool?), Azure.ResourceManager.CosmosDB.Models.DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = default(bool?), bool? enableBurstCapacity = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion? minimalTlsVersion = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion?), string customerManagedKeyStatus = null, bool? enablePriorityBasedExecution = default(bool?), Azure.ResourceManager.CosmosDB.Models.DefaultPriorityLevel? defaultPriorityLevel = default(Azure.ResourceManager.CosmosDB.Models.DefaultPriorityLevel?), bool? enablePerRegionPerPartitionAutoscale = default(bool?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKeyList CosmosDBAccountKeyList(string primaryReadonlyMasterKey = null, string secondaryReadonlyMasterKey = null, string primaryMasterKey = null, string secondaryMasterKey = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation CosmosDBAccountLocation(string id = null, Azure.Core.AzureLocation? locationName = default(Azure.Core.AzureLocation?), string documentEndpoint = null, string provisioningState = null, int? failoverPriority = default(int?), bool? isZoneRedundant = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountPatch CosmosDBAccountPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy consistencyPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability> capabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule> virtualNetworkRules = null, bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), Azure.ResourceManager.CosmosDB.Models.ConnectorOffer? connectorOffer = default(Azure.ResourceManager.CosmosDB.Models.ConnectorOffer?), bool? disableKeyBasedMetadataWriteAccess = default(bool?), System.Uri keyVaultKeyUri = null, string defaultIdentity = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess?), bool? isFreeTierEnabled = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion? apiServerVersion = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion?), bool? isAnalyticalStorageEnabled = default(bool?), Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType? analyticalStorageSchemaType = default(Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType?), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy backupPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCorsPolicy> cors = null, Azure.ResourceManager.CosmosDB.Models.NetworkAclBypass? networkAclBypass = default(Azure.ResourceManager.CosmosDB.Models.NetworkAclBypass?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> networkAclBypassResourceIds = null, Azure.ResourceManager.CosmosDB.Models.EnableFullTextQuery? diagnosticLogEnableFullTextQuery = default(Azure.ResourceManager.CosmosDB.Models.EnableFullTextQuery?), bool? disableLocalAuth = default(bool?), int? capacityTotalThroughputLimit = default(int?), bool? enableMaterializedViews = default(bool?), Azure.ResourceManager.CosmosDB.Models.DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = default(bool?), bool? enableBurstCapacity = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion? minimalTlsVersion = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion?), string customerManagedKeyStatus = null, bool? enablePriorityBasedExecution = default(bool?), Azure.ResourceManager.CosmosDB.Models.DefaultPriorityLevel? defaultPriorityLevel = default(Azure.ResourceManager.CosmosDB.Models.DefaultPriorityLevel?), bool? enablePerRegionPerPartitionAutoscale = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountPatch CosmosDBAccountPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy consistencyPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability> capabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule> virtualNetworkRules = null, bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), Azure.ResourceManager.CosmosDB.Models.ConnectorOffer? connectorOffer = default(Azure.ResourceManager.CosmosDB.Models.ConnectorOffer?), bool? disableKeyBasedMetadataWriteAccess = default(bool?), System.Uri keyVaultKeyUri = null, string defaultIdentity = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess?), bool? isFreeTierEnabled = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion? apiServerVersion = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion?), bool? isAnalyticalStorageEnabled = default(bool?), Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType? analyticalStorageSchemaType = default(Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType?), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy backupPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCorsPolicy> cors = null, Azure.ResourceManager.CosmosDB.Models.NetworkAclBypass? networkAclBypass = default(Azure.ResourceManager.CosmosDB.Models.NetworkAclBypass?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> networkAclBypassResourceIds = null, Azure.ResourceManager.CosmosDB.Models.EnableFullTextQuery? diagnosticLogEnableFullTextQuery = default(Azure.ResourceManager.CosmosDB.Models.EnableFullTextQuery?), bool? disableLocalAuth = default(bool?), int? capacityTotalThroughputLimit = default(int?), Azure.ResourceManager.CosmosDB.Models.CapacityMode? capacityMode = default(Azure.ResourceManager.CosmosDB.Models.CapacityMode?), bool? enableMaterializedViews = default(bool?), Azure.ResourceManager.CosmosDB.Models.DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = default(bool?), bool? enableBurstCapacity = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion? minimalTlsVersion = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion?), string customerManagedKeyStatus = null, bool? enablePriorityBasedExecution = default(bool?), Azure.ResourceManager.CosmosDB.Models.DefaultPriorityLevel? defaultPriorityLevel = default(Azure.ResourceManager.CosmosDB.Models.DefaultPriorityLevel?), bool? enablePerRegionPerPartitionAutoscale = default(bool?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountReadOnlyKeyList CosmosDBAccountReadOnlyKeyList(string primaryReadonlyMasterKey = null, string secondaryReadonlyMasterKey = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBBackupInformation CosmosDBBackupInformation(System.DateTimeOffset? continuousBackupInformationLatestRestorableTimestamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseMetric CosmosDBBaseMetric(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string timeGrain = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType? unit = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType?), Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricName name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricValue> metricValues = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage CosmosDBBaseUsage(Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType? unit = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType?), Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricName name = null, string quotaPeriod = null, long? limit = default(long?), long? currentValue = default(long?)) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBConnectionString CosmosDBConnectionString(string connectionString = null, string description = null) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData CosmosDBChaosFaultResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBChaosFaultSupportedAction? cosmosDBChaosFaultSupportedActions = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBChaosFaultSupportedAction?), string region = null, string databaseName = null, string containerName = null, string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBContainerPartitionKey CosmosDBContainerPartitionKey(System.Collections.Generic.IEnumerable<string> paths = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBPartitionKind? kind = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBPartitionKind?), int? version = default(int?), bool? isSystemKey = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult CosmosDBErrorResult(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy CosmosDBFailoverPolicy(string id = null, Azure.Core.AzureLocation? locationName = default(Azure.Core.AzureLocation?), int? failoverPriority = default(int?)) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.CosmosDBFirewallRuleData CosmosDBFirewallRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState? provisioningState = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState?), string startIPAddress = null, string endIPAddress = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CosmosDBLocationData CosmosDBLocationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBLocationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBLocationProperties CosmosDBLocationProperties(bool? doesSupportAvailabilityZone = default(bool?), bool? isResidencyRestricted = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBBackupStorageRedundancy> backupStorageRedundancies = null, bool? isSubscriptionRegionAccessAllowedForRegular = default(bool?), bool? isSubscriptionRegionAccessAllowedForAz = default(bool?), Azure.ResourceManager.CosmosDB.Models.CosmosDBStatus? status = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBStatus?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricAvailability CosmosDBMetricAvailability(string timeGrain = null, string retention = null) { throw null; }
@@ -2450,11 +2502,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static Azure.ResourceManager.CosmosDB.CosmosDBThroughputPoolData CosmosDBThroughputPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.CosmosDBStatus? provisioningState = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBStatus?), int? maxThroughput = default(int?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.DatabaseAccountKeysMetadata DatabaseAccountKeysMetadata(System.DateTimeOffset? primaryMasterKeyGeneratedOn = default(System.DateTimeOffset?), System.DateTimeOffset? secondaryMasterKeyGeneratedOn = default(System.DateTimeOffset?), System.DateTimeOffset? primaryReadonlyMasterKeyGeneratedOn = default(System.DateTimeOffset?), System.DateTimeOffset? secondaryReadonlyMasterKeyGeneratedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.DataTransferJobGetResultCreateOrUpdateContent DataTransferJobGetResultCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CosmosDB.Models.DataTransferJobProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.DataTransferJobGetResultData DataTransferJobGetResultData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string jobName = null, Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink source = null, Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink destination = null, string status = null, long? processedCount = default(long?), long? totalCount = default(long?), System.DateTimeOffset? lastUpdatedUtcOn = default(System.DateTimeOffset?), int? workerCount = default(int?), Azure.ResourceManager.CosmosDB.Models.ErrorResponse error = null, System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.CosmosDB.Models.DataTransferJobMode? mode = default(Azure.ResourceManager.CosmosDB.Models.DataTransferJobMode?)) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.DataTransferJobProperties DataTransferJobProperties(string jobName = null, Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink source = null, Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink destination = null, string status = null, long? processedCount = default(long?), long? totalCount = default(long?), System.DateTimeOffset? lastUpdatedUtcOn = default(System.DateTimeOffset?), int? workerCount = default(int?), Azure.ResourceManager.CosmosDB.Models.ErrorResponse error = null, System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.CosmosDB.Models.DataTransferJobMode? mode = default(Azure.ResourceManager.CosmosDB.Models.DataTransferJobMode?)) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.DataTransferJobGetResultData DataTransferJobGetResultData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string jobName = null, Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink source = null, Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink destination = null, string status = null, long? processedCount = default(long?), long? totalCount = default(long?), System.DateTimeOffset? lastUpdatedUtcOn = default(System.DateTimeOffset?), int? workerCount = default(int?), Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult error = null, System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.CosmosDB.Models.DataTransferJobMode? mode = default(Azure.ResourceManager.CosmosDB.Models.DataTransferJobMode?)) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.DataTransferJobProperties DataTransferJobProperties(string jobName = null, Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink source = null, Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink destination = null, string status = null, long? processedCount = default(long?), long? totalCount = default(long?), System.DateTimeOffset? lastUpdatedUtcOn = default(System.DateTimeOffset?), int? workerCount = default(int?), Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult error = null, System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.CosmosDB.Models.DataTransferJobMode? mode = default(Azure.ResourceManager.CosmosDB.Models.DataTransferJobMode?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.DataTransferRegionalService DataTransferRegionalService(string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus? status = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.DataTransferServiceProperties DataTransferServiceProperties(System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceSize? instanceSize = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceSize?), int? instanceCount = default(int?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus? status = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus?), System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.DataTransferRegionalService> locations = null) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.ErrorResponse ErrorResponse(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraKeyspaceResourceInfo ExtendedCassandraKeyspaceResourceInfo(string keyspaceName = null, string rid = null, float? timestamp = default(float?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraTableResourceInfo ExtendedCassandraTableResourceInfo(string tableName = null, int? defaultTtl = default(int?), Azure.ResourceManager.CosmosDB.Models.CassandraSchema schema = null, int? analyticalStorageTtl = default(int?), string rid = null, float? timestamp = default(float?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlContainerResourceInfo ExtendedCosmosDBSqlContainerResourceInfo(string containerName = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBIndexingPolicy indexingPolicy = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBUniqueKey> uniqueKeys = null, Azure.ResourceManager.CosmosDB.Models.ConflictResolutionPolicy conflictResolutionPolicy = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionPolicy clientEncryptionPolicy = null, long? analyticalStorageTtl = default(long?), Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters restoreParameters = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode? createMode = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode?), Azure.ResourceManager.CosmosDB.Models.MaterializedViewDefinition materializedViewDefinition = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.ComputedProperty> computedProperties = null, string rid = null, float? timestamp = default(float?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
@@ -2482,24 +2533,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static Azure.ResourceManager.CosmosDB.GremlinDatabaseData GremlinDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinDatabaseResourceInfo resource = null, Azure.ResourceManager.CosmosDB.Models.GremlinDatabasePropertiesConfig options = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.GremlinGraphCreateOrUpdateContent GremlinGraphCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.GremlinGraphResourceInfo resource = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig options = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.GremlinGraphData GremlinGraphData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinGraphResourceInfo resource = null, Azure.ResourceManager.CosmosDB.Models.GremlinGraphPropertiesConfig options = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.ListConnectionStringsResult ListConnectionStringsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBConnectionString> connectionStrings = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.MaterializedViewDefinition MaterializedViewDefinition(string sourceCollectionRid = null, string sourceCollectionId = null, string definition = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderRegionalService MaterializedViewsBuilderRegionalService(string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus? status = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceProperties MaterializedViewsBuilderServiceProperties(System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceSize? instanceSize = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceSize?), int? instanceCount = default(int?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus? status = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus?), System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderRegionalService> locations = null) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.MongoClusterData MongoClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode? createMode = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode?), Azure.ResourceManager.CosmosDB.Models.MongoClusterRestoreParameters restoreParameters = null, string administratorLogin = null, string administratorLoginPassword = null, string serverVersion = null, string connectionString = null, string earliestRestoreTime = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState? provisioningState = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState?), Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus? clusterStatus = default(Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.NodeGroupSpec> nodeGroupSpecs = null) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.MongoClusterPatch MongoClusterPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode? createMode = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode?), Azure.ResourceManager.CosmosDB.Models.MongoClusterRestoreParameters restoreParameters = null, string administratorLogin = null, string administratorLoginPassword = null, string serverVersion = null, string connectionString = null, string earliestRestoreTime = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState? provisioningState = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState?), Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus? clusterStatus = default(Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.NodeGroupSpec> nodeGroupSpecs = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionCreateOrUpdateContent MongoDBCollectionCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionResourceInfo resource = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig options = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.MongoDBCollectionData MongoDBCollectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBCollectionResourceInfo resource = null, Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionPropertiesConfig options = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseCreateOrUpdateContent MongoDBDatabaseCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseResourceInfo resource = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig options = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.MongoDBDatabaseData MongoDBDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBDatabaseResourceInfo resource = null, Azure.ResourceManager.CosmosDB.Models.MongoDBDatabasePropertiesConfig options = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.MongoDBRoleDefinitionData MongoDBRoleDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string roleName = null, Azure.ResourceManager.CosmosDB.Models.MongoDBRoleDefinitionType? roleDefinitionType = default(Azure.ResourceManager.CosmosDB.Models.MongoDBRoleDefinitionType?), string databaseName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilege> privileges = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.MongoDBRole> roles = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionData MongoDBUserDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string userName = null, string password = null, string databaseName = null, string customData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.MongoDBRole> roles = null, string mechanisms = null) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.CosmosDB.Models.ResourceAssociation resourceAssociation = null, Azure.ResourceManager.CosmosDB.Models.NetworkSecurityProfile profile = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.PartitionMetric PartitionMetric(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string timeGrain = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType? unit = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType?), Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricName name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricValue> metricValues = null, System.Guid? partitionId = default(System.Guid?), string partitionKeyRangeId = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.PartitionUsage PartitionUsage(Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType? unit = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType?), Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricName name = null, string quotaPeriod = null, long? limit = default(long?), long? currentValue = default(long?), System.Guid? partitionId = default(System.Guid?), string partitionKeyRangeId = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.PercentileMetricValue PercentileMetricValue(int? count = default(int?), double? average = default(double?), double? maximum = default(double?), double? minimum = default(double?), System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), double? total = default(double?), double? p10 = default(double?), double? p25 = default(double?), double? p50 = default(double?), double? p75 = default(double?), double? p90 = default(double?), double? p95 = default(double?), double? p99 = default(double?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfo PhysicalPartitionStorageInfo(string id = null, double? storageInKB = default(double?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfoCollection PhysicalPartitionStorageInfoCollection(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfo> physicalPartitionStorageInfoCollectionValue = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResult PhysicalPartitionThroughputInfoResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResource> resourcePhysicalPartitionThroughputInfo = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.ProvisioningIssue ProvisioningIssue(string name = null, Azure.ResourceManager.CosmosDB.Models.ProvisioningIssueProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.ProvisioningIssueProperties ProvisioningIssueProperties(Azure.ResourceManager.CosmosDB.Models.IssueType? issueType = default(Azure.ResourceManager.CosmosDB.Models.IssueType?), Azure.ResourceManager.CosmosDB.Models.Severity? severity = default(Azure.ResourceManager.CosmosDB.Models.Severity?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.AccessRule> suggestedAccessRules = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputParameters RedistributeThroughputParameters(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputPropertiesResource resource = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountData RestorableCosmosDBAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string accountName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? oldestRestorableOn = default(System.DateTimeOffset?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), Azure.ResourceManager.CosmosDB.Models.CosmosDBApiType? apiType = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBApiType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.RestorableLocationResourceInfo> restorableLocations = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.RestorableGremlinDatabase RestorableGremlinDatabase(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableGremlinDatabaseResourceInfo resource = null) { throw null; }
@@ -2518,7 +2570,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static Azure.ResourceManager.CosmosDB.Models.RestorableTableResourceData RestorableTableResourceData(string id = null, string name = null, string resourceType = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.RetrieveThroughputParameters RetrieveThroughputParameters(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> resourcePhysicalPartitionIds = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayRegionalService SqlDedicatedGatewayRegionalService(string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus? status = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus?), string sqlDedicatedGatewayEndpoint = null) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties SqlDedicatedGatewayServiceProperties(System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceSize? instanceSize = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceSize?), int? instanceCount = default(int?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus? status = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus?), System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null, string sqlDedicatedGatewayEndpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayRegionalService> locations = null) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties SqlDedicatedGatewayServiceProperties(System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceSize? instanceSize = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceSize?), int? instanceCount = default(int?), Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus? status = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus?), System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null, string sqlDedicatedGatewayEndpoint = null, Azure.ResourceManager.CosmosDB.Models.DedicatedGatewayType? dedicatedGatewayType = default(Azure.ResourceManager.CosmosDB.Models.DedicatedGatewayType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayRegionalService> locations = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.ThroughputSettingData ThroughputSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.ExtendedThroughputSettingsResourceInfo resource = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResourceInfo ThroughputSettingsResourceInfo(int? throughput = default(int?), Azure.ResourceManager.CosmosDB.Models.AutoscaleSettingsResourceInfo autoscaleSettings = null, string minimumThroughput = null, string offerReplacePending = null, string instantMaximumThroughput = null, string softAllowedMaximumThroughput = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsUpdateData ThroughputSettingsUpdateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResourceInfo resource = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
@@ -2534,6 +2586,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public int? ServerPort { get { throw null; } set { } }
         public string ServiceUserDistinguishedName { get { throw null; } set { } }
         public string ServiceUserPassword { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.AuthenticationMethodLdapProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.AuthenticationMethodLdapProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.AuthenticationMethodLdapProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.AuthenticationMethodLdapProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.AuthenticationMethodLdapProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2546,6 +2599,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.ThroughputPolicyResourceInfo AutoUpgradeThroughputPolicy { get { throw null; } set { } }
         public int MaxThroughput { get { throw null; } set { } }
         public int? TargetMaxThroughput { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.AutoscaleSettingsResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.AutoscaleSettingsResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.AutoscaleSettingsResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.AutoscaleSettingsResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.AutoscaleSettingsResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2557,6 +2611,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public AzureBlobDataTransferDataSourceSink(string containerName) { }
         public string ContainerName { get { throw null; } set { } }
         public System.Uri EndpointUri { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.AzureBlobDataTransferDataSourceSink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.AzureBlobDataTransferDataSourceSink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.AzureBlobDataTransferDataSourceSink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.AzureBlobDataTransferDataSourceSink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.AzureBlobDataTransferDataSourceSink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2569,6 +2624,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.BackupPolicyMigrationStatus? Status { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.BackupPolicyType? TargetType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.BackupPolicyMigrationState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.BackupPolicyMigrationState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.BackupPolicyMigrationState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.BackupPolicyMigrationState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.BackupPolicyMigrationState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2617,11 +2673,68 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public BaseCosmosDataTransferDataSourceSink() { }
         public string RemoteAccountName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.BaseCosmosDataTransferDataSourceSink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.BaseCosmosDataTransferDataSourceSink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.BaseCosmosDataTransferDataSourceSink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.BaseCosmosDataTransferDataSourceSink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.BaseCosmosDataTransferDataSourceSink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.BaseCosmosDataTransferDataSourceSink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.BaseCosmosDataTransferDataSourceSink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CapacityMode : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.CapacityMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CapacityMode(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.CapacityMode None { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CapacityMode Provisioned { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CapacityMode Serverless { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDB.Models.CapacityMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.CapacityMode left, Azure.ResourceManager.CosmosDB.Models.CapacityMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDB.Models.CapacityMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.CapacityMode left, Azure.ResourceManager.CosmosDB.Models.CapacityMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CapacityModeChangeTransitionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CapacityModeChangeTransitionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CapacityModeChangeTransitionState>
+    {
+        public CapacityModeChangeTransitionState() { }
+        public System.DateTimeOffset? CapacityModeLastSuccessfulTransitionEndTimestamp { get { throw null; } }
+        public System.DateTimeOffset? CapacityModeTransitionBeginTimestamp { get { throw null; } }
+        public System.DateTimeOffset? CapacityModeTransitionEndTimestamp { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus? CapacityModeTransitionStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.CapacityMode? CurrentCapacityMode { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.CapacityMode? PreviousCapacityMode { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.CapacityModeChangeTransitionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CapacityModeChangeTransitionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CapacityModeChangeTransitionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.CapacityModeChangeTransitionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CapacityModeChangeTransitionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CapacityModeChangeTransitionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CapacityModeChangeTransitionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CapacityModeTransitionStatus : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CapacityModeTransitionStatus(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus Completed { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus Initialized { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus left, Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus left, Azure.ResourceManager.CosmosDB.Models.CapacityModeTransitionStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CassandraAuthenticationMethod : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.CassandraAuthenticationMethod>
@@ -2665,6 +2778,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CassandraCertificate() { }
         public string Pem { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraCertificate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraCertificate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraCertificate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraCertificate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraCertificate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2679,6 +2793,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.DateTimeOffset? BackupStartTimestamp { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupState? BackupState { get { throw null; } }
         public System.DateTimeOffset? BackupStopTimestamp { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2691,6 +2806,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string CronExpression { get { throw null; } set { } }
         public int? RetentionInHours { get { throw null; } set { } }
         public string ScheduleName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterBackupSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2730,6 +2846,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Result { get { throw null; } }
         public bool? ShouldStopCassandraBeforeStart { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraClusterCommandStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterCommand System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterCommand>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterCommand>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterCommand System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterCommand>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2779,6 +2896,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Status { get { throw null; } }
         public string Timestamp { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Tokens { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterDataCenterNodeItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterDataCenterNodeItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterDataCenterNodeItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterDataCenterNodeItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterDataCenterNodeItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2790,6 +2908,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CassandraClusterKey() { }
         public string Name { get { throw null; } set { } }
         public string OrderBy { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2825,6 +2944,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string RestoreFromBackupId { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ScheduledEventStrategy? ScheduledEventStrategy { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterSeedNode> SeedNodes { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2839,6 +2959,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraError> Errors { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraReaperStatus ReaperStatus { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterPublicStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterPublicStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterPublicStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterPublicStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterPublicStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2851,6 +2972,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraClusterDataCenterNodeItem> Nodes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SeedNodes { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterPublicStatusDataCentersItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterPublicStatusDataCentersItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterPublicStatusDataCentersItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraClusterPublicStatusDataCentersItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraClusterPublicStatusDataCentersItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2880,6 +3002,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CassandraColumn() { }
         public string CassandraColumnType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraColumn System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraColumn>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraColumn>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraColumn System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraColumn>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2890,6 +3013,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal CassandraCommandOutput() { }
         public string CommandOutput { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraCommandOutput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraCommandOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraCommandOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraCommandOutput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraCommandOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2904,6 +3028,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? CassandraStopStart { get { throw null; } set { } }
         public string Command { get { throw null; } }
         public string Host { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraCommandPostBody System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraCommandPostBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraCommandPostBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraCommandPostBody System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraCommandPostBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2918,6 +3043,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string IPFrom { get { throw null; } }
         public string IPTo { get { throw null; } }
         public int? Port { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraConnectionError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraConnectionError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraConnectionError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraConnectionError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraConnectionError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2965,6 +3091,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CassandraProvisioningState? ProvisioningState { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterSeedNode> SeedNodes { get { throw null; } }
         public string Sku { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2975,6 +3102,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CassandraDataCenterSeedNode() { }
         public string IPAddress { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterSeedNode System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterSeedNode>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterSeedNode>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterSeedNode System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterSeedNode>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2988,6 +3116,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Code { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
         public string Target { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3000,6 +3129,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public string ResourceKeyspaceName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3009,6 +3139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraKeyspacePropertiesConfig : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraKeyspacePropertiesConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraKeyspacePropertiesConfig>
     {
         public CassandraKeyspacePropertiesConfig() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraKeyspacePropertiesConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraKeyspacePropertiesConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraKeyspacePropertiesConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraKeyspacePropertiesConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraKeyspacePropertiesConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3019,6 +3150,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CassandraKeyspaceResourceInfo(string keyspaceName) { }
         public string KeyspaceName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3050,6 +3182,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CassandraPartitionKey() { }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraPartitionKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraPartitionKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraPartitionKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraPartitionKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraPartitionKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3084,6 +3217,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? IsHealthy { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> RepairRunIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> RepairSchedules { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraReaperStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraReaperStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraReaperStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraReaperStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraReaperStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3096,6 +3230,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CassandraClusterKey> ClusterKeys { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CassandraColumn> Columns { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CassandraPartitionKey> PartitionKeys { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraSchema System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraSchema>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraSchema>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraSchema System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraSchema>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3108,6 +3243,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraTableResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraTableCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraTableCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraTableCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraTableCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraTableCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3117,6 +3253,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraTablePropertiesConfig : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraTablePropertiesConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraTablePropertiesConfig>
     {
         public CassandraTablePropertiesConfig() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraTablePropertiesConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraTablePropertiesConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraTablePropertiesConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraTablePropertiesConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraTablePropertiesConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3130,6 +3267,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public int? DefaultTtl { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraSchema Schema { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraTableResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraTableResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraTableResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraTableResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraTableResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3139,6 +3277,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraViewGetPropertiesOptions : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesOptions>
     {
         public CassandraViewGetPropertiesOptions() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3151,6 +3290,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewGetPropertiesResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3163,6 +3303,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraViewResource Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraViewGetResultCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewGetResultCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewGetResultCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraViewGetResultCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewGetResultCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3174,34 +3315,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CassandraViewResource(string id, string viewDefinition) { }
         public string Id { get { throw null; } set { } }
         public string ViewDefinition { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraViewResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CassandraViewResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CassandraViewResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CheckCosmosDBNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityContent>
-    {
-        public CheckCosmosDBNameAvailabilityContent() { }
-        public string Name { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
-        Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CheckCosmosDBNameAvailabilityResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityResponse>
-    {
-        internal CheckCosmosDBNameAvailabilityResponse() { }
-        public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
-        public Azure.ResourceManager.CosmosDB.Models.CosmosDBNameUnavailableReason? Reason { get { throw null; } }
-        Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CheckCosmosDBNameAvailabilityResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CompositePathSortOrder : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.CompositePathSortOrder>
@@ -3226,6 +3345,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public ComputedProperty() { }
         public string Name { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ComputedProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ComputedProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ComputedProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ComputedProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ComputedProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3256,6 +3376,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string ConflictResolutionPath { get { throw null; } set { } }
         public string ConflictResolutionProcedure { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ConflictResolutionMode? Mode { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ConflictResolutionPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ConflictResolutionPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ConflictResolutionPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ConflictResolutionPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ConflictResolutionPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3285,6 +3406,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.DefaultConsistencyLevel DefaultConsistencyLevel { get { throw null; } set { } }
         public int? MaxIntervalInSeconds { get { throw null; } set { } }
         public long? MaxStalenessPrefix { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3295,6 +3417,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public ContinuousBackupRestoreLocation() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ContinuousBackupRestoreLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ContinuousBackupRestoreLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ContinuousBackupRestoreLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ContinuousBackupRestoreLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ContinuousBackupRestoreLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3305,6 +3428,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public ContinuousModeBackupPolicy() { }
         public Azure.ResourceManager.CosmosDB.Models.ContinuousTier? ContinuousModeTier { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ContinuousModeBackupPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ContinuousModeBackupPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ContinuousModeBackupPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ContinuousModeBackupPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ContinuousModeBackupPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3334,6 +3458,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosCassandraDataTransferDataSourceSink(string keyspaceName, string tableName) { }
         public string KeyspaceName { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosCassandraDataTransferDataSourceSink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosCassandraDataTransferDataSourceSink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosCassandraDataTransferDataSourceSink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosCassandraDataTransferDataSourceSink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosCassandraDataTransferDataSourceSink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3344,6 +3469,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         protected CosmosDBAccountBackupPolicy() { }
         public Azure.ResourceManager.CosmosDB.Models.BackupPolicyMigrationState MigrationState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3354,6 +3480,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CosmosDBAccountCapability() { }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3367,6 +3494,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Description { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBKind? KeyKind { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBType? KeyType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountConnectionString System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountConnectionString>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountConnectionString>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountConnectionString System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountConnectionString>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3381,6 +3509,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string AllowedOrigins { get { throw null; } set { } }
         public string ExposedHeaders { get { throw null; } set { } }
         public long? MaxAgeInSeconds { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCorsPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCorsPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCorsPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCorsPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCorsPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3394,7 +3523,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private readonly int _dummyPrimitive;
         public CosmosDBAccountCreateMode(string value) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode Default { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode PointInTimeRestore { get { throw null; } }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode Restore { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -3413,6 +3541,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion? ApiServerVersion { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy BackupPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability> Capabilities { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.CapacityMode? CapacityMode { get { throw null; } set { } }
         public int? CapacityTotalThroughputLimit { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ConnectorOffer? ConnectorOffer { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy ConsistencyPolicy { get { throw null; } set { } }
@@ -3448,6 +3577,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRestoreParameters RestoreParameters { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3479,6 +3609,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal CosmosDBAccountKeyList() { }
         public string PrimaryMasterKey { get { throw null; } }
         public string SecondaryMasterKey { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKeyList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKeyList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKeyList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKeyList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKeyList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3513,6 +3644,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? IsZoneRedundant { get { throw null; } set { } }
         public Azure.Core.AzureLocation? LocationName { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3543,6 +3675,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion? ApiServerVersion { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountBackupPolicy BackupPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCapability> Capabilities { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.CapacityMode? CapacityMode { get { throw null; } set { } }
         public int? CapacityTotalThroughputLimit { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ConnectorOffer? ConnectorOffer { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy ConsistencyPolicy { get { throw null; } set { } }
@@ -3576,6 +3709,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3587,6 +3721,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal CosmosDBAccountReadOnlyKeyList() { }
         public string PrimaryReadonlyMasterKey { get { throw null; } }
         public string SecondaryReadonlyMasterKey { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountReadOnlyKeyList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountReadOnlyKeyList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountReadOnlyKeyList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountReadOnlyKeyList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountReadOnlyKeyList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3597,6 +3732,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CosmosDBAccountRegenerateKeyContent(Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKeyKind keyKind) { }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKeyKind KeyKind { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRegenerateKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRegenerateKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRegenerateKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRegenerateKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRegenerateKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3628,6 +3764,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRestoreMode? RestoreMode { get { throw null; } set { } }
         public string SourceBackupLocation { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TablesToRestore { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRestoreParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRestoreParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRestoreParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRestoreParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRestoreParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3660,6 +3797,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal CosmosDBBackupInformation() { }
         public System.DateTimeOffset? ContinuousBackupInformationLatestRestorableTimestamp { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBBackupInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBackupInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBackupInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBBackupInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBackupInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3690,6 +3828,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBBaseConfig() { }
         public int? AutoscaleMaxThroughput { get { throw null; } set { } }
         public int? Throughput { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3705,6 +3844,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string TimeGrain { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType? Unit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseMetric System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseMetric>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseMetric>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseMetric System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseMetric>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3719,11 +3859,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricName Name { get { throw null; } }
         public string QuotaPeriod { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType? Unit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum CosmosDBChaosFaultSupportedAction
+    {
+        Enable = 0,
+        Disable = 1,
     }
     public partial class CosmosDBClientEncryptionIncludedPath : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionIncludedPath>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionIncludedPath>
     {
@@ -3732,6 +3878,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string EncryptionAlgorithm { get { throw null; } set { } }
         public string EncryptionType { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionIncludedPath System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionIncludedPath>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionIncludedPath>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionIncludedPath System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionIncludedPath>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3743,6 +3890,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBClientEncryptionPolicy(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionIncludedPath> includedPaths, int policyFormatVersion) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionIncludedPath> IncludedPaths { get { throw null; } }
         public int PolicyFormatVersion { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3754,22 +3902,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBCompositePath() { }
         public Azure.ResourceManager.CosmosDB.Models.CompositePathSortOrder? Order { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBCompositePath System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBCompositePath>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBCompositePath>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBCompositePath System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBCompositePath>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBCompositePath>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBCompositePath>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CosmosDBConnectionString : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBConnectionString>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBConnectionString>
-    {
-        internal CosmosDBConnectionString() { }
-        public string ConnectionString { get { throw null; } }
-        public string Description { get { throw null; } }
-        Azure.ResourceManager.CosmosDB.Models.CosmosDBConnectionString System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBConnectionString>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBConnectionString>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDB.Models.CosmosDBConnectionString System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBConnectionString>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBConnectionString>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBConnectionString>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CosmosDBContainerPartitionKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBContainerPartitionKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBContainerPartitionKey>
     {
@@ -3778,6 +3916,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBPartitionKind? Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Paths { get { throw null; } }
         public int? Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBContainerPartitionKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBContainerPartitionKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBContainerPartitionKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBContainerPartitionKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBContainerPartitionKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3789,6 +3928,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBCreateUpdateConfig() { }
         public int? AutoscaleMaxThroughput { get { throw null; } set { } }
         public int? Throughput { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3817,10 +3957,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.CosmosDBDataType left, Azure.ResourceManager.CosmosDB.Models.CosmosDBDataType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class CosmosDBErrorResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult>
+    {
+        internal CosmosDBErrorResult() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CosmosDBExcludedPath : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBExcludedPath>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBExcludedPath>
     {
         public CosmosDBExcludedPath() { }
         public string Path { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBExcludedPath System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBExcludedPath>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBExcludedPath>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBExcludedPath System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBExcludedPath>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3831,6 +3984,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CosmosDBFailoverPolicies(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy> failoverPolicies) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy> FailoverPolicies { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicies System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicies>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicies>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicies System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicies>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3843,6 +3997,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public int? FailoverPriority { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public Azure.Core.AzureLocation? LocationName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3854,6 +4009,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBIncludedPath() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBPathIndexes> Indexes { get { throw null; } }
         public string Path { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBIncludedPath System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBIncludedPath>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBIncludedPath>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBIncludedPath System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBIncludedPath>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3888,6 +4044,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBIndexingMode? IndexingMode { get { throw null; } set { } }
         public bool? IsAutomatic { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.SpatialSpec> SpatialIndexes { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBIndexingPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBIndexingPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBIndexingPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBIndexingPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBIndexingPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3917,6 +4074,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CosmosDBIPAddressOrRange() { }
         public string IPAddressOrRange { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3930,6 +4088,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string CosmosDBKeyWrapMetadataType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBKeyWrapMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBKeyWrapMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBKeyWrapMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBKeyWrapMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBKeyWrapMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3965,6 +4124,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? IsSubscriptionRegionAccessAllowedForAz { get { throw null; } }
         public bool? IsSubscriptionRegionAccessAllowedForRegular { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBLocationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBLocationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBLocationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBLocationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBLocationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3976,6 +4136,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal CosmosDBMetricAvailability() { }
         public string Retention { get { throw null; } }
         public string TimeGrain { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricAvailability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricAvailability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricAvailability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricAvailability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricAvailability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3990,6 +4151,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricPrimaryAggregationType? PrimaryAggregationType { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType? Unit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4001,6 +4163,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal CosmosDBMetricName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4061,6 +4224,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public double? Minimum { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public double? Total { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricValue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricValue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4084,24 +4248,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion left, Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion left, Azure.ResourceManager.CosmosDB.Models.CosmosDBMinimalTlsVersion right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CosmosDBNameUnavailableReason : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.CosmosDBNameUnavailableReason>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CosmosDBNameUnavailableReason(string value) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBNameUnavailableReason AlreadyExists { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBNameUnavailableReason Invalid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CosmosDB.Models.CosmosDBNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.CosmosDBNameUnavailableReason left, Azure.ResourceManager.CosmosDB.Models.CosmosDBNameUnavailableReason right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CosmosDB.Models.CosmosDBNameUnavailableReason (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.CosmosDBNameUnavailableReason left, Azure.ResourceManager.CosmosDB.Models.CosmosDBNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -4150,6 +4296,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBDataType? DataType { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBIndexKind? Kind { get { throw null; } set { } }
         public int? Precision { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBPathIndexes System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBPathIndexes>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBPathIndexes>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBPathIndexes System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBPathIndexes>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4165,6 +4312,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string TimeGrain { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType? Unit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBPercentileMetric System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBPercentileMetric>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBPercentileMetric>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBPercentileMetric System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBPercentileMetric>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4177,33 +4325,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string ActionsRequired { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBPrivateLinkServiceConnectionStateProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBPrivateLinkServiceConnectionStateProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBPrivateLinkServiceConnectionStateProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBPrivateLinkServiceConnectionStateProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBPrivateLinkServiceConnectionStateProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBPrivateLinkServiceConnectionStateProperty>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBPrivateLinkServiceConnectionStateProperty>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CosmosDBProvisioningState : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CosmosDBProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState Dropping { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState InProgress { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState left, Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState left, Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CosmosDBPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.CosmosDBPublicNetworkAccess>
@@ -4230,6 +4357,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBRegionalService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBRegionalService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBRegionalService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBRegionalService System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBRegionalService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4242,6 +4370,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CosmosDBServerVersion(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion Five0 { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion Seven0 { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion Six0 { get { throw null; } }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion V3_2 { get { throw null; } }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion V3_6 { get { throw null; } }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion V4_0 { get { throw null; } }
@@ -4261,7 +4392,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBServiceCreateOrUpdateContent() { }
         public int? InstanceCount { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceSize? InstanceSize { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceType? ServiceType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4276,6 +4409,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public int? InstanceCount { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceSize? InstanceSize { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4367,6 +4501,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyResourceInfo resource) { }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyResourceInfo Resource { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4379,6 +4514,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4392,6 +4528,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Id { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBKeyWrapMetadata KeyWrapMetadata { get { throw null; } set { } }
         public byte[] WrappedDataEncryptionKey { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlClientEncryptionKeyResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4404,6 +4541,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4413,6 +4551,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBSqlContainerPropertiesConfig : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerPropertiesConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerPropertiesConfig>
     {
         public CosmosDBSqlContainerPropertiesConfig() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerPropertiesConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerPropertiesConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerPropertiesConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerPropertiesConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerPropertiesConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4434,6 +4573,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBContainerPartitionKey PartitionKey { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters RestoreParameters { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBUniqueKey> UniqueKeys { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4447,6 +4587,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseResourceInfo Resource { get { throw null; } set { } }
         public string ResourceDatabaseName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4456,6 +4597,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBSqlDatabasePropertiesConfig : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabasePropertiesConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabasePropertiesConfig>
     {
         public CosmosDBSqlDatabasePropertiesConfig() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabasePropertiesConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabasePropertiesConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabasePropertiesConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabasePropertiesConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabasePropertiesConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4468,6 +4610,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode? CreateMode { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters RestoreParameters { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4480,6 +4623,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.Guid? PrincipalId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRoleAssignmentCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRoleAssignmentCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRoleAssignmentCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRoleAssignmentCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRoleAssignmentCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4493,6 +4637,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRolePermission> Permissions { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRoleDefinitionType? RoleDefinitionType { get { throw null; } set { } }
         public string RoleName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRoleDefinitionCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRoleDefinitionCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRoleDefinitionCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRoleDefinitionCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRoleDefinitionCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4509,6 +4654,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBSqlRolePermission() { }
         public System.Collections.Generic.IList<string> DataActions { get { throw null; } }
         public System.Collections.Generic.IList<string> NotDataActions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRolePermission System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRolePermission>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRolePermission>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRolePermission System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlRolePermission>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4521,6 +4667,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlStoredProcedureResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlStoredProcedureCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlStoredProcedureCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlStoredProcedureCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlStoredProcedureCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlStoredProcedureCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4532,6 +4679,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName) { }
         public string Body { get { throw null; } set { } }
         public string StoredProcedureName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlStoredProcedureResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlStoredProcedureResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlStoredProcedureResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlStoredProcedureResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlStoredProcedureResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4544,6 +4692,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4578,6 +4727,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string TriggerName { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerOperation? TriggerOperation { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerType? TriggerType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4608,6 +4758,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4619,6 +4770,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBSqlUserDefinedFunctionResourceInfo(string functionName) { }
         public string Body { get { throw null; } set { } }
         public string FunctionName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4657,6 +4809,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBTableResourceInfo Resource { get { throw null; } set { } }
         public string ResourceTableName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBTableCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTableCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTableCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBTableCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTableCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4666,6 +4819,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBTablePropertiesOptions : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesOptions>
     {
         public CosmosDBTablePropertiesOptions() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4678,6 +4832,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4690,6 +4845,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode? CreateMode { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters RestoreParameters { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBTableResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTableResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTableResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBTableResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBTableResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4701,6 +4857,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBThroughputPoolPatch() { }
         public int? MaxThroughput { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBStatus? ProvisioningState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBThroughputPoolPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBThroughputPoolPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBThroughputPoolPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBThroughputPoolPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBThroughputPoolPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4736,6 +4893,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CosmosDBUniqueKey() { }
         public System.Collections.Generic.IList<string> Paths { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBUniqueKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBUniqueKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBUniqueKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBUniqueKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBUniqueKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4747,6 +4905,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBVirtualNetworkRule() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBVirtualNetworkRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4758,17 +4917,33 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosMongoDataTransferDataSourceSink(string databaseName, string collectionName) { }
         public string CollectionName { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class CosmosMongoVCoreDataTransferDataSourceSink : Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink>
+    {
+        public CosmosMongoVCoreDataTransferDataSourceSink(string databaseName, string collectionName) { }
+        public string CollectionName { get { throw null; } set { } }
+        public System.Uri ConnectionStringKeyVaultUri { get { throw null; } set { } }
+        public string DatabaseName { get { throw null; } set { } }
+        public string HostName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CosmosSqlDataTransferDataSourceSink : Azure.ResourceManager.CosmosDB.Models.BaseCosmosDataTransferDataSourceSink, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink>
     {
         public CosmosSqlDataTransferDataSourceSink(string databaseName, string containerName) { }
         public string ContainerName { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4782,6 +4957,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.DateTimeOffset? PrimaryReadonlyMasterKeyGeneratedOn { get { throw null; } }
         public System.DateTimeOffset? SecondaryMasterKeyGeneratedOn { get { throw null; } }
         public System.DateTimeOffset? SecondaryReadonlyMasterKeyGeneratedOn { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DatabaseAccountKeysMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DatabaseAccountKeysMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DatabaseAccountKeysMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DatabaseAccountKeysMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DatabaseAccountKeysMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4793,6 +4969,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public DatabaseRestoreResourceInfo() { }
         public System.Collections.Generic.IList<string> CollectionNames { get { throw null; } }
         public string DatabaseName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4802,6 +4979,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public abstract partial class DataTransferDataSourceSink : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink>
     {
         protected DataTransferDataSourceSink() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4812,6 +4990,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public DataTransferJobGetResultCreateOrUpdateContent(Azure.ResourceManager.CosmosDB.Models.DataTransferJobProperties properties) { }
         public Azure.ResourceManager.CosmosDB.Models.DataTransferJobProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DataTransferJobGetResultCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferJobGetResultCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferJobGetResultCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DataTransferJobGetResultCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DataTransferJobGetResultCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4841,7 +5020,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public DataTransferJobProperties(Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink source, Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink destination) { }
         public Azure.ResourceManager.CosmosDB.Models.DataTransferDataSourceSink Destination { get { throw null; } set { } }
         public System.TimeSpan? Duration { get { throw null; } }
-        public Azure.ResourceManager.CosmosDB.Models.ErrorResponse Error { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult Error { get { throw null; } }
         public string JobName { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedUtcOn { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.DataTransferJobMode? Mode { get { throw null; } set { } }
@@ -4850,6 +5029,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Status { get { throw null; } }
         public long? TotalCount { get { throw null; } }
         public int? WorkerCount { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DataTransferJobProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferJobProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferJobProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DataTransferJobProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DataTransferJobProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4859,6 +5039,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class DataTransferRegionalService : Azure.ResourceManager.CosmosDB.Models.CosmosDBRegionalService, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferRegionalService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DataTransferRegionalService>
     {
         internal DataTransferRegionalService() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DataTransferRegionalService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferRegionalService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferRegionalService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DataTransferRegionalService System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DataTransferRegionalService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4869,11 +5050,40 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public DataTransferServiceProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.DataTransferRegionalService> Locations { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DataTransferServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.DataTransferServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DataTransferServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DataTransferServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DataTransferServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DataTransferServiceResourceCreateUpdateProperties : Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferServiceResourceCreateUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DataTransferServiceResourceCreateUpdateProperties>
+    {
+        public DataTransferServiceResourceCreateUpdateProperties() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.DataTransferServiceResourceCreateUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferServiceResourceCreateUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.DataTransferServiceResourceCreateUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.DataTransferServiceResourceCreateUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DataTransferServiceResourceCreateUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DataTransferServiceResourceCreateUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.DataTransferServiceResourceCreateUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DedicatedGatewayType : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.DedicatedGatewayType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DedicatedGatewayType(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.DedicatedGatewayType DistributedQuery { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.DedicatedGatewayType IntegratedCache { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDB.Models.DedicatedGatewayType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.DedicatedGatewayType left, Azure.ResourceManager.CosmosDB.Models.DedicatedGatewayType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDB.Models.DedicatedGatewayType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.DedicatedGatewayType left, Azure.ResourceManager.CosmosDB.Models.DedicatedGatewayType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum DefaultConsistencyLevel
     {
@@ -4907,23 +5117,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         True = 1,
         False = 2,
     }
-    public partial class ErrorResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ErrorResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ErrorResponse>
-    {
-        internal ErrorResponse() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-        Azure.ResourceManager.CosmosDB.Models.ErrorResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ErrorResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ErrorResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDB.Models.ErrorResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ErrorResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ErrorResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ErrorResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ExtendedCassandraKeyspaceResourceInfo : Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceResourceInfo, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraKeyspaceResourceInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraKeyspaceResourceInfo>
     {
         public ExtendedCassandraKeyspaceResourceInfo(string keyspaceName) : base (default(string)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraKeyspaceResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraKeyspaceResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraKeyspaceResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraKeyspaceResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraKeyspaceResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4936,6 +5136,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraTableResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraTableResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraTableResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraTableResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCassandraTableResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4948,6 +5149,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlContainerResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlContainerResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlContainerResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlContainerResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlContainerResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4962,6 +5164,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
         public string Users { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlDatabaseResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlDatabaseResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlDatabaseResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlDatabaseResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlDatabaseResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4974,6 +5177,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlStoredProcedureResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlStoredProcedureResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlStoredProcedureResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlStoredProcedureResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlStoredProcedureResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4986,6 +5190,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlTriggerResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlTriggerResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlTriggerResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlTriggerResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlTriggerResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4998,6 +5203,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5010,6 +5216,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinDatabaseResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinDatabaseResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinDatabaseResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinDatabaseResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinDatabaseResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5022,6 +5229,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinGraphResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinGraphResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinGraphResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinGraphResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedGremlinGraphResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5034,6 +5242,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBCollectionResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBCollectionResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBCollectionResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBCollectionResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBCollectionResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5046,6 +5255,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBDatabaseResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBDatabaseResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBDatabaseResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBDatabaseResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedMongoDBDatabaseResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5062,6 +5272,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string EventTimestamp { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBOperationType? OperationType { get { throw null; } }
         public string Rid { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableGremlinDatabaseResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableGremlinDatabaseResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableGremlinDatabaseResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableGremlinDatabaseResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableGremlinDatabaseResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5078,6 +5289,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string GraphName { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBOperationType? OperationType { get { throw null; } }
         public string Rid { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableGremlinGraphResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableGremlinGraphResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableGremlinGraphResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableGremlinGraphResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableGremlinGraphResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5094,6 +5306,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string EventTimestamp { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBOperationType? OperationType { get { throw null; } }
         public string Rid { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableMongoDBCollectionResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableMongoDBCollectionResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableMongoDBCollectionResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableMongoDBCollectionResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableMongoDBCollectionResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5110,6 +5323,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string EventTimestamp { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBOperationType? OperationType { get { throw null; } }
         public string Rid { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableMongoDBDatabaseResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableMongoDBDatabaseResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableMongoDBDatabaseResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableMongoDBDatabaseResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableMongoDBDatabaseResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5127,6 +5341,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string EventTimestamp { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBOperationType? OperationType { get { throw null; } }
         public string Rid { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableSqlContainerResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableSqlContainerResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableSqlContainerResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableSqlContainerResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableSqlContainerResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5144,6 +5359,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string EventTimestamp { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBOperationType? OperationType { get { throw null; } }
         public string Rid { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableSqlDatabaseResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableSqlDatabaseResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableSqlDatabaseResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableSqlDatabaseResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableSqlDatabaseResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5160,6 +5376,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Rid { get { throw null; } }
         public string TableId { get { throw null; } }
         public string TableName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableTableResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableTableResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableTableResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableTableResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableTableResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5172,6 +5389,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedThroughputSettingsResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedThroughputSettingsResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ExtendedThroughputSettingsResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ExtendedThroughputSettingsResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ExtendedThroughputSettingsResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5182,6 +5400,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal GraphApiComputeRegionalService() { }
         public string GraphApiComputeEndpoint { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GraphApiComputeRegionalService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeRegionalService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeRegionalService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GraphApiComputeRegionalService System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeRegionalService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5193,15 +5412,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public GraphApiComputeServiceProperties() { }
         public string GraphApiComputeEndpoint { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeRegionalService> Locations { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class GraphApiComputeServiceResourceCreateUpdateProperties : Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceResourceCreateUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceResourceCreateUpdateProperties>
+    {
+        public GraphApiComputeServiceResourceCreateUpdateProperties() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceResourceCreateUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceResourceCreateUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceResourceCreateUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceResourceCreateUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceResourceCreateUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceResourceCreateUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceResourceCreateUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class GraphResourceGetPropertiesOptions : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GraphResourceGetPropertiesOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GraphResourceGetPropertiesOptions>
     {
         public GraphResourceGetPropertiesOptions() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GraphResourceGetPropertiesOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GraphResourceGetPropertiesOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GraphResourceGetPropertiesOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GraphResourceGetPropertiesOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GraphResourceGetPropertiesOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5214,6 +5445,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GraphResourceGetResultCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GraphResourceGetResultCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GraphResourceGetResultCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GraphResourceGetResultCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GraphResourceGetResultCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5227,6 +5459,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseResourceInfo Resource { get { throw null; } set { } }
         public string ResourceDatabaseName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5236,6 +5469,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class GremlinDatabasePropertiesConfig : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabasePropertiesConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabasePropertiesConfig>
     {
         public GremlinDatabasePropertiesConfig() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinDatabasePropertiesConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabasePropertiesConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabasePropertiesConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinDatabasePropertiesConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabasePropertiesConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5248,6 +5482,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode? CreateMode { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters RestoreParameters { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5259,6 +5494,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public GremlinDatabaseRestoreResourceInfo() { }
         public string DatabaseName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> GraphNames { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseRestoreResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseRestoreResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseRestoreResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseRestoreResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseRestoreResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5271,6 +5507,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.GremlinGraphResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinGraphCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinGraphCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinGraphCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinGraphCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GremlinGraphCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5280,6 +5517,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class GremlinGraphPropertiesConfig : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinGraphPropertiesConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GremlinGraphPropertiesConfig>
     {
         public GremlinGraphPropertiesConfig() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinGraphPropertiesConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinGraphPropertiesConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinGraphPropertiesConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinGraphPropertiesConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GremlinGraphPropertiesConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5298,21 +5536,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBContainerPartitionKey PartitionKey { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters RestoreParameters { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBUniqueKey> UniqueKeys { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinGraphResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinGraphResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.GremlinGraphResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.GremlinGraphResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GremlinGraphResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GremlinGraphResourceInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.GremlinGraphResourceInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ListConnectionStringsResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ListConnectionStringsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ListConnectionStringsResult>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IssueType : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.IssueType>
     {
-        internal ListConnectionStringsResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CosmosDBConnectionString> ConnectionStrings { get { throw null; } }
-        Azure.ResourceManager.CosmosDB.Models.ListConnectionStringsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ListConnectionStringsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ListConnectionStringsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDB.Models.ListConnectionStringsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ListConnectionStringsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ListConnectionStringsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ListConnectionStringsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IssueType(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.IssueType ConfigurationPropagationFailure { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.IssueType MissingIdentityConfiguration { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.IssueType MissingPerimeterConfiguration { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.IssueType Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDB.Models.IssueType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.IssueType left, Azure.ResourceManager.CosmosDB.Models.IssueType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDB.Models.IssueType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.IssueType left, Azure.ResourceManager.CosmosDB.Models.IssueType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MaterializedViewDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewDefinition>
     {
@@ -5320,6 +5569,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Definition { get { throw null; } set { } }
         public string SourceCollectionId { get { throw null; } set { } }
         public string SourceCollectionRid { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MaterializedViewDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MaterializedViewDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5329,6 +5579,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class MaterializedViewsBuilderRegionalService : Azure.ResourceManager.CosmosDB.Models.CosmosDBRegionalService, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderRegionalService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderRegionalService>
     {
         internal MaterializedViewsBuilderRegionalService() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderRegionalService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderRegionalService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderRegionalService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderRegionalService System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderRegionalService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5339,75 +5590,33 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public MaterializedViewsBuilderServiceProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderRegionalService> Locations { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MaterializedViewsBuilderServiceResourceCreateUpdateProperties : Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties>
+    {
+        public MaterializedViewsBuilderServiceResourceCreateUpdateProperties() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MergeParameters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MergeParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MergeParameters>
     {
         public MergeParameters() { }
         public bool? IsDryRun { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MergeParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MergeParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MergeParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MergeParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MergeParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MergeParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MergeParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MongoClusterPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterPatch>
-    {
-        public MongoClusterPatch() { }
-        public string AdministratorLogin { get { throw null; } set { } }
-        public string AdministratorLoginPassword { get { throw null; } set { } }
-        public Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus? ClusterStatus { get { throw null; } }
-        public string ConnectionString { get { throw null; } }
-        public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode? CreateMode { get { throw null; } set { } }
-        public string EarliestRestoreTime { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.NodeGroupSpec> NodeGroupSpecs { get { throw null; } }
-        public Azure.ResourceManager.CosmosDB.Models.CosmosDBProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.CosmosDB.Models.MongoClusterRestoreParameters RestoreParameters { get { throw null; } set { } }
-        public string ServerVersion { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        Azure.ResourceManager.CosmosDB.Models.MongoClusterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDB.Models.MongoClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MongoClusterRestoreParameters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterRestoreParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterRestoreParameters>
-    {
-        public MongoClusterRestoreParameters() { }
-        public System.DateTimeOffset? PointInTimeUTC { get { throw null; } set { } }
-        public string SourceResourceId { get { throw null; } set { } }
-        Azure.ResourceManager.CosmosDB.Models.MongoClusterRestoreParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterRestoreParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterRestoreParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDB.Models.MongoClusterRestoreParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterRestoreParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterRestoreParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoClusterRestoreParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MongoClusterStatus : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MongoClusterStatus(string value) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus Dropping { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus Ready { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus Starting { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus Stopped { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus Stopping { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus left, Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus left, Azure.ResourceManager.CosmosDB.Models.MongoClusterStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class MongoDBCollectionCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionCreateOrUpdateContent>
     {
@@ -5415,6 +5624,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5424,6 +5634,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class MongoDBCollectionPropertiesConfig : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionPropertiesConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionPropertiesConfig>
     {
         public MongoDBCollectionPropertiesConfig() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionPropertiesConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionPropertiesConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionPropertiesConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionPropertiesConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionPropertiesConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5439,6 +5650,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.MongoDBIndex> Indexes { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters RestoreParameters { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> ShardKey { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5452,6 +5664,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseResourceInfo Resource { get { throw null; } set { } }
         public string ResourceDatabaseName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5461,6 +5674,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class MongoDBDatabasePropertiesConfig : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBDatabasePropertiesConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBDatabasePropertiesConfig>
     {
         public MongoDBDatabasePropertiesConfig() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBDatabasePropertiesConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBDatabasePropertiesConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBDatabasePropertiesConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBDatabasePropertiesConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBDatabasePropertiesConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5473,6 +5687,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountCreateMode? CreateMode { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters RestoreParameters { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5484,6 +5699,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public MongoDBIndex() { }
         public System.Collections.Generic.IList<string> Keys { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.MongoDBIndexConfig Options { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBIndex System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBIndex>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBIndex>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBIndex System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBIndex>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5495,6 +5711,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public MongoDBIndexConfig() { }
         public int? ExpireAfterSeconds { get { throw null; } set { } }
         public bool? IsUnique { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBIndexConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBIndexConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBIndexConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBIndexConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBIndexConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5506,6 +5723,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public MongoDBPrivilege() { }
         public System.Collections.Generic.IList<string> Actions { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilegeResourceInfo Resource { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilege System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilege>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilege>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilege System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilege>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5517,6 +5735,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public MongoDBPrivilegeResourceInfo() { }
         public string Collection { get { throw null; } set { } }
         public string DBName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilegeResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilegeResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilegeResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilegeResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilegeResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5528,6 +5747,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public MongoDBRole() { }
         public string DBName { get { throw null; } set { } }
         public string Role { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5542,6 +5762,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilege> Privileges { get { throw null; } }
         public string RoleName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.MongoDBRole> Roles { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBRoleDefinitionCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBRoleDefinitionCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBRoleDefinitionCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBRoleDefinitionCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBRoleDefinitionCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5562,6 +5783,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Password { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.MongoDBRole> Roles { get { throw null; } }
         public string UserName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBUserDefinitionCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBUserDefinitionCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.MongoDBUserDefinitionCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.MongoDBUserDefinitionCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.MongoDBUserDefinitionCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5573,51 +5795,78 @@ namespace Azure.ResourceManager.CosmosDB.Models
         None = 0,
         AzureServices = 1,
     }
-    public partial class NodeGroupProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupProperties>
+    public partial class NetworkSecurityPerimeter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeter>
     {
-        public NodeGroupProperties() { }
-        public long? DiskSizeInGB { get { throw null; } set { } }
-        public bool? EnableHa { get { throw null; } set { } }
-        public string Sku { get { throw null; } set { } }
-        Azure.ResourceManager.CosmosDB.Models.NodeGroupProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDB.Models.NodeGroupProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public NetworkSecurityPerimeter() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public System.Guid? PerimeterGuid { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NodeGroupSpec : Azure.ResourceManager.CosmosDB.Models.NodeGroupProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupSpec>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupSpec>
+    public partial class NetworkSecurityPerimeterConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProperties>
     {
-        public NodeGroupSpec() { }
-        public Azure.ResourceManager.CosmosDB.Models.NodeKind? Kind { get { throw null; } set { } }
-        public int? NodeCount { get { throw null; } set { } }
-        Azure.ResourceManager.CosmosDB.Models.NodeGroupSpec System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupSpec>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupSpec>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDB.Models.NodeGroupSpec System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupSpec>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupSpec>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NodeGroupSpec>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public NetworkSecurityPerimeterConfigurationProperties() { }
+        public Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.NetworkSecurityProfile Profile { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssue> ProvisioningIssues { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.ResourceAssociation ResourceAssociation { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NodeKind : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.NodeKind>
+    public readonly partial struct NetworkSecurityPerimeterConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public NodeKind(string value) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.NodeKind Shard { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CosmosDB.Models.NodeKind other) { throw null; }
+        public NetworkSecurityPerimeterConfigurationProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.NodeKind left, Azure.ResourceManager.CosmosDB.Models.NodeKind right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CosmosDB.Models.NodeKind (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.NodeKind left, Azure.ResourceManager.CosmosDB.Models.NodeKind right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.CosmosDB.Models.NetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class NetworkSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityProfile>
+    {
+        public NetworkSecurityProfile() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.AccessRule> AccessRules { get { throw null; } }
+        public int? AccessRulesVersion { get { throw null; } set { } }
+        public int? DiagnosticSettingsVersion { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> EnabledLogCategories { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.NetworkSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.NetworkSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.NetworkSecurityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PartitionMetric : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseMetric, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PartitionMetric>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.PartitionMetric>
     {
         internal PartitionMetric() { }
         public System.Guid? PartitionId { get { throw null; } }
         public string PartitionKeyRangeId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PartitionMetric System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PartitionMetric>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PartitionMetric>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PartitionMetric System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.PartitionMetric>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5629,6 +5878,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal PartitionUsage() { }
         public System.Guid? PartitionId { get { throw null; } }
         public string PartitionKeyRangeId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PartitionUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PartitionUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PartitionUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PartitionUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.PartitionUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5645,6 +5895,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public double? P90 { get { throw null; } }
         public double? P95 { get { throw null; } }
         public double? P99 { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PercentileMetricValue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PercentileMetricValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PercentileMetricValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PercentileMetricValue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.PercentileMetricValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5655,6 +5906,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public PeriodicModeBackupPolicy() { }
         public Azure.ResourceManager.CosmosDB.Models.PeriodicModeProperties PeriodicModeProperties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PeriodicModeBackupPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PeriodicModeBackupPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PeriodicModeBackupPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PeriodicModeBackupPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.PeriodicModeBackupPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5667,6 +5919,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public int? BackupIntervalInMinutes { get { throw null; } set { } }
         public int? BackupRetentionIntervalInHours { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBBackupStorageRedundancy? BackupStorageRedundancy { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PeriodicModeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PeriodicModeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PeriodicModeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PeriodicModeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.PeriodicModeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5678,6 +5931,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal PhysicalPartitionStorageInfo() { }
         public string Id { get { throw null; } }
         public double? StorageInKB { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5688,6 +5942,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal PhysicalPartitionStorageInfoCollection() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfo> PhysicalPartitionStorageInfoCollectionValue { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfoCollection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfoCollection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfoCollection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfoCollection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionStorageInfoCollection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5699,6 +5954,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public PhysicalPartitionThroughputInfoResource(string id) { }
         public string Id { get { throw null; } set { } }
         public double? Throughput { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5710,17 +5966,46 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public PhysicalPartitionThroughputInfoResult(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResource> ResourcePhysicalPartitionThroughputInfo { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ProvisioningIssue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssue>
+    {
+        internal ProvisioningIssue() { }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.ProvisioningIssueProperties Properties { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.ProvisioningIssue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.ProvisioningIssue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProvisioningIssueProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssueProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssueProperties>
+    {
+        internal ProvisioningIssueProperties() { }
+        public string Description { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.IssueType? IssueType { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.Severity? Severity { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.AccessRule> SuggestedAccessRules { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> SuggestedResourceIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.ProvisioningIssueProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssueProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssueProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.ProvisioningIssueProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssueProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssueProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ProvisioningIssueProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class RedistributeThroughputParameters : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputParameters>
     {
         public RedistributeThroughputParameters(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputPropertiesResource resource) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputPropertiesResource Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5733,6 +6018,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResource> SourcePhysicalPartitionThroughputInfo { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.PhysicalPartitionThroughputInfoResource> TargetPhysicalPartitionThroughputInfo { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.ThroughputPolicyType ThroughputPolicy { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputPropertiesResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputPropertiesResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputPropertiesResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputPropertiesResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RedistributeThroughputPropertiesResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5743,15 +6029,48 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public RegionForOnlineOffline(string region) { }
         public string Region { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RegionForOnlineOffline System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RegionForOnlineOffline>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RegionForOnlineOffline>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RegionForOnlineOffline System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RegionForOnlineOffline>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RegionForOnlineOffline>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RegionForOnlineOffline>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ResourceAssociation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ResourceAssociation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ResourceAssociation>
+    {
+        public ResourceAssociation() { }
+        public Azure.ResourceManager.CosmosDB.Models.ResourceAssociationAccessMode? AccessMode { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.ResourceAssociation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ResourceAssociation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ResourceAssociation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.ResourceAssociation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ResourceAssociation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ResourceAssociation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ResourceAssociation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceAssociationAccessMode : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.ResourceAssociationAccessMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceAssociationAccessMode(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.ResourceAssociationAccessMode Audit { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.ResourceAssociationAccessMode Enforced { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.ResourceAssociationAccessMode Learning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDB.Models.ResourceAssociationAccessMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.ResourceAssociationAccessMode left, Azure.ResourceManager.CosmosDB.Models.ResourceAssociationAccessMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDB.Models.ResourceAssociationAccessMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.ResourceAssociationAccessMode left, Azure.ResourceManager.CosmosDB.Models.ResourceAssociationAccessMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ResourceRestoreParameters : Azure.ResourceManager.CosmosDB.Models.RestoreParametersBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters>
     {
         public ResourceRestoreParameters() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ResourceRestoreParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5762,6 +6081,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal RestorableGremlinDatabase() { }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableGremlinDatabaseResourceInfo Resource { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableGremlinDatabase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableGremlinDatabase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableGremlinDatabase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableGremlinDatabase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableGremlinDatabase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5772,6 +6092,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal RestorableGremlinGraph() { }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableGremlinGraphResourceInfo Resource { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableGremlinGraph System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableGremlinGraph>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableGremlinGraph>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableGremlinGraph System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableGremlinGraph>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5783,6 +6104,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal RestorableGremlinResourceData() { }
         public string DatabaseName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> GraphNames { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableGremlinResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableGremlinResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableGremlinResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableGremlinResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableGremlinResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5796,6 +6118,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public Azure.Core.AzureLocation? LocationName { get { throw null; } }
         public string RegionalDatabaseAccountInstanceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableLocationResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableLocationResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableLocationResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableLocationResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableLocationResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5806,6 +6129,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal RestorableMongoDBCollection() { }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableMongoDBCollectionResourceInfo Resource { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBCollection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBCollection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBCollection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBCollection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBCollection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5816,6 +6140,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal RestorableMongoDBDatabase() { }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableMongoDBDatabaseResourceInfo Resource { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBDatabase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBDatabase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBDatabase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBDatabase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBDatabase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5827,6 +6152,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal RestorableMongoDBResourceData() { }
         public System.Collections.Generic.IReadOnlyList<string> CollectionNames { get { throw null; } }
         public string DatabaseName { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5837,6 +6163,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal RestorableSqlContainer() { }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableSqlContainerResourceInfo Resource { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5850,6 +6177,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Rid { get { throw null; } }
         public string Self { get { throw null; } }
         public float? Timestamp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainerPropertiesResourceContainer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainerPropertiesResourceContainer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainerPropertiesResourceContainer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainerPropertiesResourceContainer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainerPropertiesResourceContainer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5860,6 +6188,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal RestorableSqlDatabase() { }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableSqlDatabaseResourceInfo Resource { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5875,6 +6204,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Self { get { throw null; } }
         public float? Timestamp { get { throw null; } }
         public string Users { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabasePropertiesResourceDatabase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabasePropertiesResourceDatabase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabasePropertiesResourceDatabase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabasePropertiesResourceDatabase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabasePropertiesResourceDatabase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5886,6 +6216,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal RestorableSqlResourceData() { }
         public System.Collections.Generic.IReadOnlyList<string> CollectionNames { get { throw null; } }
         public string DatabaseName { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableSqlResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableSqlResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableSqlResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5896,6 +6227,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal RestorableTable() { }
         public Azure.ResourceManager.CosmosDB.Models.ExtendedRestorableTableResourceInfo Resource { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableTable System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableTable>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableTable>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableTable System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableTable>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5908,6 +6240,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableTableResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableTableResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestorableTableResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestorableTableResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestorableTableResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5920,6 +6253,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? IsRestoreWithTtlDisabled { get { throw null; } set { } }
         public string RestoreSource { get { throw null; } set { } }
         public System.DateTimeOffset? RestoreTimestampInUtc { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestoreParametersBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestoreParametersBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RestoreParametersBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RestoreParametersBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RestoreParametersBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5931,6 +6265,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public RetrieveThroughputParameters(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.RetrieveThroughputPropertiesResource resource) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ResourcePhysicalPartitionIds { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RetrieveThroughputParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RetrieveThroughputParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RetrieveThroughputParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RetrieveThroughputParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RetrieveThroughputParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5941,6 +6276,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public RetrieveThroughputPropertiesResource(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> physicalPartitionIds) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> PhysicalPartitionIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RetrieveThroughputPropertiesResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RetrieveThroughputPropertiesResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.RetrieveThroughputPropertiesResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.RetrieveThroughputPropertiesResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.RetrieveThroughputPropertiesResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5984,11 +6320,42 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.ServiceConnectionType left, Azure.ResourceManager.CosmosDB.Models.ServiceConnectionType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public abstract partial class ServiceResourceCreateUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties>
+    {
+        protected ServiceResourceCreateUpdateProperties() { }
+        public int? InstanceCount { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceSize? InstanceSize { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Severity : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.Severity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Severity(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.Severity Error { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.Severity Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDB.Models.Severity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.Severity left, Azure.ResourceManager.CosmosDB.Models.Severity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDB.Models.Severity (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.Severity left, Azure.ResourceManager.CosmosDB.Models.Severity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SpatialSpec : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.SpatialSpec>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SpatialSpec>
     {
         public SpatialSpec() { }
         public string Path { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBSpatialType> Types { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.SpatialSpec System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.SpatialSpec>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.SpatialSpec>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.SpatialSpec System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SpatialSpec>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5999,6 +6366,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal SqlDedicatedGatewayRegionalService() { }
         public string SqlDedicatedGatewayEndpoint { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayRegionalService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayRegionalService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayRegionalService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayRegionalService System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayRegionalService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6008,19 +6376,33 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class SqlDedicatedGatewayServiceProperties : Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties>
     {
         public SqlDedicatedGatewayServiceProperties() { }
+        public Azure.ResourceManager.CosmosDB.Models.DedicatedGatewayType? DedicatedGatewayType { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayRegionalService> Locations { get { throw null; } }
         public string SqlDedicatedGatewayEndpoint { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SqlDedicatedGatewayServiceResourceCreateUpdateProperties : Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties>
+    {
+        public SqlDedicatedGatewayServiceResourceCreateUpdateProperties() { }
+        public Azure.ResourceManager.CosmosDB.Models.DedicatedGatewayType? DedicatedGatewayType { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ThroughputPolicyResourceInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ThroughputPolicyResourceInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ThroughputPolicyResourceInfo>
     {
         public ThroughputPolicyResourceInfo() { }
         public int? IncrementPercent { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ThroughputPolicyResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ThroughputPolicyResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ThroughputPolicyResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ThroughputPolicyResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ThroughputPolicyResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6055,6 +6437,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string OfferReplacePending { get { throw null; } }
         public string SoftAllowedMaximumThroughput { get { throw null; } }
         public int? Throughput { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6066,6 +6449,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public ThroughputSettingsUpdateData(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResourceInfo resource) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResourceInfo Resource { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsUpdateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsUpdateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsUpdateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsUpdateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsUpdateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

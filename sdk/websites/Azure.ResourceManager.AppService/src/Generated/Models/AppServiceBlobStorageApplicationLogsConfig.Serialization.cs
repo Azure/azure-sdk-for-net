@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<AppServiceBlobStorageApplicationLogsConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceBlobStorageApplicationLogsConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppServiceBlobStorageApplicationLogsConfig)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppServiceBlobStorageApplicationLogsConfig IJsonModel<AppServiceBlobStorageApplicationLogsConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -135,43 +142,46 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Level), out propertyOverride);
-            if (Optional.IsDefined(Level) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  level: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Level))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  level: ");
                     builder.AppendLine($"'{Level.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasUri), out propertyOverride);
-            if (Optional.IsDefined(SasUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sasUrl: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SasUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sasUrl: ");
                     builder.AppendLine($"'{SasUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionInDays), out propertyOverride);
-            if (Optional.IsDefined(RetentionInDays) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  retentionInDays: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionInDays))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  retentionInDays: ");
                     builder.AppendLine($"{RetentionInDays.Value}");
                 }
             }

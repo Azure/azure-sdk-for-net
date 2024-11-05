@@ -19,34 +19,42 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         void IJsonModel<NotificationHubResourceKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubResourceKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationHubResourceKeys)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryConnectionString))
+            if (options.Format != "W" && Optional.IsDefined(PrimaryConnectionString))
             {
                 writer.WritePropertyName("primaryConnectionString"u8);
                 writer.WriteStringValue(PrimaryConnectionString);
             }
-            if (Optional.IsDefined(SecondaryConnectionString))
+            if (options.Format != "W" && Optional.IsDefined(SecondaryConnectionString))
             {
                 writer.WritePropertyName("secondaryConnectionString"u8);
                 writer.WriteStringValue(SecondaryConnectionString);
             }
-            if (Optional.IsDefined(PrimaryKey))
+            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (Optional.IsDefined(SecondaryKey))
+            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (Optional.IsDefined(KeyName))
+            if (options.Format != "W" && Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
@@ -66,7 +74,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NotificationHubResourceKeys IJsonModel<NotificationHubResourceKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

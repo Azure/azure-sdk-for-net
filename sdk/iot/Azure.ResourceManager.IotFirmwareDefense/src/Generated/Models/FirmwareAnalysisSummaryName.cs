@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static bool operator ==(FirmwareAnalysisSummaryName left, FirmwareAnalysisSummaryName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirmwareAnalysisSummaryName"/> values are not the same. </summary>
         public static bool operator !=(FirmwareAnalysisSummaryName left, FirmwareAnalysisSummaryName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FirmwareAnalysisSummaryName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FirmwareAnalysisSummaryName"/>. </summary>
         public static implicit operator FirmwareAnalysisSummaryName(string value) => new FirmwareAnalysisSummaryName(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

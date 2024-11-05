@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, Annotation annotationProperties)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsAnnotation annotationProperties)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, Annotation annotationProperties)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsAnnotation annotationProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<Annotation>>> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, Annotation annotationProperties, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ApplicationInsightsAnnotation>>> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsAnnotation annotationProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -204,12 +204,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<Annotation> value = default;
+                        IReadOnlyList<ApplicationInsightsAnnotation> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<Annotation> array = new List<Annotation>();
+                        List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<Annotation>> Create(string subscriptionId, string resourceGroupName, string resourceName, Annotation annotationProperties, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ApplicationInsightsAnnotation>> Create(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsAnnotation annotationProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -240,12 +240,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<Annotation> value = default;
+                        IReadOnlyList<ApplicationInsightsAnnotation> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<Annotation> array = new List<Annotation>();
+                        List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<Annotation>>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ApplicationInsightsAnnotation>>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -403,12 +403,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<Annotation> value = default;
+                        IReadOnlyList<ApplicationInsightsAnnotation> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<Annotation> array = new List<Annotation>();
+                        List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<Annotation>> Get(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ApplicationInsightsAnnotation>> Get(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -439,12 +439,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<Annotation> value = default;
+                        IReadOnlyList<ApplicationInsightsAnnotation> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<Annotation> array = new List<Annotation>();
+                        List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

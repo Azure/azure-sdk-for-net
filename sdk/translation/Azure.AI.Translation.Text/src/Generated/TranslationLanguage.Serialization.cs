@@ -19,19 +19,27 @@ namespace Azure.AI.Translation.Text
 
         void IJsonModel<TranslationLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TranslationLanguage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TranslationLanguage)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("nativeName"u8);
             writer.WriteStringValue(NativeName);
             writer.WritePropertyName("dir"u8);
-            writer.WriteStringValue(Dir);
+            writer.WriteStringValue(Directionality.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -47,7 +55,6 @@ namespace Azure.AI.Translation.Text
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TranslationLanguage IJsonModel<TranslationLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,7 +79,7 @@ namespace Azure.AI.Translation.Text
             }
             string name = default;
             string nativeName = default;
-            string dir = default;
+            LanguageDirectionality dir = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +96,7 @@ namespace Azure.AI.Translation.Text
                 }
                 if (property.NameEquals("dir"u8))
                 {
-                    dir = property.Value.GetString();
+                    dir = property.Value.GetString().ToLanguageDirectionality();
                     continue;
                 }
                 if (options.Format != "W")

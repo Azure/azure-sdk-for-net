@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator ==(MySqlGeoRedundantBackup left, MySqlGeoRedundantBackup right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlGeoRedundantBackup"/> values are not the same. </summary>
         public static bool operator !=(MySqlGeoRedundantBackup left, MySqlGeoRedundantBackup right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlGeoRedundantBackup"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlGeoRedundantBackup"/>. </summary>
         public static implicit operator MySqlGeoRedundantBackup(string value) => new MySqlGeoRedundantBackup(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

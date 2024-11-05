@@ -1762,10 +1762,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockLogger
                 .Verify(log => log.EventProcessorPartitionProcessingEventPositionDetermined(
-                    partition.PartitionId,
                     mockProcessor.Object.Identifier,
                     mockProcessor.Object.EventHubName,
                     mockProcessor.Object.ConsumerGroup,
+                    partition.PartitionId,
                     expectedEventPosition.ToString(),
                     false,
                     null, // no checkpoint was used

@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<WhatIfPropertyChange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WhatIfPropertyChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WhatIfPropertyChange)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             writer.WritePropertyName("propertyChangeType"u8);
@@ -81,7 +89,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WhatIfPropertyChange IJsonModel<WhatIfPropertyChange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -182,15 +189,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
-            if (Optional.IsDefined(Path) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  path: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Path))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  path: ");
                     if (Path.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -204,56 +212,60 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PropertyChangeType), out propertyOverride);
-            builder.Append("  propertyChangeType: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  propertyChangeType: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  propertyChangeType: ");
                 builder.AppendLine($"'{PropertyChangeType.ToSerialString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Before), out propertyOverride);
-            if (Optional.IsDefined(Before) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  before: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Before))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  before: ");
                     builder.AppendLine($"'{Before.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(After), out propertyOverride);
-            if (Optional.IsDefined(After) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  after: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(After))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  after: ");
                     builder.AppendLine($"'{After.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Children), out propertyOverride);
-            if (Optional.IsCollectionDefined(Children) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Children.Any() || hasPropertyOverride)
+                builder.Append("  children: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Children))
                 {
-                    builder.Append("  children: ");
-                    if (hasPropertyOverride)
+                    if (Children.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  children: ");
                         builder.AppendLine("[");
                         foreach (var item in Children)
                         {

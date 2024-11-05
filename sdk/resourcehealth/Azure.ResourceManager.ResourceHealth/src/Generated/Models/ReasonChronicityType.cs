@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static bool operator ==(ReasonChronicityType left, ReasonChronicityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReasonChronicityType"/> values are not the same. </summary>
         public static bool operator !=(ReasonChronicityType left, ReasonChronicityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReasonChronicityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReasonChronicityType"/>. </summary>
         public static implicit operator ReasonChronicityType(string value) => new ReasonChronicityType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<WebAppLoginInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WebAppLoginInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
@@ -78,7 +86,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WebAppLoginInfo IJsonModel<WebAppLoginInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -195,68 +202,70 @@ namespace Azure.ResourceManager.AppService.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Routes), out propertyOverride);
-            if (Optional.IsDefined(Routes) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RoutesLogoutEndpoint", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  routes: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    logoutEndpoint: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Routes))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  routes: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Routes, options, 2, false, "  routes: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenStore), out propertyOverride);
-            if (Optional.IsDefined(TokenStore) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tokenStore: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TokenStore))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tokenStore: ");
                     BicepSerializationHelpers.AppendChildObject(builder, TokenStore, options, 2, false, "  tokenStore: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreserveUrlFragmentsForLogins), out propertyOverride);
-            if (Optional.IsDefined(PreserveUrlFragmentsForLogins) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  preserveUrlFragmentsForLogins: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  preserveUrlFragmentsForLogins: ");
                     var boolValue = PreserveUrlFragmentsForLogins.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedExternalRedirectUrls), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedExternalRedirectUrls.Any() || hasPropertyOverride)
+                builder.Append("  allowedExternalRedirectUrls: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
                 {
-                    builder.Append("  allowedExternalRedirectUrls: ");
-                    if (hasPropertyOverride)
+                    if (AllowedExternalRedirectUrls.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedExternalRedirectUrls: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedExternalRedirectUrls)
                         {
@@ -281,52 +290,37 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CookieExpiration), out propertyOverride);
-            if (Optional.IsDefined(CookieExpiration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  cookieExpiration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CookieExpiration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  cookieExpiration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, CookieExpiration, options, 2, false, "  cookieExpiration: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Nonce), out propertyOverride);
-            if (Optional.IsDefined(Nonce) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nonce: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Nonce))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nonce: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Nonce, options, 2, false, "  nonce: ");
                 }
             }
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "RoutesLogoutEndpoint":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("LogoutEndpoint", item.Value);
-                        bicepOptions.PropertyOverrides.Add(Routes, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<WebAppLoginInfo>.Write(ModelReaderWriterOptions options)

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01-preview";
+            _apiVersion = apiVersion ?? "2024-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.SelfHelp
             return message;
         }
 
-        /// <summary> Creates a diagnostic for the specific resource using solutionId and requiredInputs* from discovery solutions. &lt;br/&gt;Diagnostics tells you precisely the root cause of the issue and the steps to address it. You can get diagnostics once you discover the relevant solution for your Azure issue. &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics API. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <summary> Creates a diagnostic for the specific resource using solutionId from discovery solutions. &lt;br/&gt;Diagnostics are powerful solutions that access product resources or other relevant data and provide the root cause of the issue and the steps to address the issue.&lt;br/&gt;&lt;br/&gt;. </summary>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="data"> The required request body for this insightResource invocation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.SelfHelp
             }
         }
 
-        /// <summary> Creates a diagnostic for the specific resource using solutionId and requiredInputs* from discovery solutions. &lt;br/&gt;Diagnostics tells you precisely the root cause of the issue and the steps to address it. You can get diagnostics once you discover the relevant solution for your Azure issue. &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics API. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <summary> Creates a diagnostic for the specific resource using solutionId from discovery solutions. &lt;br/&gt;Diagnostics are powerful solutions that access product resources or other relevant data and provide the root cause of the issue and the steps to address the issue.&lt;br/&gt;&lt;br/&gt;. </summary>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="data"> The required request body for this insightResource invocation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Get the diagnostics using the 'diagnosticsResourceName' you chose while creating the diagnostic. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="diagnosticsResourceName"/> is null. </exception>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Get the diagnostics using the 'diagnosticsResourceName' you chose while creating the diagnostic. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="diagnosticsResourceName"/> is null. </exception>

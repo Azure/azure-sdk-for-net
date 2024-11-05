@@ -21,46 +21,22 @@ namespace Azure.ResourceManager.Cdn
 
         void IJsonModel<CdnEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CdnEndpointData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OriginPath))
@@ -208,11 +184,11 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CustomDomains))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DeepCreatedCustomDomains))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
-                foreach (var item in CustomDomains)
+                foreach (var item in DeepCreatedCustomDomains)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -227,22 +203,6 @@ namespace Azure.ResourceManager.Cdn
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
             writer.WriteEndObject();
         }
@@ -290,7 +250,7 @@ namespace Azure.ResourceManager.Cdn
             string hostName = default;
             IList<DeepCreatedOrigin> origins = default;
             IList<DeepCreatedOriginGroup> originGroups = default;
-            IReadOnlyList<CdnCustomDomainData> customDomains = default;
+            IReadOnlyList<DeepCreatedCustomDomain> customDomains = default;
             EndpointResourceState? resourceState = default;
             CdnEndpointProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -522,10 +482,10 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            List<CdnCustomDomainData> array = new List<CdnCustomDomainData>();
+                            List<DeepCreatedCustomDomain> array = new List<DeepCreatedCustomDomain>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CdnCustomDomainData.DeserializeCdnCustomDomainData(item, options));
+                                array.Add(DeepCreatedCustomDomain.DeserializeDeepCreatedCustomDomain(item, options));
                             }
                             customDomains = array;
                             continue;
@@ -581,7 +541,7 @@ namespace Azure.ResourceManager.Cdn
                 hostName,
                 origins ?? new ChangeTrackingList<DeepCreatedOrigin>(),
                 originGroups ?? new ChangeTrackingList<DeepCreatedOriginGroup>(),
-                customDomains ?? new ChangeTrackingList<CdnCustomDomainData>(),
+                customDomains ?? new ChangeTrackingList<DeepCreatedCustomDomain>(),
                 resourceState,
                 provisioningState,
                 serializedAdditionalRawData);

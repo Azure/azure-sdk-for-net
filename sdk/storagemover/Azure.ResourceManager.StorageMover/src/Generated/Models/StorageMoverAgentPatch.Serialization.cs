@@ -19,19 +19,32 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         void IJsonModel<StorageMoverAgentPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageMoverAgentPatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(UploadLimitSchedule))
+            {
+                writer.WritePropertyName("uploadLimitSchedule"u8);
+                writer.WriteObjectValue(UploadLimitSchedule, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -49,7 +62,6 @@ namespace Azure.ResourceManager.StorageMover.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StorageMoverAgentPatch IJsonModel<StorageMoverAgentPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,6 +85,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 return null;
             }
             string description = default;
+            UploadLimitSchedule uploadLimitSchedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,6 +104,15 @@ namespace Azure.ResourceManager.StorageMover.Models
                             description = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("uploadLimitSchedule"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            uploadLimitSchedule = UploadLimitSchedule.DeserializeUploadLimitSchedule(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -100,7 +122,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageMoverAgentPatch(description, serializedAdditionalRawData);
+            return new StorageMoverAgentPatch(description, uploadLimitSchedule, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMoverAgentPatch>.Write(ModelReaderWriterOptions options)

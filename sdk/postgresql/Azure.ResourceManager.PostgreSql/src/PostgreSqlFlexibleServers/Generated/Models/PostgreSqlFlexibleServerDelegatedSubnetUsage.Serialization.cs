@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         void IJsonModel<PostgreSqlFlexibleServerDelegatedSubnetUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerDelegatedSubnetUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerDelegatedSubnetUsage)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(SubnetName))
             {
                 writer.WritePropertyName("subnetName"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PostgreSqlFlexibleServerDelegatedSubnetUsage IJsonModel<PostgreSqlFlexibleServerDelegatedSubnetUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,15 +123,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubnetName), out propertyOverride);
-            if (Optional.IsDefined(SubnetName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  subnetName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubnetName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  subnetName: ");
                     if (SubnetName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -138,15 +146,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Usage), out propertyOverride);
-            if (Optional.IsDefined(Usage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  usage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Usage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  usage: ");
                     builder.AppendLine($"'{Usage.Value.ToString()}'");
                 }
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         void IJsonModel<EsuKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EsuKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EsuKey)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -34,7 +43,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(LicenseStatus))
             {
                 writer.WritePropertyName("licenseStatus"u8);
-                writer.WriteStringValue(LicenseStatus);
+                writer.WriteNumberValue(LicenseStatus.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -51,7 +60,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EsuKey IJsonModel<EsuKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -75,7 +83,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             string sku = default;
-            string licenseStatus = default;
+            int? licenseStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +95,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (property.NameEquals("licenseStatus"u8))
                 {
-                    licenseStatus = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    licenseStatus = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,6 +111,59 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new EsuKey(sku, licenseStatus, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sku: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sku))
+                {
+                    builder.Append("  sku: ");
+                    if (Sku.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Sku}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Sku}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LicenseStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  licenseStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LicenseStatus))
+                {
+                    builder.Append("  licenseStatus: ");
+                    builder.AppendLine($"{LicenseStatus.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EsuKey>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EsuKey>)this).GetFormatFromOptions(options) : options.Format;
@@ -107,6 +172,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EsuKey)} does not support writing '{options.Format}' format.");
             }

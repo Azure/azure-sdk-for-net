@@ -1,16 +1,28 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2024-05-06)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Update api version to 2024-02-01
+- Add log-scrubbing support for waf
+- Add GroupBy support for waf custom rule
+- Add AnomalyScoringValue for RuleMatchActionType
+- Add JSChallengeValue for RuleMatchActionType
 
 ## 1.2.0 (2023-11-29)
 

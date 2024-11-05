@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(ContentKeyPolicyPlayReadyUnknownOutputPassingOption left, ContentKeyPolicyPlayReadyUnknownOutputPassingOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentKeyPolicyPlayReadyUnknownOutputPassingOption"/> values are not the same. </summary>
         public static bool operator !=(ContentKeyPolicyPlayReadyUnknownOutputPassingOption left, ContentKeyPolicyPlayReadyUnknownOutputPassingOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContentKeyPolicyPlayReadyUnknownOutputPassingOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContentKeyPolicyPlayReadyUnknownOutputPassingOption"/>. </summary>
         public static implicit operator ContentKeyPolicyPlayReadyUnknownOutputPassingOption(string value) => new ContentKeyPolicyPlayReadyUnknownOutputPassingOption(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

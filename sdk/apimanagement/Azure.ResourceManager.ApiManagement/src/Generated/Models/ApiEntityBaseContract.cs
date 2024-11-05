@@ -89,34 +89,49 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Description of the API. May include HTML formatting tags. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> Collection of authentication settings included into this API. </summary>
+        [WirePath("authenticationSettings")]
         public AuthenticationSettingsContract AuthenticationSettings { get; }
         /// <summary> Protocols over which API is made available. </summary>
+        [WirePath("subscriptionKeyParameterNames")]
         public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get; }
         /// <summary> Type of API. </summary>
+        [WirePath("type")]
         public ApiType? ApiType { get; }
         /// <summary> Describes the revision of the API. If no value is provided, default revision 1 is created. </summary>
+        [WirePath("apiRevision")]
         public string ApiRevision { get; }
         /// <summary> Indicates the version identifier of the API if the API is versioned. </summary>
+        [WirePath("apiVersion")]
         public string ApiVersion { get; }
         /// <summary> Indicates if API revision is current api revision. </summary>
+        [WirePath("isCurrent")]
         public bool? IsCurrent { get; }
         /// <summary> Indicates if API revision is accessible via the gateway. </summary>
+        [WirePath("isOnline")]
         public bool? IsOnline { get; }
         /// <summary> Description of the API Revision. </summary>
+        [WirePath("apiRevisionDescription")]
         public string ApiRevisionDescription { get; }
         /// <summary> Description of the API Version. </summary>
+        [WirePath("apiVersionDescription")]
         public string ApiVersionDescription { get; }
         /// <summary> A resource identifier for the related ApiVersionSet. </summary>
+        [WirePath("apiVersionSetId")]
         public ResourceIdentifier ApiVersionSetId { get; }
         /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
+        [WirePath("subscriptionRequired")]
         public bool? IsSubscriptionRequired { get; }
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
+        [WirePath("termsOfServiceUrl")]
         public string TermsOfServiceLink { get; }
         /// <summary> Contact information for the API. </summary>
+        [WirePath("contact")]
         public ApiContactInformation Contact { get; }
         /// <summary> License information for the API. </summary>
+        [WirePath("license")]
         public ApiLicenseInformation License { get; }
     }
 }

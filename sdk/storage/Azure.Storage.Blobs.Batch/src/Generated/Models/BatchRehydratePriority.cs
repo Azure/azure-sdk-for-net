@@ -33,7 +33,7 @@ namespace Azure.Storage.Blobs.Batch.Models
         public static bool operator ==(BatchRehydratePriority left, BatchRehydratePriority right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchRehydratePriority"/> values are not the same. </summary>
         public static bool operator !=(BatchRehydratePriority left, BatchRehydratePriority right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchRehydratePriority"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchRehydratePriority"/>. </summary>
         public static implicit operator BatchRehydratePriority(string value) => new BatchRehydratePriority(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Storage.Blobs.Batch.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

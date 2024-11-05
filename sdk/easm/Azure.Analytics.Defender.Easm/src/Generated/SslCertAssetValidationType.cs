@@ -36,7 +36,7 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator ==(SslCertAssetValidationType left, SslCertAssetValidationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SslCertAssetValidationType"/> values are not the same. </summary>
         public static bool operator !=(SslCertAssetValidationType left, SslCertAssetValidationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SslCertAssetValidationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SslCertAssetValidationType"/>. </summary>
         public static implicit operator SslCertAssetValidationType(string value) => new SslCertAssetValidationType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

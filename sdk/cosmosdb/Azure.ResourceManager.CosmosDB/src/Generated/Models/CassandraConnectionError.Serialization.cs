@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CassandraConnectionError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraConnectionError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
@@ -67,7 +75,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CassandraConnectionError IJsonModel<CassandraConnectionError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -159,29 +166,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionState), out propertyOverride);
-            if (Optional.IsDefined(ConnectionState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  connectionState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectionState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  connectionState: ");
                     builder.AppendLine($"'{ConnectionState.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPFrom), out propertyOverride);
-            if (Optional.IsDefined(IPFrom) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  iPFrom: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPFrom))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  iPFrom: ");
                     if (IPFrom.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -195,15 +204,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPTo), out propertyOverride);
-            if (Optional.IsDefined(IPTo) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  iPTo: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPTo))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  iPTo: ");
                     if (IPTo.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -217,29 +227,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
-            if (Optional.IsDefined(Port) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  port: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Port))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  port: ");
                     builder.AppendLine($"{Port.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Exception), out propertyOverride);
-            if (Optional.IsDefined(Exception) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  exception: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Exception))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  exception: ");
                     if (Exception.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

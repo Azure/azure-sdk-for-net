@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +21,21 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         void IJsonModel<NetworkSecurityPerimeterConfigurationProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -76,7 +86,6 @@ namespace Azure.ResourceManager.EventGrid.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NetworkSecurityPerimeterConfigurationProfile IJsonModel<NetworkSecurityPerimeterConfigurationProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -166,6 +175,149 @@ namespace Azure.ResourceManager.EventGrid.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessRulesVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accessRulesVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccessRulesVersion))
+                {
+                    builder.Append("  accessRulesVersion: ");
+                    if (AccessRulesVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AccessRulesVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AccessRulesVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accessRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AccessRules))
+                {
+                    if (AccessRules.Any())
+                    {
+                        builder.Append("  accessRules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AccessRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  accessRules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiagnosticSettingsVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  diagnosticSettingsVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiagnosticSettingsVersion))
+                {
+                    builder.Append("  diagnosticSettingsVersion: ");
+                    if (DiagnosticSettingsVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DiagnosticSettingsVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DiagnosticSettingsVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnabledLogCategories), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabledLogCategories: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EnabledLogCategories))
+                {
+                    if (EnabledLogCategories.Any())
+                    {
+                        builder.Append("  enabledLogCategories: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EnabledLogCategories)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -174,6 +326,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support writing '{options.Format}' format.");
             }

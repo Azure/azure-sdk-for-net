@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<StorageAccountSasPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountSasPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageAccountSasPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("sasExpirationPeriod"u8);
             writer.WriteStringValue(SasExpirationPeriod);
             writer.WritePropertyName("expirationAction"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StorageAccountSasPolicy IJsonModel<StorageAccountSasPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -106,15 +113,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasExpirationPeriod), out propertyOverride);
-            if (Optional.IsDefined(SasExpirationPeriod) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sasExpirationPeriod: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SasExpirationPeriod))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sasExpirationPeriod: ");
                     if (SasExpirationPeriod.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -128,13 +136,14 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpirationAction), out propertyOverride);
-            builder.Append("  expirationAction: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  expirationAction: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  expirationAction: ");
                 builder.AppendLine($"'{ExpirationAction.ToString()}'");
             }
 

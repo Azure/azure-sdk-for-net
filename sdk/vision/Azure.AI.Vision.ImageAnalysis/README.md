@@ -53,6 +53,27 @@ ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new Azur
 
 Here we are using environment variables to hold the endpoint and key for the Computer Vision Resource.
 
+#### Create ImageAnalysisClient with a Microsoft Entra ID Credential
+
+**Prerequisites for Entra ID Authentication**:
+- The role `Cognitive Services User` assigned to you. Role assignment can be done via the "Access Control (IAM)" tab of your Computer Vision resource in the Azure portal.
+- [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) installed.
+- You are logged into your Azure account by running `az login`.
+
+Also note that if you have multiple Azure subscriptions, the subscription that contains your Computer Vision resource must be your default subscription. Run `az account list --output table` to list all your subscriptions and see which one is the default. Run `az account set --subscription "Your Subscription ID or Name"` to change your default subscription.
+
+Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Microsoft Entra ID (formerly Azure Active Directory) using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][azure_identity_dac] provider shown below, or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
+
+```dotnetcli
+dotnet add package Azure.Identity
+```
+
+```C# Snippet:ImageAnalysisEntraIDAuth
+string endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT");
+
+ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new DefaultAzureCredential());
+```
+
 ## Key concepts
 
 Once you've initialized an `ImageAnalysisClient`, you need to select one or more visual features to analyze. The options are specified by the enum class `VisualFeatures`. The following features are supported:
@@ -239,3 +260,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [image_analysis_concepts]: https://learn.microsoft.com/azure/ai-services/computer-vision/concept-tag-images-40
 [vision_studio]: https://aka.ms/vision-studio/image-analysis
 [imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Generated/ImageAnalysisClient.cs
+[azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
+[azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet

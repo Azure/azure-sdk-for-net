@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListLocalUsers()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/LocalUsersList.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/LocalUsersList.json
             // this example is just showing the usage of "LocalUsers_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,12 +52,50 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // ListNFSv3EnabledLocalUsers
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetAll_ListNFSv3EnabledLocalUsers()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/LocalUsersListNFSv3Enabled.json
+            // this example is just showing the usage of "LocalUsers_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageAccountResource created on azure
+            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res6977";
+            string accountName = "sto2527";
+            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
+
+            // get the collection of this StorageAccountLocalUserResource
+            StorageAccountLocalUserCollection collection = storageAccount.GetStorageAccountLocalUsers();
+
+            // invoke the operation and iterate over the result
+            ListLocalUserIncludeParam? include = ListLocalUserIncludeParam.Nfsv3;
+            await foreach (StorageAccountLocalUserResource item in collection.GetAllAsync(include: include))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StorageAccountLocalUserData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
         // GetLocalUser
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetLocalUser()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/LocalUserGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/LocalUserGet.json
             // this example is just showing the usage of "LocalUsers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +130,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetLocalUser()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/LocalUserGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/LocalUserGet.json
             // this example is just showing the usage of "LocalUsers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +161,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetLocalUser()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/LocalUserGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/LocalUserGet.json
             // this example is just showing the usage of "LocalUsers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +204,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateLocalUser()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/LocalUserCreate.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/LocalUserCreate.json
             // this example is just showing the usage of "LocalUsers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -203,6 +241,52 @@ Key = "ssh-rsa keykeykeykeykey=",
 }
 },
                 HasSshPassword = true,
+                GroupId = 2000,
+                IsAclAuthorizationAllowed = true,
+            };
+            ArmOperation<StorageAccountLocalUserResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, username, data);
+            StorageAccountLocalUserResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageAccountLocalUserData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // CreateNFSv3EnabledLocalUser
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateNFSv3EnabledLocalUser()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/LocalUserCreateNFSv3Enabled.json
+            // this example is just showing the usage of "LocalUsers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageAccountResource created on azure
+            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res6977";
+            string accountName = "sto2527";
+            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
+
+            // get the collection of this StorageAccountLocalUserResource
+            StorageAccountLocalUserCollection collection = storageAccount.GetStorageAccountLocalUsers();
+
+            // invoke the operation
+            string username = "user1";
+            StorageAccountLocalUserData data = new StorageAccountLocalUserData()
+            {
+                ExtendedGroups =
+{
+1001,1005,2005
+},
+                IsNfsV3Enabled = true,
             };
             ArmOperation<StorageAccountLocalUserResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, username, data);
             StorageAccountLocalUserResource result = lro.Value;
@@ -219,7 +303,7 @@ Key = "ssh-rsa keykeykeykeykey=",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_UpdateLocalUser()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/LocalUserUpdate.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/LocalUserUpdate.json
             // this example is just showing the usage of "LocalUsers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -246,6 +330,13 @@ Key = "ssh-rsa keykeykeykeykey=",
                 HasSharedKey = false,
                 HasSshKey = false,
                 HasSshPassword = false,
+                GroupId = 3000,
+                IsAclAuthorizationAllowed = false,
+                ExtendedGroups =
+{
+1001,1005,2005
+},
+                IsNfsV3Enabled = true,
             };
             ArmOperation<StorageAccountLocalUserResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, username, data);
             StorageAccountLocalUserResource result = lro.Value;

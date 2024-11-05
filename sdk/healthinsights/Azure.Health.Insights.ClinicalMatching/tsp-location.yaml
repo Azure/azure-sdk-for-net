@@ -2,5 +2,5 @@ directory: specification/ai/HealthInsights/HealthInsights.TrialMatcher/
 additionalDirectories:
   - specification/ai/HealthInsights/HealthInsights.OpenAPI/
   - specification/ai/HealthInsights/HealthInsights.Common/
-commit: e367672ea9422797ec90bfdf21a9434218359311
+commit: abcb87655f03a1501c390ff29ed495f0923fe49b
 repo: azure/azure-rest-api-specs

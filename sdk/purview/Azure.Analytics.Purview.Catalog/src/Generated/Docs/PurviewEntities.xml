@@ -4105,7 +4105,7 @@ if (response.ContentStream != null)
 }
 ]]></code></example>
     </member>
-    <member name="ImportBusinessMetadataAsync(RequestContent,RequestContext)">
+    <member name="ImportBusinessMetadataAsync(RequestContent,string,RequestContext)">
       <example>
 This sample shows how to call ImportBusinessMetadataAsync and parse the result.
 <code><![CDATA[
@@ -4114,19 +4114,19 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
 using RequestContent content = null;
-Response response = await client.ImportBusinessMetadataAsync(content);
+Response response = await client.ImportBusinessMetadataAsync(content, "multipart/form-data");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call ImportBusinessMetadataAsync with all request content and parse the result.
+This sample shows how to call ImportBusinessMetadataAsync with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = await client.ImportBusinessMetadataAsync(content);
+Response response = await client.ImportBusinessMetadataAsync(content, "multipart/form-data");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
@@ -4139,7 +4139,7 @@ Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("pa
 Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("remarks").ToString());
 ]]></code></example>
     </member>
-    <member name="ImportBusinessMetadata(RequestContent,RequestContext)">
+    <member name="ImportBusinessMetadata(RequestContent,string,RequestContext)">
       <example>
 This sample shows how to call ImportBusinessMetadata and parse the result.
 <code><![CDATA[
@@ -4148,19 +4148,19 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
 using RequestContent content = null;
-Response response = client.ImportBusinessMetadata(content);
+Response response = client.ImportBusinessMetadata(content, "multipart/form-data");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call ImportBusinessMetadata with all request content and parse the result.
+This sample shows how to call ImportBusinessMetadata with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = client.ImportBusinessMetadata(content);
+Response response = client.ImportBusinessMetadata(content, "multipart/form-data");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());

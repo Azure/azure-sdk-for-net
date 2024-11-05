@@ -127,6 +127,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("vectorSearchProfile");
                 }
             }
+            if (Optional.IsDefined(VectorEncodingFormat))
+            {
+                if (VectorEncodingFormat != null)
+                {
+                    writer.WritePropertyName("vectorEncoding"u8);
+                    writer.WriteStringValue(VectorEncodingFormat.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("vectorEncoding");
+                }
+            }
             if (Optional.IsCollectionDefined(SynonymMapNames))
             {
                 writer.WritePropertyName("synonymMaps"u8);
@@ -171,6 +183,7 @@ namespace Azure.Search.Documents.Indexes.Models
             LexicalNormalizerName? normalizer = default;
             int? dimensions = default;
             string vectorSearchProfile = default;
+            VectorEncodingFormat? vectorEncoding = default;
             IList<string> synonymMaps = default;
             IList<SearchField> fields = default;
             foreach (var property in element.EnumerateObject())
@@ -308,6 +321,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorSearchProfile = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("vectorEncoding"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        vectorEncoding = null;
+                        continue;
+                    }
+                    vectorEncoding = new VectorEncodingFormat(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("synonymMaps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -353,6 +376,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 normalizer,
                 dimensions,
                 vectorSearchProfile,
+                vectorEncoding,
                 synonymMaps ?? new ChangeTrackingList<string>(),
                 fields ?? new ChangeTrackingList<SearchField>());
         }

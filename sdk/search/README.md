@@ -20,7 +20,7 @@ Functionality is exposed through several client libraries:
   top of [Azure.Core](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md) and the
   [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
-- [Microsoft.Azure.Management.Search](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Microsoft.Azure.Management.Search/)
+- [Azure.ResourceManager.Search](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Azure.ResourceManager.Search/)
   supports managing Azure Cognitive Search services and API keys.
 
 ## Contributing

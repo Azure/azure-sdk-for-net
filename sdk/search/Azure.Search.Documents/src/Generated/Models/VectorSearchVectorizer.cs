@@ -12,31 +12,28 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary>
     /// Specifies the vectorization method to be used during query time.
     /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureOpenAIVectorizer"/> and <see cref="CustomVectorizer"/>.
+    /// The available derived classes include <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
     /// </summary>
     public abstract partial class VectorSearchVectorizer
     {
         /// <summary> Initializes a new instance of <see cref="VectorSearchVectorizer"/>. </summary>
-        /// <param name="name"> The name to associate with this particular vectorization method. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        protected VectorSearchVectorizer(string name)
+        /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
+        protected VectorSearchVectorizer(string vectorizerName)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
 
-            Name = name;
+            VectorizerName = vectorizerName;
         }
 
         /// <summary> Initializes a new instance of <see cref="VectorSearchVectorizer"/>. </summary>
-        /// <param name="name"> The name to associate with this particular vectorization method. </param>
+        /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
-        internal VectorSearchVectorizer(string name, VectorSearchVectorizerKind kind)
+        internal VectorSearchVectorizer(string vectorizerName, VectorSearchVectorizerKind kind)
         {
-            Name = name;
+            VectorizerName = vectorizerName;
             Kind = kind;
         }
-
-        /// <summary> The name to associate with this particular vectorization method. </summary>
-        public string Name { get; set; }
         /// <summary> The name of the kind of vectorization method being configured for use with vector search. </summary>
         internal VectorSearchVectorizerKind Kind { get; set; }
     }

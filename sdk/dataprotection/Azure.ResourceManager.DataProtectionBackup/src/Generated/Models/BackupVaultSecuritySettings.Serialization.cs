@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         void IJsonModel<BackupVaultSecuritySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BackupVaultSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SoftDeleteSettings))
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
@@ -35,6 +43,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
                 writer.WriteObjectValue(ImmutabilitySettings, options);
+            }
+            if (Optional.IsDefined(EncryptionSettings))
+            {
+                writer.WritePropertyName("encryptionSettings"u8);
+                writer.WriteObjectValue(EncryptionSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -51,7 +64,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BackupVaultSecuritySettings IJsonModel<BackupVaultSecuritySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,6 +88,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             BackupVaultSoftDeleteSettings softDeleteSettings = default;
             ImmutabilitySettings immutabilitySettings = default;
+            BackupVaultEncryptionSettings encryptionSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,13 +111,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("encryptionSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryptionSettings = BackupVaultEncryptionSettings.DeserializeBackupVaultEncryptionSettings(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BackupVaultSecuritySettings(softDeleteSettings, immutabilitySettings, serializedAdditionalRawData);
+            return new BackupVaultSecuritySettings(softDeleteSettings, immutabilitySettings, encryptionSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupVaultSecuritySettings>.Write(ModelReaderWriterOptions options)

@@ -3,6 +3,7 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
+v3: true
 azure-arm: true
 csharp: true
 library-name: ResourceHealth
@@ -18,6 +19,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true

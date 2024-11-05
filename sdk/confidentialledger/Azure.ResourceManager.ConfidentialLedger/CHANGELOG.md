@@ -1,16 +1,29 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.1.0-beta.5 (Unreleased)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.4 (2024-05-07)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2023-01' to 'package-preview-2023-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/de1bc645b4c91e6cb3fddb5588c102ca050dd4da/specification/confidentialledger/resource-manager/readme.md
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enable long-running operation rehydration.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.39.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.11.1
 
 ## 1.1.0-beta.3 (2023-11-27)
 
@@ -86,4 +99,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-

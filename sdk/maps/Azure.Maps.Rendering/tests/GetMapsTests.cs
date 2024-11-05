@@ -24,7 +24,6 @@ namespace Azure.Maps.Rendering.Tests
                 MapTileSetId.MicrosoftBase, new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629));
 
             Assert.IsNotNull(copyrights);
-            Assert.IsTrue(copyrights.Value.Count == 1);
         }
 
         [RecordedTest]
@@ -33,8 +32,6 @@ namespace Azure.Maps.Rendering.Tests
             var client = CreateClient();
             var options = new GetMapStaticImageOptions(new GeoPosition(10.176, 25.0524), 100, 100)
             {
-                MapImageLayer = MapImageLayer.Basic,
-                MapImageStyle = MapImageStyle.Dark,
                 Language = RenderingLanguage.EnglishUsa,
             };
             using var imageStream = new MemoryStream();

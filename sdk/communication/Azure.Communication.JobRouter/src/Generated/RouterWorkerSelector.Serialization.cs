@@ -19,13 +19,21 @@ namespace Azure.Communication.JobRouter
 
         void IJsonModel<RouterWorkerSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RouterWorkerSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RouterWorkerSelector)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
@@ -45,7 +53,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(ExpiresAfter))
             {
                 writer.WritePropertyName("expiresAfterSeconds"u8);
-                WriteExpiresAfter(writer);
+                WriteExpiresAfter(writer, options);
             }
             if (Optional.IsDefined(Expedite))
             {
@@ -77,7 +85,6 @@ namespace Azure.Communication.JobRouter
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RouterWorkerSelector IJsonModel<RouterWorkerSelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

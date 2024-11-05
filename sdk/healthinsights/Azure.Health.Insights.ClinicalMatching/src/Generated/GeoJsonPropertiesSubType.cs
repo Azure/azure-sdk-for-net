@@ -30,7 +30,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static bool operator ==(GeoJsonPropertiesSubType left, GeoJsonPropertiesSubType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GeoJsonPropertiesSubType"/> values are not the same. </summary>
         public static bool operator !=(GeoJsonPropertiesSubType left, GeoJsonPropertiesSubType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GeoJsonPropertiesSubType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GeoJsonPropertiesSubType"/>. </summary>
         public static implicit operator GeoJsonPropertiesSubType(string value) => new GeoJsonPropertiesSubType(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

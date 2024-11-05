@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<AppServiceEndpointDependency>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceEndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppServiceEndpointDependency)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppServiceEndpointDependency IJsonModel<AppServiceEndpointDependency>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,15 +134,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainName), out propertyOverride);
-            if (Optional.IsDefined(DomainName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  domainName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DomainName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  domainName: ");
                     if (DomainName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,17 +157,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointDetails), out propertyOverride);
-            if (Optional.IsCollectionDefined(EndpointDetails) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (EndpointDetails.Any() || hasPropertyOverride)
+                builder.Append("  endpointDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EndpointDetails))
                 {
-                    builder.Append("  endpointDetails: ");
-                    if (hasPropertyOverride)
+                    if (EndpointDetails.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  endpointDetails: ");
                         builder.AppendLine("[");
                         foreach (var item in EndpointDetails)
                         {

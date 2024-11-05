@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<LoginFlowNonceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<LoginFlowNonceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LoginFlowNonceSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ValidateNonce))
             {
                 writer.WritePropertyName("validateNonce"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         LoginFlowNonceSettings IJsonModel<LoginFlowNonceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,30 +123,32 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidateNonce), out propertyOverride);
-            if (Optional.IsDefined(ValidateNonce) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  validateNonce: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ValidateNonce))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  validateNonce: ");
                     var boolValue = ValidateNonce.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NonceExpirationInterval), out propertyOverride);
-            if (Optional.IsDefined(NonceExpirationInterval) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nonceExpirationInterval: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NonceExpirationInterval))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nonceExpirationInterval: ");
                     if (NonceExpirationInterval.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

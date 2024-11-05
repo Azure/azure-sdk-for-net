@@ -30,13 +30,14 @@ namespace Azure.ResourceManager.Marketplace
         public string OfferId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PlanRequesterDetails> Plans { get { throw null; } }
         public string PublisherId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MarketplaceAdminApprovalRequestResource : Azure.ResourceManager.ArmResource
+    public partial class MarketplaceAdminApprovalRequestResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MarketplaceAdminApprovalRequestResource() { }
@@ -45,6 +46,11 @@ namespace Azure.ResourceManager.Marketplace
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(System.Guid privateStoreId, string adminRequestApprovalId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource> Get(string publisherId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource>> GetAsync(string publisherId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -74,13 +80,14 @@ namespace Azure.ResourceManager.Marketplace
         public string OfferId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.PrivateStorePlanDetails> PlansDetails { get { throw null; } }
         public string PublisherId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MarketplaceApprovalRequestResource : Azure.ResourceManager.ArmResource
+    public partial class MarketplaceApprovalRequestResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MarketplaceApprovalRequestResource() { }
@@ -91,6 +98,11 @@ namespace Azure.ResourceManager.Marketplace
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestResult> QueryApprovalRequest(Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestResult>> QueryApprovalRequestAsync(Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response WithdrawPlan(Azure.ResourceManager.Marketplace.Models.WithdrawPlanContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -154,13 +166,14 @@ namespace Azure.ResourceManager.Marketplace
         public bool? IsEnabled { get { throw null; } set { } }
         public long? NumberOfOffers { get { throw null; } }
         public System.Collections.Generic.IList<string> SubscriptionsList { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PrivateStoreCollectionInfoResource : Azure.ResourceManager.ArmResource
+    public partial class PrivateStoreCollectionInfoResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PrivateStoreCollectionInfoResource() { }
@@ -186,6 +199,11 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> QueryRulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SetCollectionRules(Azure.ResourceManager.Marketplace.Models.SetRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetCollectionRulesAsync(Azure.ResourceManager.Marketplace.Models.SetRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.TransferOffersResult> TransferOffers(Azure.ResourceManager.Marketplace.Models.TransferOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.TransferOffersResult>> TransferOffersAsync(Azure.ResourceManager.Marketplace.Models.TransferOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -204,6 +222,7 @@ namespace Azure.ResourceManager.Marketplace
         public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.NotificationRecipient> Recipients { get { throw null; } }
         public bool? SendToAllMarketplaceAdmins { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.PrivateStoreData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.PrivateStoreData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -241,13 +260,14 @@ namespace Azure.ResourceManager.Marketplace
         public string PublisherDisplayName { get { throw null; } }
         public System.Collections.Generic.IList<string> SpecificPlanIdsLimitation { get { throw null; } }
         public string UniqueOfferId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.PrivateStoreOfferData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.PrivateStoreOfferData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PrivateStoreOfferResource : Azure.ResourceManager.ArmResource
+    public partial class PrivateStoreOfferResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PrivateStoreOfferResource() { }
@@ -260,12 +280,17 @@ namespace Azure.ResourceManager.Marketplace
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation? payload = default(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Marketplace.PrivateStoreOfferData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Marketplace.PrivateStoreOfferData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreOfferData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreOfferData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> UpsertOfferWithMultiContext(Azure.ResourceManager.Marketplace.Models.MultiContextAndPlansContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>> UpsertOfferWithMultiContextAsync(Azure.ResourceManager.Marketplace.Models.MultiContextAndPlansContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PrivateStoreResource : Azure.ResourceManager.ArmResource
+    public partial class PrivateStoreResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PrivateStoreResource() { }
@@ -313,6 +338,11 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryUserOffersAsync(Azure.ResourceManager.Marketplace.Models.QueryUserOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> QueryUserRules(Azure.ResourceManager.Marketplace.Models.QueryUserRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> QueryUserRulesAsync(Azure.ResourceManager.Marketplace.Models.QueryUserRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Marketplace.PrivateStoreData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Marketplace.PrivateStoreData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -346,6 +376,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public bool? IsDismissActionFlagEnabled { get { throw null; } set { } }
         public bool? IsRemoveOfferActionFlagEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> RemovePlans { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.AcknowledgeOfferNotificationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.AcknowledgeOfferNotificationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.AcknowledgeOfferNotificationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.AcknowledgeOfferNotificationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.AcknowledgeOfferNotificationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -356,6 +387,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal AnyExistingOffersInTheCollectionsResult() { }
         public bool? Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.AnyExistingOffersInTheCollectionsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.AnyExistingOffersInTheCollectionsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.AnyExistingOffersInTheCollectionsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.AnyExistingOffersInTheCollectionsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.AnyExistingOffersInTheCollectionsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -402,6 +434,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public BulkCollectionsActionContent() { }
         public string Action { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Guid> CollectionIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.BulkCollectionsActionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.BulkCollectionsActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.BulkCollectionsActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.BulkCollectionsActionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.BulkCollectionsActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -413,6 +446,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal BulkCollectionsActionResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails> Failed { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails> Succeeded { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.BulkCollectionsActionResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.BulkCollectionsActionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.BulkCollectionsActionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.BulkCollectionsActionResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.BulkCollectionsActionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -423,6 +457,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         public CollectionOffersByAllContextsPayload() { }
         public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.CollectionOffersByAllContextsPayload System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.CollectionOffersByAllContextsPayload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.CollectionOffersByAllContextsPayload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.CollectionOffersByAllContextsPayload System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.CollectionOffersByAllContextsPayload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -434,6 +469,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal CollectionOffersByContext() { }
         public string Context { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.CollectionOffersByContext System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.CollectionOffersByContext>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.CollectionOffersByContext>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.CollectionOffersByContext System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.CollectionOffersByContext>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -445,6 +481,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal CollectionsSubscriptionsMappingDetails() { }
         public string CollectionName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Subscriptions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.CollectionsSubscriptionsMappingDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.CollectionsSubscriptionsMappingDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.CollectionsSubscriptionsMappingDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.CollectionsSubscriptionsMappingDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.CollectionsSubscriptionsMappingDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -455,6 +492,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         public CollectionsToSubscriptionsMappingContent() { }
         public System.Collections.Generic.IList<string> CollectionsToSubscriptionsMappingSubscriptionIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -465,6 +503,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal CollectionsToSubscriptionsMappingResult() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Marketplace.Models.CollectionsSubscriptionsMappingDetails> Details { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -476,6 +515,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public ContextAndPlansDetails() { }
         public string Context { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PlanIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.ContextAndPlansDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.ContextAndPlansDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.ContextAndPlansDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.ContextAndPlansDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.ContextAndPlansDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -505,6 +545,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public MarketplaceRule() { }
         public Azure.ResourceManager.Marketplace.Models.MarketplaceRuleType? RuleType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.MarketplaceRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.MarketplaceRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.MarketplaceRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.MarketplaceRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.MarketplaceRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -536,6 +577,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string Id { get { throw null; } }
         public Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState? State { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.MarketplaceSubscription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.MarketplaceSubscription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.MarketplaceSubscription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.MarketplaceSubscription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.MarketplaceSubscription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -569,6 +611,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public Azure.ETag? ETag { get { throw null; } set { } }
         public string OfferId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.ContextAndPlansDetails> PlansContext { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.MultiContextAndPlansContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.MultiContextAndPlansContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.MultiContextAndPlansContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.MultiContextAndPlansContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.MultiContextAndPlansContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -584,6 +627,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public long? MessageCode { get { throw null; } }
         public string OfferId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails> Plans { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.NewPlanNotification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.NewPlanNotification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.NewPlanNotification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.NewPlanNotification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.NewPlanNotification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -594,6 +638,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal NewPlanNotificationListResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.NewPlanNotification> NewPlansNotifications { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.NewPlanNotificationListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.NewPlanNotificationListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.NewPlanNotificationListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.NewPlanNotificationListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.NewPlanNotificationListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -606,6 +651,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string DisplayName { get { throw null; } }
         public string EmailAddress { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.NotificationRecipient System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.NotificationRecipient>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.NotificationRecipient>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.NotificationRecipient System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.NotificationRecipient>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -617,6 +663,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal PlanNotificationDetails() { }
         public string PlanDisplayName { get { throw null; } }
         public string PlanId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -629,6 +676,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string PlanDisplayName { get { throw null; } }
         public string PlanId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PlanRequesterInfo> Requesters { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PlanRequesterDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PlanRequesterDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PlanRequesterDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PlanRequesterDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.PlanRequesterDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -643,6 +691,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string SubscriptionId { get { throw null; } }
         public string SubscriptionName { get { throw null; } }
         public string User { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PlanRequesterInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PlanRequesterInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PlanRequesterInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PlanRequesterInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.PlanRequesterInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -671,6 +720,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal PrivateStoreBillingAccountsResult() { }
         public System.Collections.Generic.IReadOnlyList<string> BillingAccounts { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PrivateStoreBillingAccountsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreBillingAccountsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreBillingAccountsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PrivateStoreBillingAccountsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreBillingAccountsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -682,6 +732,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal PrivateStoreCollectionDetails() { }
         public System.Guid? CollectionId { get { throw null; } }
         public string CollectionName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -694,6 +745,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.RequestApprovalsDetails> ApprovalRequests { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.NewPlanNotification> NewNotifications { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.StopSellNotifications> StopSellNotifications { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PrivateStoreNotificationsState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreNotificationsState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreNotificationsState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PrivateStoreNotificationsState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreNotificationsState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -714,6 +766,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string PublisherDisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SpecificPlanIdsLimitation { get { throw null; } }
         public string UniqueOfferId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -749,6 +802,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string PlanId { get { throw null; } }
         public string SkuId { get { throw null; } }
         public string StackType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PrivateStorePlan System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PrivateStorePlan>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PrivateStorePlan>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PrivateStorePlan System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.PrivateStorePlan>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -784,6 +838,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus? Status { get { throw null; } }
         public string SubscriptionId { get { throw null; } set { } }
         public string SubscriptionName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PrivateStorePlanDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PrivateStorePlanDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PrivateStorePlanDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.PrivateStorePlanDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.PrivateStorePlanDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -816,6 +871,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public System.Collections.Generic.IList<string> PlanIds { get { throw null; } }
         public string PublisherId { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -829,6 +885,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public long? MessageCode { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Marketplace.Models.PrivateStorePlanDetails> PlansDetails { get { throw null; } }
         public string UniqueOfferId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -841,6 +898,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string OfferId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PlanIds { get { throw null; } }
         public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -853,6 +911,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public bool? AllSubscriptions { get { throw null; } }
         public string PlanId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SubscriptionIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -863,6 +922,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal QueryApprovedPlansResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansDetails> Details { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -874,6 +934,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public QueryUserOffersContent() { }
         public System.Collections.Generic.IList<string> OfferIds { get { throw null; } }
         public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryUserOffersContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryUserOffersContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryUserOffersContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryUserOffersContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.QueryUserOffersContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -884,6 +945,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         public QueryUserRulesContent() { }
         public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryUserRulesContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryUserRulesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.QueryUserRulesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.QueryUserRulesContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.QueryUserRulesContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -899,6 +961,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string OfferId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails> Plans { get { throw null; } }
         public string PublisherId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.RequestApprovalsDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.RequestApprovalsDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.RequestApprovalsDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.RequestApprovalsDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.RequestApprovalsDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -910,6 +973,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public SetRulesContent() { }
         public string NextLink { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.SetRulesContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.SetRulesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.SetRulesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.SetRulesContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.SetRulesContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -925,6 +989,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public long? MessageCode { get { throw null; } }
         public string OfferId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails> Plans { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.StopSellNotifications System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.StopSellNotifications>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.StopSellNotifications>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.StopSellNotifications System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.StopSellNotifications>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -935,6 +1000,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal StopSellOffersPlansNotificationsList() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsResult> StopSellNotifications { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -952,6 +1018,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string OfferId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails> Plans { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SubscriptionsIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -962,6 +1029,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         public StopSellSubscriptions() { }
         public System.Collections.Generic.IList<string> Subscriptions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.StopSellSubscriptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.StopSellSubscriptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.StopSellSubscriptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.StopSellSubscriptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.StopSellSubscriptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -972,6 +1040,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal SubscriptionsContextList() { }
         public System.Collections.Generic.IReadOnlyList<string> SubscriptionsIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.SubscriptionsContextList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.SubscriptionsContextList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.SubscriptionsContextList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.SubscriptionsContextList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.SubscriptionsContextList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -984,6 +1053,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public System.Collections.Generic.IList<string> OfferIdsList { get { throw null; } }
         public string Operation { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TargetCollections { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.TransferOffersContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.TransferOffersContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.TransferOffersContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.TransferOffersContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.TransferOffersContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -995,6 +1065,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal TransferOffersResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails> Failed { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails> Succeeded { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.TransferOffersResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.TransferOffersResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.TransferOffersResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.TransferOffersResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.TransferOffersResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1006,6 +1077,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public WithdrawPlanContent() { }
         public string PlanId { get { throw null; } set { } }
         public string PublisherId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.WithdrawPlanContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.WithdrawPlanContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.WithdrawPlanContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Marketplace.Models.WithdrawPlanContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.WithdrawPlanContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<SiteLimits>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SiteLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteLimits)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(MaxPercentageCpu))
             {
                 writer.WritePropertyName("maxPercentageCpu"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SiteLimits IJsonModel<SiteLimits>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -135,43 +142,46 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxPercentageCpu), out propertyOverride);
-            if (Optional.IsDefined(MaxPercentageCpu) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxPercentageCpu: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxPercentageCpu))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxPercentageCpu: ");
                     builder.AppendLine($"'{MaxPercentageCpu.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxMemoryInMb), out propertyOverride);
-            if (Optional.IsDefined(MaxMemoryInMb) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxMemoryInMb: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxMemoryInMb))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxMemoryInMb: ");
                     builder.AppendLine($"'{MaxMemoryInMb.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxDiskSizeInMb), out propertyOverride);
-            if (Optional.IsDefined(MaxDiskSizeInMb) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxDiskSizeInMb: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxDiskSizeInMb))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxDiskSizeInMb: ");
                     builder.AppendLine($"'{MaxDiskSizeInMb.Value.ToString()}'");
                 }
             }

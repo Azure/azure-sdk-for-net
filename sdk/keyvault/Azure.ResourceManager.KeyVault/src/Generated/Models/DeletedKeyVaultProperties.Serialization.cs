@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         void IJsonModel<DeletedKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DeletedKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeletedKeyVaultProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(VaultId))
             {
                 writer.WritePropertyName("vaultId"u8);
@@ -79,7 +87,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DeletedKeyVaultProperties IJsonModel<DeletedKeyVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -199,75 +206,80 @@ namespace Azure.ResourceManager.KeyVault.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VaultId), out propertyOverride);
-            if (Optional.IsDefined(VaultId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  vaultId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VaultId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  vaultId: ");
                     builder.AppendLine($"'{VaultId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  location: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  location: ");
                     builder.AppendLine($"'{Location.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeletedOn), out propertyOverride);
-            if (Optional.IsDefined(DeletedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  deletionDate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeletedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  deletionDate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(DeletedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduledPurgeOn), out propertyOverride);
-            if (Optional.IsDefined(ScheduledPurgeOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scheduledPurgeDate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScheduledPurgeOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scheduledPurgeDate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(ScheduledPurgeOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (Optional.IsCollectionDefined(Tags) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Tags.Any() || hasPropertyOverride)
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
                 {
-                    builder.Append("  tags: ");
-                    if (hasPropertyOverride)
+                    if (Tags.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  tags: ");
                         builder.AppendLine("{");
                         foreach (var item in Tags)
                         {
@@ -293,15 +305,16 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PurgeProtectionEnabled), out propertyOverride);
-            if (Optional.IsDefined(PurgeProtectionEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  purgeProtectionEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PurgeProtectionEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  purgeProtectionEnabled: ");
                     var boolValue = PurgeProtectionEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

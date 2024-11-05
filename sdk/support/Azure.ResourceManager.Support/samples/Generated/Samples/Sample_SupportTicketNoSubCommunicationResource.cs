@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCommunicationDetailsForANoSubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/GetCommunicationDetailsForSupportTicket.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetCommunicationDetailsForSupportTicket.json
             // this example is just showing the usage of "CommunicationsNoSubscription_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_AddCommunicationToNoSubscriptionTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/CreateNoSubscriptionSupportTicketCommunication.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateNoSubscriptionSupportTicketCommunication.json
             // this example is just showing the usage of "CommunicationsNoSubscription_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,11 +65,9 @@ namespace Azure.ResourceManager.Support.Samples
             SupportTicketNoSubCommunicationResource supportTicketNoSubCommunication = client.GetSupportTicketNoSubCommunicationResource(supportTicketNoSubCommunicationResourceId);
 
             // invoke the operation
-            SupportTicketCommunicationData data = new SupportTicketCommunicationData()
+            SupportTicketCommunicationData data = new SupportTicketCommunicationData("This is a test message from a customer!", "This is a test message from a customer!")
             {
                 Sender = "user@contoso.com",
-                Subject = "This is a test message from a customer!",
-                Body = "This is a test message from a customer!",
             };
             ArmOperation<SupportTicketNoSubCommunicationResource> lro = await supportTicketNoSubCommunication.UpdateAsync(WaitUntil.Completed, data);
             SupportTicketNoSubCommunicationResource result = lro.Value;

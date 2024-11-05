@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private const string EnablingValue = "Enabling";
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
+        private const string DisablingValue = "Disabling";
+        private const string FailedValue = "Failed";
 
         /// <summary> Unknown. </summary>
         public static LicenseProfileSubscriptionStatus Unknown { get; } = new LicenseProfileSubscriptionStatus(UnknownValue);
@@ -35,11 +37,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static LicenseProfileSubscriptionStatus Enabled { get; } = new LicenseProfileSubscriptionStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static LicenseProfileSubscriptionStatus Disabled { get; } = new LicenseProfileSubscriptionStatus(DisabledValue);
+        /// <summary> Disabling. </summary>
+        public static LicenseProfileSubscriptionStatus Disabling { get; } = new LicenseProfileSubscriptionStatus(DisablingValue);
+        /// <summary> Failed. </summary>
+        public static LicenseProfileSubscriptionStatus Failed { get; } = new LicenseProfileSubscriptionStatus(FailedValue);
         /// <summary> Determines if two <see cref="LicenseProfileSubscriptionStatus"/> values are the same. </summary>
         public static bool operator ==(LicenseProfileSubscriptionStatus left, LicenseProfileSubscriptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LicenseProfileSubscriptionStatus"/> values are not the same. </summary>
         public static bool operator !=(LicenseProfileSubscriptionStatus left, LicenseProfileSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LicenseProfileSubscriptionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LicenseProfileSubscriptionStatus"/>. </summary>
         public static implicit operator LicenseProfileSubscriptionStatus(string value) => new LicenseProfileSubscriptionStatus(value);
 
         /// <inheritdoc />
@@ -50,7 +56,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

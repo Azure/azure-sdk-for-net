@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -21,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<DatabaseAccountKeysMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseAccountKeysMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(PrimaryMasterKey))
             {
                 writer.WritePropertyName("primaryMasterKey"u8);
@@ -63,7 +70,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DatabaseAccountKeysMetadata IJsonModel<DatabaseAccountKeysMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -148,103 +154,82 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryMasterKey), out propertyOverride);
-            if (Optional.IsDefined(PrimaryMasterKey) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PrimaryMasterKeyGeneratedOn", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  primaryMasterKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    generationTime: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryMasterKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  primaryMasterKey: ");
                     BicepSerializationHelpers.AppendChildObject(builder, PrimaryMasterKey, options, 2, false, "  primaryMasterKey: ");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryMasterKey), out propertyOverride);
-            if (Optional.IsDefined(SecondaryMasterKey) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SecondaryMasterKeyGeneratedOn", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  secondaryMasterKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    generationTime: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryMasterKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  secondaryMasterKey: ");
                     BicepSerializationHelpers.AppendChildObject(builder, SecondaryMasterKey, options, 2, false, "  secondaryMasterKey: ");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryReadonlyMasterKey), out propertyOverride);
-            if (Optional.IsDefined(PrimaryReadonlyMasterKey) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PrimaryReadonlyMasterKeyGeneratedOn", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  primaryReadonlyMasterKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    generationTime: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryReadonlyMasterKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  primaryReadonlyMasterKey: ");
                     BicepSerializationHelpers.AppendChildObject(builder, PrimaryReadonlyMasterKey, options, 2, false, "  primaryReadonlyMasterKey: ");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryReadonlyMasterKey), out propertyOverride);
-            if (Optional.IsDefined(SecondaryReadonlyMasterKey) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SecondaryReadonlyMasterKeyGeneratedOn", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  secondaryReadonlyMasterKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    generationTime: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryReadonlyMasterKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  secondaryReadonlyMasterKey: ");
                     BicepSerializationHelpers.AppendChildObject(builder, SecondaryReadonlyMasterKey, options, 2, false, "  secondaryReadonlyMasterKey: ");
                 }
             }
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "PrimaryMasterKeyGeneratedOn":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("GeneratedOn", item.Value);
-                        bicepOptions.PropertyOverrides.Add(PrimaryMasterKey, propertyDictionary);
-                        break;
-                    case "SecondaryMasterKeyGeneratedOn":
-                        Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
-                        propertyDictionary0.Add("GeneratedOn", item.Value);
-                        bicepOptions.PropertyOverrides.Add(SecondaryMasterKey, propertyDictionary0);
-                        break;
-                    case "PrimaryReadonlyMasterKeyGeneratedOn":
-                        Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
-                        propertyDictionary1.Add("GeneratedOn", item.Value);
-                        bicepOptions.PropertyOverrides.Add(PrimaryReadonlyMasterKey, propertyDictionary1);
-                        break;
-                    case "SecondaryReadonlyMasterKeyGeneratedOn":
-                        Dictionary<string, string> propertyDictionary2 = new Dictionary<string, string>();
-                        propertyDictionary2.Add("GeneratedOn", item.Value);
-                        bicepOptions.PropertyOverrides.Add(SecondaryReadonlyMasterKey, propertyDictionary2);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<DatabaseAccountKeysMetadata>.Write(ModelReaderWriterOptions options)

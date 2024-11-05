@@ -1,14 +1,27 @@
 # Release History
 
-## 1.1.0-beta.5 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2024-04-24)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2023-06' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a013dabbe84aeb3f5d48b0e30d15fdfbb6a8d062/specification/support/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.38.0 to 1.39.0
+- Upgraded Azure.ResourceManager from 1.10.2 to 1.11.1
 
 ## 1.1.0-beta.4 (2024-03-05)
 

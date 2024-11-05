@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Nginx.Models
 
         void IJsonModel<NginxCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NginxCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NginxCertificateProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -46,6 +54,26 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("keyVaultSecretId"u8);
                 writer.WriteStringValue(KeyVaultSecretId);
             }
+            if (options.Format != "W" && Optional.IsDefined(Sha1Thumbprint))
+            {
+                writer.WritePropertyName("sha1Thumbprint"u8);
+                writer.WriteStringValue(Sha1Thumbprint);
+            }
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultSecretVersion))
+            {
+                writer.WritePropertyName("keyVaultSecretVersion"u8);
+                writer.WriteStringValue(KeyVaultSecretVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultSecretCreated))
+            {
+                writer.WritePropertyName("keyVaultSecretCreated"u8);
+                writer.WriteStringValue(KeyVaultSecretCreated.Value, "O");
+            }
+            if (Optional.IsDefined(CertificateError))
+            {
+                writer.WritePropertyName("certificateError"u8);
+                writer.WriteObjectValue(CertificateError, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -61,7 +89,6 @@ namespace Azure.ResourceManager.Nginx.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NginxCertificateProperties IJsonModel<NginxCertificateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -88,6 +115,10 @@ namespace Azure.ResourceManager.Nginx.Models
             string keyVirtualPath = default;
             string certificateVirtualPath = default;
             string keyVaultSecretId = default;
+            string sha1Thumbprint = default;
+            string keyVaultSecretVersion = default;
+            DateTimeOffset? keyVaultSecretCreated = default;
+            NginxCertificateError certificateError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,13 +147,50 @@ namespace Azure.ResourceManager.Nginx.Models
                     keyVaultSecretId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("sha1Thumbprint"u8))
+                {
+                    sha1Thumbprint = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("keyVaultSecretVersion"u8))
+                {
+                    keyVaultSecretVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("keyVaultSecretCreated"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultSecretCreated = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("certificateError"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    certificateError = NginxCertificateError.DeserializeNginxCertificateError(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NginxCertificateProperties(provisioningState, keyVirtualPath, certificateVirtualPath, keyVaultSecretId, serializedAdditionalRawData);
+            return new NginxCertificateProperties(
+                provisioningState,
+                keyVirtualPath,
+                certificateVirtualPath,
+                keyVaultSecretId,
+                sha1Thumbprint,
+                keyVaultSecretVersion,
+                keyVaultSecretCreated,
+                certificateError,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxCertificateProperties>.Write(ModelReaderWriterOptions options)

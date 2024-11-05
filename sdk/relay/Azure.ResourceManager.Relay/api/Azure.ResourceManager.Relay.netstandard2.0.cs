@@ -5,6 +5,7 @@ namespace Azure.ResourceManager.Relay
         public RelayAuthorizationRuleData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Relay.Models.RelayAccessRight> Rights { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayAuthorizationRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayAuthorizationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Relay
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RelayHybridConnectionAuthorizationRuleResource : Azure.ResourceManager.ArmResource
+    public partial class RelayHybridConnectionAuthorizationRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected RelayHybridConnectionAuthorizationRuleResource() { }
@@ -62,6 +63,11 @@ namespace Azure.ResourceManager.Relay
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.Models.RelayAccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Relay.Models.RelayAccessKeys> RegenerateKeys(Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.Models.RelayAccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Relay.RelayAuthorizationRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Relay.RelayAuthorizationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -91,13 +97,14 @@ namespace Azure.ResourceManager.Relay
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public string UserMetadata { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayHybridConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayHybridConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RelayHybridConnectionResource : Azure.ResourceManager.ArmResource
+    public partial class RelayHybridConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected RelayHybridConnectionResource() { }
@@ -111,6 +118,11 @@ namespace Azure.ResourceManager.Relay
         public virtual Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource> GetRelayHybridConnectionAuthorizationRule(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource>> GetRelayHybridConnectionAuthorizationRuleAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleCollection GetRelayHybridConnectionAuthorizationRules() { throw null; }
+        Azure.ResourceManager.Relay.RelayHybridConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Relay.RelayHybridConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayHybridConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayHybridConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayHybridConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayHybridConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -131,7 +143,7 @@ namespace Azure.ResourceManager.Relay
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RelayNamespaceAuthorizationRuleResource : Azure.ResourceManager.ArmResource
+    public partial class RelayNamespaceAuthorizationRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected RelayNamespaceAuthorizationRuleResource() { }
@@ -146,6 +158,11 @@ namespace Azure.ResourceManager.Relay
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.Models.RelayAccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Relay.Models.RelayAccessKeys> RegenerateKeys(Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.Models.RelayAccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Relay.RelayAuthorizationRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Relay.RelayAuthorizationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -179,13 +196,14 @@ namespace Azure.ResourceManager.Relay
         public Azure.ResourceManager.Relay.Models.RelaySku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayNamespaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNamespaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNamespaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayNamespaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNamespaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNamespaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNamespaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RelayNamespaceResource : Azure.ResourceManager.ArmResource
+    public partial class RelayNamespaceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNamespaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNamespaceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected RelayNamespaceResource() { }
@@ -218,6 +236,11 @@ namespace Azure.ResourceManager.Relay
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Relay.RelayNamespaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNamespaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNamespaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Relay.RelayNamespaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNamespaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNamespaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNamespaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource> Update(Azure.ResourceManager.Relay.Models.RelayNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource>> UpdateAsync(Azure.ResourceManager.Relay.Models.RelayNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -227,13 +250,14 @@ namespace Azure.ResourceManager.Relay
         public Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule> IPRules { get { throw null; } }
         public Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayNetworkRuleSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayNetworkRuleSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RelayNetworkRuleSetResource : Azure.ResourceManager.ArmResource
+    public partial class RelayNetworkRuleSetResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected RelayNetworkRuleSetResource() { }
@@ -244,6 +268,11 @@ namespace Azure.ResourceManager.Relay
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Relay.RelayNetworkRuleSetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayNetworkRuleSetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Relay.RelayNetworkRuleSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Relay.RelayNetworkRuleSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RelayPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -269,13 +298,14 @@ namespace Azure.ResourceManager.Relay
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RelayPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
+    public partial class RelayPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected RelayPrivateEndpointConnectionResource() { }
@@ -286,10 +316,15 @@ namespace Azure.ResourceManager.Relay
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class RelayPrivateLinkResource : Azure.ResourceManager.ArmResource
+    public partial class RelayPrivateLinkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateLinkResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected RelayPrivateLinkResource() { }
@@ -298,6 +333,11 @@ namespace Azure.ResourceManager.Relay
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string privateLinkResourceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Relay.RelayPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Relay.RelayPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Relay.RelayPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RelayPrivateLinkResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.RelayPrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayPrivateLinkResource>, System.Collections.IEnumerable
     {
@@ -320,6 +360,7 @@ namespace Azure.ResourceManager.Relay
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -343,7 +384,7 @@ namespace Azure.ResourceManager.Relay
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WcfRelayAuthorizationRuleResource : Azure.ResourceManager.ArmResource
+    public partial class WcfRelayAuthorizationRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected WcfRelayAuthorizationRuleResource() { }
@@ -358,6 +399,11 @@ namespace Azure.ResourceManager.Relay
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.Models.RelayAccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Relay.Models.RelayAccessKeys> RegenerateKeys(Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.Models.RelayAccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Relay.RelayAuthorizationRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Relay.RelayAuthorizationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -390,13 +436,14 @@ namespace Azure.ResourceManager.Relay
         public Azure.ResourceManager.Relay.Models.RelayType? RelayType { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public string UserMetadata { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.WcfRelayData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.WcfRelayData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.WcfRelayData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.WcfRelayData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.WcfRelayData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.WcfRelayData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.WcfRelayData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WcfRelayResource : Azure.ResourceManager.ArmResource
+    public partial class WcfRelayResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.WcfRelayData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.WcfRelayData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected WcfRelayResource() { }
@@ -410,6 +457,11 @@ namespace Azure.ResourceManager.Relay
         public virtual Azure.Response<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource> GetWcfRelayAuthorizationRule(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource>> GetWcfRelayAuthorizationRuleAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleCollection GetWcfRelayAuthorizationRules() { throw null; }
+        Azure.ResourceManager.Relay.WcfRelayData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.WcfRelayData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.WcfRelayData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Relay.WcfRelayData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.WcfRelayData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.WcfRelayData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.WcfRelayData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.WcfRelayResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.WcfRelayData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.WcfRelayResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.WcfRelayData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -469,6 +521,7 @@ namespace Azure.ResourceManager.Relay.Models
         public string PrimaryKey { get { throw null; } }
         public string SecondaryConnectionString { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayAccessKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayAccessKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayAccessKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayAccessKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayAccessKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -516,6 +569,7 @@ namespace Azure.ResourceManager.Relay.Models
     {
         public RelayNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -528,6 +582,7 @@ namespace Azure.ResourceManager.Relay.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason? Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -547,6 +602,7 @@ namespace Azure.ResourceManager.Relay.Models
         public string Status { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayNamespacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNamespacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNamespacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayNamespacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayNamespacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -615,6 +671,7 @@ namespace Azure.ResourceManager.Relay.Models
         public RelayNetworkRuleSetIPRule() { }
         public Azure.ResourceManager.Relay.Models.RelayNetworkRuleIPAction? Action { get { throw null; } set { } }
         public string IPMask { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -668,6 +725,7 @@ namespace Azure.ResourceManager.Relay.Models
         public RelayPrivateLinkServiceConnectionState() { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus? Status { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -698,6 +756,7 @@ namespace Azure.ResourceManager.Relay.Models
         public RelayRegenerateAccessKeyContent(Azure.ResourceManager.Relay.Models.RelayAccessKeyType keyType) { }
         public string Key { get { throw null; } set { } }
         public Azure.ResourceManager.Relay.Models.RelayAccessKeyType KeyType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -709,6 +768,7 @@ namespace Azure.ResourceManager.Relay.Models
         public RelaySku(Azure.ResourceManager.Relay.Models.RelaySkuName name) { }
         public Azure.ResourceManager.Relay.Models.RelaySkuName Name { get { throw null; } set { } }
         public Azure.ResourceManager.Relay.Models.RelaySkuTier? Tier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelaySku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelaySku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelaySku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelaySku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelaySku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

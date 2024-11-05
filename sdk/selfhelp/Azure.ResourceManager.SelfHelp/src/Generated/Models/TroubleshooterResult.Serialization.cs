@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         void IJsonModel<TroubleshooterResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TroubleshooterResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TroubleshooterResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(QuestionId))
             {
                 writer.WritePropertyName("questionId"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TroubleshooterResult IJsonModel<TroubleshooterResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,7 +87,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string questionId = default;
-            QuestionType? questionType = default;
+            TroubleshooterQuestionType? questionType = default;
             string response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +104,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    questionType = new QuestionType(property.Value.GetString());
+                    questionType = new TroubleshooterQuestionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("response"u8))

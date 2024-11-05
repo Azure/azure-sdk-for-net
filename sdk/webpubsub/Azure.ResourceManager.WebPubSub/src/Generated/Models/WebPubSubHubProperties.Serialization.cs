@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         void IJsonModel<WebPubSubHubProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubHubProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebPubSubHubProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(EventHandlers))
             {
                 writer.WritePropertyName("eventHandlers"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WebPubSubHubProperties IJsonModel<WebPubSubHubProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,17 +134,18 @@ namespace Azure.ResourceManager.WebPubSub.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventHandlers), out propertyOverride);
-            if (Optional.IsCollectionDefined(EventHandlers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (EventHandlers.Any() || hasPropertyOverride)
+                builder.Append("  eventHandlers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EventHandlers))
                 {
-                    builder.Append("  eventHandlers: ");
-                    if (hasPropertyOverride)
+                    if (EventHandlers.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  eventHandlers: ");
                         builder.AppendLine("[");
                         foreach (var item in EventHandlers)
                         {
@@ -149,15 +157,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AnonymousConnectPolicy), out propertyOverride);
-            if (Optional.IsDefined(AnonymousConnectPolicy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  anonymousConnectPolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AnonymousConnectPolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  anonymousConnectPolicy: ");
                     if (AnonymousConnectPolicy.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

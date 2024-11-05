@@ -14,6 +14,7 @@ namespace Azure.Communication.Email
     {
         public EmailAttachment(string name, string contentType, System.BinaryData content) { }
         public System.BinaryData Content { get { throw null; } }
+        public string ContentId { get { throw null; } set { } }
         public string ContentType { get { throw null; } }
         public string Name { get { throw null; } }
     }
@@ -24,19 +25,24 @@ namespace Azure.Communication.Email
         public EmailClient(string connectionString, Azure.Communication.Email.EmailClientOptions options) { }
         public EmailClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.Email.EmailClientOptions options = null) { }
         public EmailClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Email.EmailClientOptions options = null) { }
+        public virtual Azure.Communication.Email.EmailSendOperation Send(Azure.WaitUntil wait, Azure.Communication.Email.EmailMessage message, System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.Email.EmailSendOperation Send(Azure.WaitUntil wait, Azure.Communication.Email.EmailMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Communication.Email.EmailSendOperation Send(Azure.WaitUntil wait, string senderAddress, string recipientAddress, string subject, string htmlContent, System.Guid operationId, string plainTextContent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.Email.EmailSendOperation Send(Azure.WaitUntil wait, string senderAddress, string recipientAddress, string subject, string htmlContent, string plainTextContent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Communication.Email.EmailSendOperation> SendAsync(Azure.WaitUntil wait, Azure.Communication.Email.EmailMessage message, System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.Email.EmailSendOperation> SendAsync(Azure.WaitUntil wait, Azure.Communication.Email.EmailMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Communication.Email.EmailSendOperation> SendAsync(Azure.WaitUntil wait, string senderAddress, string recipientAddress, string subject, string htmlContent, System.Guid operationId, string plainTextContent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.Email.EmailSendOperation> SendAsync(Azure.WaitUntil wait, string senderAddress, string recipientAddress, string subject, string htmlContent, string plainTextContent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class EmailClientOptions : Azure.Core.ClientOptions
     {
-        public EmailClientOptions(Azure.Communication.Email.EmailClientOptions.ServiceVersion version = Azure.Communication.Email.EmailClientOptions.ServiceVersion.V2023_03_31) { }
+        public EmailClientOptions(Azure.Communication.Email.EmailClientOptions.ServiceVersion version = Azure.Communication.Email.EmailClientOptions.ServiceVersion.V2024_07_01_Preview) { }
         public enum ServiceVersion
         {
             V2021_10_01_Preview = 1,
             V2023_01_15_Preview = 2,
             V2023_03_31 = 3,
+            V2024_07_01_Preview = 4,
         }
     }
     public partial class EmailContent

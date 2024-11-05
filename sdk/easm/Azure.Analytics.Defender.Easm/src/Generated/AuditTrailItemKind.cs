@@ -51,7 +51,7 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator ==(AuditTrailItemKind left, AuditTrailItemKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuditTrailItemKind"/> values are not the same. </summary>
         public static bool operator !=(AuditTrailItemKind left, AuditTrailItemKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AuditTrailItemKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AuditTrailItemKind"/>. </summary>
         public static implicit operator AuditTrailItemKind(string value) => new AuditTrailItemKind(value);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

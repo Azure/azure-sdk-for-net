@@ -7,7 +7,7 @@ This sample shows how to call GetRasterizeJobAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
 Response response = await client.GetRasterizeJobAsync("<jobId>", null);
 
@@ -20,7 +20,7 @@ This sample shows how to call GetRasterizeJobAsync with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
 Response response = await client.GetRasterizeJobAsync("<jobId>", null);
 
@@ -50,7 +50,7 @@ This sample shows how to call GetRasterizeJob and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
 Response response = client.GetRasterizeJob("<jobId>", null);
 
@@ -63,7 +63,7 @@ This sample shows how to call GetRasterizeJob with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
 Response response = client.GetRasterizeJob("<jobId>", null);
 
@@ -93,7 +93,7 @@ This sample shows how to call CreateRasterizeJobAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -116,7 +116,7 @@ This sample shows how to call CreateRasterizeJobAsync with all parameters and re
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -162,7 +162,7 @@ This sample shows how to call CreateRasterizeJob and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -185,7 +185,7 @@ This sample shows how to call CreateRasterizeJob with all parameters and request
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
 using RequestContent content = RequestContent.Create(new
 {

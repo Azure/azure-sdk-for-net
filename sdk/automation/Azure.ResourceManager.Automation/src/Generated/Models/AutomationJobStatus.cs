@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator ==(AutomationJobStatus left, AutomationJobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationJobStatus"/> values are not the same. </summary>
         public static bool operator !=(AutomationJobStatus left, AutomationJobStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutomationJobStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationJobStatus"/>. </summary>
         public static implicit operator AutomationJobStatus(string value) => new AutomationJobStatus(value);
 
         /// <inheritdoc />
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

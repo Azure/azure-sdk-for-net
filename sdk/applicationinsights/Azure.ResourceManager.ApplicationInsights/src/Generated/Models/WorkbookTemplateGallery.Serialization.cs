@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         void IJsonModel<WorkbookTemplateGallery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplateGallery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -37,10 +45,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(WorkbookTemplateGalleryType))
+            if (Optional.IsDefined(WorkbookType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(WorkbookTemplateGalleryType);
+                writer.WriteStringValue(WorkbookType);
             }
             if (Optional.IsDefined(Order))
             {
@@ -67,7 +75,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WorkbookTemplateGallery IJsonModel<WorkbookTemplateGallery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -155,15 +162,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -177,15 +185,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
-            if (Optional.IsDefined(Category) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  category: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Category))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  category: ");
                     if (Category.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -198,52 +207,55 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkbookTemplateGalleryType), out propertyOverride);
-            if (Optional.IsDefined(WorkbookTemplateGalleryType) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkbookType), out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkbookType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (WorkbookTemplateGalleryType.Contains(Environment.NewLine))
+                    builder.Append("  type: ");
+                    if (WorkbookType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{WorkbookTemplateGalleryType}'''");
+                        builder.AppendLine($"{WorkbookType}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{WorkbookTemplateGalleryType}'");
+                        builder.AppendLine($"'{WorkbookType}'");
                     }
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Order), out propertyOverride);
-            if (Optional.IsDefined(Order) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  order: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Order))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  order: ");
                     builder.AppendLine($"{Order.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
-            if (Optional.IsDefined(ResourceType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resourceType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resourceType: ");
                     if (ResourceType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
 
         [TestCase]
         [RecordedTest]
+        [LiveOnly(Reason = "Test regularly times out in playback.")]
         public async Task TestHAMonitorOperations()
         {
             _rgName ??= Recording.GenerateAssetName("netSdkTest-");
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
 
         [TestCase]
         [RecordedTest]
+        [LiveOnly(Reason = "Test regularly times out in playback.")]
         public async Task TestNonHAMonitorOperations()
         {
             _rgName ??= Recording.GenerateAssetName("netSdkTest-");

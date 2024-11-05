@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.1 (2024-10-15)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Bugs Fixed
+- Fix [BUG] Wrong request during the LRO of OperationaIInsights - Cluster - PUT #40606
+## 1.2.2 (2024-05-07)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
 
 ## 1.2.1 (2024-03-23)
 

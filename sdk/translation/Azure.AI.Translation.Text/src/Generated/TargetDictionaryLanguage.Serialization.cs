@@ -19,19 +19,27 @@ namespace Azure.AI.Translation.Text
 
         void IJsonModel<TargetDictionaryLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TargetDictionaryLanguage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TargetDictionaryLanguage)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("nativeName"u8);
             writer.WriteStringValue(NativeName);
             writer.WritePropertyName("dir"u8);
-            writer.WriteStringValue(Dir);
+            writer.WriteStringValue(Directionality.ToSerialString());
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -49,7 +57,6 @@ namespace Azure.AI.Translation.Text
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TargetDictionaryLanguage IJsonModel<TargetDictionaryLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -74,7 +81,7 @@ namespace Azure.AI.Translation.Text
             }
             string name = default;
             string nativeName = default;
-            string dir = default;
+            LanguageDirectionality dir = default;
             string code = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -92,7 +99,7 @@ namespace Azure.AI.Translation.Text
                 }
                 if (property.NameEquals("dir"u8))
                 {
-                    dir = property.Value.GetString();
+                    dir = property.Value.GetString().ToLanguageDirectionality();
                     continue;
                 }
                 if (property.NameEquals("code"u8))

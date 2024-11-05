@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<AllowedAudiencesValidation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AllowedAudiencesValidation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AllowedAudiencesValidation)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedAudiences))
             {
                 writer.WritePropertyName("allowedAudiences"u8);
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AllowedAudiencesValidation IJsonModel<AllowedAudiencesValidation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,17 +123,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedAudiences), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedAudiences) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedAudiences.Any() || hasPropertyOverride)
+                builder.Append("  allowedAudiences: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedAudiences))
                 {
-                    builder.Append("  allowedAudiences: ");
-                    if (hasPropertyOverride)
+                    if (AllowedAudiences.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedAudiences: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedAudiences)
                         {

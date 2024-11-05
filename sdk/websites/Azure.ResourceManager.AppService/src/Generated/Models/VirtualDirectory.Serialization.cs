@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<VirtualDirectory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualDirectory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualDirectory)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(VirtualPath))
             {
                 writer.WritePropertyName("virtualPath"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         VirtualDirectory IJsonModel<VirtualDirectory>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -112,15 +119,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualPath), out propertyOverride);
-            if (Optional.IsDefined(VirtualPath) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  virtualPath: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VirtualPath))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  virtualPath: ");
                     if (VirtualPath.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +142,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalPath), out propertyOverride);
-            if (Optional.IsDefined(PhysicalPath) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  physicalPath: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PhysicalPath))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  physicalPath: ");
                     if (PhysicalPath.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

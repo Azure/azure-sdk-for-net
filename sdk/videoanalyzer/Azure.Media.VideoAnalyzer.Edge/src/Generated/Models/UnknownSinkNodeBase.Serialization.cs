@@ -77,7 +77,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<SinkNodeBase>(this);
             return content;
         }
     }

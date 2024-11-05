@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.NetApp.Models
 
         void IJsonModel<NetAppKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppKeyVaultProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
@@ -35,8 +43,11 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
-            writer.WritePropertyName("keyVaultResourceId"u8);
-            writer.WriteStringValue(KeyVaultResourceId);
+            if (Optional.IsDefined(KeyVaultArmResourceId))
+            {
+                writer.WritePropertyName("keyVaultResourceId"u8);
+                writer.WriteStringValue(KeyVaultArmResourceId);
+            }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -57,7 +68,6 @@ namespace Azure.ResourceManager.NetApp.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NetAppKeyVaultProperties IJsonModel<NetAppKeyVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -83,7 +93,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string keyVaultId = default;
             Uri keyVaultUri = default;
             string keyName = default;
-            string keyVaultResourceId = default;
+            ResourceIdentifier keyVaultResourceId = default;
             NetAppKeyVaultStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -106,7 +116,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (property.NameEquals("keyVaultResourceId"u8))
                 {
-                    keyVaultResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))

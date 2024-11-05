@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         void IJsonModel<MachineInstallPatchesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -116,7 +125,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MachineInstallPatchesResult IJsonModel<MachineInstallPatchesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -314,6 +322,257 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstallationActivityId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  installationActivityId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstallationActivityId))
+                {
+                    builder.Append("  installationActivityId: ");
+                    if (InstallationActivityId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{InstallationActivityId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{InstallationActivityId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RebootStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rebootStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RebootStatus))
+                {
+                    builder.Append("  rebootStatus: ");
+                    builder.AppendLine($"'{RebootStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaintenanceWindowExceeded), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maintenanceWindowExceeded: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaintenanceWindowExceeded))
+                {
+                    builder.Append("  maintenanceWindowExceeded: ");
+                    var boolValue = MaintenanceWindowExceeded.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludedPatchCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  excludedPatchCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExcludedPatchCount))
+                {
+                    builder.Append("  excludedPatchCount: ");
+                    builder.AppendLine($"{ExcludedPatchCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotSelectedPatchCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notSelectedPatchCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NotSelectedPatchCount))
+                {
+                    builder.Append("  notSelectedPatchCount: ");
+                    builder.AppendLine($"{NotSelectedPatchCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PendingPatchCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pendingPatchCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PendingPatchCount))
+                {
+                    builder.Append("  pendingPatchCount: ");
+                    builder.AppendLine($"{PendingPatchCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstalledPatchCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  installedPatchCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstalledPatchCount))
+                {
+                    builder.Append("  installedPatchCount: ");
+                    builder.AppendLine($"{InstalledPatchCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailedPatchCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  failedPatchCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailedPatchCount))
+                {
+                    builder.Append("  failedPatchCount: ");
+                    builder.AppendLine($"{FailedPatchCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startDateTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    builder.Append("  startDateTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastModifiedDateTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastModifiedOn))
+                {
+                    builder.Append("  lastModifiedDateTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartedBy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startedBy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartedBy))
+                {
+                    builder.Append("  startedBy: ");
+                    builder.AppendLine($"'{StartedBy.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PatchServiceUsed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  patchServiceUsed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PatchServiceUsed))
+                {
+                    builder.Append("  patchServiceUsed: ");
+                    builder.AppendLine($"'{PatchServiceUsed.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  osType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OSType))
+                {
+                    builder.Append("  osType: ");
+                    builder.AppendLine($"'{OSType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  errorDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ErrorDetails))
+                {
+                    builder.Append("  errorDetails: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ErrorDetails, options, 2, false, "  errorDetails: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineInstallPatchesResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -322,6 +581,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support writing '{options.Format}' format.");
             }

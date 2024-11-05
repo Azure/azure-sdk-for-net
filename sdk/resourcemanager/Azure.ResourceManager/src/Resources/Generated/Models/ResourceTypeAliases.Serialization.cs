@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<ResourceTypeAliases>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAliases>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceTypeAliases)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ResourceTypeAliases IJsonModel<ResourceTypeAliases>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,15 +134,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
-            if (Optional.IsDefined(ResourceType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resourceType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resourceType: ");
                     if (ResourceType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,17 +157,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Aliases), out propertyOverride);
-            if (Optional.IsCollectionDefined(Aliases) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Aliases.Any() || hasPropertyOverride)
+                builder.Append("  aliases: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Aliases))
                 {
-                    builder.Append("  aliases: ");
-                    if (hasPropertyOverride)
+                    if (Aliases.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  aliases: ");
                         builder.AppendLine("[");
                         foreach (var item in Aliases)
                         {

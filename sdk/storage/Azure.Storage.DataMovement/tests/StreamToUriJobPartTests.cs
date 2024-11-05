@@ -35,27 +35,6 @@ namespace Azure.Storage.DataMovement.Tests
             return buffer;
         }
 
-        private Mock<TransferJobInternal.QueueChunkTaskInternal> GetQueueChunkTask()
-        {
-            var mock = new Mock<TransferJobInternal.QueueChunkTaskInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsAny<Func<Task>>()))
-                .Returns(Task.CompletedTask);
-            return mock;
-        }
-
-        private Mock<JobPartInternal.QueueChunkDelegate> GetPartQueueChunkTask()
-        {
-            var mock = new Mock<JobPartInternal.QueueChunkDelegate>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsAny<Func<Task>>()))
-                .Callback<Func<Task>>(
-                async (funcTask) =>
-                {
-                    await funcTask().ConfigureAwait(false);
-                })
-                .Returns(Task.CompletedTask);
-            return mock;
-        }
-
         private StorageResourceItemProperties GetResourceProperties(long length)
         {
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
@@ -150,13 +129,13 @@ namespace Azure.Storage.DataMovement.Tests
             //Arrange
             string transferId = Guid.NewGuid().ToString();
             long length = Constants.KB;
-            Mock<TransferJobInternal.QueueChunkTaskInternal> mockQueueChunkTask = GetQueueChunkTask();
-            Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = GetPartQueueChunkTask();
+            Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = MockQueueInternalTasks.GetPartQueueChunkTask();
 
             // Set up Destination to copy in one shot with a large chunk size and smaller total length.
             Mock<StorageResourceItem> mockDestination = GetServiceStorageResourceItem();
             mockDestination.Setup(resource => resource.CopyFromStreamAsync(It.IsAny<Stream>(), It.IsAny<long>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<StorageResourceWriteToOffsetOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
+            mockDestination.Setup(r => r.MaxSupportedSingleTransferSize).Returns(Constants.MB);
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(Constants.MB);
 
             // Set up source with properties and read stream
@@ -180,27 +159,26 @@ namespace Azure.Storage.DataMovement.Tests
                 source: mockSource.Object,
                 destination: mockDestination.Object);
 
-            StreamToUriTransferJob job = new(
-                new DataTransfer(
-                    id: transferId,
-                    transferManager: new TransferManager()),
+            TransferJobInternal job = new(
+                new DataTransfer(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
+                StreamToUriJobPart.CreateJobPartAsync,
+                StreamToUriJobPart.CreateJobPartAsync,
                 new DataTransferOptions(),
-                mockQueueChunkTask.Object,
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
                 job,
-                1);
+                1) as StreamToUriJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             // Act
             await jobPart.ProcessPartToChunkAsync();
 
-            // Verify
+            // Assert / Verify
             VerifyInvocation(
                 mockDestination,
                 resource => resource.CopyFromStreamAsync(
@@ -234,7 +212,9 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns(Task.CompletedTask);
             mockDestination.Setup(resource => resource.CompleteTransferAsync(It.IsAny<bool>(), It.IsAny<StorageResourceCompleteTransferOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
+            mockDestination.Setup(r => r.MaxSupportedSingleTransferSize).Returns(length - 1);
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(chunkSize);
+
             var data = GetRandomBuffer(length);
             using var stream = new MemoryStream(data);
             using var stream2 = new MemoryStream(data);
@@ -284,28 +264,28 @@ namespace Azure.Storage.DataMovement.Tests
                 source: mockSource.Object,
                 destination: mockDestination.Object);
 
-            Mock<TransferJobInternal.QueueChunkTaskInternal> mockQueueChunkTask = GetQueueChunkTask();
-            Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = GetPartQueueChunkTask();
+            Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = MockQueueInternalTasks.GetPartQueueChunkTask();
 
-            StreamToUriTransferJob job = new(
-                new DataTransfer(
-                    id: transferId,
-                    transferManager: new TransferManager()),
+            TransferJobInternal job = new(
+                new DataTransfer(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
+                StreamToUriJobPart.CreateJobPartAsync,
+                StreamToUriJobPart.CreateJobPartAsync,
                 new DataTransferOptions(),
-                mockQueueChunkTask.Object,
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
                 job,
-                1);
+                1) as StreamToUriJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
+            // Act
             await jobPart.ProcessPartToChunkAsync();
 
+            // Assert / Verify
             VerifyInvocation(
                 mockDestination,
                 resource => resource.CopyFromStreamAsync(

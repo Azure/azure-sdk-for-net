@@ -49,7 +49,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator());
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonGenerator(), groupName);
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
 

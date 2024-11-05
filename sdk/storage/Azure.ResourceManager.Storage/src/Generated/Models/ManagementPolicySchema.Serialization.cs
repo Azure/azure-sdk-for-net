@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<ManagementPolicySchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicySchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagementPolicySchema)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
             foreach (var item in Rules)
@@ -50,7 +58,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagementPolicySchema IJsonModel<ManagementPolicySchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -109,17 +116,18 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rules), out propertyOverride);
-            if (Optional.IsCollectionDefined(Rules) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Rules.Any() || hasPropertyOverride)
+                builder.Append("  rules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Rules))
                 {
-                    builder.Append("  rules: ");
-                    if (hasPropertyOverride)
+                    if (Rules.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  rules: ");
                         builder.AppendLine("[");
                         foreach (var item in Rules)
                         {

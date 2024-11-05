@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: MachineLearning
 namespace: Azure.ResourceManager.MachineLearning
-require: https://github.com/Azure/azure-rest-api-specs/blob/3eb9ec8e9c8f717c6b461c4c0f49a4662fb948fd/specification/machinelearningservices/resource-manager/readme.md
-#tag: package-preview-2023-06
+require: https://github.com/Azure/azure-rest-api-specs/blob/edb7904bfead536c7aa9716d44dba15bdabd0b00/specification/machinelearningservices/resource-manager/readme.md
+tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,6 +21,8 @@ modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
+use-write-core: true
+enable-bicep-serialization: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -99,7 +101,6 @@ request-path-to-resource-name:
 prepend-rp-prefix:
   - Feature
   - FeatureProperties
-  - LabelingJob
   - Registry
   - Webhook
   - WebhookType
@@ -108,7 +109,6 @@ prepend-rp-prefix:
 rename-mapping:
   FeaturesetContainer: MachineLearningFeatureSetContainer
   FeaturesetContainerProperties: MachineLearningFeatureSetContainerProperties
-  FeaturesetJob: MachineLearningFeatureSetJob
   FeaturesetVersion: MachineLearningFeatureSetVersion
   FeaturesetVersionBackfillRequest: FeatureSetVersionBackfillContent
   FeaturesetVersionProperties: MachineLearningFeatureSetVersionProperties
@@ -116,7 +116,6 @@ rename-mapping:
   FeaturestoreEntityContainerProperties: MachineLearningFeatureStoreEntityContainerProperties
   FeaturestoreEntityVersion: MachineLearningFeaturestoreEntityVersion
   FeaturestoreEntityVersionProperties: MachineLearningFeatureStoreEntityVersionProperties
-  FeaturestoreJobType: FeatureStoreJobType
   ComputeInstanceProperties.setupScripts: SetupScriptsSettings
   Workspace: MachineLearningWorkspace
   ComputeResource: MachineLearningCompute
@@ -141,7 +140,6 @@ rename-mapping:
   SynapseSparkProperties: MachineLearningSynapseSparkProperties
   ProvisioningState: MachineLearningProvisioningState
   ListWorkspaceKeysResult: MachineLearningWorkspaceGetKeysResult
-  ListWorkspaceKeysResult.userStorageArmId: UserStorageResourceId
   RegistryListCredentialsResult: MachineLearningContainerRegistryCredentials
   Password: MachineLearningPasswordDetail
   BatchDeploymentTrackedResource: MachineLearningBatchDeployment
@@ -191,8 +189,8 @@ rename-mapping:
   QuotaUpdateParameters: MachineLearningQuotaUpdateContent
   EncryptionProperty: MachineLearningEncryptionSetting
   EncryptionStatus: MachineLearningEncryptionStatus
-  KeyVaultProperties: MachineLearningEncryptionKeyVaultProperties
-  KeyVaultProperties.keyVaultArmId: -|arm-id
+  EncryptionKeyVaultProperties: MachineLearningEncryptionKeyVaultProperties
+  EncryptionKeyVaultProperties.keyVaultArmId: -|arm-id
   IdentityForCmk: MachineLearningCmkIdentity
   IdentityForCmk.userAssignedIdentity: -|arm-id
   NotebookResourceInfo: MachineLearningNotebookResourceInfo
@@ -205,8 +203,8 @@ rename-mapping:
   DiagnoseRequestProperties: MachineLearningWorkspaceDiagnoseProperties
   NotebookAccessTokenResult: MachineLearningWorkspaceNotebookAccessTokenResult
   ListNotebookKeysResult: MachineLearningWorkspaceGetNotebookKeysResult
-  FqdnEndpointsPropertyBag: MachineLearningFqdnEndpoints
-  FqdnEndpoints: MachineLearningFqdnEndpointsProperties
+  FqdnEndpoints: MachineLearningFqdnEndpoints
+  FqdnEndpointsProperties: MachineLearningFqdnEndpointsProperties
   ListStorageAccountKeysResult: MachineLearningWorkspaceGetStorageAccountKeysResult
   AmlUserFeature: MachineLearningUserFeature
   DatastoreCredentials: MachineLearningDatastoreCredentials
@@ -273,7 +271,7 @@ rename-mapping:
   ProvisioningStatus: MachineLearningComputeProvisioningStatus
   ScheduleBase: MachineLearningScheduleBase
   ScheduleStatus: MachineLearningScheduleStatus
-  TriggerType: MachineLearningTriggerType
+  ComputeTriggerType: MachineLearningTriggerType
   RecurrenceTrigger: MachineLearningRecurrenceTrigger
   ConnectionCategory: MachineLearningConnectionCategory
   ContainerType: MachineLearningContainerType
@@ -387,9 +385,6 @@ rename-mapping:
   OrderString: MachineLearningOrderString
   OsType: MachineLearningOSType
   PipelineJob: MachineLearningPipelineJob
-  WorkspacePrivateEndpointResource: MachineLearningPrivateEndpoint
-  WorkspacePrivateEndpointResource.id: -|arm-id
-  WorkspacePrivateEndpointResource.subnetArmId: -|arm-id
   ProbeSettings: MachineLearningProbeSettings
   PublicNetworkAccessType: MachineLearningPublicNetworkAccessType
   QuotaBaseProperties: MachineLearningQuotaProperties
@@ -443,7 +438,6 @@ rename-mapping:
   Workspace.properties.publicNetworkAccess: PublicNetworkAccessType
   WorkspaceUpdateParameters.properties.publicNetworkAccess: PublicNetworkAccessType
   AllocationState: MachineLearningAllocationState
-  FeatureResource: MachineLearningFeatureResource
   ResourceId.id: -|arm-id
   JobBase.componentId: -|arm-id
   JobBase.computeId: -|arm-id
@@ -470,7 +464,7 @@ rename-mapping:
   UserCreatedStorageAccount.armResourceId: ArmResourceIdentifier|arm-id
   Cron: ComputeStartStopCronSchedule
   Recurrence: ComputeStartStopRecurrenceSchedule
-  EndpointServiceConnectionStatus: MachineLearningPrivateEndpointServiceConnectionStatus
+  PrivateEndpointServiceConnectionStatus: MachineLearningPrivateEndpointServiceConnectionStatus
   ArmResourceId.resourceId: -|arm-id
   Workspace.properties.hubResourceId: -|arm-id
   OutboundRuleBasicResource: MachineLearningOutboundRuleBasic
@@ -481,8 +475,6 @@ rename-mapping:
   AllNodes: JobAllNodes
   Nodes: JobNodes
   AssetProvisioningState: RegistryAssetProvisioningState
-  BaseEnvironmentId: BaseEnvironmentType
-  BaseEnvironmentId.resourceId: -|arm-id
   BlobReferenceForConsumptionDto.storageAccountArmId: -|arm-id
   Collection: DataCollectionConfiguration
   Docker: DockerSetting
@@ -492,32 +484,30 @@ rename-mapping:
   ConnectionCategory.AzureSqlDb: AzureSqlDB
   ConnectionCategory.AzureMySqlDb: AzureMySqlDB
   ConnectionCategory.AzurePostgresDb: AzurePostgresDB
-  EncryptionProperty.cosmosDbResourceId: CosmosDBResourceId|arm-id
-  EncryptionProperty.searchAccountResourceId: -|arm-id
-  EncryptionProperty.storageAccountResourceId: -|arm-id
-  MLAssistConfiguration: MachineLearningAssistConfiguration
-  MLAssistConfigurationEnabled: MachineLearningAssistEnabledConfiguration
-  MlflowAutologger: MachineLearningFlowAutoLogger
-  MLFlowAutologgerState: MachineLearningFlowAutoLoggerState
-  MultiSelect: LabelCategoryMultiSelect
-  PackageRequest: ModelPackageContent
-  PackageResponse: ModelPackageResult
-  PackageInputPathId.resourceId: -|arm-id
   PrivateEndpointResource: RegistryPrivateEndpoint
   PrivateEndpointResource.subnetArmId: -|arm-id
   PrivateEndpoint: PrivateEndpointBase
   PrivateEndpoint.id: -|arm-id
   QueueSettings: JobQueueSettings
-  Ray: RayDistributionConfiguration
   RegistryPrivateEndpointConnection.id: -|arm-id
   RuleAction: NetworkingRuleAction
   RuleCategory: OutboundRuleCategory
   RuleStatus: OutboundRuleStatus
   RuleType: OutboundRuleType
-  StatusMessage: JobStatusMessage
-  StatusMessageLevel: JobStatusMessageLevel
   ImageType.azureml: AzureML
-  ProtectionLevel: IntellectualProtectionLevel
+  ServerlessComputeSettings.serverlessComputeNoPublicIP: HasNoPublicIP
+  PrivateEndpointConnection.properties.privateEndpoint: SubResource
+  MarketplacePlan: MachineLearningMarketplacePlan
+  MarketplaceSubscription: MachineLearningMarketplaceSubscription
+  MarketplaceSubscriptionProperties: MachineLearningMarketplaceSubscriptionProperties
+  ComputeRecurrenceFrequency: MachineLearningComputeRecurrenceFrequency
+  ComputeRecurrenceSchedule: MachineLearningComputeRecurrenceSchedule
+  ComputeWeekDay: MachineLearningComputeWeekDay
+  ConnectionGroup: WorkspaceConnectionGroup
+  DestinationAsset: DestinationAssetContent
+  GetBlobReferenceSASRequestDto: BlobReferenceSasContent
+  GetBlobReferenceSASResponseDto: BlobReferenceSasResult
+  ServerlessEndpoint: MachineLearningServerlessEndpoint
 
 suppress-abstract-base-class:
 - MachineLearningJobProperties

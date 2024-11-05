@@ -14,12 +14,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    [PersistableModelProxy(typeof(UnknownEventHubsApplicationGroupPolicy))]
+    [PersistableModelProxy(typeof(UnknownApplicationGroupPolicy))]
     public partial class EventHubsApplicationGroupPolicy : IUtf8JsonSerializable, IJsonModel<EventHubsApplicationGroupPolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsApplicationGroupPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsApplicationGroupPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsApplicationGroupPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,7 +36,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 throw new FormatException($"The model {nameof(EventHubsApplicationGroupPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.EventHubs.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EventHubsApplicationGroupPolicy IJsonModel<EventHubsApplicationGroupPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -77,7 +84,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     case "ThrottlingPolicy": return EventHubsThrottlingPolicy.DeserializeEventHubsThrottlingPolicy(element, options);
                 }
             }
-            return UnknownEventHubsApplicationGroupPolicy.DeserializeUnknownEventHubsApplicationGroupPolicy(element, options);
+            return UnknownApplicationGroupPolicy.DeserializeUnknownApplicationGroupPolicy(element, options);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -92,15 +99,16 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -114,13 +122,14 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationGroupPolicyType), out propertyOverride);
-            builder.Append("  type: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  type: ");
                 builder.AppendLine($"'{ApplicationGroupPolicyType.ToString()}'");
             }
 

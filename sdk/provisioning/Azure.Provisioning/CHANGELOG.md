@@ -1,14 +1,32 @@
 # Release History
 
-## 0.2.0-beta.3 (Unreleased)
+## 1.0.0 (2024-10-25)
 
 ### Features Added
 
-### Breaking Changes
+- The new Azure.Provisioning experience.
 
-### Bugs Fixed
+## 1.0.0-beta.1 (2024-10-04)
+
+### Features Added
+
+- Preview of the new Azure.Provisioning experience.
+
+## 0.3.0 (2024-05-14)
+
+### Features Added
+
+- Added support for all Bicep parameter/output types.
 
 ### Other Changes
+
+- Updated dependency on Azure Resource Manager libraries to leverage serialization fix involving property assignments.
+
+## 0.2.0 (2024-04-24)
+
+### Features Added
+
+- Initial non-beta release.
 
 ## 0.2.0-beta.2 (2024-04-09)
 

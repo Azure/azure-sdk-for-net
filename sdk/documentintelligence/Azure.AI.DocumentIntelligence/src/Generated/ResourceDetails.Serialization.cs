@@ -19,17 +19,23 @@ namespace Azure.AI.DocumentIntelligence
 
         void IJsonModel<ResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("customDocumentModels"u8);
             writer.WriteObjectValue(CustomDocumentModels, options);
-            writer.WritePropertyName("customNeuralDocumentModelBuilds"u8);
-            writer.WriteObjectValue(CustomNeuralDocumentModelBuilds, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -45,7 +51,6 @@ namespace Azure.AI.DocumentIntelligence
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ResourceDetails IJsonModel<ResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +74,6 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             CustomDocumentModelsDetails customDocumentModels = default;
-            QuotaDetails customNeuralDocumentModelBuilds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -79,18 +83,13 @@ namespace Azure.AI.DocumentIntelligence
                     customDocumentModels = CustomDocumentModelsDetails.DeserializeCustomDocumentModelsDetails(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("customNeuralDocumentModelBuilds"u8))
-                {
-                    customNeuralDocumentModelBuilds = QuotaDetails.DeserializeQuotaDetails(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds, serializedAdditionalRawData);
+            return new ResourceDetails(customDocumentModels, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceDetails>.Write(ModelReaderWriterOptions options)

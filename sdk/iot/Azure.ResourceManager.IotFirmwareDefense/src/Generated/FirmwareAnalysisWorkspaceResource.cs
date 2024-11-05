@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workspaces_GenerateUploadUrl</description>
+        /// <description>Workspaces_GenerateUploadUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workspaces_GenerateUploadUrl</description>
+        /// <description>Workspaces_GenerateUploadUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

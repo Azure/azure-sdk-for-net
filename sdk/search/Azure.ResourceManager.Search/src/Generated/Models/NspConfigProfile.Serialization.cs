@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Search.Models
 
         void IJsonModel<NspConfigProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NspConfigProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NspConfigProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -63,7 +71,6 @@ namespace Azure.ResourceManager.Search.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NspConfigProfile IJsonModel<NspConfigProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -138,15 +145,16 @@ namespace Azure.ResourceManager.Search.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -160,15 +168,16 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessRulesVersion), out propertyOverride);
-            if (Optional.IsDefined(AccessRulesVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  accessRulesVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccessRulesVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  accessRulesVersion: ");
                     if (AccessRulesVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -182,17 +191,18 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessRules), out propertyOverride);
-            if (Optional.IsCollectionDefined(AccessRules) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AccessRules.Any() || hasPropertyOverride)
+                builder.Append("  accessRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AccessRules))
                 {
-                    builder.Append("  accessRules: ");
-                    if (hasPropertyOverride)
+                    if (AccessRules.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  accessRules: ");
                         builder.AppendLine("[");
                         foreach (var item in AccessRules)
                         {

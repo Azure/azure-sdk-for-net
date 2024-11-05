@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<CapacityReservationInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CapacityReservationInstanceView)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(UtilizationInfo))
             {
                 writer.WritePropertyName("utilizationInfo"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Compute.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CapacityReservationInstanceView IJsonModel<CapacityReservationInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         void IJsonModel<WebPubSubSkuCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebPubSubSkuCapacity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
@@ -73,7 +81,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WebPubSubSkuCapacity IJsonModel<WebPubSubSkuCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -182,59 +189,63 @@ namespace Azure.ResourceManager.WebPubSub.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Minimum), out propertyOverride);
-            if (Optional.IsDefined(Minimum) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minimum: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Minimum))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minimum: ");
                     builder.AppendLine($"{Minimum.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Maximum), out propertyOverride);
-            if (Optional.IsDefined(Maximum) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maximum: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Maximum))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maximum: ");
                     builder.AppendLine($"{Maximum.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Default), out propertyOverride);
-            if (Optional.IsDefined(Default) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  default: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Default))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  default: ");
                     builder.AppendLine($"{Default.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedValues), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedValues) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedValues.Any() || hasPropertyOverride)
+                builder.Append("  allowedValues: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedValues))
                 {
-                    builder.Append("  allowedValues: ");
-                    if (hasPropertyOverride)
+                    if (AllowedValues.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedValues: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedValues)
                         {
@@ -246,15 +257,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleType), out propertyOverride);
-            if (Optional.IsDefined(ScaleType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scaleType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScaleType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scaleType: ");
                     builder.AppendLine($"'{ScaleType.Value.ToString()}'");
                 }
             }

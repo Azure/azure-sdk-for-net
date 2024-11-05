@@ -19,13 +19,31 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         void IJsonModel<NotificationHubNamespacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationHubNamespacePatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -36,11 +54,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -57,7 +70,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NotificationHubNamespacePatch IJsonModel<NotificationHubNamespacePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,12 +92,31 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
             NotificationHubSku sku = default;
+            NotificationHubNamespaceProperties properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = NotificationHubNamespaceProperties.DeserializeNotificationHubNamespaceProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -100,22 +131,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NotificationHubNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku, serializedAdditionalRawData);
+            return new NotificationHubNamespacePatch(sku, properties, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubNamespacePatch>.Write(ModelReaderWriterOptions options)

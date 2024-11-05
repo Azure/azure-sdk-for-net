@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(WafRuleType left, WafRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafRuleType"/> values are not the same. </summary>
         public static bool operator !=(WafRuleType left, WafRuleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WafRuleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WafRuleType"/>. </summary>
         public static implicit operator WafRuleType(string value) => new WafRuleType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

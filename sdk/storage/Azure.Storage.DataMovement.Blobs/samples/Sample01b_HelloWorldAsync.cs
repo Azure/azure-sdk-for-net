@@ -38,12 +38,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             try
             {
                 {
-                    TokenCredential tokenCredential =
-                    new ClientSecretCredential(
-                        ActiveDirectoryTenantId,
-                        ActiveDirectoryApplicationId,
-                        ActiveDirectoryApplicationSecret,
-                        new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+                    TokenCredential tokenCredential = new DefaultAzureCredential();
 
                     TransferManager transferManager = new TransferManager();
 
@@ -63,17 +58,17 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     // Construct simple blob resources for data movement
                     #region Snippet:ResourceConstruction_Blobs
                     StorageResource container = blobs.FromContainer(
-                        "http://myaccount.blob.core.windows.net/container");
+                        new Uri("http://myaccount.blob.core.windows.net/container"));
 
                     // Block blobs are the default if no options are specified
                     StorageResource blockBlob = blobs.FromBlob(
-                        "http://myaccount.blob.core.windows.net/container/sample-blob-block",
+                        new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-block"),
                         new BlockBlobStorageResourceOptions());
                     StorageResource pageBlob = blobs.FromBlob(
-                        "http://myaccount.blob.core.windows.net/container/sample-blob-page",
+                        new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-page"),
                         new PageBlobStorageResourceOptions());
                     StorageResource appendBlob = blobs.FromBlob(
-                        "http://myaccount.blob.core.windows.net/container/sample-blob-append",
+                        new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-append"),
                         new AppendBlobStorageResourceOptions());
                     #endregion
                 }
@@ -203,7 +198,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 LocalFilesStorageResourceProvider files = new();
 
                 // Get a reference to a destination blobs
-                string destinationBlobUri = container.GetBlockBlobClient("sample-blob").Uri.ToString();
+                Uri destinationBlobUri = container.GetBlockBlobClient("sample-blob").Uri;
                 TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 
                 // Create simple transfer single blob upload job
@@ -260,7 +255,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             {
                 // Get a reference to a source blobs and upload sample content to download
                 BlockBlobClient sourceBlobClient = container.GetBlockBlobClient("sample-blob");
-                string sourceBlobUri = sourceBlobClient.Uri.ToString();
+                Uri sourceBlobUri = sourceBlobClient.Uri;
                 BlockBlobClient sourceBlob2 = container.GetBlockBlobClient("sample-blob2");
 
                 using (FileStream stream = File.Open(originalPath, FileMode.Open))
@@ -357,7 +352,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             // Make a service request to verify we've successfully authenticated
             await blobContainerClient.CreateIfNotExistsAsync();
-            string blobContainerUri = blobContainerClient.Uri.ToString();
+            Uri blobContainerUri = blobContainerClient.Uri;
 
             // Prepare for upload
             try
@@ -384,7 +379,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         new BlobStorageResourceContainerOptions()
                         {
                             // Block blobs are the default if not specified
-                            BlobType = BlobType.Block,
+                            BlobType = new(BlobType.Block),
                             BlobDirectoryPrefix = optionalDestinationPrefix,
                         }));
                 #endregion
@@ -612,12 +607,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             // Create a token credential that can use our Azure Active
             // Directory application to authenticate with Azure Storage
-            TokenCredential credential =
-                new ClientSecretCredential(
-                    ActiveDirectoryTenantId,
-                    ActiveDirectoryApplicationId,
-                    ActiveDirectoryApplicationSecret,
-                    new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+            TokenCredential credential = new DefaultAzureCredential();
 
             // Create a client that can authenticate using our token credential
             BlobServiceClient service = new BlobServiceClient(ActiveDirectoryBlobUri, credential);
@@ -625,7 +615,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient blobContainerClient = service.GetBlobContainerClient(containerName);
-            string blobContainerUri = blobContainerClient.Uri.ToString();
+            Uri blobContainerUri = blobContainerClient.Uri;
 
             // Make a service request to verify we've successfully authenticated
             await blobContainerClient.CreateIfNotExistsAsync();
@@ -720,7 +710,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             {
                 // Get a reference to a destination blobs
                 BlockBlobClient sourceBlockBlobClient = container.GetBlockBlobClient("sample-blob");
-                string sourceBlobUri = sourceBlockBlobClient.Uri.ToString();
+                Uri sourceBlobUri = sourceBlockBlobClient.Uri;
 
                 using (FileStream stream = File.Open(originalPath, FileMode.Open))
                 {
@@ -729,7 +719,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 }
 
                 AppendBlobClient destinationAppendBlobClient = container.GetAppendBlobClient("sample-blob2");
-                string destinationBlobUri = destinationAppendBlobClient.Uri.ToString();
+                Uri destinationBlobUri = destinationAppendBlobClient.Uri;
 
                 // Upload file data
                 TransferManager transferManager = new TransferManager(default);
@@ -787,8 +777,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // Create a client that can authenticate with a connection string
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
             BlobContainerClient container = service.GetBlobContainerClient(containerName);
-            string sourceContainerUri = container.Uri.ToString();
-            string destinationContainerUri = container.Uri.ToString();
+            Uri sourceContainerUri = container.Uri;
+            Uri destinationContainerUri = container.Uri;
 
             // Make a service request to verify we've successfully authenticated
             await container.CreateIfNotExistsAsync();
@@ -846,7 +836,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     {
                         // all source blobs will be copied as a single type of destination blob
                         // defaults to block blobs if unspecified
-                        BlobType = BlobType.Block,
+                        BlobType = new(BlobType.Block),
                         BlobDirectoryPrefix = downloadPath
                     }));
                 await dataTransfer.WaitForCompletionAsync();
@@ -882,12 +872,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create a token credential that can use our Azure Active
                 // Directory application to authenticate with Azure Storage
-                TokenCredential tokenCredential =
-                new ClientSecretCredential(
-                    ActiveDirectoryTenantId,
-                    ActiveDirectoryApplicationId,
-                    ActiveDirectoryApplicationSecret,
-                    new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+                TokenCredential tokenCredential = new DefaultAzureCredential();
 
                 // Create transfer manager
                 #region Snippet:SetupTransferManagerForResume

@@ -42,7 +42,7 @@ namespace Azure.Communication.JobRouter
         public static bool operator ==(WorkerSelectorAttachmentKind left, WorkerSelectorAttachmentKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkerSelectorAttachmentKind"/> values are not the same. </summary>
         public static bool operator !=(WorkerSelectorAttachmentKind left, WorkerSelectorAttachmentKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkerSelectorAttachmentKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkerSelectorAttachmentKind"/>. </summary>
         public static implicit operator WorkerSelectorAttachmentKind(string value) => new WorkerSelectorAttachmentKind(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.Communication.JobRouter
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

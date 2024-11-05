@@ -33,7 +33,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static bool operator ==(ImportStatus left, ImportStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImportStatus"/> values are not the same. </summary>
         public static bool operator !=(ImportStatus left, ImportStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImportStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImportStatus"/>. </summary>
         public static implicit operator ImportStatus(string value) => new ImportStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

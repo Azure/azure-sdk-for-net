@@ -24,6 +24,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics
                     Subscribed = Convert.ToBoolean(subscribedValue);
                 }
 
+                if (responseHeaders?.TryGetValue("x-ms-qps-service-polling-interval-hint", out string? pollingInterval) ?? false)
+                {
+                    PollingIntervalMilliseconds = Convert.ToInt32(pollingInterval);
+                }
+
                 CollectionConfigurationInfo = info;
             }
         }
@@ -31,6 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics
         public bool Success { get; }
         public string? ConfigurationEtag { get; }
         public bool Subscribed { get; }
+        public int? PollingIntervalMilliseconds { get; }
         public CollectionConfigurationInfo? CollectionConfigurationInfo { get; }
     }
 }

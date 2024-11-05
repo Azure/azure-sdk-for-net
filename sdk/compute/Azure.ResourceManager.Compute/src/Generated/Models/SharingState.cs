@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(SharingState left, SharingState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SharingState"/> values are not the same. </summary>
         public static bool operator !=(SharingState left, SharingState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SharingState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SharingState"/>. </summary>
         public static implicit operator SharingState(string value) => new SharingState(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         void IJsonModel<PinholeTimeouts>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PinholeTimeouts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Tcp))
             {
                 writer.WritePropertyName("tcp"u8);
@@ -56,7 +65,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PinholeTimeouts IJsonModel<PinholeTimeouts>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -122,6 +130,66 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new PinholeTimeouts(tcp, udp, icmp, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tcp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tcp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Tcp))
+                {
+                    builder.Append("  tcp: ");
+                    builder.AppendLine($"{Tcp.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Udp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  udp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Udp))
+                {
+                    builder.Append("  udp: ");
+                    builder.AppendLine($"{Udp.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Icmp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  icmp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Icmp))
+                {
+                    builder.Append("  icmp: ");
+                    builder.AppendLine($"{Icmp.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PinholeTimeouts>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PinholeTimeouts>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +198,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support writing '{options.Format}' format.");
             }

@@ -122,7 +122,7 @@ namespace Azure.Maps.Routing
         public Azure.Maps.Routing.RouteDirectionParameters RouteDirectionParameters { get { throw null; } set { } }
         public Azure.Maps.Routing.RouteRepresentationForBestOrder? RouteRepresentationForBestOrder { get { throw null; } set { } }
         public Azure.Maps.Routing.RouteType? RouteType { get { throw null; } set { } }
-        public Azure.Maps.Routing.SectionType? SectionFilter { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Maps.Routing.SectionType> SectionFilter { get { throw null; } }
         public bool? ShouldReportEffectiveSettings { get { throw null; } set { } }
         public Azure.Maps.Routing.TravelMode? TravelMode { get { throw null; } set { } }
         public Azure.Maps.Routing.TravelTimeType? TravelTimeType { get { throw null; } set { } }
@@ -183,7 +183,7 @@ namespace Azure.Maps.Routing
         public Azure.Maps.Routing.InclineLevel? InclineLevel { get { throw null; } set { } }
         public Azure.Maps.Routing.RouteMatrixQuery Query { get { throw null; } }
         public Azure.Maps.Routing.RouteType? RouteType { get { throw null; } set { } }
-        public Azure.Maps.Routing.SectionType? SectionFilter { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Maps.Routing.SectionType> SectionFilter { get { throw null; } }
         public Azure.Maps.Routing.TravelMode? TravelMode { get { throw null; } set { } }
         public Azure.Maps.Routing.TravelTimeType? TravelTimeType { get { throw null; } set { } }
         public bool? UseTrafficData { get { throw null; } set { } }
@@ -755,7 +755,7 @@ namespace Azure.Maps.Routing.Models
         public int? PointIndex { get { throw null; } }
         public bool? PossibleCombineWithNext { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RoadNumbers { get { throw null; } }
-        public string RoundaboutExitNumber { get { throw null; } }
+        public long? RoundaboutExitNumber { get { throw null; } }
         public int? RouteOffsetInMeters { get { throw null; } }
         public string SignpostText { get { throw null; } }
         public string StateCode { get { throw null; } }

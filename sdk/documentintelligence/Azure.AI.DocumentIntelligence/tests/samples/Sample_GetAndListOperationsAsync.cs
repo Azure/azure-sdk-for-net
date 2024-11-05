@@ -13,8 +13,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task GetAndListOperationsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), TestEnvironment.Credential);
 
             // Build a custom model to make sure that there is at least one operation.
             string modelId = Guid.NewGuid().ToString();

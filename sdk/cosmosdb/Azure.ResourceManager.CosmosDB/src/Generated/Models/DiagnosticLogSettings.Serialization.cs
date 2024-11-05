@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<DiagnosticLogSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticLogSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiagnosticLogSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(EnableFullTextQuery))
             {
                 writer.WritePropertyName("enableFullTextQuery"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DiagnosticLogSettings IJsonModel<DiagnosticLogSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -105,15 +112,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableFullTextQuery), out propertyOverride);
-            if (Optional.IsDefined(EnableFullTextQuery) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enableFullTextQuery: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableFullTextQuery))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enableFullTextQuery: ");
                     builder.AppendLine($"'{EnableFullTextQuery.Value.ToSerialString()}'");
                 }
             }

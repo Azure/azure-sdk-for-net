@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceManagedClusterManagedClustersRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterOperationSource(Client), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterOperationSource(Client), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterOperationSource(Client), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterOperationSource(Client), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceManagedClusterManagedClustersRestClient.ResetServicePrincipalProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterServicePrincipalProfile, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetServicePrincipalProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterServicePrincipalProfile).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetServicePrincipalProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterServicePrincipalProfile).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1021,7 +1021,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.ResetServicePrincipalProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterServicePrincipalProfile, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetServicePrincipalProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterServicePrincipalProfile).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetServicePrincipalProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterServicePrincipalProfile).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1042,7 +1042,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedClusters_ResetAADProfile</description>
+        /// <description>ManagedClusters_ResetAadProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1067,7 +1067,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceManagedClusterManagedClustersRestClient.ResetAadProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetAadProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetAadProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1088,7 +1088,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedClusters_ResetAADProfile</description>
+        /// <description>ManagedClusters_ResetAadProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1113,7 +1113,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.ResetAadProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetAadProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetAadProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1155,7 +1155,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceManagedClusterManagedClustersRestClient.RotateClusterCertificatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRotateClusterCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRotateClusterCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.RotateClusterCertificates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRotateClusterCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRotateClusterCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1407,7 +1407,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceManagedClusterManagedClustersRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1491,7 +1491,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceManagedClusterManagedClustersRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1533,7 +1533,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1579,7 +1579,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceManagedClusterManagedClustersRestClient.RunCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ManagedClusterRunCommandResult>(new ManagedClusterRunCommandResultOperationSource(), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation<ManagedClusterRunCommandResult>(new ManagedClusterRunCommandResultOperationSource(), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1625,7 +1625,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.RunCommand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ManagedClusterRunCommandResult>(new ManagedClusterRunCommandResultOperationSource(), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation<ManagedClusterRunCommandResult>(new ManagedClusterRunCommandResultOperationSource(), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1902,7 +1902,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResolvePrivateLinkServiceId_POST</description>
+        /// <description>ResolvePrivateLinkServiceId_Post</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1940,7 +1940,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResolvePrivateLinkServiceId_POST</description>
+        /// <description>ResolvePrivateLinkServiceId_Post</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(Mode left, Mode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Mode"/> values are not the same. </summary>
         public static bool operator !=(Mode left, Mode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="Mode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="Mode"/>. </summary>
         public static implicit operator Mode(string value) => new Mode(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The provisioning state. </summary>
+    /// <summary> private cloud provisioning state. </summary>
     public readonly partial struct AvsPrivateCloudProvisioningState : IEquatable<AvsPrivateCloudProvisioningState>
     {
         private readonly string _value;
@@ -24,34 +24,34 @@ namespace Azure.ResourceManager.Avs.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
         private const string CancelledValue = "Cancelled";
         private const string PendingValue = "Pending";
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
-        private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static AvsPrivateCloudProvisioningState Succeeded { get; } = new AvsPrivateCloudProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static AvsPrivateCloudProvisioningState Failed { get; } = new AvsPrivateCloudProvisioningState(FailedValue);
-        /// <summary> Cancelled. </summary>
-        public static AvsPrivateCloudProvisioningState Cancelled { get; } = new AvsPrivateCloudProvisioningState(CancelledValue);
-        /// <summary> Pending. </summary>
-        public static AvsPrivateCloudProvisioningState Pending { get; } = new AvsPrivateCloudProvisioningState(PendingValue);
-        /// <summary> Building. </summary>
-        public static AvsPrivateCloudProvisioningState Building { get; } = new AvsPrivateCloudProvisioningState(BuildingValue);
-        /// <summary> Deleting. </summary>
-        public static AvsPrivateCloudProvisioningState Deleting { get; } = new AvsPrivateCloudProvisioningState(DeletingValue);
-        /// <summary> Updating. </summary>
-        public static AvsPrivateCloudProvisioningState Updating { get; } = new AvsPrivateCloudProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static AvsPrivateCloudProvisioningState Canceled { get; } = new AvsPrivateCloudProvisioningState(CanceledValue);
+        /// <summary> is cancelled. </summary>
+        public static AvsPrivateCloudProvisioningState Cancelled { get; } = new AvsPrivateCloudProvisioningState(CancelledValue);
+        /// <summary> is pending. </summary>
+        public static AvsPrivateCloudProvisioningState Pending { get; } = new AvsPrivateCloudProvisioningState(PendingValue);
+        /// <summary> is building. </summary>
+        public static AvsPrivateCloudProvisioningState Building { get; } = new AvsPrivateCloudProvisioningState(BuildingValue);
+        /// <summary> is deleting. </summary>
+        public static AvsPrivateCloudProvisioningState Deleting { get; } = new AvsPrivateCloudProvisioningState(DeletingValue);
+        /// <summary> is updating. </summary>
+        public static AvsPrivateCloudProvisioningState Updating { get; } = new AvsPrivateCloudProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="AvsPrivateCloudProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AvsPrivateCloudProvisioningState left, AvsPrivateCloudProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsPrivateCloudProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AvsPrivateCloudProvisioningState left, AvsPrivateCloudProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvsPrivateCloudProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsPrivateCloudProvisioningState"/>. </summary>
         public static implicit operator AvsPrivateCloudProvisioningState(string value) => new AvsPrivateCloudProvisioningState(value);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

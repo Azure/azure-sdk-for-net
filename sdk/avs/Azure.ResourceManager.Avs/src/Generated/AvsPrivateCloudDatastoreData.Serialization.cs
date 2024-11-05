@@ -22,33 +22,22 @@ namespace Azure.ResourceManager.Avs
 
         void IJsonModel<AvsPrivateCloudDatastoreData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudDatastoreData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvsPrivateCloudDatastoreData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -66,26 +55,15 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("diskPoolVolume"u8);
                 writer.WriteObjectValue(DiskPoolVolume, options);
             }
+            if (Optional.IsDefined(ElasticSanVolume))
+            {
+                writer.WritePropertyName("elasticSanVolume"u8);
+                writer.WriteObjectValue(ElasticSanVolume, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
             writer.WriteEndObject();
         }
@@ -117,6 +95,7 @@ namespace Azure.ResourceManager.Avs
             AvsPrivateCloudDatastoreProvisioningState? provisioningState = default;
             WritableSubResource netAppVolume = default;
             DiskPoolVolume diskPoolVolume = default;
+            ElasticSanVolume elasticSanVolume = default;
             DatastoreStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -182,6 +161,15 @@ namespace Azure.ResourceManager.Avs
                             diskPoolVolume = DiskPoolVolume.DeserializeDiskPoolVolume(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("elasticSanVolume"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            elasticSanVolume = ElasticSanVolume.DeserializeElasticSanVolume(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -208,6 +196,7 @@ namespace Azure.ResourceManager.Avs
                 provisioningState,
                 netAppVolume,
                 diskPoolVolume,
+                elasticSanVolume,
                 status,
                 serializedAdditionalRawData);
         }

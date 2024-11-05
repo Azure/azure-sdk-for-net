@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CassandraClusterCommand>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterCommand>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CassandraClusterCommand)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
@@ -99,7 +107,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CassandraClusterCommand IJsonModel<CassandraClusterCommand>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -238,15 +245,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Command), out propertyOverride);
-            if (Optional.IsDefined(Command) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  command: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Command))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  command: ");
                     if (Command.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -260,15 +268,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommandId), out propertyOverride);
-            if (Optional.IsDefined(CommandId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  commandId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommandId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  commandId: ");
                     if (CommandId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -282,29 +291,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Arguments), out propertyOverride);
-            if (Optional.IsDefined(Arguments) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  arguments: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Arguments))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  arguments: ");
                     builder.AppendLine($"'{Arguments.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Host), out propertyOverride);
-            if (Optional.IsDefined(Host) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  host: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Host))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  host: ");
                     if (Host.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -318,60 +329,64 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAdmin), out propertyOverride);
-            if (Optional.IsDefined(IsAdmin) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isAdmin: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAdmin))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isAdmin: ");
                     var boolValue = IsAdmin.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShouldStopCassandraBeforeStart), out propertyOverride);
-            if (Optional.IsDefined(ShouldStopCassandraBeforeStart) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  cassandraStopStart: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShouldStopCassandraBeforeStart))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  cassandraStopStart: ");
                     var boolValue = ShouldStopCassandraBeforeStart.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsReadWrite), out propertyOverride);
-            if (Optional.IsDefined(IsReadWrite) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  readWrite: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsReadWrite))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  readWrite: ");
                     var boolValue = IsReadWrite.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Result), out propertyOverride);
-            if (Optional.IsDefined(Result) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  result: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Result))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  result: ");
                     if (Result.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -385,29 +400,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     builder.AppendLine($"'{Status.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutputFile), out propertyOverride);
-            if (Optional.IsDefined(OutputFile) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  outputFile: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OutputFile))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  outputFile: ");
                     if (OutputFile.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

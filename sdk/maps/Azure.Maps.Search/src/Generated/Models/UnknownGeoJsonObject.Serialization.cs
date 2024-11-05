@@ -5,38 +5,45 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class UnknownGeoJsonObject : IUtf8JsonSerializable
+    internal partial class UnknownGeoJsonObject
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static UnknownGeoJsonObject DeserializeUnknownGeoJsonObject(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            GeoJsonObjectType type = default;
+            GeoJsonObjectType type = "Unknown";
+            IReadOnlyList<double> boundingBox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    type = new GeoJsonObjectType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("boundingBox"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<double> array = new List<double>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetDouble());
+                    }
+                    boundingBox = array;
                     continue;
                 }
             }
-            return new UnknownGeoJsonObject(type);
+            return new UnknownGeoJsonObject(type, boundingBox ?? new ChangeTrackingList<double>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
@@ -45,14 +52,6 @@ namespace Azure.Maps.Search.Models
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeUnknownGeoJsonObject(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

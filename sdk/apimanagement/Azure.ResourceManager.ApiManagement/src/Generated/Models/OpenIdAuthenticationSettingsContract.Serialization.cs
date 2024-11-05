@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +21,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         void IJsonModel<OpenIdAuthenticationSettingsContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<OpenIdAuthenticationSettingsContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OpenIdAuthenticationSettingsContract)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(OpenIdProviderId))
             {
                 writer.WritePropertyName("openidProviderId"u8);
@@ -56,7 +66,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         OpenIdAuthenticationSettingsContract IJsonModel<OpenIdAuthenticationSettingsContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -113,6 +122,67 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new OpenIdAuthenticationSettingsContract(openidProviderId, bearerTokenSendingMethods ?? new ChangeTrackingList<BearerTokenSendingMethod>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OpenIdProviderId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  openidProviderId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OpenIdProviderId))
+                {
+                    builder.Append("  openidProviderId: ");
+                    if (OpenIdProviderId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OpenIdProviderId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OpenIdProviderId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BearerTokenSendingMethods), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bearerTokenSendingMethods: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
+                {
+                    if (BearerTokenSendingMethods.Any())
+                    {
+                        builder.Append("  bearerTokenSendingMethods: ");
+                        builder.AppendLine("[");
+                        foreach (var item in BearerTokenSendingMethods)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<OpenIdAuthenticationSettingsContract>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OpenIdAuthenticationSettingsContract>)this).GetFormatFromOptions(options) : options.Format;
@@ -121,6 +191,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(OpenIdAuthenticationSettingsContract)} does not support writing '{options.Format}' format.");
             }

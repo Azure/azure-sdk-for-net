@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         void IJsonModel<ApplicationInsightsComponentAvailableFeatures>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAvailableFeatures>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationInsightsComponentAvailableFeatures)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsCollectionDefined(Result))
             {
                 writer.WritePropertyName("Result"u8);
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ApplicationInsightsComponentAvailableFeatures IJsonModel<ApplicationInsightsComponentAvailableFeatures>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,17 +123,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Result), out propertyOverride);
-            if (Optional.IsCollectionDefined(Result) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Result.Any() || hasPropertyOverride)
+                builder.Append("  Result: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Result))
                 {
-                    builder.Append("  Result: ");
-                    if (hasPropertyOverride)
+                    if (Result.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  Result: ");
                         builder.AppendLine("[");
                         foreach (var item in Result)
                         {

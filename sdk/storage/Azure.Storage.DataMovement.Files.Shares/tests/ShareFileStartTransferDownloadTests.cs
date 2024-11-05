@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+extern alias BaseShares;
 
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Tests;
+using BaseShares::Azure.Storage.Files.Shares;
 using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
-    [ShareClientTestFixture]
+    [DataMovementShareClientTestFixture]
     public class ShareFileStartTransferDownloadTests : StartTransferDownloadTestBase<
         ShareServiceClient,
         ShareClient,

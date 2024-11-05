@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator ==(DynatraceSsoStatus left, DynatraceSsoStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceSsoStatus"/> values are not the same. </summary>
         public static bool operator !=(DynatraceSsoStatus left, DynatraceSsoStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DynatraceSsoStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynatraceSsoStatus"/>. </summary>
         public static implicit operator DynatraceSsoStatus(string value) => new DynatraceSsoStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<AppServiceCorsSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceCorsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppServiceCorsSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedOrigins))
             {
                 writer.WritePropertyName("allowedOrigins"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppServiceCorsSettings IJsonModel<AppServiceCorsSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -131,17 +138,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedOrigins), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedOrigins) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedOrigins.Any() || hasPropertyOverride)
+                builder.Append("  allowedOrigins: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedOrigins))
                 {
-                    builder.Append("  allowedOrigins: ");
-                    if (hasPropertyOverride)
+                    if (AllowedOrigins.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedOrigins: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedOrigins)
                         {
@@ -166,15 +174,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsCredentialsSupported), out propertyOverride);
-            if (Optional.IsDefined(IsCredentialsSupported) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  supportCredentials: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsCredentialsSupported))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  supportCredentials: ");
                     var boolValue = IsCredentialsSupported.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

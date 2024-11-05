@@ -46,7 +46,7 @@ namespace Azure.AI.AnomalyDetector
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ModelState"/>. </summary>
-        public ModelState()
+        internal ModelState()
         {
             EpochIds = new ChangeTrackingList<int>();
             TrainLosses = new ChangeTrackingList<float>();
@@ -69,7 +69,7 @@ namespace Azure.AI.AnomalyDetector
         /// </param>
         /// <param name="latenciesInSeconds"> Latency for each epoch. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ModelState(IList<int> epochIds, IList<float> trainLosses, IList<float> validationLosses, IList<float> latenciesInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ModelState(IReadOnlyList<int> epochIds, IReadOnlyList<float> trainLosses, IReadOnlyList<float> validationLosses, IReadOnlyList<float> latenciesInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EpochIds = epochIds;
             TrainLosses = trainLosses;
@@ -82,18 +82,18 @@ namespace Azure.AI.AnomalyDetector
         /// Number of passes of the entire training dataset that the
         /// algorithm has completed.
         /// </summary>
-        public IList<int> EpochIds { get; }
+        public IReadOnlyList<int> EpochIds { get; }
         /// <summary>
         /// List of metrics used to assess how the model fits the training data for each
         /// epoch.
         /// </summary>
-        public IList<float> TrainLosses { get; }
+        public IReadOnlyList<float> TrainLosses { get; }
         /// <summary>
         /// List of metrics used to assess how the model fits the validation set for each
         /// epoch.
         /// </summary>
-        public IList<float> ValidationLosses { get; }
+        public IReadOnlyList<float> ValidationLosses { get; }
         /// <summary> Latency for each epoch. </summary>
-        public IList<float> LatenciesInSeconds { get; }
+        public IReadOnlyList<float> LatenciesInSeconds { get; }
     }
 }

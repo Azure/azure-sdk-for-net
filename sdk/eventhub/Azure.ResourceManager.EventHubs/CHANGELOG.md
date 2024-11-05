@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.6 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,41 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2024-10-15)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.1.0 (2024-06-14)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-01-preview' to 'package-2024-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a8c212bc18177ac4891ec93aa7b4c5c834c156e4/specification/eventhub/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.25.0 to 1.40.0
+- Upgraded Azure.ResourceManager from 1.2.0 to 1.12.0
+
+## 1.1.0-beta.8 (2024-05-07)
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.1.0-beta.7 (2024-04-30)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2022-10-preview' to 'package-2023-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/01ae995b35fa5d29433d57bcc0ff508ae8f4bbcc/specification/eventhub/resource-manager/readme.md
+
+## 1.1.0-beta.6 (2024-04-29)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ## 1.1.0-beta.5 (2024-03-26)
 

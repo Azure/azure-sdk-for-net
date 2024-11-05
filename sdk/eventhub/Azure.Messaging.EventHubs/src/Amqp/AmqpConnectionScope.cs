@@ -359,7 +359,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             try
             {
-                EventHubsEventSource.Log.AmqpConsumerLinkCreateStart(EventHubName, consumerGroup, partitionId, ownerLevelLog, eventPositionLog);
+                EventHubsEventSource.Log.AmqpConsumerLinkCreateStart(EventHubName, consumerGroup, partitionId, ownerLevelLog, eventPositionLog, linkIdentifier);
 
                 var stopWatch = ValueStopwatch.StartNew();
                 var consumerEndpoint = new Uri(ServiceEndpoint, string.Format(CultureInfo.InvariantCulture, ConsumerPathSuffixMask, EventHubName, consumerGroup, partitionId));
@@ -393,12 +393,12 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.AmqpConsumerLinkCreateError(EventHubName, consumerGroup, partitionId, ownerLevelLog, eventPositionLog, ex.Message);
+                EventHubsEventSource.Log.AmqpConsumerLinkCreateError(EventHubName, consumerGroup, partitionId, ownerLevelLog, eventPositionLog, ex.Message, linkIdentifier);
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.AmqpConsumerLinkCreateComplete(EventHubName, consumerGroup, partitionId, ownerLevelLog, eventPositionLog);
+                EventHubsEventSource.Log.AmqpConsumerLinkCreateComplete(EventHubName, consumerGroup, partitionId, ownerLevelLog, eventPositionLog, linkIdentifier);
             }
         }
 
@@ -431,7 +431,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             try
             {
-                EventHubsEventSource.Log.AmqpProducerLinkCreateStart(EventHubName, partitionId, featuresLog);
+                EventHubsEventSource.Log.AmqpProducerLinkCreateStart(EventHubName, partitionId, featuresLog, linkIdentifier);
 
                 var stopWatch = ValueStopwatch.StartNew();
                 var path = (string.IsNullOrEmpty(partitionId)) ? EventHubName : string.Format(CultureInfo.InvariantCulture, PartitionProducerPathSuffixMask, EventHubName, partitionId);
@@ -454,12 +454,12 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.AmqpProducerLinkCreateError(EventHubName, partitionId, featuresLog, ex.Message);
+                EventHubsEventSource.Log.AmqpProducerLinkCreateError(EventHubName, partitionId, featuresLog, ex.Message, linkIdentifier);
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.AmqpProducerLinkCreateComplete(EventHubName, partitionId, featuresLog);
+                EventHubsEventSource.Log.AmqpProducerLinkCreateComplete(EventHubName, partitionId, featuresLog, linkIdentifier);
             }
         }
 

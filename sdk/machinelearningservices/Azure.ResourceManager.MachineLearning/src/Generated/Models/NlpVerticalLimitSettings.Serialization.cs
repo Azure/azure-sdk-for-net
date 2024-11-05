@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,37 +20,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<NlpVerticalLimitSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NlpVerticalLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MaxConcurrentTrials))
+            if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("maxConcurrentTrials"u8);
-                writer.WriteNumberValue(MaxConcurrentTrials.Value);
-            }
-            if (Optional.IsDefined(MaxNodes))
-            {
-                writer.WritePropertyName("maxNodes"u8);
-                writer.WriteNumberValue(MaxNodes.Value);
+                writer.WritePropertyName("timeout"u8);
+                writer.WriteStringValue(Timeout.Value, "P");
             }
             if (Optional.IsDefined(MaxTrials))
             {
                 writer.WritePropertyName("maxTrials"u8);
                 writer.WriteNumberValue(MaxTrials.Value);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(MaxConcurrentTrials))
             {
-                writer.WritePropertyName("timeout"u8);
-                writer.WriteStringValue(Timeout.Value, "P");
-            }
-            if (Optional.IsDefined(TrialTimeout))
-            {
-                writer.WritePropertyName("trialTimeout"u8);
-                writer.WriteStringValue(TrialTimeout.Value, "P");
+                writer.WritePropertyName("maxConcurrentTrials"u8);
+                writer.WriteNumberValue(MaxConcurrentTrials.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -66,7 +65,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NlpVerticalLimitSettings IJsonModel<NlpVerticalLimitSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -89,31 +87,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            int? maxConcurrentTrials = default;
-            int? maxNodes = default;
-            int? maxTrials = default;
             TimeSpan? timeout = default;
-            TimeSpan? trialTimeout = default;
+            int? maxTrials = default;
+            int? maxConcurrentTrials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxConcurrentTrials"u8))
+                if (property.NameEquals("timeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxConcurrentTrials = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("maxNodes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxNodes = property.Value.GetInt32();
+                    timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("maxTrials"u8))
@@ -125,22 +112,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     maxTrials = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeout"u8))
+                if (property.NameEquals("maxConcurrentTrials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeout = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("trialTimeout"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    trialTimeout = property.Value.GetTimeSpan("P");
+                    maxConcurrentTrials = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,13 +127,68 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NlpVerticalLimitSettings(
-                maxConcurrentTrials,
-                maxNodes,
-                maxTrials,
-                timeout,
-                trialTimeout,
-                serializedAdditionalRawData);
+            return new NlpVerticalLimitSettings(timeout, maxTrials, maxConcurrentTrials, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timeout), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timeout))
+                {
+                    builder.Append("  timeout: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(Timeout.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxTrials), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxTrials: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxTrials))
+                {
+                    builder.Append("  maxTrials: ");
+                    builder.AppendLine($"{MaxTrials.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxConcurrentTrials), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxConcurrentTrials: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxConcurrentTrials))
+                {
+                    builder.Append("  maxConcurrentTrials: ");
+                    builder.AppendLine($"{MaxConcurrentTrials.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<NlpVerticalLimitSettings>.Write(ModelReaderWriterOptions options)
@@ -166,6 +199,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support writing '{options.Format}' format.");
             }

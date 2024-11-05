@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CassandraSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CassandraSchema)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
@@ -73,7 +81,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CassandraSchema IJsonModel<CassandraSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -166,17 +173,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Columns), out propertyOverride);
-            if (Optional.IsCollectionDefined(Columns) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Columns.Any() || hasPropertyOverride)
+                builder.Append("  columns: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Columns))
                 {
-                    builder.Append("  columns: ");
-                    if (hasPropertyOverride)
+                    if (Columns.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  columns: ");
                         builder.AppendLine("[");
                         foreach (var item in Columns)
                         {
@@ -188,17 +196,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(PartitionKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PartitionKeys.Any() || hasPropertyOverride)
+                builder.Append("  partitionKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PartitionKeys))
                 {
-                    builder.Append("  partitionKeys: ");
-                    if (hasPropertyOverride)
+                    if (PartitionKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  partitionKeys: ");
                         builder.AppendLine("[");
                         foreach (var item in PartitionKeys)
                         {
@@ -210,17 +219,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(ClusterKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ClusterKeys.Any() || hasPropertyOverride)
+                builder.Append("  clusterKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ClusterKeys))
                 {
-                    builder.Append("  clusterKeys: ");
-                    if (hasPropertyOverride)
+                    if (ClusterKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  clusterKeys: ");
                         builder.AppendLine("[");
                         foreach (var item in ClusterKeys)
                         {

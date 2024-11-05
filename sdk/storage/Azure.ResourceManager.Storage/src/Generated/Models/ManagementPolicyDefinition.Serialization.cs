@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<ManagementPolicyDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagementPolicyDefinition)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("actions"u8);
             writer.WriteObjectValue(Actions, options);
             if (Optional.IsDefined(Filters))
@@ -49,7 +57,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagementPolicyDefinition IJsonModel<ManagementPolicyDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -113,29 +120,31 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Actions), out propertyOverride);
-            if (Optional.IsDefined(Actions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  actions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Actions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  actions: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Actions, options, 2, false, "  actions: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Filters), out propertyOverride);
-            if (Optional.IsDefined(Filters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  filters: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Filters))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  filters: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Filters, options, 2, false, "  filters: ");
                 }
             }

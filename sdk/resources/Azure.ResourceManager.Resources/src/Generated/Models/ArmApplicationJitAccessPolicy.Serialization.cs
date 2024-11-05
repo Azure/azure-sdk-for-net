@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<ArmApplicationJitAccessPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationJitAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("jitAccessEnabled"u8);
             writer.WriteBooleanValue(JitAccessEnabled);
             if (Optional.IsDefined(JitApprovalMode))
@@ -65,7 +73,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ArmApplicationJitAccessPolicy IJsonModel<ArmApplicationJitAccessPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -154,43 +161,46 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitAccessEnabled), out propertyOverride);
-            builder.Append("  jitAccessEnabled: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  jitAccessEnabled: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  jitAccessEnabled: ");
                 var boolValue = JitAccessEnabled == true ? "true" : "false";
                 builder.AppendLine($"{boolValue}");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitApprovalMode), out propertyOverride);
-            if (Optional.IsDefined(JitApprovalMode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  jitApprovalMode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JitApprovalMode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  jitApprovalMode: ");
                     builder.AppendLine($"'{JitApprovalMode.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitApprovers), out propertyOverride);
-            if (Optional.IsCollectionDefined(JitApprovers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (JitApprovers.Any() || hasPropertyOverride)
+                builder.Append("  jitApprovers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(JitApprovers))
                 {
-                    builder.Append("  jitApprovers: ");
-                    if (hasPropertyOverride)
+                    if (JitApprovers.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  jitApprovers: ");
                         builder.AppendLine("[");
                         foreach (var item in JitApprovers)
                         {
@@ -202,15 +212,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumJitAccessDuration), out propertyOverride);
-            if (Optional.IsDefined(MaximumJitAccessDuration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maximumJitAccessDuration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumJitAccessDuration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maximumJitAccessDuration: ");
                     var formattedTimeSpan = TypeFormatters.ToString(MaximumJitAccessDuration.Value, "P");
                     builder.AppendLine($"'{formattedTimeSpan}'");
                 }

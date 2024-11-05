@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<ConsistencyPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ConsistencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("defaultConsistencyLevel"u8);
             writer.WriteStringValue(DefaultConsistencyLevel.ToSerialString());
             if (Optional.IsDefined(MaxStalenessPrefix))
@@ -54,7 +62,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ConsistencyPolicy IJsonModel<ConsistencyPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -128,40 +135,43 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultConsistencyLevel), out propertyOverride);
-            builder.Append("  defaultConsistencyLevel: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  defaultConsistencyLevel: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  defaultConsistencyLevel: ");
                 builder.AppendLine($"'{DefaultConsistencyLevel.ToSerialString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxStalenessPrefix), out propertyOverride);
-            if (Optional.IsDefined(MaxStalenessPrefix) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxStalenessPrefix: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxStalenessPrefix))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxStalenessPrefix: ");
                     builder.AppendLine($"'{MaxStalenessPrefix.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxIntervalInSeconds), out propertyOverride);
-            if (Optional.IsDefined(MaxIntervalInSeconds) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxIntervalInSeconds: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxIntervalInSeconds))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxIntervalInSeconds: ");
                     builder.AppendLine($"{MaxIntervalInSeconds.Value}");
                 }
             }

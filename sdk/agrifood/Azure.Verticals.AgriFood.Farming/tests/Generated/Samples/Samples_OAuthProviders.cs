@@ -23,7 +23,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Response response = client.GetOAuthProvider("<oauthProviderId>", null);
 
@@ -37,7 +37,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Response response = await client.GetOAuthProviderAsync("<oauthProviderId>", null);
 
@@ -51,7 +51,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Response response = client.GetOAuthProvider("<oauthProviderId>", null);
 
@@ -77,7 +77,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Response response = await client.GetOAuthProviderAsync("<oauthProviderId>", null);
 
@@ -103,7 +103,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<oauthProviderId>", content);
@@ -118,7 +118,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<oauthProviderId>", content);
@@ -133,7 +133,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -172,7 +172,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -211,7 +211,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Response response = client.Delete("<oauthProviderId>");
 
@@ -224,7 +224,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Response response = await client.DeleteAsync("<oauthProviderId>");
 
@@ -237,7 +237,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Response response = client.Delete("<oauthProviderId>");
 
@@ -250,7 +250,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Response response = await client.DeleteAsync("<oauthProviderId>");
 
@@ -263,7 +263,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -277,7 +277,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -291,7 +291,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -319,7 +319,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -347,7 +347,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             foreach (BinaryData item in client.GetOAuthProviders(null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -362,7 +362,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             await foreach (BinaryData item in client.GetOAuthProvidersAsync(null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -377,7 +377,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             foreach (BinaryData item in client.GetOAuthProviders(new string[] { "<providerIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -404,7 +404,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             await foreach (BinaryData item in client.GetOAuthProvidersAsync(new string[] { "<providerIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -431,7 +431,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<oauthProviderId>", null);
             BinaryData responseData = operation.Value;
@@ -446,7 +446,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<oauthProviderId>", null);
             BinaryData responseData = operation.Value;
@@ -461,7 +461,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<oauthProviderId>", null);
             BinaryData responseData = operation.Value;
@@ -490,7 +490,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
+            OAuthProviders client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient();
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<oauthProviderId>", null);
             BinaryData responseData = operation.Value;

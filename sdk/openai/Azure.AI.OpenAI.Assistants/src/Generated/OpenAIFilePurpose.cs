@@ -39,7 +39,7 @@ namespace Azure.AI.OpenAI.Assistants
         public static bool operator ==(OpenAIFilePurpose left, OpenAIFilePurpose right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OpenAIFilePurpose"/> values are not the same. </summary>
         public static bool operator !=(OpenAIFilePurpose left, OpenAIFilePurpose right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OpenAIFilePurpose"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OpenAIFilePurpose"/>. </summary>
         public static implicit operator OpenAIFilePurpose(string value) => new OpenAIFilePurpose(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

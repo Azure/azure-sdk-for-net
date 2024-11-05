@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +21,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         void IJsonModel<ContainerRegistryEncodedTaskStep>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("encodedTaskContent"u8);
             writer.WriteStringValue(EncodedTaskContent);
             if (Optional.IsDefined(EncodedValuesContent))
@@ -43,44 +54,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ContainerRegistryTaskStepType.ToString());
-            if (options.Format != "W" && Optional.IsCollectionDefined(BaseImageDependencies))
-            {
-                writer.WritePropertyName("baseImageDependencies"u8);
-                writer.WriteStartArray();
-                foreach (var item in BaseImageDependencies)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ContextPath))
-            {
-                writer.WritePropertyName("contextPath"u8);
-                writer.WriteStringValue(ContextPath);
-            }
-            if (Optional.IsDefined(ContextAccessToken))
-            {
-                writer.WritePropertyName("contextAccessToken"u8);
-                writer.WriteStringValue(ContextAccessToken);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         ContainerRegistryEncodedTaskStep IJsonModel<ContainerRegistryEncodedTaskStep>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -184,6 +157,171 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncodedTaskContent), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  encodedTaskContent: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncodedTaskContent))
+                {
+                    builder.Append("  encodedTaskContent: ");
+                    if (EncodedTaskContent.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EncodedTaskContent}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EncodedTaskContent}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncodedValuesContent), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  encodedValuesContent: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncodedValuesContent))
+                {
+                    builder.Append("  encodedValuesContent: ");
+                    if (EncodedValuesContent.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EncodedValuesContent}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EncodedValuesContent}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Values), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  values: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Values))
+                {
+                    if (Values.Any())
+                    {
+                        builder.Append("  values: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Values)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  values: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerRegistryTaskStepType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  type: ");
+                builder.AppendLine($"'{ContainerRegistryTaskStepType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseImageDependencies), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  baseImageDependencies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BaseImageDependencies))
+                {
+                    if (BaseImageDependencies.Any())
+                    {
+                        builder.Append("  baseImageDependencies: ");
+                        builder.AppendLine("[");
+                        foreach (var item in BaseImageDependencies)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  baseImageDependencies: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContextPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contextPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContextPath))
+                {
+                    builder.Append("  contextPath: ");
+                    if (ContextPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContextPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContextPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContextAccessToken), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contextAccessToken: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContextAccessToken))
+                {
+                    builder.Append("  contextAccessToken: ");
+                    if (ContextAccessToken.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContextAccessToken}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContextAccessToken}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerRegistryEncodedTaskStep>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskStep>)this).GetFormatFromOptions(options) : options.Format;
@@ -192,6 +330,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support writing '{options.Format}' format.");
             }

@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<PolicyDefinitionReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PolicyDefinitionReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PolicyDefinitionReference)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("policyDefinitionId"u8);
             writer.WriteStringValue(PolicyDefinitionId);
             if (Optional.IsCollectionDefined(Parameters))
@@ -71,7 +79,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PolicyDefinitionReference IJsonModel<PolicyDefinitionReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -161,15 +168,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyDefinitionId), out propertyOverride);
-            if (Optional.IsDefined(PolicyDefinitionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  policyDefinitionId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PolicyDefinitionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  policyDefinitionId: ");
                     if (PolicyDefinitionId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -183,17 +191,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
-            if (Optional.IsCollectionDefined(Parameters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Parameters.Any() || hasPropertyOverride)
+                builder.Append("  parameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Parameters))
                 {
-                    builder.Append("  parameters: ");
-                    if (hasPropertyOverride)
+                    if (Parameters.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  parameters: ");
                         builder.AppendLine("{");
                         foreach (var item in Parameters)
                         {
@@ -206,15 +215,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyDefinitionReferenceId), out propertyOverride);
-            if (Optional.IsDefined(PolicyDefinitionReferenceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  policyDefinitionReferenceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PolicyDefinitionReferenceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  policyDefinitionReferenceId: ");
                     if (PolicyDefinitionReferenceId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -228,17 +238,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupNames), out propertyOverride);
-            if (Optional.IsCollectionDefined(GroupNames) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (GroupNames.Any() || hasPropertyOverride)
+                builder.Append("  groupNames: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(GroupNames))
                 {
-                    builder.Append("  groupNames: ");
-                    if (hasPropertyOverride)
+                    if (GroupNames.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  groupNames: ");
                         builder.AppendLine("[");
                         foreach (var item in GroupNames)
                         {

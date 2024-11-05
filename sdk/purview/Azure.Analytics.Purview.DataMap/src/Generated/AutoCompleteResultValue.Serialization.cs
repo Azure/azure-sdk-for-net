@@ -19,13 +19,21 @@ namespace Azure.Analytics.Purview.DataMap
 
         void IJsonModel<AutoCompleteResultValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AutoCompleteResultValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoCompleteResultValue)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
@@ -51,7 +59,6 @@ namespace Azure.Analytics.Purview.DataMap
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AutoCompleteResultValue IJsonModel<AutoCompleteResultValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

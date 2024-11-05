@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Sql.Models
 
         void IJsonModel<SqlScheduleItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SqlScheduleItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlScheduleItem)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("startDay"u8);
             writer.WriteStringValue(StartDay.ToString());
             writer.WritePropertyName("startTime"u8);
@@ -50,7 +58,6 @@ namespace Azure.ResourceManager.Sql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SqlScheduleItem IJsonModel<SqlScheduleItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -122,26 +129,28 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartDay), out propertyOverride);
-            builder.Append("  startDay: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  startDay: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  startDay: ");
                 builder.AppendLine($"'{StartDay.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTime), out propertyOverride);
-            if (Optional.IsDefined(StartTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  startTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  startTime: ");
                     if (StartTime.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -155,26 +164,28 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StopDay), out propertyOverride);
-            builder.Append("  stopDay: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  stopDay: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  stopDay: ");
                 builder.AppendLine($"'{StopDay.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StopTime), out propertyOverride);
-            if (Optional.IsDefined(StopTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  stopTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StopTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  stopTime: ");
                     if (StopTime.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

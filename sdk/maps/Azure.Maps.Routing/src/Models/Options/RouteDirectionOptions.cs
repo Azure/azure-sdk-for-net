@@ -68,7 +68,7 @@ namespace Azure.Maps.Routing
         public bool? ShouldReportEffectiveSettings { get; set; }
 
         /// <summary> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </summary>
-        public SectionType? SectionFilter { get; set; }
+        public IList<SectionType> SectionFilter { get; } = new List<SectionType>();
 
         /// <summary> The type of route requested. </summary>
         public RouteType? RouteType { get; set; }

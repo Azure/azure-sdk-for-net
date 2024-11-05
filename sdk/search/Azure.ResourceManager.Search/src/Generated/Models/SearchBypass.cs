@@ -24,16 +24,19 @@ namespace Azure.ResourceManager.Search.Models
 
         private const string NoneValue = "None";
         private const string AzurePortalValue = "AzurePortal";
+        private const string AzureServicesValue = "AzureServices";
 
         /// <summary> Indicates that no origin can bypass the rules defined in the 'ipRules' section. This is the default. </summary>
         public static SearchBypass None { get; } = new SearchBypass(NoneValue);
         /// <summary> Indicates that requests originating from the Azure portal can bypass the rules defined in the 'ipRules' section. </summary>
         public static SearchBypass AzurePortal { get; } = new SearchBypass(AzurePortalValue);
+        /// <summary> Indicates that requests originating from Azure trusted services can bypass the rules defined in the 'ipRules' section. </summary>
+        public static SearchBypass AzureServices { get; } = new SearchBypass(AzureServicesValue);
         /// <summary> Determines if two <see cref="SearchBypass"/> values are the same. </summary>
         public static bool operator ==(SearchBypass left, SearchBypass right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchBypass"/> values are not the same. </summary>
         public static bool operator !=(SearchBypass left, SearchBypass right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchBypass"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchBypass"/>. </summary>
         public static implicit operator SearchBypass(string value) => new SearchBypass(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

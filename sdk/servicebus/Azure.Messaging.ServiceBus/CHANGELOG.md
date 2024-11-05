@@ -1,6 +1,6 @@
 # Release History
 
-## 7.18.0-beta.1 (Unreleased)
+## 7.19.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,65 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 7.18.2 (2024-10-08)
+
+### Other Changes
+
+- Enhanced the logs emitted when acquiring a session with `ServiceBusClient` times out or is canceled.  As these are known and expected exception conditions, they are now correctly logged as verbose information rather than an error.  Previously, these scenarios were special-cased for processors, but receivers were treated as standard errors.  Going forward, the processor and client/receiver scenarios are handled consistently.
+
+## 7.18.1 (2024-07-31)
+
+### Other Changes
+
+- Bump `Azure.Core.Amqp` dependency to 1.3.1, which includes a fix to serialization of binary application properties.
+
+## 7.18.0 (2024-07-18)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Martin Costello _([GitHub](https://github.com/martincostello))_
+
+### Bugs Fixed
+
+- Fixed an issue that caused connection strings using host names without a scheme to fail parsing and be considered invalid.
+
+- Fixed an issue where the scheduled enqueue time was not cleared when creating a new message from a received message.
+
+- Fixed an issue that prevented relative URIs from being used with [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `ServiceBusMessage.ApplicationProperties` and `ServiceBusReceivedMessage.ApplicationProperties` collections.
+
+- Fixed an issue that caused `ServiceBusMessageBatch` to accept more than the allowed 1mb batch limit when sending to Service Bus entities with large message sizes enabled.
+
 - Fixed issue where the `SupportOrdering` property was not being respected when set on `CreateTopicOptions`.
 
 ### Other Changes
+
+- The client will now refresh the maximum message size each time a new AMQP link is opened; this is necessary for large message support, where the maximum message size for entities can be reconfigureed adjusted on the fly.  Because the client had cached the value, it would not be aware of the change and would enforce the wrong size for batch creation.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains a fix for decoding messages with a null format code as the body.
+
+- Improved efficiency of subclient creation, reducing allocations when no explicit options are passed.
+
+- Reduced the number of allocations of various option types. _(A community contribution, courtesy of [martincostello](https://github.com/martincostello))_
+
+## 7.18.0-beta.1 (2024-05-08)
+
+### Features Added
+
+- `ServiceBusReceiver` now supports the ability to delete all messages from an entity using the `PurgeMessagesAsync` method.  Callers may optionally request to limit the target messages to those earlier than a given date.
+
+- `ServiceBusReceiver` now supports the ability to delete messages from an entity in batches using the `DeleteMessagesAsync` method.  The messages selected for deletion will be the oldest in the entity, based on the enqueued date and callers may optionally request to limit them to only those earlier than a given date.
+
+### Bugs Fixed
+
+- Fixed issue where the `SupportOrdering` property was not being respected when set on `CreateTopicOptions`.
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.6, which includes a bug fix for an internal `NullReferenceException` that would sometimes impact creating new links. _(see: [#258](https://github.com/azure/azure-amqp/issues/258))_
 
 ## 7.17.5 (2024-04-09)
 

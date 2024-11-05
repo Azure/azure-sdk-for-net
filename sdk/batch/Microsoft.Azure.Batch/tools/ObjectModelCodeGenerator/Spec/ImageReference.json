@@ -1,0 +1,96 @@
+{
+  "Name": "ImageReference",
+  "ProtocolName": "Models.ImageReference",
+  "SummaryComment": "A reference to an Azure Virtual Machines Marketplace Image or a Azure Compute Gallery Image. To get the list of all Azure Marketplace Image references verified by Azure Batch, see the 'List Supported Images' operation.",
+  "Properties": [
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "Offer",
+        "SummaryComment": "The offer type of the Azure Virtual Machines Marketplace Image.",
+        "RemarksComment": "For example, UbuntuServer or WindowsServer.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "Publisher",
+        "SummaryComment": "The publisher of the Azure Virtual Machines Marketplace Image.",
+        "RemarksComment": "For example, Canonical or MicrosoftWindowsServer.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "Sku",
+        "SummaryComment": "The SKU of the Azure Virtual Machines Marketplace Image.",
+        "RemarksComment": "For example, 18.04-LTS or 2019-Datacenter.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "Version",
+        "SummaryComment": "The version of the Azure Virtual Machines Marketplace Image.",
+        "RemarksComment": "If this property is not specified, it defaults to 'latest', which is the latest version of the image.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "VirtualMachineImageId",
+        "SummaryComment": "The ARM resource identifier of the Azure Compute Gallery Image. Compute Nodes in the Pool will be created using this Image Id. This is of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{VersionId} or /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName} for always defaulting to the latest image version.",
+        "RemarksComment": "This property is mutually exclusive with other ImageReference properties. The Azure Compute Gallery Image must have replicas in the same region and must be in the same subscription as the Azure Batch account. If the image version is not specified in the imageId, the latest version will be used. For information about the firewall settings for the Batch Compute Node agent to communicate with the Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "ExactVersion",
+        "SummaryComment": "The specific version of the platform image or marketplace image used to create the node. This read-only field differs from 'version' only if the value specified for 'version' when the pool was created was 'latest'.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read",
+        "HideSetter": true
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "SharedGalleryImageId",
+        "SummaryComment": "Gets or sets the shared gallery image unique identifier",
+        "RemarksComment": "This property is mutually exclusive with other properties and can be fetched from shared gallery image GET call.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "CommunityGalleryImageId",
+        "SummaryComment": "Gets or sets the community gallery image unique identifier",
+        "RemarksComment": "This property is mutually exclusive with other properties and can be fetched from community gallery image GET call.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    }
+  ]
+}

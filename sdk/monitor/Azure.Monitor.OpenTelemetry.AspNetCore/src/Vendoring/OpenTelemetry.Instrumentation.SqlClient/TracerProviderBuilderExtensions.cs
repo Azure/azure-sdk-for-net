@@ -1,8 +1,6 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
-#nullable disable
-
 #if NET6_0_OR_GREATER
 using System.Diagnostics.CodeAnalysis;
 #endif
@@ -57,8 +55,8 @@ internal static class TracerProviderBuilderExtensions
 
     public static TracerProviderBuilder AddSqlClientInstrumentation(
         this TracerProviderBuilder builder,
-        string name,
-        Action<SqlClientTraceInstrumentationOptions> configureSqlClientTraceInstrumentationOptions)
+        string? name,
+        Action<SqlClientTraceInstrumentationOptions>? configureSqlClientTraceInstrumentationOptions)
     {
         Guard.ThrowIfNull(builder);
 

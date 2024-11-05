@@ -22,13 +22,22 @@ namespace Azure.ResourceManager.Compute
 
         void IJsonModel<VirtualMachineScaleSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineScaleSetData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -64,45 +73,17 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
                 writer.WriteObjectValue(UpgradePolicy, options);
+            }
+            if (Optional.IsDefined(ScheduledEventsPolicy))
+            {
+                writer.WritePropertyName("scheduledEventsPolicy"u8);
+                writer.WriteObjectValue(ScheduledEventsPolicy, options);
             }
             if (Optional.IsDefined(AutomaticRepairsPolicy))
             {
@@ -199,21 +180,15 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("resiliencyPolicy"u8);
                 writer.WriteObjectValue(ResiliencyPolicy, options);
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(ZonalPlatformFaultDomainAlignMode))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("zonalPlatformFaultDomainAlignMode"u8);
+                writer.WriteStringValue(ZonalPlatformFaultDomainAlignMode.Value.ToString());
+            }
+            if (Optional.IsDefined(SkuProfile))
+            {
+                writer.WritePropertyName("skuProfile"u8);
+                writer.WriteObjectValue(SkuProfile, options);
             }
             writer.WriteEndObject();
         }
@@ -251,6 +226,7 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             SystemData systemData = default;
             VirtualMachineScaleSetUpgradePolicy upgradePolicy = default;
+            ScheduledEventsPolicy scheduledEventsPolicy = default;
             AutomaticRepairsPolicy automaticRepairsPolicy = default;
             VirtualMachineScaleSetVmProfile virtualMachineProfile = default;
             string provisioningState = default;
@@ -270,6 +246,8 @@ namespace Azure.ResourceManager.Compute
             DateTimeOffset? timeCreated = default;
             bool? constrainedMaximumCapacity = default;
             ResiliencyPolicy resiliencyPolicy = default;
+            ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
+            ComputeSkuProfile skuProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -388,6 +366,15 @@ namespace Azure.ResourceManager.Compute
                                 continue;
                             }
                             upgradePolicy = VirtualMachineScaleSetUpgradePolicy.DeserializeVirtualMachineScaleSetUpgradePolicy(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("scheduledEventsPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("automaticRepairsPolicy"u8))
@@ -553,6 +540,24 @@ namespace Azure.ResourceManager.Compute
                             resiliencyPolicy = ResiliencyPolicy.DeserializeResiliencyPolicy(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("zonalPlatformFaultDomainAlignMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            zonalPlatformFaultDomainAlignMode = new ZonalPlatformFaultDomainAlignMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("skuProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            skuProfile = ComputeSkuProfile.DeserializeComputeSkuProfile(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -576,6 +581,7 @@ namespace Azure.ResourceManager.Compute
                 extendedLocation,
                 etag,
                 upgradePolicy,
+                scheduledEventsPolicy,
                 automaticRepairsPolicy,
                 virtualMachineProfile,
                 provisioningState,
@@ -595,6 +601,8 @@ namespace Azure.ResourceManager.Compute
                 timeCreated,
                 constrainedMaximumCapacity,
                 resiliencyPolicy,
+                zonalPlatformFaultDomainAlignMode,
+                skuProfile,
                 serializedAdditionalRawData);
         }
 

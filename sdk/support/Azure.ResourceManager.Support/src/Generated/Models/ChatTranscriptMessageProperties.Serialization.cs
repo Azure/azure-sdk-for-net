@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Support.Models
 
         void IJsonModel<ChatTranscriptMessageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ChatTranscriptMessageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
@@ -41,8 +49,11 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WritePropertyName("sender"u8);
                 writer.WriteStringValue(Sender);
             }
-            writer.WritePropertyName("body"u8);
-            writer.WriteStringValue(Body);
+            if (Optional.IsDefined(Body))
+            {
+                writer.WritePropertyName("body"u8);
+                writer.WriteStringValue(Body);
+            }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
@@ -63,7 +74,6 @@ namespace Azure.ResourceManager.Support.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ChatTranscriptMessageProperties IJsonModel<ChatTranscriptMessageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

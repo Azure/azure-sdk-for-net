@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -21,13 +20,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<ArmDeploymentOperationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningOperation))
             {
                 writer.WritePropertyName("provisioningOperation"u8);
@@ -100,7 +107,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ArmDeploymentOperationProperties IJsonModel<ArmDeploymentOperationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -245,37 +251,34 @@ namespace Azure.ResourceManager.Resources.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningOperation), out propertyOverride);
-            if (Optional.IsDefined(ProvisioningOperation) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  provisioningOperation: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningOperation))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  provisioningOperation: ");
                     builder.AppendLine($"'{ProvisioningOperation.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  provisioningState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  provisioningState: ");
                     if (ProvisioningState.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -289,45 +292,48 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
-            if (Optional.IsDefined(Timestamp) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  timestamp: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timestamp))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  timestamp: ");
                     var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Duration), out propertyOverride);
-            if (Optional.IsDefined(Duration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  duration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Duration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  duration: ");
                     var formattedTimeSpan = TypeFormatters.ToString(Duration.Value, "P");
                     builder.AppendLine($"'{formattedTimeSpan}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceRequestId), out propertyOverride);
-            if (Optional.IsDefined(ServiceRequestId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serviceRequestId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceRequestId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serviceRequestId: ");
                     if (ServiceRequestId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -341,15 +347,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusCode), out propertyOverride);
-            if (Optional.IsDefined(StatusCode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  statusCode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StatusCode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  statusCode: ");
                     if (StatusCode.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -363,85 +370,73 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusMessage), out propertyOverride);
-            if (Optional.IsDefined(StatusMessage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  statusMessage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StatusMessage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  statusMessage: ");
                     BicepSerializationHelpers.AppendChildObject(builder, StatusMessage, options, 2, false, "  statusMessage: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetResource), out propertyOverride);
-            if (Optional.IsDefined(TargetResource) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  targetResource: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetResource))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  targetResource: ");
                     BicepSerializationHelpers.AppendChildObject(builder, TargetResource, options, 2, false, "  targetResource: ");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Request), out propertyOverride);
-            if (Optional.IsDefined(Request) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RequestContent", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  request: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    content: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Request))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  request: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Request, options, 2, false, "  request: ");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Response), out propertyOverride);
-            if (Optional.IsDefined(Response) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ResponseContent", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  response: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    content: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Response))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  response: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Response, options, 2, false, "  response: ");
                 }
             }
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "RequestContent":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("Content", item.Value);
-                        bicepOptions.PropertyOverrides.Add(Request, propertyDictionary);
-                        break;
-                    case "ResponseContent":
-                        Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
-                        propertyDictionary0.Add("Content", item.Value);
-                        bicepOptions.PropertyOverrides.Add(Response, propertyDictionary0);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<ArmDeploymentOperationProperties>.Write(ModelReaderWriterOptions options)

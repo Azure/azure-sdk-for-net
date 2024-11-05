@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         void IJsonModel<ManagedClusterStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterStorageProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DiskCsiDriver))
             {
                 writer.WritePropertyName("diskCSIDriver"u8);
@@ -61,7 +70,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagedClusterStorageProfile IJsonModel<ManagedClusterStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -137,6 +145,93 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterStorageProfile(diskCsiDriver, fileCsiDriver, snapshotController, blobCsiDriver, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  diskCSIDriver: ");
+                builder.AppendLine("{");
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(DiskCsiDriver))
+                {
+                    builder.Append("  diskCSIDriver: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DiskCsiDriver, options, 2, false, "  diskCSIDriver: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fileCSIDriver: ");
+                builder.AppendLine("{");
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(FileCsiDriver))
+                {
+                    builder.Append("  fileCSIDriver: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FileCsiDriver, options, 2, false, "  fileCSIDriver: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  snapshotController: ");
+                builder.AppendLine("{");
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SnapshotController))
+                {
+                    builder.Append("  snapshotController: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SnapshotController, options, 2, false, "  snapshotController: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  blobCSIDriver: ");
+                builder.AppendLine("{");
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(BlobCsiDriver))
+                {
+                    builder.Append("  blobCSIDriver: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BlobCsiDriver, options, 2, false, "  blobCSIDriver: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedClusterStorageProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +240,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterStorageProfile)} does not support writing '{options.Format}' format.");
             }

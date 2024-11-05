@@ -22,45 +22,26 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         void IJsonModel<EventHubsNetworkSecurityPerimeterConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsNetworkSecurityPerimeterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventHubsNetworkSecurityPerimeterConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -94,21 +75,30 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WritePropertyName("profile"u8);
                 writer.WriteObjectValue(Profile, options);
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && Optional.IsDefined(IsBackingResource))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("isBackingResource"u8);
+                writer.WriteBooleanValue(IsBackingResource.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApplicableFeatures))
+            {
+                writer.WritePropertyName("applicableFeatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApplicableFeatures)
                 {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteStringValue(item);
                 }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ParentAssociationName))
+            {
+                writer.WritePropertyName("parentAssociationName"u8);
+                writer.WriteStringValue(ParentAssociationName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceResourceId))
+            {
+                writer.WritePropertyName("sourceResourceId"u8);
+                writer.WriteStringValue(SourceResourceId);
             }
             writer.WriteEndObject();
         }
@@ -133,8 +123,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -144,26 +133,20 @@ namespace Azure.ResourceManager.EventHubs.Models
             EventHubsNetworkSecurityPerimeter networkSecurityPerimeter = default;
             EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = default;
             EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile profile = default;
+            bool? isBackingResource = default;
+            IReadOnlyList<string> applicableFeatures = default;
+            string parentAssociationName = default;
+            ResourceIdentifier sourceResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
@@ -250,6 +233,43 @@ namespace Azure.ResourceManager.EventHubs.Models
                             profile = EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile.DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("isBackingResource"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isBackingResource = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("applicableFeatures"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            applicableFeatures = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("parentAssociationName"u8))
+                        {
+                            parentAssociationName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("sourceResourceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -264,13 +284,16 @@ namespace Azure.ResourceManager.EventHubs.Models
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 provisioningState,
                 provisioningIssues ?? new ChangeTrackingList<EventHubsProvisioningIssue>(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,
+                isBackingResource,
+                applicableFeatures ?? new ChangeTrackingList<string>(),
+                parentAssociationName,
+                sourceResourceId,
+                location,
                 serializedAdditionalRawData);
         }
 
@@ -286,15 +309,16 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -308,76 +332,46 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
-                builder.AppendLine($"'{Location.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (Optional.IsCollectionDefined(Tags) || hasPropertyOverride)
-            {
-                if (Tags.Any() || hasPropertyOverride)
+                if (Optional.IsDefined(Location))
                 {
-                    builder.Append("  tags: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -385,31 +379,33 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    provisioningState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    provisioningState: ");
                     builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningIssues), out propertyOverride);
-            if (Optional.IsCollectionDefined(ProvisioningIssues) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ProvisioningIssues.Any() || hasPropertyOverride)
+                builder.Append("    provisioningIssues: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ProvisioningIssues))
                 {
-                    builder.Append("    provisioningIssues: ");
-                    if (hasPropertyOverride)
+                    if (ProvisioningIssues.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    provisioningIssues: ");
                         builder.AppendLine("[");
                         foreach (var item in ProvisioningIssues)
                         {
@@ -421,44 +417,137 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkSecurityPerimeter), out propertyOverride);
-            if (Optional.IsDefined(NetworkSecurityPerimeter) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    networkSecurityPerimeter: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkSecurityPerimeter))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    networkSecurityPerimeter: ");
                     BicepSerializationHelpers.AppendChildObject(builder, NetworkSecurityPerimeter, options, 4, false, "    networkSecurityPerimeter: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceAssociation), out propertyOverride);
-            if (Optional.IsDefined(ResourceAssociation) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    resourceAssociation: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceAssociation))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    resourceAssociation: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ResourceAssociation, options, 4, false, "    resourceAssociation: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Profile), out propertyOverride);
-            if (Optional.IsDefined(Profile) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    profile: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Profile))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    profile: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Profile, options, 4, false, "    profile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsBackingResource), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isBackingResource: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsBackingResource))
+                {
+                    builder.Append("    isBackingResource: ");
+                    var boolValue = IsBackingResource.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicableFeatures), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    applicableFeatures: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ApplicableFeatures))
+                {
+                    if (ApplicableFeatures.Any())
+                    {
+                        builder.Append("    applicableFeatures: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ApplicableFeatures)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParentAssociationName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    parentAssociationName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ParentAssociationName))
+                {
+                    builder.Append("    parentAssociationName: ");
+                    if (ParentAssociationName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ParentAssociationName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ParentAssociationName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sourceResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceResourceId))
+                {
+                    builder.Append("    sourceResourceId: ");
+                    builder.AppendLine($"'{SourceResourceId.ToString()}'");
                 }
             }
 

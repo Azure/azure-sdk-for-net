@@ -19,13 +19,21 @@ namespace Azure.AI.Translation.Text
 
         void IJsonModel<BreakSentenceItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BreakSentenceItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BreakSentenceItem)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
@@ -33,7 +41,7 @@ namespace Azure.AI.Translation.Text
             }
             writer.WritePropertyName("sentLen"u8);
             writer.WriteStartArray();
-            foreach (var item in SentLen)
+            foreach (var item in SentencesLengths)
             {
                 writer.WriteNumberValue(item);
             }
@@ -53,7 +61,6 @@ namespace Azure.AI.Translation.Text
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BreakSentenceItem IJsonModel<BreakSentenceItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

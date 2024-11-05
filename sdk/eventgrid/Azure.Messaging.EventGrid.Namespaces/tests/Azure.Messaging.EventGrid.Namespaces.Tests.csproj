@@ -11,16 +11,13 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Messaging.EventGrid.Namespaces.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="CloudNative.CloudEvents.SystemTextJson" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         void IJsonModel<KeyVaultAccessPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyVaultAccessPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("objectId"u8);
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         KeyVaultAccessPolicy IJsonModel<KeyVaultAccessPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -129,26 +136,28 @@ namespace Azure.ResourceManager.KeyVault.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            builder.Append("  tenantId: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  tenantId: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  tenantId: ");
                 builder.AppendLine($"'{TenantId.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObjectId), out propertyOverride);
-            if (Optional.IsDefined(ObjectId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  objectId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ObjectId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  objectId: ");
                     if (ObjectId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -162,29 +171,31 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationId), out propertyOverride);
-            if (Optional.IsDefined(ApplicationId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  applicationId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  applicationId: ");
                     builder.AppendLine($"'{ApplicationId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permissions), out propertyOverride);
-            if (Optional.IsDefined(Permissions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  permissions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Permissions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  permissions: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Permissions, options, 2, false, "  permissions: ");
                 }
             }

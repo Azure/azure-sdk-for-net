@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<BlobInventoryPolicyFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BlobInventoryPolicyFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IncludePrefix))
             {
                 writer.WritePropertyName("prefixMatch"u8);
@@ -73,6 +81,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("includeDeleted"u8);
                 writer.WriteBooleanValue(IncludeDeleted.Value);
             }
+            if (Optional.IsDefined(CreationTime))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteObjectValue(CreationTime, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +101,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BlobInventoryPolicyFilter IJsonModel<BlobInventoryPolicyFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -117,6 +129,7 @@ namespace Azure.ResourceManager.Storage.Models
             bool? includeBlobVersions = default;
             bool? includeSnapshots = default;
             bool? includeDeleted = default;
+            BlobInventoryCreationTime creationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,6 +203,15 @@ namespace Azure.ResourceManager.Storage.Models
                     includeDeleted = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("creationTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    creationTime = BlobInventoryCreationTime.DeserializeBlobInventoryCreationTime(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -203,6 +225,7 @@ namespace Azure.ResourceManager.Storage.Models
                 includeBlobVersions,
                 includeSnapshots,
                 includeDeleted,
+                creationTime,
                 serializedAdditionalRawData);
         }
 
@@ -218,17 +241,18 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludePrefix), out propertyOverride);
-            if (Optional.IsCollectionDefined(IncludePrefix) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (IncludePrefix.Any() || hasPropertyOverride)
+                builder.Append("  prefixMatch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IncludePrefix))
                 {
-                    builder.Append("  prefixMatch: ");
-                    if (hasPropertyOverride)
+                    if (IncludePrefix.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  prefixMatch: ");
                         builder.AppendLine("[");
                         foreach (var item in IncludePrefix)
                         {
@@ -253,17 +277,18 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludePrefix), out propertyOverride);
-            if (Optional.IsCollectionDefined(ExcludePrefix) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ExcludePrefix.Any() || hasPropertyOverride)
+                builder.Append("  excludePrefix: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExcludePrefix))
                 {
-                    builder.Append("  excludePrefix: ");
-                    if (hasPropertyOverride)
+                    if (ExcludePrefix.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  excludePrefix: ");
                         builder.AppendLine("[");
                         foreach (var item in ExcludePrefix)
                         {
@@ -288,17 +313,18 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobTypes), out propertyOverride);
-            if (Optional.IsCollectionDefined(BlobTypes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (BlobTypes.Any() || hasPropertyOverride)
+                builder.Append("  blobTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BlobTypes))
                 {
-                    builder.Append("  blobTypes: ");
-                    if (hasPropertyOverride)
+                    if (BlobTypes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  blobTypes: ");
                         builder.AppendLine("[");
                         foreach (var item in BlobTypes)
                         {
@@ -323,47 +349,68 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludeBlobVersions), out propertyOverride);
-            if (Optional.IsDefined(IncludeBlobVersions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  includeBlobVersions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IncludeBlobVersions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  includeBlobVersions: ");
                     var boolValue = IncludeBlobVersions.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludeSnapshots), out propertyOverride);
-            if (Optional.IsDefined(IncludeSnapshots) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  includeSnapshots: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IncludeSnapshots))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  includeSnapshots: ");
                     var boolValue = IncludeSnapshots.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludeDeleted), out propertyOverride);
-            if (Optional.IsDefined(IncludeDeleted) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  includeDeleted: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IncludeDeleted))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  includeDeleted: ");
                     var boolValue = IncludeDeleted.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CreationTimeLastNDays", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  creationTime: ");
+                builder.AppendLine("{");
+                builder.Append("    lastNDays: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(CreationTime))
+                {
+                    builder.Append("  creationTime: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CreationTime, options, 2, false, "  creationTime: ");
                 }
             }
 

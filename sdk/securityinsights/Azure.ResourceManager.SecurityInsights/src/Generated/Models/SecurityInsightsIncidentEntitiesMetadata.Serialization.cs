@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,17 +20,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         void IJsonModel<SecurityInsightsIncidentEntitiesMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentEntitiesMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsIncidentEntitiesMetadata)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("count"u8);
-            writer.WriteNumberValue(Count);
             writer.WritePropertyName("entityKind"u8);
             writer.WriteStringValue(EntityKind.ToString());
+            writer.WritePropertyName("count"u8);
+            writer.WriteNumberValue(Count);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -45,7 +54,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SecurityInsightsIncidentEntitiesMetadata IJsonModel<SecurityInsightsIncidentEntitiesMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,20 +76,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            int count = default;
             SecurityInsightsEntityKind entityKind = default;
+            int count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"u8))
-                {
-                    count = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("entityKind"u8))
                 {
                     entityKind = new SecurityInsightsEntityKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("count"u8))
+                {
+                    count = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,7 +98,46 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SecurityInsightsIncidentEntitiesMetadata(count, entityKind, serializedAdditionalRawData);
+            return new SecurityInsightsIncidentEntitiesMetadata(entityKind, count, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EntityKind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  entityKind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  entityKind: ");
+                builder.AppendLine($"'{EntityKind.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Count), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  count: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  count: ");
+                builder.AppendLine($"{Count}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentEntitiesMetadata>.Write(ModelReaderWriterOptions options)
@@ -101,6 +148,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsIncidentEntitiesMetadata)} does not support writing '{options.Format}' format.");
             }

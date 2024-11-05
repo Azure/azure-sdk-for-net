@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0;net8.0</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.SignalRService</PackageId>
-    <Version>1.14.0-beta.1</Version>
+    <Version>1.16.0-beta.1</Version>
+    <ApiCompatVersion>1.15.0</ApiCompatVersion>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.13.0</ApiCompatVersion>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-    <NoWarn>$(NoWarn);CS1591;AZC0001;AZC0107;</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0107;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

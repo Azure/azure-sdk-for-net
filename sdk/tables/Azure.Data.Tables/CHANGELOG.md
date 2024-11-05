@@ -1,15 +1,33 @@
 # Release History
 
-## 12.9.0-beta.1 (Unreleased)
+## 12.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 12.9.1 (2024-09-17)
+
+### Bugs Fixed
+- Fixed an issue that prevented use of stored access policy based SaS Uris by adding a parameterless constructor to `TableSasBuilder`. The resulting builder can then be modified to include the stored access policy identifier or any other details.
+
+### Other Changes
+- Cosmos Table endpoints now support Entra ID authentication.
+
+## 12.9.0 (2024-07-22)
+
+### Features Added
+- Overload the `DeleteEntity` method to allow an `ITableEntity` object as parameter.
+
+### Bugs Fixed
 - Fixed an issue where custom models decorated with the `DataMemberAttribute` that didn't explicitly set a name caused the query filter to be malformed.
 
 ### Other Changes
+- Reduce List allocations when uploading batches to table storage
 
 ## 12.8.3 (2024-02-06)
 

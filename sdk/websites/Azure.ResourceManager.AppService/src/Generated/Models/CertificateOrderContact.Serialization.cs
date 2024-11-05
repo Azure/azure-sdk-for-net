@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<CertificateOrderContact>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CertificateOrderContact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
@@ -62,7 +70,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CertificateOrderContact IJsonModel<CertificateOrderContact>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -134,15 +141,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Email), out propertyOverride);
-            if (Optional.IsDefined(Email) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  email: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Email))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  email: ");
                     if (Email.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -156,15 +164,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NameFirst), out propertyOverride);
-            if (Optional.IsDefined(NameFirst) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nameFirst: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NameFirst))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nameFirst: ");
                     if (NameFirst.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -178,15 +187,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NameLast), out propertyOverride);
-            if (Optional.IsDefined(NameLast) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nameLast: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NameLast))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nameLast: ");
                     if (NameLast.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -200,15 +210,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Phone), out propertyOverride);
-            if (Optional.IsDefined(Phone) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  phone: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Phone))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  phone: ");
                     if (Phone.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

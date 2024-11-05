@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
             // TODO: Replace this ActivityListener with an OpenTelemetry provider.
-            var listener = new ActivityListener
+            using var listener = new ActivityListener
             {
                 ShouldListenTo = _ => true,
                 Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
@@ -43,11 +43,23 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             ActivitySource.AddActivityListener(listener);
 
             // ACT
-            using var dependencyActivity = activitySource.StartActivity(name: "HelloWorld", kind: ActivityKind.Client);
+            using var dependencyActivity = activitySource.StartActivity(name: "TestActivityName", kind: ActivityKind.Client);
             Assert.NotNull(dependencyActivity);
-            dependencyActivity.SetTag("http.method", "GET");
+            dependencyActivity.SetTag("http.request.method", "GET");
             dependencyActivity.SetTag("url.full", "http://bing.com");
             dependencyActivity.SetTag("http.response.status_code", 200);
+
+            dependencyActivity.SetTag("customKey1", "customValue1");
+            dependencyActivity.SetTag("customKey2", "customValue2");
+            dependencyActivity.SetTag("customKey3", "customValue3");
+            dependencyActivity.SetTag("customKey4", "customValue4");
+            dependencyActivity.SetTag("customKey5", "customValue5");
+            dependencyActivity.SetTag("customKey6", "customValue6");
+            dependencyActivity.SetTag("customKey7", "customValue7");
+            dependencyActivity.SetTag("customKey8", "customValue8");
+            dependencyActivity.SetTag("customKey9", "customValue9");
+            dependencyActivity.SetTag("customKey10", "customValue10");
+            dependencyActivity.SetTag("customKey11", "customValue11");
             dependencyActivity.Stop();
 
             var dependencyDocument = DocumentHelper.ConvertToDependencyDocument(dependencyActivity);
@@ -55,8 +67,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             // ASSERT
             Assert.Equal("http://bing.com", dependencyDocument.CommandName);
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
-            Assert.Equal("HelloWorld", dependencyDocument.Name);
+            Assert.Equal("TestActivityName", dependencyDocument.Name);
             Assert.Equal("200", dependencyDocument.ResultCode);
+
+            VerifyCustomProperties(dependencyDocument);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
@@ -64,7 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
         }
 
 #if !NET462
-        [Theory(Skip = "This test is leaky and needs to be rewritten using WebApplicationFactory (same as OTel repo).")]
+        [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public async Task VerifyHttpClientDependency(bool successfulRequest)
@@ -73,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
 
             // SETUP WEBAPPLICATION
             var builder = WebApplication.CreateBuilder();
-            var app = builder.Build();
+            using var app = builder.Build();
             app.MapGet("/", () => "Response from Test Server");
             _ = app.RunAsync(TestServerUrl);
 
@@ -97,6 +111,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
                 // ignored. This can be thrown for a failed request.
             }
 
+            tracerProvider.ForceFlush();
             WaitForActivityExport(exportedActivities);
 
             // Assert

@@ -19,17 +19,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         void IJsonModel<ResponseValidationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ResponseValidationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResponseValidationProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Regex))
             {
                 writer.WritePropertyName("regex"u8);
                 writer.WriteStringValue(Regex);
+            }
+            if (Optional.IsDefined(ValidationScope))
+            {
+                writer.WritePropertyName("validationScope"u8);
+                writer.WriteStringValue(ValidationScope.Value.ToString());
             }
             if (Optional.IsDefined(IsRequired))
             {
@@ -61,7 +74,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ResponseValidationProperties IJsonModel<ResponseValidationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -85,6 +97,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string regex = default;
+            TroubleshooterValidationScope? validationScope = default;
             bool? isRequired = default;
             string validationErrorMessage = default;
             long? maxLength = default;
@@ -95,6 +108,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 if (property.NameEquals("regex"u8))
                 {
                     regex = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("validationScope"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    validationScope = new TroubleshooterValidationScope(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isRequired"u8))
@@ -126,7 +148,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResponseValidationProperties(regex, isRequired, validationErrorMessage, maxLength, serializedAdditionalRawData);
+            return new ResponseValidationProperties(
+                regex,
+                validationScope,
+                isRequired,
+                validationErrorMessage,
+                maxLength,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResponseValidationProperties>.Write(ModelReaderWriterOptions options)

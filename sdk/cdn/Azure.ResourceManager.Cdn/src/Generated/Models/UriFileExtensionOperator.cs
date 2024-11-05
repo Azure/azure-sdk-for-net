@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(UriFileExtensionOperator left, UriFileExtensionOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriFileExtensionOperator"/> values are not the same. </summary>
         public static bool operator !=(UriFileExtensionOperator left, UriFileExtensionOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UriFileExtensionOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UriFileExtensionOperator"/>. </summary>
         public static implicit operator UriFileExtensionOperator(string value) => new UriFileExtensionOperator(value);
 
         /// <inheritdoc />
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

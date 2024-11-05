@@ -57,6 +57,8 @@ namespace Azure.Search.Documents.Tests
 
         public sbyte SByte { get; set; }
 
+        public byte Byte { get; set; }
+
         public short Short { get; set; }
 
         public bool Flag { get; set; }
@@ -125,6 +127,16 @@ namespace Azure.Search.Documents.Tests
         public IEnumerable<sbyte> SByteIEnumerable { get; set; }
 
         public ICollection<sbyte> SByteICollection { get; set; }
+
+        public byte[] ByteArray { get; set; }
+
+        public IList<byte> ByteIList { get; set; }
+
+        public List<byte> ByteList { get; set; }
+
+        public IEnumerable<byte> ByteIEnumerable { get; set; }
+
+        public ICollection<byte> ByteICollection { get; set; }
 
         public short[] ShortArray { get; set; }
 

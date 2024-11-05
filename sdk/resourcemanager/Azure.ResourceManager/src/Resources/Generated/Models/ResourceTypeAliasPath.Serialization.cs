@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<ResourceTypeAliasPath>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAliasPath>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceTypeAliasPath)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
@@ -68,7 +76,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ResourceTypeAliasPath IJsonModel<ResourceTypeAliasPath>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -157,15 +164,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
-            if (Optional.IsDefined(Path) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  path: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Path))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  path: ");
                     if (Path.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -179,17 +187,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersions), out propertyOverride);
-            if (Optional.IsCollectionDefined(ApiVersions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ApiVersions.Any() || hasPropertyOverride)
+                builder.Append("  apiVersions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ApiVersions))
                 {
-                    builder.Append("  apiVersions: ");
-                    if (hasPropertyOverride)
+                    if (ApiVersions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  apiVersions: ");
                         builder.AppendLine("[");
                         foreach (var item in ApiVersions)
                         {
@@ -214,29 +223,31 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Pattern), out propertyOverride);
-            if (Optional.IsDefined(Pattern) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  pattern: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Pattern))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  pattern: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Pattern, options, 2, false, "  pattern: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metadata), out propertyOverride);
-            if (Optional.IsDefined(Metadata) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  metadata: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Metadata))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  metadata: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Metadata, options, 2, false, "  metadata: ");
                 }
             }

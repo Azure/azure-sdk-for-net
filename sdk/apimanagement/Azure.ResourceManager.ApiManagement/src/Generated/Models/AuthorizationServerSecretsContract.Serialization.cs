@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         void IJsonModel<AuthorizationServerSecretsContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationServerSecretsContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AuthorizationServerSecretsContract)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
@@ -56,7 +65,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AuthorizationServerSecretsContract IJsonModel<AuthorizationServerSecretsContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -110,6 +118,90 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new AuthorizationServerSecretsContract(clientSecret, resourceOwnerUsername, resourceOwnerPassword, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecret), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clientSecret: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientSecret))
+                {
+                    builder.Append("  clientSecret: ");
+                    if (ClientSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientSecret}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceOwnerUsername), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceOwnerUsername: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceOwnerUsername))
+                {
+                    builder.Append("  resourceOwnerUsername: ");
+                    if (ResourceOwnerUsername.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceOwnerUsername}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceOwnerUsername}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceOwnerPassword), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceOwnerPassword: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceOwnerPassword))
+                {
+                    builder.Append("  resourceOwnerPassword: ");
+                    if (ResourceOwnerPassword.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceOwnerPassword}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceOwnerPassword}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AuthorizationServerSecretsContract>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationServerSecretsContract>)this).GetFormatFromOptions(options) : options.Format;
@@ -118,6 +210,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AuthorizationServerSecretsContract)} does not support writing '{options.Format}' format.");
             }

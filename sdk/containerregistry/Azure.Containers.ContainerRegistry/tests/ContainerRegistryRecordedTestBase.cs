@@ -111,17 +111,17 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string encodedBody = Base64Url.EncodeString($"{{\"exp\":{expiresOn.ToUnixTimeSeconds()}}}");
             var jwtSanitizedValue = $"{SanitizeValue}.{encodedBody}.{SanitizeValue}";
 
-            BodyKeySanitizers.Add(new BodyKeySanitizer(jwtSanitizedValue)
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..refresh_token")
             {
-                JsonPath = "$..refresh_token"
+                Value = jwtSanitizedValue
             });
 
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"access_token=(?<group>.*?)(?=&|$)", SanitizeValue)
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"access_token=(?<group>.*?)(?=&|$)")
             {
                 GroupForReplace = "group"
             });
 
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"refresh_token=(?<group>.*?)(?=&|$)", SanitizeValue)
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"refresh_token=(?<group>.*?)(?=&|$)")
             {
                 GroupForReplace = "group"
             });

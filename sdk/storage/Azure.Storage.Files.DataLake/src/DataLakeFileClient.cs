@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -14,6 +13,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -140,6 +140,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeClientOptions options)
             : base(connectionString, fileSystemName, filePath, options)
         {
+            Argument.AssertNotNullOrWhiteSpace(filePath, nameof(filePath));
         }
 
         /// <summary>
@@ -2826,6 +2827,8 @@ namespace Azure.Storage.Files.DataLake
         #endregion
 
         #region Read Data
+
+        #region Deprecated
         /// <summary>
         /// The <see cref="Read()"/> operation downloads a file from
         /// the service, including its metadata and properties.
@@ -2843,6 +2846,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FileDownloadInfo> Read()
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Read)}");
@@ -2885,6 +2889,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FileDownloadInfo>> ReadAsync()
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Read)}");
@@ -2932,6 +2937,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FileDownloadInfo> Read(
             CancellationToken cancellationToken = default)
         {
@@ -2979,6 +2985,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FileDownloadInfo>> ReadAsync(
             CancellationToken cancellationToken = default)
         {
@@ -3016,12 +3023,12 @@ namespace Azure.Storage.Files.DataLake
         /// Get Blob</see>.
         /// </summary>
         /// <param name="range">
-        /// If provided, only donwload the bytes of the file in the specified
+        /// If provided, only download the bytes of the file in the specified
         /// range.  If not provided, download the entire file.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
-        /// donwloading this file.
+        /// downloading this file.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -3090,12 +3097,12 @@ namespace Azure.Storage.Files.DataLake
         /// Get Blob</see>.
         /// </summary>
         /// <param name="range">
-        /// If provided, only donwload the bytes of the file in the specified
+        /// If provided, only download the bytes of the file in the specified
         /// range.  If not provided, download the entire file.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
-        /// donwloading this file.
+        /// downloading this file.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -3156,7 +3163,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="Read(HttpRange, DataLakeRequestConditions?, Boolean, CancellationToken)"/>
+        /// The <see cref="Read(DataLakeFileReadOptions, CancellationToken)"/>
         /// operation downloads a file from the service, including its metadata
         /// and properties.
         ///
@@ -3180,6 +3187,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FileDownloadInfo> Read(
             DataLakeFileReadOptions options = default,
             CancellationToken cancellationToken = default)
@@ -3210,7 +3218,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="ReadAsync(HttpRange, DataLakeRequestConditions?, Boolean, CancellationToken)"/>
+        /// The <see cref="ReadAsync(DataLakeFileReadOptions, CancellationToken)"/>
         /// operation downloads a file from the service, including its metadata
         /// and properties.
         ///
@@ -3234,6 +3242,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FileDownloadInfo>> ReadAsync(
             DataLakeFileReadOptions options = default,
             CancellationToken cancellationToken = default)
@@ -3251,6 +3260,597 @@ namespace Azure.Storage.Files.DataLake
 
                 return Response.FromValue(
                     response.ToFileDownloadInfo(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Deprecated
+
+        /// <summary>
+        /// The <see cref="ReadStreaming()"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadStreamingResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadStreamingResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileReadStreamingResult> ReadStreaming()
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming();
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadStreamingResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadStreamingAsync()"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadStreamingResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadStreamingResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileReadStreamingResult>> ReadStreamingAsync()
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = await _blockBlobClient.DownloadStreamingAsync()
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadStreamingResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadStreaming(CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadStreamingResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadStreamingResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileReadStreamingResult> ReadStreaming(
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming(
+                    cancellationToken: cancellationToken);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadStreamingResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadStreamingAsync(CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadStreamingResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadStreamingResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileReadStreamingResult>> ReadStreamingAsync(
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = await _blockBlobClient.DownloadStreamingAsync(
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadStreamingResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadStreaming(DataLakeFileReadOptions, CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadStreamingResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadStreamingResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileReadStreamingResult> ReadStreaming(
+            DataLakeFileReadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming(
+                    options: options.ToBlobBaseDownloadOptions(),
+                    cancellationToken: cancellationToken);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadStreamingResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadStreamingAsync(DataLakeFileReadOptions, CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadStreamingResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadStreamingResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileReadStreamingResult>> ReadStreamingAsync(
+            DataLakeFileReadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = await _blockBlobClient.DownloadStreamingAsync(
+                    options: options.ToBlobBaseDownloadOptions(),
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadStreamingResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadContent()"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileReadResult> ReadContent()
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadResult> response = _blockBlobClient.DownloadContent();
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadContentAsync()"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileReadResult>> ReadContentAsync()
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadResult> response = await _blockBlobClient.DownloadContentAsync()
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadContent(CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileReadResult> ReadContent(
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadResult> response = _blockBlobClient.DownloadContent(
+                    cancellationToken: cancellationToken);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadContentAsync(CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileReadResult>> ReadContentAsync(
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadResult> response = await _blockBlobClient.DownloadContentAsync(
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadContent(DataLakeFileReadOptions, CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileReadResult> ReadContent(
+            DataLakeFileReadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadResult> response = _blockBlobClient.DownloadContent(
+                    options: options.ToBlobBaseDownloadOptions(),
+                    cancellationToken: cancellationToken);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadContentAsync(DataLakeFileReadOptions, CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileReadResult>> ReadContentAsync(
+            DataLakeFileReadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadResult> response = await _blockBlobClient.DownloadContentAsync(
+                    options: options.ToBlobBaseDownloadOptions(),
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadResult(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -4946,8 +5546,27 @@ namespace Azure.Storage.Files.DataLake
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => allowfileModifications ? OpenRead(position, bufferSize, new DataLakeRequestConditions(), cancellationToken)
-                : OpenRead(position, bufferSize, null, cancellationToken);
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");
+            try
+            {
+                scope.Start();
+                return _blockBlobClient.OpenRead(
+                allowfileModifications,
+                position,
+                bufferSize,
+                cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
@@ -5034,8 +5653,27 @@ namespace Azure.Storage.Files.DataLake
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => await (allowfileModifications ? OpenReadAsync(position, bufferSize, new DataLakeRequestConditions(), cancellationToken)
-                : OpenReadAsync(position, bufferSize, null, cancellationToken)).ConfigureAwait(false);
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");
+            try
+            {
+                scope.Start();
+                return await _blockBlobClient.OpenReadAsync(
+                allowfileModifications,
+                position,
+                bufferSize,
+                cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion OpenRead
 
         #region OpenWrite

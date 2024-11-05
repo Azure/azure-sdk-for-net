@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         void IJsonModel<CognitiveServicesModelSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesModelSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesModelSku)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -73,7 +81,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CognitiveServicesModelSku IJsonModel<CognitiveServicesModelSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -174,15 +181,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -196,15 +204,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UsageName), out propertyOverride);
-            if (Optional.IsDefined(UsageName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  usageName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UsageName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  usageName: ");
                     if (UsageName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -218,46 +227,49 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeprecationOn), out propertyOverride);
-            if (Optional.IsDefined(DeprecationOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  deprecationDate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeprecationOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  deprecationDate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(DeprecationOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capacity), out propertyOverride);
-            if (Optional.IsDefined(Capacity) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  capacity: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Capacity))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  capacity: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Capacity, options, 2, false, "  capacity: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RateLimits), out propertyOverride);
-            if (Optional.IsCollectionDefined(RateLimits) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (RateLimits.Any() || hasPropertyOverride)
+                builder.Append("  rateLimits: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RateLimits))
                 {
-                    builder.Append("  rateLimits: ");
-                    if (hasPropertyOverride)
+                    if (RateLimits.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  rateLimits: ");
                         builder.AppendLine("[");
                         foreach (var item in RateLimits)
                         {

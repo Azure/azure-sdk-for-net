@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Sql.Models
 
         void IJsonModel<RecommendedActionImpactRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(DimensionName))
             {
                 writer.WritePropertyName("dimensionName"u8);
@@ -67,7 +75,6 @@ namespace Azure.ResourceManager.Sql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RecommendedActionImpactRecord IJsonModel<RecommendedActionImpactRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -163,15 +170,16 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DimensionName), out propertyOverride);
-            if (Optional.IsDefined(DimensionName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dimensionName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DimensionName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dimensionName: ");
                     if (DimensionName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -185,15 +193,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
-            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  unit: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Unit))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  unit: ");
                     if (Unit.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -207,43 +216,46 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AbsoluteValue), out propertyOverride);
-            if (Optional.IsDefined(AbsoluteValue) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  absoluteValue: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AbsoluteValue))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  absoluteValue: ");
                     builder.AppendLine($"'{AbsoluteValue.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeValueAbsolute), out propertyOverride);
-            if (Optional.IsDefined(ChangeValueAbsolute) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  changeValueAbsolute: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ChangeValueAbsolute))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  changeValueAbsolute: ");
                     builder.AppendLine($"'{ChangeValueAbsolute.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeValueRelative), out propertyOverride);
-            if (Optional.IsDefined(ChangeValueRelative) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  changeValueRelative: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ChangeValueRelative))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  changeValueRelative: ");
                     builder.AppendLine($"'{ChangeValueRelative.Value.ToString()}'");
                 }
             }

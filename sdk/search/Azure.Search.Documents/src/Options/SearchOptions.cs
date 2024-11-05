@@ -52,10 +52,11 @@ namespace Azure.Search.Documents
         /// <param name="vectorQueries">
         /// The query parameters for vector and hybrid search queries.
         /// Please note <see cref="VectorQuery"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VectorizableTextQuery"/> and <see cref="VectorizedQuery"/>.
+        /// The available derived classes include <see cref="VectorizableImageBinaryQuery"/>, <see cref="VectorizableImageUrlQuery"/>, <see cref="VectorizableTextQuery"/> and <see cref="VectorizedQuery"/>.
         /// </param>
         /// <param name="filterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter'. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticQuery, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode)
+        /// <param name="hybridSearch"> The query parameters to configure hybrid search behaviors. </param>
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticQuery, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode, HybridSearch hybridSearch)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -97,6 +98,7 @@ namespace Azure.Search.Documents
             VectorSearch = (vectorQueries != null || filterMode != null) ? new VectorSearchOptions() : null;
             VectorQueries = vectorQueries;
             FilterMode = filterMode;
+            HybridSearch = hybridSearch;
         }
 
         /// <summary>
@@ -426,6 +428,7 @@ namespace Azure.Search.Documents
             destination.QuerySpeller = source.QuerySpeller;
             destination.SemanticSearch = source.SemanticSearch;
             destination.VectorSearch = source.VectorSearch;
+            destination.HybridSearch  = source.HybridSearch;
         }
 
         /// <summary>

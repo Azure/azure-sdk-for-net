@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Sql.Models
 
         void IJsonModel<SqlMetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SqlMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlMetricDefinition)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -73,7 +81,6 @@ namespace Azure.ResourceManager.Sql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SqlMetricDefinition IJsonModel<SqlMetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -178,43 +185,46 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Name, options, 2, false, "  name: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryAggregationType), out propertyOverride);
-            if (Optional.IsDefined(PrimaryAggregationType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  primaryAggregationType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryAggregationType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  primaryAggregationType: ");
                     builder.AppendLine($"'{PrimaryAggregationType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceUriString), out propertyOverride);
-            if (Optional.IsDefined(ResourceUriString) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resourceUri: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceUriString))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resourceUri: ");
                     if (ResourceUriString.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -228,31 +238,33 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
-            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  unit: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Unit))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  unit: ");
                     builder.AppendLine($"'{Unit.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricAvailabilities), out propertyOverride);
-            if (Optional.IsCollectionDefined(MetricAvailabilities) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (MetricAvailabilities.Any() || hasPropertyOverride)
+                builder.Append("  metricAvailabilities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MetricAvailabilities))
                 {
-                    builder.Append("  metricAvailabilities: ");
-                    if (hasPropertyOverride)
+                    if (MetricAvailabilities.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  metricAvailabilities: ");
                         builder.AppendLine("[");
                         foreach (var item in MetricAvailabilities)
                         {

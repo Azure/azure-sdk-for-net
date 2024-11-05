@@ -5,6 +5,7 @@ using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
@@ -16,6 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
         private readonly ConnectionVars _connectionVars;
         private readonly bool _isAadEnabled;
         private readonly string _streamId = Guid.NewGuid().ToString(); // StreamId should be unique per application instance.
+        private LiveMetricsResource? _liveMetricsResource;
         private bool _disposedValue;
 
         public Manager(AzureMonitorOptions options, IPlatform platform)
@@ -30,13 +32,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
 
             if (options.EnableLiveMetrics)
             {
-                _isAzureWebApp = InitializeIsWebAppRunningInAzure(platform);
-
                 InitializeState();
             }
         }
 
-        public LiveMetricsResource? LiveMetricsResource { get; set; }
+        private LiveMetricsResource? LiveMetricsResource => _liveMetricsResource ??= LiveMetricsResourceFunc?.Invoke();
+
+        public Func<LiveMetricsResource?>? LiveMetricsResourceFunc { get; set; }
 
         internal static ConnectionVars InitializeConnectionVars(AzureMonitorOptions options, IPlatform platform)
         {
@@ -67,6 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                 var httpPipelinePolicy = new HttpPipelinePolicy[]
                 {
                     new BearerTokenAuthenticationPolicy(options.Credential, scope),
+                    new LiveMetricsRedirectPolicy(),
                 };
 
                 isAadEnabled = true;
@@ -76,18 +79,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             else
             {
                 isAadEnabled = false;
-                pipeline = HttpPipelineBuilder.Build(options);
+                var httpPipelinePolicy = new HttpPipelinePolicy[] { new LiveMetricsRedirectPolicy() };
+                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
             }
 
             return new LiveMetricsRestAPIsForClientSDKsRestClient(new ClientDiagnostics(options), pipeline, connectionVars: connectionVars);
-        }
-
-        /// <summary>
-        /// Searches for the environment variable specific to Azure App Service.
-        /// </summary>
-        internal static bool InitializeIsWebAppRunningInAzure(IPlatform platform)
-        {
-            return !string.IsNullOrEmpty(platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_SITE_NAME));
         }
 
         public void Dispose()

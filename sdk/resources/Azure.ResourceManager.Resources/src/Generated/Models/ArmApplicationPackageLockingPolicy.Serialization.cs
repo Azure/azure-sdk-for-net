@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<ArmApplicationPackageLockingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationPackageLockingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmApplicationPackageLockingPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedActions))
             {
                 writer.WritePropertyName("allowedActions"u8);
@@ -63,7 +71,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ArmApplicationPackageLockingPolicy IJsonModel<ArmApplicationPackageLockingPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -141,17 +148,18 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedActions.Any() || hasPropertyOverride)
+                builder.Append("  allowedActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedActions))
                 {
-                    builder.Append("  allowedActions: ");
-                    if (hasPropertyOverride)
+                    if (AllowedActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedActions: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedActions)
                         {
@@ -176,17 +184,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedDataActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedDataActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedDataActions.Any() || hasPropertyOverride)
+                builder.Append("  allowedDataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedDataActions))
                 {
-                    builder.Append("  allowedDataActions: ");
-                    if (hasPropertyOverride)
+                    if (AllowedDataActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedDataActions: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedDataActions)
                         {

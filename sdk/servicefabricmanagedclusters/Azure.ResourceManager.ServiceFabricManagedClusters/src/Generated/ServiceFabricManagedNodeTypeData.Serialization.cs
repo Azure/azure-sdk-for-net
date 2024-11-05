@@ -21,13 +21,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         void IJsonModel<ServiceFabricManagedNodeTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -43,26 +52,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -328,6 +317,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("natGatewayId"u8);
                 writer.WriteStringValue(NatGatewayId);
             }
+            if (Optional.IsCollectionDefined(NatConfigurations))
+            {
+                writer.WritePropertyName("natConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in NatConfigurations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(VmImagePlan))
             {
                 writer.WritePropertyName("vmImagePlan"u8);
@@ -353,21 +352,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(ComputerNamePrefix))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("computerNamePrefix"u8);
+                writer.WriteStringValue(ComputerNamePrefix);
             }
             writer.WriteEndObject();
         }
@@ -441,10 +429,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             bool? enableNodePublicIPv6 = default;
             ResourceIdentifier vmSharedGalleryImageId = default;
             ResourceIdentifier natGatewayId = default;
+            IList<NodeTypeNatConfig> natConfigurations = default;
             VmImagePlan vmImagePlan = default;
             ResourceIdentifier serviceArtifactReferenceId = default;
             ResourceIdentifier dscpConfigurationId = default;
             IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations = default;
+            string computerNamePrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -905,6 +895,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             natGatewayId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("natConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<NodeTypeNatConfig> array = new List<NodeTypeNatConfig>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(NodeTypeNatConfig.DeserializeNodeTypeNatConfig(item, options));
+                            }
+                            natConfigurations = array;
+                            continue;
+                        }
                         if (property0.NameEquals("vmImagePlan"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -944,6 +948,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                                 array.Add(AdditionalNetworkInterfaceConfiguration.DeserializeAdditionalNetworkInterfaceConfiguration(item, options));
                             }
                             additionalNetworkInterfaceConfigurations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("computerNamePrefix"u8))
+                        {
+                            computerNamePrefix = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -1004,10 +1013,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 enableNodePublicIPv6,
                 vmSharedGalleryImageId,
                 natGatewayId,
+                natConfigurations ?? new ChangeTrackingList<NodeTypeNatConfig>(),
                 vmImagePlan,
                 serviceArtifactReferenceId,
                 dscpConfigurationId,
                 additionalNetworkInterfaceConfigurations ?? new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>(),
+                computerNamePrefix,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

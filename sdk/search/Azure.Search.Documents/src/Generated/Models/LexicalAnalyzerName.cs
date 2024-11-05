@@ -290,7 +290,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static LexicalAnalyzerName ViMicrosoft { get; } = new LexicalAnalyzerName(ViMicrosoftValue);
         /// <summary> Standard Lucene analyzer. </summary>
         public static LexicalAnalyzerName StandardLucene { get; } = new LexicalAnalyzerName(StandardLuceneValue);
-        /// <summary> Standard ASCII Folding Lucene analyzer. See https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers. </summary>
+        /// <summary> Standard ASCII Folding Lucene analyzer. See https://learn.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers. </summary>
         public static LexicalAnalyzerName StandardAsciiFoldingLucene { get; } = new LexicalAnalyzerName(StandardAsciiFoldingLuceneValue);
         /// <summary> Treats the entire content of a field as a single token. This is useful for data like zip codes, ids, and some product names. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordAnalyzer.html. </summary>
         public static LexicalAnalyzerName Keyword { get; } = new LexicalAnalyzerName(KeywordValue);
@@ -306,7 +306,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(LexicalAnalyzerName left, LexicalAnalyzerName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LexicalAnalyzerName"/> values are not the same. </summary>
         public static bool operator !=(LexicalAnalyzerName left, LexicalAnalyzerName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LexicalAnalyzerName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LexicalAnalyzerName"/>. </summary>
         public static implicit operator LexicalAnalyzerName(string value) => new LexicalAnalyzerName(value);
 
         /// <inheritdoc />
@@ -317,7 +317,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

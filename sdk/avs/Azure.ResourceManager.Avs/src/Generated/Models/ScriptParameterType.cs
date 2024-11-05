@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The type of parameter the script is expecting. psCredential is a PSCredentialObject. </summary>
+    /// <summary> Script Parameter types. </summary>
     public readonly partial struct ScriptParameterType : IEquatable<ScriptParameterType>
     {
         private readonly string _value;
@@ -29,23 +29,23 @@ namespace Azure.ResourceManager.Avs.Models
         private const string BoolValue = "Bool";
         private const string FloatValue = "Float";
 
-        /// <summary> String. </summary>
+        /// <summary> is string. </summary>
         public static ScriptParameterType String { get; } = new ScriptParameterType(StringValue);
-        /// <summary> SecureString. </summary>
+        /// <summary> is secure string. </summary>
         public static ScriptParameterType SecureString { get; } = new ScriptParameterType(SecureStringValue);
-        /// <summary> Credential. </summary>
+        /// <summary> is credential. </summary>
         public static ScriptParameterType Credential { get; } = new ScriptParameterType(CredentialValue);
-        /// <summary> Int. </summary>
+        /// <summary> is int. </summary>
         public static ScriptParameterType Int { get; } = new ScriptParameterType(IntValue);
-        /// <summary> Bool. </summary>
+        /// <summary> is bool. </summary>
         public static ScriptParameterType Bool { get; } = new ScriptParameterType(BoolValue);
-        /// <summary> Float. </summary>
+        /// <summary> is float. </summary>
         public static ScriptParameterType Float { get; } = new ScriptParameterType(FloatValue);
         /// <summary> Determines if two <see cref="ScriptParameterType"/> values are the same. </summary>
         public static bool operator ==(ScriptParameterType left, ScriptParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptParameterType"/> values are not the same. </summary>
         public static bool operator !=(ScriptParameterType left, ScriptParameterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScriptParameterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptParameterType"/>. </summary>
         public static implicit operator ScriptParameterType(string value) => new ScriptParameterType(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

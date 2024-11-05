@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CosmosDBUniqueKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBUniqueKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBUniqueKey)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Paths))
             {
                 writer.WritePropertyName("paths"u8);
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CosmosDBUniqueKey IJsonModel<CosmosDBUniqueKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,17 +123,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Paths), out propertyOverride);
-            if (Optional.IsCollectionDefined(Paths) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Paths.Any() || hasPropertyOverride)
+                builder.Append("  paths: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Paths))
                 {
-                    builder.Append("  paths: ");
-                    if (hasPropertyOverride)
+                    if (Paths.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  paths: ");
                         builder.AppendLine("[");
                         foreach (var item in Paths)
                         {

@@ -86,6 +86,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TrafficManagementProfileId { get { throw null; } set { } }
         public long? TtlInSeconds { get { throw null; } set { } }
         Azure.ResourceManager.Dns.DnsBaseRecordData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsBaseRecordData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsBaseRecordData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -171,19 +172,62 @@ namespace Azure.ResourceManager.Dns
         public virtual Azure.Response<Azure.ResourceManager.Dns.DnsCnameRecordResource> Update(Azure.ResourceManager.Dns.DnsCnameRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsCnameRecordResource>> UpdateAsync(Azure.ResourceManager.Dns.DnsCnameRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DnsDSRecordCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.DnsDSRecordResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.DnsDSRecordResource>, System.Collections.IEnumerable
+    {
+        protected DnsDSRecordCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.DnsDSRecordResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.DnsDSRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.DnsDSRecordResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.DnsDSRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsDSRecordResource> Get(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dns.DnsDSRecordResource> GetAll(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.DnsDSRecordResource> GetAllAsync(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsDSRecordResource>> GetAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dns.DnsDSRecordResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.DnsDSRecordResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.DnsDSRecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.DnsDSRecordResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DnsDSRecordData : Azure.ResourceManager.Dns.DnsBaseRecordData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsDSRecordData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsDSRecordData>
+    {
+        public DnsDSRecordData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsDSRecordInfo> DnsDSRecords { get { throw null; } }
+        Azure.ResourceManager.Dns.DnsDSRecordData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsDSRecordData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsDSRecordData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.DnsDSRecordData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsDSRecordData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsDSRecordData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsDSRecordData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DnsDSRecordResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DnsDSRecordResource() { }
+        public virtual Azure.ResourceManager.Dns.DnsDSRecordData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsDSRecordResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsDSRecordResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsDSRecordResource> Update(Azure.ResourceManager.Dns.DnsDSRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsDSRecordResource>> UpdateAsync(Azure.ResourceManager.Dns.DnsDSRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public static partial class DnsExtensions
     {
         public static Azure.ResourceManager.Dns.DnsAaaaRecordResource GetDnsAaaaRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.DnsARecordResource GetDnsARecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.DnsCaaRecordResource GetDnsCaaRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.DnsCnameRecordResource GetDnsCnameRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Dns.DnsDSRecordResource GetDnsDSRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.DnsMXRecordResource GetDnsMXRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Dns.DnsNaptrRecordResource GetDnsNaptrRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.DnsNSRecordResource GetDnsNSRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.DnsPtrRecordResource GetDnsPtrRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Dns.Models.DnsResourceReferenceResult> GetDnsResourceReferencesByTargetResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Dns.Models.DnsResourceReferenceContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.Models.DnsResourceReferenceResult>> GetDnsResourceReferencesByTargetResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Dns.Models.DnsResourceReferenceContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Dns.DnssecConfigResource GetDnssecConfigResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.DnsSoaRecordResource GetDnsSoaRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.DnsSrvRecordResource GetDnsSrvRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Dns.DnsTlsaRecordResource GetDnsTlsaRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.DnsTxtRecordResource GetDnsTxtRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Dns.DnsZoneResource> GetDnsZone(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string zoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsZoneResource>> GetDnsZoneAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string zoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -230,6 +274,45 @@ namespace Azure.ResourceManager.Dns
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsMXRecordResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.DnsMXRecordResource> Update(Azure.ResourceManager.Dns.DnsMXRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsMXRecordResource>> UpdateAsync(Azure.ResourceManager.Dns.DnsMXRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DnsNaptrRecordCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.DnsNaptrRecordResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.DnsNaptrRecordResource>, System.Collections.IEnumerable
+    {
+        protected DnsNaptrRecordCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.DnsNaptrRecordResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.DnsNaptrRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.DnsNaptrRecordResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.DnsNaptrRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsNaptrRecordResource> Get(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dns.DnsNaptrRecordResource> GetAll(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.DnsNaptrRecordResource> GetAllAsync(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsNaptrRecordResource>> GetAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dns.DnsNaptrRecordResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.DnsNaptrRecordResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.DnsNaptrRecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.DnsNaptrRecordResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DnsNaptrRecordData : Azure.ResourceManager.Dns.DnsBaseRecordData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsNaptrRecordData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsNaptrRecordData>
+    {
+        public DnsNaptrRecordData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo> DnsNaptrRecords { get { throw null; } }
+        Azure.ResourceManager.Dns.DnsNaptrRecordData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsNaptrRecordData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsNaptrRecordData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.DnsNaptrRecordData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsNaptrRecordData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsNaptrRecordData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsNaptrRecordData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DnsNaptrRecordResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DnsNaptrRecordResource() { }
+        public virtual Azure.ResourceManager.Dns.DnsNaptrRecordData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsNaptrRecordResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsNaptrRecordResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsNaptrRecordResource> Update(Azure.ResourceManager.Dns.DnsNaptrRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsNaptrRecordResource>> UpdateAsync(Azure.ResourceManager.Dns.DnsNaptrRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DnsNSRecordCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.DnsNSRecordResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.DnsNSRecordResource>, System.Collections.IEnumerable
     {
@@ -316,17 +399,53 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsAaaaRecordInfo> DnsAaaaRecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsARecordInfo> DnsARecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo> DnsCaaRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsDSRecordInfo> DnsDSRecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsMXRecordInfo> DnsMXRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo> DnsNaptrRecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsNSRecordInfo> DnsNSRecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsPtrRecordInfo> DnsPtrRecords { get { throw null; } }
         public Azure.ResourceManager.Dns.Models.DnsSoaRecordInfo DnsSoaRecordInfo { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsSrvRecordInfo> DnsSrvRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsTlsaRecordInfo> DnsTlsaRecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsTxtRecordInfo> DnsTxtRecords { get { throw null; } }
+        public Azure.ResourceManager.Dns.Models.DnsRecordType RecordType { get { throw null; } }
         Azure.ResourceManager.Dns.DnsRecordData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsRecordData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsRecordData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.DnsRecordData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsRecordData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsRecordData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsRecordData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DnssecConfigData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnssecConfigData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnssecConfigData>
+    {
+        internal DnssecConfigData() { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public string ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Dns.Models.DnsSigningKey> SigningKeys { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.DnssecConfigData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnssecConfigData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnssecConfigData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.DnssecConfigData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnssecConfigData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnssecConfigData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnssecConfigData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DnssecConfigResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnssecConfigData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnssecConfigData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DnssecConfigResource() { }
+        public virtual Azure.ResourceManager.Dns.DnssecConfigData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.DnssecConfigResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.DnssecConfigResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnssecConfigResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnssecConfigResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Dns.DnssecConfigData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnssecConfigData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnssecConfigData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.DnssecConfigData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnssecConfigData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnssecConfigData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnssecConfigData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DnsSoaRecordCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.DnsSoaRecordResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.DnsSoaRecordResource>, System.Collections.IEnumerable
     {
@@ -404,6 +523,45 @@ namespace Azure.ResourceManager.Dns
         public virtual Azure.Response<Azure.ResourceManager.Dns.DnsSrvRecordResource> Update(Azure.ResourceManager.Dns.DnsSrvRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsSrvRecordResource>> UpdateAsync(Azure.ResourceManager.Dns.DnsSrvRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DnsTlsaRecordCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.DnsTlsaRecordResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.DnsTlsaRecordResource>, System.Collections.IEnumerable
+    {
+        protected DnsTlsaRecordCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.DnsTlsaRecordResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.DnsTlsaRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.DnsTlsaRecordResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.DnsTlsaRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsTlsaRecordResource> Get(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dns.DnsTlsaRecordResource> GetAll(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.DnsTlsaRecordResource> GetAllAsync(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsTlsaRecordResource>> GetAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dns.DnsTlsaRecordResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.DnsTlsaRecordResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.DnsTlsaRecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.DnsTlsaRecordResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DnsTlsaRecordData : Azure.ResourceManager.Dns.DnsBaseRecordData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsTlsaRecordData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsTlsaRecordData>
+    {
+        public DnsTlsaRecordData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsTlsaRecordInfo> DnsTlsaRecords { get { throw null; } }
+        Azure.ResourceManager.Dns.DnsTlsaRecordData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsTlsaRecordData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsTlsaRecordData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.DnsTlsaRecordData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsTlsaRecordData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsTlsaRecordData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsTlsaRecordData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DnsTlsaRecordResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DnsTlsaRecordResource() { }
+        public virtual Azure.ResourceManager.Dns.DnsTlsaRecordData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsTlsaRecordResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsTlsaRecordResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsTlsaRecordResource> Update(Azure.ResourceManager.Dns.DnsTlsaRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsTlsaRecordResource>> UpdateAsync(Azure.ResourceManager.Dns.DnsTlsaRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class DnsTxtRecordCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.DnsTxtRecordResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.DnsTxtRecordResource>, System.Collections.IEnumerable
     {
         protected DnsTxtRecordCollection() { }
@@ -470,7 +628,9 @@ namespace Azure.ResourceManager.Dns
         public long? NumberOfRecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> RegistrationVirtualNetworks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ResolutionVirtualNetworks { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Dns.Models.DnsSigningKey> SigningKeys { get { throw null; } }
         public Azure.ResourceManager.Dns.Models.DnsZoneType? ZoneType { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.DnsZoneData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsZoneData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.DnsZoneData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.DnsZoneData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.DnsZoneData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -504,9 +664,15 @@ namespace Azure.ResourceManager.Dns
         public virtual Azure.Response<Azure.ResourceManager.Dns.DnsCnameRecordResource> GetDnsCnameRecord(string cnameRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsCnameRecordResource>> GetDnsCnameRecordAsync(string cnameRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsCnameRecordCollection GetDnsCnameRecords() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsDSRecordResource> GetDnsDSRecord(string dsRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsDSRecordResource>> GetDnsDSRecordAsync(string dsRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Dns.DnsDSRecordCollection GetDnsDSRecords() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.DnsMXRecordResource> GetDnsMXRecord(string mxRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsMXRecordResource>> GetDnsMXRecordAsync(string mxRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsMXRecordCollection GetDnsMXRecords() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsNaptrRecordResource> GetDnsNaptrRecord(string naptrRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsNaptrRecordResource>> GetDnsNaptrRecordAsync(string naptrRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Dns.DnsNaptrRecordCollection GetDnsNaptrRecords() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.DnsNSRecordResource> GetDnsNSRecord(string nsRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsNSRecordResource>> GetDnsNSRecordAsync(string nsRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsNSRecordCollection GetDnsNSRecords() { throw null; }
@@ -519,6 +685,9 @@ namespace Azure.ResourceManager.Dns
         public virtual Azure.Response<Azure.ResourceManager.Dns.DnsSrvRecordResource> GetDnsSrvRecord(string srvRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsSrvRecordResource>> GetDnsSrvRecordAsync(string srvRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsSrvRecordCollection GetDnsSrvRecords() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsTlsaRecordResource> GetDnsTlsaRecord(string tlsaRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsTlsaRecordResource>> GetDnsTlsaRecordAsync(string tlsaRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Dns.DnsTlsaRecordCollection GetDnsTlsaRecords() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.DnsTxtRecordResource> GetDnsTxtRecord(string txtRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsTxtRecordResource>> GetDnsTxtRecordAsync(string txtRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsTxtRecordCollection GetDnsTxtRecords() { throw null; }
@@ -539,11 +708,15 @@ namespace Azure.ResourceManager.Dns.Mocking
         public virtual Azure.ResourceManager.Dns.DnsARecordResource GetDnsARecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsCaaRecordResource GetDnsCaaRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsCnameRecordResource GetDnsCnameRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Dns.DnsDSRecordResource GetDnsDSRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsMXRecordResource GetDnsMXRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Dns.DnsNaptrRecordResource GetDnsNaptrRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsNSRecordResource GetDnsNSRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsPtrRecordResource GetDnsPtrRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Dns.DnssecConfigResource GetDnssecConfigResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsSoaRecordResource GetDnsSoaRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsSrvRecordResource GetDnsSrvRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Dns.DnsTlsaRecordResource GetDnsTlsaRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsTxtRecordResource GetDnsTxtRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsZoneResource GetDnsZoneResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
@@ -567,6 +740,7 @@ namespace Azure.ResourceManager.Dns.Models
 {
     public static partial class ArmDnsModelFactory
     {
+        public static Azure.ResourceManager.Dns.Models.DelegationSignerInfo DelegationSignerInfo(int? digestAlgorithmType = default(int?), string digestValue = null, string record = null) { throw null; }
         public static Azure.ResourceManager.Dns.DnsAaaaRecordData DnsAaaaRecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> metadata = null, long? ttl = default(long?), string fqdn = null, string provisioningState = null, Azure.ResourceManager.Resources.Models.WritableSubResource targetResource = null, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsAaaaRecordInfo> aaaaRecords = null) { throw null; }
         public static Azure.ResourceManager.Dns.DnsARecordData DnsARecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> metadata = null, long? ttl = default(long?), string fqdn = null, string provisioningState = null, Azure.ResourceManager.Resources.Models.WritableSubResource targetResource = null, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsARecordInfo> aRecords = null) { throw null; }
         public static Azure.ResourceManager.Dns.DnsCaaRecordData DnsCaaRecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> metadata = null, long? ttl = default(long?), string fqdn = null, string provisioningState = null, Azure.ResourceManager.Resources.Models.WritableSubResource targetResource = null, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo> caaRecords = null) { throw null; }
@@ -574,17 +748,36 @@ namespace Azure.ResourceManager.Dns.Models
         public static Azure.ResourceManager.Dns.DnsMXRecordData DnsMXRecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> metadata = null, long? ttl = default(long?), string fqdn = null, string provisioningState = null, Azure.ResourceManager.Resources.Models.WritableSubResource targetResource = null, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsMXRecordInfo> mxRecords = null) { throw null; }
         public static Azure.ResourceManager.Dns.DnsNSRecordData DnsNSRecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> metadata = null, long? ttl = default(long?), string fqdn = null, string provisioningState = null, Azure.ResourceManager.Resources.Models.WritableSubResource targetResource = null, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsNSRecordInfo> nsRecords = null) { throw null; }
         public static Azure.ResourceManager.Dns.DnsPtrRecordData DnsPtrRecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> metadata = null, long? ttl = default(long?), string fqdn = null, string provisioningState = null, Azure.ResourceManager.Resources.Models.WritableSubResource targetResource = null, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsPtrRecordInfo> ptrRecords = null) { throw null; }
+        public static Azure.ResourceManager.Dns.DnsRecordData DnsRecordData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, System.Collections.Generic.IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, Azure.ResourceManager.Resources.Models.WritableSubResource targetResource, Azure.ResourceManager.Resources.Models.WritableSubResource trafficManagementProfile, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsARecordInfo> aRecords, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsAaaaRecordInfo> aaaaRecords, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsMXRecordInfo> mxRecords, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsNSRecordInfo> nsRecords, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsPtrRecordInfo> ptrRecords, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsSrvRecordInfo> srvRecords, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsTxtRecordInfo> txtRecords, string cname, Azure.ResourceManager.Dns.Models.DnsSoaRecordInfo soaRecordInfo, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo> caaRecords, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsDSRecordInfo> dsRecords, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsTlsaRecordInfo> tlsaRecords, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo> naptrRecords, System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData) { throw null; }
         public static Azure.ResourceManager.Dns.Models.DnsResourceReference DnsResourceReference(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> dnsResources = null, Azure.Core.ResourceIdentifier targetResourceId = null) { throw null; }
         public static Azure.ResourceManager.Dns.Models.DnsResourceReferenceResult DnsResourceReferenceResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.Models.DnsResourceReference> dnsResourceReferences = null) { throw null; }
+        public static Azure.ResourceManager.Dns.DnssecConfigData DnssecConfigData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.Models.DnsSigningKey> signingKeys = null) { throw null; }
+        public static Azure.ResourceManager.Dns.Models.DnsSigningKey DnsSigningKey(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.Models.DelegationSignerInfo> delegationSignerInfo = null, int? flags = default(int?), int? keyTag = default(int?), int? protocol = default(int?), string publicKey = null, int? securityAlgorithmType = default(int?)) { throw null; }
         public static Azure.ResourceManager.Dns.DnsSoaRecordData DnsSoaRecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> metadata = null, long? ttl = default(long?), string fqdn = null, string provisioningState = null, Azure.ResourceManager.Resources.Models.WritableSubResource targetResource = null, Azure.ResourceManager.Dns.Models.DnsSoaRecordInfo soaRecords = null) { throw null; }
         public static Azure.ResourceManager.Dns.DnsSrvRecordData DnsSrvRecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> metadata = null, long? ttl = default(long?), string fqdn = null, string provisioningState = null, Azure.ResourceManager.Resources.Models.WritableSubResource targetResource = null, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsSrvRecordInfo> srvRecords = null) { throw null; }
         public static Azure.ResourceManager.Dns.DnsTxtRecordData DnsTxtRecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> metadata = null, long? ttl = default(long?), string fqdn = null, string provisioningState = null, Azure.ResourceManager.Resources.Models.WritableSubResource targetResource = null, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsTxtRecordInfo> txtRecords = null) { throw null; }
-        public static Azure.ResourceManager.Dns.DnsZoneData DnsZoneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), long? maxNumberOfRecords = default(long?), long? maxNumberOfRecordsPerRecord = default(long?), long? numberOfRecords = default(long?), System.Collections.Generic.IEnumerable<string> nameServers = null, Azure.ResourceManager.Dns.Models.DnsZoneType? zoneType = default(Azure.ResourceManager.Dns.Models.DnsZoneType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> registrationVirtualNetworks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> resolutionVirtualNetworks = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Dns.DnsZoneData DnsZoneData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, System.Collections.Generic.IEnumerable<string> nameServers, Azure.ResourceManager.Dns.Models.DnsZoneType? zoneType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> registrationVirtualNetworks, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> resolutionVirtualNetworks) { throw null; }
+        public static Azure.ResourceManager.Dns.DnsZoneData DnsZoneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), long? maxNumberOfRecords = default(long?), long? maxNumberOfRecordsPerRecord = default(long?), long? numberOfRecords = default(long?), System.Collections.Generic.IEnumerable<string> nameServers = null, Azure.ResourceManager.Dns.Models.DnsZoneType? zoneType = default(Azure.ResourceManager.Dns.Models.DnsZoneType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> registrationVirtualNetworks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> resolutionVirtualNetworks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.Models.DnsSigningKey> signingKeys = null) { throw null; }
+    }
+    public partial class DelegationSignerInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DelegationSignerInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DelegationSignerInfo>
+    {
+        internal DelegationSignerInfo() { }
+        public int? DigestAlgorithmType { get { throw null; } }
+        public string DigestValue { get { throw null; } }
+        public string Record { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.Models.DelegationSignerInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DelegationSignerInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DelegationSignerInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.Models.DelegationSignerInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DelegationSignerInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DelegationSignerInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DelegationSignerInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DnsAaaaRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsAaaaRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsAaaaRecordInfo>
     {
         public DnsAaaaRecordInfo() { }
         public System.Net.IPAddress IPv6Address { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsAaaaRecordInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsAaaaRecordInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsAaaaRecordInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsAaaaRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsAaaaRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -595,6 +788,7 @@ namespace Azure.ResourceManager.Dns.Models
     {
         public DnsARecordInfo() { }
         public System.Net.IPAddress IPv4Address { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsARecordInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsARecordInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsARecordInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsARecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsARecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -607,27 +801,59 @@ namespace Azure.ResourceManager.Dns.Models
         public int? Flags { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DnsDSRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsDSRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsDSRecordInfo>
+    {
+        public DnsDSRecordInfo() { }
+        public int? Algorithm { get { throw null; } set { } }
+        public Azure.ResourceManager.Dns.Models.DSRecordDigest Digest { get { throw null; } set { } }
+        public int? KeyTag { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.Models.DnsDSRecordInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsDSRecordInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsDSRecordInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.Models.DnsDSRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsDSRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsDSRecordInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsDSRecordInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DnsMXRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsMXRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsMXRecordInfo>
     {
         public DnsMXRecordInfo() { }
         public string Exchange { get { throw null; } set { } }
         public int? Preference { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsMXRecordInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsMXRecordInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsMXRecordInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsMXRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsMXRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsMXRecordInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsMXRecordInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DnsNaptrRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo>
+    {
+        public DnsNaptrRecordInfo() { }
+        public string Flags { get { throw null; } set { } }
+        public int? Order { get { throw null; } set { } }
+        public int? Preference { get { throw null; } set { } }
+        public string Regexp { get { throw null; } set { } }
+        public string Replacement { get { throw null; } set { } }
+        public string Services { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DnsNSRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsNSRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsNSRecordInfo>
     {
         public DnsNSRecordInfo() { }
         public string DnsNSDomainName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsNSRecordInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsNSRecordInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsNSRecordInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsNSRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsNSRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -638,17 +864,35 @@ namespace Azure.ResourceManager.Dns.Models
     {
         public DnsPtrRecordInfo() { }
         public string DnsPtrDomainName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsPtrRecordInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsPtrRecordInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsPtrRecordInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsPtrRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsPtrRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsPtrRecordInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsPtrRecordInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public enum DnsRecordType
+    {
+        A = 0,
+        Aaaa = 1,
+        CAA = 2,
+        Cname = 3,
+        MX = 4,
+        NS = 5,
+        PTR = 6,
+        SOA = 7,
+        SRV = 8,
+        TXT = 9,
+        Tlsa = 10,
+        DS = 11,
+        Naptr = 12,
+    }
     public partial class DnsResourceReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsResourceReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsResourceReference>
     {
         internal DnsResourceReference() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> DnsResources { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsResourceReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsResourceReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsResourceReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsResourceReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsResourceReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -659,6 +903,7 @@ namespace Azure.ResourceManager.Dns.Models
     {
         public DnsResourceReferenceContent() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> TargetResources { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsResourceReferenceContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsResourceReferenceContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsResourceReferenceContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsResourceReferenceContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsResourceReferenceContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -669,11 +914,28 @@ namespace Azure.ResourceManager.Dns.Models
     {
         internal DnsResourceReferenceResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Dns.Models.DnsResourceReference> DnsResourceReferences { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsResourceReferenceResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsResourceReferenceResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsResourceReferenceResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsResourceReferenceResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsResourceReferenceResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsResourceReferenceResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsResourceReferenceResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DnsSigningKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsSigningKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsSigningKey>
+    {
+        internal DnsSigningKey() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Dns.Models.DelegationSignerInfo> DelegationSignerInfo { get { throw null; } }
+        public int? Flags { get { throw null; } }
+        public int? KeyTag { get { throw null; } }
+        public int? Protocol { get { throw null; } }
+        public string PublicKey { get { throw null; } }
+        public int? SecurityAlgorithmType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.Models.DnsSigningKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsSigningKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsSigningKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.Models.DnsSigningKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsSigningKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsSigningKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsSigningKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DnsSoaRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsSoaRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsSoaRecordInfo>
     {
@@ -685,6 +947,7 @@ namespace Azure.ResourceManager.Dns.Models
         public long? RefreshTimeInSeconds { get { throw null; } set { } }
         public long? RetryTimeInSeconds { get { throw null; } set { } }
         public long? SerialNumber { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsSoaRecordInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsSoaRecordInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsSoaRecordInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsSoaRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsSoaRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -698,16 +961,32 @@ namespace Azure.ResourceManager.Dns.Models
         public int? Priority { get { throw null; } set { } }
         public string Target { get { throw null; } set { } }
         public int? Weight { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsSrvRecordInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsSrvRecordInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsSrvRecordInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsSrvRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsSrvRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsSrvRecordInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsSrvRecordInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DnsTlsaRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsTlsaRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsTlsaRecordInfo>
+    {
+        public DnsTlsaRecordInfo() { }
+        public string CertAssociationData { get { throw null; } set { } }
+        public int? MatchingType { get { throw null; } set { } }
+        public int? Selector { get { throw null; } set { } }
+        public int? Usage { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.Models.DnsTlsaRecordInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsTlsaRecordInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsTlsaRecordInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.Models.DnsTlsaRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsTlsaRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsTlsaRecordInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsTlsaRecordInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DnsTxtRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsTxtRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsTxtRecordInfo>
     {
         public DnsTxtRecordInfo() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsTxtRecordInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsTxtRecordInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsTxtRecordInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsTxtRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsTxtRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -718,6 +997,7 @@ namespace Azure.ResourceManager.Dns.Models
     {
         public DnsZonePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsZonePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsZonePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsZonePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dns.Models.DnsZonePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsZonePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -728,5 +1008,17 @@ namespace Azure.ResourceManager.Dns.Models
     {
         Public = 0,
         Private = 1,
+    }
+    public partial class DSRecordDigest : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DSRecordDigest>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DSRecordDigest>
+    {
+        public DSRecordDigest() { }
+        public int? AlgorithmType { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.Models.DSRecordDigest System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DSRecordDigest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DSRecordDigest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dns.Models.DSRecordDigest System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DSRecordDigest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DSRecordDigest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DSRecordDigest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

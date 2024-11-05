@@ -20,17 +20,25 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         void IJsonModel<ApplicationInsightsComponentFeatureCapabilities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFeatureCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SupportExportData))
+            if (options.Format != "W" && Optional.IsDefined(IsExportDataSupported))
             {
                 writer.WritePropertyName("SupportExportData"u8);
-                writer.WriteBooleanValue(SupportExportData.Value);
+                writer.WriteBooleanValue(IsExportDataSupported.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(BurstThrottlePolicy))
             {
@@ -122,7 +130,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ApplicationInsightsComponentFeatureCapabilities IJsonModel<ApplicationInsightsComponentFeatureCapabilities>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -330,31 +337,33 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportExportData), out propertyOverride);
-            if (Optional.IsDefined(SupportExportData) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsExportDataSupported), out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  SupportExportData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsExportDataSupported))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = SupportExportData.Value == true ? "true" : "false";
+                    builder.Append("  SupportExportData: ");
+                    var boolValue = IsExportDataSupported.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BurstThrottlePolicy), out propertyOverride);
-            if (Optional.IsDefined(BurstThrottlePolicy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  BurstThrottlePolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BurstThrottlePolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  BurstThrottlePolicy: ");
                     if (BurstThrottlePolicy.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -368,15 +377,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetadataClass), out propertyOverride);
-            if (Optional.IsDefined(MetadataClass) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  MetadataClass: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MetadataClass))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  MetadataClass: ");
                     if (MetadataClass.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -390,135 +400,144 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LiveStreamMetrics), out propertyOverride);
-            if (Optional.IsDefined(LiveStreamMetrics) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  LiveStreamMetrics: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LiveStreamMetrics))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  LiveStreamMetrics: ");
                     var boolValue = LiveStreamMetrics.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationMap), out propertyOverride);
-            if (Optional.IsDefined(ApplicationMap) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ApplicationMap: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationMap))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ApplicationMap: ");
                     var boolValue = ApplicationMap.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkItemIntegration), out propertyOverride);
-            if (Optional.IsDefined(WorkItemIntegration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  WorkItemIntegration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkItemIntegration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  WorkItemIntegration: ");
                     var boolValue = WorkItemIntegration.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PowerBIIntegration), out propertyOverride);
-            if (Optional.IsDefined(PowerBIIntegration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  PowerBIIntegration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PowerBIIntegration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  PowerBIIntegration: ");
                     var boolValue = PowerBIIntegration.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OpenSchema), out propertyOverride);
-            if (Optional.IsDefined(OpenSchema) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  OpenSchema: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OpenSchema))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  OpenSchema: ");
                     var boolValue = OpenSchema.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProactiveDetection), out propertyOverride);
-            if (Optional.IsDefined(ProactiveDetection) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ProactiveDetection: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProactiveDetection))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ProactiveDetection: ");
                     var boolValue = ProactiveDetection.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AnalyticsIntegration), out propertyOverride);
-            if (Optional.IsDefined(AnalyticsIntegration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  AnalyticsIntegration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AnalyticsIntegration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  AnalyticsIntegration: ");
                     var boolValue = AnalyticsIntegration.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MultipleStepWebTest), out propertyOverride);
-            if (Optional.IsDefined(MultipleStepWebTest) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  MultipleStepWebTest: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MultipleStepWebTest))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  MultipleStepWebTest: ");
                     var boolValue = MultipleStepWebTest.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiAccessLevel), out propertyOverride);
-            if (Optional.IsDefined(ApiAccessLevel) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ApiAccessLevel: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiAccessLevel))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ApiAccessLevel: ");
                     if (ApiAccessLevel.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -532,15 +551,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrackingType), out propertyOverride);
-            if (Optional.IsDefined(TrackingType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  TrackingType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TrackingType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  TrackingType: ");
                     if (TrackingType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -554,43 +574,46 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DailyCap), out propertyOverride);
-            if (Optional.IsDefined(DailyCap) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  DailyCap: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DailyCap))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  DailyCap: ");
                     builder.AppendLine($"'{DailyCap.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DailyCapResetTime), out propertyOverride);
-            if (Optional.IsDefined(DailyCapResetTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  DailyCapResetTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DailyCapResetTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  DailyCapResetTime: ");
                     builder.AppendLine($"'{DailyCapResetTime.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThrottleRate), out propertyOverride);
-            if (Optional.IsDefined(ThrottleRate) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ThrottleRate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThrottleRate))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ThrottleRate: ");
                     builder.AppendLine($"'{ThrottleRate.Value.ToString()}'");
                 }
             }

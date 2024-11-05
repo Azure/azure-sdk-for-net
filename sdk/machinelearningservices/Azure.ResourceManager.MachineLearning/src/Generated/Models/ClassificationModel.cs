@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ClassificationModel DecisionTree { get; } = new ClassificationModel(DecisionTreeValue);
         /// <summary>
         /// Random forest is a supervised learning algorithm.
-        /// The "forest" it builds, is an ensemble of decision trees, usually trained with the bagging method.
+        /// The "forest" it builds, is an ensemble of decision trees, usually trained with the “bagging” method.
         /// The general idea of the bagging method is that a combination of learning models increases the overall result.
         /// </summary>
         public static ClassificationModel RandomForest { get; } = new ClassificationModel(RandomForestValue);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ClassificationModel left, ClassificationModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClassificationModel"/> values are not the same. </summary>
         public static bool operator !=(ClassificationModel left, ClassificationModel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClassificationModel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClassificationModel"/>. </summary>
         public static implicit operator ClassificationModel(string value) => new ClassificationModel(value);
 
         /// <inheritdoc />
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

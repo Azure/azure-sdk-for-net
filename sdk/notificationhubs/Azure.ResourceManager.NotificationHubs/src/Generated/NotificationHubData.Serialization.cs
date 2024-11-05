@@ -21,50 +21,26 @@ namespace Azure.ResourceManager.NotificationHubs
 
         void IJsonModel<NotificationHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationHubData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -118,21 +94,25 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("baiduCredential"u8);
                 writer.WriteObjectValue(BaiduCredential, options);
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(BrowserCredential))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("browserCredential"u8);
+                writer.WriteObjectValue(BrowserCredential, options);
+            }
+            if (Optional.IsDefined(XiaomiCredential))
+            {
+                writer.WritePropertyName("xiaomiCredential"u8);
+                writer.WriteObjectValue(XiaomiCredential, options);
+            }
+            if (Optional.IsDefined(FcmV1Credential))
+            {
+                writer.WritePropertyName("fcmV1Credential"u8);
+                writer.WriteObjectValue(FcmV1Credential, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DailyMaxActiveDevices))
+            {
+                writer.WritePropertyName("dailyMaxActiveDevices"u8);
+                writer.WriteNumberValue(DailyMaxActiveDevices.Value);
             }
             writer.WriteEndObject();
         }
@@ -173,6 +153,10 @@ namespace Azure.ResourceManager.NotificationHubs
             NotificationHubMpnsCredential mpnsCredential = default;
             NotificationHubAdmCredential admCredential = default;
             NotificationHubBaiduCredential baiduCredential = default;
+            BrowserCredential browserCredential = default;
+            XiaomiCredential xiaomiCredential = default;
+            FcmV1Credential fcmV1Credential = default;
+            long? dailyMaxActiveDevices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -320,6 +304,42 @@ namespace Azure.ResourceManager.NotificationHubs
                             baiduCredential = NotificationHubBaiduCredential.DeserializeNotificationHubBaiduCredential(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("browserCredential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            browserCredential = BrowserCredential.DeserializeBrowserCredential(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("xiaomiCredential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            xiaomiCredential = XiaomiCredential.DeserializeXiaomiCredential(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("fcmV1Credential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            fcmV1Credential = FcmV1Credential.DeserializeFcmV1Credential(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("dailyMaxActiveDevices"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dailyMaxActiveDevices = property0.Value.GetInt64();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -336,6 +356,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                sku,
                 name0,
                 registrationTtl,
                 authorizationRules ?? new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>(),
@@ -345,7 +366,10 @@ namespace Azure.ResourceManager.NotificationHubs
                 mpnsCredential,
                 admCredential,
                 baiduCredential,
-                sku,
+                browserCredential,
+                xiaomiCredential,
+                fcmV1Credential,
+                dailyMaxActiveDevices,
                 serializedAdditionalRawData);
         }
 

@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string Stv1Value = "stv1";
         private const string Stv2Value = "stv2";
         private const string Mtv1Value = "mtv1";
+        private const string Stv21Value = "stv2.1";
 
         /// <summary> Platform version cannot be determined, as compute platform is not deployed. </summary>
         public static PlatformVersion Undetermined { get; } = new PlatformVersion(UndeterminedValue);
@@ -35,11 +36,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static PlatformVersion Stv2 { get; } = new PlatformVersion(Stv2Value);
         /// <summary> Platform running the service on Multi Tenant V1 platform. </summary>
         public static PlatformVersion Mtv1 { get; } = new PlatformVersion(Mtv1Value);
+        /// <summary> Platform running the service on Single Tenant V2 platform on newer Hardware. </summary>
+        public static PlatformVersion Stv21 { get; } = new PlatformVersion(Stv21Value);
         /// <summary> Determines if two <see cref="PlatformVersion"/> values are the same. </summary>
         public static bool operator ==(PlatformVersion left, PlatformVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlatformVersion"/> values are not the same. </summary>
         public static bool operator !=(PlatformVersion left, PlatformVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PlatformVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PlatformVersion"/>. </summary>
         public static implicit operator PlatformVersion(string value) => new PlatformVersion(value);
 
         /// <inheritdoc />
@@ -50,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -297,8 +297,8 @@ function Remove-EmptySections {
   {
     $parsedSections = $ChangeLogEntry.Sections
     $sanitizedReleaseContent = New-Object System.Collections.ArrayList(,$releaseContent)
-  
-    foreach ($key in @($parsedSections.Keys)) 
+
+    foreach ($key in @($parsedSections.Keys))
     {
       if ([System.String]::IsNullOrWhiteSpace($parsedSections[$key]))
       {
@@ -442,6 +442,7 @@ function Confirm-ChangeLogForRelease {
   if (!$foundRecommendedSection)
   {
     $ChangeLogStatus.Message = "The changelog entry did not contain any of the recommended sections ($($RecommendedSectionHeaders -join ', ')), please add at least one. See https://aka.ms/azsdk/guideline/changelogs for more info."
+    $ChangeLogStatus.IsValid = $false
     if (!$SuppressErrors) {
       LogError "$($ChangeLogStatus.Message)"
     }

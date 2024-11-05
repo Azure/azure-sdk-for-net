@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Private Endpoint destination for a Private Endpoint Outbound Rule for the managed network of a machine learning workspace. </summary>
+        [WirePath("destination")]
         public PrivateEndpointDestination Destination { get; set; }
     }
 }

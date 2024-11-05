@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<ContainerCpuUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerCpuUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerCpuUsage)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(TotalUsage))
             {
                 writer.WritePropertyName("totalUsage"u8);
@@ -68,7 +76,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerCpuUsage IJsonModel<ContainerCpuUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -161,31 +168,33 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalUsage), out propertyOverride);
-            if (Optional.IsDefined(TotalUsage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  totalUsage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TotalUsage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  totalUsage: ");
                     builder.AppendLine($"'{TotalUsage.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PerCpuUsage), out propertyOverride);
-            if (Optional.IsCollectionDefined(PerCpuUsage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PerCpuUsage.Any() || hasPropertyOverride)
+                builder.Append("  perCpuUsage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PerCpuUsage))
                 {
-                    builder.Append("  perCpuUsage: ");
-                    if (hasPropertyOverride)
+                    if (PerCpuUsage.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  perCpuUsage: ");
                         builder.AppendLine("[");
                         foreach (var item in PerCpuUsage)
                         {
@@ -197,29 +206,31 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KernelModeUsage), out propertyOverride);
-            if (Optional.IsDefined(KernelModeUsage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  kernelModeUsage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KernelModeUsage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  kernelModeUsage: ");
                     builder.AppendLine($"'{KernelModeUsage.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserModeUsage), out propertyOverride);
-            if (Optional.IsDefined(UserModeUsage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  userModeUsage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserModeUsage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  userModeUsage: ");
                     builder.AppendLine($"'{UserModeUsage.Value.ToString()}'");
                 }
             }

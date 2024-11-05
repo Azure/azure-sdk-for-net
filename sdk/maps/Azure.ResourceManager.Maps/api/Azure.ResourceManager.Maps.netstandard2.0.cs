@@ -24,13 +24,14 @@ namespace Azure.ResourceManager.Maps
         public Azure.ResourceManager.Maps.Models.MapsAccountKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.Maps.Models.MapsAccountProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Maps.Models.MapsSku Sku { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.MapsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.MapsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.MapsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.MapsAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MapsAccountResource : Azure.ResourceManager.ArmResource
+    public partial class MapsAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.MapsAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsAccountData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MapsAccountResource() { }
@@ -56,6 +57,11 @@ namespace Azure.ResourceManager.Maps
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maps.MapsAccountResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maps.MapsAccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maps.MapsAccountResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Maps.MapsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.MapsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.MapsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Maps.MapsAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maps.MapsAccountResource> Update(Azure.ResourceManager.Maps.Models.MapsAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maps.MapsAccountResource>> UpdateAsync(Azure.ResourceManager.Maps.Models.MapsAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -80,13 +86,14 @@ namespace Azure.ResourceManager.Maps
     {
         public MapsCreatorData(Azure.Core.AzureLocation location, Azure.ResourceManager.Maps.Models.MapsCreatorProperties properties) { }
         public Azure.ResourceManager.Maps.Models.MapsCreatorProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.MapsCreatorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.MapsCreatorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.MapsCreatorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.MapsCreatorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsCreatorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsCreatorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsCreatorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MapsCreatorResource : Azure.ResourceManager.ArmResource
+    public partial class MapsCreatorResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.MapsCreatorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsCreatorData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MapsCreatorResource() { }
@@ -103,6 +110,11 @@ namespace Azure.ResourceManager.Maps
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maps.MapsCreatorResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maps.MapsCreatorResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maps.MapsCreatorResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Maps.MapsCreatorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.MapsCreatorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.MapsCreatorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Maps.MapsCreatorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsCreatorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsCreatorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.MapsCreatorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maps.MapsCreatorResource> Update(Azure.ResourceManager.Maps.Models.MapsCreatorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maps.MapsCreatorResource>> UpdateAsync(Azure.ResourceManager.Maps.Models.MapsCreatorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -161,6 +173,7 @@ namespace Azure.ResourceManager.Maps.Models
         public System.DateTimeOffset? PrimaryKeyLastUpdatedOn { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
         public System.DateTimeOffset? SecondaryKeyLastUpdatedOn { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsAccountKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsAccountKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsAccountKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsAccountKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.MapsAccountKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -197,6 +210,7 @@ namespace Azure.ResourceManager.Maps.Models
         public Azure.ResourceManager.Maps.Models.MapsSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsAccountPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsAccountPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsAccountPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsAccountPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.MapsAccountPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -211,6 +225,7 @@ namespace Azure.ResourceManager.Maps.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Maps.Models.MapsLinkedResource> LinkedResources { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Guid? UniqueId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsAccountProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsAccountProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsAccountProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsAccountProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.MapsAccountProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -226,6 +241,7 @@ namespace Azure.ResourceManager.Maps.Models
         public System.Collections.Generic.IList<string> Regions { get { throw null; } }
         public Azure.ResourceManager.Maps.Models.MapsSigningKey SigningKey { get { throw null; } }
         public string Start { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsAccountSasContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsAccountSasContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsAccountSasContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsAccountSasContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.MapsAccountSasContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -236,6 +252,7 @@ namespace Azure.ResourceManager.Maps.Models
     {
         internal MapsAccountSasToken() { }
         public string AccountSasToken { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsAccountSasToken System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsAccountSasToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsAccountSasToken>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsAccountSasToken System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.MapsAccountSasToken>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -246,6 +263,7 @@ namespace Azure.ResourceManager.Maps.Models
     {
         public MapsCorsRule(System.Collections.Generic.IEnumerable<string> allowedOrigins) { }
         public System.Collections.Generic.IList<string> AllowedOrigins { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsCorsRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsCorsRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsCorsRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsCorsRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.MapsCorsRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -258,6 +276,7 @@ namespace Azure.ResourceManager.Maps.Models
         public string ProvisioningState { get { throw null; } }
         public int? StorageUnits { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsCreatorPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsCreatorPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsCreatorPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsCreatorPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.MapsCreatorPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -269,6 +288,7 @@ namespace Azure.ResourceManager.Maps.Models
         public MapsCreatorProperties(int storageUnits) { }
         public string ProvisioningState { get { throw null; } }
         public int StorageUnits { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsCreatorProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsCreatorProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsCreatorProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsCreatorProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.MapsCreatorProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -279,6 +299,7 @@ namespace Azure.ResourceManager.Maps.Models
     {
         public MapsKeySpecification(Azure.ResourceManager.Maps.Models.MapsKeyType keyType) { }
         public Azure.ResourceManager.Maps.Models.MapsKeyType KeyType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsKeySpecification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsKeySpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsKeySpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsKeySpecification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.MapsKeySpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -308,6 +329,7 @@ namespace Azure.ResourceManager.Maps.Models
         public MapsLinkedResource(string uniqueName, string id) { }
         public string Id { get { throw null; } set { } }
         public string UniqueName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsLinkedResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsLinkedResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsLinkedResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsLinkedResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.MapsLinkedResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -337,6 +359,7 @@ namespace Azure.ResourceManager.Maps.Models
         public MapsSku(Azure.ResourceManager.Maps.Models.MapsSkuName name) { }
         public Azure.ResourceManager.Maps.Models.MapsSkuName Name { get { throw null; } set { } }
         public string Tier { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maps.Models.MapsSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.MapsSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

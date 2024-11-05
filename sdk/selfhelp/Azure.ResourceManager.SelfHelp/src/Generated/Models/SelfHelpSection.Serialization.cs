@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         void IJsonModel<SelfHelpSection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SelfHelpSection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SelfHelpSection)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SelfHelpSection IJsonModel<SelfHelpSection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -81,7 +88,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
             string title = default;
             string content = default;
-            ReplacementMaps replacementMaps = default;
+            SolutionReplacementMaps replacementMaps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +109,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property.Value, options);
+                    replacementMaps = SolutionReplacementMaps.DeserializeSolutionReplacementMaps(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

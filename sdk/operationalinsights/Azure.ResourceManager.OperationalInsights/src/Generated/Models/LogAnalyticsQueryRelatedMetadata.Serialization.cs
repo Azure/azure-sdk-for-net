@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         void IJsonModel<LogAnalyticsQueryRelatedMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQueryRelatedMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LogAnalyticsQueryRelatedMetadata)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
@@ -73,7 +81,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         LogAnalyticsQueryRelatedMetadata IJsonModel<LogAnalyticsQueryRelatedMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -166,17 +173,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Categories), out propertyOverride);
-            if (Optional.IsCollectionDefined(Categories) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Categories.Any() || hasPropertyOverride)
+                builder.Append("  categories: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Categories))
                 {
-                    builder.Append("  categories: ");
-                    if (hasPropertyOverride)
+                    if (Categories.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  categories: ");
                         builder.AppendLine("[");
                         foreach (var item in Categories)
                         {
@@ -201,17 +209,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceTypes), out propertyOverride);
-            if (Optional.IsCollectionDefined(ResourceTypes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ResourceTypes.Any() || hasPropertyOverride)
+                builder.Append("  resourceTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ResourceTypes))
                 {
-                    builder.Append("  resourceTypes: ");
-                    if (hasPropertyOverride)
+                    if (ResourceTypes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  resourceTypes: ");
                         builder.AppendLine("[");
                         foreach (var item in ResourceTypes)
                         {
@@ -236,17 +245,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Solutions), out propertyOverride);
-            if (Optional.IsCollectionDefined(Solutions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Solutions.Any() || hasPropertyOverride)
+                builder.Append("  solutions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Solutions))
                 {
-                    builder.Append("  solutions: ");
-                    if (hasPropertyOverride)
+                    if (Solutions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  solutions: ");
                         builder.AppendLine("[");
                         foreach (var item in Solutions)
                         {

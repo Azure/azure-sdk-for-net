@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                 ConnectionString = ConnectionString
             };
 
-            var manager = new Manager(azureMonitorOptions, new DefaultPlatform());
+            var manager = new Manager(azureMonitorOptions, new DefaultPlatformDistro());
 
             using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
             Console.WriteLine("Key pressed. Exiting the loop.");
         }
 
-        private static bool GetRandomBool(int percent) => percent >= _random.Next(0, 100);
+        private static bool GetRandomBool(int percent) => percent > _random.Next(0, 100);
 
         private static async Task GenerateTelemetry()
         {
@@ -86,6 +86,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                 Console.WriteLine("Request");
                 using (var activity = s_activitySource.StartActivity("Request", kind: ActivityKind.Server))
                 {
+                    activity?.SetTag("url.scheme", "http");
+                    activity?.SetTag("server.address", "localhost");
+
                     // Exception
                     if (GetRandomBool(percent: 40))
                     {
@@ -98,13 +101,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                         catch (Exception ex)
                         {
                             activity?.SetStatus(ActivityStatusCode.Error);
-                            activity?.RecordException(ex);
+                            activity?.RecordException(ex, new TagList { { "customKey1", "customValue1" } });
                         }
                     }
                     else
                     {
                         activity?.SetTag("url.path", "/request/success");
                     }
+
+                    activity?.SetTag("customKey1", "customValue1");
                 }
             }
 
@@ -125,9 +130,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                         catch (Exception ex)
                         {
                             activity?.SetStatus(ActivityStatusCode.Error);
-                            activity?.RecordException(ex);
+                            activity?.RecordException(ex, new TagList { { "customKey1", "customValue1" } });
                         }
                     }
+
+                    activity?.SetTag("customKey1", "customValue1");
                 }
             }
 
@@ -138,7 +145,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
                 _logger?.Log(
                     logLevel: LogLevel.Information,
-                    eventId: 0,
+                    eventId: 1,
                     exception: null,
                     message: "Hello {name}.",
                     args: new object[] { "World" });
@@ -155,7 +162,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                     {
                         _logger?.Log(
                             logLevel: LogLevel.Error,
-                            eventId: 0,
+                            eventId: 2,
                             exception: ex,
                             message: "Hello {name}.",
                             args: new object[] { "World" });

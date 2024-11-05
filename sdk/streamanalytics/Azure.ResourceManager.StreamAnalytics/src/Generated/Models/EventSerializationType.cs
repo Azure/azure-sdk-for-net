@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator ==(EventSerializationType left, EventSerializationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventSerializationType"/> values are not the same. </summary>
         public static bool operator !=(EventSerializationType left, EventSerializationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventSerializationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventSerializationType"/>. </summary>
         public static implicit operator EventSerializationType(string value) => new EventSerializationType(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

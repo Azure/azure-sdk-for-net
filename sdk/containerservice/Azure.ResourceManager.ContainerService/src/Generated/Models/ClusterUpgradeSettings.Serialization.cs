@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         void IJsonModel<ClusterUpgradeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterUpgradeSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(OverrideSettings))
             {
                 writer.WritePropertyName("overrideSettings"u8);
@@ -46,7 +55,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ClusterUpgradeSettings IJsonModel<ClusterUpgradeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -92,6 +100,36 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ClusterUpgradeSettings(overrideSettings, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OverrideSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  overrideSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OverrideSettings))
+                {
+                    builder.Append("  overrideSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, OverrideSettings, options, 2, false, "  overrideSettings: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ClusterUpgradeSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradeSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -100,6 +138,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ClusterUpgradeSettings)} does not support writing '{options.Format}' format.");
             }

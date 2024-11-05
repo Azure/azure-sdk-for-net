@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> State of the UE. </summary>
+    /// <summary>
+    /// State of the UE.
+    /// Serialized Name: UeState
+    /// </summary>
     public readonly partial struct UEState : IEquatable<UEState>
     {
         private readonly string _value;
@@ -28,21 +31,36 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string DeregisteredValue = "Deregistered";
         private const string UnknownValue = "Unknown";
 
-        /// <summary> Connected. </summary>
+        /// <summary>
+        /// Connected
+        /// Serialized Name: UeState.Connected
+        /// </summary>
         public static UEState Connected { get; } = new UEState(ConnectedValue);
-        /// <summary> Idle. </summary>
+        /// <summary>
+        /// Idle
+        /// Serialized Name: UeState.Idle
+        /// </summary>
         public static UEState Idle { get; } = new UEState(IdleValue);
-        /// <summary> Detached. </summary>
+        /// <summary>
+        /// Detached
+        /// Serialized Name: UeState.Detached
+        /// </summary>
         public static UEState Detached { get; } = new UEState(DetachedValue);
-        /// <summary> Deregistered. </summary>
+        /// <summary>
+        /// Deregistered
+        /// Serialized Name: UeState.Deregistered
+        /// </summary>
         public static UEState Deregistered { get; } = new UEState(DeregisteredValue);
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: UeState.Unknown
+        /// </summary>
         public static UEState Unknown { get; } = new UEState(UnknownValue);
         /// <summary> Determines if two <see cref="UEState"/> values are the same. </summary>
         public static bool operator ==(UEState left, UEState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UEState"/> values are not the same. </summary>
         public static bool operator !=(UEState left, UEState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UEState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UEState"/>. </summary>
         public static implicit operator UEState(string value) => new UEState(value);
 
         /// <inheritdoc />
@@ -53,7 +71,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

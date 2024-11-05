@@ -20,54 +20,22 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         void IJsonModel<SecretAttributes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SecretAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecretAttributes)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
-            {
-                writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
-            }
-            if (Optional.IsDefined(NotBefore))
-            {
-                writer.WritePropertyName("nbf"u8);
-                writer.WriteNumberValue(NotBefore.Value, "U");
-            }
-            if (Optional.IsDefined(Expires))
-            {
-                writer.WritePropertyName("exp"u8);
-                writer.WriteNumberValue(Expires.Value, "U");
-            }
-            if (options.Format != "W" && Optional.IsDefined(Created))
-            {
-                writer.WritePropertyName("created"u8);
-                writer.WriteNumberValue(Created.Value, "U");
-            }
-            if (options.Format != "W" && Optional.IsDefined(Updated))
-            {
-                writer.WritePropertyName("updated"u8);
-                writer.WriteNumberValue(Updated.Value, "U");
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         SecretAttributes IJsonModel<SecretAttributes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -171,75 +139,80 @@ namespace Azure.ResourceManager.KeyVault.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
-            if (Optional.IsDefined(Enabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Enabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enabled: ");
                     var boolValue = Enabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotBefore), out propertyOverride);
-            if (Optional.IsDefined(NotBefore) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nbf: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NotBefore))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nbf: ");
                     var formattedDateTimeString = TypeFormatters.ToString(NotBefore.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Expires), out propertyOverride);
-            if (Optional.IsDefined(Expires) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  exp: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Expires))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  exp: ");
                     var formattedDateTimeString = TypeFormatters.ToString(Expires.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Created), out propertyOverride);
-            if (Optional.IsDefined(Created) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  created: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Created))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  created: ");
                     var formattedDateTimeString = TypeFormatters.ToString(Created.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Updated), out propertyOverride);
-            if (Optional.IsDefined(Updated) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  updated: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Updated))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  updated: ");
                     var formattedDateTimeString = TypeFormatters.ToString(Updated.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

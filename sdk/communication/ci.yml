@@ -51,11 +51,6 @@ extends:
       safeName: AzureCommunicationRooms
     - name: Azure.Communication.Identity
       safeName: AzureCommunicationIdentity
-    - name: Azure.Communication.MediaComposition
-      safeName: AzureCommunicationMediaComposition
-      skipReleaseStage: true
-    - name: Azure.Communication.NetworkTraversal
-      safeName: AzureCommunicationNetworkTraversal
     - name: Azure.Communication.PhoneNumbers
       safeName: AzureCommunicationPhoneNumbers
     - name: Azure.Communication.ShortCodes
@@ -64,3 +59,5 @@ extends:
     - name: Azure.Communication.AlphaIds
       safeName: AzureCommunicationAlphaIds
       skipReleaseStage: true
+    - name: Azure.Communication.ProgrammableConnectivity
+      safeName: AzureCommunicationProgrammableConnectivity

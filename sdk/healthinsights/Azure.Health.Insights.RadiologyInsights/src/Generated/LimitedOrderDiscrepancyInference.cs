@@ -20,20 +20,20 @@ namespace Azure.Health.Insights.RadiologyInsights
         {
             Argument.AssertNotNull(orderType, nameof(orderType));
 
-            Kind = "limitedOrderDiscrepancy";
+            Kind = RadiologyInsightsInferenceType.LimitedOrderDiscrepancy;
             OrderType = orderType;
             PresentBodyParts = new ChangeTrackingList<FhirR4CodeableConcept>();
             PresentBodyPartMeasurements = new ChangeTrackingList<FhirR4CodeableConcept>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LimitedOrderDiscrepancyInference"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> Discriminator property for RadiologyInsightsInference. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="orderType"> Order type : CPT ultrasound complete code for abdomen, retroperitoneal, pelvis or breast. </param>
         /// <param name="presentBodyParts"> List of body parts found in the document : SNOMED CT codes. </param>
         /// <param name="presentBodyPartMeasurements"> List of body parts that are measured according to the document : SNOMED CT codes. </param>
-        internal LimitedOrderDiscrepancyInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4CodeableConcept orderType, IReadOnlyList<FhirR4CodeableConcept> presentBodyParts, IReadOnlyList<FhirR4CodeableConcept> presentBodyPartMeasurements) : base(kind, extension, serializedAdditionalRawData)
+        internal LimitedOrderDiscrepancyInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4CodeableConcept orderType, IReadOnlyList<FhirR4CodeableConcept> presentBodyParts, IReadOnlyList<FhirR4CodeableConcept> presentBodyPartMeasurements) : base(kind, extension, serializedAdditionalRawData)
         {
             OrderType = orderType;
             PresentBodyParts = presentBodyParts;

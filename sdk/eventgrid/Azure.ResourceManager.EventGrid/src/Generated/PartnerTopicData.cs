@@ -100,28 +100,37 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Identity information for the Partner Topic resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The immutableId of the corresponding partner registration. </summary>
+        [WirePath("properties.partnerRegistrationImmutableId")]
         public Guid? PartnerRegistrationImmutableId { get; set; }
         /// <summary> Source associated with this partner topic. This represents a unique partner resource. </summary>
+        [WirePath("properties.source")]
         public string Source { get; set; }
         /// <summary> Event Type information from the corresponding event channel. </summary>
+        [WirePath("properties.eventTypeInfo")]
         public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }
         /// <summary>
         /// Expiration time of the partner topic. If this timer expires while the partner topic is still never activated,
         /// the partner topic and corresponding event channel are deleted.
         /// </summary>
+        [WirePath("properties.expirationTimeIfNotActivatedUtc")]
         public DateTimeOffset? ExpireOnIfNotActivated { get; set; }
         /// <summary> Provisioning state of the partner topic. </summary>
+        [WirePath("properties.provisioningState")]
         public PartnerTopicProvisioningState? ProvisioningState { get; }
         /// <summary> Activation state of the partner topic. </summary>
+        [WirePath("properties.activationState")]
         public PartnerTopicActivationState? ActivationState { get; set; }
         /// <summary>
         /// Friendly description about the topic. This can be set by the publisher/partner to show custom description for the customer partner topic.
         /// This will be helpful to remove any ambiguity of the origin of creation of the partner topic for the customer.
         /// </summary>
+        [WirePath("properties.partnerTopicFriendlyDescription")]
         public string PartnerTopicFriendlyDescription { get; set; }
         /// <summary> Context or helpful message that can be used during the approval process by the subscriber. </summary>
+        [WirePath("properties.messageForActivation")]
         public string MessageForActivation { get; set; }
     }
 }

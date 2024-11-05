@@ -1,17 +1,33 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2024-04-30)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Add canMigrate API
+- Add Migrate API
+- Add log-scrubbing support for profile
+- Add new customization for CDN Endpoint.
+- Use DeepCreatedCustomDomain for CDN Endpoint API to replace CustomDomain
+- Add secretSource support for AzureFirstPartyManagedCertificateProperties
+- Fix ManagedRuleGroupOverrideSetting error in comment
+- Add ProfileChangeSkuWafMapping 
+- Add ManagedServiceIdentity support for profile
+- Add ValidateSecret
 
 ## 1.2.0 (2023-11-21)
 

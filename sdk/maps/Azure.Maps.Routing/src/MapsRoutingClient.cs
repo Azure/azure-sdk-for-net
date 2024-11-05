@@ -968,7 +968,10 @@ namespace Azure.Maps.Routing
                 }
                 if (options?.SectionFilter != null)
                 {
-                    uri.AppendQuery("sectionType", options.SectionFilter.Value.ToString(), true);
+                    foreach (var param in options.SectionFilter)
+                    {
+                        uri.AppendQuery("sectionType", param.ToString(), true);
+                    }
                 }
                 if (options?.ArriveAt != null)
                 {

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove any identity. </summary>
+    /// <summary> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </summary>
     public readonly partial struct EventSubscriptionIdentityType : IEquatable<EventSubscriptionIdentityType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(EventSubscriptionIdentityType left, EventSubscriptionIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventSubscriptionIdentityType"/> values are not the same. </summary>
         public static bool operator !=(EventSubscriptionIdentityType left, EventSubscriptionIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventSubscriptionIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventSubscriptionIdentityType"/>. </summary>
         public static implicit operator EventSubscriptionIdentityType(string value) => new EventSubscriptionIdentityType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

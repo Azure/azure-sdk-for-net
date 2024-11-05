@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         void IJsonModel<ServiceBusSqlFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusSqlFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SqlExpression))
             {
                 writer.WritePropertyName("sqlExpression"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServiceBusSqlFilter IJsonModel<ServiceBusSqlFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -131,15 +138,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SqlExpression), out propertyOverride);
-            if (Optional.IsDefined(SqlExpression) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sqlExpression: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SqlExpression))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sqlExpression: ");
                     if (SqlExpression.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -153,29 +161,31 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompatibilityLevel), out propertyOverride);
-            if (Optional.IsDefined(CompatibilityLevel) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  compatibilityLevel: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CompatibilityLevel))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  compatibilityLevel: ");
                     builder.AppendLine($"{CompatibilityLevel.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiresPreprocessing), out propertyOverride);
-            if (Optional.IsDefined(RequiresPreprocessing) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  requiresPreprocessing: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequiresPreprocessing))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  requiresPreprocessing: ");
                     var boolValue = RequiresPreprocessing.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

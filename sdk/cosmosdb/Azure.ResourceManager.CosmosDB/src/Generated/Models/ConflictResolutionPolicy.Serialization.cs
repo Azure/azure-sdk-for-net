@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<ConflictResolutionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ConflictResolutionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConflictResolutionPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ConflictResolutionPolicy IJsonModel<ConflictResolutionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,29 +134,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
-            if (Optional.IsDefined(Mode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  mode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Mode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  mode: ");
                     builder.AppendLine($"'{Mode.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConflictResolutionPath), out propertyOverride);
-            if (Optional.IsDefined(ConflictResolutionPath) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  conflictResolutionPath: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConflictResolutionPath))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  conflictResolutionPath: ");
                     if (ConflictResolutionPath.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -163,15 +172,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConflictResolutionProcedure), out propertyOverride);
-            if (Optional.IsDefined(ConflictResolutionProcedure) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  conflictResolutionProcedure: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConflictResolutionProcedure))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  conflictResolutionProcedure: ");
                     if (ConflictResolutionProcedure.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

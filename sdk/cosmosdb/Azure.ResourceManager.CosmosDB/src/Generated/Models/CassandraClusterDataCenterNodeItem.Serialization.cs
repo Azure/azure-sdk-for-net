@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CassandraClusterDataCenterNodeItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
@@ -138,7 +146,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CassandraClusterDataCenterNodeItem IJsonModel<CassandraClusterDataCenterNodeItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -366,15 +373,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Address), out propertyOverride);
-            if (Optional.IsDefined(Address) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  address: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Address))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  address: ");
                     if (Address.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -388,29 +396,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (Optional.IsDefined(State) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  state: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  state: ");
                     builder.AppendLine($"'{State.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     if (Status.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -424,15 +434,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CassandraProcessStatus), out propertyOverride);
-            if (Optional.IsDefined(CassandraProcessStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  cassandraProcessStatus: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CassandraProcessStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  cassandraProcessStatus: ");
                     if (CassandraProcessStatus.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -446,15 +457,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Load), out propertyOverride);
-            if (Optional.IsDefined(Load) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  load: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Load))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  load: ");
                     if (Load.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -468,17 +480,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tokens), out propertyOverride);
-            if (Optional.IsCollectionDefined(Tokens) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Tokens.Any() || hasPropertyOverride)
+                builder.Append("  tokens: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tokens))
                 {
-                    builder.Append("  tokens: ");
-                    if (hasPropertyOverride)
+                    if (Tokens.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  tokens: ");
                         builder.AppendLine("[");
                         foreach (var item in Tokens)
                         {
@@ -503,43 +516,46 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Size), out propertyOverride);
-            if (Optional.IsDefined(Size) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  size: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Size))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  size: ");
                     builder.AppendLine($"{Size.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostId), out propertyOverride);
-            if (Optional.IsDefined(HostId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  hostID: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HostId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  hostID: ");
                     builder.AppendLine($"'{HostId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rack), out propertyOverride);
-            if (Optional.IsDefined(Rack) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  rack: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Rack))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  rack: ");
                     if (Rack.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -553,15 +569,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
-            if (Optional.IsDefined(Timestamp) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  timestamp: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timestamp))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  timestamp: ");
                     if (Timestamp.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -575,113 +592,121 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskUsedKB), out propertyOverride);
-            if (Optional.IsDefined(DiskUsedKB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  diskUsedKB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiskUsedKB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  diskUsedKB: ");
                     builder.AppendLine($"'{DiskUsedKB.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskFreeKB), out propertyOverride);
-            if (Optional.IsDefined(DiskFreeKB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  diskFreeKB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiskFreeKB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  diskFreeKB: ");
                     builder.AppendLine($"'{DiskFreeKB.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryUsedKB), out propertyOverride);
-            if (Optional.IsDefined(MemoryUsedKB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  memoryUsedKB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MemoryUsedKB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  memoryUsedKB: ");
                     builder.AppendLine($"'{MemoryUsedKB.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryBuffersAndCachedKB), out propertyOverride);
-            if (Optional.IsDefined(MemoryBuffersAndCachedKB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  memoryBuffersAndCachedKB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MemoryBuffersAndCachedKB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  memoryBuffersAndCachedKB: ");
                     builder.AppendLine($"'{MemoryBuffersAndCachedKB.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryFreeKB), out propertyOverride);
-            if (Optional.IsDefined(MemoryFreeKB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  memoryFreeKB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MemoryFreeKB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  memoryFreeKB: ");
                     builder.AppendLine($"'{MemoryFreeKB.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryTotalKB), out propertyOverride);
-            if (Optional.IsDefined(MemoryTotalKB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  memoryTotalKB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MemoryTotalKB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  memoryTotalKB: ");
                     builder.AppendLine($"'{MemoryTotalKB.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CpuUsage), out propertyOverride);
-            if (Optional.IsDefined(CpuUsage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  cpuUsage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CpuUsage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  cpuUsage: ");
                     builder.AppendLine($"'{CpuUsage.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLatestModel), out propertyOverride);
-            if (Optional.IsDefined(IsLatestModel) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isLatestModel: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsLatestModel))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isLatestModel: ");
                     var boolValue = IsLatestModel.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

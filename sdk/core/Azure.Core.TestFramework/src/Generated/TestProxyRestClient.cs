@@ -395,6 +395,72 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        internal HttpMessage CreateRemoveSanitizersRequest(SanitizersToRemove sanitizers, string xRecordingId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/admin/removesanitizers", false);
+            request.Uri = uri;
+            if (xRecordingId != null)
+            {
+                request.Headers.Add("x-recording-id", xRecordingId);
+            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sanitizers);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Removes sanitizers. </summary>
+        /// <param name="sanitizers"> Sanitizers to remove. </param>
+        /// <param name="xRecordingId"> The recording ID to apply the transform to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizers"/> is null. </exception>
+        public async Task<Response> RemoveSanitizersAsync(SanitizersToRemove sanitizers, string xRecordingId = null, CancellationToken cancellationToken = default)
+        {
+            if (sanitizers == null)
+            {
+                throw new ArgumentNullException(nameof(sanitizers));
+            }
+
+            using var message = CreateRemoveSanitizersRequest(sanitizers, xRecordingId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Removes sanitizers. </summary>
+        /// <param name="sanitizers"> Sanitizers to remove. </param>
+        /// <param name="xRecordingId"> The recording ID to apply the transform to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizers"/> is null. </exception>
+        public Response RemoveSanitizers(SanitizersToRemove sanitizers, string xRecordingId = null, CancellationToken cancellationToken = default)
+        {
+            if (sanitizers == null)
+            {
+                throw new ArgumentNullException(nameof(sanitizers));
+            }
+
+            using var message = CreateRemoveSanitizersRequest(sanitizers, xRecordingId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateAddBodyKeySanitizerRequest(BodyKeySanitizer sanitizer, string xRecordingId)
         {
             var message = _pipeline.CreateMessage();

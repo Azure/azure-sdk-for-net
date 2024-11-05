@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static bool operator ==(SparkBatchJobResultType left, SparkBatchJobResultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkBatchJobResultType"/> values are not the same. </summary>
         public static bool operator !=(SparkBatchJobResultType left, SparkBatchJobResultType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SparkBatchJobResultType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SparkBatchJobResultType"/>. </summary>
         public static implicit operator SparkBatchJobResultType(string value) => new SparkBatchJobResultType(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

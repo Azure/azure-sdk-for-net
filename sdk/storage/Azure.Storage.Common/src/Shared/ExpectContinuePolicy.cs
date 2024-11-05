@@ -12,7 +12,7 @@ internal class ExpectContinuePolicy : HttpPipelineSynchronousPolicy
 
     public override void OnSendingRequest(HttpMessage message)
     {
-        if (message.Request.Content == null)
+        if (message.Request.Content == null || CompatSwitches.DisableExpectContinueHeader)
         {
             return;
         }

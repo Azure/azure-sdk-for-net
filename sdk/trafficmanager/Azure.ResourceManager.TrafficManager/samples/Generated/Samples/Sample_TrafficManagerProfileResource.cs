@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         public async Task CheckTrafficManagerNameAvailabilityV2_NameAvailabilityV2TestNameAvailablePOST21()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/NameAvailabilityV2Test_NameAvailable-POST-example-21.json
-            // this example is just showing the usage of "Profiles_checkTrafficManagerNameAvailabilityV2" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Profiles_CheckTrafficManagerNameAvailabilityV2" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         public async Task CheckTrafficManagerNameAvailabilityV2_NameAvailabilityV2TestNameNotAvailablePOST23()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/NameAvailabilityV2Test_NameNotAvailable-POST-example-23.json
-            // this example is just showing the usage of "Profiles_checkTrafficManagerNameAvailabilityV2" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Profiles_CheckTrafficManagerNameAvailabilityV2" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -311,11 +311,11 @@ namespace Azure.ResourceManager.TrafficManager.Samples
                 MonitorConfig = new TrafficManagerMonitorConfig()
                 {
                     Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
+                    Port = 80L,
                     Path = "/testpath.aspx",
-                    IntervalInSeconds = 30,
-                    TimeoutInSeconds = 6,
-                    ToleratedNumberOfFailures = 4,
+                    IntervalInSeconds = 30L,
+                    TimeoutInSeconds = 6L,
+                    ToleratedNumberOfFailures = 4L,
                     CustomHeaders =
 {
 new TrafficManagerMonitorConfigCustomHeaderInfo()

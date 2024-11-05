@@ -7,7 +7,8 @@ azure-arm: true
 csharp: true
 library-name: Newrelic
 namespace: Azure.ResourceManager.NewRelicObservability
-require: https://github.com/Azure/azure-rest-api-specs/blob/fd0b301360d7f83dee9dec5afe3fff77b90b79f6/specification/newrelic/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/07d286359f828bbc7901e86288a5d62b48ae2052/specification/newrelic/resource-manager/readme.md
+#tag: package-2024-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,9 +18,11 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
+enable-bicep-serialization: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -100,6 +103,7 @@ rename-mapping:
   AppServicesGetRequest.azureResourceIds: -|arm-id
   AppServiceInfo.azureResourceId: -|arm-id
   AppServicesListResponse: NewRelicAppServicesListResult
+  BillingInfoResponse: NewRelicBillingInfoResult
   AzureStorageBlobContainerEndpointProperties: StorageBlobContainerEndpointProperties
   AzureStorageBlobContainerNewrelicEndpointProperties.StorageAccountResourceId: -|arm-id
   HostsGetRequest: NewRelicHostsGetContent
@@ -118,7 +122,7 @@ rename-mapping:
   MetricsStatusResponse: NewRelicMetricsStatusResult
   MonitoredResource: NewRelicResourceMonitorResult
   MonitoredResource.id: -|arm-id
-  MonitoredResourceListResponse: NewRelicObservabilityMonitoredResourceListResult
+  MonitoredResourceListResponse: NewRelicMonitoredResourceListResult
   MonitoringStatus.Disabled: IsDisabled
   MonitoringStatus.Enabled: IsEnabled
   NewrelicAgentData.LocalIPAddress: -|ip-address
@@ -127,6 +131,7 @@ rename-mapping:
   Project: NewRelicProject
   PlanDataListResponse: NewRelicPlanDataListResult
   PlanData: NewRelicPlanDetails
+  PlanData.billingCycle: NewRelicPlanBillingCycle
   PlanDataResource: NewRelicPlanData
   OrganizationResource: NewRelicOrganizationResourceData
   SendAadLogsStatus.Disabled: IsDisabled
@@ -144,6 +149,15 @@ rename-mapping:
   SwitchBillingRequest: NewRelicSwitchBillingContent
   SwitchBillingRequest.azureResourceId: -|arm-id
   VMInfo.vmId: -|arm-id
+  MonitoredSubscriptionProperties: NewRelicMonitoredSubscription
+  ConfigurationName: MonitoredSubscriptionConfigurationName
+  ConnectedPartnerResourceProperties: NewRelicConnectedPartnerResourceProperties
+  ConnectedPartnerResourcesListFormat: NewRelicConnectedPartnerResourceInfo
+  PatchOperation: MonitoredSubscriptionPatchOperation
+  Status: NewRelicMonitoringStatus
+  SubscriptionList: NewRelicMonitoredSubscriptionProperties
+  MonitoredSubscription: NewRelicMonitoredSubscriptionInfo
+  MonitoringTagRulesProperties: NewRelicMonitoringTagRules
 
 override-operation-name:
   Accounts_List: GetNewRelicAccounts

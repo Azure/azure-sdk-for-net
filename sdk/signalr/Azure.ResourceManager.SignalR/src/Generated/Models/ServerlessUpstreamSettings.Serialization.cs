@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.SignalR.Models
 
         void IJsonModel<ServerlessUpstreamSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ServerlessUpstreamSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServerlessUpstreamSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Templates))
             {
                 writer.WritePropertyName("templates"u8);
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.SignalR.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServerlessUpstreamSettings IJsonModel<ServerlessUpstreamSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,17 +123,18 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Templates), out propertyOverride);
-            if (Optional.IsCollectionDefined(Templates) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Templates.Any() || hasPropertyOverride)
+                builder.Append("  templates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Templates))
                 {
-                    builder.Append("  templates: ");
-                    if (hasPropertyOverride)
+                    if (Templates.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  templates: ");
                         builder.AppendLine("[");
                         foreach (var item in Templates)
                         {

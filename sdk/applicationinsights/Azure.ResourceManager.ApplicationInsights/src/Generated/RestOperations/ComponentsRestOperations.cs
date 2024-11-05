@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal RequestUriBuilder CreateUpdateTagsRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ComponentTag componentTags)
+        internal RequestUriBuilder CreateUpdateTagsRequestUri(string subscriptionId, string resourceGroupName, string resourceName, WebTestComponentTag componentTags)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return uri;
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string resourceName, ComponentTag componentTags)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string resourceName, WebTestComponentTag componentTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="componentTags"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationInsightsComponentData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string resourceName, ComponentTag componentTags, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationInsightsComponentData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string resourceName, WebTestComponentTag componentTags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="componentTags"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationInsightsComponentData> UpdateTags(string subscriptionId, string resourceGroupName, string resourceName, ComponentTag componentTags, CancellationToken cancellationToken = default)
+        public Response<ApplicationInsightsComponentData> UpdateTags(string subscriptionId, string resourceGroupName, string resourceName, WebTestComponentTag componentTags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal RequestUriBuilder CreatePurgeRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ComponentPurgeBody body)
+        internal RequestUriBuilder CreatePurgeRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ComponentPurgeContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return uri;
         }
 
-        internal HttpMessage CreatePurgeRequest(string subscriptionId, string resourceGroupName, string resourceName, ComponentPurgeBody body)
+        internal HttpMessage CreatePurgeRequest(string subscriptionId, string resourceGroupName, string resourceName, ComponentPurgeContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -613,9 +613,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -629,26 +629,26 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="body"> Describes the body of a request to purge data in a single table of an Application Insights component. </param>
+        /// <param name="content"> Describes the body of a request to purge data in a single table of an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComponentPurgeResponse>> PurgeAsync(string subscriptionId, string resourceGroupName, string resourceName, ComponentPurgeBody body, CancellationToken cancellationToken = default)
+        public async Task<Response<ComponentPurgeResult>> PurgeAsync(string subscriptionId, string resourceGroupName, string resourceName, ComponentPurgeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePurgeRequest(subscriptionId, resourceGroupName, resourceName, body);
+            using var message = CreatePurgeRequest(subscriptionId, resourceGroupName, resourceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        ComponentPurgeResponse value = default;
+                        ComponentPurgeResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ComponentPurgeResponse.DeserializeComponentPurgeResponse(document.RootElement);
+                        value = ComponentPurgeResult.DeserializeComponentPurgeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -665,26 +665,26 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="body"> Describes the body of a request to purge data in a single table of an Application Insights component. </param>
+        /// <param name="content"> Describes the body of a request to purge data in a single table of an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComponentPurgeResponse> Purge(string subscriptionId, string resourceGroupName, string resourceName, ComponentPurgeBody body, CancellationToken cancellationToken = default)
+        public Response<ComponentPurgeResult> Purge(string subscriptionId, string resourceGroupName, string resourceName, ComponentPurgeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePurgeRequest(subscriptionId, resourceGroupName, resourceName, body);
+            using var message = CreatePurgeRequest(subscriptionId, resourceGroupName, resourceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        ComponentPurgeResponse value = default;
+                        ComponentPurgeResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ComponentPurgeResponse.DeserializeComponentPurgeResponse(document.RootElement);
+                        value = ComponentPurgeResult.DeserializeComponentPurgeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="purgeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="purgeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComponentPurgeStatusResponse>> GetPurgeStatusAsync(string subscriptionId, string resourceGroupName, string resourceName, string purgeId, CancellationToken cancellationToken = default)
+        public async Task<Response<ComponentPurgeStatusResult>> GetPurgeStatusAsync(string subscriptionId, string resourceGroupName, string resourceName, string purgeId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -751,9 +751,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        ComponentPurgeStatusResponse value = default;
+                        ComponentPurgeStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ComponentPurgeStatusResponse.DeserializeComponentPurgeStatusResponse(document.RootElement);
+                        value = ComponentPurgeStatusResult.DeserializeComponentPurgeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="purgeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="purgeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComponentPurgeStatusResponse> GetPurgeStatus(string subscriptionId, string resourceGroupName, string resourceName, string purgeId, CancellationToken cancellationToken = default)
+        public Response<ComponentPurgeStatusResult> GetPurgeStatus(string subscriptionId, string resourceGroupName, string resourceName, string purgeId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -782,9 +782,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        ComponentPurgeStatusResponse value = default;
+                        ComponentPurgeStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ComponentPurgeStatusResponse.DeserializeComponentPurgeStatusResponse(document.RootElement);
+                        value = ComponentPurgeStatusResult.DeserializeComponentPurgeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

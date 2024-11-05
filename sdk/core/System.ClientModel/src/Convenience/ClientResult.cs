@@ -14,7 +14,7 @@ public class ClientResult
     private readonly PipelineResponse _response;
 
     /// <summary>
-    /// Create a new instance of <see cref="ClientResult"/> from a service
+    /// Creates a new instance of <see cref="ClientResult"/> from a service
     /// response.
     /// </summary>
     /// <param name="response">The <see cref="PipelineResponse"/> received
@@ -29,7 +29,7 @@ public class ClientResult
     /// <summary>
     /// Gets the <see cref="PipelineResponse"/> received from the service.
     /// </summary>
-    /// <returns>the <see cref="PipelineResponse"/> received from the service.
+    /// <returns>The <see cref="PipelineResponse"/> received from the service.
     /// </returns>
     public PipelineResponse GetRawResponse() => _response;
 
@@ -44,7 +44,11 @@ public class ClientResult
     /// provided <paramref name="response"/>.
     /// </returns>
     public static ClientResult FromResponse(PipelineResponse response)
-        => new ClientResult(response);
+    {
+        Argument.AssertNotNull(response, nameof(response));
+
+        return new ClientResult(response);
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="ClientResult{T}"/> that holds the
@@ -60,10 +64,12 @@ public class ClientResult
     /// </returns>
     public static ClientResult<T> FromValue<T>(T value, PipelineResponse response)
     {
+        Argument.AssertNotNull(response, nameof(response));
+
         if (value is null)
         {
             string message = "ClientResult<T> contract guarantees that ClientResult<T>.Value is non-null. " +
-                "If you need to return a ClientResult where the Value is null, please use call ClientResult.FromOptionalValue instead.";
+                "If you need to return a ClientResult where the Value is null, please use ClientResult.FromOptionalValue instead.";
 
             throw new ArgumentNullException(nameof(value), message);
         }
@@ -90,7 +96,11 @@ public class ClientResult
     /// provided <paramref name="value"/> and <paramref name="response"/>.
     /// </returns>
     public static ClientResult<T?> FromOptionalValue<T>(T? value, PipelineResponse response)
-        => new ClientResult<T?>(value, response);
+    {
+        Argument.AssertNotNull(response, nameof(response));
+
+        return new ClientResult<T?>(value, response);
+    }
 
     #endregion
 }

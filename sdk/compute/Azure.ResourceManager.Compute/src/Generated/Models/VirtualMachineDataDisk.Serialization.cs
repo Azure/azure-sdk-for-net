@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<VirtualMachineDataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineDataDisk)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
             if (Optional.IsDefined(Name))
@@ -64,6 +73,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk, options);
+            }
+            if (Optional.IsDefined(SourceResource))
+            {
+                writer.WritePropertyName("sourceResource"u8);
+                JsonSerializer.Serialize(writer, SourceResource);
             }
             if (Optional.IsDefined(ToBeDetached))
             {
@@ -105,7 +119,6 @@ namespace Azure.ResourceManager.Compute.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         VirtualMachineDataDisk IJsonModel<VirtualMachineDataDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -137,6 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
             DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
             VirtualMachineManagedDisk managedDisk = default;
+            WritableSubResource sourceResource = default;
             bool? toBeDetached = default;
             long? diskIOPSReadWrite = default;
             long? diskMBpsReadWrite = default;
@@ -215,6 +229,15 @@ namespace Azure.ResourceManager.Compute.Models
                     managedDisk = VirtualMachineManagedDisk.DeserializeVirtualMachineManagedDisk(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("sourceResource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("toBeDetached"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -276,6 +299,7 @@ namespace Azure.ResourceManager.Compute.Models
                 createOption,
                 diskSizeGB,
                 managedDisk,
+                sourceResource,
                 toBeDetached,
                 diskIOPSReadWrite,
                 diskMBpsReadWrite,

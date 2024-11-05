@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Nginx.Models
 
         void IJsonModel<NginxDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NginxDeploymentProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -66,10 +74,20 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("scalingProperties"u8);
                 writer.WriteObjectValue(ScalingProperties, options);
             }
+            if (Optional.IsDefined(AutoUpgradeProfile))
+            {
+                writer.WritePropertyName("autoUpgradeProfile"u8);
+                writer.WriteObjectValue(AutoUpgradeProfile, options);
+            }
             if (Optional.IsDefined(UserProfile))
             {
                 writer.WritePropertyName("userProfile"u8);
                 writer.WriteObjectValue(UserProfile, options);
+            }
+            if (Optional.IsDefined(NginxAppProtect))
+            {
+                writer.WritePropertyName("nginxAppProtect"u8);
+                writer.WriteObjectValue(NginxAppProtect, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,7 +104,6 @@ namespace Azure.ResourceManager.Nginx.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NginxDeploymentProperties IJsonModel<NginxDeploymentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -117,7 +134,9 @@ namespace Azure.ResourceManager.Nginx.Models
             bool? enableDiagnosticsSupport = default;
             NginxLogging logging = default;
             NginxDeploymentScalingProperties scalingProperties = default;
+            AutoUpgradeProfile autoUpgradeProfile = default;
             NginxDeploymentUserProfile userProfile = default;
+            NginxDeploymentPropertiesNginxAppProtect nginxAppProtect = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,6 +201,15 @@ namespace Azure.ResourceManager.Nginx.Models
                     scalingProperties = NginxDeploymentScalingProperties.DeserializeNginxDeploymentScalingProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("autoUpgradeProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoUpgradeProfile = AutoUpgradeProfile.DeserializeAutoUpgradeProfile(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("userProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -189,6 +217,15 @@ namespace Azure.ResourceManager.Nginx.Models
                         continue;
                     }
                     userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("nginxAppProtect"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nginxAppProtect = NginxDeploymentPropertiesNginxAppProtect.DeserializeNginxDeploymentPropertiesNginxAppProtect(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -206,7 +243,9 @@ namespace Azure.ResourceManager.Nginx.Models
                 enableDiagnosticsSupport,
                 logging,
                 scalingProperties,
+                autoUpgradeProfile,
                 userProfile,
+                nginxAppProtect,
                 serializedAdditionalRawData);
         }
 

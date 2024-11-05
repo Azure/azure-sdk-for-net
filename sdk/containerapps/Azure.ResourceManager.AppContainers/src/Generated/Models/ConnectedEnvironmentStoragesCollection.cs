@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Collection of storage resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ContainerAppConnectedEnvironmentStorageData> Value { get; }
     }
 }

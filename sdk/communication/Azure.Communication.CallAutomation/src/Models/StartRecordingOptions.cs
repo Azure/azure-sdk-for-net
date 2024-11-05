@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -51,6 +51,11 @@ namespace Azure.Communication.CallAutomation
         public bool PauseOnStart { get; set; }
 
         /// <summary>
+        /// The external storage option.
+        /// </summary>
+        public RecordingStorage RecordingStorage { get; set; }
+
+        /// <summary>
         /// The sequential order in which audio channels are assigned to participants in the unmixed recording.
         /// When 'recordingChannelType' is set to 'unmixed' and `audioChannelParticipantOrdering is not specified,
         /// the audio channel to participant mapping will be automatically assigned based on the order in which participant
@@ -66,8 +71,5 @@ namespace Azure.Communication.CallAutomation
         /// ///
         /// </summary>
         public IList<ChannelAffinity> ChannelAffinity { get; set; }
-
-        /// <summary> (Optional) Used to specify external storage for call recording. </summary>
-        public ExternalStorage ExternalStorage { get; set; }
     }
 }

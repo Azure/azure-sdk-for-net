@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2021-12-02". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2025-01-05". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version)
         {
@@ -41,7 +41,7 @@ namespace Azure.Storage.Blobs
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(BlobServiceProperties storageServiceProperties, int? timeout)
+        internal HttpMessage CreateSetPropertiesRequest(BlobServiceProperties blobServiceProperties, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,24 +60,24 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
             var content = new XmlWriterContent();
-            content.XmlWriter.WriteObjectValue(storageServiceProperties, "StorageServiceProperties");
+            content.XmlWriter.WriteObjectValue(blobServiceProperties, "StorageServiceProperties");
             request.Content = content;
             return message;
         }
 
         /// <summary> Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="storageServiceProperties"> The StorageService properties. </param>
+        /// <param name="blobServiceProperties"> The StorageService properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(BlobServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blobServiceProperties"/> is null. </exception>
+        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(BlobServiceProperties blobServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (storageServiceProperties == null)
+            if (blobServiceProperties == null)
             {
-                throw new ArgumentNullException(nameof(storageServiceProperties));
+                throw new ArgumentNullException(nameof(blobServiceProperties));
             }
 
-            using var message = CreateSetPropertiesRequest(storageServiceProperties, timeout);
+            using var message = CreateSetPropertiesRequest(blobServiceProperties, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -90,18 +90,18 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="storageServiceProperties"> The StorageService properties. </param>
+        /// <param name="blobServiceProperties"> The StorageService properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(BlobServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blobServiceProperties"/> is null. </exception>
+        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(BlobServiceProperties blobServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (storageServiceProperties == null)
+            if (blobServiceProperties == null)
             {
-                throw new ArgumentNullException(nameof(storageServiceProperties));
+                throw new ArgumentNullException(nameof(blobServiceProperties));
             }
 
-            using var message = CreateSetPropertiesRequest(storageServiceProperties, timeout);
+            using var message = CreateSetPropertiesRequest(blobServiceProperties, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -434,7 +434,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetAccountInfoRequest()
+        internal HttpMessage CreateGetAccountInfoRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -444,6 +444,10 @@ namespace Azure.Storage.Blobs
             uri.AppendPath("/", false);
             uri.AppendQuery("restype", "account", true);
             uri.AppendQuery("comp", "properties", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
@@ -451,10 +455,11 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Returns the sku name and account kind. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ServiceGetAccountInfoHeaders>> GetAccountInfoAsync(CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceGetAccountInfoHeaders>> GetAccountInfoAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAccountInfoRequest();
+            using var message = CreateGetAccountInfoRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceGetAccountInfoHeaders(message.Response);
             switch (message.Response.Status)
@@ -467,10 +472,11 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Returns the sku name and account kind. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceGetAccountInfoHeaders> GetAccountInfo(CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceGetAccountInfoHeaders> GetAccountInfo(int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAccountInfoRequest();
+            using var message = CreateGetAccountInfoRequest(timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceGetAccountInfoHeaders(message.Response);
             switch (message.Response.Status)

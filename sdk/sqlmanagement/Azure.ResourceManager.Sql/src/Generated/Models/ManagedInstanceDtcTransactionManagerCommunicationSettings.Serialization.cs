@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Sql.Models
 
         void IJsonModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedInstanceDtcTransactionManagerCommunicationSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(AllowInboundEnabled))
             {
                 writer.WritePropertyName("allowInboundEnabled"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.Sql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagedInstanceDtcTransactionManagerCommunicationSettings IJsonModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -131,45 +138,48 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowInboundEnabled), out propertyOverride);
-            if (Optional.IsDefined(AllowInboundEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  allowInboundEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowInboundEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  allowInboundEnabled: ");
                     var boolValue = AllowInboundEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowOutboundEnabled), out propertyOverride);
-            if (Optional.IsDefined(AllowOutboundEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  allowOutboundEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowOutboundEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  allowOutboundEnabled: ");
                     var boolValue = AllowOutboundEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Authentication), out propertyOverride);
-            if (Optional.IsDefined(Authentication) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  authentication: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Authentication))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  authentication: ");
                     if (Authentication.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

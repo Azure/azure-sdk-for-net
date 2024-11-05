@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
     internal class DataFactoryPipelineTests : DataFactoryManagementTestBase
     {
-        public DataFactoryPipelineTests(bool isAsync) : base(isAsync)
+        public DataFactoryPipelineTests(bool isAsync) : base(isAsync)//,RecordedTestMode.Record)
         {
         }
 
@@ -5949,7 +5949,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43388")]
         public async Task Pipeline_Odbc_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");

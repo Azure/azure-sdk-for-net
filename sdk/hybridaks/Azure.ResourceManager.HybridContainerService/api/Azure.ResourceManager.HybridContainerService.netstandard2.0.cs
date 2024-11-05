@@ -35,13 +35,14 @@ namespace Azure.ResourceManager.HybridContainerService
         public Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningStatus Status { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string VmSize { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HybridContainerServiceAgentPoolResource : Azure.ResourceManager.ArmResource
+    public partial class HybridContainerServiceAgentPoolResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected HybridContainerServiceAgentPoolResource() { }
@@ -58,6 +59,11 @@ namespace Azure.ResourceManager.HybridContainerService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -101,13 +107,14 @@ namespace Azure.ResourceManager.HybridContainerService
         public HybridContainerServiceVirtualNetworkData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HybridContainerServiceVirtualNetworkResource : Azure.ResourceManager.ArmResource
+    public partial class HybridContainerServiceVirtualNetworkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected HybridContainerServiceVirtualNetworkResource() { }
@@ -124,6 +131,11 @@ namespace Azure.ResourceManager.HybridContainerService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -133,13 +145,14 @@ namespace Azure.ResourceManager.HybridContainerService
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVmSkuProperties> Values { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HybridContainerServiceVmSkuResource : Azure.ResourceManager.ArmResource
+    public partial class HybridContainerServiceVmSkuResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected HybridContainerServiceVmSkuResource() { }
@@ -152,6 +165,11 @@ namespace Azure.ResourceManager.HybridContainerService
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVmSkuData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HybridIdentityMetadataData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>
     {
@@ -159,13 +177,14 @@ namespace Azure.ResourceManager.HybridContainerService
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState? ProvisioningState { get { throw null; } }
         public string PublicKey { get { throw null; } set { } }
         public string ResourceUid { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HybridIdentityMetadataResource : Azure.ResourceManager.ArmResource
+    public partial class HybridIdentityMetadataResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected HybridIdentityMetadataResource() { }
@@ -178,19 +197,25 @@ namespace Azure.ResourceManager.HybridContainerService
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class KubernetesVersionProfileData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>
     {
         public KubernetesVersionProfileData() { }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProfileProperties Properties { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KubernetesVersionProfileResource : Azure.ResourceManager.ArmResource
+    public partial class KubernetesVersionProfileResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected KubernetesVersionProfileResource() { }
@@ -203,19 +228,25 @@ namespace Azure.ResourceManager.HybridContainerService
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ProvisionedClusterData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>
     {
         public ProvisionedClusterData() { }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.ProvisionedClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.ProvisionedClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProvisionedClusterResource : Azure.ResourceManager.ArmResource
+    public partial class ProvisionedClusterResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ProvisionedClusterResource() { }
@@ -237,19 +268,25 @@ namespace Azure.ResourceManager.HybridContainerService
         public virtual Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfile() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredentialListResult> GetUserKubeconfig(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredentialListResult>> GetUserKubeconfigAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridContainerService.ProvisionedClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridContainerService.ProvisionedClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ProvisionedClusterUpgradeProfileData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>
     {
         public ProvisionedClusterUpgradeProfileData(Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile controlPlaneProfile) { }
         public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile ControlPlaneProfile { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProvisionedClusterUpgradeProfileResource : Azure.ResourceManager.ArmResource
+    public partial class ProvisionedClusterUpgradeProfileResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ProvisionedClusterUpgradeProfileResource() { }
@@ -258,6 +295,11 @@ namespace Azure.ResourceManager.HybridContainerService
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string connectedClusterResourceUri) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HybridContainerService.Mocking
@@ -298,6 +340,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState? CurrentState { get { throw null; } }
         public string ErrorMessage { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.AgentPoolUpdateProfile> ReadyReplicas { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -310,6 +353,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public int? Count { get { throw null; } set { } }
         public string KubernetesVersion { get { throw null; } }
         public string VmSize { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.AgentPoolUpdateProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.AgentPoolUpdateProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.AgentPoolUpdateProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.AgentPoolUpdateProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.AgentPoolUpdateProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -352,6 +396,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public string MocGroup { get { throw null; } set { } }
         public string MocLocation { get { throw null; } set { } }
         public string MocVnetName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HciInfraVnetProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HciInfraVnetProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HciInfraVnetProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HciInfraVnetProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.HciInfraVnetProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -369,6 +414,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public System.Collections.Generic.IList<string> NodeTaints { get { throw null; } }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSSku? OSSku { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSType? OSType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceAgentPoolProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceAgentPoolProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceAgentPoolProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceAgentPoolProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceAgentPoolProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -380,6 +426,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         internal HybridContainerServiceCredential() { }
         public string Name { get { throw null; } }
         public byte[] Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredential System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredential>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredential>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredential System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredential>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -391,6 +438,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         internal HybridContainerServiceCredentialListError() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredentialListError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredentialListError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredentialListError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredentialListError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredentialListError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -406,6 +454,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public string Name { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredentialListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredentialListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredentialListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredentialListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceCredentialListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -437,6 +486,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public HybridContainerServiceExtendedLocation() { }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -467,6 +517,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public string KubernetesVersion { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public string VmSize { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceNamedAgentPoolProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceNamedAgentPoolProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceNamedAgentPoolProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceNamedAgentPoolProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceNamedAgentPoolProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -478,6 +529,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         internal HybridContainerServiceNetworkOperationError() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceNetworkOperationError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceNetworkOperationError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceNetworkOperationError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceNetworkOperationError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceNetworkOperationError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -574,6 +626,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         public HybridContainerServiceVirtualNetworkPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -592,6 +645,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.KubernetesVirtualIPItem> VipPool { get { throw null; } }
         public int? VlanId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.VirtualMachineIPItem> VmipPool { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -603,6 +657,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         internal HybridContainerServiceVmSkuCapabilities() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVmSkuCapabilities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVmSkuCapabilities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVmSkuCapabilities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVmSkuCapabilities System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVmSkuCapabilities>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -617,6 +672,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public string ResourceType { get { throw null; } }
         public string Size { get { throw null; } }
         public string Tier { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVmSkuProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVmSkuProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVmSkuProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVmSkuProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVmSkuProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -628,6 +684,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         internal KubernetesPatchVersions() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionReadiness> Readiness { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Upgrades { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.KubernetesPatchVersions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesPatchVersions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesPatchVersions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.KubernetesPatchVersions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesPatchVersions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -639,6 +696,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         internal KubernetesVersionProfileProperties() { }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProperties> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProfileProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProfileProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProfileProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProfileProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProfileProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -651,6 +709,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public bool? IsPreview { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HybridContainerService.Models.KubernetesPatchVersions> PatchVersions { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -664,6 +723,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSSku? OSSku { get { throw null; } }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSType? OSType { get { throw null; } }
         public bool? Ready { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionReadiness System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionReadiness>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionReadiness>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionReadiness System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionReadiness>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -675,6 +735,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public KubernetesVirtualIPItem() { }
         public string EndIP { get { throw null; } set { } }
         public string StartIP { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.KubernetesVirtualIPItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesVirtualIPItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesVirtualIPItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.KubernetesVirtualIPItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.KubernetesVirtualIPItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -685,6 +746,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         public LinuxSshPublicKey() { }
         public string KeyData { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.LinuxSshPublicKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.LinuxSshPublicKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.LinuxSshPublicKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.LinuxSshPublicKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.LinuxSshPublicKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -722,6 +784,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public string Name { get { throw null; } }
         public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAddonPhase? Phase { get { throw null; } }
         public bool? Ready { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAddonStatusProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAddonStatusProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAddonStatusProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAddonStatusProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAddonStatusProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -753,6 +816,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public string ControlPlaneEndpointHostIP { get { throw null; } set { } }
         public int? Count { get { throw null; } set { } }
         public string VmSize { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterControlPlaneProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterControlPlaneProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterControlPlaneProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterControlPlaneProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterControlPlaneProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -782,6 +846,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public int? LoadBalancerCount { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterNetworkPolicy? NetworkPolicy { get { throw null; } set { } }
         public string PodCidr { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterNetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterNetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterNetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterNetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -794,6 +859,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public string KubernetesVersion { get { throw null; } }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSType? OSType { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfileProperties> Upgrades { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -805,6 +871,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public ProvisionedClusterPoolUpgradeProfileProperties() { }
         public bool? IsPreview { get { throw null; } }
         public string KubernetesVersion { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfileProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfileProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfileProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfileProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfileProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -826,6 +893,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.LinuxSshPublicKey> SshPublicKeys { get { throw null; } }
         public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterStatus Status { get { throw null; } }
         public Azure.ResourceManager.HybridContainerService.Models.StorageProfile StorageProfile { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -852,6 +920,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public string ScanInterval { get { throw null; } set { } }
         public string SkipNodesWithLocalStorage { get { throw null; } set { } }
         public string SkipNodesWithSystemPods { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesAutoScalerProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesAutoScalerProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesAutoScalerProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesAutoScalerProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesAutoScalerProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -864,6 +933,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAddonStatusProfile> ControlPlaneStatus { get { throw null; } }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState? CurrentState { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -875,6 +945,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public StorageProfile() { }
         public bool? IsNfsCsiDriverEnabled { get { throw null; } set { } }
         public bool? IsSmbCsiDriverEnabled { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.StorageProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.StorageProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.StorageProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.StorageProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.StorageProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -886,6 +957,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public VirtualMachineIPItem() { }
         public string EndIP { get { throw null; } set { } }
         public string StartIP { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.VirtualMachineIPItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.VirtualMachineIPItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.VirtualMachineIPItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.VirtualMachineIPItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.VirtualMachineIPItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -898,6 +970,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceNetworkOperationError Error { get { throw null; } }
         public string OperationId { get { throw null; } }
         public string Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesStatusOperationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesStatusOperationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesStatusOperationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesStatusOperationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesStatusOperationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

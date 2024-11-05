@@ -5,13 +5,15 @@ using System;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.Data.Tables.Tests;
+using System.Xml;
 
 namespace Azure.Data.Tables.Samples
 {
     public partial class TablesSamples : TablesTestEnvironment
     {
-        [Test]
-        public void CreateDeleteEntity()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void CreateDeleteEntity(bool useEntity)
         {
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
@@ -95,10 +97,20 @@ namespace Azure.Data.Tables.Samples
             Console.WriteLine($"{marker.PartitionKey}, {marker.RowKey}, {marker.Product}, {marker.Price}, {marker.Quantity}");
             #endregion
 
-            #region Snippet:TablesSample2DeleteEntity
-            // Delete the entity given the partition and row key.
-            tableClient.DeleteEntity(partitionKey, rowKey);
-            #endregion
+            if (useEntity)
+            {
+                #region Snippet:TablesSample2DeleteEntity
+                // Delete the entity given the partition and row key.
+                tableClient.DeleteEntity(partitionKey, rowKey);
+                #endregion
+            }
+            else
+            {
+                #region Snippet:TablesSample2DeleteEntityUsingObject
+                // Delete an entity given a TableEntity object
+                tableClient.DeleteEntity(tableEntity);
+                #endregion
+            }
 
             tableClient.Delete();
         }

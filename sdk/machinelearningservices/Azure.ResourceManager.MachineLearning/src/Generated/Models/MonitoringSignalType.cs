@@ -27,9 +27,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DataQualityValue = "DataQuality";
         private const string FeatureAttributionDriftValue = "FeatureAttributionDrift";
         private const string CustomValue = "Custom";
-        private const string ModelPerformanceValue = "ModelPerformance";
-        private const string GenerationSafetyQualityValue = "GenerationSafetyQuality";
-        private const string GenerationTokenStatisticsValue = "GenerationTokenStatistics";
 
         /// <summary> Tracks model input data distribution change, comparing against training data or past production data. </summary>
         public static MonitoringSignalType DataDrift { get; } = new MonitoringSignalType(DataDriftValue);
@@ -41,17 +38,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MonitoringSignalType FeatureAttributionDrift { get; } = new MonitoringSignalType(FeatureAttributionDriftValue);
         /// <summary> Tracks a custom signal provided by users. </summary>
         public static MonitoringSignalType Custom { get; } = new MonitoringSignalType(CustomValue);
-        /// <summary> Tracks model performance based on ground truth data. </summary>
-        public static MonitoringSignalType ModelPerformance { get; } = new MonitoringSignalType(ModelPerformanceValue);
-        /// <summary> Tracks the safety and quality of generated content. </summary>
-        public static MonitoringSignalType GenerationSafetyQuality { get; } = new MonitoringSignalType(GenerationSafetyQualityValue);
-        /// <summary> Tracks the token usage of generative endpoints. </summary>
-        public static MonitoringSignalType GenerationTokenStatistics { get; } = new MonitoringSignalType(GenerationTokenStatisticsValue);
         /// <summary> Determines if two <see cref="MonitoringSignalType"/> values are the same. </summary>
         public static bool operator ==(MonitoringSignalType left, MonitoringSignalType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitoringSignalType"/> values are not the same. </summary>
         public static bool operator !=(MonitoringSignalType left, MonitoringSignalType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitoringSignalType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitoringSignalType"/>. </summary>
         public static implicit operator MonitoringSignalType(string value) => new MonitoringSignalType(value);
 
         /// <inheritdoc />
@@ -62,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

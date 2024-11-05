@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<StorageAccountNetworkRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageAccountNetworkRuleSet)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Bypass))
             {
                 writer.WritePropertyName("bypass"u8);
@@ -80,7 +88,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StorageAccountNetworkRuleSet IJsonModel<StorageAccountNetworkRuleSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -195,31 +202,33 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Bypass), out propertyOverride);
-            if (Optional.IsDefined(Bypass) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  bypass: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Bypass))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  bypass: ");
                     builder.AppendLine($"'{Bypass.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceAccessRules), out propertyOverride);
-            if (Optional.IsCollectionDefined(ResourceAccessRules) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ResourceAccessRules.Any() || hasPropertyOverride)
+                builder.Append("  resourceAccessRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ResourceAccessRules))
                 {
-                    builder.Append("  resourceAccessRules: ");
-                    if (hasPropertyOverride)
+                    if (ResourceAccessRules.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  resourceAccessRules: ");
                         builder.AppendLine("[");
                         foreach (var item in ResourceAccessRules)
                         {
@@ -231,17 +240,18 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkRules), out propertyOverride);
-            if (Optional.IsCollectionDefined(VirtualNetworkRules) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (VirtualNetworkRules.Any() || hasPropertyOverride)
+                builder.Append("  virtualNetworkRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(VirtualNetworkRules))
                 {
-                    builder.Append("  virtualNetworkRules: ");
-                    if (hasPropertyOverride)
+                    if (VirtualNetworkRules.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  virtualNetworkRules: ");
                         builder.AppendLine("[");
                         foreach (var item in VirtualNetworkRules)
                         {
@@ -253,17 +263,18 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPRules), out propertyOverride);
-            if (Optional.IsCollectionDefined(IPRules) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (IPRules.Any() || hasPropertyOverride)
+                builder.Append("  ipRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IPRules))
                 {
-                    builder.Append("  ipRules: ");
-                    if (hasPropertyOverride)
+                    if (IPRules.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  ipRules: ");
                         builder.AppendLine("[");
                         foreach (var item in IPRules)
                         {
@@ -275,13 +286,14 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAction), out propertyOverride);
-            builder.Append("  defaultAction: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  defaultAction: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  defaultAction: ");
                 builder.AppendLine($"'{DefaultAction.ToSerialString()}'");
             }
 

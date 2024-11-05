@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Search.Models
         public static bool operator ==(SearchServiceSharedPrivateLinkResourceProvisioningState left, SearchServiceSharedPrivateLinkResourceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchServiceSharedPrivateLinkResourceProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(SearchServiceSharedPrivateLinkResourceProvisioningState left, SearchServiceSharedPrivateLinkResourceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchServiceSharedPrivateLinkResourceProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchServiceSharedPrivateLinkResourceProvisioningState"/>. </summary>
         public static implicit operator SearchServiceSharedPrivateLinkResourceProvisioningState(string value) => new SearchServiceSharedPrivateLinkResourceProvisioningState(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

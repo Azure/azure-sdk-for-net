@@ -32,7 +32,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator ==(DataFeedAutoRollupMethod left, DataFeedAutoRollupMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedAutoRollupMethod"/> values are not the same. </summary>
         public static bool operator !=(DataFeedAutoRollupMethod left, DataFeedAutoRollupMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFeedAutoRollupMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFeedAutoRollupMethod"/>. </summary>
         public static implicit operator DataFeedAutoRollupMethod(string value) => new DataFeedAutoRollupMethod(value);
 
         /// <inheritdoc />
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

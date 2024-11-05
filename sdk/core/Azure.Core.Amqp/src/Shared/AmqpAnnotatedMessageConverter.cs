@@ -511,7 +511,11 @@ namespace Azure.Core.Amqp.Shared
                     break;
 
                 case AmqpType.Uri:
-                    amqpPropertyValue = new DescribedType((AmqpSymbol)AmqpMessageConstants.Uri, ((Uri)propertyValue).AbsoluteUri);
+                    amqpPropertyValue = new DescribedType((AmqpSymbol)AmqpMessageConstants.Uri, propertyValue switch
+                    {
+                        Uri uriValue when uriValue.IsAbsoluteUri => uriValue.AbsoluteUri,
+                        _ => propertyValue.ToString()
+                    });
                     break;
 
                 case AmqpType.DateTimeOffset:
@@ -819,7 +823,7 @@ namespace Azure.Core.Amqp.Shared
         {
             if (symbol.Equals(AmqpMessageConstants.Uri))
             {
-                return new Uri((string)value);
+                return new Uri((string)value, UriKind.RelativeOrAbsolute);
             }
 
             if (symbol.Equals(AmqpMessageConstants.TimeSpan))

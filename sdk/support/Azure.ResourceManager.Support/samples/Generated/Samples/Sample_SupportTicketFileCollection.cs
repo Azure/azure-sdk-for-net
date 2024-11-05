@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListFilesUnderAWorkspaceForASubscription()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/ListFilesForSubscriptionUnderFileWorkspace.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/ListFilesForSubscriptionUnderFileWorkspace.json
             // this example is just showing the usage of "Files_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SubscriptionFileWorkspaceResource created on azure
             // for more information of creating SubscriptionFileWorkspaceResource, please refer to the document of SubscriptionFileWorkspaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             string fileWorkspaceName = "testworkspace";
             ResourceIdentifier subscriptionFileWorkspaceResourceId = SubscriptionFileWorkspaceResource.CreateResourceIdentifier(subscriptionId, fileWorkspaceName);
             SubscriptionFileWorkspaceResource subscriptionFileWorkspace = client.GetSubscriptionFileWorkspaceResource(subscriptionFileWorkspaceResourceId);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetDetailsOfASubscriptionFile()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/GetFileDetailsForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetFileDetailsForSubscription.json
             // this example is just showing the usage of "Files_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SubscriptionFileWorkspaceResource created on azure
             // for more information of creating SubscriptionFileWorkspaceResource, please refer to the document of SubscriptionFileWorkspaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             string fileWorkspaceName = "testworkspace";
             ResourceIdentifier subscriptionFileWorkspaceResourceId = SubscriptionFileWorkspaceResource.CreateResourceIdentifier(subscriptionId, fileWorkspaceName);
             SubscriptionFileWorkspaceResource subscriptionFileWorkspace = client.GetSubscriptionFileWorkspaceResource(subscriptionFileWorkspaceResourceId);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetDetailsOfASubscriptionFile()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/GetFileDetailsForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetFileDetailsForSubscription.json
             // this example is just showing the usage of "Files_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SubscriptionFileWorkspaceResource created on azure
             // for more information of creating SubscriptionFileWorkspaceResource, please refer to the document of SubscriptionFileWorkspaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             string fileWorkspaceName = "testworkspace";
             ResourceIdentifier subscriptionFileWorkspaceResourceId = SubscriptionFileWorkspaceResource.CreateResourceIdentifier(subscriptionId, fileWorkspaceName);
             SubscriptionFileWorkspaceResource subscriptionFileWorkspace = client.GetSubscriptionFileWorkspaceResource(subscriptionFileWorkspaceResourceId);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetDetailsOfASubscriptionFile()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/GetFileDetailsForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetFileDetailsForSubscription.json
             // this example is just showing the usage of "Files_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SubscriptionFileWorkspaceResource created on azure
             // for more information of creating SubscriptionFileWorkspaceResource, please refer to the document of SubscriptionFileWorkspaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             string fileWorkspaceName = "testworkspace";
             ResourceIdentifier subscriptionFileWorkspaceResourceId = SubscriptionFileWorkspaceResource.CreateResourceIdentifier(subscriptionId, fileWorkspaceName);
             SubscriptionFileWorkspaceResource subscriptionFileWorkspace = client.GetSubscriptionFileWorkspaceResource(subscriptionFileWorkspaceResourceId);
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.Support.Samples
             }
         }
 
-        // Create a subscription scoped file
+        // Create a file under a subscription workspace
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateASubscriptionScopedFile()
+        public async Task CreateOrUpdate_CreateAFileUnderASubscriptionWorkspace()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/CreateFileForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateFileForSubscription.json
             // this example is just showing the usage of "Files_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SubscriptionFileWorkspaceResource created on azure
             // for more information of creating SubscriptionFileWorkspaceResource, please refer to the document of SubscriptionFileWorkspaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             string fileWorkspaceName = "testworkspace";
             ResourceIdentifier subscriptionFileWorkspaceResourceId = SubscriptionFileWorkspaceResource.CreateResourceIdentifier(subscriptionId, fileWorkspaceName);
             SubscriptionFileWorkspaceResource subscriptionFileWorkspace = client.GetSubscriptionFileWorkspaceResource(subscriptionFileWorkspaceResourceId);

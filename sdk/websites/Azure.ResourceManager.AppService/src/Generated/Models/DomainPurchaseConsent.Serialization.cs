@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<DomainPurchaseConsent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DomainPurchaseConsent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DomainPurchaseConsent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AgreementKeys))
             {
                 writer.WritePropertyName("agreementKeys"u8);
@@ -63,7 +71,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DomainPurchaseConsent IJsonModel<DomainPurchaseConsent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -142,17 +149,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreementKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(AgreementKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AgreementKeys.Any() || hasPropertyOverride)
+                builder.Append("  agreementKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AgreementKeys))
                 {
-                    builder.Append("  agreementKeys: ");
-                    if (hasPropertyOverride)
+                    if (AgreementKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  agreementKeys: ");
                         builder.AppendLine("[");
                         foreach (var item in AgreementKeys)
                         {
@@ -177,15 +185,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreedBy), out propertyOverride);
-            if (Optional.IsDefined(AgreedBy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  agreedBy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AgreedBy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  agreedBy: ");
                     if (AgreedBy.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -199,15 +208,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreedOn), out propertyOverride);
-            if (Optional.IsDefined(AgreedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  agreedAt: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AgreedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  agreedAt: ");
                     var formattedDateTimeString = TypeFormatters.ToString(AgreedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

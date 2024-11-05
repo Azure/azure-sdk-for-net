@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<VirtualMachineScaleSetUpdateOSDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateOSDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSDisk)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching"u8);
@@ -35,6 +43,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
                 writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
+            }
+            if (Optional.IsDefined(DiffDiskSettings))
+            {
+                writer.WritePropertyName("diffDiskSettings"u8);
+                writer.WriteObjectValue(DiffDiskSettings, options);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -81,7 +94,6 @@ namespace Azure.ResourceManager.Compute.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         VirtualMachineScaleSetUpdateOSDisk IJsonModel<VirtualMachineScaleSetUpdateOSDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -106,6 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             CachingType? caching = default;
             bool? writeAcceleratorEnabled = default;
+            DiffDiskSettings diffDiskSettings = default;
             int? diskSizeGB = default;
             VirtualHardDisk image = default;
             IList<string> vhdContainers = default;
@@ -131,6 +144,15 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     writeAcceleratorEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("diffDiskSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diffDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"u8))
@@ -192,6 +214,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineScaleSetUpdateOSDisk(
                 caching,
                 writeAcceleratorEnabled,
+                diffDiskSettings,
                 diskSizeGB,
                 image,
                 vhdContainers ?? new ChangeTrackingList<string>(),

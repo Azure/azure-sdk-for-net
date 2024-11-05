@@ -94,8 +94,6 @@ To a get static image, one can assign bounding box and zoom level or coordinate 
 // Prepare static image options
 GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228,52.4559,13.5794,52.629))
 {
-    MapImageLayer = MapImageLayer.Basic,
-    MapImageStyle = MapImageStyle.Dark,
     ZoomLevel = 10,
     Language = RenderingLanguage.EnglishUsa,
 };
@@ -160,8 +158,6 @@ GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(
     new List<ImagePathStyle>() { path1 }
 )
 {
-    MapImageLayer = MapImageLayer.Basic,
-    MapImageStyle = MapImageStyle.Dark,
     ZoomLevel = 10,
     Language = RenderingLanguage.EnglishUsa
 };

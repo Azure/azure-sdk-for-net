@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -48,29 +47,36 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Initializes a new instance of <see cref="ComposeDocumentModelContent"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="componentModels"> List of component document models to compose. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="componentModels"/> is null. </exception>
-        public ComposeDocumentModelContent(string modelId, IEnumerable<ComponentDocumentModelDetails> componentModels)
+        /// <param name="classifierId"> Custom classifier to split and classify the input file. </param>
+        /// <param name="docTypes"> Dictionary mapping supported docTypes to the corresponding document models. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/>, <paramref name="classifierId"/> or <paramref name="docTypes"/> is null. </exception>
+        public ComposeDocumentModelContent(string modelId, string classifierId, IDictionary<string, DocumentTypeDetails> docTypes)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
-            Argument.AssertNotNull(componentModels, nameof(componentModels));
+            Argument.AssertNotNull(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(docTypes, nameof(docTypes));
 
             ModelId = modelId;
-            ComponentModels = componentModels.ToList();
+            ClassifierId = classifierId;
+            DocTypes = docTypes;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComposeDocumentModelContent"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
-        /// <param name="componentModels"> List of component document models to compose. </param>
+        /// <param name="classifierId"> Custom classifier to split and classify the input file. </param>
+        /// <param name="split"> File splitting behavior. </param>
+        /// <param name="docTypes"> Dictionary mapping supported docTypes to the corresponding document models. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComposeDocumentModelContent(string modelId, string description, IList<ComponentDocumentModelDetails> componentModels, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComposeDocumentModelContent(string modelId, string description, string classifierId, SplitMode? split, IDictionary<string, DocumentTypeDetails> docTypes, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelId = modelId;
             Description = description;
-            ComponentModels = componentModels;
+            ClassifierId = classifierId;
+            Split = split;
+            DocTypes = docTypes;
             Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -84,8 +90,12 @@ namespace Azure.AI.DocumentIntelligence
         public string ModelId { get; }
         /// <summary> Document model description. </summary>
         public string Description { get; set; }
-        /// <summary> List of component document models to compose. </summary>
-        public IList<ComponentDocumentModelDetails> ComponentModels { get; }
+        /// <summary> Custom classifier to split and classify the input file. </summary>
+        public string ClassifierId { get; }
+        /// <summary> File splitting behavior. </summary>
+        public SplitMode? Split { get; set; }
+        /// <summary> Dictionary mapping supported docTypes to the corresponding document models. </summary>
+        public IDictionary<string, DocumentTypeDetails> DocTypes { get; }
         /// <summary> List of key-value tag attributes associated with the document model. </summary>
         public IDictionary<string, string> Tags { get; }
     }

@@ -1,6 +1,18 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2024-05-21)
 
 ### Features Added
 
@@ -10,9 +22,13 @@
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Changed the method `GetLanguages` to `GetSupportedLanguages`.
+- Changed the name of `Score` property to `Confidence` in `DetectedLanguage`.
+- Changed the name of `Dir` property to `Directionality` in `Languages` models. Changed the type from `string` to `Azure.AI.Translation.Text.LanguageDirectionality`.
+- Changed the name of `Azure.AI.Translation.Text.Translation` to `Azure.AI.Translation.Text.TranslationText`.
+- Changed the name of `SentLen` property to `SentencesLengths` in `BreakSentenceItem`.
+- Changed type name from `SentenceLength` to `SentenceBoundaries`.
+- Changed the name of `Proj` property to `Projections` in `TranslatedTextAlignment` type.
 
 ## 1.0.0-beta.1 (2023-04-17)
 Initial version of Text Translation client library for .NET

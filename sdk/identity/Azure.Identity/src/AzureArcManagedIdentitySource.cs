@@ -15,10 +15,10 @@ namespace Azure.Identity
         private const string IdentityEndpointInvalidUriError = "The environment variable IDENTITY_ENDPOINT contains an invalid Uri.";
         private const string NoChallengeErrorMessage = "Did not receive expected WWW-Authenticate header in the response from Azure Arc Managed Identity Endpoint.";
         private const string InvalidChallangeErrorMessage = "The WWW-Authenticate header in the response from Azure Arc Managed Identity Endpoint did not match the expected format.";
-        private const string UserAssignedNotSupportedErrorMessage = "User assigned identity is not supported by the Azure Arc Managed Identity Endpoint. To authenticate with the system assigned identity omit the client id when constructing the ManagedIdentityCredential, or if authenticating with the DefaultAzureCredential ensure the AZURE_CLIENT_ID environment variable is not set.";
+        private const string UserAssignedNotSupportedErrorMessage = "User-assigned managed identity is not supported by the Azure Arc Managed Identity Endpoint. To authenticate with the system-assigned managed identity, omit the client ID when constructing the ManagedIdentityCredential, or if authenticating with DefaultAzureCredential, ensure the AZURE_CLIENT_ID environment variable is not set.";
         private const string ArcApiVersion = "2019-11-01";
 
-        private readonly string _clientId;
+        private readonly ManagedIdentityId _managedIdentityId;
         private readonly Uri _endpoint;
 
         public static ManagedIdentitySource TryCreate(ManagedIdentityClientOptions options)
@@ -43,8 +43,8 @@ namespace Azure.Identity
         internal AzureArcManagedIdentitySource(Uri endpoint, ManagedIdentityClientOptions options) : base(options.Pipeline)
         {
             _endpoint = endpoint;
-            _clientId = options.ClientId;
-            if (!string.IsNullOrEmpty(_clientId) || null != options.ResourceIdentifier)
+            _managedIdentityId = options.ManagedIdentityId;
+            if (options.ManagedIdentityId._idType != ManagedIdentityIdType.SystemAssigned)
             {
                 AzureIdentityEventSource.Singleton.UserAssignedManagedIdentityNotSupported("Azure Arc");
             }
@@ -53,7 +53,7 @@ namespace Azure.Identity
         protected override Request CreateRequest(string[] scopes)
         {
             // arc MI endpoint doesn't support user assigned identities so if client id was specified throw AuthenticationFailedException
-            if (!string.IsNullOrEmpty(_clientId))
+            if (_managedIdentityId._idType != ManagedIdentityIdType.SystemAssigned)
             {
                 throw new AuthenticationFailedException(UserAssignedNotSupportedErrorMessage);
             }
@@ -88,7 +88,9 @@ namespace Azure.Identity
                 {
                     throw new AuthenticationFailedException(InvalidChallangeErrorMessage);
                 }
+                string filePath = splitChallenge[1];
 
+                ValidatePath(filePath);
                 var authHeaderValue = "Basic " + File.ReadAllText(splitChallenge[1]);
 
                 using Request request = CreateRequest(context.Scopes);
@@ -111,6 +113,41 @@ namespace Azure.Identity
             }
 
             return await base.HandleResponseAsync(async, context, message, cancellationToken).ConfigureAwait(false);
+        }
+
+        private void ValidatePath(string filePath)
+        {
+            // check that the file ends with '.key'
+            if (!filePath.EndsWith(".key"))
+            {
+                throw new AuthenticationFailedException("The secret key file failed validation. File name is invalid.");
+            }
+            // if the current platform is windows check that the file is in the path %ProgramData%\AzureConnectedMachineAgent\Tokens
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                var programData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                var expectedPath = Path.Combine(programData, "AzureConnectedMachineAgent", "Tokens");
+                if (!filePath.StartsWith(expectedPath))
+                {
+                    throw new AuthenticationFailedException("The secret key file failed validation. File path is invalid.");
+                }
+            }
+
+            // if the current platform is linux check that the file is in the path /var/opt/azcmagent/tokens
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                var expectedPath = Path.Combine("/", "var", "opt", "azcmagent", "tokens");
+                if (!filePath.StartsWith(expectedPath))
+                {
+                    throw new AuthenticationFailedException("The secret key file failed validation. File path is invalid.");
+                }
+            }
+
+            // Check that the file length is no larger than 4096 bytes
+            if (new FileInfo(filePath).Length > 4096)
+            {
+                throw new AuthenticationFailedException("The secret key file failed validation. File is too large.");
+            }
         }
     }
 }

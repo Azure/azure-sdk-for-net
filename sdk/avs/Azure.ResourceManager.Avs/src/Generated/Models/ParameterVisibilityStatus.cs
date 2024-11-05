@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Should this parameter be visible to arm and passed in the parameters argument when executing. </summary>
+    /// <summary> Visibility Parameter. </summary>
     public readonly partial struct ParameterVisibilityStatus : IEquatable<ParameterVisibilityStatus>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Avs.Models
         private const string VisibleValue = "Visible";
         private const string HiddenValue = "Hidden";
 
-        /// <summary> Visible. </summary>
+        /// <summary> is visible. </summary>
         public static ParameterVisibilityStatus Visible { get; } = new ParameterVisibilityStatus(VisibleValue);
-        /// <summary> Hidden. </summary>
+        /// <summary> is hidden. </summary>
         public static ParameterVisibilityStatus Hidden { get; } = new ParameterVisibilityStatus(HiddenValue);
         /// <summary> Determines if two <see cref="ParameterVisibilityStatus"/> values are the same. </summary>
         public static bool operator ==(ParameterVisibilityStatus left, ParameterVisibilityStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParameterVisibilityStatus"/> values are not the same. </summary>
         public static bool operator !=(ParameterVisibilityStatus left, ParameterVisibilityStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ParameterVisibilityStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ParameterVisibilityStatus"/>. </summary>
         public static implicit operator ParameterVisibilityStatus(string value) => new ParameterVisibilityStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

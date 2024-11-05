@@ -37,13 +37,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         public Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionScope Scope { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatus> Statuses { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KubernetesClusterExtensionResource : Azure.ResourceManager.ArmResource
+    public partial class KubernetesClusterExtensionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected KubernetesClusterExtensionResource() { }
@@ -54,6 +55,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, bool? forceDelete = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -109,13 +115,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         public System.DateTimeOffset? SourceUpdatedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatus> Statuses { get { throw null; } }
         public System.DateTimeOffset? StatusUpdatedOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KubernetesFluxConfigurationResource : Azure.ResourceManager.ArmResource
+    public partial class KubernetesFluxConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected KubernetesFluxConfigurationResource() { }
@@ -126,6 +133,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, bool? forceDelete = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxConfigurationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxConfigurationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -162,13 +174,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         public string RepositoryPublicKey { get { throw null; } }
         public System.Uri RepositoryUri { get { throw null; } set { } }
         public string SshKnownHostsContents { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KubernetesSourceControlConfigurationResource : Azure.ResourceManager.ArmResource
+    public partial class KubernetesSourceControlConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected KubernetesSourceControlConfigurationResource() { }
@@ -179,6 +192,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -225,6 +243,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public HelmOperatorProperties() { }
         public string ChartValues { get { throw null; } set { } }
         public string ChartVersion { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.HelmOperatorProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.HelmOperatorProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.HelmOperatorProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.HelmOperatorProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.HelmOperatorProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -239,6 +258,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public long? InstallFailureCount { get { throw null; } }
         public long? LastRevisionApplied { get { throw null; } }
         public long? UpgradeFailureCount { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.HelmReleaseProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.HelmReleaseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.HelmReleaseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.HelmReleaseProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.HelmReleaseProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -257,6 +277,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public long? SyncIntervalInSeconds { get { throw null; } set { } }
         public long? TimeoutInSeconds { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesAzureBlob System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesAzureBlob>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesAzureBlob>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesAzureBlob System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesAzureBlob>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -275,6 +296,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public long? SyncIntervalInSeconds { get { throw null; } set { } }
         public long? TimeoutInSeconds { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesAzureBlobUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesAzureBlobUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesAzureBlobUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesAzureBlobUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesAzureBlobUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -291,6 +313,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public long? TimeoutInSeconds { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         public bool? UseInsecureCommunication { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesBucket System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesBucket>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesBucket>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesBucket System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesBucket>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -307,6 +330,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public long? TimeoutInSeconds { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         public bool? UseInsecureCommunication { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesBucketUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesBucketUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesBucketUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesBucketUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesBucketUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -321,6 +345,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public System.Collections.Generic.IDictionary<string, string> ConfigurationSettings { get { throw null; } set { } }
         public string ReleaseTrain { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -332,6 +357,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public KubernetesClusterExtensionScope() { }
         public string ClusterReleaseNamespace { get { throw null; } set { } }
         public string TargetNamespace { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionScope System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionScope>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionScope>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionScope System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionScope>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -346,6 +372,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatusLevel? Level { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
         public string Time { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -399,6 +426,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public System.DateTimeOffset? LastConfigAppliedOn { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationMesageLevel? MessageLevel { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationComplianceStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationComplianceStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationComplianceStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationComplianceStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationComplianceStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -535,6 +563,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.KubernetesConfiguration.Models.KustomizationUpdateContent> Kustomizations { get { throw null; } set { } }
         public Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationSourceKind? SourceKind { get { throw null; } set { } }
         public bool? Suspend { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxConfigurationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxConfigurationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxConfigurationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxConfigurationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxConfigurationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -552,6 +581,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public long? SyncIntervalInSeconds { get { throw null; } set { } }
         public long? TimeoutInSeconds { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepository System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepository>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepository>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepository System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepository>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -565,6 +595,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public string Commit { get { throw null; } set { } }
         public string Semver { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepositoryRef System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepositoryRef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepositoryRef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepositoryRef System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepositoryRef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -582,6 +613,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public long? SyncIntervalInSeconds { get { throw null; } set { } }
         public long? TimeoutInSeconds { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepositoryUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepositoryUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepositoryUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepositoryUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepositoryUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -593,6 +625,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         internal KubernetesObjectReference() { }
         public string Name { get { throw null; } }
         public string Namespace { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -609,6 +642,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public string Name { get { throw null; } }
         public string Namespace { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatusCondition> StatusConditions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -623,6 +657,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public string ObjectStatusConditionDefinitionType { get { throw null; } }
         public string Reason { get { throw null; } }
         public string Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatusCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatusCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatusCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatusCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatusCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -673,6 +708,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public System.Guid? ClientId { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesServicePrincipal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesServicePrincipal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesServicePrincipal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesServicePrincipal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesServicePrincipal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -688,6 +724,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public System.Guid? ClientId { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesServicePrincipalUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesServicePrincipalUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesServicePrincipalUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesServicePrincipalUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesServicePrincipalUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -705,6 +742,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public long? RetryIntervalInSeconds { get { throw null; } set { } }
         public long? SyncIntervalInSeconds { get { throw null; } set { } }
         public long? TimeoutInSeconds { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.Kustomization System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.Kustomization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.Kustomization>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.Kustomization System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.Kustomization>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -721,6 +759,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public long? RetryIntervalInSeconds { get { throw null; } set { } }
         public long? SyncIntervalInSeconds { get { throw null; } set { } }
         public long? TimeoutInSeconds { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KustomizationUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KustomizationUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration.Models.KustomizationUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KubernetesConfiguration.Models.KustomizationUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration.Models.KustomizationUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

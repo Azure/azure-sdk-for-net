@@ -19,19 +19,27 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         void IJsonModel<PatientRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PatientRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PatientRecord)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Info))
+            if (Optional.IsDefined(Details))
             {
-                writer.WritePropertyName("info"u8);
-                writer.WriteObjectValue(Info, options);
+                writer.WritePropertyName("details"u8);
+                writer.WriteObjectValue(Details, options);
             }
             if (Optional.IsCollectionDefined(Encounters))
             {
@@ -68,7 +76,6 @@ namespace Azure.Health.Insights.RadiologyInsights
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PatientRecord IJsonModel<PatientRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -92,8 +99,8 @@ namespace Azure.Health.Insights.RadiologyInsights
                 return null;
             }
             string id = default;
-            PatientDetails info = default;
-            IList<Encounter> encounters = default;
+            PatientDetails details = default;
+            IList<PatientEncounter> encounters = default;
             IList<PatientDocument> patientDocuments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -104,13 +111,13 @@ namespace Azure.Health.Insights.RadiologyInsights
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("info"u8))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    info = PatientDetails.DeserializePatientDetails(property.Value, options);
+                    details = PatientDetails.DeserializePatientDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encounters"u8))
@@ -119,10 +126,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<Encounter> array = new List<Encounter>();
+                    List<PatientEncounter> array = new List<PatientEncounter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Encounter.DeserializeEncounter(item, options));
+                        array.Add(PatientEncounter.DeserializePatientEncounter(item, options));
                     }
                     encounters = array;
                     continue;
@@ -147,7 +154,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PatientRecord(id, info, encounters ?? new ChangeTrackingList<Encounter>(), patientDocuments ?? new ChangeTrackingList<PatientDocument>(), serializedAdditionalRawData);
+            return new PatientRecord(id, details, encounters ?? new ChangeTrackingList<PatientEncounter>(), patientDocuments ?? new ChangeTrackingList<PatientDocument>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientRecord>.Write(ModelReaderWriterOptions options)

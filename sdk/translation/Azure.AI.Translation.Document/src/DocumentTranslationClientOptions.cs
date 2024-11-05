@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Document
@@ -9,18 +10,10 @@ namespace Azure.AI.Translation.Document
     /// <summary>
     /// Options that allow to configure the management of the request sent to the service.
     /// </summary>
-    public class DocumentTranslationClientOptions : ClientOptions
+    [CodeGenSuppress("AzureAITranslationDocumentClientOptions", typeof(ServiceVersion))]
+    [CodeGenModel("AzureAITranslationDocumentClientOptions")]
+    public partial class DocumentTranslationClientOptions : ClientOptions
     {
-        /// <summary>
-        /// The latest service version supported by this client library.
-        /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V1_0;
-
-        /// <summary>
-        /// Gets the <see cref="ServiceVersion"/> of the service API used when making requests
-        /// </summary>
-        internal ServiceVersion Version { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DocumentTranslationClientOptions"/> class.
         /// </summary>
@@ -29,29 +22,12 @@ namespace Azure.AI.Translation.Document
         /// </param>
         public DocumentTranslationClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version;
-            AddLoggedHeadersAndQueryParameters();
-        }
-
-        internal string GetVersionString()
-        {
-            return Version switch
+            Version = version switch
             {
-                ServiceVersion.V1_0 => "1.0",
-                _ => throw new ArgumentException(Version.ToString()),
+                ServiceVersion.V2024_05_01 => "2024-05-01",
+                _ => throw new NotSupportedException()
             };
-        }
-
-        /// <summary>
-        /// The versions of the Translator service supported by this client library.
-        /// </summary>
-        public enum ServiceVersion
-        {
-#pragma warning disable CA1707 // Identifiers should not contain underscores
-            /// <summary>
-            /// Version 1.0 .
-            /// </summary>
-            V1_0 = 1
+            AddLoggedHeadersAndQueryParameters();
         }
 
         /// <summary>

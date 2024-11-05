@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         void IJsonModel<BackendAuthorizationHeaderCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BackendAuthorizationHeaderCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackendAuthorizationHeaderCredentials)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("scheme"u8);
             writer.WriteStringValue(Scheme);
             writer.WritePropertyName("parameter"u8);
@@ -45,7 +54,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BackendAuthorizationHeaderCredentials IJsonModel<BackendAuthorizationHeaderCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -93,6 +101,67 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new BackendAuthorizationHeaderCredentials(scheme, parameter, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scheme), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scheme: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Scheme))
+                {
+                    builder.Append("  scheme: ");
+                    if (Scheme.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Scheme}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Scheme}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameter), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  parameter: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Parameter))
+                {
+                    builder.Append("  parameter: ");
+                    if (Parameter.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Parameter}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Parameter}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<BackendAuthorizationHeaderCredentials>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackendAuthorizationHeaderCredentials>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,6 +170,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackendAuthorizationHeaderCredentials)} does not support writing '{options.Format}' format.");
             }

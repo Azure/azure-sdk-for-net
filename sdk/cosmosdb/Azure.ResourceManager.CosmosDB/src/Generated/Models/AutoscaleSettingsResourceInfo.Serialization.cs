@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -21,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<AutoscaleSettingsResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingsResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("maxThroughput"u8);
             writer.WriteNumberValue(MaxThroughput);
             if (Optional.IsDefined(AutoUpgradePolicy))
@@ -55,7 +62,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AutoscaleSettingsResourceInfo IJsonModel<AutoscaleSettingsResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -126,71 +132,55 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxThroughput), out propertyOverride);
-            builder.Append("  maxThroughput: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  maxThroughput: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  maxThroughput: ");
                 builder.AppendLine($"{MaxThroughput}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoUpgradePolicy), out propertyOverride);
-            if (Optional.IsDefined(AutoUpgradePolicy) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AutoUpgradeThroughputPolicy", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  autoUpgradePolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    throughputPolicy: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoUpgradePolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  autoUpgradePolicy: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AutoUpgradePolicy, options, 2, false, "  autoUpgradePolicy: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetMaxThroughput), out propertyOverride);
-            if (Optional.IsDefined(TargetMaxThroughput) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  targetMaxThroughput: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetMaxThroughput))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  targetMaxThroughput: ");
                     builder.AppendLine($"{TargetMaxThroughput.Value}");
                 }
             }
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "AutoUpgradeThroughputPolicy":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("ThroughputPolicy", item.Value);
-                        bicepOptions.PropertyOverrides.Add(AutoUpgradePolicy, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<AutoscaleSettingsResourceInfo>.Write(ModelReaderWriterOptions options)

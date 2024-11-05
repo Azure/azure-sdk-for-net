@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMapping"/>. </summary>
-        internal AvailabilityZoneMapping()
+        public AvailabilityZoneMapping()
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Logical availability zone. </summary>
-        public string AvailabilityZone { get; }
+        public string AvailabilityZone { get; set; }
         /// <summary> Available availability zone. </summary>
-        public bool? IsAvailable { get; }
+        public bool? IsAvailable { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Radio connection establishment cause. </summary>
+    /// <summary>
+    /// Radio connection establishment cause
+    /// Serialized Name: RrcEstablishmentCause
+    /// </summary>
     public readonly partial struct RrcEstablishmentCause : IEquatable<RrcEstablishmentCause>
     {
         private readonly string _value;
@@ -29,23 +32,41 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string MobileTerminatedDataValue = "MobileTerminatedData";
         private const string SmsValue = "SMS";
 
-        /// <summary> Emergency. </summary>
+        /// <summary>
+        /// Emergency
+        /// Serialized Name: RrcEstablishmentCause.Emergency
+        /// </summary>
         public static RrcEstablishmentCause Emergency { get; } = new RrcEstablishmentCause(EmergencyValue);
-        /// <summary> MobileOriginatedSignaling. </summary>
+        /// <summary>
+        /// MobileOriginatedSignaling
+        /// Serialized Name: RrcEstablishmentCause.MobileOriginatedSignaling
+        /// </summary>
         public static RrcEstablishmentCause MobileOriginatedSignaling { get; } = new RrcEstablishmentCause(MobileOriginatedSignalingValue);
-        /// <summary> MobileTerminatedSignaling. </summary>
+        /// <summary>
+        /// MobileTerminatedSignaling
+        /// Serialized Name: RrcEstablishmentCause.MobileTerminatedSignaling
+        /// </summary>
         public static RrcEstablishmentCause MobileTerminatedSignaling { get; } = new RrcEstablishmentCause(MobileTerminatedSignalingValue);
-        /// <summary> MobileOriginatedData. </summary>
+        /// <summary>
+        /// MobileOriginatedData
+        /// Serialized Name: RrcEstablishmentCause.MobileOriginatedData
+        /// </summary>
         public static RrcEstablishmentCause MobileOriginatedData { get; } = new RrcEstablishmentCause(MobileOriginatedDataValue);
-        /// <summary> MobileTerminatedData. </summary>
+        /// <summary>
+        /// MobileTerminatedData
+        /// Serialized Name: RrcEstablishmentCause.MobileTerminatedData
+        /// </summary>
         public static RrcEstablishmentCause MobileTerminatedData { get; } = new RrcEstablishmentCause(MobileTerminatedDataValue);
-        /// <summary> SMS. </summary>
+        /// <summary>
+        /// SMS
+        /// Serialized Name: RrcEstablishmentCause.SMS
+        /// </summary>
         public static RrcEstablishmentCause Sms { get; } = new RrcEstablishmentCause(SmsValue);
         /// <summary> Determines if two <see cref="RrcEstablishmentCause"/> values are the same. </summary>
         public static bool operator ==(RrcEstablishmentCause left, RrcEstablishmentCause right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RrcEstablishmentCause"/> values are not the same. </summary>
         public static bool operator !=(RrcEstablishmentCause left, RrcEstablishmentCause right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RrcEstablishmentCause"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RrcEstablishmentCause"/>. </summary>
         public static implicit operator RrcEstablishmentCause(string value) => new RrcEstablishmentCause(value);
 
         /// <inheritdoc />
@@ -56,7 +77,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

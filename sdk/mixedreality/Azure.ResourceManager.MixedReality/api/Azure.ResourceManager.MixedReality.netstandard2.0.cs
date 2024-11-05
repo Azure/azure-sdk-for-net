@@ -44,13 +44,14 @@ namespace Azure.ResourceManager.MixedReality
         public Azure.ResourceManager.Models.ManagedServiceIdentity Plan { get { throw null; } set { } }
         public Azure.ResourceManager.MixedReality.Models.MixedRealitySku Sku { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.RemoteRenderingAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.RemoteRenderingAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.RemoteRenderingAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.RemoteRenderingAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.RemoteRenderingAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.RemoteRenderingAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.RemoteRenderingAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RemoteRenderingAccountResource : Azure.ResourceManager.ArmResource
+    public partial class RemoteRenderingAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.RemoteRenderingAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.RemoteRenderingAccountData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected RemoteRenderingAccountResource() { }
@@ -71,6 +72,11 @@ namespace Azure.ResourceManager.MixedReality
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MixedReality.RemoteRenderingAccountResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MixedReality.RemoteRenderingAccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MixedReality.RemoteRenderingAccountResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MixedReality.RemoteRenderingAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.RemoteRenderingAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.RemoteRenderingAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MixedReality.RemoteRenderingAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.RemoteRenderingAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.RemoteRenderingAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.RemoteRenderingAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MixedReality.RemoteRenderingAccountResource> Update(Azure.ResourceManager.MixedReality.RemoteRenderingAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MixedReality.RemoteRenderingAccountResource>> UpdateAsync(Azure.ResourceManager.MixedReality.RemoteRenderingAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -101,13 +107,14 @@ namespace Azure.ResourceManager.MixedReality
         public Azure.ResourceManager.Models.ManagedServiceIdentity Plan { get { throw null; } set { } }
         public Azure.ResourceManager.MixedReality.Models.MixedRealitySku Sku { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SpatialAnchorsAccountResource : Azure.ResourceManager.ArmResource
+    public partial class SpatialAnchorsAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SpatialAnchorsAccountResource() { }
@@ -128,6 +135,11 @@ namespace Azure.ResourceManager.MixedReality
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountResource> Update(Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountResource>> UpdateAsync(Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -174,6 +186,7 @@ namespace Azure.ResourceManager.MixedReality.Models
     {
         public MixedRealityAccountKeyRegenerateContent() { }
         public Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeySerial? Serial { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeyRegenerateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeyRegenerateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeyRegenerateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeyRegenerateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeyRegenerateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -185,6 +198,7 @@ namespace Azure.ResourceManager.MixedReality.Models
         internal MixedRealityAccountKeys() { }
         public string PrimaryKey { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -201,6 +215,7 @@ namespace Azure.ResourceManager.MixedReality.Models
         public MixedRealityNameAvailabilityContent(string name, string resourceType) { }
         public string Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -213,6 +228,7 @@ namespace Azure.ResourceManager.MixedReality.Models
         public bool IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.MixedReality.Models.MixedRealityNameUnavailableReason? Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -245,6 +261,7 @@ namespace Azure.ResourceManager.MixedReality.Models
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
         public Azure.ResourceManager.MixedReality.Models.MixedRealitySkuTier? Tier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.Models.MixedRealitySku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.Models.MixedRealitySku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MixedReality.Models.MixedRealitySku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MixedReality.Models.MixedRealitySku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MixedReality.Models.MixedRealitySku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

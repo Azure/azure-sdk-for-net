@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<AppServiceHttpSettingsRoutes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceHttpSettingsRoutes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppServiceHttpSettingsRoutes)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ApiPrefix))
             {
                 writer.WritePropertyName("apiPrefix"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppServiceHttpSettingsRoutes IJsonModel<AppServiceHttpSettingsRoutes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -101,15 +108,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiPrefix), out propertyOverride);
-            if (Optional.IsDefined(ApiPrefix) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  apiPrefix: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiPrefix))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  apiPrefix: ");
                     if (ApiPrefix.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -143,7 +143,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task CreateRoleAssignment()
         {
             List<KeyVaultRoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
@@ -157,12 +156,15 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(result.Id, Is.Not.Null);
             Assert.That(result.Name, Is.Not.Null);
             Assert.That(result.Type, Is.Not.Null);
-            Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
+            }
+
             Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(definitionToAssign.Id));
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task CreateKeysRoleAssignment()
         {
             List<KeyVaultRoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
@@ -176,12 +178,15 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(result.Id, Is.Not.Null);
             Assert.That(result.Name, Is.Not.Null);
             Assert.That(result.Type, Is.Not.Null);
-            Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
+            }
+
             Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(definitionToAssign.Id));
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task CreateKeyRoleAssignment()
         {
             List<KeyVaultRoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
@@ -198,7 +203,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(result.Id, Is.Not.Null);
             Assert.That(result.Name, Is.Not.Null);
             Assert.That(result.Type, Is.Not.Null);
-            Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
+            }
+
             Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(definitionToAssign.Id));
         }
 

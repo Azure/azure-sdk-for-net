@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<LocationMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<LocationMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LocationMetadata)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(RegionType))
             {
                 writer.WritePropertyName("regionType"u8);
@@ -51,12 +59,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
-                WriteLongitude(writer);
+                WriteLongitude(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
-                WriteLatitude(writer);
+                WriteLatitude(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PhysicalLocation))
             {
@@ -93,7 +101,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         LocationMetadata IJsonModel<LocationMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -222,43 +229,46 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegionType), out propertyOverride);
-            if (Optional.IsDefined(RegionType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  regionType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegionType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  regionType: ");
                     builder.AppendLine($"'{RegionType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegionCategory), out propertyOverride);
-            if (Optional.IsDefined(RegionCategory) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  regionCategory: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegionCategory))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  regionCategory: ");
                     builder.AppendLine($"'{RegionCategory.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Geography), out propertyOverride);
-            if (Optional.IsDefined(Geography) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  geography: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Geography))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  geography: ");
                     if (Geography.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -272,15 +282,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeographyGroup), out propertyOverride);
-            if (Optional.IsDefined(GeographyGroup) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  geographyGroup: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GeographyGroup))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  geographyGroup: ");
                     if (GeographyGroup.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -294,43 +305,46 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Longitude), out propertyOverride);
-            if (Optional.IsDefined(Longitude) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  longitude: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Longitude))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  longitude: ");
                     builder.AppendLine($"'{Longitude.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Latitude), out propertyOverride);
-            if (Optional.IsDefined(Latitude) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  latitude: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Latitude))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  latitude: ");
                     builder.AppendLine($"'{Latitude.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalLocation), out propertyOverride);
-            if (Optional.IsDefined(PhysicalLocation) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  physicalLocation: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PhysicalLocation))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  physicalLocation: ");
                     if (PhysicalLocation.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -344,17 +358,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PairedRegions), out propertyOverride);
-            if (Optional.IsCollectionDefined(PairedRegions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PairedRegions.Any() || hasPropertyOverride)
+                builder.Append("  pairedRegion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PairedRegions))
                 {
-                    builder.Append("  pairedRegion: ");
-                    if (hasPropertyOverride)
+                    if (PairedRegions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  pairedRegion: ");
                         builder.AppendLine("[");
                         foreach (var item in PairedRegions)
                         {
@@ -366,15 +381,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HomeLocation), out propertyOverride);
-            if (Optional.IsDefined(HomeLocation) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  homeLocation: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HomeLocation))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  homeLocation: ");
                     if (HomeLocation.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

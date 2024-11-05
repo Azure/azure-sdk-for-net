@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 ServerCountPerRack = 10,
                 IPv4Prefix = "10.18.0.0/17",
                 IPv6Prefix = "3FFE:FFFF:0:CD40::/60",
-                FabricAsn = 12345,
+                FabricAsn = 12345L,
                 TerminalServerConfiguration = new NetworkFabricPatchablePropertiesTerminalServerConfiguration()
                 {
                     PrimaryIPv4Prefix = "10.0.0.12/30",
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                             SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                             Mtu = 1501,
                             VlanId = 3001,
-                            PeerAsn = 1235,
+                            PeerAsn = 1235L,
                             BfdConfiguration = new BfdConfiguration()
                             {
                                 IntervalInMilliSeconds = 300,
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                             SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/126",
                             Mtu = 1500,
                             VlanId = 3000,
-                            PeerAsn = 61234,
+                            PeerAsn = 61234L,
                             BfdConfiguration = new BfdConfiguration()
                             {
                                 IntervalInMilliSeconds = 300,
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         public async Task Provision_NetworkFabricsProvisionMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_provision_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkFabrics_provision" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkFabrics_Provision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         public async Task Deprovision_NetworkFabricsDeprovisionMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_deprovision_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkFabrics_deprovision" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkFabrics_Deprovision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         public async Task Upgrade_NetworkFabricsUpgradeMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_upgrade_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkFabrics_upgrade" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkFabrics_Upgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         public async Task RefreshConfiguration_NetworkFabricsRefreshConfigurationMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_refreshConfiguration_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkFabrics_refreshConfiguration" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkFabrics_RefreshConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

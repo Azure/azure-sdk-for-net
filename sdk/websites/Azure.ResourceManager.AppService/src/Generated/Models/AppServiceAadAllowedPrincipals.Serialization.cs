@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<AppServiceAadAllowedPrincipals>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceAadAllowedPrincipals>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppServiceAadAllowedPrincipals)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
@@ -63,7 +71,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppServiceAadAllowedPrincipals IJsonModel<AppServiceAadAllowedPrincipals>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -141,17 +148,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Groups), out propertyOverride);
-            if (Optional.IsCollectionDefined(Groups) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Groups.Any() || hasPropertyOverride)
+                builder.Append("  groups: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Groups))
                 {
-                    builder.Append("  groups: ");
-                    if (hasPropertyOverride)
+                    if (Groups.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  groups: ");
                         builder.AppendLine("[");
                         foreach (var item in Groups)
                         {
@@ -176,17 +184,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identities), out propertyOverride);
-            if (Optional.IsCollectionDefined(Identities) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Identities.Any() || hasPropertyOverride)
+                builder.Append("  identities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Identities))
                 {
-                    builder.Append("  identities: ");
-                    if (hasPropertyOverride)
+                    if (Identities.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  identities: ");
                         builder.AppendLine("[");
                         foreach (var item in Identities)
                         {

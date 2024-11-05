@@ -275,7 +275,7 @@ namespace Azure.Data.Tables
 
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
+                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, _isCosmosEndpoint ? TableConstants.CosmosScope : TableConstants.StorageScope, options.EnableTenantDiscovery) },
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
             };
@@ -1150,7 +1150,7 @@ namespace Azure.Data.Tables
                                 cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
-                        return Page.FromValues(
+                        return Page<T>.FromValues(
                             response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
@@ -1177,7 +1177,7 @@ namespace Azure.Data.Tables
                                 cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
-                        return Page.FromValues(
+                        return Page<T>.FromValues(
                             response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
@@ -1232,7 +1232,7 @@ namespace Azure.Data.Tables
                             queryOptions: queryOptions,
                             cancellationToken: cancellationToken);
 
-                        return Page.FromValues(
+                        return Page<T>.FromValues(
                             response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
@@ -1260,7 +1260,7 @@ namespace Azure.Data.Tables
                             nextRowKey: NextRowKey,
                             cancellationToken: cancellationToken);
 
-                        return Page.FromValues(
+                        return Page<T>.FromValues(
                             response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
@@ -1301,6 +1301,31 @@ namespace Azure.Data.Tables
         /// Deletes the specified table entity.
         /// </summary>
         /// <remarks>Note: This method should not fail because the entity does not exist, however if delete operations are submitted in a <see cref="TableTransactionAction"/>, the transaction will fail if the entity does not exist.</remarks>
+        /// <param name="entity">The table entity to delete.</param>
+        /// <param name="ifMatch">
+        /// The If-Match value to be used for optimistic concurrency.
+        /// If <see cref="ETag.All"/> is specified, the operation will be executed unconditionally.
+        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed)
+        /// if the <see cref="ETag"/> value of the entity in the table does not match.
+        /// The default is to delete unconditionally.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+
+        public virtual async Task<Response> DeleteEntityAsync(
+            ITableEntity entity,
+            ETag ifMatch = default,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(entity, nameof(entity));
+            return await DeleteEntityInternal(true, entity.PartitionKey, entity.RowKey, ifMatch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes the specified table entity.
+        /// </summary>
+        /// <remarks>Note: This method should not fail because the entity does not exist, however if delete operations are submitted in a <see cref="TableTransactionAction"/>, the transaction will fail if the entity does not exist.</remarks>
         /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
         /// <param name="ifMatch">
@@ -1315,6 +1340,27 @@ namespace Azure.Data.Tables
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response DeleteEntity(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
             => DeleteEntityInternal(false, partitionKey, rowKey, ifMatch, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Deletes the specified table entity.
+        /// </summary>
+        /// <remarks>Note: This method should not fail because the entity does not exist, however if delete operations are submitted in a <see cref="TableTransactionAction"/>, the transaction will fail if the entity does not exist.</remarks>
+        /// <param name="entity">The table entity to delete.</param>
+        /// <param name="ifMatch">
+        /// The If-Match value to be used for optimistic concurrency.
+        /// If <see cref="ETag.All"/> is specified, the operation will be executed unconditionally.
+        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed)
+        /// if the <see cref="ETag"/> value of the entity in the table does not match.
+        /// The default is to delete unconditionally.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        public virtual Response DeleteEntity(ITableEntity entity, ETag ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(entity, nameof(entity));
+            return DeleteEntityInternal(false, entity.PartitionKey, entity.RowKey, ifMatch, cancellationToken).EnsureCompleted();
+        }
 
         internal async Task<Response> DeleteEntityInternal(
             bool async,
@@ -1565,19 +1611,23 @@ namespace Azure.Data.Tables
             try
             {
                 Argument.AssertNotNull(transactionalBatch, nameof(transactionalBatch));
-                List<TableTransactionAction> batchItems = transactionalBatch.ToList();
-                if (!batchItems.Any())
+
+                using (IEnumerator<TableTransactionAction> batchEnumerator = transactionalBatch.GetEnumerator())
                 {
-                    throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchIsEmpty);
+                    if (!batchEnumerator.MoveNext())
+                    {
+                        throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchIsEmpty);
+                    }
+
+                    Dictionary<string, HttpMessage> requestLookup = new();
+
+                    var _batch = BuildChangeSet(_batchOperations, batchEnumerator, requestLookup, batchId, changesetId);
+                    var request = _tableOperations.CreateBatchRequest(_batch, null, null);
+
+                    return async
+                        ? await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false)
+                        : _tableOperations.SendBatchRequest(request, cancellationToken);
                 }
-                Dictionary<string, HttpMessage> requestLookup = new();
-
-                var _batch = BuildChangeSet(_batchOperations, batchItems, requestLookup, batchId, changesetId);
-                var request = _tableOperations.CreateBatchRequest(_batch, null, null);
-
-                return async
-                    ? await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false)
-                    : _tableOperations.SendBatchRequest(request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -1592,15 +1642,18 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         private MultipartContent BuildChangeSet(
             TableRestClient batchOperations,
-            IEnumerable<TableTransactionAction> batch,
+            IEnumerator<TableTransactionAction> batchEnumerator,
             Dictionary<string, HttpMessage> requestLookup,
             Guid batchId,
             Guid changesetId)
         {
             var batchContent = TableRestClient.CreateBatchContent(batchId);
             var changeset = batchContent.AddChangeset(changesetId);
-            foreach (var item in batch)
+
+            do
             {
+                TableTransactionAction item = batchEnumerator.Current;
+
                 //var item = batch._requestLookup[key];
                 HttpMessage message = item.ActionType switch
                 {
@@ -1625,7 +1678,8 @@ namespace Azure.Data.Tables
                 };
                 requestLookup[item.Entity.RowKey] = message;
                 changeset.AddContent(new RequestRequestContent(message!.Request));
-            }
+            } while (batchEnumerator.MoveNext());
+
             return batchContent;
         }
 

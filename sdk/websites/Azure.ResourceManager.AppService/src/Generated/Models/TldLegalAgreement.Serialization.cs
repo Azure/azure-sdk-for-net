@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<TldLegalAgreement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TldLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("agreementKey"u8);
             writer.WriteStringValue(AgreementKey);
             writer.WritePropertyName("title"u8);
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TldLegalAgreement IJsonModel<TldLegalAgreement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -129,15 +136,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreementKey), out propertyOverride);
-            if (Optional.IsDefined(AgreementKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  agreementKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AgreementKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  agreementKey: ");
                     if (AgreementKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -151,15 +159,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Title), out propertyOverride);
-            if (Optional.IsDefined(Title) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  title: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Title))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  title: ");
                     if (Title.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -173,15 +182,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Content), out propertyOverride);
-            if (Optional.IsDefined(Content) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  content: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Content))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  content: ");
                     if (Content.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -195,15 +205,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
-            if (Optional.IsDefined(Uri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  url: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Uri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  url: ");
                     builder.AppendLine($"'{Uri.AbsoluteUri}'");
                 }
             }

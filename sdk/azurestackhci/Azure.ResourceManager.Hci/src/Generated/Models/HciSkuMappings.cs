@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Identifier of the CatalogPlan for the sku. </summary>
+        [WirePath("catalogPlanId")]
         public string CatalogPlanId { get; set; }
         /// <summary> Identifier for the sku. </summary>
+        [WirePath("marketplaceSkuId")]
         public string MarketplaceSkuId { get; set; }
         /// <summary> Array of SKU versions available. </summary>
+        [WirePath("marketplaceSkuVersions")]
         public IList<string> MarketplaceSkuVersions { get; }
     }
 }

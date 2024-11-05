@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<ComputeResourceSkuLocationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ComputeResourceSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeResourceSkuLocationInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -65,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(ExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
-                WriteExtendedLocationType(writer);
+                WriteExtendedLocationType(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,7 +90,6 @@ namespace Azure.ResourceManager.Compute.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ComputeResourceSkuLocationInfo IJsonModel<ComputeResourceSkuLocationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

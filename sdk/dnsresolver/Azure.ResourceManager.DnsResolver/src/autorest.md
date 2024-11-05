@@ -4,7 +4,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://github.com/Azure/azure-rest-api-specs/blob/a9e895ccfe29d0646795f7ff1cb78e185bd09529/specification/dnsresolver/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/b26a190235f162b15d77dad889d104d06871fb4f/specification/dnsresolver/resource-manager/readme.md
+#tag: package-preview-2023-07
 library-name: dnsresolver
 namespace: Azure.ResourceManager.DnsResolver
 output-folder: $(this-folder)/Generated
@@ -17,6 +18,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 partial-resources:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}: VirtualNetwork
@@ -69,6 +71,7 @@ rename-mapping:
   IpAllocationMethod: InboundEndpointIPAllocationMethod
   OutboundEndpoint: DnsResolverOutboundEndpoint
   VirtualNetworkLink: DnsForwardingRulesetVirtualNetworkLink
+  ActionType: DnsSecurityRuleActionType
 
 directive:
   - from: dnsresolver.json

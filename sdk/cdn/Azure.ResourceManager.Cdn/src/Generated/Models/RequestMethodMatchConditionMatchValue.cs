@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(RequestMethodMatchConditionMatchValue left, RequestMethodMatchConditionMatchValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestMethodMatchConditionMatchValue"/> values are not the same. </summary>
         public static bool operator !=(RequestMethodMatchConditionMatchValue left, RequestMethodMatchConditionMatchValue right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RequestMethodMatchConditionMatchValue"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RequestMethodMatchConditionMatchValue"/>. </summary>
         public static implicit operator RequestMethodMatchConditionMatchValue(string value) => new RequestMethodMatchConditionMatchValue(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

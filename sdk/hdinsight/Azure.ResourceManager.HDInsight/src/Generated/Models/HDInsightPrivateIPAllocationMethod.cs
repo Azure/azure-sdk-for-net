@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static bool operator ==(HDInsightPrivateIPAllocationMethod left, HDInsightPrivateIPAllocationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightPrivateIPAllocationMethod"/> values are not the same. </summary>
         public static bool operator !=(HDInsightPrivateIPAllocationMethod left, HDInsightPrivateIPAllocationMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HDInsightPrivateIPAllocationMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightPrivateIPAllocationMethod"/>. </summary>
         public static implicit operator HDInsightPrivateIPAllocationMethod(string value) => new HDInsightPrivateIPAllocationMethod(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-11-01";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, DataProtectionBackupInstanceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, DataProtectionBackupInstanceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -267,6 +267,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(backupInstanceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (xMsAuthorizationAuxiliary != null)
+            {
+                request.Headers.Add("x-ms-authorization-auxiliary", xMsAuthorizationAuxiliary);
+            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -282,10 +286,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
         /// <param name="data"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, DataProtectionBackupInstanceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -293,7 +298,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, data, xMsAuthorizationAuxiliary);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -312,10 +317,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
         /// <param name="data"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, DataProtectionBackupInstanceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -323,7 +329,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, data, xMsAuthorizationAuxiliary);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -336,7 +342,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, string xMsAuthorizationAuxiliary)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -352,7 +358,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, string xMsAuthorizationAuxiliary)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -369,6 +375,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(backupInstanceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (xMsAuthorizationAuxiliary != null)
+            {
+                request.Headers.Add("x-ms-authorization-auxiliary", xMsAuthorizationAuxiliary);
+            }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -379,17 +389,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, xMsAuthorizationAuxiliary);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -407,17 +418,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, xMsAuthorizationAuxiliary);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -912,7 +924,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal RequestUriBuilder CreateTriggerRestoreRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRestoreContent content)
+        internal RequestUriBuilder CreateTriggerRestoreRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRestoreContent content, string xMsAuthorizationAuxiliary)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -929,7 +941,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return uri;
         }
 
-        internal HttpMessage CreateTriggerRestoreRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRestoreContent content)
+        internal HttpMessage CreateTriggerRestoreRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRestoreContent content, string xMsAuthorizationAuxiliary)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -947,6 +959,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/restore", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (xMsAuthorizationAuxiliary != null)
+            {
+                request.Headers.Add("x-ms-authorization-auxiliary", xMsAuthorizationAuxiliary);
+            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
@@ -962,10 +978,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
         /// <param name="content"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> TriggerRestoreAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRestoreContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> TriggerRestoreAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRestoreContent content, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -973,7 +990,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateTriggerRestoreRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, content);
+            using var message = CreateTriggerRestoreRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, content, xMsAuthorizationAuxiliary);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -991,10 +1008,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
         /// <param name="content"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response TriggerRestore(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRestoreContent content, CancellationToken cancellationToken = default)
+        public Response TriggerRestore(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRestoreContent content, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1002,7 +1020,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateTriggerRestoreRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, content);
+            using var message = CreateTriggerRestoreRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, content, xMsAuthorizationAuxiliary);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1202,7 +1220,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal RequestUriBuilder CreateStopProtectionRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName)
+        internal RequestUriBuilder CreateStopProtectionRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, StopProtectionContent content, string xMsAuthorizationAuxiliary)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1219,7 +1237,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return uri;
         }
 
-        internal HttpMessage CreateStopProtectionRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName)
+        internal HttpMessage CreateStopProtectionRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, StopProtectionContent content, string xMsAuthorizationAuxiliary)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1237,7 +1255,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/stopProtection", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (xMsAuthorizationAuxiliary != null)
+            {
+                request.Headers.Add("x-ms-authorization-auxiliary", xMsAuthorizationAuxiliary);
+            }
             request.Headers.Add("Accept", "application/json");
+            if (content != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+                request.Content = content0;
+            }
             _userAgent.Apply(message);
             return message;
         }
@@ -1247,17 +1276,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StopProtectionAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
+        public async Task<Response> StopProtectionAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, StopProtectionContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
-            using var message = CreateStopProtectionRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName);
+            using var message = CreateStopProtectionRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, content, xMsAuthorizationAuxiliary);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1274,17 +1305,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response StopProtection(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
+        public Response StopProtection(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, StopProtectionContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
-            using var message = CreateStopProtectionRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName);
+            using var message = CreateStopProtectionRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, content, xMsAuthorizationAuxiliary);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1296,7 +1329,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal RequestUriBuilder CreateSuspendBackupsRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName)
+        internal RequestUriBuilder CreateSuspendBackupsRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, SuspendBackupContent content, string xMsAuthorizationAuxiliary)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1313,7 +1346,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return uri;
         }
 
-        internal HttpMessage CreateSuspendBackupsRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName)
+        internal HttpMessage CreateSuspendBackupsRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, SuspendBackupContent content, string xMsAuthorizationAuxiliary)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1331,7 +1364,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/suspendBackups", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (xMsAuthorizationAuxiliary != null)
+            {
+                request.Headers.Add("x-ms-authorization-auxiliary", xMsAuthorizationAuxiliary);
+            }
             request.Headers.Add("Accept", "application/json");
+            if (content != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+                request.Content = content0;
+            }
             _userAgent.Apply(message);
             return message;
         }
@@ -1341,17 +1385,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SuspendBackupsAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
+        public async Task<Response> SuspendBackupsAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, SuspendBackupContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
-            using var message = CreateSuspendBackupsRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName);
+            using var message = CreateSuspendBackupsRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, content, xMsAuthorizationAuxiliary);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1368,17 +1414,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response SuspendBackups(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
+        public Response SuspendBackups(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, SuspendBackupContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
-            using var message = CreateSuspendBackupsRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName);
+            using var message = CreateSuspendBackupsRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, content, xMsAuthorizationAuxiliary);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

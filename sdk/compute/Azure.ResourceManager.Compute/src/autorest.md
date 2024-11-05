@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/f715b7fee5e648d06b17467b08473f6cbeee84e0/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4f68529971f845e8757c2b2a746d78ceb91854cd/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,6 +20,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 update-required-copy:
   GalleryImage: OSType
@@ -266,7 +267,6 @@ rename-mapping:
   ScheduledEventsProfile: ComputeScheduledEventsProfile
   ExpandTypeForListVMs: GetVirtualMachineExpandType
   ExpandTypesForListVm: GetVirtualMachineExpandType
-  SecurityPostureReference: ComputeSecurityPostureReference
   RestorePointSourceVmStorageProfile.dataDisks: DataDiskList
   SecurityPostureReference.id: -|arm-id
   CommunityGalleryImage.properties.identifier: ImageIdentifier
@@ -277,7 +277,12 @@ rename-mapping:
   NetworkInterfaceAuxiliaryMode: ComputeNetworkInterfaceAuxiliaryMode
   CommunityGalleryInfo.publisherUri: PublisherUriString
   GalleryArtifactVersionFullSource.virtualMachineId: -|arm-id
-
+  SecurityPostureReference: ComputeSecurityPostureReference
+  SecurityPostureReference.excludeExtensions: ExcludeExtensionNames
+  SkuProfile : ComputeSkuProfile
+  SkuProfileVMSize : ComputeSkuProfileVMSize
+  AllocationStrategy : ComputeAllocationStrategy
+  
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
   - from: common.json
@@ -379,5 +384,13 @@ directive:
   - from: restorePoint.json
     where: $.definitions.RestorePointSourceVMStorageProfile.properties.dataDisks
     transform: $["x-ms-client-name"] = "DataDiskList";
+  # Add a dummy property because generator tries to flatten automaticallyApprove in both UserInitiatedRedeploy and UserInitiatedReboot
+  - from: computeRPCommon.json
+    where: $.definitions.UserInitiatedRedeploy.properties
+    transform: >
+      $.dummyProperty = {
+        "type": "string",
+        "description": "This is a dummy property to prevent flattening."
+      };      
     
 ```

@@ -36,7 +36,7 @@ namespace Azure.Communication.JobRouter
         public static bool operator ==(ExceptionActionKind left, ExceptionActionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExceptionActionKind"/> values are not the same. </summary>
         public static bool operator !=(ExceptionActionKind left, ExceptionActionKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExceptionActionKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExceptionActionKind"/>. </summary>
         public static implicit operator ExceptionActionKind(string value) => new ExceptionActionKind(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

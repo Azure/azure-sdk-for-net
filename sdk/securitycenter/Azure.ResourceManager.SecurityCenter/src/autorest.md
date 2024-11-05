@@ -25,6 +25,7 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
 use-model-reader-writer: true
+use-write-core: true
 deserialize-null-collection-as-null-value: true
 
 #mgmt-debug:
@@ -342,6 +343,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
   IoT: Iot
   TLS: Tls
   VA: VulnerabilityAssessment

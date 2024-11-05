@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CosmosDBSqlContainerResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlContainerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBSqlContainerResourceInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(ContainerName);
             if (Optional.IsDefined(IndexingPolicy))
@@ -105,7 +113,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CosmosDBSqlContainerResourceInfo IJsonModel<CosmosDBSqlContainerResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -284,23 +291,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerName), out propertyOverride);
-            if (Optional.IsDefined(ContainerName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     if (ContainerName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -314,157 +317,171 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IndexingPolicy), out propertyOverride);
-            if (Optional.IsDefined(IndexingPolicy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  indexingPolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IndexingPolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  indexingPolicy: ");
                     BicepSerializationHelpers.AppendChildObject(builder, IndexingPolicy, options, 2, false, "  indexingPolicy: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionKey), out propertyOverride);
-            if (Optional.IsDefined(PartitionKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  partitionKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartitionKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  partitionKey: ");
                     BicepSerializationHelpers.AppendChildObject(builder, PartitionKey, options, 2, false, "  partitionKey: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultTtl), out propertyOverride);
-            if (Optional.IsDefined(DefaultTtl) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  defaultTtl: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultTtl))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  defaultTtl: ");
                     builder.AppendLine($"{DefaultTtl.Value}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UniqueKeyPolicy), out propertyOverride);
-            if (Optional.IsDefined(UniqueKeyPolicy) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("UniqueKeys", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  uniqueKeyPolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    uniqueKeys: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(UniqueKeyPolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  uniqueKeyPolicy: ");
                     BicepSerializationHelpers.AppendChildObject(builder, UniqueKeyPolicy, options, 2, false, "  uniqueKeyPolicy: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConflictResolutionPolicy), out propertyOverride);
-            if (Optional.IsDefined(ConflictResolutionPolicy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  conflictResolutionPolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConflictResolutionPolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  conflictResolutionPolicy: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ConflictResolutionPolicy, options, 2, false, "  conflictResolutionPolicy: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientEncryptionPolicy), out propertyOverride);
-            if (Optional.IsDefined(ClientEncryptionPolicy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  clientEncryptionPolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientEncryptionPolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  clientEncryptionPolicy: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ClientEncryptionPolicy, options, 2, false, "  clientEncryptionPolicy: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AnalyticalStorageTtl), out propertyOverride);
-            if (Optional.IsDefined(AnalyticalStorageTtl) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  analyticalStorageTtl: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AnalyticalStorageTtl))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  analyticalStorageTtl: ");
                     builder.AppendLine($"'{AnalyticalStorageTtl.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreParameters), out propertyOverride);
-            if (Optional.IsDefined(RestoreParameters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  restoreParameters: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestoreParameters))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  restoreParameters: ");
                     BicepSerializationHelpers.AppendChildObject(builder, RestoreParameters, options, 2, false, "  restoreParameters: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreateMode), out propertyOverride);
-            if (Optional.IsDefined(CreateMode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  createMode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreateMode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  createMode: ");
                     builder.AppendLine($"'{CreateMode.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaterializedViewDefinition), out propertyOverride);
-            if (Optional.IsDefined(MaterializedViewDefinition) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  materializedViewDefinition: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaterializedViewDefinition))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  materializedViewDefinition: ");
                     BicepSerializationHelpers.AppendChildObject(builder, MaterializedViewDefinition, options, 2, false, "  materializedViewDefinition: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputedProperties), out propertyOverride);
-            if (Optional.IsCollectionDefined(ComputedProperties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ComputedProperties.Any() || hasPropertyOverride)
+                builder.Append("  computedProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ComputedProperties))
                 {
-                    builder.Append("  computedProperties: ");
-                    if (hasPropertyOverride)
+                    if (ComputedProperties.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  computedProperties: ");
                         builder.AppendLine("[");
                         foreach (var item in ComputedProperties)
                         {
@@ -477,23 +494,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "UniqueKeys":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("UniqueKeys", item.Value);
-                        bicepOptions.PropertyOverrides.Add(UniqueKeyPolicy, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<CosmosDBSqlContainerResourceInfo>.Write(ModelReaderWriterOptions options)

@@ -111,46 +111,67 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Description of the API. May include HTML formatting tags. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Collection of authentication settings included into this API. </summary>
+        [WirePath("properties.authenticationSettings")]
         public AuthenticationSettingsContract AuthenticationSettings { get; set; }
         /// <summary> Protocols over which API is made available. </summary>
+        [WirePath("properties.subscriptionKeyParameterNames")]
         public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get; set; }
         /// <summary> Type of API. </summary>
+        [WirePath("properties.type")]
         public ApiType? ApiType { get; set; }
         /// <summary> Describes the revision of the API. If no value is provided, default revision 1 is created. </summary>
+        [WirePath("properties.apiRevision")]
         public string ApiRevision { get; set; }
         /// <summary> Indicates the version identifier of the API if the API is versioned. </summary>
+        [WirePath("properties.apiVersion")]
         public string ApiVersion { get; set; }
         /// <summary> Indicates if API revision is current api revision. </summary>
+        [WirePath("properties.isCurrent")]
         public bool? IsCurrent { get; set; }
         /// <summary> Indicates if API revision is accessible via the gateway. </summary>
+        [WirePath("properties.isOnline")]
         public bool? IsOnline { get; }
         /// <summary> Description of the API Revision. </summary>
+        [WirePath("properties.apiRevisionDescription")]
         public string ApiRevisionDescription { get; set; }
         /// <summary> Description of the API Version. </summary>
+        [WirePath("properties.apiVersionDescription")]
         public string ApiVersionDescription { get; set; }
         /// <summary> A resource identifier for the related ApiVersionSet. </summary>
+        [WirePath("properties.apiVersionSetId")]
         public ResourceIdentifier ApiVersionSetId { get; set; }
         /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
+        [WirePath("properties.subscriptionRequired")]
         public bool? IsSubscriptionRequired { get; set; }
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
+        [WirePath("properties.termsOfServiceUrl")]
         public string TermsOfServiceLink { get; set; }
         /// <summary> Contact information for the API. </summary>
+        [WirePath("properties.contact")]
         public ApiContactInformation Contact { get; set; }
         /// <summary> License information for the API. </summary>
+        [WirePath("properties.license")]
         public ApiLicenseInformation License { get; set; }
         /// <summary> API identifier of the source API. </summary>
+        [WirePath("properties.sourceApiId")]
         public ResourceIdentifier SourceApiId { get; set; }
         /// <summary> API name. Must be 1 to 300 characters long. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </summary>
+        [WirePath("properties.serviceUrl")]
         public string ServiceLink { get; set; }
         /// <summary> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </summary>
+        [WirePath("properties.path")]
         public string Path { get; set; }
         /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>
+        [WirePath("properties.protocols")]
         public IList<ApiOperationInvokableProtocol> Protocols { get; }
         /// <summary> Version set details. </summary>
+        [WirePath("properties.apiVersionSet")]
         public ApiVersionSetContractDetails ApiVersionSet { get; set; }
     }
 }

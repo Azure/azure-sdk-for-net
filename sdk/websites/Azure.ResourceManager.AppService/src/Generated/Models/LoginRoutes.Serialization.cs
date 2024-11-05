@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<LoginRoutes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<LoginRoutes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LoginRoutes)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(LogoutEndpoint))
             {
                 writer.WritePropertyName("logoutEndpoint"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         LoginRoutes IJsonModel<LoginRoutes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -101,15 +108,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogoutEndpoint), out propertyOverride);
-            if (Optional.IsDefined(LogoutEndpoint) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  logoutEndpoint: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogoutEndpoint))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  logoutEndpoint: ");
                     if (LogoutEndpoint.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

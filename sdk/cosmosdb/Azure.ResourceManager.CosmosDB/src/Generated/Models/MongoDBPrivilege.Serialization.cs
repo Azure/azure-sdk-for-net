@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<MongoDBPrivilege>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBPrivilege>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MongoDBPrivilege)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MongoDBPrivilege IJsonModel<MongoDBPrivilege>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -131,31 +138,33 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Resource), out propertyOverride);
-            if (Optional.IsDefined(Resource) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resource: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Resource))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resource: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Resource, options, 2, false, "  resource: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Actions), out propertyOverride);
-            if (Optional.IsCollectionDefined(Actions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Actions.Any() || hasPropertyOverride)
+                builder.Append("  actions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Actions))
                 {
-                    builder.Append("  actions: ");
-                    if (hasPropertyOverride)
+                    if (Actions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  actions: ");
                         builder.AppendLine("[");
                         foreach (var item in Actions)
                         {

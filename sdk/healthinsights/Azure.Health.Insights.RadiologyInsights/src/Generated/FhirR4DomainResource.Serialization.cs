@@ -19,13 +19,22 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         void IJsonModel<FhirR4DomainResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4DomainResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FhirR4DomainResource)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
@@ -61,28 +70,6 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("resourceType"u8);
-            writer.WriteStringValue(ResourceType);
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Meta))
-            {
-                writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue(Meta, options);
-            }
-            if (Optional.IsDefined(ImplicitRules))
-            {
-                writer.WritePropertyName("implicitRules"u8);
-                writer.WriteStringValue(ImplicitRules);
-            }
-            if (Optional.IsDefined(Language))
-            {
-                writer.WritePropertyName("language"u8);
-                writer.WriteStringValue(Language);
-            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -95,7 +82,6 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         FhirR4DomainResource IJsonModel<FhirR4DomainResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -122,7 +108,9 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 switch (discriminator.GetString())
                 {
+                    case "Condition": return FhirR4Condition.DeserializeFhirR4Condition(element, options);
                     case "Observation": return FhirR4Observation.DeserializeFhirR4Observation(element, options);
+                    case "ResearchStudy": return FhirR4ResearchStudy.DeserializeFhirR4ResearchStudy(element, options);
                 }
             }
             return UnknownFhirR4DomainResource.DeserializeUnknownFhirR4DomainResource(element, options);

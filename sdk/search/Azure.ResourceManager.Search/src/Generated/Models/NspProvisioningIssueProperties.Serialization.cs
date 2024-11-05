@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.Search.Models
 
         void IJsonModel<NspProvisioningIssueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NspProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NspProvisioningIssueProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IssueType))
             {
                 writer.WritePropertyName("issueType"u8);
@@ -78,7 +86,6 @@ namespace Azure.ResourceManager.Search.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NspProvisioningIssueProperties IJsonModel<NspProvisioningIssueProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -180,15 +187,16 @@ namespace Azure.ResourceManager.Search.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IssueType), out propertyOverride);
-            if (Optional.IsDefined(IssueType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  issueType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IssueType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  issueType: ");
                     if (IssueType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -202,15 +210,16 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Severity), out propertyOverride);
-            if (Optional.IsDefined(Severity) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  severity: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Severity))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  severity: ");
                     if (Severity.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -224,15 +233,16 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (Optional.IsDefined(Description) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  description: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  description: ");
                     if (Description.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -246,17 +256,18 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuggestedResourceIds), out propertyOverride);
-            if (Optional.IsCollectionDefined(SuggestedResourceIds) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SuggestedResourceIds.Any() || hasPropertyOverride)
+                builder.Append("  suggestedResourceIds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SuggestedResourceIds))
                 {
-                    builder.Append("  suggestedResourceIds: ");
-                    if (hasPropertyOverride)
+                    if (SuggestedResourceIds.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  suggestedResourceIds: ");
                         builder.AppendLine("[");
                         foreach (var item in SuggestedResourceIds)
                         {
@@ -281,17 +292,18 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuggestedAccessRules), out propertyOverride);
-            if (Optional.IsCollectionDefined(SuggestedAccessRules) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SuggestedAccessRules.Any() || hasPropertyOverride)
+                builder.Append("  suggestedAccessRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SuggestedAccessRules))
                 {
-                    builder.Append("  suggestedAccessRules: ");
-                    if (hasPropertyOverride)
+                    if (SuggestedAccessRules.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  suggestedAccessRules: ");
                         builder.AppendLine("[");
                         foreach (var item in SuggestedAccessRules)
                         {

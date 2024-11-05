@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CosmosDBClientEncryptionIncludedPath>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBClientEncryptionIncludedPath>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBClientEncryptionIncludedPath)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             writer.WritePropertyName("clientEncryptionKeyId"u8);
@@ -50,7 +58,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CosmosDBClientEncryptionIncludedPath IJsonModel<CosmosDBClientEncryptionIncludedPath>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -122,15 +129,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
-            if (Optional.IsDefined(Path) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  path: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Path))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  path: ");
                     if (Path.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -144,15 +152,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientEncryptionKeyId), out propertyOverride);
-            if (Optional.IsDefined(ClientEncryptionKeyId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  clientEncryptionKeyId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientEncryptionKeyId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  clientEncryptionKeyId: ");
                     if (ClientEncryptionKeyId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -166,15 +175,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionType), out propertyOverride);
-            if (Optional.IsDefined(EncryptionType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  encryptionType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  encryptionType: ");
                     if (EncryptionType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -188,15 +198,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionAlgorithm), out propertyOverride);
-            if (Optional.IsDefined(EncryptionAlgorithm) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  encryptionAlgorithm: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionAlgorithm))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  encryptionAlgorithm: ");
                     if (EncryptionAlgorithm.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -41,11 +41,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             // ACT
             var logger = loggerFactory.CreateLogger(logCategoryName);
             logger.Log(
-                logLevel: LogLevel.Information,
-                eventId: 0,
-                exception: null,
-                message: "Hello {name}.",
-                args: new object[] { "World" });
+                LogLevel.Information,
+                0,
+                null,
+                "Hello {customKey1} {customKey2} {customKey3} {customKey4} {customKey5} {customKey6} {customKey7} {customKey8} {customKey9} {customKey10} {customKey11}.",
+                "customValue1", "customValue2", "customValue3", "customValue4", "customValue5", "customValue6", "customValue7", "customValue8", "customValue9", "customValue10", "customValue11"
+                );
 
             // CLEANUP
             loggerFactory.Dispose();
@@ -58,12 +59,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
 
             if (formatMessage)
             {
-                Assert.Equal("Hello World.", logDocument.Message);
+                Assert.Equal("Hello customValue1 customValue2 customValue3 customValue4 customValue5 customValue6 customValue7 customValue8 customValue9 customValue10 customValue11.", logDocument.Message);
             }
             else
             {
-                Assert.Equal("Hello {name}.", logDocument.Message);
+                Assert.Equal("Hello {customKey1} {customKey2} {customKey3} {customKey4} {customKey5} {customKey6} {customKey7} {customKey8} {customKey9} {customKey10} {customKey11}.", logDocument.Message);
             }
+
+            Assert.Equal(logCategoryName, logDocument.Properties.First(p => p.Key == "CategoryName").Value);
+
+            VerifyCustomProperties(logDocument, 1);
+            Assert.DoesNotContain(logDocument.Properties, x => x.Key == "{OriginalFormat}");
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             // These properties are not used for Exception and should be default values.
@@ -97,11 +103,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             catch (System.Exception ex)
             {
                 logger.Log(
-                    logLevel: LogLevel.Error,
-                    eventId: 0,
-                    exception: ex,
-                    message: "Hello {name}.",
-                    args: new object[] { "World" });
+                    LogLevel.Information,
+                    0,
+                    ex,
+                    "Hello {customKey1} {customKey2} {customKey3} {customKey4} {customKey5} {customKey6} {customKey7} {customKey8} {customKey9} {customKey10} {customKey11}.",
+                    "customValue1", "customValue2", "customValue3", "customValue4", "customValue5", "customValue6", "customValue7", "customValue8", "customValue9", "customValue10", "customValue11"
+                    );
             }
 
             // CLEANUP
@@ -111,12 +118,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             var logRecord = telemetryItems.First();
             Assert.NotNull(logRecord.Exception);
 
-            var exceptionDocument = DocumentHelper.ConvertToExceptionDocument(logRecord.Exception);
+            var exceptionDocument = DocumentHelper.ConvertToExceptionDocument(logRecord);
 
             // ASSERT
             Assert.Equal(DocumentType.Exception, exceptionDocument.DocumentType);
             Assert.Equal(typeof(System.Exception).FullName, exceptionDocument.ExceptionType);
             Assert.Equal("Test exception", exceptionDocument.ExceptionMessage);
+
+            Assert.Equal(logCategoryName, exceptionDocument.Properties.First(p => p.Key == "CategoryName").Value);
+
+            VerifyCustomProperties(exceptionDocument, 1);
+            Assert.DoesNotContain(exceptionDocument.Properties, x => x.Key == "{OriginalFormat}");
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             // These properties are not used for Exception and should be default values.

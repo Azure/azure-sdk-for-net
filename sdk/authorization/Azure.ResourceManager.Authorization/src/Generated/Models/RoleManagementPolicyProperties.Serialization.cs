@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Authorization.Models
 
         void IJsonModel<RoleManagementPolicyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoleManagementPolicyProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("scope"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ScopeId))
@@ -60,7 +68,6 @@ namespace Azure.ResourceManager.Authorization.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RoleManagementPolicyProperties IJsonModel<RoleManagementPolicyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -148,29 +155,31 @@ namespace Azure.ResourceManager.Authorization.Models
             builder.Append("  scope:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScopeId), out propertyOverride);
-            if (Optional.IsDefined(ScopeId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScopeId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    id: ");
                     builder.AppendLine($"'{ScopeId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScopeDisplayName), out propertyOverride);
-            if (Optional.IsDefined(ScopeDisplayName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    displayName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScopeDisplayName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    displayName: ");
                     if (ScopeDisplayName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -184,15 +193,16 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScopeType), out propertyOverride);
-            if (Optional.IsDefined(ScopeType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScopeType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    type: ");
                     builder.AppendLine($"'{ScopeType.Value.ToString()}'");
                 }
             }

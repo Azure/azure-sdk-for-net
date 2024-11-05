@@ -21,17 +21,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<SqlDedicatedGatewayServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(SqlDedicatedGatewayEndpoint))
             {
                 writer.WritePropertyName("sqlDedicatedGatewayEndpoint"u8);
                 writer.WriteStringValue(SqlDedicatedGatewayEndpoint);
+            }
+            if (Optional.IsDefined(DedicatedGatewayType))
+            {
+                writer.WritePropertyName("dedicatedGatewayType"u8);
+                writer.WriteStringValue(DedicatedGatewayType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
@@ -42,28 +56,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (Optional.IsDefined(InstanceSize))
-            {
-                writer.WritePropertyName("instanceSize"u8);
-                writer.WriteStringValue(InstanceSize.Value.ToString());
-            }
-            if (Optional.IsDefined(InstanceCount))
-            {
-                writer.WritePropertyName("instanceCount"u8);
-                writer.WriteNumberValue(InstanceCount.Value);
-            }
-            writer.WritePropertyName("serviceType"u8);
-            writer.WriteStringValue(ServiceType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
             }
             foreach (var item in AdditionalProperties)
             {
@@ -77,7 +69,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         SqlDedicatedGatewayServiceProperties IJsonModel<SqlDedicatedGatewayServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -101,6 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string sqlDedicatedGatewayEndpoint = default;
+            DedicatedGatewayType? dedicatedGatewayType = default;
             IReadOnlyList<SqlDedicatedGatewayRegionalService> locations = default;
             DateTimeOffset? creationTime = default;
             CosmosDBServiceSize? instanceSize = default;
@@ -114,6 +106,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 if (property.NameEquals("sqlDedicatedGatewayEndpoint"u8))
                 {
                     sqlDedicatedGatewayEndpoint = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dedicatedGatewayType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dedicatedGatewayType = new DedicatedGatewayType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -182,6 +183,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 status,
                 additionalProperties,
                 sqlDedicatedGatewayEndpoint,
+                dedicatedGatewayType,
                 locations ?? new ChangeTrackingList<SqlDedicatedGatewayRegionalService>());
         }
 
@@ -197,15 +199,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SqlDedicatedGatewayEndpoint), out propertyOverride);
-            if (Optional.IsDefined(SqlDedicatedGatewayEndpoint) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sqlDedicatedGatewayEndpoint: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SqlDedicatedGatewayEndpoint))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sqlDedicatedGatewayEndpoint: ");
                     if (SqlDedicatedGatewayEndpoint.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -218,18 +221,34 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
-            if (Optional.IsCollectionDefined(Locations) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DedicatedGatewayType), out propertyOverride);
+            if (hasPropertyOverride)
             {
-                if (Locations.Any() || hasPropertyOverride)
+                builder.Append("  dedicatedGatewayType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DedicatedGatewayType))
                 {
-                    builder.Append("  locations: ");
-                    if (hasPropertyOverride)
+                    builder.Append("  dedicatedGatewayType: ");
+                    builder.AppendLine($"'{DedicatedGatewayType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  locations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Locations))
+                {
+                    if (Locations.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  locations: ");
                         builder.AppendLine("[");
                         foreach (var item in Locations)
                         {
@@ -241,69 +260,74 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
-            if (Optional.IsDefined(CreatedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  creationTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  creationTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceSize), out propertyOverride);
-            if (Optional.IsDefined(InstanceSize) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  instanceSize: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstanceSize))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  instanceSize: ");
                     builder.AppendLine($"'{InstanceSize.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceCount), out propertyOverride);
-            if (Optional.IsDefined(InstanceCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  instanceCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstanceCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  instanceCount: ");
                     builder.AppendLine($"{InstanceCount.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceType), out propertyOverride);
-            builder.Append("  serviceType: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  serviceType: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  serviceType: ");
                 builder.AppendLine($"'{ServiceType.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     builder.AppendLine($"'{Status.Value.ToString()}'");
                 }
             }

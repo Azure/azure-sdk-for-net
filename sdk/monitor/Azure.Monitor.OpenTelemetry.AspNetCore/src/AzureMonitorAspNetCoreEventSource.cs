@@ -72,23 +72,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         [Event(4, Message = "Vendor instrumentation added for: {0}.", Level = EventLevel.Verbose)]
         public void VendorInstrumentationAdded(string packageName) => WriteEvent(4, packageName);
 
-        [NonEvent]
-        public void GetEnvironmentVariableFailed(string envVarName, System.Exception ex)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                GetEnvironmentVariableFailed(envVarName, ex.FlattenException().ToInvariantString());
-            }
-        }
+        [Event(5, Message = "Failed to map unknown EventSource log level in AzureEventSourceLogForwarder {0}", Level = EventLevel.Warning)]
+        public void MapLogLevelFailed(string level) => WriteEvent(5, level);
 
-        [Event(5, Message = "Failed to Read environment variable {0}, exception: {1}", Level = EventLevel.Error)]
-        public void GetEnvironmentVariableFailed(string envVarName, string exceptionMessage) => WriteEvent(5, envVarName, exceptionMessage);
-
-        [Event(6, Message = "Failed to map unknown EventSource log level in AzureEventSourceLogForwarder {0}", Level = EventLevel.Warning)]
-        public void MapLogLevelFailed(string level) => WriteEvent(6, level);
-
-        [Event(7, Message = "Found existing Microsoft.Extensions.Azure.AzureEventSourceLogForwarder registration.", Level = EventLevel.Informational)]
-        public void LogForwarderIsAlreadyRegistered() => WriteEvent(7);
+        [Event(6, Message = "Found existing Microsoft.Extensions.Azure.AzureEventSourceLogForwarder registration.", Level = EventLevel.Informational)]
+        public void LogForwarderIsAlreadyRegistered() => WriteEvent(6);
 
         [NonEvent]
         public void FailedToParseConnectionString(System.Exception ex)
@@ -157,20 +145,20 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public void SetAADCredentialsToPipeline(string credentialTypeName, string scope) => WriteEvent(14, credentialTypeName, scope);
 
         [NonEvent]
-        public void PingFailed(Response response)
+        public void PingFailed(Response response, string configuredEndpoint, string actualEndpoint)
         {
             if (IsEnabled(EventLevel.Error))
             {
-                ServiceCallFailed(name: "Ping", response.Status, response.ReasonPhrase);
+                ServiceCallFailed(name: "Ping", response.Status, response.ReasonPhrase, configuredEndpoint, actualEndpoint);
             }
         }
 
         [NonEvent]
-        public void PostFailed(Response response)
+        public void PostFailed(Response response, string configuredEndpoint, string actualEndpoint)
         {
             if (IsEnabled(EventLevel.Error))
             {
-                ServiceCallFailed(name: "Post", response.Status, response.ReasonPhrase);
+                ServiceCallFailed(name: "Post", response.Status, response.ReasonPhrase, configuredEndpoint, actualEndpoint);
             }
         }
 
@@ -210,8 +198,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
         }
 
-        [Event(15, Message = "Service call failed. Name: {0}. Status Code: {1} Reason: {2}.", Level = EventLevel.Error)]
-        public void ServiceCallFailed(string name, int statusCode, string reasonPhrase) => WriteEvent(15, name, statusCode, reasonPhrase);
+        [Event(15, Message = "Service call failed. Name: {0}. Status Code: {1} Reason: {2} Configured Endpoint: {3} Actual Endpoint: {4}", Level = EventLevel.Error)]
+        public void ServiceCallFailed(string name, int statusCode, string reasonPhrase, string configuredEndpoint, string actualEndpoint) => WriteEvent(15, name, statusCode, reasonPhrase, configuredEndpoint, actualEndpoint);
 
         [Event(16, Message = "Service call failed with exception. Name: {0}. Exception: {1}", Level = EventLevel.Error)]
         public void ServiceCallFailedWithUnknownException(string name, string exceptionMessage) => WriteEvent(16, name, exceptionMessage);
@@ -263,5 +251,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
         [Event(23, Message = "Failed to create telemetry document due to an exception. DocumentType: {0}. Exception: {1}", Level = EventLevel.Error)]
         public void FailedToCreateTelemetryDocument(string documentTypeName, string exceptionMessage) => WriteEvent(23, documentTypeName, exceptionMessage);
+
+        [Event(24, Message = "Redirect received from LiveMetrics service: {0}", Level = EventLevel.Informational)]
+        public void LiveMetricsRedirectReceived(string redirectUri) => WriteEvent(24, redirectUri);
+
+        [Event(25, Message = "Polling Interval received from LiveMetrics service: {0}", Level = EventLevel.Informational)]
+        public void LiveMetricsPolingIntervalReceived(int pollingInterval) => WriteEvent(25, pollingInterval);
     }
 }

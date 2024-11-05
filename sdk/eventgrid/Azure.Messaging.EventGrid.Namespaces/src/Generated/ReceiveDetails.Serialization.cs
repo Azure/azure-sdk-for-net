@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             writer.WritePropertyName("brokerProperties"u8);
             writer.WriteObjectValue(BrokerProperties, options);
             writer.WritePropertyName("event"u8);
-            WriteEvent(writer);
+            WriteEvent(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

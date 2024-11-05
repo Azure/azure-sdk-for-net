@@ -20,41 +20,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<PeriodicModeBackupPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PeriodicModeBackupPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PeriodicModeBackupPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(PeriodicModeProperties))
             {
                 writer.WritePropertyName("periodicModeProperties"u8);
                 writer.WriteObjectValue(PeriodicModeProperties, options);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(BackupPolicyType.ToString());
-            if (Optional.IsDefined(MigrationState))
-            {
-                writer.WritePropertyName("migrationState"u8);
-                writer.WriteObjectValue(MigrationState, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         PeriodicModeBackupPolicy IJsonModel<PeriodicModeBackupPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -128,40 +114,43 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeriodicModeProperties), out propertyOverride);
-            if (Optional.IsDefined(PeriodicModeProperties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  periodicModeProperties: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeriodicModeProperties))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  periodicModeProperties: ");
                     BicepSerializationHelpers.AppendChildObject(builder, PeriodicModeProperties, options, 2, false, "  periodicModeProperties: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupPolicyType), out propertyOverride);
-            builder.Append("  type: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  type: ");
                 builder.AppendLine($"'{BackupPolicyType.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationState), out propertyOverride);
-            if (Optional.IsDefined(MigrationState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  migrationState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MigrationState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  migrationState: ");
                     BicepSerializationHelpers.AppendChildObject(builder, MigrationState, options, 2, false, "  migrationState: ");
                 }
             }

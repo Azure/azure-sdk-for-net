@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
     public class DiagnosticsTests : SelfHelpManagementTestBase
     {
-        public DiagnosticsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public DiagnosticsTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 

@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         public async Task CreateApiKey_OrganizationCreateAPIKey()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_CreateClusterAPIKey.json
-            // this example is just showing the usage of "Organization_CreateAPIKey" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Organization_CreateApiKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         public async Task DeleteClusterApiKey_OrganizationDeleteClusterAPIKey()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_DeleteClusterAPIKey.json
-            // this example is just showing the usage of "Organization_DeleteClusterAPIKey" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Organization_DeleteClusterApiKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         public async Task GetClusterApiKey_OrganizationGetClusterAPIKey()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_GetClusterAPIKey.json
-            // this example is just showing the usage of "Organization_GetClusterAPIKey" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Organization_GetClusterApiKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.SignalR.Models
 
         void IJsonModel<SignalRNetworkAcl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SignalRNetworkAcl>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SignalRNetworkAcl)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Allow))
             {
                 writer.WritePropertyName("allow"u8);
@@ -63,7 +71,6 @@ namespace Azure.ResourceManager.SignalR.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SignalRNetworkAcl IJsonModel<SignalRNetworkAcl>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -141,17 +148,18 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Allow), out propertyOverride);
-            if (Optional.IsCollectionDefined(Allow) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Allow.Any() || hasPropertyOverride)
+                builder.Append("  allow: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Allow))
                 {
-                    builder.Append("  allow: ");
-                    if (hasPropertyOverride)
+                    if (Allow.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allow: ");
                         builder.AppendLine("[");
                         foreach (var item in Allow)
                         {
@@ -163,17 +171,18 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Deny), out propertyOverride);
-            if (Optional.IsCollectionDefined(Deny) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Deny.Any() || hasPropertyOverride)
+                builder.Append("  deny: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Deny))
                 {
-                    builder.Append("  deny: ");
-                    if (hasPropertyOverride)
+                    if (Deny.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  deny: ");
                         builder.AppendLine("[");
                         foreach (var item in Deny)
                         {

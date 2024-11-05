@@ -207,12 +207,8 @@ namespace Azure.Core.TestFramework
                 else
                 {
                     var clientSecret = GetOptionalVariable("CLIENT_SECRET");
-                    if (string.IsNullOrWhiteSpace(clientSecret))
-                    {
-                        _credential = new DefaultAzureCredential(
-                            new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
-                    }
-                    else
+                    var systemAccessToken = GetOptionalVariable("SYSTEM_ACCESSTOKEN");
+                    if (!string.IsNullOrWhiteSpace(clientSecret))
                     {
                         // If the recording is null but we are in Record Mode this means the Credential is being used
                         // outside of a test (for example, in ExtendResourceGroupExpirationAsync method). Attempt to use the env
@@ -232,6 +228,21 @@ namespace Azure.Core.TestFramework
                             ClientId,
                             clientSecret,
                             new ClientSecretCredentialOptions { AuthorityHost = new Uri(AuthorityHostUrl) });
+                    }
+                    else if (!string.IsNullOrWhiteSpace(systemAccessToken))
+                    {
+                        // These variables should only be defined in the Live Test Pipelines so there is no need to record these variables
+                        _credential = new AzurePipelinesCredential(
+                                GetVariable("AZURESUBSCRIPTION_TENANT_ID"),
+                                GetVariable("AZURESUBSCRIPTION_CLIENT_ID"),
+                                GetVariable("AZURESUBSCRIPTION_SERVICE_CONNECTION_ID"),
+                                systemAccessToken,
+                                new AzurePipelinesCredentialOptions { AuthorityHost = new Uri(GetVariable("AZURE_AUTHORITY_HOST")) });
+                    }
+                    else
+                    {
+                        _credential = new DefaultAzureCredential(
+                             new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
                     }
                 }
 

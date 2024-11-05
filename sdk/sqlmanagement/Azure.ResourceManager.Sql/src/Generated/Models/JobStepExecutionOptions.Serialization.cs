@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Sql.Models
 
         void IJsonModel<JobStepExecutionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<JobStepExecutionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(TimeoutSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
@@ -67,7 +75,6 @@ namespace Azure.ResourceManager.Sql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         JobStepExecutionOptions IJsonModel<JobStepExecutionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -171,71 +178,76 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeoutSeconds), out propertyOverride);
-            if (Optional.IsDefined(TimeoutSeconds) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  timeoutSeconds: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeoutSeconds))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  timeoutSeconds: ");
                     builder.AppendLine($"{TimeoutSeconds.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetryAttempts), out propertyOverride);
-            if (Optional.IsDefined(RetryAttempts) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  retryAttempts: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetryAttempts))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  retryAttempts: ");
                     builder.AppendLine($"{RetryAttempts.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InitialRetryIntervalSeconds), out propertyOverride);
-            if (Optional.IsDefined(InitialRetryIntervalSeconds) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  initialRetryIntervalSeconds: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InitialRetryIntervalSeconds))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  initialRetryIntervalSeconds: ");
                     builder.AppendLine($"{InitialRetryIntervalSeconds.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumRetryIntervalSeconds), out propertyOverride);
-            if (Optional.IsDefined(MaximumRetryIntervalSeconds) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maximumRetryIntervalSeconds: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumRetryIntervalSeconds))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maximumRetryIntervalSeconds: ");
                     builder.AppendLine($"{MaximumRetryIntervalSeconds.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetryIntervalBackoffMultiplier), out propertyOverride);
-            if (Optional.IsDefined(RetryIntervalBackoffMultiplier) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  retryIntervalBackoffMultiplier: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetryIntervalBackoffMultiplier))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  retryIntervalBackoffMultiplier: ");
                     builder.AppendLine($"'{RetryIntervalBackoffMultiplier.Value.ToString()}'");
                 }
             }

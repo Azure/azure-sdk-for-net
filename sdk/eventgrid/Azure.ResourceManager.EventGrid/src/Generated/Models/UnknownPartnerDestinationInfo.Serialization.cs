@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,61 +21,22 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         void IJsonModel<PartnerDestinationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PartnerDestinationInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AzureSubscriptionId))
-            {
-                writer.WritePropertyName("azureSubscriptionId"u8);
-                writer.WriteStringValue(AzureSubscriptionId);
-            }
-            if (Optional.IsDefined(ResourceGroupName))
-            {
-                writer.WritePropertyName("resourceGroupName"u8);
-                writer.WriteStringValue(ResourceGroupName);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            writer.WritePropertyName("endpointType"u8);
-            writer.WriteStringValue(EndpointType.ToString());
-            if (Optional.IsDefined(EndpointServiceContext))
-            {
-                writer.WritePropertyName("endpointServiceContext"u8);
-                writer.WriteStringValue(EndpointServiceContext);
-            }
-            if (Optional.IsCollectionDefined(ResourceMoveChangeHistory))
-            {
-                writer.WritePropertyName("resourceMoveChangeHistory"u8);
-                writer.WriteStartArray();
-                foreach (var item in ResourceMoveChangeHistory)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         PartnerDestinationInfo IJsonModel<PartnerDestinationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -161,6 +124,148 @@ namespace Azure.ResourceManager.EventGrid.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureSubscriptionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureSubscriptionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureSubscriptionId))
+                {
+                    builder.Append("  azureSubscriptionId: ");
+                    if (AzureSubscriptionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AzureSubscriptionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AzureSubscriptionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGroupName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceGroupName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceGroupName))
+                {
+                    builder.Append("  resourceGroupName: ");
+                    if (ResourceGroupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceGroupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceGroupName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endpointType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  endpointType: ");
+                builder.AppendLine($"'{EndpointType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointServiceContext), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endpointServiceContext: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndpointServiceContext))
+                {
+                    builder.Append("  endpointServiceContext: ");
+                    if (EndpointServiceContext.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EndpointServiceContext}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EndpointServiceContext}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceMoveChangeHistory), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceMoveChangeHistory: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ResourceMoveChangeHistory))
+                {
+                    if (ResourceMoveChangeHistory.Any())
+                    {
+                        builder.Append("  resourceMoveChangeHistory: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ResourceMoveChangeHistory)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  resourceMoveChangeHistory: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PartnerDestinationInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -169,6 +274,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PartnerDestinationInfo)} does not support writing '{options.Format}' format.");
             }

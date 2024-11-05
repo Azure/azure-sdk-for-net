@@ -8,8 +8,16 @@ azure-arm: true
 csharp: true
 library-name: ServiceFabricManagedClusters
 namespace: Azure.ResourceManager.ServiceFabricManagedClusters
-require:  https://github.com/Azure/azure-rest-api-specs/blob/2ce7ebed8b2fbcce991d2839ba0ba712f9a0d12b/specification/servicefabricmanagedclusters/resource-manager/readme.md
-#tag: package-2023-12-preview
+
+require:  https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/readme.md
+
+input-file:
+- https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/managedcluster.json
+- https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/nodetype.json
+- https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/nodetype.json
+
+tag: package-2024-04
+
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,6 +27,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -112,7 +121,7 @@ rename-mapping:
   ClusterUpgradePolicy: ManagedClusterUpgradePolicy
   SettingsSectionDescription: ClusterFabricSettingsSection
   SettingsParameterDescription: ClusterFabricSettingsParameterDescription
-  IPTag: ManagedClusterIPTag
+  IpTag: ManagedClusterIPTag
   LoadBalancingRule: ManagedClusterLoadBalancingRule
   NetworkSecurityRule: ServiceFabricManagedNetworkSecurityRule
   Direction: ServiceFabricManagedNetworkSecurityRuleDirection
@@ -175,7 +184,6 @@ rename-mapping:
   UpdateType: ServiceFabricManagedClusterUpdateType
   IpConfiguration: ServiceFabricManagedClusterIPConfiguration
   IpConfigurationPublicIPAddressConfiguration: ServiceFabricManagedClusterPublicIPAddressConfiguration
-  IpTag: ServiceFabricManagedClusterIPTag
   ManagedMaintenanceWindowStatus.lastWindowStatusUpdateAtUTC: LastWindowStatusUpdatedOn
   ManagedMaintenanceWindowStatus.lastWindowStartTimeUTC: LastWindowStartOn
   ManagedMaintenanceWindowStatus.lastWindowEndTimeUTC: LastWindowEndOn

@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<ContainerCpuStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerCpuStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerCpuStatistics)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(CpuUsage))
             {
                 writer.WritePropertyName("cpuUsage"u8);
@@ -62,7 +70,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerCpuStatistics IJsonModel<ContainerCpuStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -150,57 +157,61 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CpuUsage), out propertyOverride);
-            if (Optional.IsDefined(CpuUsage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  cpuUsage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CpuUsage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  cpuUsage: ");
                     BicepSerializationHelpers.AppendChildObject(builder, CpuUsage, options, 2, false, "  cpuUsage: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemCpuUsage), out propertyOverride);
-            if (Optional.IsDefined(SystemCpuUsage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemCpuUsage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemCpuUsage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemCpuUsage: ");
                     builder.AppendLine($"'{SystemCpuUsage.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OnlineCpuCount), out propertyOverride);
-            if (Optional.IsDefined(OnlineCpuCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  onlineCpuCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OnlineCpuCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  onlineCpuCount: ");
                     builder.AppendLine($"{OnlineCpuCount.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThrottlingData), out propertyOverride);
-            if (Optional.IsDefined(ThrottlingData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  throttlingData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThrottlingData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  throttlingData: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ThrottlingData, options, 2, false, "  throttlingData: ");
                 }
             }

@@ -30,9 +30,10 @@ namespace Azure.Storage.Blobs.Test
         {
             // Batch delimiters are random so disable body comparison
             CompareBodies = false;
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"sig=(?<group>.*?)(?=\s+)", SanitizeValue)
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"sig=(?<group>.*?)(?=\s+)")
             {
-                GroupForReplace = "group"
+                GroupForReplace = "group",
+                Value = SanitizeValue
             });
         }
 

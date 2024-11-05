@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static bool operator ==(PurviewManagedEventHubState left, PurviewManagedEventHubState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PurviewManagedEventHubState"/> values are not the same. </summary>
         public static bool operator !=(PurviewManagedEventHubState left, PurviewManagedEventHubState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PurviewManagedEventHubState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PurviewManagedEventHubState"/>. </summary>
         public static implicit operator PurviewManagedEventHubState(string value) => new PurviewManagedEventHubState(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

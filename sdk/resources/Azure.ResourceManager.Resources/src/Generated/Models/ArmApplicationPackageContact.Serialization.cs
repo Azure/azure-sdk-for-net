@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<ArmApplicationPackageContact>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationPackageContact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmApplicationPackageContact)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ContactName))
             {
                 writer.WritePropertyName("contactName"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ArmApplicationPackageContact IJsonModel<ArmApplicationPackageContact>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -117,15 +124,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContactName), out propertyOverride);
-            if (Optional.IsDefined(ContactName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  contactName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContactName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  contactName: ");
                     if (ContactName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -139,15 +147,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Email), out propertyOverride);
-            if (Optional.IsDefined(Email) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  email: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Email))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  email: ");
                     if (Email.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -161,15 +170,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Phone), out propertyOverride);
-            if (Optional.IsDefined(Phone) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  phone: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Phone))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  phone: ");
                     if (Phone.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

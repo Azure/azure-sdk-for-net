@@ -13,39 +13,50 @@ The path under which changes will be detected.
 #>
 [CmdletBinding()]
 Param (
-  [Parameter(Mandatory=$True)]
+  [Parameter(Mandatory = $True)]
   [string] $ArtifactPath,
-  [Parameter(Mandatory=$True)]
+  [Parameter(Mandatory = $True)]
   [string] $TargetPath
 )
 
-. (Join-Path $PSScriptRoot "Helpers" git-helpers.ps1)
+. (Join-Path $PSScriptRoot "Helpers" "git-helpers.ps1")
 
-function Get-ChangedServices {
-    Param (
-        [Parameter(Mandatory=$True)]
-        [string[]] $ChangedFiles
-    )
-    
-    $changedServices = $ChangedFiles | Foreach-Object { if ($_ -match "sdk/([^/]+)") { $matches[1] } } | Sort-Object -Unique
+function Get-ChangedServices
+{
+  Param (
+    [Parameter(Mandatory = $True)]
+    [string[]] $ChangedFiles
+  )
 
-    return $changedServices
+  $changedServices = $ChangedFiles | Foreach-Object { if ($_ -match "sdk/([^/]+)") { $matches[1] } } | Sort-Object -Unique
+
+  return $changedServices
 }
 
-if (!(Test-Path $ArtifactPath)) {
-    New-Item -ItemType Directory -Path $ArtifactPath | Out-Null
+if (!(Test-Path $ArtifactPath))
+{
+  New-Item -ItemType Directory -Path $ArtifactPath | Out-Null
 }
 
 $ArtifactPath = Resolve-Path $ArtifactPath
 $ArtifactName = Join-Path $ArtifactPath "diff.json"
 
-$changedFiles = Get-ChangedFiles -DiffPath $TargetPath
-$changedServices = Get-ChangedServices -ChangedFiles $changedFiles
+$changedFiles = @()
+$changedServices = @()
 
-$result = [PSCustomObject]@{
-    "ChangedFiles" = $changedFiles
-    "ChangedServices" = $changedServices
-    "PRNumber" = $env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER
+$changedFiles = Get-ChangedFiles -DiffPath $TargetPath
+if ($changedFiles) {
+  $changedServices = Get-ChangedServices -ChangedFiles $changedFiles
 }
 
-$result | ConvertTo-Json | Out-File $ArtifactName
+$result = [PSCustomObject]@{
+  "ChangedFiles"    = $changedFiles
+  "ChangedServices" = $changedServices
+  "PRNumber"        = if ($env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER) { $env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER } else { "-1" }
+}
+
+$json = $result | ConvertTo-Json
+$json | Out-File $ArtifactName
+
+Write-Host "`nGenerated diff.json file at $ArtifactName"
+Write-Host "  $($json -replace "`n", "`n  ")"

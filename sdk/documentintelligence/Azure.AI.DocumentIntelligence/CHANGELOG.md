@@ -1,14 +1,65 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed a bug where calling `Operation.Id` would sometimes return an `InvalidOperationException` with message "The operation ID was not present in the service response.".
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2024-08-14)
+
+### Features Added
+- Added support for the Analyze Batch Documents API:
+  - Added method `AnalyzeBatchDocuments` to `DocumentIntelligenceClient`.
+  - Added class `AnalyzeBatchDocumentsContent` to be used as the main input of the API.
+  - Added class `AnalyzeBatchResult` to be used as the main output of the API.
+  - Added class `AnalyzeBatchOperationDetail` to be used as part of the output of the API.
+- Added support for different kinds of output in the Analyze Document API:
+  - Added method `GetAnalyzeResultPdf` to `DocumentIntelligenceClient`.
+  - Added method `GetAnalyzeResultFigures` to `DocumentIntelligenceClient`.
+  - Added type `AnalyzeOutputOption` to specify other kinds of output: either `Pdf` and `Figures`.
+  - Added parameter `output` to `AnalyzeDocument` overloads in `DocumentIntelligenceClient`.
+  - Added property `Id` to `DocumentFigure`.
+- Added support for the Copy Classifier API:
+  - Added method `AuthorizeClassifierCopy` to `DocumentIntelligenceAdministrationClient`.
+  - Added method `CopyClassifierTo` to `DocumentIntelligenceAdministrationClient`.
+  - Added class `AuthorizeClassifierCopyContent` to be used as the input of the `AuthorizeClassifierCopy` API.
+  - Added class `ClassifierCopyAuthorization` to be use das the output of the `AuthorizeClassifierCopy` API.
+  - Added class `DocumentClassifierCopyToOperationDetails` to represent a Copy Classifier operation in calls to the `GetOperation` API.
+- Miscellaneous:
+  - Added new kind of `DocumentBuildMode`: `Generative`.
+  - Added property `Warnings` to `AnalyzeResult`.
+  - Added properties `ClassifierId`, `Split`, and `TrainingHours` to `DocumentModelDetails`.
+  - Added properties `ConfidenceThreshold`, `Features`, `MaxDocumentsToAnalyze`, `ModelId`, and `QueryFields` to `DocumentTypeDetails`.
+  - Added properties `AllowOverwrite` and `MaxTrainingHours` to `BuildDocumentModelContent`.
+  - Exposed the constructor of `DocumentTypeDetails` and made its properties settable to support new changes to the Compose Document API.
+  - Exposed the constructor of `DocumentFieldSchema` and made its properties settable to support new changes to the Compose Document API.
+  - Added parameter `pages` to `ClassifyDocument` overloads in `DocumentIntelligenceClient`.
+  - Added properties `ClassifierId`, `DocTypes`, and `Split` to `ComposeDocumentModelContent`.
+  - Added property `AllowOverwrite` to `BuildDocumentClassifierContent`.
+
+### Breaking Changes
+- `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient` now target service API version `2024-07-31-preview`. Support for `2024-02-29-preview` has been removed.
+- Removed support for extracting lists from analyzed documents:
+  - Removed types `DocumentList` and `DocumentListItem`.
+  - Removed property `Lists` from `AnalyzeResult`.
+- Changes to the Compose Document API:
+  - Removed class `ComponentDocumentModelDetails`, originally used as part of the input of the API.
+  - Removed property `ComponentModels` from `ComposeDocumentModelContent`.
+  - `ComposeDocumentModelContent` now needs a dictionary of `DocumentTypeDetails` instances and a classifier ID to be constructed.
+- Removed type `QuotaDetails`.
+- Removed property `CustomNeuralDocumentModelBuilds` from `ResourceDetails.`
+- Updated class `DocumentIntelligenceModelFactory` to reflect model changes.
+
+### Bugs Fixed
+- Calling `Operation.Id` in an operation returned from the Analyze Document API won't throw a `NotSupportedException` anymore. Using the operation ID to retrieve operations started previously is still not supported.
 
 ## 1.0.0-beta.2 (2024-03-05)
 

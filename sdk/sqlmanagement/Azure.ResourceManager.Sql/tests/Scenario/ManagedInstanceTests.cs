@@ -24,18 +24,13 @@ namespace Azure.ResourceManager.Sql.Tests
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
-        {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroupResource resourceGroup = rgLro.Value;
-            _resourceGroupIdentifier = resourceGroup.Id;
-        }
-
         [SetUp]
         public async Task TestSetUp()
         {
             var client = GetArmClient();
+            var rgLro = await client.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            ResourceGroupResource resourceGroup = rgLro.Value;
+            _resourceGroupIdentifier = resourceGroup.Id;
             _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 

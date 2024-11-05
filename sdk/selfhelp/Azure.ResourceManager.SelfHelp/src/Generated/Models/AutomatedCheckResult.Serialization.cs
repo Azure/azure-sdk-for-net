@@ -19,13 +19,31 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         void IJsonModel<AutomatedCheckResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AutomatedCheckResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutomatedCheckResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
@@ -51,7 +69,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AutomatedCheckResult IJsonModel<AutomatedCheckResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -74,12 +91,24 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
+            string version = default;
+            string status = default;
             string result = default;
             AutomatedCheckResultType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    status = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("result"u8))
                 {
                     result = property.Value.GetString();
@@ -100,7 +129,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AutomatedCheckResult(result, type, serializedAdditionalRawData);
+            return new AutomatedCheckResult(version, status, result, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomatedCheckResult>.Write(ModelReaderWriterOptions options)

@@ -99,7 +99,9 @@ namespace Azure.Storage.DataMovement.Tests
             bool createResource = false,
             string objectName = default,
             TSourceClientOptions options = default,
-            Stream contents = default);
+            Stream contents = default,
+            TransferPropertiesTestType propertiesTestType = default,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the specific storage resource from the given TSourceObjectClient
@@ -150,7 +152,8 @@ namespace Azure.Storage.DataMovement.Tests
             bool createResource = false,
             string objectName = default,
             TDestinationClientOptions options = default,
-            Stream contents = default);
+            Stream contents = default,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the specific storage resource from the given TDestinationObjectClient
@@ -192,7 +195,8 @@ namespace Azure.Storage.DataMovement.Tests
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             TSourceObjectClient sourceClient,
-            TDestinationObjectClient destinationClient);
+            TDestinationObjectClient destinationClient,
+            CancellationToken cancellationToken = default);
         #endregion
 
         protected string GetNewObjectName()
@@ -1035,7 +1039,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyRemoteObjects_VerifyProperties(
                 source.Container,
                 destination.Container,
-                TransferPropertiesTestType.Preserve);
+                TransferPropertiesTestType.NewProperties);
         }
     }
 }

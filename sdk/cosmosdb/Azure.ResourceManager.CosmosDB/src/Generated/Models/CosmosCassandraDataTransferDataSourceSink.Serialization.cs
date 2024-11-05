@@ -20,40 +20,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CosmosCassandraDataTransferDataSourceSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosCassandraDataTransferDataSourceSink)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("keyspaceName"u8);
             writer.WriteStringValue(KeyspaceName);
             writer.WritePropertyName("tableName"u8);
             writer.WriteStringValue(TableName);
-            if (Optional.IsDefined(RemoteAccountName))
-            {
-                writer.WritePropertyName("remoteAccountName"u8);
-                writer.WriteStringValue(RemoteAccountName);
-            }
-            writer.WritePropertyName("component"u8);
-            writer.WriteStringValue(Component.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         CosmosCassandraDataTransferDataSourceSink IJsonModel<CosmosCassandraDataTransferDataSourceSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -125,15 +111,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyspaceName), out propertyOverride);
-            if (Optional.IsDefined(KeyspaceName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  keyspaceName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyspaceName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  keyspaceName: ");
                     if (KeyspaceName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -147,15 +134,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
-            if (Optional.IsDefined(TableName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tableName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TableName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tableName: ");
                     if (TableName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -169,15 +157,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteAccountName), out propertyOverride);
-            if (Optional.IsDefined(RemoteAccountName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  remoteAccountName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemoteAccountName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  remoteAccountName: ");
                     if (RemoteAccountName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -191,13 +180,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Component), out propertyOverride);
-            builder.Append("  component: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  component: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  component: ");
                 builder.AppendLine($"'{Component.ToString()}'");
             }
 

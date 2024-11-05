@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         void IJsonModel<CognitiveServicesMultiRegionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesMultiRegionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesMultiRegionSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(RoutingMethod))
             {
                 writer.WritePropertyName("routingMethod"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CognitiveServicesMultiRegionSettings IJsonModel<CognitiveServicesMultiRegionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -131,31 +138,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingMethod), out propertyOverride);
-            if (Optional.IsDefined(RoutingMethod) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  routingMethod: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingMethod))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  routingMethod: ");
                     builder.AppendLine($"'{RoutingMethod.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Regions), out propertyOverride);
-            if (Optional.IsCollectionDefined(Regions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Regions.Any() || hasPropertyOverride)
+                builder.Append("  regions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Regions))
                 {
-                    builder.Append("  regions: ");
-                    if (hasPropertyOverride)
+                    if (Regions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  regions: ");
                         builder.AppendLine("[");
                         foreach (var item in Regions)
                         {

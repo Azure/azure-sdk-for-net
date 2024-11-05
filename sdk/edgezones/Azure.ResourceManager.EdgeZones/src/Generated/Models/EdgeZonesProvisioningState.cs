@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
         public static bool operator ==(EdgeZonesProvisioningState left, EdgeZonesProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeZonesProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(EdgeZonesProvisioningState left, EdgeZonesProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EdgeZonesProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeZonesProvisioningState"/>. </summary>
         public static implicit operator EdgeZonesProvisioningState(string value) => new EdgeZonesProvisioningState(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

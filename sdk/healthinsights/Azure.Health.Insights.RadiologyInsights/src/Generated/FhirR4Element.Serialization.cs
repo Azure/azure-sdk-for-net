@@ -19,13 +19,21 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         void IJsonModel<FhirR4Element>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4Element>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FhirR4Element)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -56,7 +64,6 @@ namespace Azure.Health.Insights.RadiologyInsights
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FhirR4Element IJsonModel<FhirR4Element>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,7 +87,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 return null;
             }
             string id = default;
-            IReadOnlyList<FhirR4Extension> extension = default;
+            IList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

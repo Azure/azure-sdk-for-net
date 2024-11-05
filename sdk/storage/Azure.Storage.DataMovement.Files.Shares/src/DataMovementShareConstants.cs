@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using static Azure.Storage.DataMovement.DataMovementConstants;
 
 namespace Azure.Storage.DataMovement.Files.Shares
@@ -22,56 +19,61 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         internal class DestinationCheckpointData
         {
-            internal const int SchemaVersion = 1;
+            internal const int SchemaVersion = 2;
 
-            private const int VersionEncodedSize = IntSizeInBytes;
-            private const int FileAttributesEncodedSize = OneByte + IntSizeInBytes;
-            private const int FilePermissionKeyOffsetEncodedSize = IntSizeInBytes;
-            private const int FilePermissionKeyLengthEncodedSize = IntSizeInBytes;
-            private const int FileCreatedOnEncodedSize = OneByte + LongSizeInBytes;
-            private const int FileLastWrittenOnEncodedSize = OneByte + LongSizeInBytes;
-            private const int FileChangedOnEncodedSize = OneByte + LongSizeInBytes;
-            private const int ContentTypeOffsetEncodedSize = IntSizeInBytes;
-            private const int ContentTypeLengthEncodedSize = IntSizeInBytes;
-            private const int ContentEncodingOffsetEncodedSize = IntSizeInBytes;
-            private const int ContentEncodingLengthEncodedSize = IntSizeInBytes;
-            private const int ContentLanguageOffsetEncodedSize = IntSizeInBytes;
-            private const int ContentLanguageLengthEncodedSize = IntSizeInBytes;
-            private const int ContentDispositionOffsetEncodedSize = IntSizeInBytes;
-            private const int ContentDispositionLengthEncodedSize = IntSizeInBytes;
-            private const int CacheControlOffsetEncodedSize = IntSizeInBytes;
-            private const int CacheControlLengthEncodedSize = IntSizeInBytes;
-            private const int FileMetadataOffsetEncodedSize = IntSizeInBytes;
-            private const int FileMetadataLengthEncodedSize = IntSizeInBytes;
-            private const int DirectoryMetadataOffsetEncodedSize = IntSizeInBytes;
-            private const int DirectoryMetadataLengthEncodedSize = IntSizeInBytes;
+            internal const int VersionEncodedSize = IntSizeInBytes;
+            internal const int PreserveEncodedSize = OneByte;
+            internal const int OffsetLengthEncodedSize = IntSizeInBytes;
 
             internal const int VersionIndex = 0;
 
-            internal const int FileAttributesIndex = VersionIndex + VersionEncodedSize;
-            internal const int FilePermissionKeyOffsetIndex = FileAttributesIndex + FileAttributesEncodedSize;
-            internal const int FilePermissionKeyLengthIndex = FilePermissionKeyOffsetIndex + FilePermissionKeyOffsetEncodedSize;
-            internal const int FileCreatedOnIndex = FilePermissionKeyLengthIndex + FilePermissionKeyLengthEncodedSize;
-            internal const int FileLastWrittenOnIndex = FileCreatedOnIndex + FileCreatedOnEncodedSize;
-            internal const int FileChangedOnIndex = FileLastWrittenOnIndex + FileLastWrittenOnEncodedSize;
+            internal const int PreserveFileAttributesIndex = VersionIndex + VersionEncodedSize;
+            internal const int FileAttributesOffsetIndex = PreserveFileAttributesIndex + PreserveEncodedSize;
+            internal const int FileAttributesLengthIndex = FileAttributesOffsetIndex + OffsetLengthEncodedSize;
 
-            internal const int ContentTypeOffsetIndex = FileChangedOnIndex + FileChangedOnEncodedSize;
-            internal const int ContentTypeLengthIndex = ContentTypeOffsetIndex + ContentTypeOffsetEncodedSize;
-            internal const int ContentEncodingOffsetIndex = ContentTypeLengthIndex + ContentTypeLengthEncodedSize;
-            internal const int ContentEncodingLengthIndex = ContentEncodingOffsetIndex + ContentEncodingOffsetEncodedSize;
-            internal const int ContentLanguageOffsetIndex = ContentEncodingLengthIndex + ContentEncodingLengthEncodedSize;
-            internal const int ContentLanguageLengthIndex = ContentLanguageOffsetIndex + ContentLanguageOffsetEncodedSize;
-            internal const int ContentDispositionOffsetIndex = ContentLanguageLengthIndex + ContentLanguageLengthEncodedSize;
-            internal const int ContentDispositionLengthIndex = ContentDispositionOffsetIndex + ContentDispositionOffsetEncodedSize;
-            internal const int CacheControlOffsetIndex = ContentDispositionLengthIndex + ContentDispositionLengthEncodedSize;
-            internal const int CacheControlLengthIndex = CacheControlOffsetIndex + CacheControlOffsetEncodedSize;
+            internal const int PreserveFilePermissionIndex = FileAttributesLengthIndex + PreserveEncodedSize;
 
-            internal const int FileMetadataOffsetIndex = CacheControlLengthIndex + CacheControlLengthEncodedSize;
-            internal const int FileMetadataLengthIndex = FileMetadataOffsetIndex + FileMetadataOffsetEncodedSize;
-            internal const int DirectoryMetadataOffsetIndex = FileMetadataLengthIndex + FileMetadataLengthEncodedSize;
-            internal const int DirectoryMetadataLengthIndex = DirectoryMetadataOffsetIndex + DirectoryMetadataOffsetEncodedSize;
+            internal const int PreserveFileCreatedOnIndex = PreserveFilePermissionIndex + OffsetLengthEncodedSize;
+            internal const int FileCreatedOnIndex = PreserveFileCreatedOnIndex + PreserveEncodedSize;
+            internal const int FileCreatedOnLengthIndex = FileCreatedOnIndex + OffsetLengthEncodedSize;
 
-            internal const int VariableLengthStartIndex = DirectoryMetadataLengthIndex + DirectoryMetadataLengthEncodedSize;
+            internal const int PreserveFileLastWrittenOnIndex = FileCreatedOnLengthIndex + OffsetLengthEncodedSize;
+            internal const int FileLastWrittenOnIndex = PreserveFileLastWrittenOnIndex + PreserveEncodedSize;
+            internal const int FileLastWrittenOnLengthIndex = FileLastWrittenOnIndex + OffsetLengthEncodedSize;
+
+            internal const int PreserveFileChangedOn = FileLastWrittenOnLengthIndex + OffsetLengthEncodedSize;
+            internal const int FileChangedOnIndex = PreserveFileChangedOn + PreserveEncodedSize;
+            internal const int FileChangedOnLengthIndex = FileChangedOnIndex + OffsetLengthEncodedSize;
+
+            internal const int PreserveContentTypeIndex = FileChangedOnLengthIndex + OffsetLengthEncodedSize;
+            internal const int ContentTypeOffsetIndex = PreserveContentTypeIndex + PreserveEncodedSize;
+            internal const int ContentTypeLengthIndex = ContentTypeOffsetIndex + OffsetLengthEncodedSize;
+
+            internal const int PreserveContentEncodingIndex = ContentTypeLengthIndex + OffsetLengthEncodedSize;
+            internal const int ContentEncodingOffsetIndex = PreserveContentEncodingIndex + PreserveEncodedSize;
+            internal const int ContentEncodingLengthIndex = ContentEncodingOffsetIndex + OffsetLengthEncodedSize;
+
+            internal const int PreserveContentLanguageIndex = ContentEncodingLengthIndex + OffsetLengthEncodedSize;
+            internal const int ContentLanguageOffsetIndex = PreserveContentLanguageIndex + PreserveEncodedSize;
+            internal const int ContentLanguageLengthIndex = ContentLanguageOffsetIndex + OffsetLengthEncodedSize;
+
+            internal const int PreserveContentDispositionIndex = ContentLanguageLengthIndex + OffsetLengthEncodedSize;
+            internal const int ContentDispositionOffsetIndex = PreserveContentDispositionIndex + PreserveEncodedSize;
+            internal const int ContentDispositionLengthIndex = ContentDispositionOffsetIndex + OffsetLengthEncodedSize;
+
+            internal const int PreserveCacheControlIndex = ContentDispositionLengthIndex + OffsetLengthEncodedSize;
+            internal const int CacheControlOffsetIndex = PreserveCacheControlIndex + PreserveEncodedSize;
+            internal const int CacheControlLengthIndex = CacheControlOffsetIndex + OffsetLengthEncodedSize;
+
+            internal const int PreserveFileMetadataIndex = CacheControlLengthIndex + OffsetLengthEncodedSize;
+            internal const int FileMetadataOffsetIndex = PreserveFileMetadataIndex + PreserveEncodedSize;
+            internal const int FileMetadataLengthIndex = FileMetadataOffsetIndex + OffsetLengthEncodedSize;
+
+            internal const int PreserveDirectoryMetadataIndex = FileMetadataLengthIndex + OffsetLengthEncodedSize;
+            internal const int DirectoryMetadataOffsetIndex = PreserveDirectoryMetadataIndex + PreserveEncodedSize;
+            internal const int DirectoryMetadataLengthIndex = DirectoryMetadataOffsetIndex + OffsetLengthEncodedSize;
+
+            internal const int VariableLengthStartIndex = DirectoryMetadataLengthIndex + OffsetLengthEncodedSize;
         }
     }
 }

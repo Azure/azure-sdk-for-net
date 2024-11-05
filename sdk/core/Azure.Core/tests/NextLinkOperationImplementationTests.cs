@@ -31,6 +31,19 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CreateWithValidNextRequestUri()
+        {
+            var operationId = Guid.NewGuid().ToString();
+            var pipeline = CreateMockHttpPipelineWithHeaders(HttpStatusCode.Accepted, operationId, out var mockResponse);
+            var requetMethod = RequestMethod.Get;
+            var startRequestUri = new Uri("https://test");
+            var finalStateVia = OperationFinalStateVia.OperationLocation;
+            var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, requetMethod, startRequestUri, mockResponse, finalStateVia);
+            Assert.NotNull(operation);
+            Assert.AreEqual(operationId, operation.OperationId);
+        }
+
+        [Test]
         public void CreateWithIncompleteNextRequestUri()
         {
             var pipeline = CreateMockHttpPipeline(HttpStatusCode.Accepted);
@@ -91,6 +104,15 @@ namespace Azure.Core.Tests
         private static HttpPipeline CreateMockHttpPipeline(HttpStatusCode statusCode)
         {
             var mockResponse = new MockResponse((int)statusCode);
+            var transport = new MockTransport(mockResponse, mockResponse);
+            var pipeline = new HttpPipeline(transport, default);
+            return pipeline;
+        }
+
+        private static HttpPipeline CreateMockHttpPipelineWithHeaders(HttpStatusCode statusCode, string operationId, out MockResponse mockResponse)
+        {
+            mockResponse = new MockResponse((int)statusCode);
+            mockResponse.AddHeader("location", $"https://test.com/operations/{operationId}");
             var transport = new MockTransport(mockResponse, mockResponse);
             var pipeline = new HttpPipeline(transport, default);
             return pipeline;

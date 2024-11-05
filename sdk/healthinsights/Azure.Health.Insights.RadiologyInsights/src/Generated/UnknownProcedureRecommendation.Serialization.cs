@@ -19,31 +19,22 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         void IJsonModel<ProcedureRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ProcedureRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProcedureRecommendation)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         ProcedureRecommendation IJsonModel<ProcedureRecommendation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,6 +58,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 return null;
             }
             string kind = "Unknown";
+            IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -76,13 +68,27 @@ namespace Azure.Health.Insights.RadiologyInsights
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("extension"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FhirR4Extension> array = new List<FhirR4Extension>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FhirR4Extension.DeserializeFhirR4Extension(item, options));
+                    }
+                    extension = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownProcedureRecommendation(kind, serializedAdditionalRawData);
+            return new UnknownProcedureRecommendation(kind, extension ?? new ChangeTrackingList<FhirR4Extension>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProcedureRecommendation>.Write(ModelReaderWriterOptions options)
@@ -128,7 +134,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<ProcedureRecommendation>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

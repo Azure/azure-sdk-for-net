@@ -161,17 +161,17 @@ To create a blob `StorageResource`, use the methods `FromBlob` or `FromContainer
 
 ```C# Snippet:ResourceConstruction_Blobs
 StorageResource container = blobs.FromContainer(
-    "http://myaccount.blob.core.windows.net/container");
+    new Uri("http://myaccount.blob.core.windows.net/container"));
 
 // Block blobs are the default if no options are specified
 StorageResource blockBlob = blobs.FromBlob(
-    "http://myaccount.blob.core.windows.net/container/sample-blob-block",
+    new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-block"),
     new BlockBlobStorageResourceOptions());
 StorageResource pageBlob = blobs.FromBlob(
-    "http://myaccount.blob.core.windows.net/container/sample-blob-page",
+    new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-page"),
     new PageBlobStorageResourceOptions());
 StorageResource appendBlob = blobs.FromBlob(
-    "http://myaccount.blob.core.windows.net/container/sample-blob-append",
+    new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-append"),
     new AppendBlobStorageResourceOptions());
 ```
 
@@ -235,7 +235,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
         new BlobStorageResourceContainerOptions()
         {
             // Block blobs are the default if not specified
-            BlobType = BlobType.Block,
+            BlobType = new(BlobType.Block),
             BlobDirectoryPrefix = optionalDestinationPrefix,
         }));
 ```
@@ -296,7 +296,7 @@ destinationResource: blobs.FromContainer(
     {
         // all source blobs will be copied as a single type of destination blob
         // defaults to block blobs if unspecified
-        BlobType = BlobType.Block,
+        BlobType = new(BlobType.Block),
         BlobDirectoryPrefix = downloadPath
     }));
 await dataTransfer.WaitForCompletionAsync();

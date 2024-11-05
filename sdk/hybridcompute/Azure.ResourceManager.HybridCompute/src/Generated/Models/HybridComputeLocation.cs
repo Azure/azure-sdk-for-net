@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> A canonical name for the geographic or physical location. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The city or locality where the resource is located. </summary>
+        [WirePath("city")]
         public string City { get; set; }
         /// <summary> The district, state, or province where the resource is located. </summary>
+        [WirePath("district")]
         public string District { get; set; }
         /// <summary> The country or region where the resource is located. </summary>
+        [WirePath("countryOrRegion")]
         public string CountryOrRegion { get; set; }
     }
 }
