@@ -21,8 +21,8 @@
 - StorageAppliance has new properties returned for the appliance manifacturer, model, version, and secret rotation status.
 - KeySetUser has a new property containing a user principal name that can be set.
 - RackSkuProvisioningState got new values "Cancelled" and "Failed" to better represent its state.
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - NetworkCloudOperationStatusResult now exposes additional properties to get access for BareMetalMachine command execution result, such as, exitCode, outputHead, resultRef, and resultUri.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
@@ -30,7 +30,7 @@
 ### Other Changes
 
 - A clarification is added to the descriptions throughout that memory and disk sizes are measured in gibibytes.
-- ServiceLoadBalancerBgpPeer has the following optional fields marked as deprecated: "holdTime" and "keepAliveTime". Of defined, their values will be ignored.
+- ServiceLoadBalancerBgpPeer has the following optional fields marked as deprecated: "holdTime" and "keepAliveTime". If defined, their values will be ignored.
 - For consistency with the API implementation, synchronous DELETE commands were removed and Location header is added to all PATCH update commands.
 
 ## 1.0.1 (2023-11-29)
