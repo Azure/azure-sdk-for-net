@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkFunction.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkFunction.Samples
 {
     public partial class Sample_AzureTrafficCollectorResource
     {
-        // Get Traffic Collector
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTrafficCollector()
         {
             // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/AzureTrafficCollectorGet.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.NetworkFunction.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Traffic Collector
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteTrafficCollector()
         {
             // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/AzureTrafficCollectorDelete.json
@@ -68,14 +67,13 @@ namespace Azure.ResourceManager.NetworkFunction.Samples
             AzureTrafficCollectorResource azureTrafficCollector = client.GetAzureTrafficCollectorResource(azureTrafficCollectorResourceId);
 
             // invoke the operation
-            await azureTrafficCollector.DeleteAsync(WaitUntil.Completed);
+            await azureTrafficCollector.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update Traffic Collector tags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateTrafficCollectorTags()
         {
             // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/AzureTrafficCollectorUpdateTags.json
@@ -95,12 +93,12 @@ namespace Azure.ResourceManager.NetworkFunction.Samples
             AzureTrafficCollectorResource azureTrafficCollector = client.GetAzureTrafficCollectorResource(azureTrafficCollectorResourceId);
 
             // invoke the operation
-            TagsObject tagsObject = new TagsObject()
+            TagsObject tagsObject = new TagsObject
             {
                 Tags =
 {
 ["key1"] = "value1",
-["key2"] = "value2",
+["key2"] = "value2"
 },
             };
             AzureTrafficCollectorResource result = await azureTrafficCollector.UpdateAsync(tagsObject);

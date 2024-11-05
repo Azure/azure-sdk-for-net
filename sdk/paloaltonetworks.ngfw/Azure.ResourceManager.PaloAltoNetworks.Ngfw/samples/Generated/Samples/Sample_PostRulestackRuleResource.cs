@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 {
     public partial class Sample_PostRulestackRuleResource
     {
-        // PostRules_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PostRulesGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_Get_MaximumSet_Gen.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PostRules_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PostRulesGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_Get_MinimumSet_Gen.json
@@ -75,9 +74,58 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PostRules_CreateOrUpdate_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_PostRulesDeleteMaximumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "PostRules_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostRulestackRuleResource created on azure
+            // for more information of creating PostRulestackRuleResource, please refer to the document of PostRulestackRuleResource
+            string globalRulestackName = "lrs1";
+            string priority = "1";
+            ResourceIdentifier postRulestackRuleResourceId = PostRulestackRuleResource.CreateResourceIdentifier(globalRulestackName, priority);
+            PostRulestackRuleResource postRulestackRule = client.GetPostRulestackRuleResource(postRulestackRuleResourceId);
+
+            // invoke the operation
+            await postRulestackRule.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_PostRulesDeleteMinimumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "PostRules_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostRulestackRuleResource created on azure
+            // for more information of creating PostRulestackRuleResource, please refer to the document of PostRulestackRuleResource
+            string globalRulestackName = "lrs1";
+            string priority = "1";
+            ResourceIdentifier postRulestackRuleResourceId = PostRulestackRuleResource.CreateResourceIdentifier(globalRulestackName, priority);
+            PostRulestackRuleResource postRulestackRule = client.GetPostRulestackRuleResource(postRulestackRuleResourceId);
+
+            // invoke the operation
+            await postRulestackRule.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PostRulesCreateOrUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_CreateOrUpdate_MaximumSet_Gen.json
@@ -101,75 +149,33 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 ETag = new ETag("c18e6eef-ba3e-49ee-8a85-2b36c863a9d0"),
                 Description = "description of post rule",
                 RuleState = RulestackStateType.Disabled,
-                Source = new SourceAddressInfo()
+                Source = new SourceAddressInfo
                 {
-                    Cidrs =
-{
-"1.0.0.1/10"
-},
-                    Countries =
-{
-"India"
-},
-                    Feeds =
-{
-"feed"
-},
-                    PrefixLists =
-{
-"PL1"
-},
+                    Cidrs = { "1.0.0.1/10" },
+                    Countries = { "India" },
+                    Feeds = { "feed" },
+                    PrefixLists = { "PL1" },
                 },
                 NegateSource = FirewallBooleanType.True,
-                Destination = new DestinationAddressInfo()
+                Destination = new DestinationAddressInfo
                 {
-                    Cidrs =
-{
-"1.0.0.1/10"
-},
-                    Countries =
-{
-"India"
-},
-                    Feeds =
-{
-"feed"
-},
-                    PrefixLists =
-{
-"PL1"
-},
-                    FqdnLists =
-{
-"FQDN1"
-},
+                    Cidrs = { "1.0.0.1/10" },
+                    Countries = { "India" },
+                    Feeds = { "feed" },
+                    PrefixLists = { "PL1" },
+                    FqdnLists = { "FQDN1" },
                 },
                 NegateDestination = FirewallBooleanType.True,
-                Applications =
-{
-"app1"
-},
-                Category = new EdlMatchCategory(new string[]
-            {
-"https://microsoft.com"
-            }, new string[]
-            {
-"feed"
-            }),
+                Applications = { "app1" },
+                Category = new EdlMatchCategory(new string[] { "https://microsoft.com" }, new string[] { "feed" }),
                 Protocol = "HTTP",
-                ProtocolPortList =
-{
-"80"
-},
+                ProtocolPortList = { "80" },
                 InboundInspectionCertificate = "cert1",
                 AuditComment = "example comment",
                 ActionType = RulestackActionType.Allow,
                 EnableLogging = RulestackStateType.Disabled,
                 DecryptionRuleType = DecryptionRuleType.SslOutboundInspection,
-                Tags =
-{
-new RulestackTagInfo("keyName","value")
-},
+                Tags = { new RulestackTagInfo("keyName", "value") },
             };
             ArmOperation<PostRulestackRuleResource> lro = await postRulestackRule.UpdateAsync(WaitUntil.Completed, data);
             PostRulestackRuleResource result = lro.Value;
@@ -181,9 +187,8 @@ new RulestackTagInfo("keyName","value")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PostRules_CreateOrUpdate_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PostRulesCreateOrUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_CreateOrUpdate_MinimumSet_Gen.json
@@ -213,61 +218,8 @@ new RulestackTagInfo("keyName","value")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PostRules_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_PostRulesDeleteMaximumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "PostRules_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostRulestackRuleResource created on azure
-            // for more information of creating PostRulestackRuleResource, please refer to the document of PostRulestackRuleResource
-            string globalRulestackName = "lrs1";
-            string priority = "1";
-            ResourceIdentifier postRulestackRuleResourceId = PostRulestackRuleResource.CreateResourceIdentifier(globalRulestackName, priority);
-            PostRulestackRuleResource postRulestackRule = client.GetPostRulestackRuleResource(postRulestackRuleResourceId);
-
-            // invoke the operation
-            await postRulestackRule.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // PostRules_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_PostRulesDeleteMinimumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_Delete_MinimumSet_Gen.json
-            // this example is just showing the usage of "PostRules_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostRulestackRuleResource created on azure
-            // for more information of creating PostRulestackRuleResource, please refer to the document of PostRulestackRuleResource
-            string globalRulestackName = "lrs1";
-            string priority = "1";
-            ResourceIdentifier postRulestackRuleResourceId = PostRulestackRuleResource.CreateResourceIdentifier(globalRulestackName, priority);
-            PostRulestackRuleResource postRulestackRule = client.GetPostRulestackRuleResource(postRulestackRuleResourceId);
-
-            // invoke the operation
-            await postRulestackRule.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // PostRules_getCounters_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCounters_PostRulesGetCountersMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_getCounters_MaximumSet_Gen.json
@@ -287,14 +239,13 @@ new RulestackTagInfo("keyName","value")
 
             // invoke the operation
             string firewallName = "firewall1";
-            FirewallRuleCounter result = await postRulestackRule.GetCountersAsync(firewallName: firewallName);
+            FirewallRuleCounter result = await postRulestackRule.GetCountersAsync(firewallName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PostRules_getCounters_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCounters_PostRulesGetCountersMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_getCounters_MinimumSet_Gen.json
@@ -318,9 +269,8 @@ new RulestackTagInfo("keyName","value")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PostRules_refreshCounters_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RefreshCounters_PostRulesRefreshCountersMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_refreshCounters_MaximumSet_Gen.json
@@ -340,14 +290,13 @@ new RulestackTagInfo("keyName","value")
 
             // invoke the operation
             string firewallName = "firewall1";
-            await postRulestackRule.RefreshCountersAsync(firewallName: firewallName);
+            await postRulestackRule.RefreshCountersAsync(firewallName).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PostRules_refreshCounters_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RefreshCounters_PostRulesRefreshCountersMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_refreshCounters_MinimumSet_Gen.json
@@ -366,14 +315,13 @@ new RulestackTagInfo("keyName","value")
             PostRulestackRuleResource postRulestackRule = client.GetPostRulestackRuleResource(postRulestackRuleResourceId);
 
             // invoke the operation
-            await postRulestackRule.RefreshCountersAsync();
+            await postRulestackRule.RefreshCountersAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PostRules_resetCounters_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResetCounters_PostRulesResetCountersMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_resetCounters_MaximumSet_Gen.json
@@ -393,14 +341,13 @@ new RulestackTagInfo("keyName","value")
 
             // invoke the operation
             string firewallName = "firewall1";
-            FirewallRuleResetConter result = await postRulestackRule.ResetCountersAsync(firewallName: firewallName);
+            FirewallRuleResetConter result = await postRulestackRule.ResetCountersAsync(firewallName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PostRules_resetCounters_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResetCounters_PostRulesResetCountersMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_resetCounters_MinimumSet_Gen.json

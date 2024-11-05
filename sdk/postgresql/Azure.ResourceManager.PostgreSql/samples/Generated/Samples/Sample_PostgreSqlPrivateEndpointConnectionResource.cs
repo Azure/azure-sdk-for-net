@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.PostgreSql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.Samples
 {
     public partial class Sample_PostgreSqlPrivateEndpointConnectionResource
     {
-        // Gets private endpoint connection.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsPrivateEndpointConnection()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2018-06-01/examples/PrivateEndpointConnectionGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.PostgreSql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes a private endpoint connection with a given name.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesAPrivateEndpointConnectionWithAGivenName()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2018-06-01/examples/PrivateEndpointConnectionDelete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.PostgreSql.Samples
             PostgreSqlPrivateEndpointConnectionResource postgreSqlPrivateEndpointConnection = client.GetPostgreSqlPrivateEndpointConnectionResource(postgreSqlPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            await postgreSqlPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
+            await postgreSqlPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update private endpoint connection Tags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatePrivateEndpointConnectionTags()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2018-06-01/examples/PrivateEndpointConnectionUpdateTags.json
@@ -98,13 +96,13 @@ namespace Azure.ResourceManager.PostgreSql.Samples
             PostgreSqlPrivateEndpointConnectionResource postgreSqlPrivateEndpointConnection = client.GetPostgreSqlPrivateEndpointConnectionResource(postgreSqlPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            PostgreSqlPrivateEndpointConnectionPatch patch = new PostgreSqlPrivateEndpointConnectionPatch()
+            PostgreSqlPrivateEndpointConnectionPatch patch = new PostgreSqlPrivateEndpointConnectionPatch
             {
                 Tags =
 {
 ["key1"] = "val1",
 ["key2"] = "val2",
-["key3"] = "val3",
+["key3"] = "val3"
 },
             };
             ArmOperation<PostgreSqlPrivateEndpointConnectionResource> lro = await postgreSqlPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, patch);

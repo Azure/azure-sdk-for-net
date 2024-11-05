@@ -11,79 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 {
     public partial class Sample_PaloAltoNetworksFirewallResource
     {
-        // Firewalls_ListBySubscription_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetPaloAltoNetworksFirewalls_FirewallsListBySubscriptionMaximumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firewalls_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (PaloAltoNetworksFirewallResource item in subscriptionResource.GetPaloAltoNetworksFirewallsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PaloAltoNetworksFirewallData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Firewalls_ListBySubscription_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetPaloAltoNetworksFirewalls_FirewallsListBySubscriptionMinimumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_ListBySubscription_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firewalls_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (PaloAltoNetworksFirewallResource item in subscriptionResource.GetPaloAltoNetworksFirewallsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PaloAltoNetworksFirewallData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Firewalls_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FirewallsGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Get_MaximumSet_Gen.json
@@ -112,9 +47,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Firewalls_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FirewallsGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Get_MinimumSet_Gen.json
@@ -143,9 +77,60 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Firewalls_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_FirewallsDeleteMaximumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "Firewalls_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
+            // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
+            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string resourceGroupName = "firewall-rg";
+            string firewallName = "firewall1";
+            ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
+            PaloAltoNetworksFirewallResource paloAltoNetworksFirewall = client.GetPaloAltoNetworksFirewallResource(paloAltoNetworksFirewallResourceId);
+
+            // invoke the operation
+            await paloAltoNetworksFirewall.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_FirewallsDeleteMinimumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "Firewalls_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
+            // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
+            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string resourceGroupName = "firewall-rg";
+            string firewallName = "firewall1";
+            ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
+            PaloAltoNetworksFirewallResource paloAltoNetworksFirewall = client.GetPaloAltoNetworksFirewallResource(paloAltoNetworksFirewallResourceId);
+
+            // invoke the operation
+            await paloAltoNetworksFirewall.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_FirewallsUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Update_MaximumSet_Gen.json
@@ -165,120 +150,108 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             PaloAltoNetworksFirewallResource paloAltoNetworksFirewall = client.GetPaloAltoNetworksFirewallResource(paloAltoNetworksFirewallResourceId);
 
             // invoke the operation
-            PaloAltoNetworksFirewallPatch patch = new PaloAltoNetworksFirewallPatch()
+            PaloAltoNetworksFirewallPatch patch = new PaloAltoNetworksFirewallPatch
             {
-                Identity = new ManagedServiceIdentity("None")
+                Identity = new ManagedServiceIdentity(default)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("key16")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("key16")] = null
 },
                 },
                 Tags =
 {
-["tagName"] = "value",
+["tagName"] = "value"
 },
-                Properties = new FirewallUpdateProperties()
+                Properties = new FirewallUpdateProperties
                 {
                     PanETag = new ETag("2bf4a339-294d-4c25-b0b2-ef649e9f5c12"),
                     NetworkProfile = new FirewallNetworkProfile(FirewallNetworkType.Vnet, new IPAddressInfo[]
             {
-new IPAddressInfo()
+new IPAddressInfo
 {
 ResourceId = new ResourceIdentifier("/subscriptions/01c7d41f-afaf-464e-8a8b-5c6f9f98cee8/resourceGroups/mj-liftr-integration/providers/Microsoft.Network/publicIPAddresses/mj-liftr-integration-PublicIp1"),
 Address = "20.22.92.11",
 }
             }, AllowEgressNatType.Enabled)
                     {
-                        VnetConfiguration = new FirewallVnetConfiguration(new IPAddressSpaceInfo()
+                        VnetConfiguration = new FirewallVnetConfiguration(new IPAddressSpaceInfo
                         {
                             ResourceId = new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/os-liftr-integration/providers/Microsoft.Network/virtualNetworks/os-liftr-integration-vnet"),
                             AddressSpace = "10.1.0.0/16",
-                        }, new IPAddressSpaceInfo()
+                        }, new IPAddressSpaceInfo
                         {
                             ResourceId = new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/os-liftr-integration/providers/Microsoft.Network/virtualNetworks/os-liftr-integration-vnet/subnets/os-liftr-integration-trust-subnet"),
                             AddressSpace = "10.1.1.0/24",
-                        }, new IPAddressSpaceInfo()
+                        }, new IPAddressSpaceInfo
                         {
                             ResourceId = new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/os-liftr-integration/providers/Microsoft.Network/virtualNetworks/os-liftr-integration-vnet/subnets/os-liftr-integration-untrust-subnet"),
                             AddressSpace = "10.1.1.0/24",
                         })
                         {
-                            IPOfTrustSubnetForUdr = new IPAddressInfo()
+                            IPOfTrustSubnetForUdr = new IPAddressInfo
                             {
                                 ResourceId = new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/os-liftr-integration/providers/Microsoft.Network/virtualNetworks/os-liftr-integration-vnet/subnets/os-liftr-integration-untrust-subnet"),
                                 Address = "10.1.1.0/24",
                             },
                         },
-                        VwanConfiguration = new FirewallVwanConfiguration(new IPAddressSpaceInfo()
+                        VwanConfiguration = new FirewallVwanConfiguration(new IPAddressSpaceInfo
                         {
                             ResourceId = new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/os-liftr-integration/providers/Microsoft.Network/virtualNetworks/os-liftr-integration-vnet/subnets/os-liftr-integration-untrust-subnet"),
                             AddressSpace = "10.1.1.0/24",
                         })
                         {
                             NetworkVirtualApplianceId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c12",
-                            TrustSubnet = new IPAddressSpaceInfo()
+                            TrustSubnet = new IPAddressSpaceInfo
                             {
                                 ResourceId = new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/os-liftr-integration/providers/Microsoft.Network/virtualNetworks/os-liftr-integration-vnet/subnets/os-liftr-integration-trust-subnet"),
                                 AddressSpace = "10.1.1.0/24",
                             },
-                            UnTrustSubnet = new IPAddressSpaceInfo()
+                            UnTrustSubnet = new IPAddressSpaceInfo
                             {
                                 ResourceId = new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/os-liftr-integration/providers/Microsoft.Network/virtualNetworks/os-liftr-integration-vnet/subnets/os-liftr-integration-untrust-subnet"),
                                 AddressSpace = "10.1.1.0/24",
                             },
-                            IPOfTrustSubnetForUdr = new IPAddressInfo()
+                            IPOfTrustSubnetForUdr = new IPAddressInfo
                             {
                                 ResourceId = new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/os-liftr-integration/providers/Microsoft.Network/virtualNetworks/os-liftr-integration-vnet/subnets/os-liftr-integration-untrust-subnet"),
                                 Address = "10.1.1.0/24",
                             },
                         },
-                        EgressNatIP =
-{
-new IPAddressInfo()
+                        EgressNatIP = {new IPAddressInfo
 {
 ResourceId = new ResourceIdentifier("/subscriptions/01c7d41f-afaf-464e-8a8b-5c6f9f98cee8/resourceGroups/mj-liftr-integration/providers/Microsoft.Network/publicIPAddresses/mj-liftr-integration-egressNatIp1"),
 Address = "20.22.92.111",
-}
-},
-                        TrustedRanges =
-{
-"20.22.92.11"
-},
+}},
+                        TrustedRanges = { "20.22.92.11" },
                     },
                     IsPanoramaManaged = FirewallBooleanType.True,
                     PanoramaConfig = new FirewallPanoramaConfiguration("bas64EncodedString"),
-                    AssociatedRulestack = new RulestackDetails()
+                    AssociatedRulestack = new RulestackDetails
                     {
                         ResourceId = new ResourceIdentifier("aaaaaaaaaa"),
                         RulestackId = "aaaaaaaaaaaaaaaa",
                         Location = new AzureLocation("eastus"),
                     },
-                    DnsSettings = new FirewallDnsSettings()
+                    DnsSettings = new FirewallDnsSettings
                     {
                         EnableDnsProxy = AllowDnsProxyType.Disabled,
                         EnabledDnsType = EnabledDnsType.Custom,
-                        DnsServers =
-{
-new IPAddressInfo()
+                        DnsServers = {new IPAddressInfo
 {
 ResourceId = new ResourceIdentifier("/subscriptions/01c7d41f-afaf-464e-8a8b-5c6f9f98cee8/resourceGroups/mj-liftr-integration/providers/Microsoft.Network/publicIPAddresses/mj-liftr-integration-egressNatIp1"),
 Address = "20.22.92.111",
-}
-},
+}},
                     },
-                    FrontEndSettings =
-{
-new FirewallFrontendSetting("frontendsetting11",FirewallProtocolType.Tcp,new FirewallEndpointConfiguration("80",new IPAddressInfo()
+                    FrontEndSettings = {new FirewallFrontendSetting("frontendsetting11", FirewallProtocolType.Tcp, new FirewallEndpointConfiguration("80", new IPAddressInfo
 {
 ResourceId = new ResourceIdentifier("/subscriptions/01c7d41f-afaf-464e-8a8b-5c6f9f98cee8/resourceGroups/mj-liftr-integration/providers/Microsoft.Network/publicIPAddresses/mj-liftr-integration-frontendSettingIp1"),
 Address = "20.22.91.251",
-}),new FirewallEndpointConfiguration("80",new IPAddressInfo()
+}), new FirewallEndpointConfiguration("80", new IPAddressInfo
 {
 ResourceId = new ResourceIdentifier("/subscriptions/01c7d41f-afaf-464e-8a8b-5c6f9f98cee8/resourceGroups/mj-liftr-integration/providers/Microsoft.Network/publicIPAddresses/mj-liftr-integration-frontendSettingIp2"),
 Address = "20.22.32.136",
-}))
-},
+}))},
                     PlanData = new FirewallBillingPlanInfo(FirewallBillingCycle.Weekly, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
                     {
                         UsageType = FirewallBillingPlanUsageType.Payg,
@@ -298,9 +271,8 @@ Address = "20.22.32.136",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Firewalls_Update_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_FirewallsUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Update_MinimumSet_Gen.json
@@ -330,63 +302,8 @@ Address = "20.22.32.136",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Firewalls_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_FirewallsDeleteMaximumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firewalls_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
-            // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
-            string resourceGroupName = "firewall-rg";
-            string firewallName = "firewall1";
-            ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
-            PaloAltoNetworksFirewallResource paloAltoNetworksFirewall = client.GetPaloAltoNetworksFirewallResource(paloAltoNetworksFirewallResourceId);
-
-            // invoke the operation
-            await paloAltoNetworksFirewall.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Firewalls_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_FirewallsDeleteMinimumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Delete_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firewalls_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
-            // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
-            string resourceGroupName = "firewall-rg";
-            string firewallName = "firewall1";
-            ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
-            PaloAltoNetworksFirewallResource paloAltoNetworksFirewall = client.GetPaloAltoNetworksFirewallResource(paloAltoNetworksFirewallResourceId);
-
-            // invoke the operation
-            await paloAltoNetworksFirewall.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Firewalls_getGlobalRulestack_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGlobalRulestack_FirewallsGetGlobalRulestackMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getGlobalRulestack_MaximumSet_Gen.json
@@ -411,9 +328,8 @@ Address = "20.22.32.136",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Firewalls_getGlobalRulestack_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGlobalRulestack_FirewallsGetGlobalRulestackMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getGlobalRulestack_MinimumSet_Gen.json
@@ -438,9 +354,8 @@ Address = "20.22.32.136",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Firewalls_getLogProfile_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLogProfile_FirewallsGetLogProfileMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getLogProfile_MaximumSet_Gen.json
@@ -465,9 +380,8 @@ Address = "20.22.32.136",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Firewalls_getLogProfile_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLogProfile_FirewallsGetLogProfileMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getLogProfile_MinimumSet_Gen.json
@@ -492,9 +406,8 @@ Address = "20.22.32.136",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Firewalls_getSupportInfo_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSupportInfo_FirewallsGetSupportInfoMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getSupportInfo_MaximumSet_Gen.json
@@ -515,14 +428,13 @@ Address = "20.22.32.136",
 
             // invoke the operation
             string email = "user1@domain.com";
-            FirewallSupportInfo result = await paloAltoNetworksFirewall.GetSupportInfoAsync(email: email);
+            FirewallSupportInfo result = await paloAltoNetworksFirewall.GetSupportInfoAsync(email);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Firewalls_getSupportInfo_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSupportInfo_FirewallsGetSupportInfoMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getSupportInfo_MinimumSet_Gen.json
@@ -547,9 +459,8 @@ Address = "20.22.32.136",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Firewalls_saveLogProfile_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SaveLogProfile_FirewallsSaveLogProfileMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_saveLogProfile_MaximumSet_Gen.json
@@ -569,24 +480,24 @@ Address = "20.22.32.136",
             PaloAltoNetworksFirewallResource paloAltoNetworksFirewall = client.GetPaloAltoNetworksFirewallResource(paloAltoNetworksFirewallResourceId);
 
             // invoke the operation
-            FirewallLogSettings logSettings = new FirewallLogSettings()
+            FirewallLogSettings logSettings = new FirewallLogSettings
             {
                 LogType = FirewallLogType.Traffic,
                 LogOption = FirewallLogOption.SameDestination,
-                ApplicationInsights = new FirewallApplicationInsights()
+                ApplicationInsights = new FirewallApplicationInsights
                 {
                     Id = "aaaaaaaaaaaaaaaa",
                     Key = "aaaaaaaaaaaaa",
                 },
-                CommonDestination = new FirewallLogDestination()
+                CommonDestination = new FirewallLogDestination
                 {
-                    StorageConfiguration = new StorageAccountConfiguration()
+                    StorageConfiguration = new StorageAccountConfiguration
                     {
                         Id = new ResourceIdentifier("aaaaaaaaaaaaaaa"),
                         SubscriptionId = "aaaaaaaaa",
                         AccountName = "aaaaaaaaaaaaaaaaaaaaaaa",
                     },
-                    EventHubConfiguration = new EventHubConfiguration()
+                    EventHubConfiguration = new EventHubConfiguration
                     {
                         Id = new ResourceIdentifier("aaaaaaaaaa"),
                         SubscriptionId = "aaaaaaaaaa",
@@ -594,7 +505,7 @@ Address = "20.22.32.136",
                         NameSpace = "aaaaaaaaaaaaaaaaaaaaa",
                         PolicyName = "aaaaaaaaaaaa",
                     },
-                    MonitorConfiguration = new MonitorLogConfiguration()
+                    MonitorConfiguration = new MonitorLogConfiguration
                     {
                         Id = new ResourceIdentifier("aaaaaaaaaaaaaaaaaaa"),
                         SubscriptionId = "aaaaaaaaaaaaa",
@@ -603,15 +514,15 @@ Address = "20.22.32.136",
                         SecondaryKey = "a",
                     },
                 },
-                TrafficLogDestination = new FirewallLogDestination()
+                TrafficLogDestination = new FirewallLogDestination
                 {
-                    StorageConfiguration = new StorageAccountConfiguration()
+                    StorageConfiguration = new StorageAccountConfiguration
                     {
                         Id = new ResourceIdentifier("aaaaaaaaaaaaaaa"),
                         SubscriptionId = "aaaaaaaaa",
                         AccountName = "aaaaaaaaaaaaaaaaaaaaaaa",
                     },
-                    EventHubConfiguration = new EventHubConfiguration()
+                    EventHubConfiguration = new EventHubConfiguration
                     {
                         Id = new ResourceIdentifier("aaaaaaaaaa"),
                         SubscriptionId = "aaaaaaaaaa",
@@ -619,7 +530,7 @@ Address = "20.22.32.136",
                         NameSpace = "aaaaaaaaaaaaaaaaaaaaa",
                         PolicyName = "aaaaaaaaaaaa",
                     },
-                    MonitorConfiguration = new MonitorLogConfiguration()
+                    MonitorConfiguration = new MonitorLogConfiguration
                     {
                         Id = new ResourceIdentifier("aaaaaaaaaaaaaaaaaaa"),
                         SubscriptionId = "aaaaaaaaaaaaa",
@@ -628,15 +539,15 @@ Address = "20.22.32.136",
                         SecondaryKey = "a",
                     },
                 },
-                ThreatLogDestination = new FirewallLogDestination()
+                ThreatLogDestination = new FirewallLogDestination
                 {
-                    StorageConfiguration = new StorageAccountConfiguration()
+                    StorageConfiguration = new StorageAccountConfiguration
                     {
                         Id = new ResourceIdentifier("aaaaaaaaaaaaaaa"),
                         SubscriptionId = "aaaaaaaaa",
                         AccountName = "aaaaaaaaaaaaaaaaaaaaaaa",
                     },
-                    EventHubConfiguration = new EventHubConfiguration()
+                    EventHubConfiguration = new EventHubConfiguration
                     {
                         Id = new ResourceIdentifier("aaaaaaaaaa"),
                         SubscriptionId = "aaaaaaaaaa",
@@ -644,7 +555,7 @@ Address = "20.22.32.136",
                         NameSpace = "aaaaaaaaaaaaaaaaaaaaa",
                         PolicyName = "aaaaaaaaaaaa",
                     },
-                    MonitorConfiguration = new MonitorLogConfiguration()
+                    MonitorConfiguration = new MonitorLogConfiguration
                     {
                         Id = new ResourceIdentifier("aaaaaaaaaaaaaaaaaaa"),
                         SubscriptionId = "aaaaaaaaaaaaa",
@@ -653,15 +564,15 @@ Address = "20.22.32.136",
                         SecondaryKey = "a",
                     },
                 },
-                DecryptLogDestination = new FirewallLogDestination()
+                DecryptLogDestination = new FirewallLogDestination
                 {
-                    StorageConfiguration = new StorageAccountConfiguration()
+                    StorageConfiguration = new StorageAccountConfiguration
                     {
                         Id = new ResourceIdentifier("aaaaaaaaaaaaaaa"),
                         SubscriptionId = "aaaaaaaaa",
                         AccountName = "aaaaaaaaaaaaaaaaaaaaaaa",
                     },
-                    EventHubConfiguration = new EventHubConfiguration()
+                    EventHubConfiguration = new EventHubConfiguration
                     {
                         Id = new ResourceIdentifier("aaaaaaaaaa"),
                         SubscriptionId = "aaaaaaaaaa",
@@ -669,7 +580,7 @@ Address = "20.22.32.136",
                         NameSpace = "aaaaaaaaaaaaaaaaaaaaa",
                         PolicyName = "aaaaaaaaaaaa",
                     },
-                    MonitorConfiguration = new MonitorLogConfiguration()
+                    MonitorConfiguration = new MonitorLogConfiguration
                     {
                         Id = new ResourceIdentifier("aaaaaaaaaaaaaaaaaaa"),
                         SubscriptionId = "aaaaaaaaaaaaa",
@@ -679,14 +590,13 @@ Address = "20.22.32.136",
                     },
                 },
             };
-            await paloAltoNetworksFirewall.SaveLogProfileAsync(logSettings: logSettings);
+            await paloAltoNetworksFirewall.SaveLogProfileAsync(logSettings).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Firewalls_saveLogProfile_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SaveLogProfile_FirewallsSaveLogProfileMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_saveLogProfile_MinimumSet_Gen.json
@@ -706,9 +616,9 @@ Address = "20.22.32.136",
             PaloAltoNetworksFirewallResource paloAltoNetworksFirewall = client.GetPaloAltoNetworksFirewallResource(paloAltoNetworksFirewallResourceId);
 
             // invoke the operation
-            await paloAltoNetworksFirewall.SaveLogProfileAsync();
+            await paloAltoNetworksFirewall.SaveLogProfileAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

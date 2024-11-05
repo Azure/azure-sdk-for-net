@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkFunction.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkFunction.Samples
 {
     public partial class Sample_CollectorPolicyResource
     {
-        // Get Collection Policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCollectionPolicy()
         {
             // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/CollectorPolicyGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.NetworkFunction.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Collection Policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteCollectionPolicy()
         {
             // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/CollectorPolicyDelete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.NetworkFunction.Samples
             CollectorPolicyResource collectorPolicy = client.GetCollectorPolicyResource(collectorPolicyResourceId);
 
             // invoke the operation
-            await collectorPolicy.DeleteAsync(WaitUntil.Completed);
+            await collectorPolicy.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update Collector Policy tags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateCollectorPolicyTags()
         {
             // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/CollectorPolicyUpdateTags.json
@@ -98,12 +96,12 @@ namespace Azure.ResourceManager.NetworkFunction.Samples
             CollectorPolicyResource collectorPolicy = client.GetCollectorPolicyResource(collectorPolicyResourceId);
 
             // invoke the operation
-            TagsObject tagsObject = new TagsObject()
+            TagsObject tagsObject = new TagsObject
             {
                 Tags =
 {
 ["key1"] = "value1",
-["key2"] = "value2",
+["key2"] = "value2"
 },
             };
             CollectorPolicyResource result = await collectorPolicy.UpdateAsync(tagsObject);

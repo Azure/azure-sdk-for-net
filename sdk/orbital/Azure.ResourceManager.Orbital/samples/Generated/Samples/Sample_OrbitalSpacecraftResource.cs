@@ -10,48 +10,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Orbital.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Orbital.Samples
 {
     public partial class Sample_OrbitalSpacecraftResource
     {
-        // List of Spacecraft by Subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOrbitalSpacecrafts_ListOfSpacecraftBySubscription()
-        {
-            // Generated from example definition: specification/orbital/resource-manager/Microsoft.Orbital/stable/2022-03-01/examples/SpacecraftsBySubscriptionList.json
-            // this example is just showing the usage of "Spacecrafts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "c1be1141-a7c9-4aac-9608-3c2e2f1152c3";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (OrbitalSpacecraftResource item in subscriptionResource.GetOrbitalSpacecraftsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                OrbitalSpacecraftData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get Spacecraft
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSpacecraft()
         {
             // Generated from example definition: specification/orbital/resource-manager/Microsoft.Orbital/stable/2022-03-01/examples/SpacecraftGet.json
@@ -80,9 +47,8 @@ namespace Azure.ResourceManager.Orbital.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Spacecraft
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSpacecraft()
         {
             // Generated from example definition: specification/orbital/resource-manager/Microsoft.Orbital/stable/2022-03-01/examples/SpacecraftDelete.json
@@ -102,14 +68,13 @@ namespace Azure.ResourceManager.Orbital.Samples
             OrbitalSpacecraftResource orbitalSpacecraft = client.GetOrbitalSpacecraftResource(orbitalSpacecraftResourceId);
 
             // invoke the operation
-            await orbitalSpacecraft.DeleteAsync(WaitUntil.Completed);
+            await orbitalSpacecraft.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update Spacecraft tags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateSpacecraftTags()
         {
             // Generated from example definition: specification/orbital/resource-manager/Microsoft.Orbital/stable/2022-03-01/examples/SpacecraftUpdateTags.json
@@ -129,12 +94,12 @@ namespace Azure.ResourceManager.Orbital.Samples
             OrbitalSpacecraftResource orbitalSpacecraft = client.GetOrbitalSpacecraftResource(orbitalSpacecraftResourceId);
 
             // invoke the operation
-            OrbitalSpacecraftTags orbitalSpacecraftTags = new OrbitalSpacecraftTags()
+            OrbitalSpacecraftTags orbitalSpacecraftTags = new OrbitalSpacecraftTags
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             ArmOperation<OrbitalSpacecraftResource> lro = await orbitalSpacecraft.UpdateAsync(WaitUntil.Completed, orbitalSpacecraftTags);
@@ -147,9 +112,8 @@ namespace Azure.ResourceManager.Orbital.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List of Contact
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllAvailableContacts_ListOfContact()
         {
             // Generated from example definition: specification/orbital/resource-manager/Microsoft.Orbital/stable/2022-03-01/examples/AvailableContactsList.json
@@ -169,10 +133,10 @@ namespace Azure.ResourceManager.Orbital.Samples
             OrbitalSpacecraftResource orbitalSpacecraft = client.GetOrbitalSpacecraftResource(orbitalSpacecraftResourceId);
 
             // invoke the operation
-            OrbitalAvailableContactsContent content = new OrbitalAvailableContactsContent(new WritableSubResource()
+            OrbitalAvailableContactsContent content = new OrbitalAvailableContactsContent(new WritableSubResource
             {
                 Id = new ResourceIdentifier("/subscriptions/c1be1141-a7c9-4aac-9608-3c2e2f1152c3/resourceGroups/contoso-Rgp/providers/Microsoft.Orbital/contactProfiles/CONTOSO-CP"),
-            }, "EASTUS2_0", DateTimeOffset.Parse("2022-03-01T11:30:00Z"), DateTimeOffset.Parse("2022-03-02T11:30:00Z"));
+            }, "EASTUS2_0", default, default);
             ArmOperation<OrbitalAvailableContactsResult> lro = await orbitalSpacecraft.GetAllAvailableContactsAsync(WaitUntil.Completed, content);
             OrbitalAvailableContactsResult result = lro.Value;
 

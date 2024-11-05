@@ -9,82 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PolicyInsights.Samples
 {
     public partial class Sample_PolicyRemediationCollection
     {
-        // List remediations at individual resource scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListRemediationsAtIndividualResourceScope()
-        {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2021-10-01/examples/Remediations_ListResourceScope.json
-            // this example is just showing the usage of "Remediations_ListForResource" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this PolicyRemediationResource
-            string resourceId = "subscriptions/35ee058e-5fa0-414c-8145-3ebb8d09b6e2/resourcegroups/myResourceGroup/providers/microsoft.storage/storageaccounts/storAc1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceId));
-            PolicyRemediationCollection collection = client.GetPolicyRemediations(scopeId);
-
-            // invoke the operation and iterate over the result
-            await foreach (PolicyRemediationResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicyRemediationData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // List remediations at individual resource scope with query parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListRemediationsAtIndividualResourceScopeWithQueryParameters()
-        {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2021-10-01/examples/Remediations_ListResourceScope_WithQuery.json
-            // this example is just showing the usage of "Remediations_ListForResource" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this PolicyRemediationResource
-            string resourceId = "subscriptions/35ee058e-5fa0-414c-8145-3ebb8d09b6e2/resourcegroups/myResourceGroup/providers/microsoft.storage/storageaccounts/storAc1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceId));
-            PolicyRemediationCollection collection = client.GetPolicyRemediations(scopeId);
-
-            // invoke the operation and iterate over the result
-            await foreach (PolicyRemediationResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicyRemediationData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Create remediation at individual resource scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateRemediationAtIndividualResourceScope()
         {
             // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2021-10-01/examples/Remediations_CreateResourceScope.json
@@ -95,17 +27,13 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyRemediationResource
             string resourceId = "subscriptions/35ee058e-5fa0-414c-8145-3ebb8d09b6e2/resourcegroups/myResourceGroup/providers/microsoft.storage/storageaccounts/storAc1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceId));
-            PolicyRemediationCollection collection = client.GetPolicyRemediations(scopeId);
+            PolicyRemediationCollection collection = client.GetPolicyRemediations(new ResourceIdentifier(resourceId));
 
             // invoke the operation
             string remediationName = "storageRemediation";
-            PolicyRemediationData data = new PolicyRemediationData()
+            PolicyRemediationData data = new PolicyRemediationData
             {
                 PolicyAssignmentId = new ResourceIdentifier("/subscriptions/35ee058e-5fa0-414c-8145-3ebb8d09b6e2/resourceGroups/myResourceGroup/providers/microsoft.authorization/policyassignments/b101830944f246d8a14088c5"),
             };
@@ -119,9 +47,8 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get remediation at individual resource scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRemediationAtIndividualResourceScope()
         {
             // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2021-10-01/examples/Remediations_GetResourceScope.json
@@ -132,13 +59,9 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyRemediationResource
             string resourceId = "subscriptions/35ee058e-5fa0-414c-8145-3ebb8d09b6e2/resourcegroups/myResourceGroup/providers/microsoft.storage/storageaccounts/storAc1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceId));
-            PolicyRemediationCollection collection = client.GetPolicyRemediations(scopeId);
+            PolicyRemediationCollection collection = client.GetPolicyRemediations(new ResourceIdentifier(resourceId));
 
             // invoke the operation
             string remediationName = "storageRemediation";
@@ -151,9 +74,66 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get remediation at individual resource scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListRemediationsAtIndividualResourceScope()
+        {
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2021-10-01/examples/Remediations_ListResourceScope.json
+            // this example is just showing the usage of "Remediations_ListForResource" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this PolicyRemediationResource
+            string resourceId = "subscriptions/35ee058e-5fa0-414c-8145-3ebb8d09b6e2/resourcegroups/myResourceGroup/providers/microsoft.storage/storageaccounts/storAc1";
+            PolicyRemediationCollection collection = client.GetPolicyRemediations(new ResourceIdentifier(resourceId));
+
+            // invoke the operation and iterate over the result
+            await foreach (PolicyRemediationResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PolicyRemediationData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListRemediationsAtIndividualResourceScopeWithQueryParameters()
+        {
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2021-10-01/examples/Remediations_ListResourceScope_WithQuery.json
+            // this example is just showing the usage of "Remediations_ListForResource" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this PolicyRemediationResource
+            string resourceId = "subscriptions/35ee058e-5fa0-414c-8145-3ebb8d09b6e2/resourcegroups/myResourceGroup/providers/microsoft.storage/storageaccounts/storAc1";
+            PolicyRemediationCollection collection = client.GetPolicyRemediations(new ResourceIdentifier(resourceId));
+
+            // invoke the operation and iterate over the result
+            await foreach (PolicyRemediationResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PolicyRemediationData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetRemediationAtIndividualResourceScope()
         {
             // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2021-10-01/examples/Remediations_GetResourceScope.json
@@ -164,13 +144,9 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyRemediationResource
             string resourceId = "subscriptions/35ee058e-5fa0-414c-8145-3ebb8d09b6e2/resourcegroups/myResourceGroup/providers/microsoft.storage/storageaccounts/storAc1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceId));
-            PolicyRemediationCollection collection = client.GetPolicyRemediations(scopeId);
+            PolicyRemediationCollection collection = client.GetPolicyRemediations(new ResourceIdentifier(resourceId));
 
             // invoke the operation
             string remediationName = "storageRemediation";
@@ -179,9 +155,8 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get remediation at individual resource scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetRemediationAtIndividualResourceScope()
         {
             // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2021-10-01/examples/Remediations_GetResourceScope.json
@@ -192,13 +167,9 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyRemediationResource
             string resourceId = "subscriptions/35ee058e-5fa0-414c-8145-3ebb8d09b6e2/resourcegroups/myResourceGroup/providers/microsoft.storage/storageaccounts/storAc1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceId));
-            PolicyRemediationCollection collection = client.GetPolicyRemediations(scopeId);
+            PolicyRemediationCollection collection = client.GetPolicyRemediations(new ResourceIdentifier(resourceId));
 
             // invoke the operation
             string remediationName = "storageRemediation";
@@ -207,7 +178,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 {
     public partial class Sample_GlobalRulestackCertificateObjectResource
     {
-        // CertificateObjectGlobalRulestack_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CertificateObjectGlobalRulestackGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MaximumSet_Gen.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CertificateObjectGlobalRulestack_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CertificateObjectGlobalRulestackGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MinimumSet_Gen.json
@@ -75,9 +74,58 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CertificateObjectGlobalRulestack_CreateOrUpdate_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_CertificateObjectGlobalRulestackDeleteMaximumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "CertificateObjectGlobalRulestack_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GlobalRulestackCertificateObjectResource created on azure
+            // for more information of creating GlobalRulestackCertificateObjectResource, please refer to the document of GlobalRulestackCertificateObjectResource
+            string globalRulestackName = "praval";
+            string name = "armid1";
+            ResourceIdentifier globalRulestackCertificateObjectResourceId = GlobalRulestackCertificateObjectResource.CreateResourceIdentifier(globalRulestackName, name);
+            GlobalRulestackCertificateObjectResource globalRulestackCertificateObject = client.GetGlobalRulestackCertificateObjectResource(globalRulestackCertificateObjectResourceId);
+
+            // invoke the operation
+            await globalRulestackCertificateObject.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_CertificateObjectGlobalRulestackDeleteMinimumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "CertificateObjectGlobalRulestack_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GlobalRulestackCertificateObjectResource created on azure
+            // for more information of creating GlobalRulestackCertificateObjectResource, please refer to the document of GlobalRulestackCertificateObjectResource
+            string globalRulestackName = "praval";
+            string name = "armid1";
+            ResourceIdentifier globalRulestackCertificateObjectResourceId = GlobalRulestackCertificateObjectResource.CreateResourceIdentifier(globalRulestackName, name);
+            GlobalRulestackCertificateObjectResource globalRulestackCertificateObject = client.GetGlobalRulestackCertificateObjectResource(globalRulestackCertificateObjectResourceId);
+
+            // invoke the operation
+            await globalRulestackCertificateObject.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CertificateObjectGlobalRulestackCreateOrUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_CreateOrUpdate_MaximumSet_Gen.json
@@ -113,9 +161,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CertificateObjectGlobalRulestack_CreateOrUpdate_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CertificateObjectGlobalRulestackCreateOrUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_CreateOrUpdate_MinimumSet_Gen.json
@@ -143,58 +190,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             GlobalRulestackCertificateObjectData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CertificateObjectGlobalRulestack_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_CertificateObjectGlobalRulestackDeleteMaximumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "CertificateObjectGlobalRulestack_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GlobalRulestackCertificateObjectResource created on azure
-            // for more information of creating GlobalRulestackCertificateObjectResource, please refer to the document of GlobalRulestackCertificateObjectResource
-            string globalRulestackName = "praval";
-            string name = "armid1";
-            ResourceIdentifier globalRulestackCertificateObjectResourceId = GlobalRulestackCertificateObjectResource.CreateResourceIdentifier(globalRulestackName, name);
-            GlobalRulestackCertificateObjectResource globalRulestackCertificateObject = client.GetGlobalRulestackCertificateObjectResource(globalRulestackCertificateObjectResourceId);
-
-            // invoke the operation
-            await globalRulestackCertificateObject.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // CertificateObjectGlobalRulestack_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_CertificateObjectGlobalRulestackDeleteMinimumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Delete_MinimumSet_Gen.json
-            // this example is just showing the usage of "CertificateObjectGlobalRulestack_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GlobalRulestackCertificateObjectResource created on azure
-            // for more information of creating GlobalRulestackCertificateObjectResource, please refer to the document of GlobalRulestackCertificateObjectResource
-            string globalRulestackName = "praval";
-            string name = "armid1";
-            ResourceIdentifier globalRulestackCertificateObjectResourceId = GlobalRulestackCertificateObjectResource.CreateResourceIdentifier(globalRulestackName, name);
-            GlobalRulestackCertificateObjectResource globalRulestackCertificateObject = client.GetGlobalRulestackCertificateObjectResource(globalRulestackCertificateObjectResourceId);
-
-            // invoke the operation
-            await globalRulestackCertificateObject.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

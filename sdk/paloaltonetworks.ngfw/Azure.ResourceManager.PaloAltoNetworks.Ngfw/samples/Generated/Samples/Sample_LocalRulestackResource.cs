@@ -11,79 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 {
     public partial class Sample_LocalRulestackResource
     {
-        // LocalRulestacks_ListBySubscription_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLocalRulestacks_LocalRulestacksListBySubscriptionMaximumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "LocalRulestacks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (LocalRulestackResource item in subscriptionResource.GetLocalRulestacksAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                LocalRulestackData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // LocalRulestacks_ListBySubscription_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLocalRulestacks_LocalRulestacksListBySubscriptionMinimumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_ListBySubscription_MinimumSet_Gen.json
-            // this example is just showing the usage of "LocalRulestacks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (LocalRulestackResource item in subscriptionResource.GetLocalRulestacksAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                LocalRulestackData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // LocalRulestacks_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_LocalRulestacksGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_Get_MaximumSet_Gen.json
@@ -112,9 +47,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LocalRulestacks_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_LocalRulestacksGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_Get_MinimumSet_Gen.json
@@ -143,9 +77,60 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LocalRulestacks_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_LocalRulestacksDeleteMaximumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "LocalRulestacks_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this LocalRulestackResource created on azure
+            // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
+            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string resourceGroupName = "rgopenapi";
+            string localRulestackName = "lrs1";
+            ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
+
+            // invoke the operation
+            await localRulestack.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_LocalRulestacksDeleteMinimumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "LocalRulestacks_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this LocalRulestackResource created on azure
+            // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
+            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string resourceGroupName = "rgopenapi";
+            string localRulestackName = "lrs1";
+            ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
+
+            // invoke the operation
+            await localRulestack.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_LocalRulestacksUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_Update_MaximumSet_Gen.json
@@ -165,32 +150,29 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            LocalRulestackPatch patch = new LocalRulestackPatch()
+            LocalRulestackPatch patch = new LocalRulestackPatch
             {
-                Identity = new ManagedServiceIdentity("None")
+                Identity = new ManagedServiceIdentity(default)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("key16")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("key16")] = null
 },
                 },
                 Tags =
 {
-["tagName"] = "value",
+["tagName"] = "value"
 },
-                Properties = new LocalRulestackUpdateProperties()
+                Properties = new LocalRulestackUpdateProperties
                 {
                     PanETag = new ETag("2bf4a339-294d-4c25-b0b2-ef649e9f5c12"),
                     PanLocation = new AzureLocation("eastus"),
                     Scope = RulestackScopeType.Local,
-                    AssociatedSubscriptions =
-{
-"2bf4a339-294d-4c25-b0b2-ef649e9f5c27"
-},
+                    AssociatedSubscriptions = { "2bf4a339-294d-4c25-b0b2-ef649e9f5c27" },
                     Description = "local rulestacks",
                     DefaultMode = RuleCreationDefaultMode.IPS,
                     MinAppIdVersion = "8.5.3",
-                    SecurityServices = new RulestackSecurityServices()
+                    SecurityServices = new RulestackSecurityServices
                     {
                         VulnerabilityProfile = "default",
                         AntiSpywareProfile = "default",
@@ -212,9 +194,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LocalRulestacks_Update_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_LocalRulestacksUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_Update_MinimumSet_Gen.json
@@ -244,63 +225,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LocalRulestacks_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_LocalRulestacksDeleteMaximumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "LocalRulestacks_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this LocalRulestackResource created on azure
-            // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
-            string resourceGroupName = "rgopenapi";
-            string localRulestackName = "lrs1";
-            ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
-
-            // invoke the operation
-            await localRulestack.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // LocalRulestacks_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_LocalRulestacksDeleteMinimumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_Delete_MinimumSet_Gen.json
-            // this example is just showing the usage of "LocalRulestacks_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this LocalRulestackResource created on azure
-            // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
-            string resourceGroupName = "rgopenapi";
-            string localRulestackName = "lrs1";
-            ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
-
-            // invoke the operation
-            await localRulestack.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // LocalRulestacks_commit_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Commit_LocalRulestacksCommitMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_commit_MaximumSet_Gen.json
@@ -320,14 +246,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            await localRulestack.CommitAsync(WaitUntil.Completed);
+            await localRulestack.CommitAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LocalRulestacks_commit_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Commit_LocalRulestacksCommitMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_commit_MinimumSet_Gen.json
@@ -347,14 +272,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            await localRulestack.CommitAsync(WaitUntil.Completed);
+            await localRulestack.CommitAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LocalRulestacks_getChangeLog_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetChangeLog_LocalRulestacksGetChangeLogMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_getChangeLog_MaximumSet_Gen.json
@@ -379,9 +303,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LocalRulestacks_getChangeLog_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetChangeLog_LocalRulestacksGetChangeLogMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_getChangeLog_MinimumSet_Gen.json
@@ -406,9 +329,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LocalRulestacks_getSupportInfo_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSupportInfo_LocalRulestacksGetSupportInfoMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_getSupportInfo_MaximumSet_Gen.json
@@ -429,14 +351,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // invoke the operation
             string email = "user1@domain.com";
-            FirewallSupportInfo result = await localRulestack.GetSupportInfoAsync(email: email);
+            FirewallSupportInfo result = await localRulestack.GetSupportInfoAsync(email);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LocalRulestacks_getSupportInfo_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSupportInfo_LocalRulestacksGetSupportInfoMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_getSupportInfo_MinimumSet_Gen.json
@@ -461,9 +382,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LocalRulestacks_listAdvancedSecurityObjects_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAdvancedSecurityObjects_LocalRulestacksListAdvancedSecurityObjectsMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_listAdvancedSecurityObjects_MaximumSet_Gen.json
@@ -486,14 +406,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             AdvancedSecurityObjectType type = new AdvancedSecurityObjectType("localRulestacks");
             string skip = "a6a321";
             int? top = 20;
-            AdvancedSecurityObjectListResult result = await localRulestack.GetAdvancedSecurityObjectsAsync(type, skip: skip, top: top);
+            AdvancedSecurityObjectListResult result = await localRulestack.GetAdvancedSecurityObjectsAsync(type, skip, top);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LocalRulestacks_listAdvancedSecurityObjects_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAdvancedSecurityObjects_LocalRulestacksListAdvancedSecurityObjectsMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_listAdvancedSecurityObjects_MinimumSet_Gen.json
@@ -519,9 +438,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LocalRulestacks_listAppIds_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAppIds_LocalRulestacksListAppIdsMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_listAppIds_MaximumSet_Gen.json
@@ -545,17 +463,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string appPrefix = "pref";
             string skip = "a6a321";
             int? top = 20;
-            await foreach (string item in localRulestack.GetAppIdsAsync(appIdVersion: appIdVersion, appPrefix: appPrefix, skip: skip, top: top))
+            await foreach (string item in localRulestack.GetAppIdsAsync(appIdVersion, appPrefix, skip, top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LocalRulestacks_listAppIds_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAppIds_LocalRulestacksListAppIdsMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_listAppIds_MinimumSet_Gen.json
@@ -580,12 +497,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LocalRulestacks_listCountries_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCountries_LocalRulestacksListCountriesMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_listCountries_MaximumSet_Gen.json
@@ -607,17 +523,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // invoke the operation and iterate over the result
             string skip = "a6a321";
             int? top = 20;
-            await foreach (RulestackCountry item in localRulestack.GetCountriesAsync(skip: skip, top: top))
+            await foreach (RulestackCountry item in localRulestack.GetCountriesAsync(skip, top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LocalRulestacks_listCountries_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCountries_LocalRulestacksListCountriesMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_listCountries_MinimumSet_Gen.json
@@ -642,12 +557,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LocalRulestacks_listFirewalls_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFirewalls_LocalRulestacksListFirewallsMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_listFirewalls_MaximumSet_Gen.json
@@ -672,12 +586,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LocalRulestacks_listFirewalls_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFirewalls_LocalRulestacksListFirewallsMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_listFirewalls_MinimumSet_Gen.json
@@ -702,12 +615,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LocalRulestacks_listPredefinedUrlCategories_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPredefinedUrlCategories_LocalRulestacksListPredefinedUrlCategoriesMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_listPredefinedUrlCategories_MaximumSet_Gen.json
@@ -729,17 +641,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // invoke the operation and iterate over the result
             string skip = "a6a321";
             int? top = 20;
-            await foreach (PredefinedUrlCategory item in localRulestack.GetPredefinedUrlCategoriesAsync(skip: skip, top: top))
+            await foreach (PredefinedUrlCategory item in localRulestack.GetPredefinedUrlCategoriesAsync(skip, top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LocalRulestacks_listPredefinedUrlCategories_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPredefinedUrlCategories_LocalRulestacksListPredefinedUrlCategoriesMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_listPredefinedUrlCategories_MinimumSet_Gen.json
@@ -764,12 +675,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LocalRulestacks_listSecurityServices_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSecurityServices_LocalRulestacksListSecurityServicesMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_listSecurityServices_MaximumSet_Gen.json
@@ -792,14 +702,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             RulestackSecurityServiceType type = new RulestackSecurityServiceType("localRulestacks");
             string skip = "a6a321";
             int? top = 20;
-            RulestackSecurityServiceListResult result = await localRulestack.GetSecurityServicesAsync(type, skip: skip, top: top);
+            RulestackSecurityServiceListResult result = await localRulestack.GetSecurityServicesAsync(type, skip, top);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LocalRulestacks_listSecurityServices_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSecurityServices_LocalRulestacksListSecurityServicesMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_listSecurityServices_MinimumSet_Gen.json
@@ -825,9 +734,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LocalRulestacks_revert_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Revert_LocalRulestacksRevertMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_revert_MaximumSet_Gen.json
@@ -847,14 +755,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            await localRulestack.RevertAsync();
+            await localRulestack.RevertAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LocalRulestacks_revert_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Revert_LocalRulestacksRevertMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_revert_MinimumSet_Gen.json
@@ -874,9 +781,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            await localRulestack.RevertAsync();
+            await localRulestack.RevertAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

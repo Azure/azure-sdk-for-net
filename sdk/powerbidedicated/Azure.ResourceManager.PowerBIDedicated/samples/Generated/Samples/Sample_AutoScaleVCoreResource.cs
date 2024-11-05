@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.PowerBIDedicated.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Samples
 {
     public partial class Sample_AutoScaleVCoreResource
     {
-        // Get details of an auto scale v-core
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDetailsOfAnAutoScaleVCore()
         {
             // Generated from example definition: specification/powerbidedicated/resource-manager/Microsoft.PowerBIdedicated/stable/2021-01-01/examples/getAutoScaleVCore.json
@@ -47,9 +46,8 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete an auto scale v-core
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnAutoScaleVCore()
         {
             // Generated from example definition: specification/powerbidedicated/resource-manager/Microsoft.PowerBIdedicated/stable/2021-01-01/examples/deleteAutoScaleVCore.json
@@ -69,14 +67,13 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
             AutoScaleVCoreResource autoScaleVCore = client.GetAutoScaleVCoreResource(autoScaleVCoreResourceId);
 
             // invoke the operation
-            await autoScaleVCore.DeleteAsync(WaitUntil.Completed);
+            await autoScaleVCore.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update auto scale v-core parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAutoScaleVCoreParameters()
         {
             // Generated from example definition: specification/powerbidedicated/resource-manager/Microsoft.PowerBIdedicated/stable/2021-01-01/examples/updateAutoScaleVCore.json
@@ -96,7 +93,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
             AutoScaleVCoreResource autoScaleVCore = client.GetAutoScaleVCoreResource(autoScaleVCoreResourceId);
 
             // invoke the operation
-            AutoScaleVCorePatch patch = new AutoScaleVCorePatch()
+            AutoScaleVCorePatch patch = new AutoScaleVCorePatch
             {
                 Sku = new AutoScaleVCoreSku("AutoScale")
                 {
@@ -105,7 +102,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
                 },
                 Tags =
 {
-["testKey"] = "testValue",
+["testKey"] = "testValue"
 },
                 CapacityLimit = 20,
             };
@@ -116,38 +113,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
             AutoScaleVCoreData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // List auto scale v-cores in subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAutoScaleVCores_ListAutoScaleVCoresInSubscription()
-        {
-            // Generated from example definition: specification/powerbidedicated/resource-manager/Microsoft.PowerBIdedicated/stable/2021-01-01/examples/listAutoScaleVCoresInSubscription.json
-            // this example is just showing the usage of "AutoScaleVCores_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AutoScaleVCoreResource item in subscriptionResource.GetAutoScaleVCoresAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AutoScaleVCoreData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

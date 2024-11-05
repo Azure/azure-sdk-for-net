@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Peering.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Peering.Samples
 {
     public partial class Sample_PeeringResource
     {
-        // Get a peering
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPeering()
         {
             // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetPeering.json
@@ -47,9 +46,8 @@ namespace Azure.ResourceManager.Peering.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a peering
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAPeering()
         {
             // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/DeletePeering.json
@@ -69,14 +67,13 @@ namespace Azure.ResourceManager.Peering.Samples
             PeeringResource peering = client.GetPeeringResource(peeringResourceId);
 
             // invoke the operation
-            await peering.DeleteAsync(WaitUntil.Completed);
+            await peering.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update peering tags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatePeeringTags()
         {
             // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/UpdatePeeringTags.json
@@ -96,12 +93,12 @@ namespace Azure.ResourceManager.Peering.Samples
             PeeringResource peering = client.GetPeeringResource(peeringResourceId);
 
             // invoke the operation
-            PeeringPatch patch = new PeeringPatch()
+            PeeringPatch patch = new PeeringPatch
             {
                 Tags =
 {
 ["tag0"] = "value0",
-["tag1"] = "value1",
+["tag1"] = "value1"
 },
             };
             PeeringResource result = await peering.UpdateAsync(patch);
@@ -113,41 +110,8 @@ namespace Azure.ResourceManager.Peering.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List peerings in a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetPeerings_ListPeeringsInASubscription()
-        {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/ListPeeringsBySubscription.json
-            // this example is just showing the usage of "Peerings_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subId";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (PeeringResource item in subscriptionResource.GetPeeringsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PeeringData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Lists the prefixes received over the specified peering under the given subscription and resource group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReceivedRoutes_ListsThePrefixesReceivedOverTheSpecifiedPeeringUnderTheGivenSubscriptionAndResourceGroup()
         {
             // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetPeeringReceivedRoutes.json
@@ -171,17 +135,16 @@ namespace Azure.ResourceManager.Peering.Samples
             string asPath = "123 456";
             string originAsValidationState = "Valid";
             string rpkiValidationState = "Valid";
-            await foreach (PeeringReceivedRoute item in peering.GetReceivedRoutesAsync(prefix: prefix, asPath: asPath, originAsValidationState: originAsValidationState, rpkiValidationState: rpkiValidationState))
+            await foreach (PeeringReceivedRoute item in peering.GetReceivedRoutesAsync(prefix, asPath, originAsValidationState, rpkiValidationState))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List all the RP unbilled prefixes advertised at a particular peering location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRpUnbilledPrefixes_ListAllTheRPUnbilledPrefixesAdvertisedAtAParticularPeeringLocation()
         {
             // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/ListRpUnbilledPrefixes.json
@@ -202,12 +165,12 @@ namespace Azure.ResourceManager.Peering.Samples
 
             // invoke the operation and iterate over the result
             bool? consolidate = true;
-            await foreach (RoutingPreferenceUnbilledPrefix item in peering.GetRpUnbilledPrefixesAsync(consolidate: consolidate))
+            await foreach (RoutingPreferenceUnbilledPrefix item in peering.GetRpUnbilledPrefixesAsync(consolidate))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 {
     public partial class Sample_PreRulestackRuleResource
     {
-        // PreRules_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PreRulesGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_Get_MaximumSet_Gen.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PreRules_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PreRulesGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_Get_MinimumSet_Gen.json
@@ -75,9 +74,58 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PreRules_CreateOrUpdate_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_PreRulesDeleteMaximumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "PreRules_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PreRulestackRuleResource created on azure
+            // for more information of creating PreRulestackRuleResource, please refer to the document of PreRulestackRuleResource
+            string globalRulestackName = "lrs1";
+            string priority = "1";
+            ResourceIdentifier preRulestackRuleResourceId = PreRulestackRuleResource.CreateResourceIdentifier(globalRulestackName, priority);
+            PreRulestackRuleResource preRulestackRule = client.GetPreRulestackRuleResource(preRulestackRuleResourceId);
+
+            // invoke the operation
+            await preRulestackRule.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_PreRulesDeleteMinimumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "PreRules_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PreRulestackRuleResource created on azure
+            // for more information of creating PreRulestackRuleResource, please refer to the document of PreRulestackRuleResource
+            string globalRulestackName = "lrs1";
+            string priority = "1";
+            ResourceIdentifier preRulestackRuleResourceId = PreRulestackRuleResource.CreateResourceIdentifier(globalRulestackName, priority);
+            PreRulestackRuleResource preRulestackRule = client.GetPreRulestackRuleResource(preRulestackRuleResourceId);
+
+            // invoke the operation
+            await preRulestackRule.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PreRulesCreateOrUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_CreateOrUpdate_MaximumSet_Gen.json
@@ -101,75 +149,33 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 ETag = new ETag("c18e6eef-ba3e-49ee-8a85-2b36c863a9d0"),
                 Description = "description of pre rule",
                 RuleState = RulestackStateType.Disabled,
-                Source = new SourceAddressInfo()
+                Source = new SourceAddressInfo
                 {
-                    Cidrs =
-{
-"1.0.0.1/10"
-},
-                    Countries =
-{
-"India"
-},
-                    Feeds =
-{
-"feed"
-},
-                    PrefixLists =
-{
-"PL1"
-},
+                    Cidrs = { "1.0.0.1/10" },
+                    Countries = { "India" },
+                    Feeds = { "feed" },
+                    PrefixLists = { "PL1" },
                 },
                 NegateSource = FirewallBooleanType.True,
-                Destination = new DestinationAddressInfo()
+                Destination = new DestinationAddressInfo
                 {
-                    Cidrs =
-{
-"1.0.0.1/10"
-},
-                    Countries =
-{
-"India"
-},
-                    Feeds =
-{
-"feed"
-},
-                    PrefixLists =
-{
-"PL1"
-},
-                    FqdnLists =
-{
-"FQDN1"
-},
+                    Cidrs = { "1.0.0.1/10" },
+                    Countries = { "India" },
+                    Feeds = { "feed" },
+                    PrefixLists = { "PL1" },
+                    FqdnLists = { "FQDN1" },
                 },
                 NegateDestination = FirewallBooleanType.True,
-                Applications =
-{
-"app1"
-},
-                Category = new EdlMatchCategory(new string[]
-            {
-"https://microsoft.com"
-            }, new string[]
-            {
-"feed"
-            }),
+                Applications = { "app1" },
+                Category = new EdlMatchCategory(new string[] { "https://microsoft.com" }, new string[] { "feed" }),
                 Protocol = "HTTP",
-                ProtocolPortList =
-{
-"80"
-},
+                ProtocolPortList = { "80" },
                 InboundInspectionCertificate = "cert1",
                 AuditComment = "example comment",
                 ActionType = RulestackActionType.Allow,
                 EnableLogging = RulestackStateType.Disabled,
                 DecryptionRuleType = DecryptionRuleType.SslOutboundInspection,
-                Tags =
-{
-new RulestackTagInfo("keyName","value")
-},
+                Tags = { new RulestackTagInfo("keyName", "value") },
             };
             ArmOperation<PreRulestackRuleResource> lro = await preRulestackRule.UpdateAsync(WaitUntil.Completed, data);
             PreRulestackRuleResource result = lro.Value;
@@ -181,9 +187,8 @@ new RulestackTagInfo("keyName","value")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PreRules_CreateOrUpdate_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PreRulesCreateOrUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_CreateOrUpdate_MinimumSet_Gen.json
@@ -213,61 +218,8 @@ new RulestackTagInfo("keyName","value")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PreRules_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_PreRulesDeleteMaximumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "PreRules_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PreRulestackRuleResource created on azure
-            // for more information of creating PreRulestackRuleResource, please refer to the document of PreRulestackRuleResource
-            string globalRulestackName = "lrs1";
-            string priority = "1";
-            ResourceIdentifier preRulestackRuleResourceId = PreRulestackRuleResource.CreateResourceIdentifier(globalRulestackName, priority);
-            PreRulestackRuleResource preRulestackRule = client.GetPreRulestackRuleResource(preRulestackRuleResourceId);
-
-            // invoke the operation
-            await preRulestackRule.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // PreRules_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_PreRulesDeleteMinimumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_Delete_MinimumSet_Gen.json
-            // this example is just showing the usage of "PreRules_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PreRulestackRuleResource created on azure
-            // for more information of creating PreRulestackRuleResource, please refer to the document of PreRulestackRuleResource
-            string globalRulestackName = "lrs1";
-            string priority = "1";
-            ResourceIdentifier preRulestackRuleResourceId = PreRulestackRuleResource.CreateResourceIdentifier(globalRulestackName, priority);
-            PreRulestackRuleResource preRulestackRule = client.GetPreRulestackRuleResource(preRulestackRuleResourceId);
-
-            // invoke the operation
-            await preRulestackRule.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // PreRules_getCounters_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCounters_PreRulesGetCountersMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_getCounters_MaximumSet_Gen.json
@@ -287,14 +239,13 @@ new RulestackTagInfo("keyName","value")
 
             // invoke the operation
             string firewallName = "firewall1";
-            FirewallRuleCounter result = await preRulestackRule.GetCountersAsync(firewallName: firewallName);
+            FirewallRuleCounter result = await preRulestackRule.GetCountersAsync(firewallName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PreRules_getCounters_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCounters_PreRulesGetCountersMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_getCounters_MinimumSet_Gen.json
@@ -318,9 +269,8 @@ new RulestackTagInfo("keyName","value")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PreRules_refreshCounters_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RefreshCounters_PreRulesRefreshCountersMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_refreshCounters_MaximumSet_Gen.json
@@ -340,14 +290,13 @@ new RulestackTagInfo("keyName","value")
 
             // invoke the operation
             string firewallName = "firewall1";
-            await preRulestackRule.RefreshCountersAsync(firewallName: firewallName);
+            await preRulestackRule.RefreshCountersAsync(firewallName).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PreRules_refreshCounters_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RefreshCounters_PreRulesRefreshCountersMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_refreshCounters_MinimumSet_Gen.json
@@ -366,14 +315,13 @@ new RulestackTagInfo("keyName","value")
             PreRulestackRuleResource preRulestackRule = client.GetPreRulestackRuleResource(preRulestackRuleResourceId);
 
             // invoke the operation
-            await preRulestackRule.RefreshCountersAsync();
+            await preRulestackRule.RefreshCountersAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PreRules_resetCounters_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResetCounters_PreRulesResetCountersMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_resetCounters_MaximumSet_Gen.json
@@ -393,14 +341,13 @@ new RulestackTagInfo("keyName","value")
 
             // invoke the operation
             string firewallName = "firewall1";
-            FirewallRuleResetConter result = await preRulestackRule.ResetCountersAsync(firewallName: firewallName);
+            FirewallRuleResetConter result = await preRulestackRule.ResetCountersAsync(firewallName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PreRules_resetCounters_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResetCounters_PreRulesResetCountersMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_resetCounters_MinimumSet_Gen.json

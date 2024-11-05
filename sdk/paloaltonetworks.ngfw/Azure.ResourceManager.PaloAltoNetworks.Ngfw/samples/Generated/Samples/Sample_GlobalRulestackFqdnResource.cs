@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 {
     public partial class Sample_GlobalRulestackFqdnResource
     {
-        // FqdnListGlobalRulestack_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FqdnListGlobalRulestackGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/FqdnListGlobalRulestack_Get_MaximumSet_Gen.json
@@ -44,9 +44,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FqdnListGlobalRulestack_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FqdnListGlobalRulestackGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/FqdnListGlobalRulestack_Get_MinimumSet_Gen.json
@@ -74,84 +73,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FqdnListGlobalRulestack_CreateOrUpdate_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_FqdnListGlobalRulestackCreateOrUpdateMaximumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/FqdnListGlobalRulestack_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "FqdnListGlobalRulestack_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GlobalRulestackFqdnResource created on azure
-            // for more information of creating GlobalRulestackFqdnResource, please refer to the document of GlobalRulestackFqdnResource
-            string globalRulestackName = "praval";
-            string name = "armid1";
-            ResourceIdentifier globalRulestackFqdnResourceId = GlobalRulestackFqdnResource.CreateResourceIdentifier(globalRulestackName, name);
-            GlobalRulestackFqdnResource globalRulestackFqdn = client.GetGlobalRulestackFqdnResource(globalRulestackFqdnResourceId);
-
-            // invoke the operation
-            GlobalRulestackFqdnData data = new GlobalRulestackFqdnData(new string[]
-            {
-"string1","string2"
-            })
-            {
-                Description = "string",
-                ETag = new ETag("aaaaaaaaaaaaaaaaaa"),
-                AuditComment = "string",
-            };
-            ArmOperation<GlobalRulestackFqdnResource> lro = await globalRulestackFqdn.UpdateAsync(WaitUntil.Completed, data);
-            GlobalRulestackFqdnResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            GlobalRulestackFqdnData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // FqdnListGlobalRulestack_CreateOrUpdate_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_FqdnListGlobalRulestackCreateOrUpdateMinimumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/FqdnListGlobalRulestack_CreateOrUpdate_MinimumSet_Gen.json
-            // this example is just showing the usage of "FqdnListGlobalRulestack_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GlobalRulestackFqdnResource created on azure
-            // for more information of creating GlobalRulestackFqdnResource, please refer to the document of GlobalRulestackFqdnResource
-            string globalRulestackName = "praval";
-            string name = "armid1";
-            ResourceIdentifier globalRulestackFqdnResourceId = GlobalRulestackFqdnResource.CreateResourceIdentifier(globalRulestackName, name);
-            GlobalRulestackFqdnResource globalRulestackFqdn = client.GetGlobalRulestackFqdnResource(globalRulestackFqdnResourceId);
-
-            // invoke the operation
-            GlobalRulestackFqdnData data = new GlobalRulestackFqdnData(new string[]
-            {
-"string1","string2"
-            });
-            ArmOperation<GlobalRulestackFqdnResource> lro = await globalRulestackFqdn.UpdateAsync(WaitUntil.Completed, data);
-            GlobalRulestackFqdnResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            GlobalRulestackFqdnData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // FqdnListGlobalRulestack_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_FqdnListGlobalRulestackDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/FqdnListGlobalRulestack_Delete_MaximumSet_Gen.json
@@ -170,14 +93,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             GlobalRulestackFqdnResource globalRulestackFqdn = client.GetGlobalRulestackFqdnResource(globalRulestackFqdnResourceId);
 
             // invoke the operation
-            await globalRulestackFqdn.DeleteAsync(WaitUntil.Completed);
+            await globalRulestackFqdn.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // FqdnListGlobalRulestack_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_FqdnListGlobalRulestackDeleteMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/FqdnListGlobalRulestack_Delete_MinimumSet_Gen.json
@@ -196,9 +118,76 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             GlobalRulestackFqdnResource globalRulestackFqdn = client.GetGlobalRulestackFqdnResource(globalRulestackFqdnResourceId);
 
             // invoke the operation
-            await globalRulestackFqdn.DeleteAsync(WaitUntil.Completed);
+            await globalRulestackFqdn.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_FqdnListGlobalRulestackCreateOrUpdateMaximumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/FqdnListGlobalRulestack_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "FqdnListGlobalRulestack_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GlobalRulestackFqdnResource created on azure
+            // for more information of creating GlobalRulestackFqdnResource, please refer to the document of GlobalRulestackFqdnResource
+            string globalRulestackName = "praval";
+            string name = "armid1";
+            ResourceIdentifier globalRulestackFqdnResourceId = GlobalRulestackFqdnResource.CreateResourceIdentifier(globalRulestackName, name);
+            GlobalRulestackFqdnResource globalRulestackFqdn = client.GetGlobalRulestackFqdnResource(globalRulestackFqdnResourceId);
+
+            // invoke the operation
+            GlobalRulestackFqdnData data = new GlobalRulestackFqdnData(new string[] { "string1", "string2" })
+            {
+                Description = "string",
+                ETag = new ETag("aaaaaaaaaaaaaaaaaa"),
+                AuditComment = "string",
+            };
+            ArmOperation<GlobalRulestackFqdnResource> lro = await globalRulestackFqdn.UpdateAsync(WaitUntil.Completed, data);
+            GlobalRulestackFqdnResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            GlobalRulestackFqdnData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_FqdnListGlobalRulestackCreateOrUpdateMinimumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/FqdnListGlobalRulestack_CreateOrUpdate_MinimumSet_Gen.json
+            // this example is just showing the usage of "FqdnListGlobalRulestack_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GlobalRulestackFqdnResource created on azure
+            // for more information of creating GlobalRulestackFqdnResource, please refer to the document of GlobalRulestackFqdnResource
+            string globalRulestackName = "praval";
+            string name = "armid1";
+            ResourceIdentifier globalRulestackFqdnResourceId = GlobalRulestackFqdnResource.CreateResourceIdentifier(globalRulestackName, name);
+            GlobalRulestackFqdnResource globalRulestackFqdn = client.GetGlobalRulestackFqdnResource(globalRulestackFqdnResourceId);
+
+            // invoke the operation
+            GlobalRulestackFqdnData data = new GlobalRulestackFqdnData(new string[] { "string1", "string2" });
+            ArmOperation<GlobalRulestackFqdnResource> lro = await globalRulestackFqdn.UpdateAsync(WaitUntil.Completed, data);
+            GlobalRulestackFqdnResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            GlobalRulestackFqdnData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }
