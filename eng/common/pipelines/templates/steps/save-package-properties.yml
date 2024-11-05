@@ -34,7 +34,7 @@ steps:
 
       # When running in PR node, we want the detected changed services to be attached to the build as tags.
       # However, the public identity does not have the permissions to attach tags to the build.
-      # Instead, we will save the changed services to a file, attach it as an attachment named tags.json, and pipeline
+      # Instead, we will save the changed services to a file, attach it as an attachment for PiplineWitness to pick up and utilize.
       - pwsh: |
           $changedServices = (Get-Content -Path '${{ parameters.DiffDirectory }}/diff.json' -Raw | ConvertFrom-Json).ChangedServices
 
