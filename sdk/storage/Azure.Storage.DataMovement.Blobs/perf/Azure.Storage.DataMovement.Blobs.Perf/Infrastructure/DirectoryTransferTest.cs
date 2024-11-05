@@ -118,7 +118,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
 
         private Task HandleFailure(TransferItemFailedEventArgs args)
         {
-            Console.WriteLine(args.Exception);
+            Console.WriteLine($"Transfer failure event - {args.Exception}");
             return Task.CompletedTask;
         }
     }

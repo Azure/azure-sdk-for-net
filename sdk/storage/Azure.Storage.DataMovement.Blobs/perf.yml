@@ -14,7 +14,7 @@ parameters:
 - name: Arguments
   displayName: Arguments (regex of arguments to run)
   type: string
-  default: '(1024)|(10485760)|(1073741824)'
+  default: '.*'
 - name: Iterations
   displayName: Iterations (times to run each test)
   type: number
