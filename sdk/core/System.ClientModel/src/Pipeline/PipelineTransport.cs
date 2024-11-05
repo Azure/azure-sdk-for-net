@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace System.ClientModel.Primitives;
 
@@ -16,6 +17,8 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public abstract class PipelineTransport : PipelinePolicy
 {
+    internal PipelineTransportLogger? TransportLogger { get; set; }
+
     #region CreateMessage
 
     /// <summary>
@@ -84,6 +87,8 @@ public abstract class PipelineTransport : PipelinePolicy
         using CancellationTokenSource timeoutTokenSource = CancellationTokenSource.CreateLinkedTokenSource(messageToken);
         timeoutTokenSource.CancelAfter(networkTimeout);
 
+        var before = Stopwatch.GetTimestamp();
+
         try
         {
             message.CancellationToken = timeoutTokenSource.Token;
@@ -97,9 +102,15 @@ public abstract class PipelineTransport : PipelinePolicy
                 ProcessCore(message);
             }
         }
-        catch (OperationCanceledException ex)
+        catch (Exception ex)
         {
-            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(messageToken, timeoutTokenSource.Token, ex, networkTimeout);
+            TransportLogger?.LogExceptionResponse(message.Response?.ClientRequestId ?? string.Empty, ex);
+
+            if (ex is OperationCanceledException)
+            {
+                CancellationHelper.ThrowIfCancellationRequestedOrTimeout(messageToken, timeoutTokenSource.Token, ex, networkTimeout);
+            }
+
             throw;
         }
         finally
@@ -108,8 +119,16 @@ public abstract class PipelineTransport : PipelinePolicy
             timeoutTokenSource.CancelAfter(Timeout.Infinite);
         }
 
+        var after = Stopwatch.GetTimestamp();
+        double elapsed = (after - before) / (double)Stopwatch.Frequency;
+
         message.AssertResponse();
         message.Response!.IsErrorCore = ClassifyResponse(message);
+
+        if (elapsed > ClientPipelineOptions.RequestTooLongSeconds)
+        {
+            TransportLogger?.LogResponseDelay(message.Response!.ClientRequestId ?? string.Empty, elapsed);
+        }
 
         // The remainder of the method handles response content according to
         // buffering logic specified by value of message.BufferResponse.

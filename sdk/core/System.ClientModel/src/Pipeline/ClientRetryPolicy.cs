@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Primitives;
@@ -28,18 +29,27 @@ public class ClientRetryPolicy : PipelinePolicy
 
     private readonly int _maxRetries;
     private readonly TimeSpan _initialDelay;
+    private readonly PipelineRetryLogger _retryLogger;
 
     /// <summary>
     /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.
     /// </summary>
     /// <param name="maxRetries">The maximum number of retries to attempt.</param>
-    public ClientRetryPolicy(int maxRetries = DefaultMaxRetries)
+    public ClientRetryPolicy(int maxRetries = DefaultMaxRetries) : this(maxRetries, default)
+    {
+    }
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.
+    /// </summary>
+    /// <param name="maxRetries">The maximum number of retries to attempt.</param>
+    /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to use to create an <see cref="ILogger"/> instance for logging.</param>
+    public ClientRetryPolicy(int maxRetries, ILoggerFactory? loggerFactory)
     {
         _maxRetries = maxRetries;
         _initialDelay = DefaultInitialDelay;
+        _retryLogger = new PipelineRetryLogger(loggerFactory);
     }
-
-    internal PipelineLoggingHandler? LogHandler { get; set; }
 
     /// <inheritdoc/>
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
@@ -123,7 +133,7 @@ public class ClientRetryPolicy : PipelinePolicy
                 message.RetryCount++;
                 OnTryComplete(message);
 
-                LogHandler?.LogRequestRetrying(message.Request.ClientRequestId ?? string.Empty, message.RetryCount, elapsed);
+                _retryLogger.LogRequestRetrying(message.Request.ClientRequestId ?? string.Empty, message.RetryCount, elapsed);
 
                 continue;
             }

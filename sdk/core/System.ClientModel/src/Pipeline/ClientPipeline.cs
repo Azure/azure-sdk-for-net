@@ -104,7 +104,19 @@ public sealed partial class ClientPipeline
         Argument.AssertNotNull(options, nameof(options));
 
         options.Freeze();
-        bool useDefaultLogging = options.UseDefaultLogging();
+
+        // Validate options do not conflict
+
+        if (options.ClientLoggingOptions?.EnableLogging == false
+            && (options.ClientLoggingOptions?.EnableMessageLogging == true || options.ClientLoggingOptions?.EnableMessageContentLogging == true))
+        {
+            throw new InvalidOperationException("HTTP Message logging cannot be enabled when client-wide logging is disabled.");
+        }
+        if (options.ClientLoggingOptions?.EnableMessageLogging == false
+            && options.ClientLoggingOptions?.EnableMessageContentLogging == true)
+        {
+            throw new InvalidOperationException("HTTP Message content logging cannot be enabled when HTTP message logging is disabled.");
+        }
 
         // Add length of client-specific policies.
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
@@ -115,9 +127,9 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
-        if (options.EnableLogging != false && options.EnableMessageLogging != false)
+        if (options.ClientLoggingOptions?.EnableMessageLogging == true)
         {
-            pipelineLength++; // for logging policy
+            pipelineLength++; // for message logging policy
         }
         pipelineLength++; // for transport
 
@@ -138,12 +150,13 @@ public sealed partial class ClientPipeline
         int perCallIndex = index;
 
         // Add retry policy.
-        policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
-
-        if (options.EnableLogging != false && policies[index] is ClientRetryPolicy retryPolicy)
+        if (options.ClientLoggingOptions?.EnableLogging != false && options.ClientLoggingOptions?.LoggerFactory != null)
         {
-            ILogger? logger = options.LoggerFactory?.CreateLogger<ClientRetryPolicy>();
-            retryPolicy.LogHandler = new PipelineLoggingHandler(logger, options.GetPipelineMessageSanitizer());
+            policies[index++] = options.RetryPolicy ?? new ClientRetryPolicy;
+        }
+        else
+        {
+            policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
         }
 
         // Per try policies come after the retry policy.
@@ -160,13 +173,13 @@ public sealed partial class ClientPipeline
 
         // Add logging policy just before the transport.
 
-        if (useDefaultLogging)
+        if (options.ClientLoggingOptions == null || options.ClientLoggingOptions.UseDefaultLogging())
         {
-            policies[index++] = MessageLoggingPolicy.Default;
+            policies[index++] = options.MessageLoggingPolicy ?? MessageLoggingPolicy.Default;
         }
-        else if (options.EnableLogging != false && options.EnableMessageLogging != false)
+        else if (options.ClientLoggingOptions.EnableLogging != false && options.ClientLoggingOptions.EnableMessageLogging != false)
         {
-            policies[index++] = options.MessageLoggingPolicy ?? new MessageLoggingPolicy(options);
+            policies[index++] = options.MessageLoggingPolicy ?? new MessageLoggingPolicy(options.ClientLoggingOptions);
         }
 
         // Before transport policies come before the transport.
