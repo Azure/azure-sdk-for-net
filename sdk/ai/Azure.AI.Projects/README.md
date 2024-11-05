@@ -1,6 +1,6 @@
 # Azure AI Projects client library for .NET
 
-The Azure AI Assistants client library for .NET is an adaptation of OpenAI's REST APIs that provides an idiomatic interface
+TODO: [Update README] The Azure AI Assistants client library for .NET is an adaptation of OpenAI's REST APIs that provides an idiomatic interface
 and rich integration with the rest of the Azure SDK ecosystem. It will connect to Azure AI resources endpoint.
 
 Use this library to:
