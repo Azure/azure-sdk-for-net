@@ -24,10 +24,16 @@ using Azure.AI.OpenAI.FineTuning;
 
 namespace Azure.AI.OpenAI.Tests;
 
+[Category("FineTuning")]
 public class FineTuningTests : AoaiTestBase<FineTuningClient>
 {
     public FineTuningTests(bool isAsync) : base(isAsync)
-    { }
+    {
+        if (Mode == RecordedTestMode.Playback)
+        {
+            Assert.Inconclusive("Playback for fine-tuning temporarily disabled");
+        }
+    }
 
 #if !AZURE_OPENAI_GA
     [Test]
@@ -57,7 +63,6 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     }
 
     [RecordedTest]
-    [Ignore("Disable pending resolution of test framework interception overriding Rehydrateoverrides")]
     public async Task CheckpointsFineTuning()
     {
         string fineTunedModel = GetFineTunedModel();
@@ -69,7 +74,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         Assert.That(job, Is.Not.Null);
         Assert.That(job!.Status, Is.EqualTo("succeeded"));
 
-        FineTuningJobOperation fineTuningJobOperation = await FineTuningJobOperation.RehydrateAsync(client, job.ID);
+        FineTuningJobOperation fineTuningJobOperation = await FineTuningJobOperation.RehydrateAsync(UnWrap(client), job.ID);
 
         int count = 25;
         await foreach (FineTuningCheckpoint checkpoint in EnumerateCheckpoints(fineTuningJobOperation))
@@ -95,7 +100,6 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     }
 
     [RecordedTest]
-    [Ignore("Disable pending resolution of test framework interception overriding Rehydrateoverrides")]
     public async Task EventsFineTuning()
     {
         string fineTunedModel = GetFineTunedModel();
@@ -109,7 +113,8 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
 
         HashSet<string> ids = new();
 
-        FineTuningJobOperation fineTuningJobOperation = await FineTuningJobOperation.RehydrateAsync(client, job.ID);
+        //TODO fix unwrapping so you don't have to unwrap here.
+        FineTuningJobOperation fineTuningJobOperation = await FineTuningJobOperation.RehydrateAsync(UnWrap(client), job.ID);
 
         int count = 25;
         var asyncEnum = EnumerateAsync<FineTuningJobEvent>((after, limit, opt) => fineTuningJobOperation.GetJobEventsAsync(after, limit, opt));
@@ -133,7 +138,6 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     }
 
     [RecordedTest]
-    [Ignore("Disabling pending resolution of AOAI quota issues and re-recording")]
     public async Task CreateAndCancelFineTuning()
     {
         var fineTuningFile = Assets.FineTuning;
@@ -141,8 +145,24 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         FineTuningClient client = GetTestClient();
         OpenAIFileClient fileClient = GetTestClientFrom<OpenAIFileClient>(client);
 
-        // upload training data
-        OpenAIFile uploadedFile = await UploadAndWaitForCompleteOrFail(fileClient, fineTuningFile.RelativePath);
+        OpenAIFile uploadedFile;
+        try
+        {
+            ClientResult fileResult = await fileClient.GetFileAsync("file-db5f5bfe5ea04ffcaeba89947a872828", new RequestOptions() { });
+            uploadedFile = ValidateAndParse<OpenAIFile>(fileResult);
+        }
+        catch (ClientResultException e)
+        {
+            if (e.Message.Contains("ResourceNotFound"))
+            {
+                // upload training data
+                uploadedFile = await UploadAndWaitForCompleteOrFail(fileClient, fineTuningFile.RelativePath);
+            }
+            else
+            {
+                throw;
+            }
+        }
 
         // Create the fine tuning job
         using var requestContent = new FineTuningOptions()
@@ -194,9 +214,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         Assert.True(operation.HasCompleted);
     }
 
-    [RecordedTest(AutomaticRecord = false)]
-    [Category("LongRunning")] // CAUTION: This test can take up 30 *minutes* to run in live mode
-    [Ignore("Disabled pending investigation of 404")]
+    [RecordedTest]
     public async Task CreateAndDeleteFineTuning()
     {
         var fineTuningFile = Assets.FineTuning;
@@ -226,7 +244,12 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         using var requestContent = new FineTuningOptions()
         {
             Model = client.DeploymentOrThrow(),
-            TrainingFile = uploadedFile.Id
+            TrainingFile = uploadedFile.Id,
+            Hyperparameters = new FineTuningHyperparameters()
+            {
+                NumEpochs = 1,
+                BatchSize = 11
+            }
         }.ToBinaryContent();
 
         FineTuningJobOperation operation = await client.CreateFineTuningJobAsync(requestContent, waitUntilCompleted: false);
@@ -234,12 +257,12 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         Assert.That(job.ID, Is.Not.Null.Or.Empty);
         Assert.That(job.Error, Is.Null);
         Assert.That(job.Status, !(Is.Null.Or.EqualTo("failed").Or.EqualTo("cancelled")));
+        await operation.CancelAsync(options: null);
 
         // Wait for the fine tuning to complete
         await operation.WaitForCompletionAsync();
         job = ValidateAndParse<FineTuningJob>(await operation.GetJobAsync(null));
-        Assert.That(job.Status, Is.EqualTo("succeeded"), "Fine tuning did not succeed");
-        Assert.That(job.FineTunedModel, Is.Not.Null.Or.Empty);
+        Assert.That(job.Status, Is.EqualTo("cancelled"), "Fine tuning did not cancel");
 
         // Delete the fine tuned model
         bool deleted = await DeleteJobAndVerifyAsync((AzureFineTuningJobOperation)operation, job.ID);

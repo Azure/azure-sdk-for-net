@@ -179,12 +179,12 @@ namespace Azure.Storage.DataMovement
 
         public override async Task ProcessPartToChunkAsync()
         {
-            await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
-
-            long? fileLength = default;
-            StorageResourceItemProperties sourceProperties = default;
             try
             {
+                await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
+
+                long? fileLength = default;
+                StorageResourceItemProperties sourceProperties = default;
                 fileLength = _sourceResource.Length;
                 sourceProperties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
                 await _destinationResource.SetPermissionsAsync(
@@ -193,60 +193,58 @@ namespace Azure.Storage.DataMovement
                     _cancellationToken).ConfigureAwait(false);
 
                 fileLength = sourceProperties.ResourceLength;
+                if (!fileLength.HasValue)
+                {
+                    await InvokeFailedArg(Errors.UnableToGetLength()).ConfigureAwait(false);
+                    return;
+                }
+                long length = fileLength.Value;
+
+                // Perform a single copy operation
+                if (_initialTransferSize >= length)
+                {
+                    await QueueChunkToChannelAsync(
+                        async () =>
+                        await StartSingleCallCopy(length).ConfigureAwait(false))
+                        .ConfigureAwait(false);
+                    return;
+                }
+
+                // Perform a series of chunk copies followed by a commit
+                long blockSize = _transferChunkSize;
+
+                _commitBlockHandler = GetCommitController(
+                    expectedLength: length,
+                    blockSize: blockSize,
+                    this,
+                    _destinationResource.TransferType,
+                    sourceProperties);
+                // If we cannot upload in one shot, initiate the parallel block uploader
+                if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
+                {
+                    List<(long Offset, long Length)> commitBlockList = GetRangeList(blockSize, length);
+                    if (_destinationResource.TransferType == DataTransferOrder.Unordered)
+                    {
+                        await QueueStageBlockRequests(commitBlockList, length, sourceProperties).ConfigureAwait(false);
+                    }
+                    else // Sequential
+                    {
+                        // Queue the first partitioned block task
+                        await QueueStageBlockRequest(
+                            commitBlockList[0].Offset,
+                            commitBlockList[0].Length,
+                            length,
+                            sourceProperties).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
-                // TODO: logging when given the event handler
                 await InvokeFailedArg(ex).ConfigureAwait(false);
-                return;
-            }
-            if (!fileLength.HasValue)
-            {
-                await InvokeFailedArg(Errors.UnableToGetLength()).ConfigureAwait(false);
-                return;
-            }
-            long length = fileLength.Value;
-
-            // Perform a single copy operation
-            if (_initialTransferSize >= length)
-            {
-                await QueueChunkToChannelAsync(
-                    async () =>
-                    await StartSingleCallCopy(length).ConfigureAwait(false))
-                    .ConfigureAwait(false);
-                return;
-            }
-
-            // Perform a series of chunk copies followed by a commit
-            long blockSize = _transferChunkSize;
-
-            _commitBlockHandler = GetCommitController(
-                expectedLength: length,
-                blockSize: blockSize,
-                this,
-                _destinationResource.TransferType,
-                sourceProperties);
-            // If we cannot upload in one shot, initiate the parallel block uploader
-            if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
-            {
-                List<(long Offset, long Length)> commitBlockList = GetRangeList(blockSize, length);
-                if (_destinationResource.TransferType == DataTransferOrder.Unordered)
-                {
-                    await QueueStageBlockRequests(commitBlockList, length, sourceProperties).ConfigureAwait(false);
-                }
-                else // Sequential
-                {
-                    // Queue the first partitioned block task
-                    await QueueStageBlockRequest(
-                        commitBlockList[0].Offset,
-                        commitBlockList[0].Length,
-                        length,
-                        sourceProperties).ConfigureAwait(false);
-                }
-            }
-            else
-            {
-                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
             }
         }
 

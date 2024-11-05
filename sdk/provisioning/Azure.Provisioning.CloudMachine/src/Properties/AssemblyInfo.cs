@@ -2,3 +2,4 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;

@@ -180,6 +180,12 @@
 # ServiceLabel: %Bot Service
 # ServiceOwners:                                                   @sgellock
 
+# PRLabel: %Cloud Machine
+/sdk/cloudmachine/                                                 @christothes @KrzysztofCwalina
+
+# ServiceLabel: %Cloud Machine
+# AzureSdkOwners:                                                  @christothes @KrzysztofCwalina
+
 # PRLabel: %Cognitive - Language
 /sdk/cognitivelanguage/                                            @quentinRobinson @bidisha-c
 
@@ -891,10 +897,10 @@
 # ServiceOwners:                                                   @shahbj79 @mit2nil @aygoya @ganganarayanan
 
 # PRLabel: %Synapse
-/sdk/synapse/                                                      @wonner @yanjungao718 @annelo-msft
+/sdk/synapse/                                                      @yanjungao718 @annelo-msft
 
 # ServiceLabel: %Synapse
-# ServiceOwners:                                                   @wonner @yanjungao718
+# ServiceOwners:                                                   @yanjungao718
 
 # PRLabel: %Tables
 /sdk/tables/                                                       @christothes @JonathanCrd

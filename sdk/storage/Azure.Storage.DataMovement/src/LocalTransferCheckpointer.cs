@@ -113,6 +113,13 @@ namespace Azure.Storage.DataMovement
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             headerStream.Position = 0;
 
+            if (!_transferStates.ContainsKey(transferId))
+            {
+                // We should never get here because AddNewJobAsync should
+                // always be called first.
+                throw Errors.MissingTransferIdAddPartCheckpointer(transferId, partNumber);
+            }
+
             JobPartPlanFile mappedFile = await JobPartPlanFile.CreateJobPartPlanFileAsync(
                 _pathToCheckpointer,
                 transferId,
@@ -121,18 +128,9 @@ namespace Azure.Storage.DataMovement
                 cancellationToken).ConfigureAwait(false);
 
             // Add the job part into the current state
-            if (_transferStates.ContainsKey(transferId))
+            if (!_transferStates[transferId].JobParts.TryAdd(partNumber, mappedFile))
             {
-                if (!_transferStates[transferId].JobParts.TryAdd(partNumber, mappedFile))
-                {
-                    throw Errors.CollisionJobPart(transferId, partNumber);
-                }
-            }
-            else
-            {
-                // We should never get here because AddNewJobAsync should
-                // always be called first.
-                throw Errors.MissingTransferIdAddPartCheckpointer(transferId, partNumber);
+                throw Errors.CollisionJobPart(transferId, partNumber);
             }
         }
 

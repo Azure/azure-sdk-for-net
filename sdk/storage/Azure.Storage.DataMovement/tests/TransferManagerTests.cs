@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -429,6 +430,38 @@ public class TransferManagerTests
         Assert.That(failures, Is.Not.Empty);
         // TODO determine checkpointer status of job chunks
         //      need checkpointer API refactor for this
+    }
+
+    [Test]
+    [TestCase(5)]
+    [TestCase(10)]
+    [TestCase(12345)]
+    public async Task MultipleTransfersAddedCheckpointer(int numJobs)
+    {
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
+        Mock<ITransferCheckpointer> checkpointer = new(MockBehavior.Loose);
+
+        (StorageResource srcResource, StorageResource dstResource, Func<IDisposable> srcThrowScope, Func<IDisposable> dstThrowScope)
+            = GetBasicSetupResources(false, srcUri, dstUri);
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer.Object,
+            default);
+
+        // Add jobs on separate Tasks
+        var loopResult = Parallel.For(0, numJobs, i =>
+        {
+            Task<DataTransfer> task = transferManager.StartTransferAsync(srcResource, dstResource);
+        });
+        Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error during initial Job queueing.");
     }
 }
 
