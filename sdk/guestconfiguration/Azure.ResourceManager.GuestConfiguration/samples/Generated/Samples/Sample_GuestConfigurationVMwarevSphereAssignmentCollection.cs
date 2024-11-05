@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.GuestConfiguration.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.GuestConfiguration.Samples
 {
     public partial class Sample_GuestConfigurationVMwarevSphereAssignmentCollection
     {
-        // Create or update guest configuration assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateGuestConfigurationAssignment()
         {
             // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/createOrUpdateGuestConfigurationConnectedVMwarevSphereAssignment.json
@@ -75,9 +75,8 @@ Value = "NotePad,sql",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a guest configuration assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAGuestConfigurationAssignment()
         {
             // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getGuestConfigurationConnectedVMwarevSphereAssignment.json
@@ -109,9 +108,8 @@ Value = "NotePad,sql",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a guest configuration assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAGuestConfigurationAssignment()
         {
             // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getGuestConfigurationConnectedVMwarevSphereAssignment.json
@@ -139,9 +137,8 @@ Value = "NotePad,sql",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a guest configuration assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAGuestConfigurationAssignment()
         {
             // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getGuestConfigurationConnectedVMwarevSphereAssignment.json
@@ -169,7 +166,7 @@ Value = "NotePad,sql",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -181,9 +178,8 @@ Value = "NotePad,sql",
             }
         }
 
-        // List all guest configuration assignments for a virtual machine
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllGuestConfigurationAssignmentsForAVirtualMachine()
         {
             // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/listGuestConfigurationConnectedVMwarevSphereAssignments.json
@@ -214,7 +210,7 @@ Value = "NotePad,sql",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
