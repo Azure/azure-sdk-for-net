@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Paginated details of all documents in a job. </summary>
-    public partial class DocumentDetails
+    /// <summary> Location of a document. </summary>
+    public partial class DocumentLocation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,36 +45,35 @@ namespace Azure.Health.Deidentification
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentDetails"/>. </summary>
-        /// <param name="nextLink"> Token to continue a previous query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        internal DocumentDetails(string nextLink)
+        /// <summary> Initializes a new instance of <see cref="DocumentLocation"/>. </summary>
+        /// <param name="location"> Location of document in storage. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        internal DocumentLocation(Uri location)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(location, nameof(location));
 
-            Value = new ChangeTrackingList<DocumentDetail>();
-            NextLink = nextLink;
+            Location = location;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentDetails"/>. </summary>
-        /// <param name="value"> List of documents. </param>
-        /// <param name="nextLink"> Token to continue a previous query. </param>
+        /// <summary> Initializes a new instance of <see cref="DocumentLocation"/>. </summary>
+        /// <param name="location"> Location of document in storage. </param>
+        /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentDetails(IReadOnlyList<DocumentDetail> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentLocation(Uri location, ETag etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Location = location;
+            Etag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentDetails"/> for deserialization. </summary>
-        internal DocumentDetails()
+        /// <summary> Initializes a new instance of <see cref="DocumentLocation"/> for deserialization. </summary>
+        internal DocumentLocation()
         {
         }
 
-        /// <summary> List of documents. </summary>
-        public IReadOnlyList<DocumentDetail> Value { get; }
-        /// <summary> Token to continue a previous query. </summary>
-        public string NextLink { get; }
+        /// <summary> Location of document in storage. </summary>
+        public Uri Location { get; }
+        /// <summary> The entity tag for this resource. </summary>
+        public ETag Etag { get; }
     }
 }
