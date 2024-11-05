@@ -345,7 +345,9 @@ function RemoveStorageAccount($Account) {
     if ($container.BlobContainerProperties.HasImmutableStorageWithVersioning) {
       try {
         # Use AzRm cmdlet as deletion will only work through ARM with the immutability policies defined on the blobs
-        Remove-AzRmStorageContainer -Name $container.Name -StorageAccountName $Account.StorageAccountName -ResourceGroupName $Account.ResourceGroupName -Force
+        # If blob deletion takes longer then the container delete
+        # will fail, so retry a couple times
+        Retry -Action { Remove-AzRmStorageContainer -Name $container.Name -StorageAccountName $Account.StorageAccountName -ResourceGroupName $Account.ResourceGroupName -Force } -Attempts 2
         #$container | Remove-AzStorageContainer
       } catch {
         Write-Host "Container removal failed: $($container.Name), account: $($Account.storageAccountName), group: $($Account.ResourceGroupName)"
