@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_DscpConfigurationResource
     {
-        // Create DSCP Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateDSCPConfiguration()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/DscpConfigurationCreate.json
@@ -138,9 +138,8 @@ Protocol = ProtocolType.Udp,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete DSCP Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteDSCPConfiguration()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/DscpConfigurationDelete.json
@@ -162,12 +161,11 @@ Protocol = ProtocolType.Udp,
             // invoke the operation
             await dscpConfiguration.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Dscp Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDscpConfiguration()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/DscpConfigurationGet.json
@@ -196,9 +194,8 @@ Protocol = ProtocolType.Udp,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List all network interfaces
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDscpConfigurations_ListAllNetworkInterfaces()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/DscpConfigurationListAll.json
@@ -225,7 +222,7 @@ Protocol = ProtocolType.Udp,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

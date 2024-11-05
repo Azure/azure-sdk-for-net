@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_ExpressRouteConnectionCollection
     {
-        // ExpressRouteConnectionCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ExpressRouteConnectionCreate()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteConnectionCreate.json
@@ -86,9 +86,8 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExpressRouteConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ExpressRouteConnectionGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteConnectionGet.json
@@ -121,9 +120,8 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExpressRouteConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ExpressRouteConnectionGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteConnectionGet.json
@@ -152,9 +150,8 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExpressRouteConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ExpressRouteConnectionGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteConnectionGet.json
@@ -183,7 +180,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -195,9 +192,8 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
             }
         }
 
-        // ExpressRouteConnectionList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExpressRouteConnectionList()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteConnectionList.json
@@ -229,7 +225,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

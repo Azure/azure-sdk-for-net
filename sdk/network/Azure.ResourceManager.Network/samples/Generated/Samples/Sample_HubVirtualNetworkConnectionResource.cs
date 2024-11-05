@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_HubVirtualNetworkConnectionResource
     {
-        // HubVirtualNetworkConnectionPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_HubVirtualNetworkConnectionPut()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/HubVirtualNetworkConnectionPut.json
@@ -101,9 +101,8 @@ NextHopIPAddress = "10.0.0.65",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HubVirtualNetworkConnectionDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_HubVirtualNetworkConnectionDelete()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/HubVirtualNetworkConnectionDelete.json
@@ -126,12 +125,11 @@ NextHopIPAddress = "10.0.0.65",
             // invoke the operation
             await hubVirtualNetworkConnection.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // HubVirtualNetworkConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_HubVirtualNetworkConnectionGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/HubVirtualNetworkConnectionGet.json

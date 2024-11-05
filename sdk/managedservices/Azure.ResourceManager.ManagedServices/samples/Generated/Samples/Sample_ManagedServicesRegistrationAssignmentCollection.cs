@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagedServices.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedServices.Samples
 {
     public partial class Sample_ManagedServicesRegistrationAssignmentCollection
     {
-        // Get Registration Assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRegistrationAssignment()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/GetRegistrationAssignment.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.ManagedServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Registration Assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetRegistrationAssignment()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/GetRegistrationAssignment.json
@@ -75,9 +74,8 @@ namespace Azure.ResourceManager.ManagedServices.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Registration Assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetRegistrationAssignment()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/GetRegistrationAssignment.json
@@ -103,7 +101,7 @@ namespace Azure.ResourceManager.ManagedServices.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -115,9 +113,8 @@ namespace Azure.ResourceManager.ManagedServices.Samples
             }
         }
 
-        // Put Registration Assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutRegistrationAssignment()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/PutRegistrationAssignment.json
@@ -152,9 +149,8 @@ namespace Azure.ResourceManager.ManagedServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Registration Assignments
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetRegistrationAssignments()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/GetRegistrationAssignments.json
@@ -183,12 +179,11 @@ namespace Azure.ResourceManager.ManagedServices.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Registration Assignments with ManagedByTenantId eq filter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetRegistrationAssignmentsWithManagedByTenantIdEqFilter()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/GetRegistrationAssignmentsWithManagedByTenantIdEqFilter.json
@@ -218,12 +213,11 @@ namespace Azure.ResourceManager.ManagedServices.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Registration Assignments with ManagedByTenantId in filter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetRegistrationAssignmentsWithManagedByTenantIdInFilter()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/GetRegistrationAssignmentsWithManagedByTenantIdInFilter.json
@@ -253,7 +247,7 @@ namespace Azure.ResourceManager.ManagedServices.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_RoutingIntentCollection
     {
-        // RouteTablePut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RouteTablePut()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RoutingIntentPut.json
@@ -64,9 +64,8 @@ new RoutingPolicy("InternetTraffic",new string[]
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RouteTableGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RouteTableGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RoutingIntentGet.json
@@ -99,9 +98,8 @@ new RoutingPolicy("InternetTraffic",new string[]
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RouteTableGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RouteTableGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RoutingIntentGet.json
@@ -130,9 +128,8 @@ new RoutingPolicy("InternetTraffic",new string[]
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RouteTableGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RouteTableGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RoutingIntentGet.json
@@ -161,7 +158,7 @@ new RoutingPolicy("InternetTraffic",new string[]
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -173,9 +170,8 @@ new RoutingPolicy("InternetTraffic",new string[]
             }
         }
 
-        // RoutingIntentList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_RoutingIntentList()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RoutingIntentList.json
@@ -207,7 +203,7 @@ new RoutingPolicy("InternetTraffic",new string[]
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

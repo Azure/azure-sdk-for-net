@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagedNetwork.Models;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetwork.Samples
 {
     public partial class Sample_ManagedNetworkPeeringPolicyCollection
     {
-        // ManagedNetworkPeeringPoliciesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ManagedNetworkPeeringPoliciesGet()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkPeeringPolicy/ManagedNetworkPeeringPoliciesGet.json
@@ -51,9 +51,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ManagedNetworkPeeringPoliciesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ManagedNetworkPeeringPoliciesGet()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkPeeringPolicy/ManagedNetworkPeeringPoliciesGet.json
@@ -82,9 +81,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ManagedNetworkPeeringPoliciesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ManagedNetworkPeeringPoliciesGet()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkPeeringPolicy/ManagedNetworkPeeringPoliciesGet.json
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -125,9 +123,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
             }
         }
 
-        // ManagedNetworkPeeringPoliciesPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ManagedNetworkPeeringPoliciesPut()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkPeeringPolicy/ManagedNetworkPeeringPoliciesPut.json
@@ -175,9 +172,8 @@ Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/provi
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ManagedNetworkPeeringPoliciesListByManagedNetwork
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ManagedNetworkPeeringPoliciesListByManagedNetwork()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkPeeringPolicy/ManagedNetworkPeeringPoliciesListByManagedNetwork.json
@@ -209,7 +205,7 @@ Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/provi
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MongoCluster.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MongoCluster.Samples
 {
     public partial class Sample_MongoClusterCollection
     {
-        // Gets a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Get.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Get.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Get.json
@@ -110,7 +108,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -122,9 +120,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             }
         }
 
-        // Creates a new Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesANewMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Create.json
@@ -173,9 +170,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a replica Mongo Cluster resource from a source resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesAReplicaMongoClusterResourceFromASourceResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_CreateGeoReplica.json
@@ -216,9 +212,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a Mongo Cluster resource from a point in time restore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesAMongoClusterResourceFromAPointInTimeRestore()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_CreatePITR.json
@@ -263,9 +258,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Lists the Mongo Cluster resources in a resource group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListsTheMongoClusterResourcesInAResourceGroup()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_ListByResourceGroup.json
@@ -296,7 +290,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
