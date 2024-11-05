@@ -76,7 +76,7 @@ namespace Azure.Health.Deidentification
             {
                 return null;
             }
-            IReadOnlyList<DocumentDetails> value = default;
+            IReadOnlyList<DocumentDetail> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.Health.Deidentification
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DocumentDetails> array = new List<DocumentDetails>();
+                    List<DocumentDetail> array = new List<DocumentDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeDocumentDetails(item, options));
+                        array.Add(DocumentDetail.DeserializeDocumentDetail(item, options));
                     }
                     value = array;
                     continue;
