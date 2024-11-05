@@ -356,15 +356,15 @@ VmSetupAction.EnableContainers,VmSetupAction.EnableHyperV
                 SecurityType = ServiceFabricManagedClusterSecurityType.TrustedLaunch,
                 IsSecureBootEnabled = true,
                 IsNodePublicIPEnabled = true,
-                EnableNodePublicIPv6 = true,
+                IsNodePublicIPv6Enabled = true,
                 NatGatewayId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/natGateways/myNatGateway"),
                 ServiceArtifactReferenceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Compute/galleries/myGallery/serviceArtifacts/myServiceArtifact/vmArtifactsProfiles/myVmArtifactProfile"),
                 DscpConfigurationId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/dscpConfigurations/myDscpConfig"),
                 AdditionalNetworkInterfaceConfigurations =
 {
-new AdditionalNetworkInterfaceConfiguration("nic-1",new IPConfiguration[]
+new AdditionalNetworkInterfaceConfiguration("nic-1",new ServiceFabricManagedClusterIPConfiguration[]
 {
-new IPConfiguration("ipconfig-1")
+new ServiceFabricManagedClusterIPConfiguration("ipconfig-1")
 {
 ApplicationGatewayBackendAddressPools =
 {
@@ -388,14 +388,14 @@ Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000
 }
 },
 SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
-PrivateIPAddressVersion = PrivateIPAddressVersion.IPv4,
-PublicIPAddressConfiguration = new IPConfigurationPublicIPAddressConfiguration("publicip-1")
+PrivateIPAddressVersion = ServiceFabricManagedClusterPrivateIPAddressVersion.IPv4,
+PublicIPAddressConfiguration = new ServiceFabricManagedClusterPublicIPAddressConfiguration("publicip-1")
 {
 IPTags =
 {
 new ManagedClusterIPTag("RoutingPreference","Internet")
 },
-PublicIPAddressVersion = PublicIPAddressVersion.IPv4,
+PublicIPAddressVersion = ServiceFabricManagedClusterPublicIPAddressVersion.IPv4,
 },
 }
 })

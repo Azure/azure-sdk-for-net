@@ -302,10 +302,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("enableNodePublicIP"u8);
                 writer.WriteBooleanValue(IsNodePublicIPEnabled.Value);
             }
-            if (Optional.IsDefined(EnableNodePublicIPv6))
+            if (Optional.IsDefined(IsNodePublicIPv6Enabled))
             {
                 writer.WritePropertyName("enableNodePublicIPv6"u8);
-                writer.WriteBooleanValue(EnableNodePublicIPv6.Value);
+                writer.WriteBooleanValue(IsNodePublicIPv6Enabled.Value);
             }
             if (Optional.IsDefined(VmSharedGalleryImageId))
             {

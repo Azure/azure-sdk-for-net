@@ -54,20 +54,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("canApplyUpdates"u8);
                 writer.WriteBooleanValue(CanApplyUpdates.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastWindowStatusUpdateAtUTC))
+            if (options.Format != "W" && Optional.IsDefined(LastWindowStatusUpdatedOn))
             {
                 writer.WritePropertyName("lastWindowStatusUpdateAtUTC"u8);
-                writer.WriteStringValue(LastWindowStatusUpdateAtUTC.Value, "O");
+                writer.WriteStringValue(LastWindowStatusUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastWindowStartTimeUTC))
+            if (options.Format != "W" && Optional.IsDefined(LastWindowStartOn))
             {
                 writer.WritePropertyName("lastWindowStartTimeUTC"u8);
-                writer.WriteStringValue(LastWindowStartTimeUTC.Value, "O");
+                writer.WriteStringValue(LastWindowStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastWindowEndTimeUTC))
+            if (options.Format != "W" && Optional.IsDefined(LastWindowEndOn))
             {
                 writer.WritePropertyName("lastWindowEndTimeUTC"u8);
-                writer.WriteStringValue(LastWindowEndTimeUTC.Value, "O");
+                writer.WriteStringValue(LastWindowEndOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

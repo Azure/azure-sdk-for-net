@@ -4,12 +4,13 @@
 using System.Threading.Tasks;
 using System.Threading;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
-using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    public partial class ServiceFabricManagedClusterResource
+    /// <summary>
+    /// A Class representing a ServiceFabricManagedCluster along with the instance operations that can be performed on it.
+    /// </summary>
+    public partial class ServiceFabricManagedClusterResource: ArmResource
     {
         /// <summary>
         /// Action to get Maintenance Window Status of the Service Fabric Managed Clusters.
@@ -29,9 +30,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        ///
-        [Obsolete("This function is obsolete and will be removed in a future release", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ManagedMaintenanceWindowStatus>> GetManagedMaintenanceWindowStatusAsync(CancellationToken cancellationToken = default)
         {
             return await GetManagedMaintenanceWindowStatuAsync(cancellationToken).ConfigureAwait(false);
@@ -55,8 +53,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This function is obsolete and will be removed in a future release", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ManagedMaintenanceWindowStatus> GetManagedMaintenanceWindowStatus(CancellationToken cancellationToken = default)
         {
             return GetManagedMaintenanceWindowStatu(cancellationToken);

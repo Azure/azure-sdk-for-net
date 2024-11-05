@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string name = default;
             bool? enableAcceleratedNetworking = default;
             WritableSubResource dscpConfiguration = default;
-            IList<IPConfiguration> ipConfigurations = default;
+            IList<ServiceFabricManagedClusterIPConfiguration> ipConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (property.NameEquals("ipConfigurations"u8))
                 {
-                    List<IPConfiguration> array = new List<IPConfiguration>();
+                    List<ServiceFabricManagedClusterIPConfiguration> array = new List<ServiceFabricManagedClusterIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPConfiguration.DeserializeIPConfiguration(item, options));
+                        array.Add(ServiceFabricManagedClusterIPConfiguration.DeserializeServiceFabricManagedClusterIPConfiguration(item, options));
                     }
                     ipConfigurations = array;
                     continue;

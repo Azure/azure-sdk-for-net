@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="name"> Name of the network interface. </param>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="ipConfigurations"/> is null. </exception>
-        public AdditionalNetworkInterfaceConfiguration(string name, IEnumerable<IPConfiguration> ipConfigurations)
+        public AdditionalNetworkInterfaceConfiguration(string name, IEnumerable<ServiceFabricManagedClusterIPConfiguration> ipConfigurations)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(ipConfigurations, nameof(ipConfigurations));
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="dscpConfiguration"> Specifies the DSCP configuration to apply to the network interface. </param>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdditionalNetworkInterfaceConfiguration(string name, bool? enableAcceleratedNetworking, WritableSubResource dscpConfiguration, IList<IPConfiguration> ipConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AdditionalNetworkInterfaceConfiguration(string name, bool? enableAcceleratedNetworking, WritableSubResource dscpConfiguration, IList<ServiceFabricManagedClusterIPConfiguration> ipConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
@@ -100,6 +100,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Specifies the IP configurations of the network interface. </summary>
-        public IList<IPConfiguration> IPConfigurations { get; }
+        public IList<ServiceFabricManagedClusterIPConfiguration> IPConfigurations { get; }
     }
 }

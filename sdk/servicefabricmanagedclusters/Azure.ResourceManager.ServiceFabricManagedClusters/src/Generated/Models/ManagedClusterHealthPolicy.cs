@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// Defines a health policy used to evaluate the health of the cluster or of a cluster node.
     ///
     /// </summary>
-    public partial class ClusterHealthPolicy
+    public partial class ManagedClusterHealthPolicy
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterHealthPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterHealthPolicy"/>. </summary>
         /// <param name="maxPercentUnhealthyNodes">
         /// The maximum allowed percentage of unhealthy nodes before reporting an error. For example, to allow 10% of nodes to be unhealthy, this value would be 10.
         ///
@@ -69,13 +69,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// The computation rounds up to tolerate one failure on small numbers of applications. Default percentage is zero.
         ///
         /// </param>
-        public ClusterHealthPolicy(int maxPercentUnhealthyNodes, int maxPercentUnhealthyApplications)
+        public ManagedClusterHealthPolicy(int maxPercentUnhealthyNodes, int maxPercentUnhealthyApplications)
         {
             MaxPercentUnhealthyNodes = maxPercentUnhealthyNodes;
             MaxPercentUnhealthyApplications = maxPercentUnhealthyApplications;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterHealthPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterHealthPolicy"/>. </summary>
         /// <param name="maxPercentUnhealthyNodes">
         /// The maximum allowed percentage of unhealthy nodes before reporting an error. For example, to allow 10% of nodes to be unhealthy, this value would be 10.
         ///
@@ -97,15 +97,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         ///
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterHealthPolicy(int maxPercentUnhealthyNodes, int maxPercentUnhealthyApplications, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterHealthPolicy(int maxPercentUnhealthyNodes, int maxPercentUnhealthyApplications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxPercentUnhealthyNodes = maxPercentUnhealthyNodes;
             MaxPercentUnhealthyApplications = maxPercentUnhealthyApplications;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterHealthPolicy"/> for deserialization. </summary>
-        internal ClusterHealthPolicy()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterHealthPolicy"/> for deserialization. </summary>
+        internal ManagedClusterHealthPolicy()
         {
         }
 

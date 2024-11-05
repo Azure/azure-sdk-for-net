@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="isRegionReady"> Indicates if the region is ready to configure maintenance windows. </param>
         /// <param name="isWindowActive"> If maintenance window is active. </param>
         /// <param name="canApplyUpdates"> If updates can be applied. </param>
-        /// <param name="lastWindowStatusUpdateAtUTC"> Last window update time in UTC. </param>
-        /// <param name="lastWindowStartTimeUTC"> Last window start time in UTC. </param>
-        /// <param name="lastWindowEndTimeUTC"> Last window end time in UTC. </param>
+        /// <param name="lastWindowStatusUpdatedOn"> Last window update time in UTC. </param>
+        /// <param name="lastWindowStartOn"> Last window start time in UTC. </param>
+        /// <param name="lastWindowEndOn"> Last window end time in UTC. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedMaintenanceWindowStatus(bool? isWindowEnabled, bool? isRegionReady, bool? isWindowActive, bool? canApplyUpdates, DateTimeOffset? lastWindowStatusUpdateAtUTC, DateTimeOffset? lastWindowStartTimeUTC, DateTimeOffset? lastWindowEndTimeUTC, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedMaintenanceWindowStatus(bool? isWindowEnabled, bool? isRegionReady, bool? isWindowActive, bool? canApplyUpdates, DateTimeOffset? lastWindowStatusUpdatedOn, DateTimeOffset? lastWindowStartOn, DateTimeOffset? lastWindowEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsWindowEnabled = isWindowEnabled;
             IsRegionReady = isRegionReady;
             IsWindowActive = isWindowActive;
             CanApplyUpdates = canApplyUpdates;
-            LastWindowStatusUpdateAtUTC = lastWindowStatusUpdateAtUTC;
-            LastWindowStartTimeUTC = lastWindowStartTimeUTC;
-            LastWindowEndTimeUTC = lastWindowEndTimeUTC;
+            LastWindowStatusUpdatedOn = lastWindowStatusUpdatedOn;
+            LastWindowStartOn = lastWindowStartOn;
+            LastWindowEndOn = lastWindowEndOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> If updates can be applied. </summary>
         public bool? CanApplyUpdates { get; }
         /// <summary> Last window update time in UTC. </summary>
-        public DateTimeOffset? LastWindowStatusUpdateAtUTC { get; }
+        public DateTimeOffset? LastWindowStatusUpdatedOn { get; }
         /// <summary> Last window start time in UTC. </summary>
-        public DateTimeOffset? LastWindowStartTimeUTC { get; }
+        public DateTimeOffset? LastWindowStartOn { get; }
         /// <summary> Last window end time in UTC. </summary>
-        public DateTimeOffset? LastWindowEndTimeUTC { get; }
+        public DateTimeOffset? LastWindowEndOn { get; }
     }
 }

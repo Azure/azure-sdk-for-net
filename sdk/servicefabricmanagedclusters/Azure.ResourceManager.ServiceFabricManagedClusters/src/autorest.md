@@ -102,6 +102,7 @@ rename-mapping:
   ManagedCluster.properties.ipv4Address: -|ip-address
   ManagedCluster.properties.ipv6Address: -|ip-address
   ManagedCluster.properties.zonalResiliency: HasZoneResiliency
+  ManagedCluster.properties.enableHttpGatewayExclusiveAuthMode: IsHttpGatewayExclusiveAuthModeEnabled
   
   Subnet: ManagedClusterSubnet
   Subnet.enableIpv6: IsIPv6Enabled
@@ -129,6 +130,7 @@ rename-mapping:
   NodeType.properties.enableEncryptionAtHost: IsEncryptionAtHostEnabled
   NodeType.properties.enableOverProvisioning: IsOverProvisioningEnabled
   NodeType.properties.multiplePlacementGroups: HasMultiplePlacementGroups
+  NodeType.properties.enableNodePublicIPv6: IsNodePublicIPv6Enabled
   VmssDataDisk: NodeTypeVmssDataDisk
   VmssDataDisk.diskSizeGB: DiskSizeInGB
   VmssExtension: NodeTypeVmssExtension
@@ -175,6 +177,17 @@ rename-mapping:
   ResourceAzStatus.resourceType: -|resource-type
   SecurityType: ServiceFabricManagedClusterSecurityType
   UpdateType: ServiceFabricManagedClusterUpdateType
+  ClusterHealthPolicy: ManagedClusterHealthPolicy
+  ClusterUpgradePolicy: ManagedClusterUpgradePolicy
+  ClusterUpgradeDeltaHealthPolicy: ManagedClusterUpgradeDeltaHealthPolicy
+  ClusterMonitoringPolicy: ManagedClusterMonitoringPolicy
+  PrivateIPAddressVersion: ServiceFabricManagedClusterPrivateIPAddressVersion
+  PublicIPAddressVersion: ServiceFabricManagedClusterPublicIPAddressVersion
+  IpConfiguration: ServiceFabricManagedClusterIPConfiguration
+  IpConfigurationPublicIPAddressConfiguration: ServiceFabricManagedClusterPublicIPAddressConfiguration
+  ManagedMaintenanceWindowStatus.lastWindowStatusUpdateAtUTC: LastWindowStatusUpdatedOn
+  ManagedMaintenanceWindowStatus.lastWindowStartTimeUTC: LastWindowStartOn
+  ManagedMaintenanceWindowStatus.lastWindowEndTimeUTC: LastWindowEndOn
 
 suppress-abstract-base-class:
 - ManagedServiceProperties
