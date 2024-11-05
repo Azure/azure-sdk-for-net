@@ -28,6 +28,11 @@ namespace Azure.Health.Deidentification
             writer.WriteStartObject();
             writer.WritePropertyName("inputText"u8);
             writer.WriteStringValue(InputText);
+            if (Optional.IsDefined(Operation))
+            {
+                writer.WritePropertyName("operation"u8);
+                writer.WriteStringValue(Operation.Value.ToString());
+            }
             if (Optional.IsDefined(Customizations))
             {
                 writer.WritePropertyName("customizations"u8);
@@ -72,6 +77,7 @@ namespace Azure.Health.Deidentification
                 return null;
             }
             string inputText = default;
+            OperationType? operation = default;
             CustomizationOptions customizations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -80,6 +86,15 @@ namespace Azure.Health.Deidentification
                 if (property.NameEquals("inputText"u8))
                 {
                     inputText = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("operation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    operation = new OperationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("customizations"u8))
@@ -97,7 +112,7 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeidentificationContent(inputText, customizations, serializedAdditionalRawData);
+            return new DeidentificationContent(inputText, operation, customizations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeidentificationContent>.Write(ModelReaderWriterOptions options)

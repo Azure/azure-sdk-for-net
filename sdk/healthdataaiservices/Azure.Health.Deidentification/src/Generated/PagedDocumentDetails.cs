@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Request body for de-identification operation. </summary>
-    public partial class DeidentificationContent
+    /// <summary> Paginated details of all documents in a job. </summary>
+    public partial class PagedDocumentDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,39 +45,36 @@ namespace Azure.Health.Deidentification
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
-        /// <param name="inputText"> Input text to de-identify. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputText"/> is null. </exception>
-        public DeidentificationContent(string inputText)
+        /// <summary> Initializes a new instance of <see cref="PagedDocumentDetails"/>. </summary>
+        /// <param name="nextLink"> Token to continue a previous query. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        internal PagedDocumentDetails(string nextLink)
         {
-            Argument.AssertNotNull(inputText, nameof(inputText));
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            InputText = inputText;
+            Value = new ChangeTrackingList<DocumentDetails>();
+            NextLink = nextLink;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
-        /// <param name="inputText"> Input text to de-identify. </param>
-        /// <param name="operation"> Operation to perform on the input documents. </param>
-        /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
+        /// <summary> Initializes a new instance of <see cref="PagedDocumentDetails"/>. </summary>
+        /// <param name="value"> List of documents. </param>
+        /// <param name="nextLink"> Token to continue a previous query. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationContent(string inputText, OperationType? operation, CustomizationOptions customizations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PagedDocumentDetails(IReadOnlyList<DocumentDetails> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            InputText = inputText;
-            Operation = operation;
-            Customizations = customizations;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/> for deserialization. </summary>
-        internal DeidentificationContent()
+        /// <summary> Initializes a new instance of <see cref="PagedDocumentDetails"/> for deserialization. </summary>
+        internal PagedDocumentDetails()
         {
         }
 
-        /// <summary> Input text to de-identify. </summary>
-        public string InputText { get; }
-        /// <summary> Operation to perform on the input documents. </summary>
-        public OperationType? Operation { get; set; }
-        /// <summary> Customization parameters to override default service behaviors. </summary>
-        public CustomizationOptions Customizations { get; set; }
+        /// <summary> List of documents. </summary>
+        public IReadOnlyList<DocumentDetails> Value { get; }
+        /// <summary> Token to continue a previous query. </summary>
+        public string NextLink { get; }
     }
 }
