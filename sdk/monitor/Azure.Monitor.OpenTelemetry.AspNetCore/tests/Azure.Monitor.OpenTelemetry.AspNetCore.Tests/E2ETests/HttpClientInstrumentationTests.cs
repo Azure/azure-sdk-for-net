@@ -148,7 +148,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             var activities = new List<Activity>();
             var serviceCollection = new ServiceCollection();
 
-            // This shouldn't be needed but Http Instrumentation library was performing redaction without it.
             serviceCollection.AddEnvironmentVariables(new Dictionary<string, string?> { { "OTEL_DOTNET_EXPERIMENTAL_HTTPCLIENT_DISABLE_URL_QUERY_REDACTION", (!redactionEnabled).ToString() } });
 
             serviceCollection.AddOpenTelemetry()
@@ -166,14 +165,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             string url = "/custom-endpoint?key=value";
             var httpclient = new HttpClient();
 
-            try
-            {
-                await httpclient.GetAsync(baseAddress + url);
-            }
-            catch
-            {
-                // Do nothing
-            }
+            await httpclient.GetAsync(baseAddress + url);
 
             // SHUTDOWN
             tracerProvider.ForceFlush();
