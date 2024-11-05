@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Search.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Search.Samples
 {
     public partial class Sample_SearchServiceResource
     {
-        // SearchGetAdminKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAdminKey_SearchGetAdminKeys()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchGetAdminKeys.json
@@ -44,9 +44,8 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SearchRegenerateAdminKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateAdminKey_SearchRegenerateAdminKey()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchRegenerateAdminKey.json
@@ -72,9 +71,8 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SearchCreateQueryKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateQueryKey_SearchCreateQueryKey()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchCreateQueryKey.json
@@ -100,9 +98,8 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SearchListQueryKeysBySearchService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetQueryKeysBySearchService_SearchListQueryKeysBySearchService()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchListQueryKeysBySearchService.json
@@ -127,12 +124,11 @@ namespace Azure.ResourceManager.Search.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SearchDeleteQueryKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteQueryKey_SearchDeleteQueryKey()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchDeleteQueryKey.json
@@ -155,12 +151,11 @@ namespace Azure.ResourceManager.Search.Samples
             string key = "<a query API key>";
             await searchService.DeleteQueryKeyAsync(key);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SearchUpdateService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SearchUpdateService()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateService.json
@@ -198,9 +193,8 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SearchUpdateServiceAuthOptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SearchUpdateServiceAuthOptions()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceAuthOptions.json
@@ -242,9 +236,8 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SearchUpdateServiceDisableLocalAuth
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SearchUpdateServiceDisableLocalAuth()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceDisableLocalAuth.json
@@ -283,9 +276,8 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SearchUpdateServiceToAllowAccessFromPrivateEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SearchUpdateServiceToAllowAccessFromPrivateEndpoints()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceToAllowAccessFromPrivateEndpoints.json
@@ -320,9 +312,8 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SearchUpdateServiceToAllowAccessFromPublicCustomIPs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SearchUpdateServiceToAllowAccessFromPublicCustomIPs()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceToAllowAccessFromPublicCustomIPs.json
@@ -370,9 +361,8 @@ Value = "123.4.6.0/18",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SearchUpdateServiceToAllowAccessFromPublicCustomIPsAndBypass
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SearchUpdateServiceToAllowAccessFromPublicCustomIPsAndBypass()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceToAllowAccessFromPublicCustomIPsAndBypass.json
@@ -421,9 +411,8 @@ Value = "123.4.6.0/18",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SearchUpdateServiceToRemoveIdentity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SearchUpdateServiceToRemoveIdentity()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceToRemoveIdentity.json
@@ -457,9 +446,8 @@ Value = "123.4.6.0/18",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SearchUpdateServiceWithCmkEnforcement
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SearchUpdateServiceWithCmkEnforcement()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceWithCmkEnforcement.json
@@ -501,9 +489,8 @@ Value = "123.4.6.0/18",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SearchUpdateServiceWithDataExfiltration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SearchUpdateServiceWithDataExfiltration()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceWithDataExfiltration.json
@@ -545,9 +532,8 @@ SearchDisabledDataExfiltrationOption.All
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SearchUpdateServiceWithSemanticSearch
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SearchUpdateServiceWithSemanticSearch()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceWithSemanticSearch.json
@@ -586,9 +572,8 @@ SearchDisabledDataExfiltrationOption.All
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SearchGetService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SearchGetService()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchGetService.json
@@ -617,9 +602,8 @@ SearchDisabledDataExfiltrationOption.All
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SearchDeleteService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SearchDeleteService()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchDeleteService.json
@@ -641,12 +625,11 @@ SearchDisabledDataExfiltrationOption.All
             // invoke the operation
             await searchService.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SearchListServicesBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSearchServices_SearchListServicesBySubscription()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchListServicesBySubscription.json
@@ -673,12 +656,11 @@ SearchDisabledDataExfiltrationOption.All
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SearchCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckSearchServiceNameAvailability_SearchCheckNameAvailability()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchCheckNameAvailability.json
@@ -702,9 +684,8 @@ SearchDisabledDataExfiltrationOption.All
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListSupportedPrivateLinkResources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSupportedPrivateLinkResources_ListSupportedPrivateLinkResources()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/ListSupportedPrivateLinkResources.json
@@ -729,7 +710,7 @@ SearchDisabledDataExfiltrationOption.All
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

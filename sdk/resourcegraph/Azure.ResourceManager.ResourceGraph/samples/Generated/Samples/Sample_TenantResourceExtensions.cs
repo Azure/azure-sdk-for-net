@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ResourceGraph.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ResourceGraph.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {
-        // Access a properties field
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_AccessAPropertiesField()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesPropertiesQuery.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Basic management group query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_BasicManagementGroupQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesMgBasicQuery.json
@@ -75,9 +74,8 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Basic query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_BasicQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesBasicQuery.json
@@ -105,9 +103,8 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Basic tenant query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_BasicTenantQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesTenantBasicQuery.json
@@ -129,9 +126,8 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Complex query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_ComplexQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesComplexQuery.json
@@ -159,9 +155,8 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Filter resources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_FilterResources()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesFilterQuery.json
@@ -189,9 +184,8 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // First page query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_FirstPageQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesFirstPageQuery.json
@@ -224,9 +218,8 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Next page query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_NextPageQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesNextPageQuery.json
@@ -258,9 +251,8 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Query with a facet request
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_QueryWithAFacetRequest()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesFacetQuery.json
@@ -328,9 +320,8 @@ Top = 3,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Random page query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_RandomPageQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesRandomPageQuery.json
@@ -363,9 +354,8 @@ Top = 3,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Summarize resources by location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_SummarizeResourcesByLocation()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesSummarizeQuery.json
@@ -393,9 +383,8 @@ Top = 3,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Resource History Management Group scope Query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResourceHistory_ResourceHistoryManagementGroupScopeQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesHistoryMgsGet.json
@@ -428,9 +417,8 @@ Top = 3,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Resource History Query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResourceHistory_ResourceHistoryQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesHistoryGet.json
