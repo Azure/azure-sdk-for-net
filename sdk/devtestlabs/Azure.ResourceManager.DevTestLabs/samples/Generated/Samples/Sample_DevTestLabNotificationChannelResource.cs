@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DevTestLabs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabNotificationChannelResource
     {
-        // NotificationChannels_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NotificationChannelsGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/NotificationChannels_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NotificationChannels_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_NotificationChannelsDelete()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/NotificationChannels_Delete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabNotificationChannelResource devTestLabNotificationChannel = client.GetDevTestLabNotificationChannelResource(devTestLabNotificationChannelResourceId);
 
             // invoke the operation
-            await devTestLabNotificationChannel.DeleteAsync(WaitUntil.Completed);
+            await devTestLabNotificationChannel.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // NotificationChannels_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_NotificationChannelsUpdate()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/NotificationChannels_Update.json
@@ -108,9 +106,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NotificationChannels_Notify
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Notify_NotificationChannelsNotify()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/NotificationChannels_Notify.json
@@ -131,14 +128,14 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabNotificationChannelResource devTestLabNotificationChannel = client.GetDevTestLabNotificationChannelResource(devTestLabNotificationChannelResourceId);
 
             // invoke the operation
-            DevTestLabNotificationChannelNotifyContent content = new DevTestLabNotificationChannelNotifyContent()
+            DevTestLabNotificationChannelNotifyContent content = new DevTestLabNotificationChannelNotifyContent
             {
                 EventName = DevTestLabNotificationChannelEventType.AutoShutdown,
                 JsonPayload = "{\"eventType\":\"AutoShutdown\",\"subscriptionId\":\"{subscriptionId}\",\"resourceGroupName\":\"resourceGroupName\",\"labName\":\"{labName}\"}",
             };
-            await devTestLabNotificationChannel.NotifyAsync(content);
+            await devTestLabNotificationChannel.NotifyAsync(content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

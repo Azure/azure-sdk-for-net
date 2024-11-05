@@ -10,47 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Elastic.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Elastic.Samples
 {
     public partial class Sample_ElasticMonitorResource
     {
-        // Monitors_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetElasticMonitorResources_MonitorsList()
-        {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/Monitors_List.json
-            // this example is just showing the usage of "Monitors_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ElasticMonitorResource item in subscriptionResource.GetElasticMonitorResourcesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ElasticMonitorResourceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Monitors_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MonitorsGet()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/Monitors_Get.json
@@ -79,9 +46,34 @@ namespace Azure.ResourceManager.Elastic.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_MonitorsDelete()
+        {
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/Monitors_Delete.json
+            // this example is just showing the usage of "Monitors_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ElasticMonitorResource created on azure
+            // for more information of creating ElasticMonitorResource, please refer to the document of ElasticMonitorResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string monitorName = "myMonitor";
+            ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
+            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+
+            // invoke the operation
+            await elasticMonitorResource.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_MonitorsUpdate()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/Monitors_Update.json
@@ -112,36 +104,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_MonitorsDelete()
-        {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/Monitors_Delete.json
-            // this example is just showing the usage of "Monitors_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ElasticMonitorResource created on azure
-            // for more information of creating ElasticMonitorResource, please refer to the document of ElasticMonitorResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string monitorName = "myMonitor";
-            ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
-
-            // invoke the operation
-            await elasticMonitorResource.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // MonitoredResources_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMonitoredResources_MonitoredResourcesList()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/MonitoredResources_List.json
@@ -166,12 +130,11 @@ namespace Azure.ResourceManager.Elastic.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DeploymentInfo_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDeploymentInfo_DeploymentInfoList()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/DeploymentInfo_List.json
@@ -196,9 +159,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExternalUser_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateExternalUser_ExternalUserCreateOrUpdate()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/ExternalUserInfo.json
@@ -223,9 +185,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BillingInfo_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingInfo_BillingInfoGet()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/BillingInfo_Get.json
@@ -250,9 +211,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ConnectedPartnerResources_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConnectedPartnerResources_ConnectedPartnerResourcesList()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/ConnectedPartnerResources_List.json
@@ -277,12 +237,11 @@ namespace Azure.ResourceManager.Elastic.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VMHost_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVMHosts_VMHostList()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/VMHost_List.json
@@ -307,12 +266,11 @@ namespace Azure.ResourceManager.Elastic.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VMIngestion_Details
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DetailsVMIngestion_VMIngestionDetails()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/VMIngestion_Details.json
@@ -337,9 +295,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VMCollection_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateVMCollection_VMCollectionUpdate()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/VMCollection_Update.json
@@ -359,14 +316,13 @@ namespace Azure.ResourceManager.Elastic.Samples
             ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            await elasticMonitorResource.UpdateVMCollectionAsync();
+            await elasticMonitorResource.UpdateVMCollectionAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // UpgradableVersions_Details
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DetailsUpgradableVersion_UpgradableVersionsDetails()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/UpgradableVersions_Details.json
@@ -391,9 +347,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitor_Upgrade
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpgradeMonitor_MonitorUpgrade()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/Monitor_Upgrade.json
@@ -413,14 +368,13 @@ namespace Azure.ResourceManager.Elastic.Samples
             ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            await elasticMonitorResource.UpgradeMonitorAsync(WaitUntil.Completed);
+            await elasticMonitorResource.UpgradeMonitorAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AllTrafficFilters_list
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllTrafficFilter_AllTrafficFiltersList()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/AllTrafficFilters_list.json
@@ -445,9 +399,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // listAssociatedTrafficFilters_list
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetListAssociatedTrafficFilter_ListAssociatedTrafficFiltersList()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/AssociatedFiltersForDeployment_list.json
@@ -472,9 +425,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // createAndAssociateIPFilter_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateCreateAndAssociateIPFilter_CreateAndAssociateIPFilterCreate()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/IPTrafficFilter_Create.json
@@ -495,14 +447,13 @@ namespace Azure.ResourceManager.Elastic.Samples
 
             // invoke the operation
             string ips = "192.168.131.0, 192.168.132.6/22";
-            await elasticMonitorResource.CreateCreateAndAssociateIPFilterAsync(WaitUntil.Completed, ips: ips);
+            await elasticMonitorResource.CreateCreateAndAssociateIPFilterAsync(WaitUntil.Completed, ips).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // createAndAssociatePLFilter_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateCreateAndAssociatePLFilter_CreateAndAssociatePLFilterCreate()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/PrivateLinkTrafficFilters_Create.json
@@ -524,14 +475,13 @@ namespace Azure.ResourceManager.Elastic.Samples
             // invoke the operation
             string privateEndpointGuid = "fdb54d3b-e85e-4d08-8958-0d2f7g523df9";
             string privateEndpointName = "myPrivateEndpoint";
-            await elasticMonitorResource.CreateCreateAndAssociatePLFilterAsync(WaitUntil.Completed, privateEndpointGuid: privateEndpointGuid, privateEndpointName: privateEndpointName);
+            await elasticMonitorResource.CreateCreateAndAssociatePLFilterAsync(WaitUntil.Completed, privateEndpointGuid, privateEndpointName).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AssociateTrafficFilter_Associate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AssociateAssociateTrafficFilter_AssociateTrafficFilterAssociate()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/AssociateTrafficFilter_Update.json
@@ -552,14 +502,13 @@ namespace Azure.ResourceManager.Elastic.Samples
 
             // invoke the operation
             string rulesetId = "31d91b5afb6f4c2eaaf104c97b1991dd";
-            await elasticMonitorResource.AssociateAssociateTrafficFilterAsync(WaitUntil.Completed, rulesetId: rulesetId);
+            await elasticMonitorResource.AssociateAssociateTrafficFilterAsync(WaitUntil.Completed, rulesetId).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DetachAndDeleteTrafficFilter_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteDetachAndDeleteTrafficFilter_DetachAndDeleteTrafficFilterDelete()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/DetachAndDeleteTrafficFilter_Delete.json
@@ -580,14 +529,13 @@ namespace Azure.ResourceManager.Elastic.Samples
 
             // invoke the operation
             string rulesetId = "31d91b5afb6f4c2eaaf104c97b1991dd";
-            await elasticMonitorResource.DeleteDetachAndDeleteTrafficFilterAsync(rulesetId: rulesetId);
+            await elasticMonitorResource.DeleteDetachAndDeleteTrafficFilterAsync(rulesetId).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DetachTrafficFilter_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateDetachTrafficFilter_DetachTrafficFilterUpdate()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/DetachTrafficFilters_Update.json
@@ -608,14 +556,13 @@ namespace Azure.ResourceManager.Elastic.Samples
 
             // invoke the operation
             string rulesetId = "31d91b5afb6f4c2eaaf104c97b1991dd";
-            await elasticMonitorResource.UpdateDetachTrafficFilterAsync(WaitUntil.Completed, rulesetId: rulesetId);
+            await elasticMonitorResource.UpdateDetachTrafficFilterAsync(WaitUntil.Completed, rulesetId).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // TrafficFilters_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteTrafficFilter_TrafficFiltersDelete()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/TrafficFilters_Delete.json
@@ -636,14 +583,13 @@ namespace Azure.ResourceManager.Elastic.Samples
 
             // invoke the operation
             string rulesetId = "31d91b5afb6f4c2eaaf104c97b1991dd";
-            await elasticMonitorResource.DeleteTrafficFilterAsync(rulesetId: rulesetId);
+            await elasticMonitorResource.DeleteTrafficFilterAsync(rulesetId).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Organizations_Resubscribe
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResubscribeOrganization_OrganizationsResubscribe()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/Organizations_Resubscribe.json

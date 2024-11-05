@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventGrid.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {
     public partial class Sample_PartnerTopicEventSubscriptionResource
     {
-        // PartnerTopicEventSubscriptions_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PartnerTopicEventSubscriptionsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopicEventSubscriptions_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PartnerTopicEventSubscriptions_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PartnerTopicEventSubscriptionsDelete()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopicEventSubscriptions_Delete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.EventGrid.Samples
             PartnerTopicEventSubscriptionResource partnerTopicEventSubscription = client.GetPartnerTopicEventSubscriptionResource(partnerTopicEventSubscriptionResourceId);
 
             // invoke the operation
-            await partnerTopicEventSubscription.DeleteAsync(WaitUntil.Completed);
+            await partnerTopicEventSubscription.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PartnerTopicEventSubscriptions_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PartnerTopicEventSubscriptionsUpdate()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopicEventSubscriptions_Update.json
@@ -98,22 +96,19 @@ namespace Azure.ResourceManager.EventGrid.Samples
             PartnerTopicEventSubscriptionResource partnerTopicEventSubscription = client.GetPartnerTopicEventSubscriptionResource(partnerTopicEventSubscriptionResourceId);
 
             // invoke the operation
-            EventGridSubscriptionPatch patch = new EventGridSubscriptionPatch()
+            EventGridSubscriptionPatch patch = new EventGridSubscriptionPatch
             {
-                Destination = new WebHookEventSubscriptionDestination()
+                Destination = new WebHookEventSubscriptionDestination
                 {
                     Endpoint = new Uri("https://requestb.in/15ksip71"),
                 },
-                Filter = new EventSubscriptionFilter()
+                Filter = new EventSubscriptionFilter
                 {
                     SubjectBeginsWith = "existingPrefix",
                     SubjectEndsWith = "newSuffix",
                     IsSubjectCaseSensitive = true,
                 },
-                Labels =
-{
-"label1","label2"
-},
+                Labels = { "label1", "label2" },
             };
             ArmOperation<PartnerTopicEventSubscriptionResource> lro = await partnerTopicEventSubscription.UpdateAsync(WaitUntil.Completed, patch);
             PartnerTopicEventSubscriptionResource result = lro.Value;
@@ -125,9 +120,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PartnerTopicEventSubscriptions_GetFullUrl
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFullUri_PartnerTopicEventSubscriptionsGetFullUrl()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopicEventSubscriptions_GetFullUrl.json
@@ -153,9 +147,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PartnerTopicEventSubscriptions_GetDeliveryAttributes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDeliveryAttributes_PartnerTopicEventSubscriptionsGetDeliveryAttributes()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopicEventSubscriptions_GetDeliveryAttributes.json
@@ -181,7 +174,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

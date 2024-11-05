@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DevTestLabs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabFormulaResource
     {
-        // Formulas_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FormulasGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Formulas_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Formulas_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_FormulasDelete()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Formulas_Delete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabFormulaResource devTestLabFormula = client.GetDevTestLabFormulaResource(devTestLabFormulaResourceId);
 
             // invoke the operation
-            await devTestLabFormula.DeleteAsync(WaitUntil.Completed);
+            await devTestLabFormula.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Formulas_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_FormulasUpdate()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Formulas_Update.json
@@ -98,11 +96,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabFormulaResource devTestLabFormula = client.GetDevTestLabFormulaResource(devTestLabFormulaResourceId);
 
             // invoke the operation
-            DevTestLabFormulaPatch patch = new DevTestLabFormulaPatch()
+            DevTestLabFormulaPatch patch = new DevTestLabFormulaPatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabFormulaResource result = await devTestLabFormula.UpdateAsync(patch);

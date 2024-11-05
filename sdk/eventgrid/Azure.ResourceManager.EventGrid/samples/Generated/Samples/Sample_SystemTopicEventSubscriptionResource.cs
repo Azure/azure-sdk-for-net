@@ -10,45 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventGrid.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {
     public partial class Sample_SystemTopicEventSubscriptionResource
     {
-        // SystemTopicEventSubscriptions_GetDeliveryAttributes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetDeliveryAttributes_SystemTopicEventSubscriptionsGetDeliveryAttributes()
-        {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopicEventSubscriptions_GetDeliveryAttributes.json
-            // this example is just showing the usage of "SystemTopicEventSubscriptions_GetDeliveryAttributes" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SystemTopicEventSubscriptionResource created on azure
-            // for more information of creating SystemTopicEventSubscriptionResource, please refer to the document of SystemTopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
-            string resourceGroupName = "examplerg";
-            string systemTopicName = "exampleSystemTopic1";
-            string eventSubscriptionName = "examplesubscription1";
-            ResourceIdentifier systemTopicEventSubscriptionResourceId = SystemTopicEventSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, systemTopicName, eventSubscriptionName);
-            SystemTopicEventSubscriptionResource systemTopicEventSubscription = client.GetSystemTopicEventSubscriptionResource(systemTopicEventSubscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (DeliveryAttributeMapping item in systemTopicEventSubscription.GetDeliveryAttributesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // SystemTopicEventSubscriptions_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SystemTopicEventSubscriptionsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopicEventSubscriptions_Get.json
@@ -78,9 +47,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SystemTopicEventSubscriptions_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SystemTopicEventSubscriptionsDelete()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopicEventSubscriptions_Delete.json
@@ -101,14 +69,13 @@ namespace Azure.ResourceManager.EventGrid.Samples
             SystemTopicEventSubscriptionResource systemTopicEventSubscription = client.GetSystemTopicEventSubscriptionResource(systemTopicEventSubscriptionResourceId);
 
             // invoke the operation
-            await systemTopicEventSubscription.DeleteAsync(WaitUntil.Completed);
+            await systemTopicEventSubscription.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SystemTopicEventSubscriptions_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SystemTopicEventSubscriptionsUpdate()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopicEventSubscriptions_Update.json
@@ -129,22 +96,19 @@ namespace Azure.ResourceManager.EventGrid.Samples
             SystemTopicEventSubscriptionResource systemTopicEventSubscription = client.GetSystemTopicEventSubscriptionResource(systemTopicEventSubscriptionResourceId);
 
             // invoke the operation
-            EventGridSubscriptionPatch patch = new EventGridSubscriptionPatch()
+            EventGridSubscriptionPatch patch = new EventGridSubscriptionPatch
             {
-                Destination = new WebHookEventSubscriptionDestination()
+                Destination = new WebHookEventSubscriptionDestination
                 {
                     Endpoint = new Uri("https://requestb.in/15ksip71"),
                 },
-                Filter = new EventSubscriptionFilter()
+                Filter = new EventSubscriptionFilter
                 {
                     SubjectBeginsWith = "existingPrefix",
                     SubjectEndsWith = "newSuffix",
                     IsSubjectCaseSensitive = true,
                 },
-                Labels =
-{
-"label1","label2"
-},
+                Labels = { "label1", "label2" },
             };
             ArmOperation<SystemTopicEventSubscriptionResource> lro = await systemTopicEventSubscription.UpdateAsync(WaitUntil.Completed, patch);
             SystemTopicEventSubscriptionResource result = lro.Value;
@@ -156,9 +120,38 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SystemTopicEventSubscriptions_GetFullUrl
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetDeliveryAttributes_SystemTopicEventSubscriptionsGetDeliveryAttributes()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopicEventSubscriptions_GetDeliveryAttributes.json
+            // this example is just showing the usage of "SystemTopicEventSubscriptions_GetDeliveryAttributes" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SystemTopicEventSubscriptionResource created on azure
+            // for more information of creating SystemTopicEventSubscriptionResource, please refer to the document of SystemTopicEventSubscriptionResource
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string resourceGroupName = "examplerg";
+            string systemTopicName = "exampleSystemTopic1";
+            string eventSubscriptionName = "examplesubscription1";
+            ResourceIdentifier systemTopicEventSubscriptionResourceId = SystemTopicEventSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, systemTopicName, eventSubscriptionName);
+            SystemTopicEventSubscriptionResource systemTopicEventSubscription = client.GetSystemTopicEventSubscriptionResource(systemTopicEventSubscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (DeliveryAttributeMapping item in systemTopicEventSubscription.GetDeliveryAttributesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFullUri_SystemTopicEventSubscriptionsGetFullUrl()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopicEventSubscriptions_GetFullUrl.json

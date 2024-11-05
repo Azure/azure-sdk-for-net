@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DeviceUpdate.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DeviceUpdate.Samples
 {
     public partial class Sample_DeviceUpdateInstanceResource
     {
-        // Gets list of Instances
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsListOfInstances()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/Instances/Instances_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes instance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesInstance()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/Instances/Instances_Delete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
             DeviceUpdateInstanceResource deviceUpdateInstance = client.GetDeviceUpdateInstanceResource(deviceUpdateInstanceResourceId);
 
             // invoke the operation
-            await deviceUpdateInstance.DeleteAsync(WaitUntil.Completed);
+            await deviceUpdateInstance.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Updates Instance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesInstance()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/Instances/Instances_Update.json
@@ -98,11 +96,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
             DeviceUpdateInstanceResource deviceUpdateInstance = client.GetDeviceUpdateInstanceResource(deviceUpdateInstanceResourceId);
 
             // invoke the operation
-            DeviceUpdateInstancePatch patch = new DeviceUpdateInstancePatch()
+            DeviceUpdateInstancePatch patch = new DeviceUpdateInstancePatch
             {
                 Tags =
 {
-["tagKey"] = "tagValue",
+["tagKey"] = "tagValue"
 },
             };
             DeviceUpdateInstanceResource result = await deviceUpdateInstance.UpdateAsync(patch);

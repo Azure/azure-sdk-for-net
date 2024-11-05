@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventGrid.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {
     public partial class Sample_PartnerNamespaceChannelResource
     {
-        // Channels_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ChannelsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/Channels_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Channels_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ChannelsDelete()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/Channels_Delete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.EventGrid.Samples
             PartnerNamespaceChannelResource partnerNamespaceChannel = client.GetPartnerNamespaceChannelResource(partnerNamespaceChannelResourceId);
 
             // invoke the operation
-            await partnerNamespaceChannel.DeleteAsync(WaitUntil.Completed);
+            await partnerNamespaceChannel.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Channels_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ChannelsUpdate()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/Channels_Update.json
@@ -98,18 +96,17 @@ namespace Azure.ResourceManager.EventGrid.Samples
             PartnerNamespaceChannelResource partnerNamespaceChannel = client.GetPartnerNamespaceChannelResource(partnerNamespaceChannelResourceId);
 
             // invoke the operation
-            PartnerNamespaceChannelPatch patch = new PartnerNamespaceChannelPatch()
+            PartnerNamespaceChannelPatch patch = new PartnerNamespaceChannelPatch
             {
-                ExpireOnIfNotActivated = DateTimeOffset.Parse("2022-03-23T23:06:11.785Z"),
+                ExpireOnIfNotActivated = default,
             };
-            await partnerNamespaceChannel.UpdateAsync(patch);
+            await partnerNamespaceChannel.UpdateAsync(patch).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Channels_GetFullUrl
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFullUri_ChannelsGetFullUrl()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/Channels_GetFullUrl.json

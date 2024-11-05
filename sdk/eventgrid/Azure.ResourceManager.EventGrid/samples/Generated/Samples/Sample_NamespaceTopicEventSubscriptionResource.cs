@@ -7,18 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventGrid.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {
     public partial class Sample_NamespaceTopicEventSubscriptionResource
     {
-        // NamespaceTopicEventSubscriptions_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NamespaceTopicEventSubscriptionsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/NamespaceTopicEventSubscriptions_Get.json
@@ -49,9 +48,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NamespaceTopicEventSubscriptions_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_NamespaceTopicEventSubscriptionsDelete()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/NamespaceTopicEventSubscriptions_Delete.json
@@ -73,14 +71,13 @@ namespace Azure.ResourceManager.EventGrid.Samples
             NamespaceTopicEventSubscriptionResource namespaceTopicEventSubscription = client.GetNamespaceTopicEventSubscriptionResource(namespaceTopicEventSubscriptionResourceId);
 
             // invoke the operation
-            await namespaceTopicEventSubscription.DeleteAsync(WaitUntil.Completed);
+            await namespaceTopicEventSubscription.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // NamespaceTopicEventSubscriptions_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_NamespaceTopicEventSubscriptionsUpdate()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/NamespaceTopicEventSubscriptions_Update.json
@@ -102,16 +99,16 @@ namespace Azure.ResourceManager.EventGrid.Samples
             NamespaceTopicEventSubscriptionResource namespaceTopicEventSubscription = client.GetNamespaceTopicEventSubscriptionResource(namespaceTopicEventSubscriptionResourceId);
 
             // invoke the operation
-            NamespaceTopicEventSubscriptionPatch patch = new NamespaceTopicEventSubscriptionPatch()
+            NamespaceTopicEventSubscriptionPatch patch = new NamespaceTopicEventSubscriptionPatch
             {
-                DeliveryConfiguration = new DeliveryConfiguration()
+                DeliveryConfiguration = new DeliveryConfiguration
                 {
                     DeliveryMode = DeliveryMode.Queue,
-                    Queue = new QueueInfo()
+                    Queue = new QueueInfo
                     {
                         ReceiveLockDurationInSeconds = 60,
                         MaxDeliveryCount = 3,
-                        EventTimeToLive = XmlConvert.ToTimeSpan("P1D"),
+                        EventTimeToLive = default,
                     },
                 },
                 EventDeliverySchema = DeliverySchema.CloudEventSchemaV10,
@@ -126,9 +123,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NamespaceTopicEventSubscriptions_GetDeliveryAttributes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDeliveryAttributes_NamespaceTopicEventSubscriptionsGetDeliveryAttributes()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/NamespaceTopicEventSubscriptions_GetDeliveryAttributes.json
@@ -155,12 +151,11 @@ namespace Azure.ResourceManager.EventGrid.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // NamespaceTopicEventSubscriptions_GetFullUrl
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFullUri_NamespaceTopicEventSubscriptionsGetFullUrl()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/NamespaceTopicEventSubscriptions_GetFullUrl.json

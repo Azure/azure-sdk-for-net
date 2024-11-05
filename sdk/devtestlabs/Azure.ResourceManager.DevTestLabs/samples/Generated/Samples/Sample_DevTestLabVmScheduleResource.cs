@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DevTestLabs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabVmScheduleResource
     {
-        // VirtualMachineSchedules_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VirtualMachineSchedulesGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachineSchedules_Get.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualMachineSchedules_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_VirtualMachineSchedulesDelete()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachineSchedules_Delete.json
@@ -72,14 +71,13 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabVmScheduleResource devTestLabVmSchedule = client.GetDevTestLabVmScheduleResource(devTestLabVmScheduleResourceId);
 
             // invoke the operation
-            await devTestLabVmSchedule.DeleteAsync(WaitUntil.Completed);
+            await devTestLabVmSchedule.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineSchedules_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_VirtualMachineSchedulesUpdate()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachineSchedules_Update.json
@@ -101,11 +99,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabVmScheduleResource devTestLabVmSchedule = client.GetDevTestLabVmScheduleResource(devTestLabVmScheduleResourceId);
 
             // invoke the operation
-            DevTestLabSchedulePatch patch = new DevTestLabSchedulePatch()
+            DevTestLabSchedulePatch patch = new DevTestLabSchedulePatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabVmScheduleResource result = await devTestLabVmSchedule.UpdateAsync(patch);
@@ -117,9 +115,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualMachineSchedules_Execute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Execute_VirtualMachineSchedulesExecute()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachineSchedules_Execute.json
@@ -141,9 +138,9 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabVmScheduleResource devTestLabVmSchedule = client.GetDevTestLabVmScheduleResource(devTestLabVmScheduleResourceId);
 
             // invoke the operation
-            await devTestLabVmSchedule.ExecuteAsync(WaitUntil.Completed);
+            await devTestLabVmSchedule.ExecuteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

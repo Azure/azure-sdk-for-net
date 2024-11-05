@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DevTestLabs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabVirtualNetworkResource
     {
-        // VirtualNetworks_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VirtualNetworksGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualNetworks_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualNetworks_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_VirtualNetworksDelete()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualNetworks_Delete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabVirtualNetworkResource devTestLabVirtualNetwork = client.GetDevTestLabVirtualNetworkResource(devTestLabVirtualNetworkResourceId);
 
             // invoke the operation
-            await devTestLabVirtualNetwork.DeleteAsync(WaitUntil.Completed);
+            await devTestLabVirtualNetwork.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualNetworks_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_VirtualNetworksUpdate()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualNetworks_Update.json
@@ -98,11 +96,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabVirtualNetworkResource devTestLabVirtualNetwork = client.GetDevTestLabVirtualNetworkResource(devTestLabVirtualNetworkResourceId);
 
             // invoke the operation
-            DevTestLabVirtualNetworkPatch patch = new DevTestLabVirtualNetworkPatch()
+            DevTestLabVirtualNetworkPatch patch = new DevTestLabVirtualNetworkPatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabVirtualNetworkResource result = await devTestLabVirtualNetwork.UpdateAsync(patch);

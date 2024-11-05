@@ -10,14 +10,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DevTestLabs.Models;
+using Azure.ResourceManager.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabServiceRunnerResource
     {
-        // ServiceRunners_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ServiceRunnersGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceRunners_Get.json
@@ -47,9 +48,35 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServiceRunners_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ServiceRunnersDelete()
+        {
+            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceRunners_Delete.json
+            // this example is just showing the usage of "ServiceRunners_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabServiceRunnerResource created on azure
+            // for more information of creating DevTestLabServiceRunnerResource, please refer to the document of DevTestLabServiceRunnerResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string labName = "{devtestlabName}";
+            string name = "{servicerunnerName}";
+            ResourceIdentifier devTestLabServiceRunnerResourceId = DevTestLabServiceRunnerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, name);
+            DevTestLabServiceRunnerResource devTestLabServiceRunner = client.GetDevTestLabServiceRunnerResource(devTestLabServiceRunnerResourceId);
+
+            // invoke the operation
+            await devTestLabServiceRunner.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ServiceRunnersCreateOrUpdate()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceRunners_CreateOrUpdate.json
@@ -72,16 +99,16 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // invoke the operation
             DevTestLabServiceRunnerData data = new DevTestLabServiceRunnerData(new AzureLocation("{location}"))
             {
-                Identity = new DevTestLabManagedIdentity()
+                Identity = new DevTestLabManagedIdentity
                 {
-                    ManagedIdentityType = "{identityType}",
+                    ManagedIdentityType = (ManagedServiceIdentityType)default,
                     PrincipalId = Guid.Parse("{identityPrincipalId}"),
                     TenantId = Guid.Parse("{identityTenantId}"),
                     ClientSecretUri = new Uri("{identityClientSecretUrl}"),
                 },
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             ArmOperation<DevTestLabServiceRunnerResource> lro = await devTestLabServiceRunner.UpdateAsync(WaitUntil.Completed, data);
@@ -92,34 +119,6 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabServiceRunnerData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ServiceRunners_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ServiceRunnersDelete()
-        {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceRunners_Delete.json
-            // this example is just showing the usage of "ServiceRunners_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DevTestLabServiceRunnerResource created on azure
-            // for more information of creating DevTestLabServiceRunnerResource, please refer to the document of DevTestLabServiceRunnerResource
-            string subscriptionId = "{subscriptionId}";
-            string resourceGroupName = "resourceGroupName";
-            string labName = "{devtestlabName}";
-            string name = "{servicerunnerName}";
-            ResourceIdentifier devTestLabServiceRunnerResourceId = DevTestLabServiceRunnerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, name);
-            DevTestLabServiceRunnerResource devTestLabServiceRunner = client.GetDevTestLabServiceRunnerResource(devTestLabServiceRunnerResourceId);
-
-            // invoke the operation
-            await devTestLabServiceRunner.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

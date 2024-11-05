@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DevTestLabs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabCostResource
     {
-        // Costs_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CostsGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Costs_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Costs_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CostsCreateOrUpdate()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Costs_CreateOrUpdate.json
@@ -70,53 +69,50 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabCostResource devTestLabCost = client.GetDevTestLabCostResource(devTestLabCostResourceId);
 
             // invoke the operation
-            DevTestLabCostData data = new DevTestLabCostData(new AzureLocation("placeholder"))
+            DevTestLabCostData data = new DevTestLabCostData(default)
             {
-                TargetCost = new DevTestLabTargetCost()
+                TargetCost = new DevTestLabTargetCost
                 {
                     Status = DevTestLabTargetCostStatus.Enabled,
                     Target = 100,
-                    CostThresholds =
-{
-new DevTestLabCostThreshold()
+                    CostThresholds = {new DevTestLabCostThreshold
 {
 ThresholdId = "00000000-0000-0000-0000-000000000001",
 ThresholdValue = 25,
 DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
 SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-},new DevTestLabCostThreshold()
+}, new DevTestLabCostThreshold
 {
 ThresholdId = "00000000-0000-0000-0000-000000000002",
 ThresholdValue = 50,
 DisplayOnChart = DevTestLabCostThresholdStatus.Enabled,
 SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Enabled,
-},new DevTestLabCostThreshold()
+}, new DevTestLabCostThreshold
 {
 ThresholdId = "00000000-0000-0000-0000-000000000003",
 ThresholdValue = 75,
 DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
 SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-},new DevTestLabCostThreshold()
+}, new DevTestLabCostThreshold
 {
 ThresholdId = "00000000-0000-0000-0000-000000000004",
 ThresholdValue = 100,
 DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
 SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-},new DevTestLabCostThreshold()
+}, new DevTestLabCostThreshold
 {
 ThresholdId = "00000000-0000-0000-0000-000000000005",
 ThresholdValue = 125,
 DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
 SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-}
-},
-                    CycleStartOn = DateTimeOffset.Parse("2020-12-01T00:00:00.000Z"),
-                    CycleEndOn = DateTimeOffset.Parse("2020-12-31T00:00:00.000Z"),
+}},
+                    CycleStartOn = default,
+                    CycleEndOn = default,
                     CycleType = DevTestLabReportingCycleType.CalendarMonth,
                 },
                 CurrencyCode = "USD",
-                StartOn = DateTimeOffset.Parse("2020-12-01T00:00:00Z"),
-                EndOn = DateTimeOffset.Parse("2020-12-31T23:59:59Z"),
+                StartOn = default,
+                EndOn = default,
             };
             ArmOperation<DevTestLabCostResource> lro = await devTestLabCost.UpdateAsync(WaitUntil.Completed, data);
             DevTestLabCostResource result = lro.Value;

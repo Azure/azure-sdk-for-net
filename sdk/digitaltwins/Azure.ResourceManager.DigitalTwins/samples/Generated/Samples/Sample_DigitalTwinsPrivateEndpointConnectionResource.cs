@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DigitalTwins.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DigitalTwins.Samples
 {
     public partial class Sample_DigitalTwinsPrivateEndpointConnectionResource
     {
-        // Get private endpoint connection properties for the given private endpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateEndpointConnectionPropertiesForTheGivenPrivateEndpoint()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/PrivateEndpointConnectionByConnectionName_example.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete private endpoint connection with the specified name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletePrivateEndpointConnectionWithTheSpecifiedName()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/PrivateEndpointConnectionDelete_example.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             DigitalTwinsPrivateEndpointConnectionResource digitalTwinsPrivateEndpointConnection = client.GetDigitalTwinsPrivateEndpointConnectionResource(digitalTwinsPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            await digitalTwinsPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
+            await digitalTwinsPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update the status of a private endpoint connection with the given name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateTheStatusOfAPrivateEndpointConnectionWithTheGivenName()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/PrivateEndpointConnectionPut_example.json
@@ -98,7 +96,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             DigitalTwinsPrivateEndpointConnectionResource digitalTwinsPrivateEndpointConnection = client.GetDigitalTwinsPrivateEndpointConnectionResource(digitalTwinsPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            DigitalTwinsPrivateEndpointConnectionData data = new DigitalTwinsPrivateEndpointConnectionData(new DigitalTwinsPrivateEndpointConnectionProperties()
+            DigitalTwinsPrivateEndpointConnectionData data = new DigitalTwinsPrivateEndpointConnectionData(new DigitalTwinsPrivateEndpointConnectionProperties
             {
                 PrivateLinkServiceConnectionState = new DigitalTwinsPrivateLinkServiceConnectionState(DigitalTwinsPrivateLinkServiceConnectionStatus.Approved, "Approved by johndoe@company.com."),
             });

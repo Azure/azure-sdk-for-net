@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DevTestLabs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabEnvironmentResource
     {
-        // Environments_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_EnvironmentsGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Environments_Get.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Environments_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_EnvironmentsDelete()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Environments_Delete.json
@@ -72,14 +71,13 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabEnvironmentResource devTestLabEnvironment = client.GetDevTestLabEnvironmentResource(devTestLabEnvironmentResourceId);
 
             // invoke the operation
-            await devTestLabEnvironment.DeleteAsync(WaitUntil.Completed);
+            await devTestLabEnvironment.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Environments_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_EnvironmentsUpdate()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Environments_Update.json
@@ -101,11 +99,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabEnvironmentResource devTestLabEnvironment = client.GetDevTestLabEnvironmentResource(devTestLabEnvironmentResourceId);
 
             // invoke the operation
-            DevTestLabEnvironmentPatch patch = new DevTestLabEnvironmentPatch()
+            DevTestLabEnvironmentPatch patch = new DevTestLabEnvironmentPatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabEnvironmentResource result = await devTestLabEnvironment.UpdateAsync(patch);
