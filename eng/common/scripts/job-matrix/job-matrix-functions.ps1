@@ -213,7 +213,7 @@ function GetMatrixConfigFromFile([String] $config) {
 }
 
 function GetMatrixConfigFromYaml([String] $yamlConfig) {
-    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
     # ConvertTo then from json is to make sure the nested values are in PSCustomObject
     [MatrixConfig]$config = ConvertFrom-Yaml $yamlConfig -Ordered | ConvertTo-Json -Depth 100 | ConvertFrom-Json
     return GetMatrixConfig $config
