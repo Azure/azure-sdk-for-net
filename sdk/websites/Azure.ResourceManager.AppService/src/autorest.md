@@ -1052,6 +1052,8 @@ directive:
         $.properties.properties.properties.threads.items = {
             "$ref": "#/definitions/ProcessThreadProperties"
           };
+  # Fix for issue: https://github.com/Azure/azure-sdk-for-net/issues/46854
+  # TODO: Remove this workaround after the issue is resolved. Issue link: https://github.com/Azure/azure-rest-api-specs/issues/19022
   - from: Certificates.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}'].put
     transform: >
