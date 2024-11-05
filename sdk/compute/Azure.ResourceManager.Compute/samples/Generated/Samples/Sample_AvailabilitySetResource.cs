@@ -10,16 +10,127 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_AvailabilitySetResource
     {
-        // AvailabilitySet_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_AvailabilitySetGetMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AvailabilitySetResource created on azure
+            // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string availabilitySetName = "aaaaaaaaaaaa";
+            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
+
+            // invoke the operation
+            AvailabilitySetResource result = await availabilitySet.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AvailabilitySetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_AvailabilitySetGetMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AvailabilitySetResource created on azure
+            // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
+            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
+
+            // invoke the operation
+            AvailabilitySetResource result = await availabilitySet.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AvailabilitySetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_AvailabilitySetDeleteMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "AvailabilitySets_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AvailabilitySetResource created on azure
+            // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
+            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
+
+            // invoke the operation
+            await availabilitySet.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_AvailabilitySetDeleteMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "AvailabilitySets_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AvailabilitySetResource created on azure
+            // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string availabilitySetName = "aaaaaaaaaaa";
+            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
+
+            // invoke the operation
+            await availabilitySet.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AvailabilitySetUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Update_MaximumSet_Gen.json
@@ -39,9 +150,9 @@ namespace Azure.ResourceManager.Compute.Samples
             AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
 
             // invoke the operation
-            AvailabilitySetPatch patch = new AvailabilitySetPatch()
+            AvailabilitySetPatch patch = new AvailabilitySetPatch
             {
-                Sku = new ComputeSku()
+                Sku = new ComputeSku
                 {
                     Name = "DSv3-Type1",
                     Tier = "aaa",
@@ -49,17 +160,14 @@ namespace Azure.ResourceManager.Compute.Samples
                 },
                 PlatformUpdateDomainCount = 20,
                 PlatformFaultDomainCount = 2,
-                VirtualMachines =
-{
-new WritableSubResource()
+                VirtualMachines = {new WritableSubResource
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
-}
-},
+}},
                 ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
                 Tags =
 {
-["key2574"] = "aaaaaaaa",
+["key2574"] = "aaaaaaaa"
 },
             };
             AvailabilitySetResource result = await availabilitySet.UpdateAsync(patch);
@@ -71,9 +179,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AvailabilitySet_Update_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AvailabilitySetUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Update_MinimumSet_Gen.json
@@ -103,158 +210,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AvailabilitySet_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_AvailabilitySetDeleteMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "AvailabilitySets_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AvailabilitySetResource created on azure
-            // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
-            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
-
-            // invoke the operation
-            await availabilitySet.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // AvailabilitySet_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_AvailabilitySetDeleteMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Delete_MinimumSet_Gen.json
-            // this example is just showing the usage of "AvailabilitySets_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AvailabilitySetResource created on azure
-            // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string availabilitySetName = "aaaaaaaaaaa";
-            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
-            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
-
-            // invoke the operation
-            await availabilitySet.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // AvailabilitySet_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_AvailabilitySetGetMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AvailabilitySetResource created on azure
-            // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string availabilitySetName = "aaaaaaaaaaaa";
-            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
-            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
-
-            // invoke the operation
-            AvailabilitySetResource result = await availabilitySet.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AvailabilitySetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // AvailabilitySet_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_AvailabilitySetGetMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AvailabilitySetResource created on azure
-            // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
-            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
-
-            // invoke the operation
-            AvailabilitySetResource result = await availabilitySet.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AvailabilitySetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // List availability sets in a subscription.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAvailabilitySets_ListAvailabilitySetsInASubscription()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_ListBySubscription.json
-            // this example is just showing the usage of "AvailabilitySets_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscriptionId}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            string expand = "virtualMachines\\$ref";
-            await foreach (AvailabilitySetResource item in subscriptionResource.GetAvailabilitySetsAsync(expand: expand))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AvailabilitySetData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // AvailabilitySet_ListAvailableSizes_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableSizes_AvailabilitySetListAvailableSizesMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_ListAvailableSizes_MaximumSet_Gen.json
@@ -279,12 +236,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AvailabilitySet_ListAvailableSizes_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableSizes_AvailabilitySetListAvailableSizesMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_ListAvailableSizes_MinimumSet_Gen.json
@@ -309,7 +265,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,55 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_DiskAccessResource
     {
-        // Update a disk access resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateADiskAccessResource()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskAccessExamples/DiskAccess_Update.json
-            // this example is just showing the usage of "DiskAccesses_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DiskAccessResource created on azure
-            // for more information of creating DiskAccessResource, please refer to the document of DiskAccessResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string diskAccessName = "myDiskAccess";
-            ResourceIdentifier diskAccessResourceId = DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
-            DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
-
-            // invoke the operation
-            DiskAccessPatch patch = new DiskAccessPatch()
-            {
-                Tags =
-{
-["department"] = "Development",
-["project"] = "PrivateEndpoints",
-},
-            };
-            ArmOperation<DiskAccessResource> lro = await diskAccess.UpdateAsync(WaitUntil.Completed, patch);
-            DiskAccessResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DiskAccessData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get information about a disk access resource with private endpoints.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetInformationAboutADiskAccessResourceWithPrivateEndpoints()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskAccessExamples/DiskAccess_Get_WithPrivateEndpoints.json
@@ -87,9 +46,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get information about a disk access resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetInformationAboutADiskAccessResource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskAccessExamples/DiskAccess_Get.json
@@ -118,9 +76,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a disk access resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteADiskAccessResource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskAccessExamples/DiskAccess_Delete.json
@@ -140,46 +97,52 @@ namespace Azure.ResourceManager.Compute.Samples
             DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
 
             // invoke the operation
-            await diskAccess.DeleteAsync(WaitUntil.Completed);
+            await diskAccess.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List all disk access resources in a subscription.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetDiskAccesses_ListAllDiskAccessResourcesInASubscription()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateADiskAccessResource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskAccessExamples/DiskAccess_ListBySubscription.json
-            // this example is just showing the usage of "DiskAccesses_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskAccessExamples/DiskAccess_Update.json
+            // this example is just showing the usage of "DiskAccesses_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this DiskAccessResource created on azure
+            // for more information of creating DiskAccessResource, please refer to the document of DiskAccessResource
             string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "myResourceGroup";
+            string diskAccessName = "myDiskAccess";
+            ResourceIdentifier diskAccessResourceId = DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
+            DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (DiskAccessResource item in subscriptionResource.GetDiskAccessesAsync())
+            // invoke the operation
+            DiskAccessPatch patch = new DiskAccessPatch
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DiskAccessData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Tags =
+{
+["department"] = "Development",
+["project"] = "PrivateEndpoints"
+},
+            };
+            ArmOperation<DiskAccessResource> lro = await diskAccess.UpdateAsync(WaitUntil.Completed, patch);
+            DiskAccessResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DiskAccessData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List all possible private link resources under disk access resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_ListAllPossiblePrivateLinkResourcesUnderDiskAccessResource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskAccessExamples/DiskAccessPrivateLinkResources_Get.json
@@ -204,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

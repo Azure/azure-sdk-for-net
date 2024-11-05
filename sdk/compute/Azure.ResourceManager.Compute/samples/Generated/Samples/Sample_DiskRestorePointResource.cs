@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_DiskRestorePointResource
     {
-        // Get an incremental disk restorePoint resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnIncrementalDiskRestorePointResource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskRestorePointExamples/DiskRestorePoint_Get.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an incremental disk restorePoint when source resource is from a different region
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnIncrementalDiskRestorePointWhenSourceResourceIsFromADifferentRegion()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskRestorePointExamples/DiskRestorePoint_Get_WhenSourceResourceIsFromDifferentRegion.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Grants access to a diskRestorePoint.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GrantAccess_GrantsAccessToADiskRestorePoint()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskRestorePointExamples/DiskRestorePoint_BeginGetAccess.json
@@ -115,9 +113,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Revokes access to a diskRestorePoint.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RevokeAccess_RevokesAccessToADiskRestorePoint()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskRestorePointExamples/DiskRestorePoint_EndGetAccess.json
@@ -139,9 +136,9 @@ namespace Azure.ResourceManager.Compute.Samples
             DiskRestorePointResource diskRestorePoint = client.GetDiskRestorePointResource(diskRestorePointResourceId);
 
             // invoke the operation
-            await diskRestorePoint.RevokeAccessAsync(WaitUntil.Completed);
+            await diskRestorePoint.RevokeAccessAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

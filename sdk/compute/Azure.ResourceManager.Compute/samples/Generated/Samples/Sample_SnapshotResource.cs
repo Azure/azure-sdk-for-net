@@ -10,101 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_SnapshotResource
     {
-        // Update a snapshot with accelerated networking.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateASnapshotWithAcceleratedNetworking()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/snapshotExamples/Snapshot_Update_WithAcceleratedNetwork.json
-            // this example is just showing the usage of "Snapshots_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SnapshotResource created on azure
-            // for more information of creating SnapshotResource, please refer to the document of SnapshotResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string snapshotName = "mySnapshot";
-            ResourceIdentifier snapshotResourceId = SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
-            SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
-
-            // invoke the operation
-            SnapshotPatch patch = new SnapshotPatch()
-            {
-                Tags =
-{
-["department"] = "Development",
-["project"] = "UpdateSnapshots",
-},
-                DiskSizeGB = 20,
-                SupportedCapabilities = new SupportedCapabilities()
-                {
-                    AcceleratedNetwork = false,
-                },
-            };
-            ArmOperation<SnapshotResource> lro = await snapshot.UpdateAsync(WaitUntil.Completed, patch);
-            SnapshotResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SnapshotData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Update a snapshot.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateASnapshot()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/snapshotExamples/Snapshot_Update.json
-            // this example is just showing the usage of "Snapshots_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SnapshotResource created on azure
-            // for more information of creating SnapshotResource, please refer to the document of SnapshotResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string snapshotName = "mySnapshot";
-            ResourceIdentifier snapshotResourceId = SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
-            SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
-
-            // invoke the operation
-            SnapshotPatch patch = new SnapshotPatch()
-            {
-                Tags =
-{
-["department"] = "Development",
-["project"] = "UpdateSnapshots",
-},
-                DiskSizeGB = 20,
-            };
-            ArmOperation<SnapshotResource> lro = await snapshot.UpdateAsync(WaitUntil.Completed, patch);
-            SnapshotResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SnapshotData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get information about a snapshot.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetInformationAboutASnapshot()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/snapshotExamples/Snapshot_Get.json
@@ -133,9 +46,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get information about an incremental snapshot.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetInformationAboutAnIncrementalSnapshot()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/snapshotExamples/Snapshot_GetIncrementalSnapshot.json
@@ -164,9 +76,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a snapshot.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteASnapshot()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/snapshotExamples/Snapshot_Delete.json
@@ -186,46 +97,97 @@ namespace Azure.ResourceManager.Compute.Samples
             SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
 
             // invoke the operation
-            await snapshot.DeleteAsync(WaitUntil.Completed);
+            await snapshot.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List all snapshots in a subscription.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSnapshots_ListAllSnapshotsInASubscription()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateASnapshotWithAcceleratedNetworking()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/snapshotExamples/Snapshot_ListBySubscription.json
-            // this example is just showing the usage of "Snapshots_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/snapshotExamples/Snapshot_Update_WithAcceleratedNetwork.json
+            // this example is just showing the usage of "Snapshots_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this SnapshotResource created on azure
+            // for more information of creating SnapshotResource, please refer to the document of SnapshotResource
             string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "myResourceGroup";
+            string snapshotName = "mySnapshot";
+            ResourceIdentifier snapshotResourceId = SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
+            SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (SnapshotResource item in subscriptionResource.GetSnapshotsAsync())
+            // invoke the operation
+            SnapshotPatch patch = new SnapshotPatch
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SnapshotData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Tags =
+{
+["department"] = "Development",
+["project"] = "UpdateSnapshots"
+},
+                DiskSizeGB = 20,
+                SupportedCapabilities = new SupportedCapabilities
+                {
+                    AcceleratedNetwork = false,
+                },
+            };
+            ArmOperation<SnapshotResource> lro = await snapshot.UpdateAsync(WaitUntil.Completed, patch);
+            SnapshotResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SnapshotData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a sas on a snapshot.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateASnapshot()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/snapshotExamples/Snapshot_Update.json
+            // this example is just showing the usage of "Snapshots_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SnapshotResource created on azure
+            // for more information of creating SnapshotResource, please refer to the document of SnapshotResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string snapshotName = "mySnapshot";
+            ResourceIdentifier snapshotResourceId = SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
+            SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
+
+            // invoke the operation
+            SnapshotPatch patch = new SnapshotPatch
+            {
+                Tags =
+{
+["department"] = "Development",
+["project"] = "UpdateSnapshots"
+},
+                DiskSizeGB = 20,
+            };
+            ArmOperation<SnapshotResource> lro = await snapshot.UpdateAsync(WaitUntil.Completed, patch);
+            SnapshotResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SnapshotData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GrantAccess_GetASasOnASnapshot()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/snapshotExamples/Snapshot_BeginGetAccess.json
@@ -255,9 +217,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Revoke access to a snapshot.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RevokeAccess_RevokeAccessToASnapshot()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/snapshotExamples/Snapshot_EndGetAccess.json
@@ -277,9 +238,9 @@ namespace Azure.ResourceManager.Compute.Samples
             SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
 
             // invoke the operation
-            await snapshot.RevokeAccessAsync(WaitUntil.Completed);
+            await snapshot.RevokeAccessAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

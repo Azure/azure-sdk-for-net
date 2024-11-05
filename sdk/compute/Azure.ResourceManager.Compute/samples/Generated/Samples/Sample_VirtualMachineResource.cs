@@ -7,313 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_VirtualMachineResource
     {
-        // Lists all the virtual machines under the specified subscription for the specified location.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachinesByLocation_ListsAllTheVirtualMachinesUnderTheSpecifiedSubscriptionForTheSpecifiedLocation()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_ListBySubscription_ByLocation.json
-            // this example is just showing the usage of "VirtualMachines_ListByLocation" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscriptionId}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("eastus");
-            await foreach (VirtualMachineResource item in subscriptionResource.GetVirtualMachinesByLocationAsync(location))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachine_Capture_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Capture_VirtualMachineCaptureMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Capture_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_Capture" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string vmName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            VirtualMachineCaptureContent content = new VirtualMachineCaptureContent("aaaaaaaaa", "aaaaaaa", true);
-            ArmOperation<VirtualMachineCaptureResult> lro = await virtualMachine.CaptureAsync(WaitUntil.Completed, content);
-            VirtualMachineCaptureResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // VirtualMachine_Capture_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Capture_VirtualMachineCaptureMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Capture_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_Capture" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string vmName = "aaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            VirtualMachineCaptureContent content = new VirtualMachineCaptureContent("aaaaaaaaa", "aaaaaaa", true);
-            ArmOperation<VirtualMachineCaptureResult> lro = await virtualMachine.CaptureAsync(WaitUntil.Completed, content);
-            VirtualMachineCaptureResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Update a VM by detaching data disk
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateAVMByDetachingDataDisk()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Update_DetachDataDiskUsingToBeDetachedProperty.json
-            // this example is just showing the usage of "VirtualMachines_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            VirtualMachinePatch patch = new VirtualMachinePatch()
-            {
-                HardwareProfile = new VirtualMachineHardwareProfile()
-                {
-                    VmSize = VirtualMachineSizeType.StandardD2V2,
-                },
-                StorageProfile = new VirtualMachineStorageProfile()
-                {
-                    ImageReference = new ImageReference()
-                    {
-                        Publisher = "MicrosoftWindowsServer",
-                        Offer = "WindowsServer",
-                        Sku = "2016-Datacenter",
-                        Version = "latest",
-                    },
-                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
-                    {
-                        Name = "myVMosdisk",
-                        Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
-                        {
-                            StorageAccountType = StorageAccountType.StandardLrs,
-                        },
-                    },
-                    DataDisks =
-{
-new VirtualMachineDataDisk(0,DiskCreateOptionType.Empty)
-{
-DiskSizeGB = 1023,
-ToBeDetached = true,
-},new VirtualMachineDataDisk(1,DiskCreateOptionType.Empty)
-{
-DiskSizeGB = 1023,
-ToBeDetached = false,
-}
-},
-                },
-                OSProfile = new VirtualMachineOSProfile()
-                {
-                    ComputerName = "myVM",
-                    AdminUsername = "{your-username}",
-                    AdminPassword = "{your-password}",
-                },
-                NetworkProfile = new VirtualMachineNetworkProfile()
-                {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
-{
-Primary = true,
-Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
-                },
-            };
-            ArmOperation<VirtualMachineResource> lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, patch);
-            VirtualMachineResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Update a VM by force-detaching data disk
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateAVMByForceDetachingDataDisk()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Update_ForceDetachDataDisk.json
-            // this example is just showing the usage of "VirtualMachines_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            VirtualMachinePatch patch = new VirtualMachinePatch()
-            {
-                HardwareProfile = new VirtualMachineHardwareProfile()
-                {
-                    VmSize = VirtualMachineSizeType.StandardD2V2,
-                },
-                StorageProfile = new VirtualMachineStorageProfile()
-                {
-                    ImageReference = new ImageReference()
-                    {
-                        Publisher = "MicrosoftWindowsServer",
-                        Offer = "WindowsServer",
-                        Sku = "2016-Datacenter",
-                        Version = "latest",
-                    },
-                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
-                    {
-                        Name = "myVMosdisk",
-                        Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
-                        {
-                            StorageAccountType = StorageAccountType.StandardLrs,
-                        },
-                    },
-                    DataDisks =
-{
-new VirtualMachineDataDisk(0,DiskCreateOptionType.Empty)
-{
-DiskSizeGB = 1023,
-ToBeDetached = true,
-DetachOption = DiskDetachOptionType.ForceDetach,
-},new VirtualMachineDataDisk(1,DiskCreateOptionType.Empty)
-{
-DiskSizeGB = 1023,
-ToBeDetached = false,
-}
-},
-                },
-                OSProfile = new VirtualMachineOSProfile()
-                {
-                    ComputerName = "myVM",
-                    AdminUsername = "{your-username}",
-                    AdminPassword = "{your-password}",
-                },
-                NetworkProfile = new VirtualMachineNetworkProfile()
-                {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
-{
-Primary = true,
-Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
-                },
-            };
-            ArmOperation<VirtualMachineResource> lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, patch);
-            VirtualMachineResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Force delete a VM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ForceDeleteAVM()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Delete_Force.json
-            // this example is just showing the usage of "VirtualMachines_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            bool? forceDeletion = true;
-            await virtualMachine.DeleteAsync(WaitUntil.Completed, forceDeletion: forceDeletion);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get a Virtual Machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachine()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get.json
@@ -334,7 +38,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             // invoke the operation
             InstanceViewType? expand = InstanceViewType.UserData;
-            VirtualMachineResource result = await virtualMachine.GetAsync(expand: expand);
+            VirtualMachineResource result = await virtualMachine.GetAsync(expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -343,9 +47,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual machine placed on a dedicated host group through automatic placement
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
@@ -374,9 +77,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual machine with Disk Controller Type Properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachineWithDiskControllerTypeProperties()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
@@ -397,7 +99,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             // invoke the operation
             InstanceViewType? expand = InstanceViewType.UserData;
-            VirtualMachineResource result = await virtualMachine.GetAsync(expand: expand);
+            VirtualMachineResource result = await virtualMachine.GetAsync(expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -406,9 +108,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual machine with VM Size Properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachineWithVMSizeProperties()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
@@ -437,9 +138,252 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Virtual Machine Instance View.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ForceDeleteAVM()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Delete_Force.json
+            // this example is just showing the usage of "VirtualMachines_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string vmName = "myVM";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            bool? forceDeletion = true;
+            await virtualMachine.DeleteAsync(WaitUntil.Completed, forceDeletion).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateAVMByDetachingDataDisk()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Update_DetachDataDiskUsingToBeDetachedProperty.json
+            // this example is just showing the usage of "VirtualMachines_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string vmName = "myVM";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            VirtualMachinePatch patch = new VirtualMachinePatch
+            {
+                HardwareProfile = new VirtualMachineHardwareProfile
+                {
+                    VmSize = VirtualMachineSizeType.StandardD2V2,
+                },
+                StorageProfile = new VirtualMachineStorageProfile
+                {
+                    ImageReference = new ImageReference
+                    {
+                        Publisher = "MicrosoftWindowsServer",
+                        Offer = "WindowsServer",
+                        Sku = "2016-Datacenter",
+                        Version = "latest",
+                    },
+                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                    {
+                        Name = "myVMosdisk",
+                        Caching = CachingType.ReadWrite,
+                        ManagedDisk = new VirtualMachineManagedDisk
+                        {
+                            StorageAccountType = StorageAccountType.StandardLrs,
+                        },
+                    },
+                    DataDisks = {new VirtualMachineDataDisk(0, DiskCreateOptionType.Empty)
+{
+DiskSizeGB = 1023,
+ToBeDetached = true,
+}, new VirtualMachineDataDisk(1, DiskCreateOptionType.Empty)
+{
+DiskSizeGB = 1023,
+ToBeDetached = false,
+}},
+                },
+                OSProfile = new VirtualMachineOSProfile
+                {
+                    ComputerName = "myVM",
+                    AdminUsername = "{your-username}",
+                    AdminPassword = "{your-password}",
+                },
+                NetworkProfile = new VirtualMachineNetworkProfile
+                {
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
+{
+Primary = true,
+Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+}},
+                },
+            };
+            ArmOperation<VirtualMachineResource> lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, patch);
+            VirtualMachineResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateAVMByForceDetachingDataDisk()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Update_ForceDetachDataDisk.json
+            // this example is just showing the usage of "VirtualMachines_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string vmName = "myVM";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            VirtualMachinePatch patch = new VirtualMachinePatch
+            {
+                HardwareProfile = new VirtualMachineHardwareProfile
+                {
+                    VmSize = VirtualMachineSizeType.StandardD2V2,
+                },
+                StorageProfile = new VirtualMachineStorageProfile
+                {
+                    ImageReference = new ImageReference
+                    {
+                        Publisher = "MicrosoftWindowsServer",
+                        Offer = "WindowsServer",
+                        Sku = "2016-Datacenter",
+                        Version = "latest",
+                    },
+                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                    {
+                        Name = "myVMosdisk",
+                        Caching = CachingType.ReadWrite,
+                        ManagedDisk = new VirtualMachineManagedDisk
+                        {
+                            StorageAccountType = StorageAccountType.StandardLrs,
+                        },
+                    },
+                    DataDisks = {new VirtualMachineDataDisk(0, DiskCreateOptionType.Empty)
+{
+DiskSizeGB = 1023,
+ToBeDetached = true,
+DetachOption = DiskDetachOptionType.ForceDetach,
+}, new VirtualMachineDataDisk(1, DiskCreateOptionType.Empty)
+{
+DiskSizeGB = 1023,
+ToBeDetached = false,
+}},
+                },
+                OSProfile = new VirtualMachineOSProfile
+                {
+                    ComputerName = "myVM",
+                    AdminUsername = "{your-username}",
+                    AdminPassword = "{your-password}",
+                },
+                NetworkProfile = new VirtualMachineNetworkProfile
+                {
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
+{
+Primary = true,
+Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+}},
+                },
+            };
+            ArmOperation<VirtualMachineResource> lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, patch);
+            VirtualMachineResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Capture_VirtualMachineCaptureMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Capture_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_Capture" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "aaaaaaaaaaaaaaaaaaaa";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            VirtualMachineCaptureContent content = new VirtualMachineCaptureContent("aaaaaaaaa", "aaaaaaa", true);
+            ArmOperation<VirtualMachineCaptureResult> lro = await virtualMachine.CaptureAsync(WaitUntil.Completed, content);
+            VirtualMachineCaptureResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Capture_VirtualMachineCaptureMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Capture_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_Capture" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "aaaaaaaaaaaaa";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            VirtualMachineCaptureContent content = new VirtualMachineCaptureContent("aaaaaaaaa", "aaaaaaa", true);
+            ArmOperation<VirtualMachineCaptureResult> lro = await virtualMachine.CaptureAsync(WaitUntil.Completed, content);
+            VirtualMachineCaptureResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task InstanceView_GetVirtualMachineInstanceView()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_InstanceView.json
@@ -464,9 +408,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get instance view of a virtual machine placed on a dedicated host group through automatic placement.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task InstanceView_GetInstanceViewOfAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_InstanceViewAutoPlacedOnDedicatedHostGroup.json
@@ -491,9 +434,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachine_ConvertToManagedDisks_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ConvertToManagedDisks_VirtualMachineConvertToManagedDisksMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_ConvertToManagedDisks_MaximumSet_Gen.json
@@ -513,14 +455,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.ConvertToManagedDisksAsync(WaitUntil.Completed);
+            await virtualMachine.ConvertToManagedDisksAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_ConvertToManagedDisks_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ConvertToManagedDisks_VirtualMachineConvertToManagedDisksMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_ConvertToManagedDisks_MinimumSet_Gen.json
@@ -540,14 +481,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.ConvertToManagedDisksAsync(WaitUntil.Completed);
+            await virtualMachine.ConvertToManagedDisksAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_Deallocate_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Deallocate_VirtualMachineDeallocateMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Deallocate_MaximumSet_Gen.json
@@ -568,14 +508,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             // invoke the operation
             bool? hibernate = true;
-            await virtualMachine.DeallocateAsync(WaitUntil.Completed, hibernate: hibernate);
+            await virtualMachine.DeallocateAsync(WaitUntil.Completed, hibernate).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_Deallocate_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Deallocate_VirtualMachineDeallocateMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Deallocate_MinimumSet_Gen.json
@@ -595,14 +534,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.DeallocateAsync(WaitUntil.Completed);
+            await virtualMachine.DeallocateAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Generalize a Virtual Machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Generalize_GeneralizeAVirtualMachine()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Generalize.json
@@ -622,80 +560,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.GeneralizeAsync();
+            await virtualMachine.GeneralizeAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_ListAll_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachines_VirtualMachineListAllMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_ListAll_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_ListAll" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            string statusOnly = "aaaaaa";
-            string filter = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            await foreach (VirtualMachineResource item in subscriptionResource.GetVirtualMachinesAsync(statusOnly: statusOnly, filter: filter))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachine_ListAll_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachines_VirtualMachineListAllMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_ListAll_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_ListAll" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (VirtualMachineResource item in subscriptionResource.GetVirtualMachinesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Lists all available virtual machine sizes to which the specified virtual machine can be resized
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableSizes_ListsAllAvailableVirtualMachineSizesToWhichTheSpecifiedVirtualMachineCanBeResized()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_ListAvailableVmSizes.json
@@ -720,12 +591,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_PowerOff_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PowerOff_VirtualMachinePowerOffMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_PowerOff_MaximumSet_Gen.json
@@ -746,14 +616,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             // invoke the operation
             bool? skipShutdown = true;
-            await virtualMachine.PowerOffAsync(WaitUntil.Completed, skipShutdown: skipShutdown);
+            await virtualMachine.PowerOffAsync(WaitUntil.Completed, skipShutdown).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_PowerOff_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PowerOff_VirtualMachinePowerOffMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_PowerOff_MinimumSet_Gen.json
@@ -773,14 +642,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.PowerOffAsync(WaitUntil.Completed);
+            await virtualMachine.PowerOffAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Reapply the state of a virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Reapply_ReapplyTheStateOfAVirtualMachine()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Reapply.json
@@ -800,14 +668,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.ReapplyAsync(WaitUntil.Completed);
+            await virtualMachine.ReapplyAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_Restart_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Restart_VirtualMachineRestartMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Restart_MaximumSet_Gen.json
@@ -827,14 +694,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.RestartAsync(WaitUntil.Completed);
+            await virtualMachine.RestartAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_Restart_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Restart_VirtualMachineRestartMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Restart_MinimumSet_Gen.json
@@ -854,14 +720,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.RestartAsync(WaitUntil.Completed);
+            await virtualMachine.RestartAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_Start_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PowerOn_VirtualMachineStartMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Start_MaximumSet_Gen.json
@@ -881,14 +746,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.PowerOnAsync(WaitUntil.Completed);
+            await virtualMachine.PowerOnAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_Start_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PowerOn_VirtualMachineStartMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Start_MinimumSet_Gen.json
@@ -908,14 +772,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.PowerOnAsync(WaitUntil.Completed);
+            await virtualMachine.PowerOnAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_Redeploy_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Redeploy_VirtualMachineRedeployMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Redeploy_MaximumSet_Gen.json
@@ -935,14 +798,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.RedeployAsync(WaitUntil.Completed);
+            await virtualMachine.RedeployAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_Redeploy_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Redeploy_VirtualMachineRedeployMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Redeploy_MinimumSet_Gen.json
@@ -962,14 +824,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.RedeployAsync(WaitUntil.Completed);
+            await virtualMachine.RedeployAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Reimage a Non-Ephemeral Virtual Machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Reimage_ReimageANonEphemeralVirtualMachine()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Reimage_NonEphemeralVMs.json
@@ -989,24 +850,23 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            VirtualMachineReimageContent content = new VirtualMachineReimageContent()
+            VirtualMachineReimageContent content = new VirtualMachineReimageContent
             {
                 TempDisk = true,
                 ExactVersion = "aaaaaa",
-                OSProfile = new OSProfileProvisioningData()
+                OSProfile = new OSProfileProvisioningData
                 {
                     AdminPassword = "{your-password}",
                     CustomData = "{your-custom-data}",
                 },
             };
-            await virtualMachine.ReimageAsync(WaitUntil.Completed, content: content);
+            await virtualMachine.ReimageAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Reimage a Virtual Machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Reimage_ReimageAVirtualMachine()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Reimage.json
@@ -1026,18 +886,17 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            VirtualMachineReimageContent content = new VirtualMachineReimageContent()
+            VirtualMachineReimageContent content = new VirtualMachineReimageContent
             {
                 TempDisk = true,
             };
-            await virtualMachine.ReimageAsync(WaitUntil.Completed, content: content);
+            await virtualMachine.ReimageAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RetrieveBootDiagnosticsData of a virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RetrieveBootDiagnosticsData_RetrieveBootDiagnosticsDataOfAVirtualMachine()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_RetrieveBootDiagnosticsData.json
@@ -1058,14 +917,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             // invoke the operation
             int? sasUriExpirationTimeInMinutes = 60;
-            RetrieveBootDiagnosticsDataResult result = await virtualMachine.RetrieveBootDiagnosticsDataAsync(sasUriExpirationTimeInMinutes: sasUriExpirationTimeInMinutes);
+            RetrieveBootDiagnosticsDataResult result = await virtualMachine.RetrieveBootDiagnosticsDataAsync(sasUriExpirationTimeInMinutes);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachine_PerformMaintenance_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PerformMaintenance_VirtualMachinePerformMaintenanceMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_PerformMaintenance_MaximumSet_Gen.json
@@ -1085,14 +943,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.PerformMaintenanceAsync(WaitUntil.Completed);
+            await virtualMachine.PerformMaintenanceAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_PerformMaintenance_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PerformMaintenance_VirtualMachinePerformMaintenanceMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_PerformMaintenance_MinimumSet_Gen.json
@@ -1112,14 +969,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.PerformMaintenanceAsync(WaitUntil.Completed);
+            await virtualMachine.PerformMaintenanceAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Simulate Eviction a virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SimulateEviction_SimulateEvictionAVirtualMachine()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_SimulateEviction.json
@@ -1139,14 +995,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            await virtualMachine.SimulateEvictionAsync();
+            await virtualMachine.SimulateEvictionAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Assess patch state of a virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AssessPatches_AssessPatchStateOfAVirtualMachine()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_AssessPatches.json
@@ -1172,9 +1027,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Install patch state of a virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task InstallPatches_InstallPatchStateOfAVirtualMachine()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_InstallPatches.json
@@ -1196,14 +1050,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             // invoke the operation
             VirtualMachineInstallPatchesContent content = new VirtualMachineInstallPatchesContent(VmGuestPatchRebootSetting.IfRequired)
             {
-                MaximumDuration = XmlConvert.ToTimeSpan("PT4H"),
-                WindowsParameters = new WindowsParameters()
+                MaximumDuration = default,
+                WindowsParameters = new WindowsParameters
                 {
-                    ClassificationsToInclude =
-{
-VmGuestPatchClassificationForWindows.Critical,VmGuestPatchClassificationForWindows.Security
-},
-                    MaxPatchPublishOn = DateTimeOffset.Parse("2020-11-19T02:36:43.0539904+00:00"),
+                    ClassificationsToInclude = { VmGuestPatchClassificationForWindows.Critical, VmGuestPatchClassificationForWindows.Security },
+                    MaxPatchPublishOn = default,
                 },
             };
             ArmOperation<VirtualMachineInstallPatchesResult> lro = await virtualMachine.InstallPatchesAsync(WaitUntil.Completed, content);
@@ -1212,9 +1063,8 @@ VmGuestPatchClassificationForWindows.Critical,VmGuestPatchClassificationForWindo
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachine_AttachDetachDataDisks_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AttachDetachDataDisks_VirtualMachineAttachDetachDataDisksMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_AttachDetachDataDisks_MaximumSet_Gen.json
@@ -1234,36 +1084,30 @@ VmGuestPatchClassificationForWindows.Critical,VmGuestPatchClassificationForWindo
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            AttachDetachDataDisksRequest attachDetachDataDisksRequest = new AttachDetachDataDisksRequest()
+            AttachDetachDataDisksRequest attachDetachDataDisksRequest = new AttachDetachDataDisksRequest
             {
-                DataDisksToAttach =
-{
-new DataDisksToAttach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_0_disk2_6c4f554bdafa49baa780eb2d128ff39d")
+                DataDisksToAttach = {new DataDisksToAttach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_0_disk2_6c4f554bdafa49baa780eb2d128ff39d")
 {
 Lun = 1,
 Caching = CachingType.ReadOnly,
 DeleteOption = DiskDeleteOptionType.Delete,
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
 WriteAcceleratorEnabled = true,
-},new DataDisksToAttach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_2_disk3_7d5e664bdafa49baa780eb2d128ff38e")
+}, new DataDisksToAttach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_2_disk3_7d5e664bdafa49baa780eb2d128ff38e")
 {
 Lun = 2,
 Caching = CachingType.ReadWrite,
 DeleteOption = DiskDeleteOptionType.Detach,
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
 WriteAcceleratorEnabled = false,
-}
-},
-                DataDisksToDetach =
-{
-new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_1_disk1_1a4e784bdafa49baa780eb2d128ff65x")
+}},
+                DataDisksToDetach = {new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_1_disk1_1a4e784bdafa49baa780eb2d128ff65x")
 {
 DetachOption = DiskDetachOptionType.ForceDetach,
-},new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_4_disk4_4d4e784bdafa49baa780eb2d256ff41z")
+}, new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_4_disk4_4d4e784bdafa49baa780eb2d256ff41z")
 {
 DetachOption = DiskDetachOptionType.ForceDetach,
-}
-},
+}},
             };
             ArmOperation<VirtualMachineStorageProfile> lro = await virtualMachine.AttachDetachDataDisksAsync(WaitUntil.Completed, attachDetachDataDisksRequest);
             VirtualMachineStorageProfile result = lro.Value;
@@ -1271,9 +1115,8 @@ DetachOption = DiskDetachOptionType.ForceDetach,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachine_AttachDetachDataDisks_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AttachDetachDataDisks_VirtualMachineAttachDetachDataDisksMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_AttachDetachDataDisks_MinimumSet_Gen.json
@@ -1293,16 +1136,10 @@ DetachOption = DiskDetachOptionType.ForceDetach,
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            AttachDetachDataDisksRequest attachDetachDataDisksRequest = new AttachDetachDataDisksRequest()
+            AttachDetachDataDisksRequest attachDetachDataDisksRequest = new AttachDetachDataDisksRequest
             {
-                DataDisksToAttach =
-{
-new DataDisksToAttach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_0_disk2_6c4f554bdafa49baa780eb2d128ff39d")
-},
-                DataDisksToDetach =
-{
-new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_1_disk1_1a4e784bdafa49baa780eb2d128ff65x")
-},
+                DataDisksToAttach = { new DataDisksToAttach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_0_disk2_6c4f554bdafa49baa780eb2d128ff39d") },
+                DataDisksToDetach = { new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_1_disk1_1a4e784bdafa49baa780eb2d128ff65x") },
             };
             ArmOperation<VirtualMachineStorageProfile> lro = await virtualMachine.AttachDetachDataDisksAsync(WaitUntil.Completed, attachDetachDataDisksRequest);
             VirtualMachineStorageProfile result = lro.Value;
@@ -1310,9 +1147,8 @@ new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourc
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachineRunCommand
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RunCommand_VirtualMachineRunCommand()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/runCommandExamples/VirtualMachineRunCommand.json

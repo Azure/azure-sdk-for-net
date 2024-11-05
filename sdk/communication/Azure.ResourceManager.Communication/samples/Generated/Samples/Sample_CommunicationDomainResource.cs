@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Communication.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Samples
 {
     public partial class Sample_CommunicationDomainResource
     {
-        // Get Domains resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDomainsResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Domains resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteDomainsResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/delete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.Communication.Samples
             CommunicationDomainResource communicationDomainResource = client.GetCommunicationDomainResource(communicationDomainResourceId);
 
             // invoke the operation
-            await communicationDomainResource.DeleteAsync(WaitUntil.Completed);
+            await communicationDomainResource.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update Domains resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateDomainsResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/update.json
@@ -98,7 +96,7 @@ namespace Azure.ResourceManager.Communication.Samples
             CommunicationDomainResource communicationDomainResource = client.GetCommunicationDomainResource(communicationDomainResourceId);
 
             // invoke the operation
-            CommunicationDomainResourcePatch patch = new CommunicationDomainResourcePatch()
+            CommunicationDomainResourcePatch patch = new CommunicationDomainResourcePatch
             {
                 UserEngagementTracking = UserEngagementTracking.Enabled,
             };
@@ -112,9 +110,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Initiate verification
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task InitiateVerification_InitiateVerification()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/initiateVerification.json
@@ -136,14 +133,13 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // invoke the operation
             DomainsRecordVerificationContent content = new DomainsRecordVerificationContent(DomainRecordVerificationType.Spf);
-            await communicationDomainResource.InitiateVerificationAsync(WaitUntil.Completed, content);
+            await communicationDomainResource.InitiateVerificationAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Cancel verification
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CancelVerification_CancelVerification()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/cancelVerification.json
@@ -165,9 +161,9 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // invoke the operation
             DomainsRecordVerificationContent content = new DomainsRecordVerificationContent(DomainRecordVerificationType.Spf);
-            await communicationDomainResource.CancelVerificationAsync(WaitUntil.Completed, content);
+            await communicationDomainResource.CancelVerificationAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
