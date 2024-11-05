@@ -106,20 +106,22 @@ class PackageProps {
     }
 
     [void]InitializeCIArtifacts() {
-        $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
+        if ($env:TF_BUILD -or $env:GITHUB_ACTIONS) {
+            $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
 
-        $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)
-        $ciFiles = Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File
+            $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)
+            $ciFiles = Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File
 
-        if (-not $this.ArtifactDetails) {
-            foreach ($ciFile in $ciFiles) {
-                $ciArtifactResult = $this.ParseYmlForArtifact($ciFile.FullName)
-                if ($ciArtifactResult) {
-                    $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
-                    $this.CIMatrixConfigs = $ciArtifactResult.MatrixConfigs
-                    # if this package appeared in this ci file, then we should
-                    # treat this CI file as the source of the Matrix for this package
-                    break
+            if (-not $this.ArtifactDetails) {
+                foreach ($ciFile in $ciFiles) {
+                    $ciArtifactResult = $this.ParseYmlForArtifact($ciFile.FullName)
+                    if ($ciArtifactResult) {
+                        $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
+                        $this.CIMatrixConfigs = $ciArtifactResult.MatrixConfigs
+                        # if this package appeared in this ci file, then we should
+                        # treat this CI file as the source of the Matrix for this package
+                        break
+                    }
                 }
             }
         }
