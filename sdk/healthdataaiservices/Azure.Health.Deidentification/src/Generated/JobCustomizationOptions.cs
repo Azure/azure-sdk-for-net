@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Customizations options to override default service behaviors for synchronous usage. </summary>
-    public partial class CustomizationConfig
+    /// <summary> Customizations options to override default service behaviors for job usage. </summary>
+    public partial class JobCustomizationOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.Health.Deidentification
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CustomizationConfig"/>. </summary>
-        public CustomizationConfig()
+        /// <summary> Initializes a new instance of <see cref="JobCustomizationOptions"/>. </summary>
+        public JobCustomizationOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomizationConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobCustomizationOptions"/>. </summary>
         /// <param name="redactionFormat"> Format of the redacted output. Only valid when Operation is Redact. </param>
         /// <param name="surrogateLocale"> Locale in which the output surrogates are written. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomizationConfig(string redactionFormat, string surrogateLocale, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal JobCustomizationOptions(string redactionFormat, string surrogateLocale, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RedactionFormat = redactionFormat;
             SurrogateLocale = surrogateLocale;

@@ -77,7 +77,7 @@ namespace Azure.Health.Deidentification
         /// <param name="startedAt"> Date and time when the job was started. </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationJob(string name, OperationType? operation, SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, JobCustomizationConfig customizations, JobStatus status, ResponseError error, DateTimeOffset lastUpdatedAt, DateTimeOffset createdAt, DateTimeOffset? startedAt, JobSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationJob(string name, OperationType? operation, SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, JobCustomizationOptions customizations, JobStatus status, ResponseError error, DateTimeOffset lastUpdatedAt, DateTimeOffset createdAt, DateTimeOffset? startedAt, JobSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Operation = operation;
@@ -107,7 +107,7 @@ namespace Azure.Health.Deidentification
         /// <summary> Target location to store output of operation. </summary>
         public TargetStorageLocation TargetLocation { get; set; }
         /// <summary> Customization parameters to override default service behaviors. </summary>
-        public JobCustomizationConfig Customizations { get; set; }
+        public JobCustomizationOptions Customizations { get; set; }
         /// <summary> Current status of a job. </summary>
         public JobStatus Status { get; }
         /// <summary> Error when job fails in it's entirety. </summary>

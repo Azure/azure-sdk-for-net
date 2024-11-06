@@ -33,7 +33,7 @@ namespace Azure.Health.Deidentification
         /// <param name="startedAt"> Date and time when the job was started. </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationJob"/> instance for mocking. </returns>
-        public static DeidentificationJob DeidentificationJob(string name = null, OperationType? operation = null, SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, JobCustomizationConfig customizations = null, JobStatus status = default, ResponseError error = null, DateTimeOffset lastUpdatedAt = default, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, JobSummary summary = null)
+        public static DeidentificationJob DeidentificationJob(string name = null, OperationType? operation = null, SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, JobCustomizationOptions customizations = null, JobStatus status = default, ResponseError error = null, DateTimeOffset lastUpdatedAt = default, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, JobSummary summary = null)
         {
             return new DeidentificationJob(
                 name,
@@ -100,7 +100,7 @@ namespace Azure.Health.Deidentification
         /// <param name="operation"> Operation to perform on the input documents. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
-        public static DeidentificationContent DeidentificationContent(string inputText = null, OperationType? operation = null, CustomizationConfig customizations = null)
+        public static DeidentificationContent DeidentificationContent(string inputText = null, OperationType? operation = null, CustomizationOptions customizations = null)
         {
             return new DeidentificationContent(inputText, operation, customizations, serializedAdditionalRawData: null);
         }

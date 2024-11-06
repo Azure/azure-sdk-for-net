@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    public partial class CustomizationConfig : IUtf8JsonSerializable, IJsonModel<CustomizationConfig>
+    public partial class CustomizationOptions : IUtf8JsonSerializable, IJsonModel<CustomizationOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomizationConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomizationOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CustomizationConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CustomizationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomizationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomizationConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomizationOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.Health.Deidentification
             writer.WriteEndObject();
         }
 
-        CustomizationConfig IJsonModel<CustomizationConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CustomizationOptions IJsonModel<CustomizationOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomizationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomizationConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomizationOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomizationConfig(document.RootElement, options);
+            return DeserializeCustomizationOptions(document.RootElement, options);
         }
 
-        internal static CustomizationConfig DeserializeCustomizationConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CustomizationOptions DeserializeCustomizationOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,46 +96,46 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CustomizationConfig(redactionFormat, surrogateLocale, serializedAdditionalRawData);
+            return new CustomizationOptions(redactionFormat, surrogateLocale, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CustomizationConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CustomizationOptions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomizationOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomizationConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomizationOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CustomizationConfig IPersistableModel<CustomizationConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CustomizationOptions IPersistableModel<CustomizationOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomizationOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCustomizationConfig(document.RootElement, options);
+                        return DeserializeCustomizationOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomizationConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomizationOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CustomizationConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CustomizationOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CustomizationConfig FromResponse(Response response)
+        internal static CustomizationOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCustomizationConfig(document.RootElement);
+            return DeserializeCustomizationOptions(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
