@@ -25,8 +25,6 @@
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
-### Breaking Changes
-
 ### Other Changes
 
 - A clarification is added to the descriptions throughout that memory and disk sizes are measured in gibibytes.
