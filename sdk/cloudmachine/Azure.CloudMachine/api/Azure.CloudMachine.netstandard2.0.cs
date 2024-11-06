@@ -55,6 +55,7 @@ namespace Azure.CloudMachine
         public void Delete(string path) { }
         public System.Threading.Tasks.Task DeleteAsync(string path) { throw null; }
         public System.BinaryData Download(string path) { throw null; }
+        public System.Threading.Tasks.Task<System.BinaryData> DownloadAsync(string path) { throw null; }
         public string Upload(System.BinaryData data, string name = null, bool overwrite = false) { throw null; }
         public string Upload(System.IO.Stream fileStream, string name = null, string contentType = null, bool overwrite = false) { throw null; }
         public System.Threading.Tasks.Task<string> UploadAsync(System.BinaryData data, string name = null, bool overwrite = false) { throw null; }

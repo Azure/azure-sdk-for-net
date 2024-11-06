@@ -157,9 +157,32 @@ public readonly struct StorageServices
     /// <returns></returns>
     public BinaryData Download(string path)
     {
-        BlobClient blob = GetBlobClientFromPath(path, null);
+        BlobClient blob = GetBlobClientFromPath(path, containerName: default);
         BlobDownloadResult result = blob.DownloadContent();
-        return result.Content;
+        BinaryData content = result.Content;
+
+        string contentType = result.Details.ContentType;
+        if (contentType != default)
+            content = content.WithMediaType(contentType);
+
+        return content;
+    }
+
+    /// <summary>
+    /// Uploads a file to the storage account.
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public async Task<BinaryData> DownloadAsync(string path)
+    {
+        BlobClient blob = GetBlobClientFromPath(path, containerName: default);
+        BlobDownloadResult result = await blob.DownloadContentAsync().ConfigureAwait(false);
+        BinaryData content = result.Content;
+
+        string contentType = result.Details.ContentType;
+        if (contentType!=default) content = content.WithMediaType(contentType);
+
+        return content;
     }
 
     /// <summary>
