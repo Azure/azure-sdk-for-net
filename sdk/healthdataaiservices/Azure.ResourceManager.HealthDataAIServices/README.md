@@ -17,7 +17,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure HealthDataAIServices management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.HealthDataAIServices --prerelease
+dotnet add package Azure.ResourceManager.HealthDataAIServices
 ```
 
 ### Prerequisites
