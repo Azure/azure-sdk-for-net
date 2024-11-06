@@ -16,7 +16,6 @@ This limitation also exists for share files and directories.
 
 BlobFuse uses custom blob metadata to manage it's directory structure. That metadata will currently be lost on a service to service copy.
 
-
 ## Blob HNS Support
 
 There is currently no explicit support for Azure Blob Storage accounts with hierarchichal namespace enabled. This can manifest in unexpected errors with some transfers of multi-level directories. Single blob transfers and transfers of directories with no subdirectories should be unaffected by this lack of support.
