@@ -43,6 +43,17 @@ public class EmbeddingsVectorbase
     }
 
     /// <summary>
+    /// Adds an entry to the vectorbase. The media type must be "text/plain".
+    /// </summary>
+    /// <param name="data"></param>
+    /// <exception cref="InvalidOperationException"></exception>
+    public void Add(BinaryData data)
+    {
+        if (data.MediaType != "text/plain") throw new InvalidOperationException("Only text/plain media type is supported.");
+        Add(data.ToString());
+    }
+
+    /// <summary>
     /// Finds entries in the vectorbase.
     /// </summary>
     /// <param name="text"></param>

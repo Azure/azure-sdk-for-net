@@ -13,6 +13,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Messaging.ServiceBus;
 using System.Net.Mime;
 using ContentType = Azure.Core.ContentType;
+using System.Collections.Generic;
 
 namespace Azure.CloudMachine;
 
@@ -124,9 +125,8 @@ public readonly struct StorageServices
         BlobUploadOptions options = new()
         {
             Conditions = overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag("*") },
-            HttpHeaders = new BlobHttpHeaders { ContentType = ContentType.ApplicationOctetStream.ToString() }
+            HttpHeaders = new BlobHttpHeaders { ContentType = contentType },
         };
-        options.Metadata.Add("Content-Type", contentType);
         return options;
     }
 
