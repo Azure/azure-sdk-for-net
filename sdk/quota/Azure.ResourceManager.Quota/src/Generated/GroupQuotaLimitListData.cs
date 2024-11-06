@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Quota.Models;
 
-namespace Azure.ResourceManager.Quota.Models
+namespace Azure.ResourceManager.Quota
 {
-    /// <summary> Subscription quota list. </summary>
-    internal partial class SubscriptionQuotaAllocationsList
+    /// <summary>
+    /// A class representing the GroupQuotaLimitList data model.
+    /// List of Group Quota Limit details.
+    /// </summary>
+    public partial class GroupQuotaLimitListData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +51,26 @@ namespace Azure.ResourceManager.Quota.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaAllocationsList"/>. </summary>
-        internal SubscriptionQuotaAllocationsList()
+        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitListData"/>. </summary>
+        public GroupQuotaLimitListData()
         {
-            Value = new ChangeTrackingList<SubscriptionQuotaAllocationData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaAllocationsList"/>. </summary>
-        /// <param name="value"> Subscription quota list. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitListData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionQuotaAllocationsList(IReadOnlyList<SubscriptionQuotaAllocationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GroupQuotaLimitListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GroupQuotaLimitListProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Subscription quota list. </summary>
-        public IReadOnlyList<SubscriptionQuotaAllocationData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Gets or sets the properties. </summary>
+        [WirePath("properties")]
+        public GroupQuotaLimitListProperties Properties { get; set; }
     }
 }

@@ -16,11 +16,11 @@ using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
 {
-    public partial class SubscriptionQuotaAllocationData : IUtf8JsonSerializable, IJsonModel<SubscriptionQuotaAllocationData>
+    public partial class GroupQuotaLimitListData : IUtf8JsonSerializable, IJsonModel<GroupQuotaLimitListData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionQuotaAllocationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GroupQuotaLimitListData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SubscriptionQuotaAllocationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GroupQuotaLimitListData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Quota
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaAllocationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionQuotaAllocationData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        SubscriptionQuotaAllocationData IJsonModel<SubscriptionQuotaAllocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GroupQuotaLimitListData IJsonModel<GroupQuotaLimitListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaAllocationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionQuotaAllocationData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubscriptionQuotaAllocationData(document.RootElement, options);
+            return DeserializeGroupQuotaLimitListData(document.RootElement, options);
         }
 
-        internal static SubscriptionQuotaAllocationData DeserializeSubscriptionQuotaAllocationData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GroupQuotaLimitListData DeserializeGroupQuotaLimitListData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Quota
             {
                 return null;
             }
-            SubscriptionQuotaDetails properties = default;
+            GroupQuotaLimitListProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Quota
                     {
                         continue;
                     }
-                    properties = SubscriptionQuotaDetails.DeserializeSubscriptionQuotaDetails(property.Value, options);
+                    properties = GroupQuotaLimitListProperties.DeserializeGroupQuotaLimitListProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Quota
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SubscriptionQuotaAllocationData(
+            return new GroupQuotaLimitListData(
                 id,
                 name,
                 type,
@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.Quota
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<SubscriptionQuotaAllocationData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GroupQuotaLimitListData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaAllocationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -216,26 +216,26 @@ namespace Azure.ResourceManager.Quota
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionQuotaAllocationData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SubscriptionQuotaAllocationData IPersistableModel<SubscriptionQuotaAllocationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GroupQuotaLimitListData IPersistableModel<GroupQuotaLimitListData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaAllocationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSubscriptionQuotaAllocationData(document.RootElement, options);
+                        return DeserializeGroupQuotaLimitListData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionQuotaAllocationData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SubscriptionQuotaAllocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GroupQuotaLimitListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SubscriptionQuotaAllocationRequestsGetRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/SubscriptionQuotaAllocationRequests/SubscriptionQuotaAllocationRequests_Get-Compute.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/SubscriptionQuotaAllocationRequests/SubscriptionQuotaAllocationRequests_Get-Compute.json
             // this example is just showing the usage of "GroupQuotaSubscriptionAllocationRequest_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -35,13 +35,14 @@ namespace Azure.ResourceManager.Quota.Samples
             ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
 
             // get the collection of this QuotaAllocationRequestStatusResource
-            QuotaAllocationRequestStatusCollection collection = managementGroupResource.GetQuotaAllocationRequestStatuses();
-
-            // invoke the operation
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupQuotaName = "groupquota1";
+            string resourceProviderName = "Microsoft.Compute";
+            QuotaAllocationRequestStatusCollection collection = managementGroupResource.GetQuotaAllocationRequestStatuses(subscriptionId, groupQuotaName, resourceProviderName);
+
+            // invoke the operation
             string allocationId = "AE000000-0000-0000-0000-00000000000A";
-            QuotaAllocationRequestStatusResource result = await collection.GetAsync(subscriptionId, groupQuotaName, allocationId);
+            QuotaAllocationRequestStatusResource result = await collection.GetAsync(allocationId);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_SubscriptionQuotaAllocationRequestsGetRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/SubscriptionQuotaAllocationRequests/SubscriptionQuotaAllocationRequests_Get-Compute.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/SubscriptionQuotaAllocationRequests/SubscriptionQuotaAllocationRequests_Get-Compute.json
             // this example is just showing the usage of "GroupQuotaSubscriptionAllocationRequest_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,13 +71,14 @@ namespace Azure.ResourceManager.Quota.Samples
             ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
 
             // get the collection of this QuotaAllocationRequestStatusResource
-            QuotaAllocationRequestStatusCollection collection = managementGroupResource.GetQuotaAllocationRequestStatuses();
-
-            // invoke the operation
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupQuotaName = "groupquota1";
+            string resourceProviderName = "Microsoft.Compute";
+            QuotaAllocationRequestStatusCollection collection = managementGroupResource.GetQuotaAllocationRequestStatuses(subscriptionId, groupQuotaName, resourceProviderName);
+
+            // invoke the operation
             string allocationId = "AE000000-0000-0000-0000-00000000000A";
-            bool result = await collection.ExistsAsync(subscriptionId, groupQuotaName, allocationId);
+            bool result = await collection.ExistsAsync(allocationId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -86,7 +88,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_SubscriptionQuotaAllocationRequestsGetRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/SubscriptionQuotaAllocationRequests/SubscriptionQuotaAllocationRequests_Get-Compute.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/SubscriptionQuotaAllocationRequests/SubscriptionQuotaAllocationRequests_Get-Compute.json
             // this example is just showing the usage of "GroupQuotaSubscriptionAllocationRequest_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,13 +103,14 @@ namespace Azure.ResourceManager.Quota.Samples
             ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
 
             // get the collection of this QuotaAllocationRequestStatusResource
-            QuotaAllocationRequestStatusCollection collection = managementGroupResource.GetQuotaAllocationRequestStatuses();
-
-            // invoke the operation
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupQuotaName = "groupquota1";
+            string resourceProviderName = "Microsoft.Compute";
+            QuotaAllocationRequestStatusCollection collection = managementGroupResource.GetQuotaAllocationRequestStatuses(subscriptionId, groupQuotaName, resourceProviderName);
+
+            // invoke the operation
             string allocationId = "AE000000-0000-0000-0000-00000000000A";
-            NullableResponse<QuotaAllocationRequestStatusResource> response = await collection.GetIfExistsAsync(subscriptionId, groupQuotaName, allocationId);
+            NullableResponse<QuotaAllocationRequestStatusResource> response = await collection.GetIfExistsAsync(allocationId);
             QuotaAllocationRequestStatusResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
@@ -122,6 +125,45 @@ namespace Azure.ResourceManager.Quota.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
+        }
+
+        // SubscriptionQuotaAllocation_List_Request_ForCompute
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetAll_SubscriptionQuotaAllocationListRequestForCompute()
+        {
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/SubscriptionQuotaAllocationRequests/SubscriptionQuotaAllocationRequests_List-Compute.json
+            // this example is just showing the usage of "GroupQuotaSubscriptionAllocationRequest_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagementGroupResource created on azure
+            // for more information of creating ManagementGroupResource, please refer to the document of ManagementGroupResource
+            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
+            ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
+            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
+
+            // get the collection of this QuotaAllocationRequestStatusResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string groupQuotaName = "groupquota1";
+            string resourceProviderName = "Microsoft.Compute";
+            QuotaAllocationRequestStatusCollection collection = managementGroupResource.GetQuotaAllocationRequestStatuses(subscriptionId, groupQuotaName, resourceProviderName);
+
+            // invoke the operation and iterate over the result
+            string filter = "location eq westus";
+            await foreach (QuotaAllocationRequestStatusResource item in collection.GetAllAsync(filter))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                QuotaAllocationRequestStatusData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
         }
     }
 }

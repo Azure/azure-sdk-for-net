@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_GroupQuotaLocationSettingsCreateOrUpdate()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasEnforcement/PutGroupQuotaEnforcement.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasEnforcement/PutGroupQuotaEnforcement.json
             // this example is just showing the usage of "GroupQuotaLocationSettings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_GroupQuotaLocationSettingsCreateOrUpdateFailed()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasEnforcement/PutGroupQuotaEnforcementFailed.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasEnforcement/PutGroupQuotaEnforcementFailed.json
             // this example is just showing the usage of "GroupQuotaLocationSettings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GroupQuotasEnforcementGet()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasEnforcement/GetGroupQuotaEnforcement.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasEnforcement/GetGroupQuotaEnforcement.json
             // this example is just showing the usage of "GroupQuotaLocationSettings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GroupQuotasEnforcementGet()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasEnforcement/GetGroupQuotaEnforcement.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasEnforcement/GetGroupQuotaEnforcement.json
             // this example is just showing the usage of "GroupQuotaLocationSettings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GroupQuotasEnforcementGet()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasEnforcement/GetGroupQuotaEnforcement.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasEnforcement/GetGroupQuotaEnforcement.json
             // this example is just showing the usage of "GroupQuotaLocationSettings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_GroupQuotaEnforcementList()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasEnforcement/ListGroupQuotaEnforcement.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasEnforcement/ListGroupQuotaEnforcement.json
             // this example is just showing the usage of "GroupQuotaLocationSettings_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

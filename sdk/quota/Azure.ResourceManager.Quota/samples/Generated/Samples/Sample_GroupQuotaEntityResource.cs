@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_GroupQuotasPatchRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotas/PatchGroupQuotas.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotas/PatchGroupQuotas.json
             // this example is just showing the usage of "GroupQuotas_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GroupQuotasGetRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotas/GetGroupQuotas.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotas/GetGroupQuotas.json
             // this example is just showing the usage of "GroupQuotas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_GroupQuotasDeleteRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotas/DeleteGroupQuotas.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotas/DeleteGroupQuotas.json
             // this example is just showing the usage of "GroupQuotas_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,78 +118,12 @@ namespace Azure.ResourceManager.Quota.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // GroupQuotaLimitsRequests_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdateGroupQuotaLimitsRequest_GroupQuotaLimitsRequestsCreateOrUpdate()
-        {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotaLimitsRequests/PutGroupQuotaLimitsRequests-Compute.json
-            // this example is just showing the usage of "GroupQuotaLimitsRequest_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GroupQuotaEntityResource created on azure
-            // for more information of creating GroupQuotaEntityResource, please refer to the document of GroupQuotaEntityResource
-            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
-            string groupQuotaName = "groupquota1";
-            ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-            GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
-
-            // invoke the operation
-            string resourceProviderName = "Microsoft.Compute";
-            string resourceName = "standardav2family";
-            ArmOperation<GroupQuotaRequestStatusResource> lro = await groupQuotaEntity.CreateOrUpdateGroupQuotaLimitsRequestAsync(WaitUntil.Completed, resourceProviderName, resourceName);
-            GroupQuotaRequestStatusResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            GroupQuotaRequestStatusData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // GroupQuotaLimitsRequests_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpdateGroupQuotaLimitsRequest_GroupQuotaLimitsRequestsUpdate()
-        {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotaLimitsRequests/PatchGroupQuotaLimitsRequests-Compute.json
-            // this example is just showing the usage of "GroupQuotaLimitsRequest_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GroupQuotaEntityResource created on azure
-            // for more information of creating GroupQuotaEntityResource, please refer to the document of GroupQuotaEntityResource
-            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
-            string groupQuotaName = "groupquota1";
-            ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-            GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
-
-            // invoke the operation
-            string resourceProviderName = "Microsoft.Compute";
-            string resourceName = "standardav2family";
-            ArmOperation<GroupQuotaRequestStatusResource> lro = await groupQuotaEntity.UpdateGroupQuotaLimitsRequestAsync(WaitUntil.Completed, resourceProviderName, resourceName);
-            GroupQuotaRequestStatusResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            GroupQuotaRequestStatusData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
         // GroupQuotaLimitsRequest_List
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetGroupQuotaLimitsRequests_GroupQuotaLimitsRequestList()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotaLimitsRequests/GroupQuotaLimitsRequests_List.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotaLimitsRequests/GroupQuotaLimitsRequests_List.json
             // this example is just showing the usage of "GroupQuotaLimitsRequest_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -224,7 +158,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetGroupQuotaUsages_GroupQuotasUsagesList()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotaUsages/GetGroupQuotaUsages.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotaUsages/GetGroupQuotaUsages.json
             // this example is just showing the usage of "GroupQuotaUsages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

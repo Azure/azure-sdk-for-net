@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary> Subscription Quota details. </summary>
-    public partial class SubscriptionQuotaDetails
+    /// <summary> Quota allocated to a subscription for the specific Resource Provider, Location, ResourceName. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
+    public partial class SubscriptionQuotaAllocations
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,42 +45,22 @@ namespace Azure.ResourceManager.Quota.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaDetails"/>. </summary>
-        public SubscriptionQuotaDetails()
+        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaAllocations"/>. </summary>
+        public SubscriptionQuotaAllocations()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaDetails"/>. </summary>
-        /// <param name="resourceName"> The resource name, such as SKU name. </param>
-        /// <param name="limit"> The total quota limit for the subscription. </param>
-        /// <param name="shareableQuota"> The shareable quota for the subscription. </param>
-        /// <param name="value"> Resource name. </param>
-        /// <param name="localizedValue"> Resource display name. </param>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaAllocations"/>. </summary>
+        /// <param name="properties"> Quota properties for the specified resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionQuotaDetails(string resourceName, long? limit, long? shareableQuota, string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubscriptionQuotaAllocations(SubscriptionQuotaDetails properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ResourceName = resourceName;
-            Limit = limit;
-            ShareableQuota = shareableQuota;
-            Value = value;
-            LocalizedValue = localizedValue;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource name, such as SKU name. </summary>
-        [WirePath("resourceName")]
-        public string ResourceName { get; set; }
-        /// <summary> The total quota limit for the subscription. </summary>
-        [WirePath("limit")]
-        public long? Limit { get; set; }
-        /// <summary> The shareable quota for the subscription. </summary>
-        [WirePath("shareableQuota")]
-        public long? ShareableQuota { get; }
-        /// <summary> Resource name. </summary>
-        [WirePath("name.value")]
-        public string Value { get; }
-        /// <summary> Resource display name. </summary>
-        [WirePath("name.localizedValue")]
-        public string LocalizedValue { get; }
+        /// <summary> Quota properties for the specified resource. </summary>
+        [WirePath("properties")]
+        public SubscriptionQuotaDetails Properties { get; set; }
     }
 }

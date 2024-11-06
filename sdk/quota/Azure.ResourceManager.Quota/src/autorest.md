@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Quota
 namespace: Azure.ResourceManager.Quota
-require: https://github.com/Azure/azure-rest-api-specs/blob/d1f4d6fcf1bbb2e71a32bb2079de12f17fedf56a/specification/quota/resource-manager/readme.md
-#tag: package-2023-06-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/c49a2294eb759d4abf571e3b44351574d8e5cd4c/specification/quota/resource-manager/readme.md
+tag: package-2024-10-15-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

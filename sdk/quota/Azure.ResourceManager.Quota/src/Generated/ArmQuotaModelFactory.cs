@@ -127,16 +127,16 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotaSubscriptionRequestStatusProperties(subscriptionId, requestSubmitOn, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Quota.GroupQuotaLimitData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Quota.GroupQuotaLimitListData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Group Quota properties for the specified resource. </param>
-        /// <returns> A new <see cref="Quota.GroupQuotaLimitData"/> instance for mocking. </returns>
-        public static GroupQuotaLimitData GroupQuotaLimitData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GroupQuotaDetails properties = null)
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Quota.GroupQuotaLimitListData"/> instance for mocking. </returns>
+        public static GroupQuotaLimitListData GroupQuotaLimitListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GroupQuotaLimitListProperties properties = null)
         {
-            return new GroupQuotaLimitData(
+            return new GroupQuotaLimitListData(
                 id,
                 name,
                 resourceType,
@@ -145,8 +145,20 @@ namespace Azure.ResourceManager.Quota.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaLimitListProperties"/>. </summary>
+        /// <param name="provisioningState"> Request status. </param>
+        /// <param name="value"> List of Group Quota Limit details. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <returns> A new <see cref="Models.GroupQuotaLimitListProperties"/> instance for mocking. </returns>
+        public static GroupQuotaLimitListProperties GroupQuotaLimitListProperties(QuotaRequestStatus? provisioningState = null, IEnumerable<GroupQuotaLimit> value = null, string nextLink = null)
+        {
+            value ??= new List<GroupQuotaLimit>();
+
+            return new GroupQuotaLimitListProperties(provisioningState, value?.ToList(), nextLink, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaDetails"/>. </summary>
-        /// <param name="region"> Location/Azure region for the quota requested for resource. </param>
+        /// <param name="resourceName"> The resource name, such as SKU name. </param>
         /// <param name="limit"> The current Group Quota Limit at the parentId level. </param>
         /// <param name="comment"> Any comment related to quota request. </param>
         /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
@@ -155,12 +167,12 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display name. </param>
         /// <returns> A new <see cref="Models.GroupQuotaDetails"/> instance for mocking. </returns>
-        public static GroupQuotaDetails GroupQuotaDetails(string region = null, long? limit = null, string comment = null, string unit = null, long? availableLimit = null, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null, string value = null, string localizedValue = null)
+        public static GroupQuotaDetails GroupQuotaDetails(string resourceName = null, long? limit = null, string comment = null, string unit = null, long? availableLimit = null, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null, string value = null, string localizedValue = null)
         {
             allocatedToSubscriptionsValue ??= new List<SubscriptionAllocatedQuota>();
 
             return new GroupQuotaDetails(
-                region,
+                resourceName,
                 limit,
                 comment,
                 unit,
@@ -227,16 +239,16 @@ namespace Azure.ResourceManager.Quota.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Quota.SubscriptionQuotaAllocationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Quota.SubscriptionQuotaAllocationsListData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Quota properties for the specified resource. </param>
-        /// <returns> A new <see cref="Quota.SubscriptionQuotaAllocationData"/> instance for mocking. </returns>
-        public static SubscriptionQuotaAllocationData SubscriptionQuotaAllocationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionQuotaDetails properties = null)
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Quota.SubscriptionQuotaAllocationsListData"/> instance for mocking. </returns>
+        public static SubscriptionQuotaAllocationsListData SubscriptionQuotaAllocationsListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionQuotaAllocationsListProperties properties = null)
         {
-            return new SubscriptionQuotaAllocationData(
+            return new SubscriptionQuotaAllocationsListData(
                 id,
                 name,
                 resourceType,
@@ -245,17 +257,29 @@ namespace Azure.ResourceManager.Quota.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionQuotaAllocationsListProperties"/>. </summary>
+        /// <param name="provisioningState"> Request status. </param>
+        /// <param name="value"> Subscription quota list. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <returns> A new <see cref="Models.SubscriptionQuotaAllocationsListProperties"/> instance for mocking. </returns>
+        public static SubscriptionQuotaAllocationsListProperties SubscriptionQuotaAllocationsListProperties(QuotaRequestStatus? provisioningState = null, IEnumerable<SubscriptionQuotaAllocations> value = null, string nextLink = null)
+        {
+            value ??= new List<SubscriptionQuotaAllocations>();
+
+            return new SubscriptionQuotaAllocationsListProperties(provisioningState, value?.ToList(), nextLink, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SubscriptionQuotaDetails"/>. </summary>
-        /// <param name="region"> Location/Azure region for the quota requested for resource. </param>
+        /// <param name="resourceName"> The resource name, such as SKU name. </param>
         /// <param name="limit"> The total quota limit for the subscription. </param>
         /// <param name="shareableQuota"> The shareable quota for the subscription. </param>
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display name. </param>
         /// <returns> A new <see cref="Models.SubscriptionQuotaDetails"/> instance for mocking. </returns>
-        public static SubscriptionQuotaDetails SubscriptionQuotaDetails(string region = null, long? limit = null, long? shareableQuota = null, string value = null, string localizedValue = null)
+        public static SubscriptionQuotaDetails SubscriptionQuotaDetails(string resourceName = null, long? limit = null, long? shareableQuota = null, string value = null, string localizedValue = null)
         {
             return new SubscriptionQuotaDetails(
-                region,
+                resourceName,
                 limit,
                 shareableQuota,
                 value,

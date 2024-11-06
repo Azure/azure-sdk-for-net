@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_GroupQuotaSubscriptionsPatchSubscriptions()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/PatchGroupQuotasSubscription.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasSubscriptions/PatchGroupQuotasSubscription.json
             // this example is just showing the usage of "GroupQuotaSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_GroupQuotaSubscriptionsDeleteSubscriptions()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/DeleteGroupQuotaSubscriptions.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasSubscriptions/DeleteGroupQuotaSubscriptions.json
             // this example is just showing the usage of "GroupQuotaSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GroupQuotaSubscriptionsGetSubscriptions()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/GetGroupQuotaSubscriptions.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasSubscriptions/GetGroupQuotaSubscriptions.json
             // this example is just showing the usage of "GroupQuotaSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

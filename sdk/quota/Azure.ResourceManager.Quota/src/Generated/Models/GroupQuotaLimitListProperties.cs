@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Quota.Models;
 
-namespace Azure.ResourceManager.Quota
+namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary>
-    /// A class representing the GroupQuotaLimit data model.
-    /// Group Quota limit.
-    /// </summary>
-    public partial class GroupQuotaLimitData : ResourceData
+    /// <summary> The GroupQuotaLimitListProperties. </summary>
+    public partial class GroupQuotaLimitListProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,26 +45,33 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitData"/>. </summary>
-        public GroupQuotaLimitData()
+        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitListProperties"/>. </summary>
+        public GroupQuotaLimitListProperties()
         {
+            Value = new ChangeTrackingList<GroupQuotaLimit>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Group Quota properties for the specified resource. </param>
+        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitListProperties"/>. </summary>
+        /// <param name="provisioningState"> Request status. </param>
+        /// <param name="value"> List of Group Quota Limit details. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotaLimitData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GroupQuotaDetails properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal GroupQuotaLimitListProperties(QuotaRequestStatus? provisioningState, IList<GroupQuotaLimit> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            ProvisioningState = provisioningState;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Group Quota properties for the specified resource. </summary>
-        [WirePath("properties")]
-        public GroupQuotaDetails Properties { get; set; }
+        /// <summary> Request status. </summary>
+        [WirePath("provisioningState")]
+        public QuotaRequestStatus? ProvisioningState { get; }
+        /// <summary> List of Group Quota Limit details. </summary>
+        [WirePath("value")]
+        public IList<GroupQuotaLimit> Value { get; }
+        /// <summary> The URL to use for getting the next set of results. </summary>
+        [WirePath("nextLink")]
+        public string NextLink { get; }
     }
 }
