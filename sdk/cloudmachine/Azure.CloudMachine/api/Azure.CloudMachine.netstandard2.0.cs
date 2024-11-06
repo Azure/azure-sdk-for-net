@@ -99,7 +99,7 @@ namespace Azure.CloudMachine.OpenAI
     }
     public partial class EmbeddingsVectorbase
     {
-        public EmbeddingsVectorbase(OpenAI.Embeddings.EmbeddingClient client, Azure.CloudMachine.OpenAI.VectorbaseStore store = null, int factChunkSize = 0) { }
+        public EmbeddingsVectorbase(OpenAI.Embeddings.EmbeddingClient client, Azure.CloudMachine.OpenAI.VectorbaseStore store = null, int factChunkSize = 1000) { }
         public void Add(System.BinaryData data) { }
         public void Add(string text) { }
         public System.Collections.Generic.IEnumerable<Azure.CloudMachine.OpenAI.VectorbaseEntry> Find(string text, Azure.CloudMachine.OpenAI.FindOptions options = null) { throw null; }

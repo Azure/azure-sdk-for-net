@@ -23,7 +23,7 @@ public class EmbeddingsVectorbase
     /// <param name="client"></param>
     /// <param name="store"></param>
     /// <param name="factChunkSize"></param>
-    public EmbeddingsVectorbase(EmbeddingClient client, VectorbaseStore store = default, int factChunkSize = 0)
+    public EmbeddingsVectorbase(EmbeddingClient client, VectorbaseStore store = default, int factChunkSize = 1000)
     {
         _client = client;
         _store = store ?? new MemoryVectorbaseStore();
