@@ -313,14 +313,16 @@ function RemoveStorageAccount($Account) {
   if ($Account.Kind -eq "FileStorage") { return }
 
   $containers = New-AzStorageContext -StorageAccountName $Account.StorageAccountName | Get-AzStorageContainer
-  $blobs = $containers | Get-AzStorageBlob
   $deleteNow = @()
 
   try {
-    foreach ($blob in $blobs) {
-      $shouldDelete = EnableBlobDeletion -Blob $blob -StorageAccountName $Account.StorageAccountName -ResourceGroupName $Account.ResourceGroupName
-      if ($shouldDelete) {
-        $deleteNow += $blob
+    foreach ($container in $containers) {
+      $blobs = $container | Get-AzStorageBlob
+      foreach ($blob in $blobs) {
+        $shouldDelete = EnableBlobDeletion -Blob $blob -Container $container -StorageAccountName $Account.StorageAccountName -ResourceGroupName $Account.ResourceGroupName
+        if ($shouldDelete) {
+          $deleteNow += $blob
+        }
       }
     }
   } catch {
@@ -398,7 +400,7 @@ function EnableBlobDeletion($Blob, $Container, $StorageAccountName, $ResourceGro
     $Blob.ICloudBlob.BreakLease()
   }
 
-  if (($container | Get-Member 'BlobContainerProperties') -and $container.BlobContainerProperties.HasImmutableStorageWithVersioning) {
+  if (($Container | Get-Member 'BlobContainerProperties') -and $Container.BlobContainerProperties.HasImmutableStorageWithVersioning) {
     $forceBlobDeletion = $true
   }
 
