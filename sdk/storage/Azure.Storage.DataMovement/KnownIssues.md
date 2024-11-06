@@ -16,6 +16,7 @@ This limitation also exists for share files and directories.
 
 BlobFuse uses custom blob metadata to manage it's directory structure. That metadata will currently be lost on a service to service copy.
 
+
 ## Blob HNS Support
 
 There is currently no explicit support for Azure Blob Storage accounts with hierarchichal namespace enabled. This can manifest in unexpected errors with some transfers of multi-level directories. Single blob transfers and transfers of directories with no subdirectories should be unaffected by this lack of support.
@@ -23,3 +24,7 @@ There is currently no explicit support for Azure Blob Storage accounts with hier
 ## Transfer Sizes
 
 The Azure Storage REST service has various limitations as to the size of request body it will accept, depending on the operation being performed. While the DataMovement library attempts to clamp transfer chunk sizes down to accepted levels, it is not always accurate. Please refer to the [REST documentation](https://learn.microsoft.com/rest/api/storageservices/) for information on transfer size limitations.
+
+### Resume Behavior when Client Options are set
+
+When calling `*StorageResourceProvider.FromClient` with a Storage Client (e.g. `BlobBaseClient`, `ShareFileClient`) initialized with `*ClientOptions` (e.g `BlobClientOptions`, `ShareClientOptions`). It is NOT guaranteed that properties set within the `*ClientOptions` will be respected when resuming a transfer. 
