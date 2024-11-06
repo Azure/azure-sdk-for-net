@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.Json;
 using OpenAI.Chat;
 
-namespace Azure.CloudMachine.OpenAI.Chat;
+namespace Azure.CloudMachine.OpenAI;
 
 /// <summary> The service client for the OpenAI Chat Completions endpoint. </summary>
 public class ChatTools

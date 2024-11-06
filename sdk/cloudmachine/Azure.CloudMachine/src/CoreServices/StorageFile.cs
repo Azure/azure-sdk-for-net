@@ -43,7 +43,7 @@ public class StorageFile
     /// </summary>
     /// <returns></returns>
     public BinaryData Download()
-        => _storage.DownloadBlob(Path);
+        => _storage.Download(Path);
 
     // public async Task<BinaryData> DownloadAsync()
     //     => await _storage.DownloadBlobAsync(Path).ConfigureAwait(false);
@@ -52,7 +52,7 @@ public class StorageFile
     /// Deletes the file from the storage account.
     /// </summary>
     public void Delete()
-        => _storage.DeleteBlob(Path);
+        => _storage.Delete(Path);
 
     // public async Task DeleteAsync()
     //     => await _storage.DeleteBlobAsync(Path).ConfigureAwait(false);
