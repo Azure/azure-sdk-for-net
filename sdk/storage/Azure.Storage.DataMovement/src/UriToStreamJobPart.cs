@@ -196,10 +196,9 @@ namespace Azure.Storage.DataMovement
         {
             // we can default the length to 0 because we know the destination is local and
             // does not require a length to be created.
-            await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
-
             try
             {
+                await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
                 if (!_sourceResource.Length.HasValue)
                 {
                     await UnknownDownloadInternal().ConfigureAwait(false);

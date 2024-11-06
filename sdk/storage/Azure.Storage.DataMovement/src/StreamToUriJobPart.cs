@@ -186,10 +186,10 @@ namespace Azure.Storage.DataMovement
             // Attempt to get the length, it's possible the file could
             // not be accessible (or does not exist).
             string operationName = $"{nameof(TransferManager.StartTransferAsync)}";
-            await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
-            long? fileLength = default;
             try
             {
+                await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
+                long? fileLength = default;
                 StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
                 fileLength = properties.ResourceLength;
 

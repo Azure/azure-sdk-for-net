@@ -106,6 +106,10 @@ class PackageProps {
     }
 
     [void]InitializeCIArtifacts() {
+        if (-not $env:SYSTEM_TEAMPROJECTID  -and -not $env:GITHUB_ACTIONS) {
+            return
+        }
+
         $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
 
         $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)

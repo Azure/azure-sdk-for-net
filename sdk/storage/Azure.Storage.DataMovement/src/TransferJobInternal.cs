@@ -281,7 +281,15 @@ namespace Azure.Storage.DataMovement
         /// <returns>An IEnumerable that contains the job parts</returns>
         public virtual async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync()
         {
-            await OnJobStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
+            try
+            {
+                await OnJobStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
+                yield break;
+            }
             int partNumber = 0;
 
             if (_jobParts.Count == 0)
@@ -324,7 +332,18 @@ namespace Azure.Storage.DataMovement
                     }
                 }
 
-                if (!await _checkpointer.IsEnumerationCompleteAsync(_dataTransfer.Id, _cancellationToken).ConfigureAwait(false))
+                bool isEnumerationComplete;
+                try
+                {
+                    isEnumerationComplete = await _checkpointer.IsEnumerationCompleteAsync(_dataTransfer.Id, _cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    await InvokeFailedArgAsync(ex).ConfigureAwait(false);
+                    yield break;
+                }
+
+                if (!isEnumerationComplete)
                 {
                     await foreach (JobPartInternal jobPartInternal in GetStorageResourcesAsync().ConfigureAwait(false))
                     {
@@ -333,8 +352,15 @@ namespace Azure.Storage.DataMovement
                 }
             }
 
-            // Call regardless of the outcome of enumeration so job can pause/finish
-            await OnEnumerationComplete().ConfigureAwait(false);
+            try
+            {
+                // Call regardless of the outcome of enumeration so job can pause/finish
+                await OnEnumerationComplete().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
+            }
         }
 
         private async IAsyncEnumerable<JobPartInternal> GetStorageResourcesAsync()
