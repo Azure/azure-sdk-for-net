@@ -1,15 +1,15 @@
 namespace Azure.Health.Deidentification
 {
-    public partial class CustomizationConfig : System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.CustomizationConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.CustomizationConfig>
+    public partial class CustomizationOptions : System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.CustomizationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.CustomizationOptions>
     {
-        public CustomizationConfig() { }
+        public CustomizationOptions() { }
         public string RedactionFormat { get { throw null; } set { } }
         public string SurrogateLocale { get { throw null; } set { } }
-        Azure.Health.Deidentification.CustomizationConfig System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.CustomizationConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.CustomizationConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Health.Deidentification.CustomizationConfig System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.CustomizationConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.CustomizationConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.CustomizationConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Health.Deidentification.CustomizationOptions System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.CustomizationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.CustomizationOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Health.Deidentification.CustomizationOptions System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.CustomizationOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.CustomizationOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.CustomizationOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DeidentificationClient
     {
@@ -35,14 +35,14 @@ namespace Azure.Health.Deidentification
         public virtual Azure.Response<Azure.Health.Deidentification.DeidentificationJob> GetJob(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetJobAsync(string name, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Health.Deidentification.DeidentificationJob>> GetJobAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetJobDocuments(string jobName, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Health.Deidentification.DocumentDetails> GetJobDocuments(string jobName, int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetJobDocumentsAsync(string jobName, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Health.Deidentification.DocumentDetails> GetJobDocumentsAsync(string jobName, int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetJobs(int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Health.Deidentification.DeidentificationJob> GetJobs(int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetJobsAsync(int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Health.Deidentification.DeidentificationJob> GetJobsAsync(int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetJobDocuments(string jobName, int? maxpagesize, string continuationToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Health.Deidentification.DocumentDetails> GetJobDocuments(string jobName, int? maxpagesize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetJobDocumentsAsync(string jobName, int? maxpagesize, string continuationToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Health.Deidentification.DocumentDetails> GetJobDocumentsAsync(string jobName, int? maxpagesize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetJobs(int? maxpagesize, string continuationToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Health.Deidentification.DeidentificationJob> GetJobs(int? maxpagesize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetJobsAsync(int? maxpagesize, string continuationToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Health.Deidentification.DeidentificationJob> GetJobsAsync(int? maxpagesize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DeidentificationClientOptions : Azure.Core.ClientOptions
     {
@@ -55,7 +55,7 @@ namespace Azure.Health.Deidentification
     public partial class DeidentificationContent : System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.DeidentificationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.DeidentificationContent>
     {
         public DeidentificationContent(string inputText) { }
-        public Azure.Health.Deidentification.CustomizationConfig Customizations { get { throw null; } set { } }
+        public Azure.Health.Deidentification.CustomizationOptions Customizations { get { throw null; } set { } }
         public string InputText { get { throw null; } }
         public Azure.Health.Deidentification.OperationType? Operation { get { throw null; } set { } }
         Azure.Health.Deidentification.DeidentificationContent System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.DeidentificationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -68,7 +68,7 @@ namespace Azure.Health.Deidentification
     {
         public DeidentificationJob(Azure.Health.Deidentification.SourceStorageLocation sourceLocation, Azure.Health.Deidentification.TargetStorageLocation targetLocation) { }
         public System.DateTimeOffset CreatedAt { get { throw null; } }
-        public Azure.Health.Deidentification.JobCustomizationConfig Customizations { get { throw null; } set { } }
+        public Azure.Health.Deidentification.JobCustomizationOptions Customizations { get { throw null; } set { } }
         public Azure.ResponseError Error { get { throw null; } }
         public System.DateTimeOffset LastUpdatedAt { get { throw null; } }
         public string Name { get { throw null; } }
@@ -122,8 +122,8 @@ namespace Azure.Health.Deidentification
     }
     public static partial class HealthDeidentificationModelFactory
     {
-        public static Azure.Health.Deidentification.DeidentificationContent DeidentificationContent(string inputText = null, Azure.Health.Deidentification.OperationType? operation = default(Azure.Health.Deidentification.OperationType?), Azure.Health.Deidentification.CustomizationConfig customizations = null) { throw null; }
-        public static Azure.Health.Deidentification.DeidentificationJob DeidentificationJob(string name = null, Azure.Health.Deidentification.OperationType? operation = default(Azure.Health.Deidentification.OperationType?), Azure.Health.Deidentification.SourceStorageLocation sourceLocation = null, Azure.Health.Deidentification.TargetStorageLocation targetLocation = null, Azure.Health.Deidentification.JobCustomizationConfig customizations = null, Azure.Health.Deidentification.JobStatus status = default(Azure.Health.Deidentification.JobStatus), Azure.ResponseError error = null, System.DateTimeOffset lastUpdatedAt = default(System.DateTimeOffset), System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset? startedAt = default(System.DateTimeOffset?), Azure.Health.Deidentification.JobSummary summary = null) { throw null; }
+        public static Azure.Health.Deidentification.DeidentificationContent DeidentificationContent(string inputText = null, Azure.Health.Deidentification.OperationType? operation = default(Azure.Health.Deidentification.OperationType?), Azure.Health.Deidentification.CustomizationOptions customizations = null) { throw null; }
+        public static Azure.Health.Deidentification.DeidentificationJob DeidentificationJob(string name = null, Azure.Health.Deidentification.OperationType? operation = default(Azure.Health.Deidentification.OperationType?), Azure.Health.Deidentification.SourceStorageLocation sourceLocation = null, Azure.Health.Deidentification.TargetStorageLocation targetLocation = null, Azure.Health.Deidentification.JobCustomizationOptions customizations = null, Azure.Health.Deidentification.JobStatus status = default(Azure.Health.Deidentification.JobStatus), Azure.ResponseError error = null, System.DateTimeOffset lastUpdatedAt = default(System.DateTimeOffset), System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset? startedAt = default(System.DateTimeOffset?), Azure.Health.Deidentification.JobSummary summary = null) { throw null; }
         public static Azure.Health.Deidentification.DeidentificationResult DeidentificationResult(string outputText = null, Azure.Health.Deidentification.PhiTaggerResult taggerResult = null) { throw null; }
         public static Azure.Health.Deidentification.DocumentDetails DocumentDetails(string id = null, Azure.Health.Deidentification.DocumentLocation input = null, Azure.Health.Deidentification.DocumentLocation output = null, Azure.Health.Deidentification.OperationState status = default(Azure.Health.Deidentification.OperationState), Azure.ResponseError error = null) { throw null; }
         public static Azure.Health.Deidentification.DocumentLocation DocumentLocation(System.Uri location = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
@@ -132,16 +132,16 @@ namespace Azure.Health.Deidentification
         public static Azure.Health.Deidentification.PhiTaggerResult PhiTaggerResult(System.Collections.Generic.IEnumerable<Azure.Health.Deidentification.PhiEntity> entities = null) { throw null; }
         public static Azure.Health.Deidentification.StringIndex StringIndex(int utf8 = 0, int utf16 = 0, int codePoint = 0) { throw null; }
     }
-    public partial class JobCustomizationConfig : System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.JobCustomizationConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.JobCustomizationConfig>
+    public partial class JobCustomizationOptions : System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.JobCustomizationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.JobCustomizationOptions>
     {
-        public JobCustomizationConfig() { }
+        public JobCustomizationOptions() { }
         public string RedactionFormat { get { throw null; } set { } }
         public string SurrogateLocale { get { throw null; } set { } }
-        Azure.Health.Deidentification.JobCustomizationConfig System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.JobCustomizationConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.JobCustomizationConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Health.Deidentification.JobCustomizationConfig System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.JobCustomizationConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.JobCustomizationConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.JobCustomizationConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Health.Deidentification.JobCustomizationOptions System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.JobCustomizationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.JobCustomizationOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Health.Deidentification.JobCustomizationOptions System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.JobCustomizationOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.JobCustomizationOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.JobCustomizationOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobStatus : System.IEquatable<Azure.Health.Deidentification.JobStatus>
