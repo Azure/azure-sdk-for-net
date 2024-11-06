@@ -60,7 +60,7 @@ namespace Azure.Health.Deidentification
         /// <param name="operation"> Operation to perform on the input documents. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationContent(string inputText, OperationType? operation, CustomizationConfig customizations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationContent(string inputText, OperationType? operation, CustomizationOptions customizations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InputText = inputText;
             Operation = operation;
@@ -78,6 +78,6 @@ namespace Azure.Health.Deidentification
         /// <summary> Operation to perform on the input documents. </summary>
         public OperationType? Operation { get; set; }
         /// <summary> Customization parameters to override default service behaviors. </summary>
-        public CustomizationConfig Customizations { get; set; }
+        public CustomizationOptions Customizations { get; set; }
     }
 }

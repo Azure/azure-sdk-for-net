@@ -229,7 +229,7 @@ namespace Azure.Health.Deidentification.Samples
             DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
             {
                 Operation = OperationType.Redact,
-                Customizations = new CustomizationConfig
+                Customizations = new CustomizationOptions
                 {
                     RedactionFormat = "[{type}]",
                     SurrogateLocale = "en-US",
@@ -249,7 +249,7 @@ namespace Azure.Health.Deidentification.Samples
             DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
             {
                 Operation = OperationType.Redact,
-                Customizations = new CustomizationConfig
+                Customizations = new CustomizationOptions
                 {
                     RedactionFormat = "[{type}]",
                     SurrogateLocale = "en-US",
@@ -266,7 +266,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetJobs(10, null))
+            foreach (BinaryData item in client.GetJobs(10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -288,7 +288,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetJobsAsync(10, null))
+            await foreach (BinaryData item in client.GetJobsAsync(10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -336,7 +336,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetJobDocuments("xafoosjabeidsrojt", 10, null))
+            foreach (BinaryData item in client.GetJobDocuments("Replace this value with a string matching RegExp ^[a-zA-Z0-9][a-zA-Z0-9-_]+[a-zA-Z0-9]$", 10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -354,7 +354,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetJobDocumentsAsync("xafoosjabeidsrojt", 10, null))
+            await foreach (BinaryData item in client.GetJobDocumentsAsync("Replace this value with a string matching RegExp ^[a-zA-Z0-9][a-zA-Z0-9-_]+[a-zA-Z0-9]$", 10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -372,7 +372,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            foreach (DocumentDetails item in client.GetJobDocuments("xafoosjabeidsrojt"))
+            foreach (DocumentDetails item in client.GetJobDocuments("Replace this value with a string matching RegExp ^[a-zA-Z0-9][a-zA-Z0-9-_]+[a-zA-Z0-9]$"))
             {
             }
         }
@@ -385,7 +385,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            await foreach (DocumentDetails item in client.GetJobDocumentsAsync("xafoosjabeidsrojt"))
+            await foreach (DocumentDetails item in client.GetJobDocumentsAsync("Replace this value with a string matching RegExp ^[a-zA-Z0-9][a-zA-Z0-9-_]+[a-zA-Z0-9]$"))
             {
             }
         }
@@ -531,7 +531,7 @@ namespace Azure.Health.Deidentification.Samples
             })
             {
                 Operation = OperationType.Redact,
-                Customizations = new JobCustomizationConfig
+                Customizations = new JobCustomizationOptions
                 {
                     RedactionFormat = "[{type}]",
                     SurrogateLocale = "en-US",
@@ -558,7 +558,7 @@ namespace Azure.Health.Deidentification.Samples
             })
             {
                 Operation = OperationType.Redact,
-                Customizations = new JobCustomizationConfig
+                Customizations = new JobCustomizationOptions
                 {
                     RedactionFormat = "[{type}]",
                     SurrogateLocale = "en-US",
