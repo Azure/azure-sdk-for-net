@@ -16,11 +16,8 @@ using OpenAI.Chat;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using Microsoft.Extensions.Primitives;
-using OpenAI.Embeddings;
 using System.Linq;
 using System.IO;
-using Azure.CloudMachine.OpenAI.Chat;
-using Azure.CloudMachine.OpenAI.Embeddings;
 
 namespace Azure.CloudMachine.Tests;
 
@@ -61,7 +58,7 @@ public class CloudMachineTests
 
         CloudMachineClient cm = new();
 
-        cm.Storage.WhenBlobUploaded((StorageFile file) =>
+        cm.Storage.WhenUploaded((StorageFile file) =>
         {
             var data = file.Download();
             Console.WriteLine(data.ToString());
@@ -73,7 +70,7 @@ public class CloudMachineTests
             Foo = 5,
             Bar = true
         });
-        BinaryData downloaded = cm.Storage.DownloadBlob(uploaded);
+        BinaryData downloaded = cm.Storage.Download(uploaded);
         Console.WriteLine(downloaded.ToString());
         eventSlim.Wait();
     }
@@ -136,7 +133,7 @@ public class CloudMachineTests
             Console.WriteLine(message);
             Assert.True(message != null);
         });
-        cm.Messaging.SendMessage(new
+        cm.Messaging.SendJson(new
         {
             Foo = 5,
             Bar = true
@@ -155,8 +152,8 @@ public class CloudMachineTests
         CloudMachineClient cm = new();
 
         // setup
-        cm.Messaging.WhenMessageReceived((string message) => cm.Storage.UploadBinaryData(BinaryData.FromString(message)));
-        cm.Storage.WhenBlobUploaded((StorageFile file) =>
+        cm.Messaging.WhenMessageReceived((string message) => cm.Storage.Upload(BinaryData.FromString(message)));
+        cm.Storage.WhenUploaded((StorageFile file) =>
         {
             var content = file.Download();
             ChatCompletion completion = cm.GetOpenAIChatClient().CompleteChat(content.ToString());
@@ -164,7 +161,7 @@ public class CloudMachineTests
         });
 
         // go!
-        cm.Messaging.SendMessage("Tell me something about Redmond, WA.");
+        cm.Messaging.SendJson("Tell me something about Redmond, WA.");
     }
 
     [Ignore("no recordings yet")]
