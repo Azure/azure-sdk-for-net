@@ -3,7 +3,7 @@
     <Version>1.3.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.2.0</ApiCompatVersion>
-    <PackageId>Azure.ResourceManager.AppService</PackageId>
+    <PackageId>Azure.ResourceManager.AppService1111</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.Web.</Description>
     <PackageTags>azure;management;AppService</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
