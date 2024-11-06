@@ -37,6 +37,7 @@ namespace Azure.CloudMachine
         public string Path { get { throw null; } }
         public string RequestId { get { throw null; } }
         public void Delete() { }
+        public System.Threading.Tasks.Task DeleteAsync() { throw null; }
         public System.BinaryData Download() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -52,12 +53,14 @@ namespace Azure.CloudMachine
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public void Delete(string path) { }
+        public System.Threading.Tasks.Task DeleteAsync(string path) { throw null; }
         public System.BinaryData Download(string path) { throw null; }
         public string Upload(System.BinaryData data, string name = null, bool overwrite = false) { throw null; }
         public string Upload(System.IO.Stream fileStream, string name = null, string contentType = null, bool overwrite = false) { throw null; }
         public System.Threading.Tasks.Task<string> UploadAsync(System.BinaryData data, string name = null, bool overwrite = false) { throw null; }
         public System.Threading.Tasks.Task<string> UploadAsync(System.IO.Stream fileStream, string name = null, string contentType = null, bool overwrite = false) { throw null; }
         public string UploadJson(object json, string name = null, bool overwrite = false) { throw null; }
+        public System.Threading.Tasks.Task<string> UploadJsonAsync(object json, string name = null, bool overwrite = false) { throw null; }
         public void WhenUploaded(System.Action<Azure.CloudMachine.StorageFile> function) { }
         public void WhenUploaded(System.Action<System.BinaryData> function) { }
     }
