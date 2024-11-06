@@ -21,7 +21,7 @@
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" VersionOverride="8.0.0" />
     <PackageReference Include="Microsoft.Bcl.Numerics" />
-    <PackageReference Include="System.Memory.Data"/>
+    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.0"/>
   </ItemGroup>
 
 </Project>
