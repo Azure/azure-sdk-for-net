@@ -8,6 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using Azure.Messaging.EventGrid.SystemEvents;
 using OpenAI.Chat;
 
 namespace Azure.CloudMachine.OpenAI;
@@ -34,6 +35,20 @@ public class ChatTools
     /// Gets the tool definitions.
     /// </summary>
     public IList<ChatTool> Definitions => _definitions;
+
+    /// <summary>
+    /// Implicitly converts a <see cref="ChatTools"/> to <see cref="ChatCompletionOptions"/>.
+    /// </summary>
+    /// <param name="tools"></param>
+    public static implicit operator ChatCompletionOptions(ChatTools tools)
+    {
+        ChatCompletionOptions options = new();
+        foreach (var tool in tools.Definitions)
+        {
+            options.Tools.Add(tool);
+        }
+        return options;
+    }
 
     /// <summary>
     /// Adds a set of functions to the chat functions.

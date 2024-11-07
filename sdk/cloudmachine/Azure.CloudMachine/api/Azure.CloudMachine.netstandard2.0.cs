@@ -77,6 +77,7 @@ namespace Azure.CloudMachine.OpenAI
 {
     public static partial class AzureOpenAIExtensions
     {
+        public static void Add(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages, OpenAI.Chat.ChatCompletion completion) { }
         public static void Add(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages, System.Collections.Generic.IEnumerable<Azure.CloudMachine.OpenAI.VectorbaseEntry> entries) { }
         public static OpenAI.Chat.ChatClient GetOpenAIChatClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
         public static OpenAI.Embeddings.EmbeddingClient GetOpenAIEmbeddingsClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
@@ -96,6 +97,7 @@ namespace Azure.CloudMachine.OpenAI
         protected virtual string GetMethodInfoToDescription(System.Reflection.MethodInfo function) { throw null; }
         protected virtual string GetMethodInfoToName(System.Reflection.MethodInfo function) { throw null; }
         protected virtual string GetParameterInfoToDescription(System.Reflection.ParameterInfo parameter) { throw null; }
+        public static implicit operator OpenAI.Chat.ChatCompletionOptions (Azure.CloudMachine.OpenAI.ChatTools tools) { throw null; }
     }
     public partial class EmbeddingsVectorbase
     {

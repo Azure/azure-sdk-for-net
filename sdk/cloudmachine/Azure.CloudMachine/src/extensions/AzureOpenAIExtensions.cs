@@ -95,4 +95,12 @@ public static class AzureOpenAIExtensions
             messages.Add(ChatMessage.CreateSystemMessage(entry.Data.ToString()));
         }
     }
+
+    /// <summary>
+    /// Adds a chat completion as an AssistantChatMessage to the list of chat messages.
+    /// </summary>
+    /// <param name="messages"></param>
+    /// <param name="completion"></param>
+    public static void Add(this List<ChatMessage> messages, ChatCompletion completion)
+        => messages.Add(ChatMessage.CreateAssistantMessage(completion));
 }
