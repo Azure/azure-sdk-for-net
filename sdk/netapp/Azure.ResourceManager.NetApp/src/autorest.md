@@ -248,6 +248,7 @@ rename-mapping:
   VolumeRevert.snapshotId: -|string
   Volume.properties.backupId: -|string
   BackupsMigrationRequest.backupVaultId: -|string
+  ListQuotaResportResponse: ListQuotaResportResult
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
