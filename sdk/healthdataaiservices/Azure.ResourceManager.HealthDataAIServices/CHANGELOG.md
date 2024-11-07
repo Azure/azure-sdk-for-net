@@ -6,18 +6,6 @@
 
 This release marks the General Availability (GA) of the package. There are no changes from the previous version, but the API version has been updated.
 
-## 1.0.0-beta.2 (2024-08-15)
-
-### Features Added
-
-This version was automatically incremented by the Azure SDK bot after the release of the Azure.ResourceManager.HealthDataAIServices package. There were no additional changes in this version.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.1 (2024-08-15)
 
 ### Features Added
