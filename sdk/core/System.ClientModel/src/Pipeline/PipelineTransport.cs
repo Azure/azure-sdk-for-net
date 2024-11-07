@@ -17,7 +17,27 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public abstract class PipelineTransport : PipelinePolicy
 {
-    internal PipelineTransportLogger? TransportLogger { get; set; }
+    private readonly PipelineTransportLogger? _pipelineTransportLogger;
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="PipelineTransport"/> class.
+    /// </summary>
+    protected PipelineTransport()
+    {
+    }
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="PipelineTransport"/> class.
+    /// </summary>
+    /// <param name="enableLogging"></param>
+    /// <param name="loggerFactory"></param>
+    protected PipelineTransport(bool enableLogging, ILoggerFactory? loggerFactory)
+    {
+        if (enableLogging)
+        {
+            _pipelineTransportLogger = new(loggerFactory);
+        }
+    }
 
     #region CreateMessage
 
@@ -104,7 +124,7 @@ public abstract class PipelineTransport : PipelinePolicy
         }
         catch (Exception ex)
         {
-            TransportLogger?.LogExceptionResponse(message.Response?.ClientRequestId ?? string.Empty, ex);
+            _pipelineTransportLogger?.LogExceptionResponse(message.Response?.ClientRequestId ?? string.Empty, ex);
 
             if (ex is OperationCanceledException)
             {
@@ -125,9 +145,9 @@ public abstract class PipelineTransport : PipelinePolicy
         message.AssertResponse();
         message.Response!.IsErrorCore = ClassifyResponse(message);
 
-        if (elapsed > ClientPipelineOptions.RequestTooLongSeconds)
+        if (elapsed > ClientLoggingOptions.RequestTooLongSeconds)
         {
-            TransportLogger?.LogResponseDelay(message.Response!.ClientRequestId ?? string.Empty, elapsed);
+            _pipelineTransportLogger?.LogResponseDelay(message.Response!.ClientRequestId ?? string.Empty, elapsed);
         }
 
         // The remainder of the method handles response content according to

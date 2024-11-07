@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Internal;
 
@@ -17,7 +18,7 @@ internal partial class PipelineMessageLogger
     public PipelineMessageLogger(PipelineMessageSanitizer sanitizer, ILoggerFactory? loggerFactory)
     {
         _sanitizer = sanitizer;
-        _logger = loggerFactory?.CreateLogger<MessageLoggingPolicy>() ?? null;
+        _logger = loggerFactory?.CreateLogger<MessageLoggingPolicy>() ?? NullLogger<MessageLoggingPolicy>.Instance;
     }
 
     /// <summary>
@@ -40,7 +41,7 @@ internal partial class PipelineMessageLogger
         {
             if (_logger.IsEnabled(LogLevel.Information))
             {
-                Request(requestId, request.Method, _sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers), clientAssembly);
+                Request(_logger, requestId, request.Method, _sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers), clientAssembly);
             }
         }
         else
@@ -50,7 +51,7 @@ internal partial class PipelineMessageLogger
     }
 
     [LoggerMessage(LoggingEventIds.RequestEvent, LogLevel.Information, "Request [{requestId}] {method} {uri}\r\n{headers}client assembly: {clientAssembly}", SkipEnabledCheck = true, EventName = "Request")]
-    private partial void Request(string requestId, string method, string uri, string headers, string? clientAssembly);
+    private partial void Request(ILogger logger, string requestId, string method, string uri, string headers, string? clientAssembly);
 
     public void LogRequestContent(string requestId, byte[] content, Encoding? textEncoding)
     {
@@ -60,11 +61,11 @@ internal partial class PipelineMessageLogger
             {
                 if (textEncoding != null)
                 {
-                    RequestContentText(requestId, textEncoding.GetString(content));
+                    RequestContentText(_logger, requestId, textEncoding.GetString(content));
                 }
                 else
                 {
-                    RequestContent(requestId, content);
+                    RequestContent(_logger, requestId, content);
                 }
             }
         }
@@ -75,10 +76,10 @@ internal partial class PipelineMessageLogger
     }
 
     [LoggerMessage(LoggingEventIds.RequestContentEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "RequestContent")]
-    private partial void RequestContent(string requestId, byte[] content);
+    private partial void RequestContent(ILogger logger, string requestId, byte[] content);
 
     [LoggerMessage(LoggingEventIds.RequestContentTextEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "RequestContentText")]
-    private partial void RequestContentText(string requestId, string content);
+    private partial void RequestContentText(ILogger logger, string requestId, string content);
 
     #endregion
 
@@ -90,7 +91,7 @@ internal partial class PipelineMessageLogger
         {
             if (_logger.IsEnabled(LogLevel.Information))
             {
-                Response(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
+                Response(_logger, requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
             }
         }
         else
@@ -100,7 +101,7 @@ internal partial class PipelineMessageLogger
     }
 
     [LoggerMessage(LoggingEventIds.ResponseEvent, LogLevel.Information, "Response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", SkipEnabledCheck = true, EventName = "Response")]
-    private partial void Response(string requestId, int status, string reasonPhrase, string headers, double seconds);
+    private partial void Response(ILogger logger, string requestId, int status, string reasonPhrase, string headers, double seconds);
 
     public void LogResponseContent(string requestId, byte[] content, Encoding? textEncoding)
     {
@@ -110,11 +111,11 @@ internal partial class PipelineMessageLogger
             {
                 if (textEncoding != null)
                 {
-                    ResponseContentText(requestId, textEncoding.GetString(content));
+                    ResponseContentText(_logger, requestId, textEncoding.GetString(content));
                 }
                 else
                 {
-                    ResponseContent(requestId, content);
+                    ResponseContent(_logger, requestId, content);
                 }
             }
         }
@@ -125,10 +126,10 @@ internal partial class PipelineMessageLogger
     }
 
     [LoggerMessage(LoggingEventIds.ResponseContentEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "ResponseContent")]
-    private partial void ResponseContent(string requestId, byte[] content);
+    private partial void ResponseContent(ILogger logger, string requestId, byte[] content);
 
     [LoggerMessage(LoggingEventIds.ResponseContentTextEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "ResponseContentText")]
-    private partial void ResponseContentText(string requestId, string content);
+    private partial void ResponseContentText(ILogger logger, string requestId, string content);
 
     public void LogResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
     {
@@ -138,11 +139,11 @@ internal partial class PipelineMessageLogger
             {
                 if (textEncoding != null)
                 {
-                    ResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
+                    ResponseContentTextBlock(_logger, requestId, blockNumber, textEncoding.GetString(content));
                 }
                 else
                 {
-                    ResponseContentBlock(requestId, blockNumber, content);
+                    ResponseContentBlock(_logger, requestId, blockNumber, content);
                 }
             }
         }
@@ -153,10 +154,10 @@ internal partial class PipelineMessageLogger
     }
 
     [LoggerMessage(LoggingEventIds.ResponseContentBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ResponseContentBlock")]
-    private partial void ResponseContentBlock(string requestId, int blockNumber, byte[] content);
+    private partial void ResponseContentBlock(ILogger logger, string requestId, int blockNumber, byte[] content);
 
     [LoggerMessage(LoggingEventIds.ResponseContentTextBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ResponseContentTextBlock")]
-    private partial void ResponseContentTextBlock(string requestId, int blockNumber, string content);
+    private partial void ResponseContentTextBlock(ILogger logger, string requestId, int blockNumber, string content);
 
     #endregion
 
@@ -168,7 +169,7 @@ internal partial class PipelineMessageLogger
         {
             if (_logger.IsEnabled(LogLevel.Warning))
             {
-                ErrorResponse(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
+                ErrorResponse(_logger, requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
             }
         }
         else
@@ -178,7 +179,7 @@ internal partial class PipelineMessageLogger
     }
 
     [LoggerMessage(LoggingEventIds.ErrorResponseEvent, LogLevel.Warning, "Error response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", SkipEnabledCheck = true, EventName = "ErrorResponse")]
-    private partial void ErrorResponse(string requestId, int status, string reasonPhrase, string headers, double seconds);
+    private partial void ErrorResponse(ILogger logger, string requestId, int status, string reasonPhrase, string headers, double seconds);
 
     public void LogErrorResponseContent(string requestId, byte[] content, Encoding? textEncoding)
     {
@@ -188,11 +189,11 @@ internal partial class PipelineMessageLogger
             {
                 if (textEncoding != null)
                 {
-                    ErrorResponseContentText(requestId, textEncoding.GetString(content));
+                    ErrorResponseContentText(_logger, requestId, textEncoding.GetString(content));
                 }
                 else
                 {
-                    ErrorResponseContent(requestId, content);
+                    ErrorResponseContent(_logger, requestId, content);
                 }
             }
         }
@@ -203,10 +204,10 @@ internal partial class PipelineMessageLogger
     }
 
     [LoggerMessage(LoggingEventIds.ErrorResponseContentEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "ErrorResponseContent")]
-    private partial void ErrorResponseContent(string requestId, byte[] content);
+    private partial void ErrorResponseContent(ILogger logger, string requestId, byte[] content);
 
     [LoggerMessage(LoggingEventIds.ErrorResponseContentTextEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "ErrorResponseContentText")]
-    private partial void ErrorResponseContentText(string requestId, string content);
+    private partial void ErrorResponseContentText(ILogger logger, string requestId, string content);
 
     public void LogErrorResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
     {
@@ -216,11 +217,11 @@ internal partial class PipelineMessageLogger
             {
                 if (textEncoding != null)
                 {
-                    ErrorResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
+                    ErrorResponseContentTextBlock(_logger, requestId, blockNumber, textEncoding.GetString(content));
                 }
                 else
                 {
-                    ErrorResponseContentBlock(requestId, blockNumber, content);
+                    ErrorResponseContentBlock(_logger, requestId, blockNumber, content);
                 }
             }
         }
@@ -231,10 +232,10 @@ internal partial class PipelineMessageLogger
     }
 
     [LoggerMessage(LoggingEventIds.ErrorResponseContentBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ErrorResponseContentBlock")]
-    private partial void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content);
+    private partial void ErrorResponseContentBlock(ILogger logger, string requestId, int blockNumber, byte[] content);
 
     [LoggerMessage(LoggingEventIds.ErrorResponseContentTextBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ErrorResponseContentTextBlock")]
-    private partial void ErrorResponseContentTextBlock(string requestId, int blockNumber, string content);
+    private partial void ErrorResponseContentTextBlock(ILogger logger, string requestId, int blockNumber, string content);
 
     #endregion
 
@@ -252,7 +253,6 @@ internal partial class PipelineMessageLogger
         }
         return stringBuilder.ToString();
     }
-
 
     #endregion
 }

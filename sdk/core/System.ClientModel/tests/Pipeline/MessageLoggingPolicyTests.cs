@@ -13,11 +13,11 @@ using SyncAsyncTestBase = ClientModel.Tests.SyncAsyncTestBase;
 
 namespace System.ClientModel.Tests.Pipeline;
 
-public class ClientLoggingPolicyTests : SyncAsyncTestBase
+public class MessageLoggingPolicyTests : SyncAsyncTestBase
 {
     private ILoggerFactory _loggerFactory;
 
-    public ClientLoggingPolicyTests(bool isAsync) : base(isAsync)
+    public MessageLoggingPolicyTests(bool isAsync) : base(isAsync)
     {
         _loggerFactory = new TestLoggingFactory(new TestLogger(LogLevel.Debug));
     }

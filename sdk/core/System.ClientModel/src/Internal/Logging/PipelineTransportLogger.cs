@@ -22,7 +22,7 @@ internal partial class PipelineTransportLogger
     {
         if (_logger is not null)
         {
-            ResponseDelay(requestId, seconds);
+            ResponseDelay(_logger, requestId, seconds);
         }
         else
         {
@@ -31,7 +31,7 @@ internal partial class PipelineTransportLogger
     }
 
     [LoggerMessage(LoggingEventIds.ResponseDelayEvent, LogLevel.Warning, "Response [{requestId}] took {seconds:00.0}s", EventName = "ResponseDelay")]
-    public partial void ResponseDelay(string requestId, double seconds);
+    public partial void ResponseDelay(ILogger logger, string requestId, double seconds);
 
     #endregion
 
@@ -41,7 +41,7 @@ internal partial class PipelineTransportLogger
     {
         if (_logger is not null)
         {
-            ExceptionResponse(requestId, exception);
+            ExceptionResponse(_logger, requestId, exception);
         }
         else if (ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None))
         {
@@ -50,7 +50,7 @@ internal partial class PipelineTransportLogger
     }
 
     [LoggerMessage(LoggingEventIds.ExceptionResponseEvent, LogLevel.Information, "Request [{requestId}] exception occurred.", EventName = "ExceptionResponse")]
-    public partial void ExceptionResponse(string requestId, Exception exception);
+    public partial void ExceptionResponse(ILogger logger, string requestId, Exception exception);
 
     #endregion
 }

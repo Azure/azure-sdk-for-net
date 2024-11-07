@@ -30,39 +30,9 @@ public class ClientPipelineOptions
 
     #region Defaults
 
-    internal const double RequestTooLongSeconds = 3.0; // sec
-    internal const bool DefaultEnableLogging = true;
-    internal const bool DefaultEnableMessageLogging = true;
-    internal const bool DefaultEnableMessageContentLogging = false;
-    internal const int DefaultMessageContentSizeLimit = 4 * 1024;
     internal const int DefaultMaxRetries = 3;
     internal static readonly TimeSpan S_DefaultMaxDelay = TimeSpan.FromMinutes(1);
     internal static readonly TimeSpan S_DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
-
-    internal static string[] DefaultAllowedHeaderNames { get; } = new[] {
-            "traceparent",
-            "Accept",
-            "Cache-Control",
-            "Connection",
-            "Content-Length",
-            "Content-Type",
-            "Date",
-            "ETag",
-            "Expires",
-            "If-Match",
-            "If-Modified-Since",
-            "If-None-Match",
-            "If-Unmodified-Since",
-            "Last-Modified",
-            "Pragma",
-            "Request-Id",
-            "Retry-After",
-            "Server",
-            "Transfer-Encoding",
-            "User-Agent",
-            "WWW-Authenticate" };
-
-    internal static string[] DefaultAllowedQueryParameters { get; } = new[] { "api-version" };
 
     #endregion
 

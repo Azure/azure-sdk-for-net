@@ -104,19 +104,8 @@ public sealed partial class ClientPipeline
         Argument.AssertNotNull(options, nameof(options));
 
         options.Freeze();
-
-        // Validate options do not conflict
-
-        if (options.ClientLoggingOptions?.EnableLogging == false
-            && (options.ClientLoggingOptions?.EnableMessageLogging == true || options.ClientLoggingOptions?.EnableMessageContentLogging == true))
-        {
-            throw new InvalidOperationException("HTTP Message logging cannot be enabled when client-wide logging is disabled.");
-        }
-        if (options.ClientLoggingOptions?.EnableMessageLogging == false
-            && options.ClientLoggingOptions?.EnableMessageContentLogging == true)
-        {
-            throw new InvalidOperationException("HTTP Message content logging cannot be enabled when HTTP message logging is disabled.");
-        }
+        ClientLoggingOptions? loggingOptions = options.ClientLoggingOptions;
+        loggingOptions?.ValidateOptions();
 
         // Add length of client-specific policies.
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
@@ -127,7 +116,8 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
-        if (options.ClientLoggingOptions?.EnableMessageLogging == true)
+
+        if (loggingOptions == null || loggingOptions.ShouldAddMessageLoggingPolicy())
         {
             pipelineLength++; // for message logging policy
         }
@@ -150,9 +140,9 @@ public sealed partial class ClientPipeline
         int perCallIndex = index;
 
         // Add retry policy.
-        if (options.ClientLoggingOptions?.EnableLogging != false && options.ClientLoggingOptions?.LoggerFactory != null)
+        if (loggingOptions == null || loggingOptions.ShouldUseDefaultRetryPolicy())
         {
-            policies[index++] = options.RetryPolicy ?? new ClientRetryPolicy;
+            policies[index++] = options.RetryPolicy ?? new ClientRetryPolicy();
         }
         else
         {
@@ -173,7 +163,7 @@ public sealed partial class ClientPipeline
 
         // Add logging policy just before the transport.
 
-        if (options.ClientLoggingOptions == null || options.ClientLoggingOptions.UseDefaultLogging())
+        if (options.ClientLoggingOptions == null || options.ClientLoggingOptions.ShouldUseDefaultMessageLoggingPolicy())
         {
             policies[index++] = options.MessageLoggingPolicy ?? MessageLoggingPolicy.Default;
         }
@@ -195,7 +185,14 @@ public sealed partial class ClientPipeline
         int beforeTransportIndex = index;
 
         // Add the transport.
-        policies[index++] = options.Transport ?? HttpClientPipelineTransport.Shared;
+        if (loggingOptions == null || loggingOptions.ShouldUseDefaultPipelineTransport())
+        {
+            policies[index++] = options.Transport ?? HttpClientPipelineTransport.Shared;
+        }
+        else
+        {
+            policies[index++] = options.Transport ?? new HttpClientPipelineTransport(null, loggingOptions.EnableLogging ?? ClientLoggingOptions.DefaultEnableLogging, loggingOptions.LoggerFactory);
+        }
 
         return new ClientPipeline(policies,
             options.NetworkTimeout ?? DefaultNetworkTimeout,
