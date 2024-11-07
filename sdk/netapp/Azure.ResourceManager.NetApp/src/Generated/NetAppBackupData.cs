@@ -77,8 +77,9 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="useExistingSnapshot"> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </param>
         /// <param name="snapshotName"> The name of the snapshot. </param>
         /// <param name="backupPolicyArmResourceId"> ResourceId used to identify the backup policy. </param>
+        /// <param name="isLargeVolume"> Specifies if the backup is for a large volume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyArmResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyArmResourceId, bool? isLargeVolume, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BackupId = backupId;
             CreatedOn = createdOn;
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.NetApp
             UseExistingSnapshot = useExistingSnapshot;
             SnapshotName = snapshotName;
             BackupPolicyArmResourceId = backupPolicyArmResourceId;
+            IsLargeVolume = isLargeVolume;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -121,5 +123,7 @@ namespace Azure.ResourceManager.NetApp
         public string SnapshotName { get; set; }
         /// <summary> ResourceId used to identify the backup policy. </summary>
         public ResourceIdentifier BackupPolicyArmResourceId { get; }
+        /// <summary> Specifies if the backup is for a large volume. </summary>
+        public bool? IsLargeVolume { get; }
     }
 }
