@@ -56,16 +56,80 @@ And if you go to your Azure portal, or execute the following az cli command to s
 ```dotnetcli
 az resource list --resource-group <resource_group_from_command_line> --output table
 ```
-Since we are writing an AI application, we need to add Azure OpenAI resource. To do this, change the CloudMachine configuration call to the following:
+Since we are writing an AI application, we need to provision Azure OpenAI resources. To do this, add the follwoing class to the end of the Program.cs file:
 ```csharp
-if (CloudMachineInfrastructure.Configure(args, (cm) => {
-    cm.AddFeature(new OpenAIFeature() {
-        Chat = new AIModel("gpt-35-turbo", "0125")
-    });
-})) return;
+class AssistantService {
+    internal static void Configure(CloudMachineInfrastructure cm) {
+        cm.AddFeature(new OpenAIFeature() { Chat = new AIModel("gpt-4o-mini", "2024-07-18") });
+    }
+}
+```
+And change the infrastructure configuration call att he begining of the file to:
+```csharp
+if (CloudMachineInfrastructure.Configure(args, AssistantService.Configure)) return;
 ```
 And now regenerate new bicep with the new Azure OpenAI resources, and re-provision
 ```dotnetcli
 dotnet run -bicep
 azd provision
 ```
+You are now ready to call Azure OpenAI service from the app. To do this, add CloudMachineClient field add a Chat method to `AssistantService`:
+```csharp
+class AssistantService {
+    CloudMachineClient cm = new CloudMachineClient();
+
+    public async Task<string> Chat(string message) {
+        var client = cm.GetOpenAIChatClient();
+        ChatCompletion completion = await client.CompleteChatAsync(message);
+        return completion.Content[0].Text;
+    } 
+}
+```
+Lastly, create an instance of the service and call the chat method from the mapped app method:
+```csharp
+var service = new AssistantService();
+app.MapGet("/", async () => {
+    return await service.Chat("List all noble gasses");
+});
+```
+The full program should look like following:
+```csharp
+using Azure.CloudMachine;
+using Azure.CloudMachine.OpenAI;
+using Azure.Provisioning.CloudMachine;
+using Azure.Provisioning.CloudMachine.OpenAI;
+using OpenAI.Chat;
+
+if (CloudMachineInfrastructure.Configure(args, AssistantService.Configure)) return;
+
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+var service = new AssistantService();
+app.MapGet("/", async () => {
+    return await service.Chat("List all noble gasses");
+});
+
+app.Run();
+
+class AssistantService {
+    CloudMachineClient cm = new CloudMachineClient();
+
+    public async Task<string> Chat(string message) {
+        var client = cm.GetOpenAIChatClient();
+        ChatCompletion completion = await client.CompleteChatAsync(message);
+        return completion.Content[0].Text;
+    } 
+
+    internal static void Configure(CloudMachineInfrastructure cm) {
+        cm.AddFeature(new OpenAIFeature() {
+            Chat = new AIModel("gpt-4o-mini", "2024-07-18")
+        });
+    }
+}
+```
+You can now start the application
+```dotnetcli
+dotnet run
+```
+and browse to the URI printed in the console.
