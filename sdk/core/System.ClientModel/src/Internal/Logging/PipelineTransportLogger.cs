@@ -31,7 +31,7 @@ internal partial class PipelineTransportLogger
     }
 
     [LoggerMessage(LoggingEventIds.ResponseDelayEvent, LogLevel.Warning, "Response [{requestId}] took {seconds:00.0}s", EventName = "ResponseDelay")]
-    public partial void ResponseDelay(ILogger logger, string requestId, double seconds);
+    private static partial void ResponseDelay(ILogger logger, string requestId, double seconds);
 
     #endregion
 
@@ -50,7 +50,7 @@ internal partial class PipelineTransportLogger
     }
 
     [LoggerMessage(LoggingEventIds.ExceptionResponseEvent, LogLevel.Information, "Request [{requestId}] exception occurred.", EventName = "ExceptionResponse")]
-    public partial void ExceptionResponse(ILogger logger, string requestId, Exception exception);
+    private static partial void ExceptionResponse(ILogger logger, string requestId, Exception exception);
 
     #endregion
 }

@@ -31,10 +31,15 @@ public class MessageLoggingPolicyTests : SyncAsyncTestBase
         var response = new MockPipelineResponse(200, mockHeaders: headers);
         response.SetContent("World.");
 
+        ClientLoggingOptions loggingOptions = new()
+        {
+            LoggerFactory = _loggerFactory
+        };
+
         ClientPipelineOptions options = new()
         {
             Transport = new MockPipelineTransport("Transport", i => response),
-            LoggerFactory = _loggerFactory
+            ClientLoggingOptions = loggingOptions
         };
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
