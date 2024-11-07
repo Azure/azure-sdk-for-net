@@ -6,12 +6,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Primitives;
 
@@ -38,12 +36,12 @@ public class MessageLoggingPolicy : PipelinePolicy
     /// <param name="options">The user-provided logging options object.</param>
     public MessageLoggingPolicy(ClientLoggingOptions? options = default)
     {
-        ClientLoggingOptions loggingOptions = options ?? new();
-        loggingOptions.Freeze();
-        _enableMessageContentLogging = loggingOptions.EnableMessageContentLogging ?? ClientPipelineOptions.DefaultEnableMessageContentLogging;
-        _maxLength = loggingOptions.MessageContentSizeLimit ?? ClientPipelineOptions.DefaultMessageContentSizeLimit;
+        _enableMessageContentLogging = options?.EnableMessageContentLogging ?? ClientLoggingOptions.DefaultEnableMessageContentLogging;
+        _maxLength = options?.MessageContentSizeLimit ?? ClientLoggingOptions.DefaultMessageContentSizeLimit;
 
-        _messageLogger = new PipelineMessageLogger(loggingOptions.GetPipelineMessageSanitizer(), loggingOptions.LoggerFactory);
+        PipelineMessageSanitizer sanitizer = options?.GetPipelineMessageSanitizer() ?? ClientLoggingOptions.DefaultSanitizer;
+
+        _messageLogger = new PipelineMessageLogger(sanitizer, options?.LoggerFactory);
     }
 
     /// <inheritdoc/>
@@ -71,7 +69,7 @@ public class MessageLoggingPolicy : PipelinePolicy
 
         PipelineRequest request = message.Request;
 
-        string requestId = Guid.NewGuid().ToString();
+        string requestId = Guid.NewGuid().ToString(); // TODO where should this be set?
         message.Request.ClientRequestId = requestId;
 
         _messageLogger.LogRequest(requestId, request, _clientAssembly);

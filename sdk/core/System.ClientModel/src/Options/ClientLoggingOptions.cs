@@ -58,6 +58,8 @@ public class ClientLoggingOptions
 
     internal static string[] DefaultAllowedQueryParameters { get; } = new[] { "api-version" };
 
+    internal static PipelineMessageSanitizer DefaultSanitizer { get; } = new(DefaultAllowedHeaderNames, DefaultAllowedQueryParameters);
+
     /// <summary>
     /// Gets or sets the implementation of <see cref="ILoggerFactory"/> to use to
     /// create <see cref="ILogger"/> instances for logging.
