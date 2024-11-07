@@ -304,7 +304,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 CredentialType.Token => new ShareDirectoryClient(
                     directoryUri,
                     _getTokenCredential(directoryUri, false),
-                    new ShareClientOptions {  ShareTokenIntent = ShareTokenIntent.Backup }),
+                    new ShareClientOptions { ShareTokenIntent = ShareTokenIntent.Backup }),
                 CredentialType.Sas => new ShareDirectoryClient(directoryUri, _getAzureSasCredential(directoryUri, false)),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
