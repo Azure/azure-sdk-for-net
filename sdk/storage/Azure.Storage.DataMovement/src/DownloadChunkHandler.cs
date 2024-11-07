@@ -339,7 +339,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="bytesDownloaded"></param>
         private void UpdateBytesAndRange(long bytesDownloaded)
         {
-            // don't need to use Interlocked since there is only one thread reading and updating at a time
+            // don't need to use Interlocked since this is the only thread reading and updating these values
             _bytesTransferred += bytesDownloaded;
             _currentRangeIndex++;
             _reportProgressInBytes(bytesDownloaded);

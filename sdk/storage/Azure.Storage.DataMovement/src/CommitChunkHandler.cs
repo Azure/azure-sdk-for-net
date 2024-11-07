@@ -157,7 +157,7 @@ namespace Azure.Storage.DataMovement
                     StageChunkEventArgs args = await _stageChunkChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
 
                     // don't need to use Interlocked.Add() as we are reading one event at a time
-                    // and _bytesTransferred is not being read/updated from any other threads
+                    // and _bytesTransferred is not being read/updated from any other thread
                     _bytesTransferred += args.BytesTransferred;
 
                     // Report the incremental bytes transferred
