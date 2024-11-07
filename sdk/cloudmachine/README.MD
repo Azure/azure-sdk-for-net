@@ -99,7 +99,7 @@ Lastly, create an instance of the service and call the `Chat` method when the ap
 ```csharp
 var service = new AssistantService();
 app.MapGet("/", async () => {
-    return await service.Chat("List all noble gasses");
+    return await service.Chat("List all noble gases");
 });
 ```
 The full program should look like following:
@@ -117,7 +117,7 @@ var app = builder.Build();
 
 var service = new AssistantService();
 app.MapGet("/", async () => {
-    return await service.Chat("List all noble gasses");
+    return await service.Chat("List all noble gases");
 });
 
 app.Run();
