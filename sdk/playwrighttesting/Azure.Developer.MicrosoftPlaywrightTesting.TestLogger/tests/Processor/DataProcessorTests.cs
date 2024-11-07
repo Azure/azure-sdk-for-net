@@ -172,8 +172,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             RawTestResult result = DataProcessor.GetRawResultObject(testResult);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual("[{\"message\":\"An error occurred\"}]", result.errors);
-            Assert.AreEqual("Error stack trace", result.stdErr);
+            Assert.AreEqual("[{\"message\":\"An error occurred\"},{\"message\":\"Error stack trace\"}]", result.errors);
         }
     }
 }
