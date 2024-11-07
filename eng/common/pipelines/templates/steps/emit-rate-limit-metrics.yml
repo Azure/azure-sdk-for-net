@@ -15,9 +15,10 @@ steps:
     $timestamp = Get-Date
     foreach ($property in $response.resources.PSObject.Properties.Value)
     {
-        Write-Host "logmetric: $( @{ name= "github_rate_limit_remaining_total"; value= $property.remaining; timestamp= $timestamp; labels= @{ user=$env:GITHUB_USER; resource=$property.resource }} | ConvertTo-Json -Compress)"
-        Write-Host "logmetric: $( @{ name= "github_rate_limit_limit_total"; value= $property.limit; timestamp= $timestamp; labels= @{ user=$env:GITHUB_USER; resource=$property.resource }} | ConvertTo-Json -Compress)"
-        Write-Host "logmetric: $( @{ name= "github_rate_limit_used_total"; value= $property.used; timestamp= $timestamp; labels= @{ user=$env:GITHUB_USER; resource=$property.resource }} | ConvertTo-Json -Compress)"
+        $labels = @{ user=$env:GITHUB_USER; resource=$property.resource }
+        Write-Host "logmetric: $( [ordered]@{ name= "github_ratelimit_remaining_total"; value= $property.remaining; timestamp= $timestamp; labels= $labels } | ConvertTo-Json -Compress)"
+        Write-Host "logmetric: $( [ordered]@{ name= "github_ratelimit_limit_total"; value= $property.limit; timestamp= $timestamp; labels= $labels } | ConvertTo-Json -Compress)"
+        Write-Host "logmetric: $( [ordered]@{ name= "github_ratelimit_used_total"; value= $property.used; timestamp= $timestamp; labels= $labels } | ConvertTo-Json -Compress)"
     }          
   displayName: Check GitHub Rate Limit
   env:
