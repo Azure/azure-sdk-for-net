@@ -20,8 +20,17 @@ mkdir cmdemo
 cd cmdemo
 mkdir server
 cd server
+dotnet new web
 ```
 
+Add Azure.CloudMachine.All package
 ```dotnetcli
 dotnet add package Azure.CloudMachine.All --prerelease
 ```
+
+Open Program.cs file and add the following two lines of code to the top of the file
+```csharp
+using Azure.Provisioning.CloudMachine;
+if (CloudMachineInfrastructure.Configure(args)) return;
+```
+
