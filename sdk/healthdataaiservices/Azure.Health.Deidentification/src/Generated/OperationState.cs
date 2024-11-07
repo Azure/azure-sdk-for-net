@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Health.Deidentification
 {
     /// <summary> Enum describing allowed operation states. </summary>
-    public readonly partial struct OperationState : IEquatable<OperationState>
+    internal readonly partial struct OperationState : IEquatable<OperationState>
     {
         private readonly string _value;
 
