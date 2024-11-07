@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    public partial class DocumentLocation : IUtf8JsonSerializable, IJsonModel<DocumentLocation>
+    internal partial class DocumentLocation : IUtf8JsonSerializable, IJsonModel<DocumentLocation>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

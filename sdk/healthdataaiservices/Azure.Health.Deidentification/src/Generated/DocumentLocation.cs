@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Health.Deidentification
 {
     /// <summary> Location of a document. </summary>
-    public partial class DocumentLocation
+    internal partial class DocumentLocation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
