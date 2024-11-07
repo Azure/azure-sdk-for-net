@@ -437,7 +437,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
     #region Test default logging policy behavior
     [Test]
-    public async Task LogsRequestAndResponse()
+    public async Task LogsRequestAndResponseToEventSource()
     {
         using FunctionalTestsEventListener eventListener = new();
 
@@ -472,7 +472,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void LogsRequestAndExceptionResponse()
+    public void LogsRequestAndExceptionResponseToEventSource()
     {
         using FunctionalTestsEventListener eventListener = new();
 
@@ -510,7 +510,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task LogsRequestAndErrorResponse()
+    public async Task LogsRequestAndErrorResponseToEventSource()
     {
         using FunctionalTestsEventListener eventListener = new();
 

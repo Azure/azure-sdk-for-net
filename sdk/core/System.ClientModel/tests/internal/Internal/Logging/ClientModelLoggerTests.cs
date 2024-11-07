@@ -113,6 +113,14 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     }
 
     [Test]
+    [TestCase(true)]
+    [TestCase(false)]
+    public Task ContentLogIsNotWrittenWhenThereIsNoContent(bool isError)
+    {
+        throw new NotImplementedException();
+    }
+
+    [Test]
     public Task RequestContentLogsAreLimitedInLength()
     {
         throw new NotImplementedException();

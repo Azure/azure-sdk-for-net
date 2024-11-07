@@ -54,6 +54,24 @@ public class MessageLoggingPolicyTests : SyncAsyncTestBase
         await pipeline.SendSyncOrAsync(message, IsAsync);
     }
 
+    [Test]
+    public Task DefaultValuesAreRespectedWhenNoOptionsArePassed()
+    {
+        throw new NotImplementedException();
+    }
+
+    [Test]
+    public Task ClientLoggingOptionsAreRespectedWhenPassed()
+    {
+        throw new NotImplementedException();
+    }
+
+    [Test]
+    public Task CanUseCustomLoggingPolicy()
+    {
+        throw new NotImplementedException();
+    }
+
     #region Helpers
 
     // In order to test listeners with different event levels, each case has to has its own listener.

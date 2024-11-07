@@ -149,6 +149,7 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
     public void CannotModifyOptionsAfterFrozen()
     {
         ClientPipelineOptions options = new();
+        options.ClientLoggingOptions = new();
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
         Assert.Throws<InvalidOperationException>(()
@@ -161,12 +162,17 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
             => options.NetworkTimeout = TimeSpan.MinValue);
         Assert.Throws<InvalidOperationException>(()
             => options.AddPolicy(new ObservablePolicy("A"), PipelinePosition.PerCall));
+        Assert.Throws<InvalidOperationException>(()
+            => options.ClientLoggingOptions = new());
+        Assert.Throws<InvalidOperationException>(()
+            => options.ClientLoggingOptions.EnableLogging = true);
     }
 
     [Test]
     public void CannotModifyOptionsAfterExplicitlyFrozen()
     {
         ClientPipelineOptions options = new();
+        options.ClientLoggingOptions = new();
         options.Freeze();
 
         Assert.Throws<InvalidOperationException>(()
@@ -179,6 +185,10 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
             => options.NetworkTimeout = TimeSpan.MinValue);
         Assert.Throws<InvalidOperationException>(()
             => options.AddPolicy(new ObservablePolicy("A"), PipelinePosition.PerCall));
+        Assert.Throws<InvalidOperationException>(()
+            => options.ClientLoggingOptions = new());
+        Assert.Throws<InvalidOperationException>(()
+            => options.ClientLoggingOptions.EnableLogging = true);
     }
 
     #region Helpers

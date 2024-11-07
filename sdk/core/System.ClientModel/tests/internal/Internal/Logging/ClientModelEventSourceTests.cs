@@ -121,6 +121,14 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
     }
 
     [Test]
+    [TestCase(true)]
+    [TestCase(false)]
+    public Task ContentEventIsNotWrittenWhenThereIsNoContent(bool isError)
+    {
+        throw new NotImplementedException();
+    }
+
+        [Test]
     public Task RequestContentLogsAreLimitedInLength()
     {
         throw new NotImplementedException();
