@@ -20,15 +20,24 @@ public readonly struct MessagingServices
     /// Sends a message to the service bus.
     /// </summary>
     /// <param name="serializable"></param>
-    public void SendMessage(object serializable)
+    public void SendJson(object serializable)
+    {
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+        SendJsonAsync(serializable).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+    }
+
+    /// <summary>
+    /// Sends a message to the service bus.
+    /// </summary>
+    /// <param name="serializable"></param>
+    public async Task SendJsonAsync(object serializable)
     {
         ServiceBusSender sender = GetServiceBusSender();
 
         BinaryData serialized = BinaryData.FromObjectAsJson(serializable);
         ServiceBusMessage message = new(serialized);
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-        sender.SendMessageAsync(message).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+        await sender.SendMessageAsync(message).ConfigureAwait(false);
     }
 
     /// <summary>

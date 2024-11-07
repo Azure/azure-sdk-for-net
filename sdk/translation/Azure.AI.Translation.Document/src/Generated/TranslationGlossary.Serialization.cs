@@ -19,21 +19,13 @@ namespace Azure.AI.Translation.Document
 
         void IJsonModel<TranslationGlossary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<TranslationGlossary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TranslationGlossary)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             writer.WritePropertyName("glossaryUrl"u8);
             writer.WriteStringValue(GlossaryUri.AbsoluteUri);
             writer.WritePropertyName("format"u8);
@@ -46,7 +38,7 @@ namespace Azure.AI.Translation.Document
             if (Optional.IsDefined(StorageSource))
             {
                 writer.WritePropertyName("storageSource"u8);
-                writer.WriteStringValue(StorageSource);
+                writer.WriteStringValue(StorageSource.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,6 +55,7 @@ namespace Azure.AI.Translation.Document
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         TranslationGlossary IJsonModel<TranslationGlossary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -88,7 +81,7 @@ namespace Azure.AI.Translation.Document
             Uri glossaryUrl = default;
             string format = default;
             string version = default;
-            string storageSource = default;
+            TranslationStorageSource? storageSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +103,11 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("storageSource"u8))
                 {
-                    storageSource = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageSource = new TranslationStorageSource(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

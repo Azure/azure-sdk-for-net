@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel;
+using System.Collections.Generic;
 using Azure.AI.OpenAI;
 using Azure.Core;
 using OpenAI.Chat;
@@ -72,4 +73,34 @@ public static class AzureOpenAIExtensions
         EmbeddingClient embeddings = client.GetEmbeddingClient(connection.Id);
         return embeddings;
     }
+
+    /// <summary>
+    /// Trims list of chat messages.
+    /// </summary>
+    /// <param name="messages"></param>
+    public static void Trim(this List<ChatMessage> messages)
+    {
+        messages.RemoveRange(0, messages.Count / 2);
+    }
+
+    /// <summary>
+    /// Adds a list of vectorbase entries to the list of chat messages.
+    /// </summary>
+    /// <param name="messages"></param>
+    /// <param name="entries"></param>
+    public static void Add(this List<ChatMessage> messages, IEnumerable<VectorbaseEntry> entries)
+    {
+        foreach (VectorbaseEntry entry in entries)
+        {
+            messages.Add(ChatMessage.CreateSystemMessage(entry.Data.ToString()));
+        }
+    }
+
+    /// <summary>
+    /// Adds a chat completion as an AssistantChatMessage to the list of chat messages.
+    /// </summary>
+    /// <param name="messages"></param>
+    /// <param name="completion"></param>
+    public static void Add(this List<ChatMessage> messages, ChatCompletion completion)
+        => messages.Add(ChatMessage.CreateAssistantMessage(completion));
 }

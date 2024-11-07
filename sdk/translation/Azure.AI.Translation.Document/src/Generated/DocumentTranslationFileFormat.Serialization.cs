@@ -19,21 +19,13 @@ namespace Azure.AI.Translation.Document
 
         void IJsonModel<DocumentTranslationFileFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentTranslationFileFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentTranslationFileFormat)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format);
             writer.WritePropertyName("fileExtensions"u8);
@@ -68,7 +60,7 @@ namespace Azure.AI.Translation.Document
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -85,6 +77,7 @@ namespace Azure.AI.Translation.Document
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         DocumentTranslationFileFormat IJsonModel<DocumentTranslationFileFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -112,7 +105,7 @@ namespace Azure.AI.Translation.Document
             IReadOnlyList<string> contentTypes = default;
             string defaultVersion = default;
             IReadOnlyList<string> versions = default;
-            string type = default;
+            FileFormatType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +156,11 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new FileFormatType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
