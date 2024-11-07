@@ -16,7 +16,7 @@ namespace BasicTypeSpec
     {
         public static async ValueTask<Response> ProcessMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
-            await pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+            await pipeline.SendAsync(message, default).ConfigureAwait(false);
 
             if (message.Response.IsError && (context?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
             {
@@ -29,7 +29,7 @@ namespace BasicTypeSpec
 
         public static Response ProcessMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
-            pipeline.Send(message, context.CancellationToken);
+            pipeline.Send(message, default);
 
             if (message.Response.IsError && (context?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
             {

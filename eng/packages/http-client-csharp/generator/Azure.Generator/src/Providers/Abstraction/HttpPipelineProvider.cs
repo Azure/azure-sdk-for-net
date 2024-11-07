@@ -41,9 +41,9 @@ namespace Azure.Generator.Providers.Abstraction
         public override ClientPipelineApi ToExpression() => this;
 
         public override MethodBodyStatement Send(HttpMessageApi message, HttpRequestOptionsApi options)
-            => Original.Invoke(nameof(HttpPipeline.Send), [message, options.Property(nameof(RequestContext.CancellationToken))]).Terminate();
+            => Original.Invoke(nameof(HttpPipeline.Send), [message, Default]).Terminate();
 
         public override MethodBodyStatement SendAsync(HttpMessageApi message, HttpRequestOptionsApi options)
-            => Original.Invoke(nameof(HttpPipeline.SendAsync), [message, options.Property(nameof(RequestContext.CancellationToken))], true).Terminate();
+            => Original.Invoke(nameof(HttpPipeline.SendAsync), [message, Default], true).Terminate();
     }
 }
