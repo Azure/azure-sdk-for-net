@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Status Summary. </summary>
-    internal partial class StatusSummary
+    internal partial class TranslationStatusSummary
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,7 +45,7 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StatusSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationStatusSummary"/>. </summary>
         /// <param name="total"> Total count. </param>
         /// <param name="failed"> Failed count. </param>
         /// <param name="success"> Number of Success. </param>
@@ -53,7 +53,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="notYetStarted"> Count of not yet started. </param>
         /// <param name="cancelled"> Number of cancelled. </param>
         /// <param name="totalCharacterCharged"> Total characters charged by the API. </param>
-        internal StatusSummary(int total, int failed, int success, int inProgress, int notYetStarted, int cancelled, long totalCharacterCharged)
+        internal TranslationStatusSummary(int total, int failed, int success, int inProgress, int notYetStarted, int cancelled, long totalCharacterCharged)
         {
             Total = total;
             Failed = failed;
@@ -64,7 +64,7 @@ namespace Azure.AI.Translation.Document
             TotalCharacterCharged = totalCharacterCharged;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StatusSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationStatusSummary"/>. </summary>
         /// <param name="total"> Total count. </param>
         /// <param name="failed"> Failed count. </param>
         /// <param name="success"> Number of Success. </param>
@@ -73,7 +73,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="cancelled"> Number of cancelled. </param>
         /// <param name="totalCharacterCharged"> Total characters charged by the API. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StatusSummary(int total, int failed, int success, int inProgress, int notYetStarted, int cancelled, long totalCharacterCharged, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslationStatusSummary(int total, int failed, int success, int inProgress, int notYetStarted, int cancelled, long totalCharacterCharged, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Total = total;
             Failed = failed;
@@ -85,8 +85,8 @@ namespace Azure.AI.Translation.Document
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StatusSummary"/> for deserialization. </summary>
-        internal StatusSummary()
+        /// <summary> Initializes a new instance of <see cref="TranslationStatusSummary"/> for deserialization. </summary>
+        internal TranslationStatusSummary()
         {
         }
 

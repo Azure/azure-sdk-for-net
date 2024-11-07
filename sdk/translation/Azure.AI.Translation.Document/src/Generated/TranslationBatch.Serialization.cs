@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class StartTranslationDetails : IUtf8JsonSerializable, IJsonModel<StartTranslationDetails>
+    public partial class TranslationBatch : IUtf8JsonSerializable, IJsonModel<TranslationBatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StartTranslationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranslationBatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StartTranslationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TranslationBatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StartTranslationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranslationBatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StartTranslationDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TranslationBatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.AI.Translation.Document
             writer.WriteEndObject();
         }
 
-        StartTranslationDetails IJsonModel<StartTranslationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TranslationBatch IJsonModel<TranslationBatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StartTranslationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranslationBatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StartTranslationDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TranslationBatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStartTranslationDetails(document.RootElement, options);
+            return DeserializeTranslationBatch(document.RootElement, options);
         }
 
-        internal static StartTranslationDetails DeserializeStartTranslationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TranslationBatch DeserializeTranslationBatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,46 +92,46 @@ namespace Azure.AI.Translation.Document
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StartTranslationDetails(inputs, serializedAdditionalRawData);
+            return new TranslationBatch(inputs, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<StartTranslationDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TranslationBatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StartTranslationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranslationBatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StartTranslationDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TranslationBatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StartTranslationDetails IPersistableModel<StartTranslationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TranslationBatch IPersistableModel<TranslationBatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StartTranslationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranslationBatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeStartTranslationDetails(document.RootElement, options);
+                        return DeserializeTranslationBatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StartTranslationDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TranslationBatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StartTranslationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TranslationBatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static StartTranslationDetails FromResponse(Response response)
+        internal static TranslationBatch FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeStartTranslationDetails(document.RootElement);
+            return DeserializeTranslationBatch(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    internal partial class StatusSummary : IUtf8JsonSerializable, IJsonModel<StatusSummary>
+    internal partial class TranslationStatusSummary : IUtf8JsonSerializable, IJsonModel<TranslationStatusSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatusSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranslationStatusSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StatusSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TranslationStatusSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StatusSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranslationStatusSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StatusSummary)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TranslationStatusSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,19 +58,19 @@ namespace Azure.AI.Translation.Document
             writer.WriteEndObject();
         }
 
-        StatusSummary IJsonModel<StatusSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TranslationStatusSummary IJsonModel<TranslationStatusSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StatusSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranslationStatusSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StatusSummary)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TranslationStatusSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStatusSummary(document.RootElement, options);
+            return DeserializeTranslationStatusSummary(document.RootElement, options);
         }
 
-        internal static StatusSummary DeserializeStatusSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TranslationStatusSummary DeserializeTranslationStatusSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -130,7 +130,7 @@ namespace Azure.AI.Translation.Document
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StatusSummary(
+            return new TranslationStatusSummary(
                 total,
                 failed,
                 success,
@@ -141,43 +141,43 @@ namespace Azure.AI.Translation.Document
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<StatusSummary>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TranslationStatusSummary>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StatusSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranslationStatusSummary>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StatusSummary)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TranslationStatusSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StatusSummary IPersistableModel<StatusSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TranslationStatusSummary IPersistableModel<TranslationStatusSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StatusSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranslationStatusSummary>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeStatusSummary(document.RootElement, options);
+                        return DeserializeTranslationStatusSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StatusSummary)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TranslationStatusSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StatusSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TranslationStatusSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static StatusSummary FromResponse(Response response)
+        internal static TranslationStatusSummary FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeStatusSummary(document.RootElement);
+            return DeserializeTranslationStatusSummary(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
