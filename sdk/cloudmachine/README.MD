@@ -52,8 +52,10 @@ When provisioning finishes, you should see something like the following in the c
 ```dotnetcli
  (✓) Done: Resource group: cm125957681369428 (627ms)
 ```
-And if you go to your Azure portal, you will see the resource group created. The resource group will have server resources such us Storage, ServiceBus, and EventGrid. 
-
+And if you go to your Azure portal, or execute the following az cli command to see the resource group created. The resource group will have server resources such us Storage, ServiceBus, and EventGrid. 
+```dotnetcli
+az resource list --resource-group <resource_group_from_command_line> --output table
+```
 Since we are writing an AI application, we need to add Azure OpenAI resource. To do this, change the CloudMachine configuration call to the following:
 ```csharp
 if (CloudMachineInfrastructure.Configure(args, (cm) => {
