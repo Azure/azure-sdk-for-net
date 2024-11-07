@@ -143,3 +143,95 @@ You can now start the application
 dotnet run
 ```
 and browse to the URI printed in the console.
+
+#### Use TDK to expose Web APIs
+First, let's define an API we want to expose. We will do it using an interface. Add the following interface to the end of Program.cs:
+```csharp
+interface IAssistantService {
+    Task<string> Chat(string message);
+}
+```
+Make sure that the `AssistantService` implements the interface:
+```csharp
+class AssistantService : IAssistantService
+```
+Expose the service methods as web APIs by adding the following line after the existing 'var service = new AssistantService();' line:
+```csharp
+app.Map(service);
+```
+Lastly, add the ability to generate TypeSpec for the new API by adding new statement to the `Configure` method
+```csharp
+cm.AddEndpoints<IAssistantService>();
+```
+Your program shoud now look like following:
+```csharp
+using Azure.CloudMachine;
+using Azure.CloudMachine.OpenAI;
+using Azure.Provisioning.CloudMachine;
+using Azure.Provisioning.CloudMachine.OpenAI;
+using OpenAI.Chat;
+using System.ClientModel.TypeSpec;
+
+if (CloudMachineInfrastructure.Configure(args, AssistantService.Configure)) return;
+
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+var service = new AssistantService();
+app.Map(service);
+app.MapGet("/", async () => {
+    return await service.Chat("List all noble gasses");
+});
+
+app.Run();
+
+class AssistantService : IAssistantService {
+    CloudMachineClient cm = new CloudMachineClient();
+
+    public async Task<string> Chat(string message) {
+        var client = cm.GetOpenAIChatClient();
+        ChatCompletion completion = await client.CompleteChatAsync(message);
+        return completion.Content[0].Text;
+    } 
+
+    internal static void Configure(CloudMachineInfrastructure cm) {
+        cm.AddFeature(new OpenAIFeature() {
+            Chat = new AIModel("gpt-4o-mini", "2024-07-18")
+        });
+        cm.AddEndpoints<IAssistantService>();
+    }
+}
+
+interface IAssistantService {
+    Task<string> Chat(string message);
+}
+```
+You can now start the application and browse to the /chat endpoint [TDB]
+
+But what's more interesting, you can run the app with the -tsp switch to generate TypeSpec for the endpoint:
+```dotnetcli
+dotnet run -tsp
+```
+This will create a `tsp` directory, AssistantService.tsp file, with the following contents:
+```tsp
+import "@typespec/http";
+import "@typespec/rest";
+import "@azure-tools/typespec-client-generator-core";
+
+@service({
+  title: "AssistantService",
+})
+
+namespace AssistantService;
+
+using TypeSpec.Http;
+using TypeSpec.Rest;
+using Azure.ClientGenerator.Core;
+
+@client interface AssistantServiceClient {
+  @get @route("chat") Chat(@body message: string) : {
+    @statusCode statusCode: 200;
+    @body response : string;
+  };
+}
+```
