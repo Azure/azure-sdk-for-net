@@ -144,7 +144,7 @@ dotnet run
 ```
 and browse to the URI printed in the console.
 
-#### Use TDK to expose Web APIs
+#### Use TDK to expose Web APIs and generate TypeSpec
 First, let's define an API we want to expose. We will do it using an interface. Add the following interface to the end of Program.cs:
 ```csharp
 interface IAssistantService {
