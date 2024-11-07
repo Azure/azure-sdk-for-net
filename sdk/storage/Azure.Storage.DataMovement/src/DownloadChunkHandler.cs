@@ -107,6 +107,11 @@ namespace Azure.Storage.DataMovement
             ClientDiagnostics clientDiagnostics,
             CancellationToken cancellationToken)
         {
+            // Set bytes transferred to the length of bytes we got back from the initial
+            // download request
+            _bytesTransferred = currentTransferred;
+            _currentRangeIndex = 0;
+
             // Create channel of finished Stage Chunk Args to update the bytesTransferred
             // and for ending tasks like commit block.
             // The size of the channel should never exceed 50k (limit on blocks in a block blob).
@@ -143,10 +148,6 @@ namespace Azure.Storage.DataMovement
             _queueCompleteFileDownload = behaviors.QueueCompleteFileDownload
                 ?? throw Errors.ArgumentNull(nameof(behaviors.QueueCompleteFileDownload));
 
-            // Set bytes transferred to the length of bytes we got back from the initial
-            // download request
-            _bytesTransferred = currentTransferred;
-            _currentRangeIndex = 0;
             _rangesCount = ranges.Count;
             // Set size of the list of null streams
             _rangesCompleted = new ConcurrentDictionary<long, string>();
@@ -338,8 +339,9 @@ namespace Azure.Storage.DataMovement
         /// <param name="bytesDownloaded"></param>
         private void UpdateBytesAndRange(long bytesDownloaded)
         {
-            Interlocked.Add(ref _bytesTransferred, bytesDownloaded);
-            Interlocked.Increment(ref _currentRangeIndex);
+            // don't need to use Interlocked since there is only one thread reading and updating at a time
+            _bytesTransferred += bytesDownloaded;
+            _currentRangeIndex++;
             _reportProgressInBytes(bytesDownloaded);
         }
     }

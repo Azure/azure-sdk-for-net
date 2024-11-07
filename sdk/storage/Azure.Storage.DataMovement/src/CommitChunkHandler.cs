@@ -92,10 +92,11 @@ namespace Azure.Storage.DataMovement
                     SingleReader = true,
                 });
             _cancellationToken = cancellationToken;
-            _processStageChunkEvents = Task.Run(() => NotifyOfPendingStageChunkEvents());
 
             // Set bytes transferred to block size because we transferred the initial block
             _bytesTransferred = blockSize;
+
+            _processStageChunkEvents = Task.Run(() => NotifyOfPendingStageChunkEvents());
 
             _blockSize = blockSize;
             _transferOrder = transferOrder;
@@ -155,7 +156,10 @@ namespace Azure.Storage.DataMovement
                     // Read one event argument at a time.
                     StageChunkEventArgs args = await _stageChunkChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
 
-                    Interlocked.Add(ref _bytesTransferred, args.BytesTransferred);
+                    // don't need to use Interlocked.Add() as we are reading one event at a time
+                    // and _bytesTransferred is not being read/updated from any other threads
+                    _bytesTransferred += args.BytesTransferred;
+
                     // Report the incremental bytes transferred
                     _reportProgressInBytes(args.BytesTransferred);
 
