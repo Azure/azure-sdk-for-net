@@ -1,5 +1,15 @@
 namespace Azure.Communication.Sms
 {
+    public partial class OptOutsClient
+    {
+        protected OptOutsClient() { }
+        public virtual Azure.Response<Azure.Communication.Sms.Models.OptOutChangeResponse> Add(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Sms.Models.OptOutChangeResponse>> AddAsync(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Sms.Models.OptOutResponse> Check(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Sms.Models.OptOutResponse>> CheckAsync(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Sms.Models.OptOutChangeResponse> Remove(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Sms.Models.OptOutChangeResponse>> RemoveAsync(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class SmsClient
     {
         protected SmsClient() { }
@@ -7,6 +17,7 @@ namespace Azure.Communication.Sms
         public SmsClient(string connectionString, Azure.Communication.Sms.SmsClientOptions options) { }
         public SmsClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.Sms.SmsClientOptions options = null) { }
         public SmsClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.Sms.SmsClientOptions options = null) { }
+        public virtual Azure.Communication.Sms.OptOutsClient OptOuts { get { throw null; } }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.SmsSendResult>> Send(string from, System.Collections.Generic.IEnumerable<string> to, string message, Azure.Communication.Sms.SmsSendOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.Sms.SmsSendResult> Send(string from, string to, string message, Azure.Communication.Sms.SmsSendOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.SmsSendResult>>> SendAsync(string from, System.Collections.Generic.IEnumerable<string> to, string message, Azure.Communication.Sms.SmsSendOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -14,11 +25,11 @@ namespace Azure.Communication.Sms
     }
     public partial class SmsClientOptions : Azure.Core.ClientOptions
     {
-        public SmsClientOptions(Azure.Communication.Sms.SmsClientOptions.ServiceVersion version = Azure.Communication.Sms.SmsClientOptions.ServiceVersion.V2024_02_05_Preview) { }
+        public SmsClientOptions(Azure.Communication.Sms.SmsClientOptions.ServiceVersion version = Azure.Communication.Sms.SmsClientOptions.ServiceVersion.V2024_12_10_Preview) { }
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
-            V2024_02_05_Preview = 2,
+            V2024_12_10_Preview = 2,
         }
     }
     public partial class SmsSendOptions
@@ -40,6 +51,41 @@ namespace Azure.Communication.Sms
 }
 namespace Azure.Communication.Sms.Models
 {
+    public static partial class CommunicationSmsModelFactory
+    {
+        public static Azure.Communication.Sms.Models.OptOutResponse OptOutResponse(System.Collections.Generic.IEnumerable<Azure.Communication.Sms.Models.OptOutResponseItem> value = null) { throw null; }
+        public static Azure.Communication.Sms.Models.OptOutResponseItem OptOutResponseItem(string to = null, int httpStatusCode = 0, bool? isOptedOut = default(bool?), string errorMessage = null) { throw null; }
+    }
+    public partial class OptOutChangeResponse
+    {
+        internal OptOutChangeResponse() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutChangeResponseItem> Value { get { throw null; } }
+    }
+    public partial class OptOutChangeResponseItem
+    {
+        internal OptOutChangeResponseItem() { }
+        public string ErrorMessage { get { throw null; } }
+        public int HttpStatusCode { get { throw null; } }
+        public string To { get { throw null; } }
+    }
+    public partial class OptOutRecipient
+    {
+        public OptOutRecipient(string to) { }
+        public string To { get { throw null; } }
+    }
+    public partial class OptOutResponse
+    {
+        internal OptOutResponse() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutResponseItem> Value { get { throw null; } }
+    }
+    public partial class OptOutResponseItem
+    {
+        internal OptOutResponseItem() { }
+        public string ErrorMessage { get { throw null; } }
+        public int HttpStatusCode { get { throw null; } }
+        public bool? IsOptedOut { get { throw null; } }
+        public string To { get { throw null; } }
+    }
     public static partial class SmsModelFactory
     {
         public static Azure.Communication.Sms.SmsSendResult SmsSendResult(string to, string messageId, int httpStatusCode, bool successful, string errorMessage) { throw null; }
