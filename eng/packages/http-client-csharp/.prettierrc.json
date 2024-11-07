@@ -1,6 +1,6 @@
 {
-    "semi": true,
-    "trailingComma": "none",
-    "printWidth": 80,
-    "endOfLine": "auto"
+  "semi": true,
+  "trailingComma": "none",
+  "printWidth": 80,
+  "endOfLine": "auto"
 }
