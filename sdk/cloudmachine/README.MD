@@ -42,10 +42,7 @@ As you can see, a folder called `infra` was created and it should have several b
 ```dotnetcli
 azd init
 ```
-select template
-choose 'yes' when asked 'Continue initializing an app here? This will also initialize a new git repository in 'D:\git\cmdemo\server'. (y/N)'
-choose 'minimal' template 
-use 'cmserver' as the environment name
+select template, choose 'yes' when asked 'Continue initializing an app here? This will also initialize a new git repository in 'D:\git\cmdemo\server'. (y/N)', choose 'minimal' template, and use 'cmserver' as the environment name
 ```dotnetcli
 azd init
 ```
