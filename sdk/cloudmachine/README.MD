@@ -31,6 +31,25 @@ dotnet add package Azure.CloudMachine.All --prerelease
 Open Program.cs file and add the following two lines of code to the top of the file
 ```csharp
 using Azure.Provisioning.CloudMachine;
+
 if (CloudMachineInfrastructure.Configure(args)) return;
 ```
-
+The `CloudMachineInfrastructure.Configure` call allows running the app with `-bicep` switch, which generate bicep files required to provision resources in Azure. Let's generate these bicep files now. 
+```dotnetcli
+dotnet run -bicep
+```
+As you can see, a folder called `infra` was created and it should have several bicep files in it. Let's now initialize the project for azd.
+```dotnetcli
+azd init
+```
+select template
+choose 'yes' when asked 'Continue initializing an app here? This will also initialize a new git repository in 'D:\git\cmdemo\server'. (y/N)'
+choose 'minimal' template 
+use 'cmserver' as the environment name
+```dotnetcli
+azd init
+```
+And now let's provision the resources. Select `eastus` as the region
+```dotnetcli
+azd provision
+```
