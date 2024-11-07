@@ -28,14 +28,6 @@ public class ClientPipelineOptions
     private TimeSpan? _timeout;
     private ClientLoggingOptions? _loggingOptions;
 
-    #region Defaults
-
-    internal const int DefaultMaxRetries = 3;
-    internal static readonly TimeSpan S_DefaultMaxDelay = TimeSpan.FromMinutes(1);
-    internal static readonly TimeSpan S_DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
-
-    #endregion
-
     #region Pipeline creation: Overrides of default pipeline policies
 
     /// <summary>

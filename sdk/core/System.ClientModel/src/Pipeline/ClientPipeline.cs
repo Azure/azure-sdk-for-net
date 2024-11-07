@@ -163,13 +163,16 @@ public sealed partial class ClientPipeline
 
         // Add logging policy just before the transport.
 
-        if (options.ClientLoggingOptions == null || options.ClientLoggingOptions.ShouldUseDefaultMessageLoggingPolicy())
+        if (loggingOptions == null || loggingOptions.ShouldAddMessageLoggingPolicy())
         {
-            policies[index++] = options.MessageLoggingPolicy ?? MessageLoggingPolicy.Default;
-        }
-        else if (options.ClientLoggingOptions.EnableLogging != false && options.ClientLoggingOptions.EnableMessageLogging != false)
-        {
-            policies[index++] = options.MessageLoggingPolicy ?? new MessageLoggingPolicy(options.ClientLoggingOptions);
+            if (loggingOptions == null || loggingOptions.ShouldUseDefaultMessageLoggingPolicy())
+            {
+                policies[index++] = options.MessageLoggingPolicy ?? MessageLoggingPolicy.Default;
+            }
+            else
+            {
+                policies[index++] = options.MessageLoggingPolicy ?? new MessageLoggingPolicy(options.ClientLoggingOptions);
+            }
         }
 
         // Before transport policies come before the transport.

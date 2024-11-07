@@ -18,7 +18,7 @@ internal partial class PipelineMessageLogger
     public PipelineMessageLogger(PipelineMessageSanitizer sanitizer, ILoggerFactory? loggerFactory)
     {
         _sanitizer = sanitizer;
-        _logger = loggerFactory?.CreateLogger<MessageLoggingPolicy>() ?? NullLogger<MessageLoggingPolicy>.Instance;
+        _logger = loggerFactory?.CreateLogger<MessageLoggingPolicy>() ?? null;
     }
 
     /// <summary>
