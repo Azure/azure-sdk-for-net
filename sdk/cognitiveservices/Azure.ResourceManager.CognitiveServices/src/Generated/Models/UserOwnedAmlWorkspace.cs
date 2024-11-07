@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="resourceId"> Full resource id of a AML workspace resource. </param>
         /// <param name="identityClientId"> Identity Client id of a AML workspace resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserOwnedAmlWorkspace(string resourceId, Guid? identityClientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserOwnedAmlWorkspace(ResourceIdentifier resourceId, Guid? identityClientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             IdentityClientId = identityClientId;
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Full resource id of a AML workspace resource. </summary>
         [WirePath("resourceId")]
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Identity Client id of a AML workspace resource. </summary>
         [WirePath("identityClientId")]
         public Guid? IdentityClientId { get; set; }

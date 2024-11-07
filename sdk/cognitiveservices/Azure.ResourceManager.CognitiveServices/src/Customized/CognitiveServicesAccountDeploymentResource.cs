@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.CognitiveServices
     public partial class CognitiveServicesAccountDeploymentResource
     {
         /// <summary>
-        /// UpdateAsync
+        /// UpdateAsync (Compatible version, only Tags and Sku can be updated.)
         /// </summary>
-        public virtual async Task<ArmOperation<CognitiveServicesAccountDeploymentResource>> UpdateAsync(WaitUntil waitUntil, CognitiveServicesAccountDeploymentData deployment, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CognitiveServicesAccountDeploymentResource>> UpdateAsync(WaitUntil waitUntil, CognitiveServicesAccountDeploymentData data, CancellationToken cancellationToken = default)
         {
-            var patchPayload = new PatchResourceTagsAndSku(deployment.Tags, null, deployment.Sku);
+            var patchPayload = new PatchResourceTagsAndSku(data.Tags, null, data.Sku);
             return await this.UpdateAsync(waitUntil, patchPayload, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Update
+        /// Update (Compatible version, only Tags and Sku can be updated.)
         /// </summary>
-        public virtual ArmOperation<CognitiveServicesAccountDeploymentResource> Update(WaitUntil waitUntil, CognitiveServicesAccountDeploymentData deployment, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CognitiveServicesAccountDeploymentResource> Update(WaitUntil waitUntil, CognitiveServicesAccountDeploymentData data, CancellationToken cancellationToken = default)
         {
-            var patchPayload = new PatchResourceTagsAndSku(deployment.Tags, null, deployment.Sku);
+            var patchPayload = new PatchResourceTagsAndSku(data.Tags, null, data.Sku);
             return this.Update(waitUntil, patchPayload, cancellationToken);
         }
     }

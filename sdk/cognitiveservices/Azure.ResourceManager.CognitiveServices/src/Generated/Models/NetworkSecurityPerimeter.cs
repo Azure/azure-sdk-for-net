@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="perimeterGuid"> Guid of the resource. </param>
         /// <param name="location"> Location of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeter(ResourceIdentifier id, string perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PerimeterGuid = perimeterGuid;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public ResourceIdentifier Id { get; set; }
         /// <summary> Guid of the resource. </summary>
         [WirePath("perimeterGuid")]
-        public string PerimeterGuid { get; set; }
+        public Guid? PerimeterGuid { get; set; }
         /// <summary> Location of the resource. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }

@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("versionUpgradeOption"u8);
                 writer.WriteStringValue(VersionUpgradeOption.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DynamicThrottlingEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsDynamicThrottlingEnabled))
             {
                 writer.WritePropertyName("dynamicThrottlingEnabled"u8);
-                writer.WriteBooleanValue(DynamicThrottlingEnabled.Value);
+                writer.WriteBooleanValue(IsDynamicThrottlingEnabled.Value);
             }
             if (Optional.IsDefined(CurrentCapacity))
             {
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DynamicThrottlingEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDynamicThrottlingEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  dynamicThrottlingEnabled: ");
@@ -469,10 +469,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             else
             {
-                if (Optional.IsDefined(DynamicThrottlingEnabled))
+                if (Optional.IsDefined(IsDynamicThrottlingEnabled))
                 {
                     builder.Append("  dynamicThrottlingEnabled: ");
-                    var boolValue = DynamicThrottlingEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsDynamicThrottlingEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

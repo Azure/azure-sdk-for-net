@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(PerimeterGuid))
             {
                 writer.WritePropertyName("perimeterGuid"u8);
-                writer.WriteStringValue(PerimeterGuid);
+                writer.WriteStringValue(PerimeterGuid.Value);
             }
             if (Optional.IsDefined(Location))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            string perimeterGuid = default;
+            Guid? perimeterGuid = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (property.NameEquals("perimeterGuid"u8))
                 {
-                    perimeterGuid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    perimeterGuid = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -163,15 +167,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 if (Optional.IsDefined(PerimeterGuid))
                 {
                     builder.Append("  perimeterGuid: ");
-                    if (PerimeterGuid.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PerimeterGuid}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PerimeterGuid}'");
-                    }
+                    builder.AppendLine($"'{PerimeterGuid.Value.ToString()}'");
                 }
             }
 

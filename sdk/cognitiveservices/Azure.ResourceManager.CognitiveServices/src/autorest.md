@@ -92,6 +92,10 @@ rename-mapping:
   CalculateModelCapacityParameter: CalculateModelCapacityContent
   RaiBlocklistItemBulkRequest: RaiBlocklistItemBulkContent
   SkuResource: ResourceSku
+  DeploymentProperties.dynamicThrottlingEnabled: IsDynamicThrottlingEnabled
+  RaiMonitorConfig.adxStorageResourceId: -|arm-id
+  UserOwnedAmlWorkspace.resourceId: -|arm-id
+  NetworkSecurityPerimeter.perimeterGuid: -|uuid
 
 prepend-rp-prefix:
   - Account

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            string adxStorageResourceId = default;
+            ResourceIdentifier adxStorageResourceId = default;
             Guid? identityClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -90,7 +90,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 if (property.NameEquals("adxStorageResourceId"u8))
                 {
-                    adxStorageResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    adxStorageResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identityClientId"u8))
@@ -133,15 +137,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 if (Optional.IsDefined(AdxStorageResourceId))
                 {
                     builder.Append("  adxStorageResourceId: ");
-                    if (AdxStorageResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AdxStorageResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AdxStorageResourceId}'");
-                    }
+                    builder.AppendLine($"'{AdxStorageResourceId.ToString()}'");
                 }
             }
 

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.CognitiveServices
     public partial class CognitiveServicesCommitmentPlanResource
     {
         /// <summary>
-        /// UpdateAsync
+        /// UpdateAsync (Compatible version, only Tags and Sku can be updated.)
         /// </summary>
-        public virtual async Task<ArmOperation<CognitiveServicesCommitmentPlanResource>> UpdateAsync(WaitUntil waitUntil, CognitiveServicesCommitmentPlanPatch commitmentPlan, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CognitiveServicesCommitmentPlanResource>> UpdateAsync(WaitUntil waitUntil, CognitiveServicesCommitmentPlanPatch patch, CancellationToken cancellationToken = default)
         {
-            var patchPayload = new PatchResourceTagsAndSku(commitmentPlan.Tags, null, commitmentPlan.Sku);
+            var patchPayload = new PatchResourceTagsAndSku(patch.Tags, null, patch.Sku);
             return await this.UpdateAsync(waitUntil, patchPayload, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Update
+        /// Update (Compatible version, only Tags and Sku can be updated.)
         /// </summary>
-        public virtual ArmOperation<CognitiveServicesCommitmentPlanResource> Update(WaitUntil waitUntil, CognitiveServicesCommitmentPlanPatch commitmentPlan, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CognitiveServicesCommitmentPlanResource> Update(WaitUntil waitUntil, CognitiveServicesCommitmentPlanPatch patch, CancellationToken cancellationToken = default)
         {
-            var patchPayload = new PatchResourceTagsAndSku(commitmentPlan.Tags, null, commitmentPlan.Sku);
+            var patchPayload = new PatchResourceTagsAndSku(patch.Tags, null, patch.Sku);
             return this.Update(waitUntil, patchPayload, cancellationToken);
         }
     }
