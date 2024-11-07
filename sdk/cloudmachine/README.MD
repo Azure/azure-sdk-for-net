@@ -9,12 +9,15 @@ Write Azure apps in 5 minutes
 > You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 > You must have .NET 8 (or higher) installed
 > You must have Azure CLI installed
+> You must have Azure Developer CLI installed
 > You must have npm installed
+> You must be logged into Azure CLI and Azure Developer CLI
 
 ### Walkthrough
 
-Create project
+#### Create Server Project
 
+In a command line window type
 ```dotnetcli
 mkdir cmdemo
 cd cmdemo
@@ -23,10 +26,11 @@ cd server
 dotnet new web
 ```
 
-Add Azure.CloudMachine.All package
+Add `Azure.CloudMachine.All` package
 ```dotnetcli
 dotnet add package Azure.CloudMachine.All --prerelease
 ```
+#### Use Azure Dev CLI to provision CloudMachine
 
 Open Program.cs file and add the following two lines of code to the top of the file
 ```csharp
@@ -56,6 +60,9 @@ And if you go to your Azure portal, or execute the following az cli command to s
 ```dotnetcli
 az resource list --resource-group <resource_group_from_command_line> --output table
 ```
+
+#### Use CDK to add resources to the CloudMachine
+
 Since we are writing an AI application, we need to provision Azure OpenAI resources. To do this, add the follwoing class to the end of the Program.cs file:
 ```csharp
 class AssistantService {
@@ -73,7 +80,10 @@ And now regenerate new bicep with the new Azure OpenAI resources, and re-provisi
 dotnet run -bicep
 azd provision
 ```
-You are now ready to call Azure OpenAI service from the app. To do this, add CloudMachineClient field add a Chat method to `AssistantService`:
+
+#### Call CloudMachine APIs
+
+You are now ready to call Azure OpenAI service from the app. To do this, add `CloudMachineClient` field and a `Chat` method to `AssistantService`:
 ```csharp
 class AssistantService {
     CloudMachineClient cm = new CloudMachineClient();
@@ -85,7 +95,7 @@ class AssistantService {
     } 
 }
 ```
-Lastly, create an instance of the service and call the chat method from the mapped app method:
+Lastly, create an instance of the service and call the `Chat` method when the app users browses the app:
 ```csharp
 var service = new AssistantService();
 app.MapGet("/", async () => {
