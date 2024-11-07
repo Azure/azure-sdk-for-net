@@ -20,7 +20,7 @@
     <PackageReference Include="Azure.Messaging.ServiceBus" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0' OR '$(TargetFramework)' == 'net8.0'">
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Rpc" />
     <PackageReference Include="Grpc.Tools" />
     <PackageReference Include="Google.Protobuf" />

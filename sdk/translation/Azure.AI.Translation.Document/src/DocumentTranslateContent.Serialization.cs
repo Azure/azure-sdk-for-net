@@ -37,14 +37,12 @@ namespace Azure.AI.Translation.Document
 
             writer.WriteStartObject();
             writer.WritePropertyName("document"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(global::System.BinaryData.FromStream(MultipartDocument.Content));
-#else
+
             using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(MultipartDocument.Content)))
             {
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
-#endif
+
             if (Optional.IsCollectionDefined(MultipartGlossary))
             {
                 writer.WritePropertyName("glossary"u8);
@@ -56,14 +54,11 @@ namespace Azure.AI.Translation.Document
                         writer.WriteNullValue();
                         continue;
                     }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(global::System.BinaryData.FromStream(item.Content));
-#else
+
                     using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(item.Content)))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
-#endif
                 }
                 writer.WriteEndArray();
             }
@@ -72,14 +67,11 @@ namespace Azure.AI.Translation.Document
                 foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
+
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
-#endif
                 }
             }
             writer.WriteEndObject();
