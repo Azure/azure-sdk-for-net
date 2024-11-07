@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Health.Deidentification
 {
     /// <summary> Details of a single document in a job. </summary>
-    internal partial class DocumentDetails
+    public partial class DocumentDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

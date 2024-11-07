@@ -484,12 +484,12 @@ namespace Azure.Health.Deidentification
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Resource list operation template. </remarks>
-        internal virtual AsyncPageable<DeidentificationJob> GetJobsAsync(int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<DeidentificationJob> GetJobsInternalsAsync(int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DeidentificationJob.DeserializeDeidentificationJob(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobs", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsInternalsRequest(maxpagesize, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsInternalsNextPageRequest(nextLink, maxpagesize, continuationToken, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DeidentificationJob.DeserializeDeidentificationJob(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobsInternals", "value", "nextLink", context);
         }
 
         /// <summary> List de-identification jobs. </summary>
@@ -497,12 +497,12 @@ namespace Azure.Health.Deidentification
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Resource list operation template. </remarks>
-        internal virtual Pageable<DeidentificationJob> GetJobs(int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        internal virtual Pageable<DeidentificationJob> GetJobsInternals(int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DeidentificationJob.DeserializeDeidentificationJob(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobs", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsInternalsRequest(maxpagesize, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsInternalsNextPageRequest(nextLink, maxpagesize, continuationToken, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DeidentificationJob.DeserializeDeidentificationJob(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobsInternals", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -515,7 +515,7 @@ namespace Azure.Health.Deidentification
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobsAsync(int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobsInternalsAsync(int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -525,11 +525,11 @@ namespace Azure.Health.Deidentification
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual AsyncPageable<BinaryData> GetJobsAsync(int? maxpagesize, string continuationToken, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetJobsInternalsAsync(int? maxpagesize, string continuationToken, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobs", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsInternalsRequest(maxpagesize, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsInternalsNextPageRequest(nextLink, maxpagesize, continuationToken, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobsInternals", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -542,7 +542,7 @@ namespace Azure.Health.Deidentification
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobs(int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobsInternals(int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -552,11 +552,11 @@ namespace Azure.Health.Deidentification
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual Pageable<BinaryData> GetJobs(int? maxpagesize, string continuationToken, RequestContext context)
+        internal virtual Pageable<BinaryData> GetJobsInternals(int? maxpagesize, string continuationToken, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobs", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsInternalsRequest(maxpagesize, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsInternalsNextPageRequest(nextLink, maxpagesize, continuationToken, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobsInternals", "value", "nextLink", context);
         }
 
         /// <summary> List processed documents within a job. </summary>
@@ -567,14 +567,14 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> The most basic operation. </remarks>
-        internal virtual AsyncPageable<DocumentDetails> GetJobDocumentsAsync(string jobName, int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<DocumentDetails> GetJobDocumentsInternalsAsync(string jobName, int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsRequest(jobName, maxpagesize, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsNextPageRequest(nextLink, jobName, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentDetails.DeserializeDocumentDetails(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocuments", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsInternalsRequest(jobName, maxpagesize, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsInternalsNextPageRequest(nextLink, jobName, maxpagesize, continuationToken, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentDetails.DeserializeDocumentDetails(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocumentsInternals", "value", "nextLink", context);
         }
 
         /// <summary> List processed documents within a job. </summary>
@@ -585,14 +585,14 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> The most basic operation. </remarks>
-        internal virtual Pageable<DocumentDetails> GetJobDocuments(string jobName, int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        internal virtual Pageable<DocumentDetails> GetJobDocumentsInternals(string jobName, int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsRequest(jobName, maxpagesize, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsNextPageRequest(nextLink, jobName, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentDetails.DeserializeDocumentDetails(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocuments", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsInternalsRequest(jobName, maxpagesize, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsInternalsNextPageRequest(nextLink, jobName, maxpagesize, continuationToken, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentDetails.DeserializeDocumentDetails(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocumentsInternals", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -605,7 +605,7 @@ namespace Azure.Health.Deidentification
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobDocumentsAsync(string,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobDocumentsInternalsAsync(string,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -618,13 +618,13 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual AsyncPageable<BinaryData> GetJobDocumentsAsync(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetJobDocumentsInternalsAsync(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsRequest(jobName, maxpagesize, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsNextPageRequest(nextLink, jobName, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocuments", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsInternalsRequest(jobName, maxpagesize, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsInternalsNextPageRequest(nextLink, jobName, maxpagesize, continuationToken, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocumentsInternals", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -637,7 +637,7 @@ namespace Azure.Health.Deidentification
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobDocuments(string,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobDocumentsInternals(string,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -650,13 +650,13 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual Pageable<BinaryData> GetJobDocuments(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
+        internal virtual Pageable<BinaryData> GetJobDocumentsInternals(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsRequest(jobName, maxpagesize, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsNextPageRequest(nextLink, jobName, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocuments", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsInternalsRequest(jobName, maxpagesize, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsInternalsNextPageRequest(nextLink, jobName, maxpagesize, continuationToken, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocumentsInternals", "value", "nextLink", context);
         }
 
         /// <summary> Create a de-identification job. </summary>
@@ -819,7 +819,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateGetJobsRequest(int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetJobsInternalsRequest(int? maxpagesize, string continuationToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -842,7 +842,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateGetJobDocumentsRequest(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetJobDocumentsInternalsRequest(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -917,7 +917,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateGetJobsNextPageRequest(string nextLink, int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetJobsInternalsNextPageRequest(string nextLink, int? maxpagesize, string continuationToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -931,7 +931,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateGetJobDocumentsNextPageRequest(string nextLink, string jobName, int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetJobDocumentsInternalsNextPageRequest(string nextLink, string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
