@@ -28,9 +28,9 @@ steps:
   condition: succeeded()
   workingDirectory: ${{ parameters.WorkingDirectory }}
 
-- template: ./emit-ratelimit-metrics.yml
+- template: /eng/common/pipelines/templates/steps/emit-rate-limit-metrics.yml
   parameters:
-    User: 'azure-sdk'
+    GitHubUser: azure-sdk
     GitHubToken: $(azuresdk-github-pat)
 
 - task: PowerShell@2

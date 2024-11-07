@@ -1,5 +1,5 @@
 parameters:
-  - name: User
+  - name: GitHubUser
     type: string
   - name: GitHubToken
     type: string
@@ -22,4 +22,4 @@ steps:
   displayName: Check GitHub Rate Limit
   env:
     GITHUB_TOKEN: ${{ parameters.GitHubToken}}
-    GITHUB_USER: ${{ parameters.User}}
+    GITHUB_USER: ${{ parameters.GitHubUser}}
