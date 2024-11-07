@@ -42,11 +42,9 @@ As you can see, a folder called `infra` was created and it should have several b
 ```dotnetcli
 azd init
 ```
-select template, choose 'yes' when asked 'Continue initializing an app here? This will also initialize a new git repository in 'D:\git\cmdemo\server'. (y/N)', choose 'minimal' template, and use 'cmserver' as the environment name
-```dotnetcli
-azd init
-```
-And now let's provision the resources. Select `eastus` as the region
+select template, choose 'yes' when asked 'Continue initializing an app here?', choose the 'minimal' template, and use 'cmserver' as the environment name
+
+Once the initialization completes, let's provision the resources. Select `eastus` as the region
 ```dotnetcli
 azd provision
 ```
