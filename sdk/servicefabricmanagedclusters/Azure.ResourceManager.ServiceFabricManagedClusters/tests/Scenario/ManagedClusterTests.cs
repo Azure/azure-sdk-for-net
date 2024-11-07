@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             clusterName = Recording.GenerateAssetName("sfmctestclusternet");
             clusterCollection = resourceGroupResource.GetServiceFabricManagedClusters();
 
-            ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(new AzureLocation("southcentralus"))
+            ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(new AzureLocation("westus"))
             {
                 DnsName = clusterName,
                 AdminUserName = "Myusername4",
