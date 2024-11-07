@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Security.Authentication;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -309,6 +308,20 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
             // validate response matches exception
             Assert.AreEqual("Invalid user", response);
+        }
+
+        [Test]
+        public async Task TestHubBaseReturnsWhenCustomHubName()
+        {
+            var hubName = "customHub";
+            _adaptor.RegisterHub<TestDefaultHub>(hubName);
+            var connectBody = "{\"claims\":{\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"ddd\"],\"nbf\":[\"1629183374\"],\"exp\":[\"1629186974\"],\"iat\":[\"1629183374\"],\"aud\":[\"http://localhost:8080/client/hubs/chat\"],\"sub\":[\"ddd\"]},\"query\":{\"access_token\":[\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGQiLCJuYmYiOjE2MjkxODMzNzQsImV4cCI6MTYyOTE4Njk3NCwiaWF0IjoxNjI5MTgzMzc0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvY2xpZW50L2h1YnMvY2hhdCJ9.tqD8ykjv5NmYw6gzLKglUAv-c-AVWu-KNZOptRKkgMM\"]},\"subprotocols\":[\"protocol1\", \"protocol2\"],\"clientCertificates\":[],\"headers\":{}}";
+            var context = PrepareHttpContext(httpMethod: HttpMethods.Post, eventName: "connect", body: connectBody, hub: hubName);
+
+            await _adaptor.HandleRequest(context);
+
+            Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
+            Assert.Null(context.Response.ContentLength);
         }
 
         private static HttpContext PrepareHttpContext(
