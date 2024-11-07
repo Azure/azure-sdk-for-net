@@ -159,7 +159,7 @@ namespace Azure.Storage.DataMovement
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
-            await SetDataTransfers(cancellationToken).ConfigureAwait(false);
+            await SetDataTransfersAsync(cancellationToken).ConfigureAwait(false);
             IEnumerable<DataTransfer> totalTransfers;
             if (filterByStatus == default || filterByStatus.Count == 0)
             {
@@ -419,7 +419,7 @@ namespace Azure.Storage.DataMovement
         }
         #endregion
 
-        private async Task SetDataTransfers(CancellationToken cancellationToken = default)
+        private async Task SetDataTransfersAsync(CancellationToken cancellationToken = default)
         {
             _dataTransfers.Clear();
 

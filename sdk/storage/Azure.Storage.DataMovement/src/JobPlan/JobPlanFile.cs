@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -27,7 +28,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// List of Job Part Plan Files associated with this job.
         /// </summary>
-        public Dictionary<int, JobPartPlanFile> JobParts { get; private set; }
+        public ConcurrentDictionary<int, JobPartPlanFile> JobParts { get; private set; }
 
         /// <summary>
         /// Lock for the memory mapped file to allow only one writer.
@@ -40,7 +41,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         {
             Id = id;
             FilePath = filePath;
-            JobParts = new Dictionary<int, JobPartPlanFile>();
+            JobParts = new();
             WriteLock = new SemaphoreSlim(1);
         }
 
@@ -58,9 +59,18 @@ namespace Azure.Storage.DataMovement.JobPlan
             string filePath = Path.Combine(checkpointerPath, fileName);
 
             JobPlanFile jobPlanFile = new(id, filePath);
-            using (FileStream fileStream = File.Create(jobPlanFile.FilePath))
+            try
             {
-                await headerStream.CopyToAsync(fileStream, DefaultBufferSize, cancellationToken).ConfigureAwait(false);
+                using (FileStream fileStream = File.Create(jobPlanFile.FilePath))
+                {
+                    await headerStream.CopyToAsync(fileStream, DefaultBufferSize, cancellationToken).ConfigureAwait(false);
+                }
+            }
+            catch (Exception)
+            {
+                // will handle if file has not been created yet
+                File.Delete(jobPlanFile.FilePath);
+                throw;
             }
 
             return jobPlanFile;

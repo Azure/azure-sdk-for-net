@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace Azure.CloudMachine.OpenAI.Embeddings;
+namespace Azure.CloudMachine.OpenAI;
 
 internal class MemoryVectorbaseStore : VectorbaseStore
 {

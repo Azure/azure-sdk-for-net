@@ -1090,6 +1090,12 @@
 # ServiceLabel: %Compute - Fleet %Mgmt
 # ServiceOwners:                                                   @sahilarora92 @dhruvil009 @rahuls-microsoft
 
+# PRLabel: %HybridConnectivity
+/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @alexmahonic
+
+# ServiceLabel: %%HybridConnectivity %Mgmt
+# ServiceOwners:                                                   @alexmahonic
+
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
 /eng/common/                                                       @Azure/azure-sdk-eng
@@ -1112,7 +1118,7 @@
 #PRLabel: %CodeGen %Client
 /eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft
 
-# ServiceLabel: %CodeGen 
+# ServiceLabel: %CodeGen
 # AzureSdkOwners:                                                  @JoshLove-msft
 
 #PRLabel: %CodeGen %Client
