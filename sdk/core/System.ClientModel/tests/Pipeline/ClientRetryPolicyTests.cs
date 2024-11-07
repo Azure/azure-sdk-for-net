@@ -47,7 +47,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
     {
         ClientPipelineOptions options = new()
         {
-            Transport = new MockPipelineTransport("Transport", i => 500)
+            Transport = new MockPipelineTransport("Transport", _ => new MockPipelineResponse(500))
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -76,7 +76,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         ClientPipelineOptions options = new()
         {
             RetryPolicy = new MockRetryPolicy(maxRetryCount, i => TimeSpan.FromMilliseconds(10)),
-            Transport = new MockPipelineTransport("Transport", i => 500)
+            Transport = new MockPipelineTransport("Transport", _ => new MockPipelineResponse(500))
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -173,12 +173,13 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         MockRetryPolicy retryPolicy = new MockRetryPolicy();
         MockPipelineTransport transport = new MockPipelineTransport("Transport", responseFactory);
 
-        int responseFactory(int i)
-            => i switch
+        int retryCount = -1;
+        MockPipelineResponse responseFactory(PipelineMessage m)
+            => retryCount++ switch
             {
-                0 => 500,
+                0 => new MockPipelineResponse(500),
                 1 => throw retriableException,
-                2 => 200,
+                2 => new MockPipelineResponse(200),
                 _ => throw new InvalidOperationException(),
             };
 

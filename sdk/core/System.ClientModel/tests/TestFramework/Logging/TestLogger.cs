@@ -18,7 +18,7 @@ public class TestLogger : ILogger
     public TestLogger(LogLevel logLevel)
     {
         _logLevel = logLevel;
-        Name = "nothing yet...";
+        Name = "<Will be set by the logger factory>";
     }
 
     public IEnumerable<LoggerEvent> Logs => _logs;

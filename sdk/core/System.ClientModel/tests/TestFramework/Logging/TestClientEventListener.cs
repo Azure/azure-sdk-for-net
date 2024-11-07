@@ -15,7 +15,6 @@ namespace ClientModel.Tests
     {
         private volatile bool _disposed;
         private readonly ConcurrentQueue<EventWrittenEventArgs> _events = new ConcurrentQueue<EventWrittenEventArgs>();
-        private EventLevel _eventLevel = EventLevel.Verbose;
 
         public IEnumerable<EventWrittenEventArgs> EventData => _events;
 
@@ -32,9 +31,9 @@ namespace ClientModel.Tests
             // is because when an EventListener is instantiated, the OnEventWritten and OnEventSourceCreated callback methods can
             // be called before the constructor has completed
             // see: https://learn.microsoft.com/dotnet/api/system.diagnostics.tracing.eventlistener#remarks
-            if (eventSource.Name == "System-ClientModel")
+            if (eventSource.Name == "System.ClientModel")
             {
-                EnableEvents(eventSource, _eventLevel);
+                EnableEvents(eventSource, EventLevel.Verbose);
             }
         }
 
@@ -69,6 +68,8 @@ namespace ClientModel.Tests
             _disposed = true;
             base.Dispose();
         }
+
+        #region Helpers
 
         private static string Format(EventWrittenEventArgs eventData)
         {
@@ -131,5 +132,7 @@ namespace ClientModel.Tests
 
             return o;
         }
+
+        #endregion
     }
 }
