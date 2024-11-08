@@ -98,16 +98,12 @@ class AssistantService {
 Lastly, create an instance of the service and call the `Chat` method when the app users browses the app:
 ```csharp
 var service = new AssistantService();
-app.MapGet("/", async () => {
-    return await service.Chat("List all noble gases");
-});
+app.MapGet("/", async () => await service.Chat("List all noble gases"));
 ```
 The full program should look like following:
 ```csharp
 using Azure.CloudMachine;
 using Azure.CloudMachine.OpenAI;
-using Azure.Provisioning.CloudMachine;
-using Azure.Provisioning.CloudMachine.OpenAI;
 using OpenAI.Chat;
 
 if (CloudMachineInfrastructure.Configure(args, AssistantService.Configure)) return;
@@ -116,9 +112,7 @@ var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
 var service = new AssistantService();
-app.MapGet("/", async () => {
-    return await service.Chat("List all noble gases");
-});
+app.MapGet("/", async () => await service.Chat("List all noble gases"));
 
 app.Run();
 
@@ -167,10 +161,7 @@ Your program shoud now look like following:
 ```csharp
 using Azure.CloudMachine;
 using Azure.CloudMachine.OpenAI;
-using Azure.Provisioning.CloudMachine;
-using Azure.Provisioning.CloudMachine.OpenAI;
 using OpenAI.Chat;
-using System.ClientModel.TypeSpec;
 
 if (CloudMachineInfrastructure.Configure(args, AssistantService.Configure)) return;
 
@@ -179,9 +170,7 @@ var app = builder.Build();
 
 var service = new AssistantService();
 app.Map(service);
-app.MapGet("/", async () => {
-    return await service.Chat("List all noble gasses");
-});
+app.MapGet("/", async () => await service.Chat("List all noble gases"));
 
 app.Run();
 
@@ -242,6 +231,11 @@ cd ..
 npm install @typespec/http-client-csharp
 tsp compile .\server\tsp\AssistantService.tsp --emit "@typespec/http-client-csharp"
 dotnet build tsp-output\@typespec\http-client-csharp\src\AssistantService.csproj
+```
+You can also generate libraries for other languages, e.g.
+```dotnetcli
+npm install @typespec/http-client-python
+tsp compile .\server\tsp\AssistantService.tsp --emit "@typespec/http-client-python"
 ```
 
 #### Create command line client app for the service
