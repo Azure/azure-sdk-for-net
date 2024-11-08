@@ -6,12 +6,12 @@ Write Azure apps in 5 minutes
 
 ### Prerequisites
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
-> You must have .NET 8 (or higher) installed
-> You must have Azure CLI installed
-> You must have Azure Developer CLI installed
-> You must have npm installed
-> You must be logged into Azure CLI and Azure Developer CLI
+* You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
+* You must have .NET 8 (or higher) installed
+* You must have Azure CLI (az) installed
+* You must have Azure Developer CLI (azd) installed
+* You must have npm installed
+* You must be logged into Azure CLI and Azure Developer CLI
 
 ### Walkthrough
 
@@ -30,19 +30,19 @@ Add `Azure.CloudMachine.All` package
 ```dotnetcli
 dotnet add package Azure.CloudMachine.All --prerelease
 ```
-#### Use Azure Dev CLI to provision CloudMachine
+#### Use Azure Developer CLI to provision CloudMachine
 
-Open Program.cs file and add the following two lines of code to the top of the file
+Open `Program.cs` file and add the following two lines of code to the top of the file
 ```csharp
-using Azure.Provisioning.CloudMachine;
+using Azure.CloudMachine;
 
 if (CloudMachineInfrastructure.Configure(args)) return;
 ```
-The `CloudMachineInfrastructure.Configure` call allows running the app with `-bicep` switch, which generate bicep files required to provision resources in Azure. Let's generate these bicep files now. 
+The `CloudMachineInfrastructure.Configure` call allows running the app with a `-bicep` switch, which will generate bicep files required to provision CloudMachine resources in Azure. Let's generate these bicep files now. 
 ```dotnetcli
 dotnet run -bicep
 ```
-As you can see, a folder called `infra` was created and it should have several bicep files in it. Let's now initialize the project for azd.
+As you can see, a folder called `infra` was created with several bicep files in it. Let's now initialize the project.
 ```dotnetcli
 azd init
 ```
@@ -56,14 +56,14 @@ When provisioning finishes, you should see something like the following in the c
 ```dotnetcli
  (✓) Done: Resource group: cm125957681369428 (627ms)
 ```
-And if you go to your Azure portal, or execute the following az cli command to see the resource group created. The resource group will have server resources such us Storage, ServiceBus, and EventGrid. 
+And if you go to your Azure portal, or execute the following az command, you can see the resource group created. The resource group will contain resources such as Storage, ServiceBus, and EventGrid. 
 ```dotnetcli
 az resource list --resource-group <resource_group_from_command_line> --output table
 ```
 
 #### Use CDK to add resources to the CloudMachine
 
-Since we are writing an AI application, we need to provision Azure OpenAI resources. To do this, add the follwoing class to the end of the Program.cs file:
+Since we are writing an AI application, we need to provision Azure OpenAI resources. To do this, add the follwoing class to the end of the `Program.cs` file:
 ```csharp
 class AssistantService {
     internal static void Configure(CloudMachineInfrastructure cm) {
@@ -71,11 +71,11 @@ class AssistantService {
     }
 }
 ```
-And change the infrastructure configuration call att he begining of the file to:
+Then change the configuration call at the beginning of the file to:
 ```csharp
 if (CloudMachineInfrastructure.Configure(args, AssistantService.Configure)) return;
 ```
-And now regenerate new bicep with the new Azure OpenAI resources, and re-provision
+Now regenerate the bicep files and re-provision
 ```dotnetcli
 dotnet run -bicep
 azd provision
@@ -95,12 +95,12 @@ class AssistantService {
     } 
 }
 ```
-Lastly, create an instance of the service and call the `Chat` method when the app users browses the app:
+Lastly, create an instance of the service and call the `Chat` method when the user navigates to the root URL:
 ```csharp
 var service = new AssistantService();
 app.MapGet("/", async () => await service.Chat("List all noble gases"));
 ```
-The full program should look like following:
+The full program should now look like the following:
 ```csharp
 using Azure.CloudMachine;
 using Azure.CloudMachine.OpenAI;
@@ -136,28 +136,28 @@ You can now start the application
 ```dotnetcli
 dotnet run
 ```
-and browse to the URI printed in the console.
+and navigate to the URL printed in the console.
 
 #### Use TDK to expose Web APIs and generate TypeSpec
-First, let's define an API we want to expose. We will do it using an interface. Add the following interface to the end of Program.cs:
+First, let's define an API we want to expose. We will do it using a C# interface. Add the following interface to the end of `Program.cs`:
 ```csharp
 interface IAssistantService {
     Task<string> Chat(string message);
 }
 ```
-Make sure that the `AssistantService` implements the interface:
+Make sure that the `AssistantService` class implements the interface:
 ```csharp
 class AssistantService : IAssistantService
 ```
-Expose the service methods as web APIs by adding the following line after the existing 'var service = new AssistantService();' line:
+Expose the service methods as web APIs by adding the following line after the existing `var service = new AssistantService();` line:
 ```csharp
 app.Map(service);
 ```
-Lastly, add the ability to generate TypeSpec for the new API by adding new statement to the `Configure` method
+Lastly, add the ability to generate TypeSpec for the new API by adding a new statement to the `Configure` method
 ```csharp
 cm.AddEndpoints<IAssistantService>();
 ```
-Your program shoud now look like following:
+Your program shoud now look like the following:
 ```csharp
 using Azure.CloudMachine;
 using Azure.CloudMachine.OpenAI;
@@ -195,13 +195,13 @@ interface IAssistantService {
     Task<string> Chat(string message);
 }
 ```
-You can now start the application and browse to the /chat endpoint [TDB]
+You can now start the application and browse to the /chat endpoint [TBD on how to pass the parameter]
 
 But what's more interesting, you can run the app with the -tsp switch to generate TypeSpec for the endpoint:
 ```dotnetcli
 dotnet run -tsp
 ```
-This will create a `tsp` directory, AssistantService.tsp file, with the following contents:
+This will create a `tsp` directory, `AssistantService.tsp` file, with the following contents:
 ```tsp
 import "@typespec/http";
 import "@typespec/rest";
@@ -245,7 +245,7 @@ cd cmdclient
 dotnet new console
 dotnet add reference ..\tsp-output\@typespec\http-client-csharp\src\AssistantService.csproj
 ```
-And change the Program.cs file to the following, replacing the client URI with the URI in your server's launchsettings.json file ('cmdemo\server\Properties' folder)
+And change the `Program.cs` file to the following, replacing the client URI with the URI in your server's launchsettings.json file ('cmdemo\server\Properties' folder)
 
 ```csharp
 using AssistantService;
