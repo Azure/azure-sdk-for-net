@@ -19,22 +19,13 @@ namespace Azure.AI.Language.Conversations.Models
 
         void IJsonModel<LuisConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<LuisConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LuisConfig)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
@@ -45,6 +36,29 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WritePropertyName("callingOptions"u8);
                 writer.WriteObjectValue(CallingOptions, options);
             }
+            writer.WritePropertyName("targetProjectKind"u8);
+            writer.WriteStringValue(TargetProjectKind.ToString());
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ApiVersion);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
         }
 
         LuisConfig IJsonModel<LuisConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

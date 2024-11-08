@@ -19,21 +19,13 @@ namespace Azure.AI.Language.Conversations.Models
 
         void IJsonModel<NamedEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<NamedEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NamedEntity)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             writer.WritePropertyName("category"u8);
@@ -49,6 +41,21 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WriteNumberValue(Length);
             writer.WritePropertyName("confidenceScore"u8);
             writer.WriteNumberValue(ConfidenceScore);
+            if (Optional.IsDefined(Mask))
+            {
+                writer.WritePropertyName("mask"u8);
+                writer.WriteStringValue(Mask);
+            }
+            if (Optional.IsDefined(MaskOffset))
+            {
+                writer.WritePropertyName("maskOffset"u8);
+                writer.WriteNumberValue(MaskOffset.Value);
+            }
+            if (Optional.IsDefined(MaskLength))
+            {
+                writer.WritePropertyName("maskLength"u8);
+                writer.WriteNumberValue(MaskLength.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -64,6 +71,7 @@ namespace Azure.AI.Language.Conversations.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         NamedEntity IJsonModel<NamedEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -92,6 +100,9 @@ namespace Azure.AI.Language.Conversations.Models
             int offset = default;
             int length = default;
             double confidenceScore = default;
+            string mask = default;
+            int? maskOffset = default;
+            int? maskLength = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,6 +137,29 @@ namespace Azure.AI.Language.Conversations.Models
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("mask"u8))
+                {
+                    mask = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("maskOffset"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maskOffset = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maskLength"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maskLength = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -139,6 +173,9 @@ namespace Azure.AI.Language.Conversations.Models
                 offset,
                 length,
                 confidenceScore,
+                mask,
+                maskOffset,
+                maskLength,
                 serializedAdditionalRawData);
         }
 

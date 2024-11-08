@@ -13,27 +13,19 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class PiiActionContent : IUtf8JsonSerializable, IJsonModel<PiiActionContent>
+    public partial class ConversationPiiActionContent : IUtf8JsonSerializable, IJsonModel<ConversationPiiActionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PiiActionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConversationPiiActionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PiiActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConversationPiiActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationPiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PiiActionContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConversationPiiActionContent)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
@@ -79,6 +71,11 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(RedactionPolicy))
+            {
+                writer.WritePropertyName("redactionPolicy"u8);
+                writer.WriteObjectValue(RedactionPolicy, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -94,21 +91,22 @@ namespace Azure.AI.Language.Conversations.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
-        PiiActionContent IJsonModel<PiiActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConversationPiiActionContent IJsonModel<ConversationPiiActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationPiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PiiActionContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConversationPiiActionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePiiActionContent(document.RootElement, options);
+            return DeserializeConversationPiiActionContent(document.RootElement, options);
         }
 
-        internal static PiiActionContent DeserializePiiActionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ConversationPiiActionContent DeserializeConversationPiiActionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -123,6 +121,7 @@ namespace Azure.AI.Language.Conversations.Models
             TranscriptContentType? redactionSource = default;
             RedactionCharacter? redactionCharacter = default;
             IList<ConversationPiiCategoryExclusions> excludePiiCategories = default;
+            BaseRedactionPolicy redactionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,13 +195,22 @@ namespace Azure.AI.Language.Conversations.Models
                     excludePiiCategories = array;
                     continue;
                 }
+                if (property.NameEquals("redactionPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    redactionPolicy = BaseRedactionPolicy.DeserializeBaseRedactionPolicy(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PiiActionContent(
+            return new ConversationPiiActionContent(
                 loggingOptOut,
                 modelVersion,
                 piiCategories ?? new ChangeTrackingList<ConversationPiiCategories>(),
@@ -210,46 +218,47 @@ namespace Azure.AI.Language.Conversations.Models
                 redactionSource,
                 redactionCharacter,
                 excludePiiCategories ?? new ChangeTrackingList<ConversationPiiCategoryExclusions>(),
+                redactionPolicy,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PiiActionContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConversationPiiActionContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationPiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PiiActionContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConversationPiiActionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PiiActionContent IPersistableModel<PiiActionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConversationPiiActionContent IPersistableModel<ConversationPiiActionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationPiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePiiActionContent(document.RootElement, options);
+                        return DeserializeConversationPiiActionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PiiActionContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConversationPiiActionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PiiActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConversationPiiActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PiiActionContent FromResponse(Response response)
+        internal static ConversationPiiActionContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializePiiActionContent(document.RootElement);
+            return DeserializeConversationPiiActionContent(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

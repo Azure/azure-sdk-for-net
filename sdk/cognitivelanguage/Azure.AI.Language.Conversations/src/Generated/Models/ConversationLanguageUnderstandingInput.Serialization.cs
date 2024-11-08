@@ -19,26 +19,35 @@ namespace Azure.AI.Language.Conversations.Models
 
         void IJsonModel<ConversationLanguageUnderstandingInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingInput)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            writer.WriteStartObject();
             writer.WritePropertyName("analysisInput"u8);
             writer.WriteObjectValue(ConversationInput, options);
             writer.WritePropertyName("parameters"u8);
             writer.WriteObjectValue(ActionContent, options);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
         }
 
         ConversationLanguageUnderstandingInput IJsonModel<ConversationLanguageUnderstandingInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -62,7 +71,7 @@ namespace Azure.AI.Language.Conversations.Models
                 return null;
             }
             ConversationAnalysisInput analysisInput = default;
-            ConversationActionContent parameters = default;
+            ConversationLanguageUnderstandingActionContent parameters = default;
             AnalyzeConversationInputKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -75,7 +84,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = ConversationActionContent.DeserializeConversationActionContent(property.Value, options);
+                    parameters = ConversationLanguageUnderstandingActionContent.DeserializeConversationLanguageUnderstandingActionContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

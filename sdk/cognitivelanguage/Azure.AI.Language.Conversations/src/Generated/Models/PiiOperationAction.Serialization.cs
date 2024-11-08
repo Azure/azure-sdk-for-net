@@ -19,27 +19,41 @@ namespace Azure.AI.Language.Conversations.Models
 
         void IJsonModel<PiiOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<PiiOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PiiOperationAction)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            writer.WriteStartObject();
             if (Optional.IsDefined(ActionContent))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(ActionContent, options);
             }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("taskName"u8);
+                writer.WriteStringValue(Name);
+            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
         }
 
         PiiOperationAction IJsonModel<PiiOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -62,7 +76,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 return null;
             }
-            PiiActionContent parameters = default;
+            ConversationPiiActionContent parameters = default;
             string taskName = default;
             AnalyzeConversationOperationActionKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -75,7 +89,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    parameters = PiiActionContent.DeserializePiiActionContent(property.Value, options);
+                    parameters = ConversationPiiActionContent.DeserializeConversationPiiActionContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))

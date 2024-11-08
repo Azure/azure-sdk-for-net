@@ -19,21 +19,13 @@ namespace Azure.AI.Language.Conversations.Models
 
         void IJsonModel<KnowledgeBaseAnswerContext>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseAnswerContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KnowledgeBaseAnswerContext)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             writer.WritePropertyName("previousQnaId"u8);
             writer.WriteNumberValue(PreviousQnaId);
             if (Optional.IsDefined(PreviousQuestion))
@@ -56,6 +48,7 @@ namespace Azure.AI.Language.Conversations.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         KnowledgeBaseAnswerContext IJsonModel<KnowledgeBaseAnswerContext>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

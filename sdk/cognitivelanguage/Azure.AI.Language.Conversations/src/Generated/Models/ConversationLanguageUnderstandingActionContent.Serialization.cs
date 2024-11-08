@@ -13,27 +13,19 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class ConversationActionContent : IUtf8JsonSerializable, IJsonModel<ConversationActionContent>
+    public partial class ConversationLanguageUnderstandingActionContent : IUtf8JsonSerializable, IJsonModel<ConversationLanguageUnderstandingActionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConversationActionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConversationLanguageUnderstandingActionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConversationActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConversationLanguageUnderstandingActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConversationActionContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingActionContent)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
             writer.WritePropertyName("deploymentName"u8);
@@ -84,21 +76,22 @@ namespace Azure.AI.Language.Conversations.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
-        ConversationActionContent IJsonModel<ConversationActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConversationLanguageUnderstandingActionContent IJsonModel<ConversationLanguageUnderstandingActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConversationActionContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingActionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationActionContent(document.RootElement, options);
+            return DeserializeConversationLanguageUnderstandingActionContent(document.RootElement, options);
         }
 
-        internal static ConversationActionContent DeserializeConversationActionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ConversationLanguageUnderstandingActionContent DeserializeConversationLanguageUnderstandingActionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -179,7 +172,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConversationActionContent(
+            return new ConversationLanguageUnderstandingActionContent(
                 projectName,
                 deploymentName,
                 verbose,
@@ -190,43 +183,43 @@ namespace Azure.AI.Language.Conversations.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConversationActionContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConversationLanguageUnderstandingActionContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingActionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConversationActionContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingActionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConversationActionContent IPersistableModel<ConversationActionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConversationLanguageUnderstandingActionContent IPersistableModel<ConversationLanguageUnderstandingActionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingActionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConversationActionContent(document.RootElement, options);
+                        return DeserializeConversationLanguageUnderstandingActionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConversationActionContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingActionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConversationActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConversationLanguageUnderstandingActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ConversationActionContent FromResponse(Response response)
+        internal static ConversationLanguageUnderstandingActionContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeConversationActionContent(document.RootElement);
+            return DeserializeConversationLanguageUnderstandingActionContent(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
