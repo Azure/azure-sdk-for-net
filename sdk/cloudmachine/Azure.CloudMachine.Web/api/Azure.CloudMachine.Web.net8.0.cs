@@ -1,4 +1,4 @@
-namespace System.ClientModel.TypeSpec
+namespace Azure.CloudMachine
 {
     public static partial class CloudMachineExtensions
     {

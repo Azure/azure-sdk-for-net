@@ -1,17 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Reflection;
-using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using Azure.CloudMachine;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
-namespace System.ClientModel.TypeSpec;
+namespace Azure.CloudMachine;
 
 /// <summary>
 /// ASp.NET Core extension methods for mapping a service implementation to a set of HTTP endpoints.

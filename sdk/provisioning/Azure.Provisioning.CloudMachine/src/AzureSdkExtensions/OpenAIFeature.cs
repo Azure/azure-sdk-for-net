@@ -3,9 +3,10 @@
 
 using System;
 using Azure.Provisioning.Authorization;
+using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
 
-namespace Azure.Provisioning.CloudMachine.OpenAI;
+namespace Azure.CloudMachine.OpenAI;
 
 public class OpenAIFeature : CloudMachineFeature
 {
