@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where `BearerTokenAuthenticationPolicy` throws `ArgumentOutOfRangeException` if the `ExpiresOn` property of the token is the default value. ([#]())
+
 ### Other Changes
 
 - Use `BinaryData.Empty` for `PipelineResponse.Content` when HTTP message has no content.
