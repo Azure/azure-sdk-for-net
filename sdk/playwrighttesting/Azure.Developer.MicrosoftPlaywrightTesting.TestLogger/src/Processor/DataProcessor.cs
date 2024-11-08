@@ -143,13 +143,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         {
             if (testResultSource == null)
                 return new RawTestResult();
-            List <MPTError> errors = new();//[testResultSource.ErrorMessage];
+            List <MPTError> errors = new();
             if (testResultSource.ErrorMessage != null)
                 errors.Add(new MPTError() { message = testResultSource.ErrorMessage });
+            if (testResultSource.ErrorStackTrace != null)
+                errors.Add(new MPTError() { message = testResultSource.ErrorStackTrace });
             var rawTestResult = new RawTestResult
             {
-                errors = JsonSerializer.Serialize(errors),
-                stdErr = testResultSource?.ErrorStackTrace ?? string.Empty
+                errors = JsonSerializer.Serialize(errors)
             };
             return rawTestResult;
         }

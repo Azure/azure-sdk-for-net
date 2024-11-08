@@ -161,6 +161,22 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
         }
 
         [Test]
+        public void GetRawResultObject_WithNullErrorStackTrace_ReturnsRawTestResultWithEmptyErrorsAndStdErr()
+        {
+            var testResult = new TestResult(new TestCase("Test", new System.Uri("file:///test.cs"), "TestNamespace.TestClass"))
+            {
+                ErrorMessage = null,
+                ErrorStackTrace = null
+            };
+
+            RawTestResult result = DataProcessor.GetRawResultObject(testResult);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("[]", result.errors);
+            Assert.AreEqual("[]", result.stdErr);
+        }
+
+        [Test]
         public void GetRawResultObject_WithNonNullTestResult_ReturnsRawTestResultWithErrorsAndStdErr()
         {
             var testResult = new TestResult(new TestCase("Test", new System.Uri("file:///test.cs"), "TestNamespace.TestClass"))
@@ -172,8 +188,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             RawTestResult result = DataProcessor.GetRawResultObject(testResult);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual("[{\"message\":\"An error occurred\"}]", result.errors);
-            Assert.AreEqual("Error stack trace", result.stdErr);
+            Assert.AreEqual("[{\"message\":\"An error occurred\"},{\"message\":\"Error stack trace\"}]", result.errors);
         }
     }
 }
