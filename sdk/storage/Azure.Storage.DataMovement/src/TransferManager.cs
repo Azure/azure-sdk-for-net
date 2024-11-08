@@ -392,7 +392,9 @@ namespace Azure.Storage.DataMovement
                 // cleanup any state for a job that didn't even start
                 try
                 {
-                    _dataTransfers.Remove(transferId);
+                    // No need to check if we were able to remove the transfer or not.
+                    // If there's no stale DataTransfer to remove, move on, because this is a cleanup
+                    _dataTransfers.TryRemove(transferId, out DataTransfer transfer);
                     await _checkpointer.TryRemoveStoredTransferAsync(transferId, cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception cleanupEx)
