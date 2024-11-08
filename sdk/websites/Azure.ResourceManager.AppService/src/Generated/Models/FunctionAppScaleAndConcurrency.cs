@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="instanceMemoryMB"> Set the amount of memory allocated to each instance of the function app in MB. CPU and network bandwidth are allocated proportionally. </param>
         /// <param name="triggers"> Scale and concurrency settings for the function app triggers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionAppScaleAndConcurrency(IList<FunctionAppAlwaysReadyConfig> alwaysReady, float? maximumInstanceCount, float? instanceMemoryMB, FunctionsScaleAndConcurrencyTriggers triggers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FunctionAppScaleAndConcurrency(IList<FunctionAppAlwaysReadyConfig> alwaysReady, int? maximumInstanceCount, int? instanceMemoryMB, FunctionsScaleAndConcurrencyTriggers triggers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlwaysReady = alwaysReady;
             MaximumInstanceCount = maximumInstanceCount;
@@ -71,15 +71,15 @@ namespace Azure.ResourceManager.AppService.Models
         public IList<FunctionAppAlwaysReadyConfig> AlwaysReady { get; }
         /// <summary> The maximum number of instances for the function app. </summary>
         [WirePath("maximumInstanceCount")]
-        public float? MaximumInstanceCount { get; set; }
+        public int? MaximumInstanceCount { get; set; }
         /// <summary> Set the amount of memory allocated to each instance of the function app in MB. CPU and network bandwidth are allocated proportionally. </summary>
         [WirePath("instanceMemoryMB")]
-        public float? InstanceMemoryMB { get; set; }
+        public int? InstanceMemoryMB { get; set; }
         /// <summary> Scale and concurrency settings for the function app triggers. </summary>
         internal FunctionsScaleAndConcurrencyTriggers Triggers { get; set; }
         /// <summary> The maximum number of concurrent HTTP trigger invocations per instance. </summary>
         [WirePath("triggers.http.perInstanceConcurrency")]
-        public float? HttpPerInstanceConcurrency
+        public int? HttpPerInstanceConcurrency
         {
             get => Triggers is null ? default : Triggers.HttpPerInstanceConcurrency;
             set

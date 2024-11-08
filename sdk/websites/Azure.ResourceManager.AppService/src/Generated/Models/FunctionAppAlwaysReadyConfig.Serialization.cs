@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string name = default;
-            float? instanceCount = default;
+            int? instanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    instanceCount = property.Value.GetSingle();
+                    instanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Optional.IsDefined(InstanceCount))
                 {
                     builder.Append("  instanceCount: ");
-                    builder.AppendLine($"'{InstanceCount.Value.ToString()}'");
+                    builder.AppendLine($"{InstanceCount.Value}");
                 }
             }
 
