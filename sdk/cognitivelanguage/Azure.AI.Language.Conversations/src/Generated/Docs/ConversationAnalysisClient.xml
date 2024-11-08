@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}"));
+AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationActionContent("{project-name}", "{deployment-name}"));
 Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(analyzeConversationInput);
 ]]></code>
 This sample shows how to call AnalyzeConversationAsync.
@@ -22,7 +22,7 @@ AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnde
 {
     Language = "en-GB",
     Modality = InputModality.Text,
-}), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}")
+}), new ConversationActionContent("{project-name}", "{deployment-name}")
 {
     Verbose = true,
     IsLoggingEnabled = false,
@@ -35,7 +35,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Ports and connectors")), new ConversationLanguageUnderstandingActionContent("prj1", "dep1")
+AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Ports and connectors")), new ConversationActionContent("prj1", "dep1")
 {
     DirectTarget = "qnaProject",
     TargetProjectParameters =
@@ -65,7 +65,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}"));
+AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationActionContent("{project-name}", "{deployment-name}"));
 Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(analyzeConversationInput);
 ]]></code>
 This sample shows how to call AnalyzeConversation.
@@ -78,7 +78,7 @@ AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnde
 {
     Language = "en-GB",
     Modality = InputModality.Text,
-}), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}")
+}), new ConversationActionContent("{project-name}", "{deployment-name}")
 {
     Verbose = true,
     IsLoggingEnabled = false,
@@ -91,7 +91,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Ports and connectors")), new ConversationLanguageUnderstandingActionContent("prj1", "dep1")
+AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Ports and connectors")), new ConversationActionContent("prj1", "dep1")
 {
     DirectTarget = "qnaProject",
     TargetProjectParameters =
@@ -711,7 +711,7 @@ AnalyzeConversationOperationInput analyzeConversationOperationInput = new Analyz
 {
     new PiiOperationAction
     {
-        ActionContent = new ConversationPiiActionContent
+        ActionContent = new PiiActionContent
         {
             ModelVersion = "latest",
             RedactAudioTiming = true,
@@ -774,7 +774,7 @@ AnalyzeConversationOperationInput analyzeConversationOperationInput = new Analyz
 {
     new PiiOperationAction
     {
-        ActionContent = new ConversationPiiActionContent
+        ActionContent = new PiiActionContent
         {
             ModelVersion = "latest",
             PiiCategories = {ConversationPiiCategories.All},
@@ -838,7 +838,7 @@ AnalyzeConversationOperationInput analyzeConversationOperationInput = new Analyz
 {
     new PiiOperationAction
     {
-        ActionContent = new ConversationPiiActionContent
+        ActionContent = new PiiActionContent
         {
             ModelVersion = "latest",
             PiiCategories = {ConversationPiiCategories.All},
@@ -1078,7 +1078,7 @@ AnalyzeConversationOperationInput analyzeConversationOperationInput = new Analyz
 {
     new PiiOperationAction
     {
-        ActionContent = new ConversationPiiActionContent
+        ActionContent = new PiiActionContent
         {
             ModelVersion = "latest",
             RedactAudioTiming = true,
@@ -1141,7 +1141,7 @@ AnalyzeConversationOperationInput analyzeConversationOperationInput = new Analyz
 {
     new PiiOperationAction
     {
-        ActionContent = new ConversationPiiActionContent
+        ActionContent = new PiiActionContent
         {
             ModelVersion = "latest",
             PiiCategories = {ConversationPiiCategories.All},
@@ -1205,7 +1205,7 @@ AnalyzeConversationOperationInput analyzeConversationOperationInput = new Analyz
 {
     new PiiOperationAction
     {
-        ActionContent = new ConversationPiiActionContent
+        ActionContent = new PiiActionContent
         {
             ModelVersion = "latest",
             PiiCategories = {ConversationPiiCategories.All},
