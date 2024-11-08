@@ -1,19 +1,5 @@
 namespace Azure
 {
-    public partial class CloudMachine
-    {
-        public CloudMachine(System.IO.Stream configurationContent) { }
-        public CloudMachine(string? configurationFile = null) { }
-        public string DisplayName { get { throw null; } set { } }
-        public string Id { get { throw null; } }
-        public string Region { get { throw null; } }
-        public string SubscriptionId { get { throw null; } }
-        public static Azure.CloudMachine Create(string subscriptionId, string region) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public void Save(System.IO.Stream stream) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public void Save(string filepath) { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Variant
     {
