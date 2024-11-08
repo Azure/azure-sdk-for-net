@@ -195,7 +195,7 @@ interface IAssistantService {
     Task<string> Chat(string message);
 }
 ```
-You can now start the application and browse to the /chat endpoint [TDB on how to pass the parameter]
+You can now start the application and browse to the /chat endpoint [TBD on how to pass the parameter]
 
 But what's more interesting, you can run the app with the -tsp switch to generate TypeSpec for the endpoint:
 ```dotnetcli
