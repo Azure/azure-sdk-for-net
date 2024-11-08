@@ -235,3 +235,44 @@ using Azure.ClientGenerator.Core;
   };
 }
 ```
+#### Generate client libraries from TypeSpec
+Let's now generate and build a C# client library from the `AssistantService.tsp` file:
+```dotnetcli
+cd ..
+npm install @typespec/http-client-csharp
+tsp compile .\server\tsp\AssistantService.tsp --emit "@typespec/http-client-csharp"
+dotnet build tsp-output\@typespec\http-client-csharp\src\AssistantService.csproj
+```
+
+#### Create command line client app for the service
+```dotnetcli
+mkdir cmdclient
+cd cmdclient
+dotnet new console
+dotnet add reference ..\tsp-output\@typespec\http-client-csharp\src\AssistantService.csproj
+```
+And change the Program.cs file to the following, replacing the client URI with the URI in your server's launchsettings.json file ('cmdemo\server\Properties' folder)
+
+```csharp
+using AssistantService;
+
+var client = new AssistantServiceClient(new Uri("http://localhost:5121/"));
+
+while(true){
+    string message = Console.ReadLine();
+    var completion = client.Chat(message);
+    Console.WriteLine(completion);
+}
+```
+Now start the server
+```dotnetcli
+start cmd
+cd..
+cd server
+dotnet run
+```
+Go back to the client project command window and start the client:
+```dotnetcli
+dotnet run
+```
+You can use the simple command line app to ask Azure OpenAI some questions.
