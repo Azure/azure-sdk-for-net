@@ -19,7 +19,7 @@ jobs:
         displayName: 'Generate Doc Index'
         inputs:
           pwsh: true
-          filePath: $(Build.SourcesDirectory)/eng/common/docgeneration/Generate-DocIndex.ps1
+          filePath: $(Build.SourcesDirectory)/eng/common/docgeneration/Generate-DocIndex.ps1 
           arguments: >
             -Docfx $(docfxPath)
             -RepoRoot $(Build.SourcesDirectory)
@@ -34,14 +34,14 @@ jobs:
           Copy-Item -Path $(Build.SourcesDirectory)/eng/* -Destination ./ -Recurse -Force
           echo "##vso[task.setvariable variable=toolPath]$(Build.BinariesDirectory)"
         workingDirectory: $(Build.BinariesDirectory)
-        displayName: Move eng/common to Tool Directory
+        displayName: Move eng/common to Tool Directory   
 
       - task: PublishPipelineArtifact@0
         condition: succeeded()
         inputs:
           artifactName: "Doc.Index"
           targetPath: $(Build.ArtifactStagingDirectory)/docfx_project/_site
-
+          
       - pwsh: |
           git checkout -b gh-pages-local --track origin/gh-pages-root -f
         workingDirectory: $(Build.SourcesDirectory)
