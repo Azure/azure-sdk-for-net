@@ -10,16 +10,18 @@ Ready to get started? Jump into our [quickstart guide]<!--(https://github.com/Az
 - [Documentation](https://aka.ms/mpt/docs) 
 - [Pricing](https://aka.ms/mpt/pricing)
 - [Share feedback](https://aka.ms/mpt/feedback)
+- [Playwright Nunit doc](https://playwright.dev/dotnet/docs/intro)
 
 ## Getting started
 
 ### Install the package
 
-Install the client library for .NET with [NuGet](https://www.nuget.org/):
+Install the latest client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.Developer.MicrosoftPlaywrightTesting.NUnit --prerelease
 ```
+
 
 ### Prerequisites
 
@@ -63,6 +65,7 @@ public class PlaywrightServiceSetup : PlaywrightServiceNUnit {};
 
 > [!NOTE]
 > Make sure your project uses `Microsoft.Playwright.NUnit` version 1.37 or above.
+> Make sure namepspace for this setup file is same as your test project namespace
 
 ### Obtain region endpoint
 
@@ -84,6 +87,11 @@ Run Playwright tests against browsers managed by the service using the configura
 dotnet test --logger "microsoft-playwright-testing"
 ```
 
+or run using runsettings file, check here for [sample](https://aka.ms/mpt/sample-nunit) runsettings file 
+```dotnetcli
+dotnet test --settings .runsettings
+```
+
 ## Key concepts
 
 Key concepts of the Microsoft Playwright Testing NUnit SDK for .NET can be found [here](https://aka.ms/mpt/what-is-mpt)
@@ -91,7 +99,7 @@ Key concepts of the Microsoft Playwright Testing NUnit SDK for .NET can be found
 ## Examples
 
 Code samples for using this SDK can be found in the following locations
-- [.NET Microsoft Playwright Testing NUnit Library Code Samples](https://aka.ms/mpt/sample)
+- [.NET Microsoft Playwright Testing NUnit Library Code Samples](https://aka.ms/mpt/sample-nunit)
 
 ## Troubleshooting
 
