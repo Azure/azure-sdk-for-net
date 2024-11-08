@@ -71,7 +71,7 @@ class AssistantService {
     }
 }
 ```
-And then change the configuration call at the begining of the file to:
+Then change the configuration call at the beginning of the file to:
 ```csharp
 if (CloudMachineInfrastructure.Configure(args, AssistantService.Configure)) return;
 ```
