@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+ - Fixed an issue where setting `DefaultAzureCredentialOptions.TenantId` twice throws an `InvalidOperationException` ([#47035](https://github.com/Azure/azure-sdk-for-net/issues/47035))
 
 ### Other Changes
 
