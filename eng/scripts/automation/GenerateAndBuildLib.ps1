@@ -892,8 +892,15 @@ function GeneratePackage()
     }
 
     # get the sdk version
+    $version = ""
     $projectFile = Join-Path $srcPath "$packageName.csproj"
-    $version=([xml](Get-Content $projectFile)).Project.PropertyGroup.Version
+    $csproj = new-object xml
+    $csproj.PreserveWhitespace = $true
+    $csproj.Load($projectFile)
+    $versionNode = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node
+    if ($versionNode) {
+        $version = $versionNode.InnerText
+    }
     $packageDetails = @{
         version=$version;
         packageName="$packageName";
