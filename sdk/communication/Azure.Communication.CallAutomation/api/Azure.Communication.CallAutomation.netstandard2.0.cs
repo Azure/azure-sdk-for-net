@@ -64,7 +64,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class AudioData : Azure.Communication.CallAutomation.StreamingData
     {
-        public AudioData(string data) { }
+        public AudioData(byte[] data) { }
         public byte[] Data { get { throw null; } }
         public bool IsSilent { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
@@ -137,7 +137,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class CallAutomationClientOptions : Azure.Core.ClientOptions
     {
-        public CallAutomationClientOptions(Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion version = Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion.V2024_06_15_Preview) { }
+        public CallAutomationClientOptions(Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion version = Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion.V2024_11_15_Preview) { }
         public Azure.Communication.CommunicationUserIdentifier Source { get { throw null; } set { } }
         public enum ServiceVersion
         {
@@ -145,6 +145,8 @@ namespace Azure.Communication.CallAutomation
             V2023_10_15 = 2,
             V2024_04_15 = 3,
             V2024_06_15_Preview = 4,
+            V2024_09_15 = 5,
+            V2024_11_15_Preview = 6,
         }
     }
     public abstract partial class CallAutomationEventBase
@@ -977,9 +979,9 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class OutStreamingData
     {
-        public OutStreamingData() { }
+        public OutStreamingData(Azure.Communication.CallAutomation.MediaKind kind) { }
         public Azure.Communication.CallAutomation.AudioData AudioData { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.MediaKind Kind { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.MediaKind Kind { get { throw null; } }
         public Azure.Communication.CallAutomation.StopAudio StopAudio { get { throw null; } set { } }
     }
     public partial class ParticipantsUpdated : Azure.Communication.CallAutomation.CallAutomationEventBase
