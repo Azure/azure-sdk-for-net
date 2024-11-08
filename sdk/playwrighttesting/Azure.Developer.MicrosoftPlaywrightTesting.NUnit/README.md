@@ -16,7 +16,7 @@ Ready to get started? Jump into our [quickstart guide]<!--(https://github.com/Az
 
 ### Install the package
 
-Install the latest client library for .NET with [NuGet](https://www.nuget.org/):
+Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.Developer.MicrosoftPlaywrightTesting.NUnit --prerelease
@@ -91,7 +91,7 @@ Run Playwright tests against browsers managed by the service using the configura
 dotnet test --logger "microsoft-playwright-testing"
 ```
 
-or run using runsettings file, check here for [sample](https://aka.ms/mpt/sample-nunit) runsettings file 
+Alternatively, you can configure the tests by using a runsettings file. For a sample runsettings file, refer to the [sample nunit documentation](https://aka.ms/mpt/sample-nunit). 
 ```dotnetcli
 dotnet test --settings .runsettings
 ```
