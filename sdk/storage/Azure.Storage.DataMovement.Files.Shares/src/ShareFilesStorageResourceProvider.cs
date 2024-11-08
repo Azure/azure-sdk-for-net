@@ -341,6 +341,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// </summary>
         /// <param name="client">
         /// Target resource presented within an Azure SDK client.
+        /// Note: It is NOT guaranteed that properties set within the client's <see cref="ShareClientOptions"/>
+        /// will be respected when resuming a transfer.
         /// </param>
         /// <param name="options">
         /// Options for creating the storage resource.
@@ -360,6 +362,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// </summary>
         /// <param name="client">
         /// Target resource presented within an Azure SDK client.
+        /// Note: It is NOT guaranteed that properties set within the client's <see cref="ShareClientOptions"/>
+        /// will be respected when resuming a transfer.
         /// </param>
         /// <param name="options">
         /// Options for creating the storage resource.
