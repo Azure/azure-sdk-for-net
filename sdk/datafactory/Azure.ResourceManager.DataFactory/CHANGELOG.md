@@ -7,12 +7,6 @@
 - Added support for additional MySQL connection properties.
 - Added support for Azure PostgreSQL v2, updated connection strings, and corrected Linked JSON configurations.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.5.0 (2024-10-24)
 
 ### Features Added
