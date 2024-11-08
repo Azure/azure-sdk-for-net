@@ -89,7 +89,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationActionContent("{project-name}", "{deployment-name}"));
+            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}"));
             Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(analyzeConversationInput);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationActionContent("{project-name}", "{deployment-name}"));
+            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}"));
             Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(analyzeConversationInput);
         }
 
@@ -189,7 +189,7 @@ namespace Azure.AI.Language.Conversations.Samples
             {
                 Language = "en-GB",
                 Modality = InputModality.Text,
-            }), new ConversationActionContent("{project-name}", "{deployment-name}")
+            }), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}")
             {
                 Verbose = true,
                 IsLoggingEnabled = false,
@@ -209,7 +209,7 @@ namespace Azure.AI.Language.Conversations.Samples
             {
                 Language = "en-GB",
                 Modality = InputModality.Text,
-            }), new ConversationActionContent("{project-name}", "{deployment-name}")
+            }), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}")
             {
                 Verbose = true,
                 IsLoggingEnabled = false,
@@ -325,7 +325,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Ports and connectors")), new ConversationActionContent("prj1", "dep1")
+            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Ports and connectors")), new ConversationLanguageUnderstandingActionContent("prj1", "dep1")
             {
                 DirectTarget = "qnaProject",
                 TargetProjectParameters =
@@ -355,7 +355,7 @@ PreviousQuestion = "Meet Surface Pro 4",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Ports and connectors")), new ConversationActionContent("prj1", "dep1")
+            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Ports and connectors")), new ConversationLanguageUnderstandingActionContent("prj1", "dep1")
             {
                 DirectTarget = "qnaProject",
                 TargetProjectParameters =
@@ -981,7 +981,7 @@ Domain = ConversationDomain.Generic,
             {
 new PiiOperationAction
 {
-ActionContent = new PiiActionContent
+ActionContent = new ConversationPiiActionContent
 {
 ModelVersion = "latest",
 RedactAudioTiming = true,
@@ -1047,7 +1047,7 @@ Domain = ConversationDomain.Generic,
             {
 new PiiOperationAction
 {
-ActionContent = new PiiActionContent
+ActionContent = new ConversationPiiActionContent
 {
 ModelVersion = "latest",
 RedactAudioTiming = true,
@@ -1285,7 +1285,7 @@ Domain = ConversationDomain.Generic,
             {
 new PiiOperationAction
 {
-ActionContent = new PiiActionContent
+ActionContent = new ConversationPiiActionContent
 {
 ModelVersion = "latest",
 PiiCategories = {ConversationPiiCategories.All},
@@ -1352,7 +1352,7 @@ Domain = ConversationDomain.Generic,
             {
 new PiiOperationAction
 {
-ActionContent = new PiiActionContent
+ActionContent = new ConversationPiiActionContent
 {
 ModelVersion = "latest",
 PiiCategories = {ConversationPiiCategories.All},
@@ -1589,7 +1589,7 @@ Domain = ConversationDomain.Generic,
             {
 new PiiOperationAction
 {
-ActionContent = new PiiActionContent
+ActionContent = new ConversationPiiActionContent
 {
 ModelVersion = "latest",
 PiiCategories = {ConversationPiiCategories.All},
@@ -1655,7 +1655,7 @@ Domain = ConversationDomain.Generic,
             {
 new PiiOperationAction
 {
-ActionContent = new PiiActionContent
+ActionContent = new ConversationPiiActionContent
 {
 ModelVersion = "latest",
 PiiCategories = {ConversationPiiCategories.All},

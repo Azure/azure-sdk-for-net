@@ -24,12 +24,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionContent"> parameters. </param>
-        internal PiiOperationAction(string name, AnalyzeConversationOperationActionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, PiiActionContent actionContent) : base(name, kind, serializedAdditionalRawData)
+        internal PiiOperationAction(string name, AnalyzeConversationOperationActionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ConversationPiiActionContent actionContent) : base(name, kind, serializedAdditionalRawData)
         {
             ActionContent = actionContent;
         }
 
         /// <summary> parameters. </summary>
-        public PiiActionContent ActionContent { get; set; }
+        public ConversationPiiActionContent ActionContent { get; set; }
     }
 }
