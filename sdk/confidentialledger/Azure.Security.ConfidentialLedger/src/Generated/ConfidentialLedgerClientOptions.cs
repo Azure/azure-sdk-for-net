@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Security.ConfidentialLedger
 {
-    /// <summary> Client options for ConfidentialLedger library clients. </summary>
+    /// <summary> Client options for ConfidentialLedgerClient. </summary>
     public partial class ConfidentialLedgerClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_05_13;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_08_22_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2022-05-13". </summary>
-            V2022_05_13 = 1,
+            /// <summary> Service version "2024-08-22-preview". </summary>
+            V2024_08_22_Preview = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             Version = version switch
             {
-                ServiceVersion.V2022_05_13 => "2022-05-13",
+                ServiceVersion.V2024_08_22_Preview => "2024-08-22-preview",
                 _ => throw new NotSupportedException()
             };
         }
