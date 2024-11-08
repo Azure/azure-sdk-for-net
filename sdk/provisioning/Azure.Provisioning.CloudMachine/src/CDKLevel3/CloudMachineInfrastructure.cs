@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.CloudMachine;
 using System.IO;
 using System;
 using Azure.Provisioning.Authorization;
@@ -13,10 +12,11 @@ using Azure.Provisioning.ServiceBus;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Primitives;
 using System.Collections.Generic;
-using System.Security.Principal;
 using System.ClientModel.TypeSpec;
+using Azure.Provisioning;
+using Azure.Provisioning.CloudMachine;
 
-namespace Azure.Provisioning.CloudMachine;
+namespace Azure.CloudMachine;
 
 public class CloudMachineInfrastructure
 {

@@ -11,9 +11,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Messaging.ServiceBus;
-using System.Net.Mime;
 using ContentType = Azure.Core.ContentType;
-using System.Collections.Generic;
 
 namespace Azure.CloudMachine;
 
