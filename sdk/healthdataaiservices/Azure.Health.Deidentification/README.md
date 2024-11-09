@@ -40,9 +40,9 @@ Basic code snippet to create your Deidentification Client and Deidentify a strin
             new DeidentificationClientOptions()
         );
 
-        DeidentificationContent content = new("Hello, John!", OperationType.Surrogate, DocumentDataType.Plaintext);
+        DeidentificationContent content = new("Hello, John!", OperationType.Surrogate);
 
-        Response<DeidentificationResult> result = client.Deidentify(content);
+        Response<DeidentificationResult> result = client.DeidentifyText(content);
         string outputString = result.Value.OutputText;
         Console.WriteLine(outputString); // Hello, Tom!
 ```

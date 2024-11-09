@@ -30,9 +30,9 @@
 
 //             await foreach (DocumentDetails file in files)
 //             {
-//                 Console.WriteLine($"File Name: {file.Input.Path}");
+//                 Console.WriteLine($"File Name: {file.Input.Location}");
 //                 Console.WriteLine($"File Status: {file.Status}");
-//                 Console.WriteLine($"File Output Path: {file.Output.Path}");
+//                 Console.WriteLine($"File Output Path: {file.Output.Location}");
 //             }
 //             #endregion
 //         }
