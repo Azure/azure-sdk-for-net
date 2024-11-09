@@ -142,11 +142,11 @@ namespace Azure.Storage.DataMovement
                     {
                         fileStream.Seek(position, SeekOrigin.Begin);
                     }
-                    await stream.CopyToAsync(
-                        fileStream,
-                        (int)streamLength,
-                        cancellationToken)
-                        .ConfigureAwait(false);
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+                    await stream.CopyToAsync(fileStream, cancellationToken).ConfigureAwait(false);
+#else
+                    await stream.CopyToAsync(fileStream, 4096, cancellationToken).ConfigureAwait(false);
+#endif
                 }
             }
         }
