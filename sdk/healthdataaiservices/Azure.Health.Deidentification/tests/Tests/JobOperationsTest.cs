@@ -73,8 +73,8 @@ namespace Azure.Health.Deidentification.Tests
 
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Started, jobName, job)).Value;
 
-            // Test list jobs
-            var jobs = client.GetJobsAsync().GetAsyncEnumerator();
+            // Test list jobs with maxpagesize = 2 to ensure pagination works.
+            var jobs = client.GetJobsAsync(2).GetAsyncEnumerator();
 
             bool jobFound = false;
             int jobsToLookThrough = 10;
@@ -205,7 +205,7 @@ namespace Azure.Health.Deidentification.Tests
 
             Assert.AreEqual(JobStatus.Failed, job.Status);
             Assert.IsNotNull(job.Error);
-            Assert.AreEqual("JobValidationError", job.Error.Code);
+            Assert.AreEqual("StorageAccessDenied", job.Error.Code);
             Assert.IsTrue(job.Error.Message.Length > 10); // Arbitrary length choice.
         }
 
