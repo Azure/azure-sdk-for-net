@@ -83,7 +83,7 @@ namespace Azure.Communication.Sms
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new SmsRestClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
-            OptOuts = new OptOutsClient(new OptOutsRestClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion), _clientDiagnostics);
+            OptOuts = new OptOutsClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
         }
 
         #endregion

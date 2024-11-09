@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Communication.Sms.Models;
 using Azure.Core.Pipeline;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Threading;
-using System;
-using System.Linq;
 
 namespace Azure.Communication.Sms
 {
@@ -20,9 +20,14 @@ namespace Azure.Communication.Sms
 
         internal OptOutsRestClient OptOutsRestClient;
 
-        internal OptOutsClient(OptOutsRestClient optOutsRestClient, ClientDiagnostics clientDiagnostics)
+        internal OptOutsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-12-10-preview")
         {
-            OptOutsRestClient = optOutsRestClient;
+            Argument.CheckNotNull(clientDiagnostics, nameof(clientDiagnostics));
+            Argument.CheckNotNull(pipeline, nameof(pipeline));
+            Argument.CheckNotNull(endpoint, nameof(endpoint));
+            Argument.CheckNotNull(apiVersion, nameof(apiVersion));
+
+            OptOutsRestClient = new OptOutsRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
         }
 
