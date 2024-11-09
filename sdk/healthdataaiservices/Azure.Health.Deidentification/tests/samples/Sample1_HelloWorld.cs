@@ -31,9 +31,9 @@
 //             #endregion
 
 //             #region Snippet:AzHealthDeidSample1_CreateRequest
-//             DeidentificationContent content = new("Hello, John!", OperationType.Surrogate, DocumentDataType.Plaintext, null, null);
+//             DeidentificationContent content = new("Hello, John!", OperationType.Surrogate, null, null);
 
-//             Response<DeidentificationResult> result = client.Deidentify(content);
+//             Response<DeidentificationResult> result = client.DeidentifyText(content);
 //             string outputString = result.Value.OutputText;
 //             Console.WriteLine(outputString); // Hello, Tom!
 //             #endregion
