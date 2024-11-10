@@ -5,7 +5,7 @@ using Azure.Core;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-using System.Threading;
+using System;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
@@ -45,6 +45,10 @@ public class PlaywrightServiceNUnit : PlaywrightService
     [OneTimeSetUp]
     public async Task SetupAsync()
     {
+        if (!UseCloudHostedBrowsers)
+            return;
+        TestContext.Progress.WriteLine("\nRunning tests using Microsoft Playwright Testing service.\n");
+
         await InitializeAsync().ConfigureAwait(false);
     }
 
