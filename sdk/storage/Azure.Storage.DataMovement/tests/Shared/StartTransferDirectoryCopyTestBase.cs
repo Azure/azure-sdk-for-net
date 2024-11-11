@@ -274,7 +274,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPrefix: destinationPrefix);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(0, 10)]
         [TestCase(DataMovementTestConstants.KB / 2, 10)]
         [TestCase(DataMovementTestConstants.KB, 10)]
@@ -354,7 +354,7 @@ namespace Azure.Storage.DataMovement.Tests
                 waitTimeInSec).ConfigureAwait(false);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DirectoryToDirectory_EmptyFolder()
         {
             // Arrange
@@ -394,7 +394,7 @@ namespace Azure.Storage.DataMovement.Tests
             testEventsRaised.AssertUnexpectedFailureCheck();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DirectoryToDirectory_SingleFile()
         {
             // Arrange
@@ -418,7 +418,7 @@ namespace Azure.Storage.DataMovement.Tests
                 itemTransferCount: 1).ConfigureAwait(false);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DirectoryToDirectory_ManySubDirectories()
         {
             // Arrange
@@ -452,7 +452,7 @@ namespace Azure.Storage.DataMovement.Tests
                 itemTransferCount: 3).ConfigureAwait(false);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
@@ -486,7 +486,7 @@ namespace Azure.Storage.DataMovement.Tests
                 itemTransferCount: level).ConfigureAwait(false);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DirectoryToDirectory_OverwriteExists()
         {
             // Arrange
@@ -535,7 +535,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options: options).ConfigureAwait(false);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DirectoryToDirectory_OverwriteNotExists()
         {
             // Arrange
@@ -580,7 +580,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options: options).ConfigureAwait(false);
         }
 
-        [Test]
+        [RecordedTest]
         public virtual async Task DirectoryToDirectory_OAuth()
         {
             // Arrange
@@ -688,7 +688,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options).ConfigureAwait(false);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartTransfer_AwaitCompletion()
         {
             // Arrange
@@ -756,7 +756,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartTransfer_AwaitCompletion_Skipped()
         {
             // Arrange
@@ -793,7 +793,7 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartTransfer_EnsureCompleted()
         {
             // Arrange
@@ -862,7 +862,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartTransfer_EnsureCompleted_Skipped()
         {
             // Arrange
@@ -1007,7 +1007,7 @@ namespace Azure.Storage.DataMovement.Tests
                 propertiesType);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase((int) TransferPropertiesTestType.Default)]
         [TestCase((int) TransferPropertiesTestType.Preserve)]
         [TestCase((int) TransferPropertiesTestType.NoPreserve)]
