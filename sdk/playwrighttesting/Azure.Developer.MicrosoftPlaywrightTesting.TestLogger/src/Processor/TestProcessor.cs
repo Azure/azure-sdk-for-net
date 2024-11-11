@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
@@ -174,7 +175,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                                 // Upload rawResult to blob storage using sasUri
                                 var rawTestResultJson = JsonSerializer.Serialize(rawResult);
                                 var filePath = $"{testResult.TestExecutionId}/rawTestResult.json";
-                                _blobService.UploadBufferAsync(sasUri!.Uri!, rawTestResultJson, filePath);
+                                _blobService.UploadBuffer(sasUri!.Uri!, rawTestResultJson, filePath);
                             }
                             else
                             {
