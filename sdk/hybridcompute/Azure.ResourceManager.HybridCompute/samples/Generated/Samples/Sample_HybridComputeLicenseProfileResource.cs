@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HybridCompute.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridCompute.Samples
 {
     public partial class Sample_HybridComputeLicenseProfileResource
     {
-        // Create or Update a License Profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateALicenseProfile()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/licenseProfile/LicenseProfile_CreateOrUpdate.json
@@ -62,9 +62,8 @@ SubscriptionStatus = LicenseProfileSubscriptionStatus.Enabled,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a License Profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateALicenseProfile()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/licenseProfile/LicenseProfile_Update.json
@@ -109,9 +108,8 @@ SubscriptionStatus = LicenseProfileSubscriptionStatusUpdate.Enable,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get License Profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetLicenseProfile()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/licenseProfile/LicenseProfile_Get.json
@@ -140,9 +138,8 @@ SubscriptionStatus = LicenseProfileSubscriptionStatusUpdate.Enable,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a License Profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteALicenseProfile()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/licenseProfile/LicenseProfile_Delete.json
@@ -164,7 +161,7 @@ SubscriptionStatus = LicenseProfileSubscriptionStatusUpdate.Enable,
             // invoke the operation
             await hybridComputeLicenseProfile.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -12,14 +12,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HDInsight.Samples
 {
     public partial class Sample_HDInsightClusterCollection
     {
-        // Create HDInsight cluster with Autoscale configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateHDInsightClusterWithAutoscaleConfiguration()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateHDInsightClusterWithAutoscaleConfig.json
@@ -170,9 +170,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Hadoop cluster with Azure Data Lake Storage Gen 2
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateHadoopClusterWithAzureDataLakeStorageGen2()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateLinuxHadoopAdlsGen2.json
@@ -279,9 +278,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Hadoop on Linux cluster with SSH password
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateHadoopOnLinuxClusterWithSSHPassword()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateLinuxHadoopSshPassword.json
@@ -388,9 +386,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Hadoop on Linux cluster with SSH public key
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateHadoopOnLinuxClusterWithSSHPublicKey()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateLinuxHadoopSshPublicKey.json
@@ -503,9 +500,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Kafka cluster with Kafka Rest Proxy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateKafkaClusterWithKafkaRestProxy()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateKafkaClusterWithKafkaRestProxy.json
@@ -634,9 +630,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Secure Hadoop cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSecureHadoopCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateLinuxHadoopSecureHadoop.json
@@ -804,9 +799,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Spark on Linux Cluster with SSH password
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSparkOnLinuxClusterWithSSHPassword()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateLinuxSparkSshPassword.json
@@ -906,9 +900,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create cluster with TLS 1.2
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateClusterWithTLS12()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateHDInsightClusterWithTLS12.json
@@ -1009,9 +1002,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create cluster with availability zones
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateClusterWithAvailabilityZones()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateHDInsightClusterWithAvailabilityZones.json
@@ -1168,9 +1160,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create cluster with compute isolation properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateClusterWithComputeIsolationProperties()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateHDInsightClusterWithComputeIsolationProperties.json
@@ -1278,9 +1269,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create cluster with encryption at host
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateClusterWithEncryptionAtHost()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateHDInsightClusterWithEncryptionAtHost.json
@@ -1384,9 +1374,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create cluster with encryption in transit
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateClusterWithEncryptionInTransit()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateHDInsightClusterWithEncryptionInTransit.json
@@ -1487,9 +1476,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create cluster with network properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateClusterWithNetworkProperties()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateHDInsightClusterWithCustomNetworkProperties.json
@@ -1608,9 +1596,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Hadoop on Linux cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetHadoopOnLinuxCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxHadoopCluster.json
@@ -1642,9 +1629,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Hadoop on Linux cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetHadoopOnLinuxCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxHadoopCluster.json
@@ -1672,9 +1658,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Hadoop on Linux cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetHadoopOnLinuxCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxHadoopCluster.json
@@ -1702,7 +1687,7 @@ EnableSecureChannel = true,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1714,9 +1699,8 @@ EnableSecureChannel = true,
             }
         }
 
-        // Get Spark on Linux cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSparkOnLinuxCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxSparkCluster.json
@@ -1748,9 +1732,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Spark on Linux cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSparkOnLinuxCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxSparkCluster.json
@@ -1778,9 +1761,8 @@ EnableSecureChannel = true,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Spark on Linux cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSparkOnLinuxCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxSparkCluster.json
@@ -1808,7 +1790,7 @@ EnableSecureChannel = true,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1820,9 +1802,8 @@ EnableSecureChannel = true,
             }
         }
 
-        // Get All Hadoop on Linux clusters in a resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAllHadoopOnLinuxClustersInAResourceGroup()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxHadoopAllClustersInResourceGroup.json
@@ -1853,7 +1834,7 @@ EnableSecureChannel = true,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
