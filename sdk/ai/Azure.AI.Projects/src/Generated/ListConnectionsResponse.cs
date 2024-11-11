@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Projects
 {
     /// <summary> Response from the list operation. </summary>
-    internal partial class ListConnectionsResponse
+    public partial class ListConnectionsResponse
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

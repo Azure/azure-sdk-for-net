@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> workspace properties. </summary>
-    internal partial class WorkspaceProperties
+    public partial class WorkspaceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

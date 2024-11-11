@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class GetWorkspaceResponse : IUtf8JsonSerializable, IJsonModel<GetWorkspaceResponse>
+    public partial class GetWorkspaceResponse : IUtf8JsonSerializable, IJsonModel<GetWorkspaceResponse>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetWorkspaceResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

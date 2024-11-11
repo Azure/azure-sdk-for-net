@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Response from the Workspace - Get operation. </summary>
-    internal partial class GetWorkspaceResponse
+    public partial class GetWorkspaceResponse
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class GetConnectionResponse : IUtf8JsonSerializable, IJsonModel<GetConnectionResponse>
+    public partial class GetConnectionResponse : IUtf8JsonSerializable, IJsonModel<GetConnectionResponse>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetConnectionResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -31,7 +31,7 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            writer.WriteObjectValue<InternalConnectionProperties>(Properties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -93,6 +93,34 @@ namespace Azure.AI.Projects
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Projects.GetWorkspaceResponse"/>. </summary>
+        /// <param name="id"> A unique identifier for the resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="properties"> The properties of the resource. </param>
+        /// <returns> A new <see cref="Projects.GetWorkspaceResponse"/> instance for mocking. </returns>
+        public static GetWorkspaceResponse GetWorkspaceResponse(string id = null, string name = null, WorkspaceProperties properties = null)
+        {
+            return new GetWorkspaceResponse(id, name, properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.WorkspaceProperties"/>. </summary>
+        /// <param name="applicationInsights"> Authentication type of the connection target. </param>
+        /// <returns> A new <see cref="Projects.WorkspaceProperties"/> instance for mocking. </returns>
+        public static WorkspaceProperties WorkspaceProperties(string applicationInsights = null)
+        {
+            return new WorkspaceProperties(applicationInsights, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.ListConnectionsResponse"/>. </summary>
+        /// <param name="value"> A list of connection list secrets. </param>
+        /// <returns> A new <see cref="Projects.ListConnectionsResponse"/> instance for mocking. </returns>
+        public static ListConnectionsResponse ListConnectionsResponse(IEnumerable<GetConnectionResponse> value = null)
+        {
+            value ??= new List<GetConnectionResponse>();
+
+            return new ListConnectionsResponse(value?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Projects.ThreadMessageOptions"/>. </summary>
         /// <param name="role">
         /// The role of the entity that is creating the message. Allowed values include:

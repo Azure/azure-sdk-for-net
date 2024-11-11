@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Response from the listSecrets operation. </summary>
-    internal partial class GetConnectionResponse
+    public partial class GetConnectionResponse
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -91,11 +91,5 @@ namespace Azure.AI.Projects
         public string Id { get; }
         /// <summary> The name of the resource. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The properties of the resource
-        /// Please note <see cref="InternalConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="InternalConnectionPropertiesAADAuth"/>, <see cref="InternalConnectionPropertiesApiKeyAuth"/> and <see cref="InternalConnectionPropertiesSASAuth"/>.
-        /// </summary>
-        public InternalConnectionProperties Properties { get; }
     }
 }

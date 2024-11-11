@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ListConnectionsResponse : IUtf8JsonSerializable, IJsonModel<ListConnectionsResponse>
+    public partial class ListConnectionsResponse : IUtf8JsonSerializable, IJsonModel<ListConnectionsResponse>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListConnectionsResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
