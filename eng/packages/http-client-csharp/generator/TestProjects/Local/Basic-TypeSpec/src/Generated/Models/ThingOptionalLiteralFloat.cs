@@ -50,6 +50,7 @@ namespace BasicTypeSpec.Models
         public bool Equals(ThingOptionalLiteralFloat other) => Equals(_value, other._value);
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value.GetHashCode();
 
         /// <inheritdoc/>

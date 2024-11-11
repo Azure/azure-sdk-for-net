@@ -24,6 +24,10 @@ public class AzureClientPlugin : ClientModelPlugin
     /// <inheritdoc/>
     public override AzureTypeFactory TypeFactory { get; }
 
+    private AzureOutputLibrary? _azureOutputLibrary;
+    /// <inheritdoc/>
+    public override OutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
+
     /// <summary>
     /// The Azure client plugin to generate the Azure client SDK.
     /// </summary>
