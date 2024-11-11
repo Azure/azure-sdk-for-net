@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Samples
 {
     public partial class Sample_SenderUsernameResourceCollection
     {
-        // Get SenderUsernames resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetSenderUsernamesResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/senderUsernames/listByDomain.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.Communication.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get SenderUsernames resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSenderUsernamesResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/senderUsernames/get.json
@@ -88,9 +87,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get SenderUsernames resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSenderUsernamesResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/senderUsernames/get.json
@@ -120,9 +118,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get SenderUsernames resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSenderUsernamesResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/senderUsernames/get.json
@@ -152,7 +149,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -164,9 +161,8 @@ namespace Azure.ResourceManager.Communication.Samples
             }
         }
 
-        // Create or update SenderUsernames resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateSenderUsernamesResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/senderUsernames/createOrUpdate.json
