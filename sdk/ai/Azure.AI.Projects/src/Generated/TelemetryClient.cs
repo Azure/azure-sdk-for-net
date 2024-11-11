@@ -15,7 +15,7 @@ namespace Azure.AI.Projects
 {
     // Data plane generated sub-client.
     /// <summary> The Telemetry sub-client. </summary>
-    public partial class Telemetry
+    public partial class TelemetryClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://management.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -32,12 +32,12 @@ namespace Azure.AI.Projects
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of Telemetry for mocking. </summary>
-        protected Telemetry()
+        /// <summary> Initializes a new instance of TelemetryClient for mocking. </summary>
+        protected TelemetryClient()
         {
         }
 
-        /// <summary> Initializes a new instance of Telemetry. </summary>
+        /// <summary> Initializes a new instance of TelemetryClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
@@ -46,7 +46,7 @@ namespace Azure.AI.Projects
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
         /// <param name="projectName"> The Azure AI Studio project name. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Telemetry(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, string apiVersion)
+        internal TelemetryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -111,7 +111,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(appInsightsResourceUrl, nameof(appInsightsResourceUrl));
 
-            using var scope = ClientDiagnostics.CreateScope("Telemetry.GetAppInsights");
+            using var scope = ClientDiagnostics.CreateScope("TelemetryClient.GetAppInsights");
             scope.Start();
             try
             {
@@ -150,7 +150,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(appInsightsResourceUrl, nameof(appInsightsResourceUrl));
 
-            using var scope = ClientDiagnostics.CreateScope("Telemetry.GetAppInsights");
+            using var scope = ClientDiagnostics.CreateScope("TelemetryClient.GetAppInsights");
             scope.Start();
             try
             {

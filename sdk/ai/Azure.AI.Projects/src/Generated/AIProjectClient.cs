@@ -93,14 +93,14 @@ namespace Azure.AI.Projects
             return new ConnectionsClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of Telemetry. </summary>
+        /// <summary> Initializes a new instance of TelemetryClient. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Telemetry GetTelemetryClient(string apiVersion = "2024-07-01-preview")
+        public virtual TelemetryClient GetTelemetryClient(string apiVersion = "2024-07-01-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new Telemetry(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
+            return new TelemetryClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
         }
 
         /// <summary> Initializes a new instance of EvaluationsClient. </summary>
