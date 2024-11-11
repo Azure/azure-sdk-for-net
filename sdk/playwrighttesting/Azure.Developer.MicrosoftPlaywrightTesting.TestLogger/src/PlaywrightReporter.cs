@@ -89,6 +89,9 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         runParameters.TryGetValue(RunSettingKey.ManagedIdentityClientId, out var managedIdentityClientId);
         runParameters.TryGetValue(RunSettingKey.EnableGitHubSummary, out var enableGithubSummary);
         runParameters.TryGetValue(RunSettingKey.EnableResultPublish, out var enableResultPublish);
+        runParameters.TryGetValue(RunSettingKey.RunName, out var runName);
+        if (!string.IsNullOrEmpty(runName?.ToString()))
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunName, runName!.ToString());
         string? enableGithubSummaryString = enableGithubSummary?.ToString();
         string? enableResultPublishString = enableResultPublish?.ToString();
 
@@ -113,6 +116,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
 
         var cloudRunId = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
+        var customRunName = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunName);
         string baseUrl = Environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
         string accessToken = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
         if (string.IsNullOrEmpty(baseUrl))
@@ -134,6 +138,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         var cloudRunMetadata = new CloudRunMetadata
         {
             RunId = cloudRunId,
+            RunName = customRunName,
             WorkspaceId = workspaceId,
             BaseUri = baseUri,
             EnableResultPublish = _enableResultPublish,

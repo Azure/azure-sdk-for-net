@@ -36,6 +36,11 @@ public class ServiceEnvironmentVariable
     /// The environment variable for the Playwright service run ID.
     /// </summary>
     public static readonly string PlaywrightServiceRunId = "PLAYWRIGHT_SERVICE_RUN_ID";
+
+    /// <summary>
+    /// The environment variable for the Playwright service run Name.
+    /// </summary>
+    public static readonly string PlaywrightServiceRunName = "PLAYWRIGHT_SERVICE_RUN_NAME";
 };
 
 /// <summary>
@@ -180,6 +185,11 @@ public class RunSettingKey
     /// Enable Result publish.
     /// </summary>
     public static readonly string EnableResultPublish = "EnableResultPublish";
+
+    /// <summary>
+    /// The run nam setting key.
+    /// </summary>
+    public static readonly string RunName = "RunName";
 }
 
 internal class Constants
