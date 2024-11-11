@@ -66,7 +66,10 @@ namespace Azure.Storage.DataMovement.JobPlan
             {
                 using (FileStream fileStream = File.Create(result.FileName.ToString()))
                 {
-                    await headerStream.CopyToAsync(fileStream, DefaultBufferSize, cancellationToken).ConfigureAwait(false);
+                    await headerStream.CopyToAsync(
+                        fileStream,
+                        DataMovementConstants.DefaultStreamCopyBufferSize,
+                        cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception)

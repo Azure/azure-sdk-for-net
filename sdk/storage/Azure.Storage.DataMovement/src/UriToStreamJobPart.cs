@@ -472,7 +472,7 @@ namespace Azure.Storage.DataMovement
             {
                 await source.CopyToAsync(
                     fileStream,
-                    Constants.DefaultDownloadCopyBufferSize,
+                    DataMovementConstants.DefaultStreamCopyBufferSize,
                     _cancellationToken)
                     .ConfigureAwait(false);
             }
