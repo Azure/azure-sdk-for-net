@@ -13,14 +13,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Batch.Samples
 {
     public partial class Sample_BatchAccountPoolCollection
     {
-        // ListPool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPool()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolList.json
@@ -52,12 +52,11 @@ namespace Azure.ResourceManager.Batch.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ListPoolWithFilter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPoolWithFilter()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolListWithFilter.json
@@ -91,12 +90,11 @@ namespace Azure.ResourceManager.Batch.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CreatePool - Custom Image
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolCustomImage()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_SharedImageGallery.json
@@ -138,9 +136,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePool - Full VirtualMachineConfiguration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolFullVirtualMachineConfiguration()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_VirtualMachineConfiguration.json
@@ -242,9 +239,8 @@ SourcePortRanges =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePool - Minimal VirtualMachineConfiguration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolMinimalVirtualMachineConfiguration()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_MinimalVirtualMachineConfiguration.json
@@ -296,9 +292,8 @@ SourcePortRanges =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePool - No public IP
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolNoPublicIP()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_NoPublicIPAddresses.json
@@ -348,9 +343,8 @@ SourcePortRanges =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePool - Public IPs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolPublicIPs()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_PublicIPs.json
@@ -404,9 +398,8 @@ new ResourceIdentifier("/subscriptions/subid1/resourceGroups/rg13/providers/Micr
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePool - ResourceTags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolResourceTags()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_ResourceTags.json
@@ -464,9 +457,8 @@ new ResourceIdentifier("/subscriptions/subid1/resourceGroups/rg13/providers/Micr
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePool - SecurityProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolSecurityProfile()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_SecurityProfile.json
@@ -531,9 +523,8 @@ new ResourceIdentifier("/subscriptions/subid1/resourceGroups/rg13/providers/Micr
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePool - Tags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolTags()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_Tags.json
@@ -591,9 +582,8 @@ new ResourceIdentifier("/subscriptions/subid1/resourceGroups/rg13/providers/Micr
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePool - UpgradePolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolUpgradePolicy()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_UpgradePolicy.json
@@ -670,9 +660,8 @@ new ResourceIdentifier("/subscriptions/subid1/resourceGroups/rg13/providers/Micr
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePool - UserAssignedIdentities
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolUserAssignedIdentities()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_UserAssignedIdentities.json
@@ -732,9 +721,8 @@ new ResourceIdentifier("/subscriptions/subid1/resourceGroups/rg13/providers/Micr
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePool - VirtualMachineConfiguration Extensions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolVirtualMachineConfigurationExtensions()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_VirtualMachineConfiguration_Extensions.json
@@ -801,9 +789,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePool - VirtualMachineConfiguration OSDisk
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolVirtualMachineConfigurationOSDisk()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_VirtualMachineConfiguration_ManagedOSDisk.json
@@ -867,9 +854,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePool - VirtualMachineConfiguration ServiceArtifactReference
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolVirtualMachineConfigurationServiceArtifactReference()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_VirtualMachineConfiguration_ServiceArtifactReference.json
@@ -933,9 +919,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePool - accelerated networking
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolAcceleratedNetworking()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_AcceleratedNetworking.json
@@ -993,9 +978,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetPool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPool()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet.json
@@ -1028,9 +1012,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetPool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPool()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet.json
@@ -1059,9 +1042,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetPool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPool()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet.json
@@ -1090,7 +1072,7 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1102,9 +1084,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             }
         }
 
-        // GetPool - AcceleratedNetworking
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolAcceleratedNetworking()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_AcceleratedNetworking.json
@@ -1137,9 +1118,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetPool - AcceleratedNetworking
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolAcceleratedNetworking()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_AcceleratedNetworking.json
@@ -1168,9 +1148,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetPool - AcceleratedNetworking
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPoolAcceleratedNetworking()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_AcceleratedNetworking.json
@@ -1199,7 +1178,7 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1211,9 +1190,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             }
         }
 
-        // GetPool - SecurityProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolSecurityProfile()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_SecurityProfile.json
@@ -1246,9 +1224,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetPool - SecurityProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolSecurityProfile()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_SecurityProfile.json
@@ -1277,9 +1254,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetPool - SecurityProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPoolSecurityProfile()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_SecurityProfile.json
@@ -1308,7 +1284,7 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1320,9 +1296,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             }
         }
 
-        // GetPool - UpgradePolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolUpgradePolicy()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_UpgradePolicy.json
@@ -1355,9 +1330,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetPool - UpgradePolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolUpgradePolicy()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_UpgradePolicy.json
@@ -1386,9 +1360,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetPool - UpgradePolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPoolUpgradePolicy()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_UpgradePolicy.json
@@ -1417,7 +1390,7 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1429,9 +1402,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             }
         }
 
-        // GetPool - VirtualMachineConfiguration Extensions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolVirtualMachineConfigurationExtensions()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
@@ -1464,9 +1436,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetPool - VirtualMachineConfiguration Extensions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolVirtualMachineConfigurationExtensions()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
@@ -1495,9 +1466,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetPool - VirtualMachineConfiguration Extensions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPoolVirtualMachineConfigurationExtensions()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
@@ -1526,7 +1496,7 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1538,9 +1508,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             }
         }
 
-        // GetPool - VirtualMachineConfiguration OSDisk
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolVirtualMachineConfigurationOSDisk()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
@@ -1573,9 +1542,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetPool - VirtualMachineConfiguration OSDisk
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolVirtualMachineConfigurationOSDisk()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
@@ -1604,9 +1572,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetPool - VirtualMachineConfiguration OSDisk
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPoolVirtualMachineConfigurationOSDisk()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
@@ -1635,7 +1602,7 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1647,9 +1614,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             }
         }
 
-        // GetPool - VirtualMachineConfiguration ServiceArtifactReference
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolVirtualMachineConfigurationServiceArtifactReference()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
@@ -1682,9 +1648,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetPool - VirtualMachineConfiguration ServiceArtifactReference
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolVirtualMachineConfigurationServiceArtifactReference()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
@@ -1713,9 +1678,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetPool - VirtualMachineConfiguration ServiceArtifactReference
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPoolVirtualMachineConfigurationServiceArtifactReference()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
@@ -1744,7 +1708,7 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

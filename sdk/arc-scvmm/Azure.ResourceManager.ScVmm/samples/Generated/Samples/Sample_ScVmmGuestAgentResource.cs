@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ScVmm.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ScVmm.Samples
 {
     public partial class Sample_ScVmmGuestAgentResource
     {
-        // CreateGuestAgent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateGuestAgent()
         {
             // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/CreateVMInstanceGuestAgent.json
@@ -51,9 +51,8 @@ namespace Azure.ResourceManager.ScVmm.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetGuestAgent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetGuestAgent()
         {
             // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/GetVMInstanceGuestAgent.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.ScVmm.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteGuestAgent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteGuestAgent()
         {
             // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/DeleteVMInstanceGuestAgent.json
@@ -102,7 +100,7 @@ namespace Azure.ResourceManager.ScVmm.Samples
             // invoke the operation
             await scVmmGuestAgent.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

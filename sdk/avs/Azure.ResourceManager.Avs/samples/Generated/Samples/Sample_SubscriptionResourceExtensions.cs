@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // Locations_CheckQuotaAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckAvsQuotaAvailability_LocationsCheckQuotaAvailability()
         {
             // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Locations_CheckQuotaAvailability.json
@@ -42,9 +42,8 @@ namespace Azure.ResourceManager.Avs.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Locations_CheckTrialAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckAvsTrialAvailability_LocationsCheckTrialAvailability()
         {
             // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Locations_CheckTrialAvailability.json
@@ -68,9 +67,8 @@ namespace Azure.ResourceManager.Avs.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Locations_CheckTrialAvailabilityWithSku
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckAvsTrialAvailability_LocationsCheckTrialAvailabilityWithSku()
         {
             // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Locations_CheckTrialAvailabilityWithSku.json
