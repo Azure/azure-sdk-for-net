@@ -174,7 +174,9 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                                 // Upload rawResult to blob storage using sasUri
                                 var rawTestResultJson = JsonSerializer.Serialize(rawResult);
                                 var filePath = $"{testResult.TestExecutionId}/rawTestResult.json";
-                                _blobService.UploadBufferAsync(sasUri!.Uri!, rawTestResultJson, filePath);
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+                                _blobService.UploadBufferAsync(sasUri!.Uri!, rawTestResultJson, filePath).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
                             }
                             else
                             {
