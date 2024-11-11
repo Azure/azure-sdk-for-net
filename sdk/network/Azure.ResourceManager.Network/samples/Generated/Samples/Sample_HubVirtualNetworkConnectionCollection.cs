@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_HubVirtualNetworkConnectionCollection
     {
-        // HubVirtualNetworkConnectionPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_HubVirtualNetworkConnectionPut()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/HubVirtualNetworkConnectionPut.json
@@ -104,9 +104,8 @@ NextHopIPAddress = "10.0.0.65",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HubVirtualNetworkConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_HubVirtualNetworkConnectionGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/HubVirtualNetworkConnectionGet.json
@@ -139,9 +138,8 @@ NextHopIPAddress = "10.0.0.65",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HubVirtualNetworkConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_HubVirtualNetworkConnectionGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/HubVirtualNetworkConnectionGet.json
@@ -170,9 +168,8 @@ NextHopIPAddress = "10.0.0.65",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // HubVirtualNetworkConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_HubVirtualNetworkConnectionGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/HubVirtualNetworkConnectionGet.json
@@ -201,7 +198,7 @@ NextHopIPAddress = "10.0.0.65",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -213,9 +210,8 @@ NextHopIPAddress = "10.0.0.65",
             }
         }
 
-        // HubVirtualNetworkConnectionList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_HubVirtualNetworkConnectionList()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/HubVirtualNetworkConnectionList.json
@@ -247,7 +243,7 @@ NextHopIPAddress = "10.0.0.65",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

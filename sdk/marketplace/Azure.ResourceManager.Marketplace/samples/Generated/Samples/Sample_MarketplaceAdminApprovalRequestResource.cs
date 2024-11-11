@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Marketplace.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Marketplace.Samples
 {
     public partial class Sample_MarketplaceAdminApprovalRequestResource
     {
-        // GetAdminRequestApproval
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAdminRequestApproval()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetAdminRequestApproval.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.Marketplace.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UpdateAdminRequestApproval
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAdminRequestApproval()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/UpdateAdminRequestApproval.json

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Maintenance.Samples
 {
     public partial class Sample_MaintenancePublicConfigurationCollection
     {
-        // PublicMaintenanceConfigurations_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_PublicMaintenanceConfigurationsList()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/PublicMaintenanceConfigurations_List.json
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.Maintenance.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PublicMaintenanceConfigurations_GetForResource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PublicMaintenanceConfigurationsGetForResource()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/PublicMaintenanceConfigurations_GetForResource.json
@@ -83,9 +82,8 @@ namespace Azure.ResourceManager.Maintenance.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PublicMaintenanceConfigurations_GetForResource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_PublicMaintenanceConfigurationsGetForResource()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/PublicMaintenanceConfigurations_GetForResource.json
@@ -112,9 +110,8 @@ namespace Azure.ResourceManager.Maintenance.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PublicMaintenanceConfigurations_GetForResource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PublicMaintenanceConfigurationsGetForResource()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/PublicMaintenanceConfigurations_GetForResource.json
@@ -141,7 +138,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
