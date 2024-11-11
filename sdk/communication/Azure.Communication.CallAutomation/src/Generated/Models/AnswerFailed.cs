@@ -7,32 +7,27 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The TranscriptionStarted. </summary>
-    public partial class TranscriptionStarted
+    /// <summary> The failed to answer call event. </summary>
+    public partial class AnswerFailed
     {
-        /// <summary> Initializes a new instance of <see cref="TranscriptionStarted"/>. </summary>
-        internal TranscriptionStarted()
+        /// <summary> Initializes a new instance of <see cref="AnswerFailed"/>. </summary>
+        internal AnswerFailed()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptionStarted"/>. </summary>
-        /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+        /// <summary> Initializes a new instance of <see cref="AnswerFailed"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        internal TranscriptionStarted(TranscriptionUpdate transcriptionUpdate, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        internal AnswerFailed(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
         {
-            TranscriptionUpdate = transcriptionUpdate;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
         }
-
-        /// <summary> Defines the result for TranscriptionUpdate with the current status and the details about the status. </summary>
-        public TranscriptionUpdate TranscriptionUpdate { get; }
     }
 }

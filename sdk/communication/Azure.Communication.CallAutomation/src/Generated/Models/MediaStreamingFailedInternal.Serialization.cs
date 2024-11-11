@@ -17,14 +17,23 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
+            MediaStreamingUpdate mediaStreamingUpdate = default;
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
             string operationContext = default;
             ResultInformation resultInformation = default;
-            MediaStreamingUpdate mediaStreamingUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("mediaStreamingUpdate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mediaStreamingUpdate = MediaStreamingUpdate.DeserializeMediaStreamingUpdate(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
@@ -54,23 +63,14 @@ namespace Azure.Communication.CallAutomation
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("mediaStreamingUpdate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mediaStreamingUpdate = MediaStreamingUpdate.DeserializeMediaStreamingUpdate(property.Value);
-                    continue;
-                }
             }
             return new MediaStreamingFailedInternal(
+                mediaStreamingUpdate,
                 callConnectionId,
                 serverCallId,
                 correlationId,
                 operationContext,
-                resultInformation,
-                mediaStreamingUpdate);
+                resultInformation);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

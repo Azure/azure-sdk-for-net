@@ -9,15 +9,14 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class TranscriptionStarted
+    public partial class AnswerFailed
     {
-        internal static TranscriptionStarted DeserializeTranscriptionStarted(JsonElement element)
+        internal static AnswerFailed DeserializeAnswerFailed(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            TranscriptionUpdate transcriptionUpdate = default;
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
@@ -25,15 +24,6 @@ namespace Azure.Communication.CallAutomation
             ResultInformation resultInformation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("transcriptionUpdate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    transcriptionUpdate = TranscriptionUpdate.DeserializeTranscriptionUpdate(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
@@ -64,21 +54,15 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new TranscriptionStarted(
-                transcriptionUpdate,
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                operationContext,
-                resultInformation);
+            return new AnswerFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TranscriptionStarted FromResponse(Response response)
+        internal static AnswerFailed FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTranscriptionStarted(document.RootElement);
+            return DeserializeAnswerFailed(document.RootElement);
         }
     }
 }

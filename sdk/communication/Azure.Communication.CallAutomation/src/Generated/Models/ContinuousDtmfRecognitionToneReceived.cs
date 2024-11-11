@@ -20,18 +20,18 @@ namespace Azure.Communication.CallAutomation
         /// <param name="tone"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId or skype chain ID. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        internal ContinuousDtmfRecognitionToneReceived(int? sequenceId, DtmfTone? tone, string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation, string operationContext)
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        internal ContinuousDtmfRecognitionToneReceived(int? sequenceId, DtmfTone? tone, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
         {
             SequenceId = sequenceId;
             Tone = tone;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
-            ResultInformation = resultInformation;
             OperationContext = operationContext;
+            ResultInformation = resultInformation;
         }
 
         /// <summary> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </summary>

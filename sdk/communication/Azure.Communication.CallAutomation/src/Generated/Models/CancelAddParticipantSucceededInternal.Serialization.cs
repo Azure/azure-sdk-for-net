@@ -22,6 +22,7 @@ namespace Azure.Communication.CallAutomation
             string correlationId = default;
             string operationContext = default;
             string invitationId = default;
+            ResultInformation resultInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -49,8 +50,23 @@ namespace Azure.Communication.CallAutomation
                     invitationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("resultInformation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    continue;
+                }
             }
-            return new CancelAddParticipantSucceededInternal(callConnectionId, serverCallId, correlationId, operationContext, invitationId);
+            return new CancelAddParticipantSucceededInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                invitationId,
+                resultInformation);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

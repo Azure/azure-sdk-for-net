@@ -22,8 +22,8 @@ namespace Azure.Communication.CallAutomation
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
-            ResultInformation resultInformation = default;
             string operationContext = default;
+            ResultInformation resultInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sequenceId"u8))
@@ -59,6 +59,11 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("resultInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -68,11 +73,6 @@ namespace Azure.Communication.CallAutomation
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("operationContext"u8))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
             }
             return new ContinuousDtmfRecognitionToneReceived(
                 sequenceId,
@@ -80,8 +80,8 @@ namespace Azure.Communication.CallAutomation
                 callConnectionId,
                 serverCallId,
                 correlationId,
-                resultInformation,
-                operationContext);
+                operationContext,
+                resultInformation);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
