@@ -11,14 +11,14 @@ using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Redis.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Redis.Samples
 {
     public partial class Sample_RedisPatchScheduleResource
     {
-        // RedisCachePatchSchedulesCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RedisCachePatchSchedulesCreateOrUpdate()
         {
             // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-03-01/examples/RedisCachePatchSchedulesCreateOrUpdate.json
@@ -56,9 +56,8 @@ MaintenanceWindow = XmlConvert.ToTimeSpan("PT5H"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RedisCachePatchSchedulesDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RedisCachePatchSchedulesDelete()
         {
             // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-03-01/examples/RedisCachePatchSchedulesDelete.json
@@ -81,12 +80,11 @@ MaintenanceWindow = XmlConvert.ToTimeSpan("PT5H"),
             // invoke the operation
             await redisPatchSchedule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RedisCachePatchSchedulesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RedisCachePatchSchedulesGet()
         {
             // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-03-01/examples/RedisCachePatchSchedulesGet.json

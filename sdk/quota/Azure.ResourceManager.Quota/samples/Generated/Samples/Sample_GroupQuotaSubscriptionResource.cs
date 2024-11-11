@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Quota.Samples
 {
     public partial class Sample_GroupQuotaSubscriptionResource
     {
-        // GroupQuotaSubscriptions_Patch_Subscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_GroupQuotaSubscriptionsPatchSubscriptions()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/PatchGroupQuotasSubscription.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.Quota.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GroupQuotaSubscriptions_Delete_Subscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_GroupQuotaSubscriptionsDeleteSubscriptions()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/DeleteGroupQuotaSubscriptions.json
@@ -70,12 +69,11 @@ namespace Azure.ResourceManager.Quota.Samples
             // invoke the operation
             await groupQuotaSubscription.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GroupQuotaSubscriptions_Get_Subscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GroupQuotaSubscriptionsGetSubscriptions()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/GetGroupQuotaSubscriptions.json

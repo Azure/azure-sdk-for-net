@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ResourceHealth.Samples
 {
     public partial class Sample_ResourceHealthEventResource
     {
-        // ListSecurityAdvisoryImpactedResourcesBySubscriptionId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId_ListSecurityAdvisoryImpactedResourcesBySubscriptionId()
         {
             // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/SecurityAdvisoryImpactedResources_ListBySubscriptionId_ListByEventId.json
@@ -41,12 +41,11 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SecurityAdvisoriesEventBySubscriptionIdAndTrackingId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SecurityAdvisoriesEventBySubscriptionIdAndTrackingId()
         {
             // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/Event_GetBySubscriptionIdAndTrackingId.json
@@ -76,9 +75,8 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // EventDetailsBySubscriptionIdAndTrackingId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task FetchDetailsBySubscriptionIdAndTrackingId_EventDetailsBySubscriptionIdAndTrackingId()
         {
             // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/Event_fetchDetailsBySubscriptionIdAndTrackingId.json

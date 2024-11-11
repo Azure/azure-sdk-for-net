@@ -12,14 +12,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_PolicyAssignmentCollection
     {
-        // Create or update a policy assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignment()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignment.json
@@ -75,9 +75,8 @@ new NonComplianceMessage("Resource names must start with 'DeptA' and end with '-
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a policy assignment with a system assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithASystemAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithIdentity.json
@@ -132,9 +131,8 @@ Value = BinaryData.FromString("\"-LC\""),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a policy assignment with a user assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithAUserAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithUserAssignedIdentity.json
@@ -195,9 +193,8 @@ Value = BinaryData.FromString("\"-LC\""),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a policy assignment with multiple non-compliance messages
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithMultipleNonComplianceMessages()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentNonComplianceMessages.json
@@ -243,9 +240,8 @@ PolicyDefinitionReferenceId = "8572513655450389710",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a policy assignment with overrides
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithOverrides()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithOverrides.json
@@ -305,9 +301,8 @@ In =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a policy assignment with resource selectors
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithResourceSelectors()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithResourceSelectors.json
@@ -366,9 +361,8 @@ In =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a policy assignment without enforcing policy effect during resource creation or update.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithoutEnforcingPolicyEffectDuringResourceCreationOrUpdate()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithoutEnforcement.json
@@ -421,9 +415,8 @@ Value = BinaryData.FromString("\"-LC\""),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignment()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
@@ -453,9 +446,8 @@ Value = BinaryData.FromString("\"-LC\""),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicyAssignment()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
@@ -481,9 +473,8 @@ Value = BinaryData.FromString("\"-LC\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Retrieve a policy assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicyAssignment()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
@@ -509,7 +500,7 @@ Value = BinaryData.FromString("\"-LC\""),
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -521,9 +512,8 @@ Value = BinaryData.FromString("\"-LC\""),
             }
         }
 
-        // Retrieve a policy assignment with a system assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
@@ -553,9 +543,8 @@ Value = BinaryData.FromString("\"-LC\""),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy assignment with a system assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
@@ -581,9 +570,8 @@ Value = BinaryData.FromString("\"-LC\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Retrieve a policy assignment with a system assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
@@ -609,7 +597,7 @@ Value = BinaryData.FromString("\"-LC\""),
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -621,9 +609,8 @@ Value = BinaryData.FromString("\"-LC\""),
             }
         }
 
-        // Retrieve a policy assignment with a user assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
@@ -653,9 +640,8 @@ Value = BinaryData.FromString("\"-LC\""),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy assignment with a user assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
@@ -681,9 +667,8 @@ Value = BinaryData.FromString("\"-LC\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Retrieve a policy assignment with a user assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
@@ -709,7 +694,7 @@ Value = BinaryData.FromString("\"-LC\""),
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -721,9 +706,8 @@ Value = BinaryData.FromString("\"-LC\""),
             }
         }
 
-        // Retrieve a policy assignment with overrides
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignmentWithOverrides()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
@@ -753,9 +737,8 @@ Value = BinaryData.FromString("\"-LC\""),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy assignment with overrides
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicyAssignmentWithOverrides()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
@@ -781,9 +764,8 @@ Value = BinaryData.FromString("\"-LC\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Retrieve a policy assignment with overrides
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicyAssignmentWithOverrides()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
@@ -809,7 +791,7 @@ Value = BinaryData.FromString("\"-LC\""),
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -821,9 +803,8 @@ Value = BinaryData.FromString("\"-LC\""),
             }
         }
 
-        // Retrieve a policy assignment with resource selectors
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignmentWithResourceSelectors()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
@@ -853,9 +834,8 @@ Value = BinaryData.FromString("\"-LC\""),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy assignment with resource selectors
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicyAssignmentWithResourceSelectors()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
@@ -881,9 +861,8 @@ Value = BinaryData.FromString("\"-LC\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Retrieve a policy assignment with resource selectors
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicyAssignmentWithResourceSelectors()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
@@ -909,7 +888,7 @@ Value = BinaryData.FromString("\"-LC\""),
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -921,9 +900,8 @@ Value = BinaryData.FromString("\"-LC\""),
             }
         }
 
-        // List policy assignments that apply to a resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPolicyAssignmentsThatApplyToAResourceGroup()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/listPolicyAssignmentsForResourceGroup.json
@@ -954,12 +932,11 @@ Value = BinaryData.FromString("\"-LC\""),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List all policy assignments that apply to a resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllPolicyAssignmentsThatApplyToAResource()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/listPolicyAssignmentsForResource.json
@@ -993,12 +970,11 @@ Value = BinaryData.FromString("\"-LC\""),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List policy assignments that apply to a management group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPolicyAssignmentsThatApplyToAManagementGroup()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/listPolicyAssignmentsForManagementGroup.json
@@ -1028,12 +1004,11 @@ Value = BinaryData.FromString("\"-LC\""),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List policy assignments that apply to a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPolicyAssignmentsThatApplyToASubscription()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/listPolicyAssignments.json
@@ -1063,7 +1038,7 @@ Value = BinaryData.FromString("\"-LC\""),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

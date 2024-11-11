@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.RedisEnterprise.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RedisEnterprise.Samples
 {
     public partial class Sample_RedisEnterpriseDatabaseCollection
     {
-        // RedisEnterpriseDatabasesListByCluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_RedisEnterpriseDatabasesListByCluster()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesListByCluster.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RedisEnterpriseDatabasesCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RedisEnterpriseDatabasesCreate()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesCreate.json
@@ -112,9 +111,8 @@ Args = "RETENTION_POLICY 20",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RedisEnterpriseDatabasesCreate With Active Geo Replication
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RedisEnterpriseDatabasesCreateWithActiveGeoReplication()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesCreateWithGeoReplication.json
@@ -170,9 +168,8 @@ Id = new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8e
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RedisEnterpriseDatabasesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RedisEnterpriseDatabasesGet()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesGet.json
@@ -205,9 +202,8 @@ Id = new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8e
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RedisEnterpriseDatabasesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RedisEnterpriseDatabasesGet()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesGet.json
@@ -236,9 +232,8 @@ Id = new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8e
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RedisEnterpriseDatabasesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RedisEnterpriseDatabasesGet()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesGet.json
@@ -267,7 +262,7 @@ Id = new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8e
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Quantum.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Quantum.Samples
 {
     public partial class Sample_QuantumWorkspaceCollection
     {
-        // QuantumWorkspacesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_QuantumWorkspacesGet()
         {
             // Generated from example definition: specification/quantum/resource-manager/Microsoft.Quantum/preview/2023-11-13-preview/examples/quantumWorkspacesGet.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.Quantum.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QuantumWorkspacesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_QuantumWorkspacesGet()
         {
             // Generated from example definition: specification/quantum/resource-manager/Microsoft.Quantum/preview/2023-11-13-preview/examples/quantumWorkspacesGet.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.Quantum.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // QuantumWorkspacesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_QuantumWorkspacesGet()
         {
             // Generated from example definition: specification/quantum/resource-manager/Microsoft.Quantum/preview/2023-11-13-preview/examples/quantumWorkspacesGet.json
@@ -110,7 +108,7 @@ namespace Azure.ResourceManager.Quantum.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -122,9 +120,8 @@ namespace Azure.ResourceManager.Quantum.Samples
             }
         }
 
-        // QuantumWorkspacesPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_QuantumWorkspacesPut()
         {
             // Generated from example definition: specification/quantum/resource-manager/Microsoft.Quantum/preview/2023-11-13-preview/examples/quantumWorkspacesPut.json
@@ -177,9 +174,8 @@ ProviderSku = "Basic",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QuantumWorkspacesListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_QuantumWorkspacesListByResourceGroup()
         {
             // Generated from example definition: specification/quantum/resource-manager/Microsoft.Quantum/preview/2023-11-13-preview/examples/quantumWorkspacesListResourceGroup.json
@@ -210,7 +206,7 @@ ProviderSku = "Basic",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

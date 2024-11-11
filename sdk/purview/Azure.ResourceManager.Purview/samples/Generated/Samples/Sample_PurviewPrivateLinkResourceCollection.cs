@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Purview.Samples
 {
     public partial class Sample_PurviewPrivateLinkResourceCollection
     {
-        // PrivateLinkResources_ListByAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_PrivateLinkResourcesListByAccount()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/PrivateLinkResources_ListByAccount.json
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.Purview.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PrivateLinkResources_GetByGroupId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateLinkResourcesGetByGroupId()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/PrivateLinkResources_GetByGroupId.json
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.Purview.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateLinkResources_GetByGroupId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_PrivateLinkResourcesGetByGroupId()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/PrivateLinkResources_GetByGroupId.json
@@ -117,9 +115,8 @@ namespace Azure.ResourceManager.Purview.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PrivateLinkResources_GetByGroupId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PrivateLinkResourcesGetByGroupId()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/PrivateLinkResources_GetByGroupId.json
@@ -148,7 +145,7 @@ namespace Azure.ResourceManager.Purview.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
