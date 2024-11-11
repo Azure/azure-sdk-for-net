@@ -19,13 +19,21 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         void IJsonModel<RenewLocksRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RenewLocksRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RenewLocksRequest)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("lockTokens"u8);
             writer.WriteStartArray();
             foreach (var item in LockTokens)
@@ -48,7 +56,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RenewLocksRequest IJsonModel<RenewLocksRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
