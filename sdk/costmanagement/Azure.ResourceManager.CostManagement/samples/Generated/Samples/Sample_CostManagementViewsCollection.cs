@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CostManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CostManagement.Samples
 {
     public partial class Sample_CostManagementViewsCollection
     {
-        // ResourceGroupViewList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ResourceGroupViewList()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ViewListByResourceGroup.json
@@ -46,12 +46,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ResourceGroupView
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ResourceGroupView()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ViewByResourceGroup.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ResourceGroupView
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ResourceGroupView()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ViewByResourceGroup.json
@@ -109,9 +107,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ResourceGroupView
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ResourceGroupView()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ViewByResourceGroup.json
@@ -137,7 +134,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -149,9 +146,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             }
         }
 
-        // ResourceGroupCreateOrUpdateView
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ResourceGroupCreateOrUpdateView()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ViewCreateOrUpdateByResourceGroup.json

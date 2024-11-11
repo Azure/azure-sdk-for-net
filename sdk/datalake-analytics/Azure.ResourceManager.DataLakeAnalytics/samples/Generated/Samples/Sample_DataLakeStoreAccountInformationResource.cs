@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 {
     public partial class Sample_DataLakeStoreAccountInformationResource
     {
-        // Adds a Data Lake Store account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AddsADataLakeStoreAccount()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/DataLakeStoreAccounts_Add.json
@@ -44,12 +44,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             };
             await dataLakeStoreAccountInformation.UpdateAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets the specified Data Lake Store account details
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheSpecifiedDataLakeStoreAccountDetails()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/DataLakeStoreAccounts_Get.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Removes the specified Data Lake Store account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RemovesTheSpecifiedDataLakeStoreAccount()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/DataLakeStoreAccounts_Delete.json
@@ -104,7 +102,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             // invoke the operation
             await dataLakeStoreAccountInformation.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppContainers.Samples
 {
     public partial class Sample_ContainerAppJobExecutionResource
     {
-        // Terminate a Container Apps Job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StopExecutionJob_TerminateAContainerAppsJob()
         {
             // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Job_Stop_Execution.json
@@ -40,12 +40,11 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // invoke the operation
             await containerAppJobExecution.StopExecutionJobAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a single Job Execution
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetASingleJobExecution()
         {
             // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Job_Execution_Get.json
@@ -75,9 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List all operations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCustomDomainVerificationId_ListAllOperations()
         {
             // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Subscriptions_GetCustomDomainVerificationId.json

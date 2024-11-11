@@ -12,14 +12,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerInstance.Samples
 {
     public partial class Sample_ContainerGroupProfileCollection
     {
-        // ContainerGroupProfilesListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ContainerGroupProfilesListByResourceGroup()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesListByResourceGroup.json
@@ -50,12 +50,11 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ContainerGroupProfilesGetWithPriority
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ContainerGroupProfilesGetWithPriority()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesGetPriority.json
@@ -87,9 +86,8 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ContainerGroupProfilesGetWithPriority
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ContainerGroupProfilesGetWithPriority()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesGetPriority.json
@@ -117,9 +115,8 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ContainerGroupProfilesGetWithPriority
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ContainerGroupProfilesGetWithPriority()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesGetPriority.json
@@ -147,7 +144,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -159,9 +156,8 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             }
         }
 
-        // ContainerGroupProfilesGet_Succeeded
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ContainerGroupProfilesGetSucceeded()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesGet.json
@@ -193,9 +189,8 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ContainerGroupProfilesGet_Succeeded
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ContainerGroupProfilesGetSucceeded()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesGet.json
@@ -223,9 +218,8 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ContainerGroupProfilesGet_Succeeded
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ContainerGroupProfilesGetSucceeded()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesGet.json
@@ -253,7 +247,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -265,9 +259,8 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             }
         }
 
-        // ConfidentialContainerGroupProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ConfidentialContainerGroupProfile()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfileCreateOrUpdate_CreateConfidential.json
@@ -347,9 +340,8 @@ Protocol = ContainerGroupNetworkProtocol.Tcp,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ContainerGroupProfileCreateWithExtensions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ContainerGroupProfileCreateWithExtensions()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfileCreateOrUpdate_Extensions.json
@@ -435,9 +427,8 @@ Version = "1.0",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ContainerGroupProfileWithEncryptionProperties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ContainerGroupProfileWithEncryptionProperties()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfileCreateOrUpdate_EncryptionProperties.json
@@ -508,9 +499,8 @@ Protocol = ContainerGroupNetworkProtocol.Tcp,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ContainerGroupProfilesCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ContainerGroupProfilesCreateOrUpdate()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesCreateOrUpdate.json
@@ -624,9 +614,8 @@ Secret =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ContainerGroupsCreateWithPriority
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ContainerGroupsCreateWithPriority()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupsProfileCreateOrUpdate_CreatePriority.json

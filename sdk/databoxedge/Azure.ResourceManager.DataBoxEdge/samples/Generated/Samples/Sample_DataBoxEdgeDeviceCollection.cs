@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataBoxEdge.Samples
 {
     public partial class Sample_DataBoxEdgeDeviceCollection
     {
-        // DataBoxEdgeDeviceGetByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DataBoxEdgeDeviceGetByResourceGroup()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DataBoxEdgeDeviceGetByResourceGroup.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DataBoxEdgeDeviceGetByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_DataBoxEdgeDeviceGetByName()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DataBoxEdgeDeviceGetByName.json
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DataBoxEdgeDeviceGetByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_DataBoxEdgeDeviceGetByName()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DataBoxEdgeDeviceGetByName.json
@@ -116,9 +114,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // DataBoxEdgeDeviceGetByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DataBoxEdgeDeviceGetByName()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DataBoxEdgeDeviceGetByName.json
@@ -146,7 +143,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -158,9 +155,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             }
         }
 
-        // DataBoxEdgeDeviceGetByNameWithDataResidency
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_DataBoxEdgeDeviceGetByNameWithDataResidency()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DataBoxEdgeDeviceGetByNameWithDataResidency.json
@@ -192,9 +188,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DataBoxEdgeDeviceGetByNameWithDataResidency
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_DataBoxEdgeDeviceGetByNameWithDataResidency()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DataBoxEdgeDeviceGetByNameWithDataResidency.json
@@ -222,9 +217,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // DataBoxEdgeDeviceGetByNameWithDataResidency
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DataBoxEdgeDeviceGetByNameWithDataResidency()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DataBoxEdgeDeviceGetByNameWithDataResidency.json
@@ -252,7 +246,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -264,9 +258,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             }
         }
 
-        // DataBoxEdgeDevicePut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DataBoxEdgeDevicePut()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DataBoxEdgeDevicePut.json
@@ -310,9 +303,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DataBoxEdgeDevicePutWithDataResidency
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DataBoxEdgeDevicePutWithDataResidency()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DataBoxEdgeDevicePutWithDataResidency.json

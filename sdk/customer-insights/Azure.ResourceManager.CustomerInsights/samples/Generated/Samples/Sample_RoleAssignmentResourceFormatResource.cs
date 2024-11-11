@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CustomerInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CustomerInsights.Samples
 {
     public partial class Sample_RoleAssignmentResourceFormatResource
     {
-        // RoleAssignments_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RoleAssignmentsCreateOrUpdate()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsCreateOrUpdate.json
@@ -56,9 +56,8 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RoleAssignments_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RoleAssignmentsGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsGet.json
@@ -88,9 +87,8 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RoleAssignments_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RoleAssignmentsDelete()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsDelete.json
@@ -113,7 +111,7 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
             // invoke the operation
             await roleAssignmentResourceFormat.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
