@@ -473,16 +473,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async virtual Task AddJobPartToCheckpointerAsync()
         {
-            JobPartPlanHeader header = this.ToJobPartPlanHeader();
-            using (Stream stream = new MemoryStream())
-            {
-                header.Serialize(stream);
-                await _checkpointer.AddNewJobPartAsync(
-                    transferId: _dataTransfer.Id,
-                    partNumber: PartNumber,
-                    headerStream: stream,
-                    cancellationToken: _cancellationToken).ConfigureAwait(false);
-            }
+            await _checkpointer.AddNewJobPartAsync(
+                transferId: _dataTransfer.Id,
+                partNumber: PartNumber,
+                header: this.ToJobPartPlanHeader(),
+                cancellationToken: _cancellationToken).ConfigureAwait(false);
         }
 
         internal async virtual Task SetCheckpointerStatusAsync()
