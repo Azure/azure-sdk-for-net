@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.AI.Language.Conversations.Authoring.Models;
 
@@ -48,11 +49,13 @@ namespace Azure.AI.Language.Authoring.Conversations.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GetAssignDeploymentResourcesStatusResult"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="status"> The job status. </param>
-        internal GetAssignDeploymentResourcesStatusResult(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, JobStatus status)
+        internal GetAssignDeploymentResourcesStatusResult(string jobId, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, JobStatus status)
         {
+            JobId = jobId;
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
             Status = status;
@@ -61,6 +64,7 @@ namespace Azure.AI.Language.Authoring.Conversations.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GetAssignDeploymentResourcesStatusResult"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="expirationDateTime"> The expiration date time of the job. </param>
@@ -68,7 +72,7 @@ namespace Azure.AI.Language.Authoring.Conversations.Models
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetAssignDeploymentResourcesStatusResult(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, DateTimeOffset? expirationDateTime, JobStatus status, IReadOnlyList<AuthoringConversationsWarning> warnings, IReadOnlyList<AuthoringConversationsError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetAssignDeploymentResourcesStatusResult(string jobId, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, DateTimeOffset? expirationDateTime, JobStatus status, IReadOnlyList<AuthoringConversationsWarning> warnings, IReadOnlyList<AuthoringConversationsError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
@@ -84,6 +88,8 @@ namespace Azure.AI.Language.Authoring.Conversations.Models
         {
         }
 
+        /// <summary> The job ID. </summary>
+        public string JobId { get; }
         /// <summary> The creation date time of the job. </summary>
         public DateTimeOffset CreatedDateTime { get; }
         /// <summary> The last date time the job was updated. </summary>
