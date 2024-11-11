@@ -28,8 +28,8 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         private readonly ICloudRunErrorParser _cloudRunErrorParser;
         private readonly IServiceClient _serviceClient;
         private readonly IConsoleWriter _consoleWriter;
-        private readonly CIInfo _cIInfo;
-        private readonly CloudRunMetadata _cloudRunMetadata;
+        internal readonly CIInfo _cIInfo;
+        internal readonly CloudRunMetadata _cloudRunMetadata;
         private readonly IBlobService _blobService;
 
         // Test Metadata

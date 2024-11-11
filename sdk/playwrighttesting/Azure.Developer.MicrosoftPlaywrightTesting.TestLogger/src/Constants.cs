@@ -180,6 +180,11 @@ public class RunSettingKey
     /// Enable Result publish.
     /// </summary>
     public static readonly string EnableResultPublish = "EnableResultPublish";
+
+    /// <summary>
+    /// Number of NUnit test workers.
+    /// </summary>
+    public static readonly string NumberOfTestWorkers = "NumberOfTestWorkers";
 }
 
 internal class Constants

@@ -79,8 +79,8 @@ public class PlaywrightService
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
-        _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential);
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
+        _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential, _jsonWebTokenHandler);
         InitializePlaywrightServiceEnvironmentVariables(getServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
@@ -248,12 +248,12 @@ public class PlaywrightService
             if (string.IsNullOrEmpty(authToken))
                 throw new Exception(Constants.s_no_auth_error);
             JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(authToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
-            var tokenaWorkspaceId = jsonWebToken.Claims.FirstOrDefault(c => c.Type == "aid")?.Value;
+            var tokenWorkspaceId = jsonWebToken.Claims.FirstOrDefault(c => c.Type == "aid")?.Value;
             Match match = Regex.Match(ServiceEndpoint, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
             if (!match.Success)
                 throw new Exception(Constants.s_invalid_service_endpoint_error_message);
             var serviceEndpointWorkspaceId = match.Groups["workspaceId"].Value;
-            if (tokenaWorkspaceId != serviceEndpointWorkspaceId)
+            if (tokenWorkspaceId != serviceEndpointWorkspaceId)
                 throw new Exception(Constants.s_workspace_mismatch_error);
             var expiry = (long)(jsonWebToken.ValidTo - new DateTime(1970, 1, 1)).TotalSeconds;
             if (expiry <= DateTimeOffset.UtcNow.ToUnixTimeSeconds())

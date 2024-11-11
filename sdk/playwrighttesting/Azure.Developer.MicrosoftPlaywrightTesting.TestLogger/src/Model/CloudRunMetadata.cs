@@ -18,5 +18,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model
         internal bool EnableGithubSummary { get; set; } = true;
         internal DateTime TestRunStartTime { get; set; }
         internal TokenDetails? AccessTokenDetails { get; set; }
+        internal int NumberOfTestWorkers { get; set; } = 1;
     }
 }

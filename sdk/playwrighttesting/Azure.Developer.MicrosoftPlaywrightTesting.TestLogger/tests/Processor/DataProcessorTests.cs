@@ -23,7 +23,8 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
                 {
                     oid = "oid",
                     userName = "  userName  "
-                }
+                },
+                NumberOfTestWorkers = 5
             };
             var cIInfo = new CIInfo
             {
@@ -54,7 +55,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             Assert.AreEqual(cIInfo.RevisionUrl, result.CiConfig!.RevisionUrl);
             Assert.AreEqual(cIInfo.Provider, result.CiConfig!.CiProviderName);
             Assert.IsNotNull(result.TestRunConfig);
-            Assert.AreEqual(1, result.TestRunConfig!.Workers);
+            Assert.AreEqual(5, result.TestRunConfig!.Workers);
             Assert.AreEqual("1.40", result.TestRunConfig!.PwVersion);
             Assert.AreEqual(60000, result.TestRunConfig!.Timeout);
             Assert.AreEqual("WebTest", result.TestRunConfig!.TestType);
@@ -72,6 +73,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
         public void GetTestRunShard_ReturnsTestRunShardDto()
         {
             var cloudRunMetadata = new CloudRunMetadata();
+            cloudRunMetadata.NumberOfTestWorkers = 6;
             var cIInfo = new CIInfo();
             var dataProcessor = new DataProcessor(cloudRunMetadata, cIInfo);
 
@@ -84,7 +86,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             Assert.IsNotNull(result.Summary);
             Assert.AreEqual("RUNNING", result.Summary!.Status);
             Assert.IsNotNull(result.Summary!.StartTime);
-            Assert.AreEqual(1, result.Workers);
+            Assert.AreEqual(6, result.Workers);
         }
 
         [Test]
