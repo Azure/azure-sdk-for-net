@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NewRelicObservability.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NewRelicObservability.Samples
 {
     public partial class Sample_NewRelicMonitorResource
     {
-        // Monitors_ListBySubscription_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNewRelicMonitorResources_MonitorsListBySubscriptionMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListBySubscription_MaximumSet_Gen.json
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MonitorsGetMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Get_MaximumSet_Gen.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_MonitorsUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Update_MaximumSet_Gen.json
@@ -162,9 +160,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_MonitorsDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Delete_MaximumSet_Gen.json
@@ -187,12 +184,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             await newRelicMonitorResource.DeleteAsync(WaitUntil.Completed, userEmail);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_MonitorsDeleteMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Delete_MinimumSet_Gen.json
@@ -215,12 +211,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             await newRelicMonitorResource.DeleteAsync(WaitUntil.Completed, userEmail);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_GetMetricRules_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetricRules_MonitorsGetMetricRulesMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_GetMetricRules_MaximumSet_Gen.json
@@ -246,9 +241,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_GetMetricRules_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetricRules_MonitorsGetMetricRulesMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_GetMetricRules_MinimumSet_Gen.json
@@ -274,9 +268,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_GetMetricStatus_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetricStatus_MonitorsGetMetricStatusMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_GetMetricStatus_MaximumSet_Gen.json
@@ -308,9 +301,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_GetMetricStatus_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetricStatus_MonitorsGetMetricStatusMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_GetMetricStatus_MinimumSet_Gen.json
@@ -342,9 +334,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_ListAppServices_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAppServices_MonitorsListAppServicesMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListAppServices_MaximumSet_Gen.json
@@ -376,12 +367,11 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListAppServices_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAppServices_MonitorsListAppServicesMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListAppServices_MinimumSet_Gen.json
@@ -413,12 +403,11 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_SwitchBilling_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SwitchBilling_MonitorsSwitchBillingMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_SwitchBilling_MaximumSet_Gen.json
@@ -459,9 +448,8 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_SwitchBilling_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SwitchBilling_MonitorsSwitchBillingMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_SwitchBilling_MinimumSet_Gen.json
@@ -491,9 +479,8 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_ListHosts_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHosts_MonitorsListHostsMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListHosts_MaximumSet_Gen.json
@@ -525,12 +512,11 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListHosts_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHosts_MonitorsListHostsMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListHosts_MinimumSet_Gen.json
@@ -562,12 +548,11 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListMonitoredResources_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMonitoredResources_MonitorsListMonitoredResourcesMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListMonitoredResources_MaximumSet_Gen.json
@@ -592,12 +577,11 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListMonitoredResources_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMonitoredResources_MonitorsListMonitoredResourcesMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListMonitoredResources_MinimumSet_Gen.json
@@ -622,12 +606,11 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListLinkedResources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLinkedResources_MonitorsListLinkedResources()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/LinkedResources_List.json
@@ -652,12 +635,11 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_VmHostPayload_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task VmHostPayload_MonitorsVmHostPayloadMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_VmHostPayload_MaximumSet_Gen.json
@@ -682,9 +664,8 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_VmHostPayload_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task VmHostPayload_MonitorsVmHostPayloadMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_VmHostPayload_MinimumSet_Gen.json
@@ -709,9 +690,8 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BillingInfo_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingInfo_BillingInfoGet()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/BillingInfo_Get.json
@@ -736,9 +716,8 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ConnectedPartnerResources_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConnectedPartnerResources_ConnectedPartnerResourcesList()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/ConnectedPartnerResources_List.json
@@ -763,7 +742,7 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

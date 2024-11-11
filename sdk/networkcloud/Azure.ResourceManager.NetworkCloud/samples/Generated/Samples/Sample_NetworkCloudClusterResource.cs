@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
 {
     public partial class Sample_NetworkCloudClusterResource
     {
-        // List clusters for subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkCloudClusters_ListClustersForSubscription()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Clusters_ListBySubscription.json
@@ -46,12 +46,11 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCluster()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Clusters_Get.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch cluster AggregatorOrSingleRackDefinition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchClusterAggregatorOrSingleRackDefinition()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Clusters_Patch_AggregatorOrSingleRackDefinition.json
@@ -153,9 +151,8 @@ StorageApplianceName = "vmName",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch cluster command output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchClusterCommandOutput()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Clusters_Patch_CommandOutput.json
@@ -210,9 +207,8 @@ StorageApplianceName = "vmName",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch cluster location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchClusterLocation()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Clusters_Patch_Location.json
@@ -251,9 +247,8 @@ StorageApplianceName = "vmName",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch runtime protection configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchRuntimeProtectionConfiguration()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Clusters_Patch_RuntimeProtectionConfiguration.json
@@ -292,9 +287,8 @@ StorageApplianceName = "vmName",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch secret archive
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchSecretArchive()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Clusters_Patch_SecretArchive.json
@@ -336,9 +330,8 @@ StorageApplianceName = "vmName",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch update strategy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchUpdateStrategy()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Clusters_Patch_UpdateStrategy.json
@@ -381,9 +374,8 @@ StorageApplianceName = "vmName",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Continue update cluster version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ContinueUpdateVersion_ContinueUpdateClusterVersion()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Clusters_ContinueUpdateVersion.json
@@ -413,9 +405,8 @@ StorageApplianceName = "vmName",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Deploy cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Deploy_DeployCluster()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Clusters_Deploy.json
@@ -442,9 +433,8 @@ StorageApplianceName = "vmName",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Deploy cluster skipping validation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Deploy_DeployClusterSkippingValidation()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Clusters_Deploy_SkipValidation.json
@@ -477,9 +467,8 @@ StorageApplianceName = "vmName",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Execute a runtime protection scan on the cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScanRuntime_ExecuteARuntimeProtectionScanOnTheCluster()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Clusters_ScanRuntime.json
@@ -509,9 +498,8 @@ StorageApplianceName = "vmName",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Update cluster version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateVersion_UpdateClusterVersion()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Clusters_UpdateVersion.json

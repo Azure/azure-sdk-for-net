@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NotificationHubs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NotificationHubs.Samples
 {
     public partial class Sample_NotificationHubNamespaceAuthorizationRuleResource
     {
-        // Namespaces_CreateOrUpdateAuthorizationRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_NamespacesCreateOrUpdateAuthorizationRule()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/AuthorizationRuleCreateOrUpdate.json
@@ -55,9 +55,8 @@ AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Namespaces_DeleteAuthorizationRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_NamespacesDeleteAuthorizationRule()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/AuthorizationRuleDelete.json
@@ -80,12 +79,11 @@ AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
             // invoke the operation
             await notificationHubNamespaceAuthorizationRule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Namespaces_GetAuthorizationRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NamespacesGetAuthorizationRule()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/AuthorizationRuleGet.json
@@ -115,9 +113,8 @@ AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Namespaces_ListKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_NamespacesListKeys()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/AuthorizationRuleListKeys.json
@@ -143,9 +140,8 @@ AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Namespaces_RegenerateKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKeys_NamespacesRegenerateKeys()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/AuthorizationRuleRegenerateKey.json

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NotificationHubs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NotificationHubs.Samples
 {
     public partial class Sample_NotificationHubAuthorizationRuleCollection
     {
-        // NotificationHubs_CreateOrUpdateAuthorizationRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NotificationHubsCreateOrUpdateAuthorizationRule()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/AuthorizationRuleCreateOrUpdate.json
@@ -59,9 +59,8 @@ AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NotificationHubs_GetAuthorizationRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NotificationHubsGetAuthorizationRule()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/AuthorizationRuleGet.json
@@ -95,9 +94,8 @@ AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NotificationHubs_GetAuthorizationRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_NotificationHubsGetAuthorizationRule()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/AuthorizationRuleGet.json
@@ -127,9 +125,8 @@ AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NotificationHubs_GetAuthorizationRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NotificationHubsGetAuthorizationRule()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/AuthorizationRuleGet.json
@@ -159,7 +156,7 @@ AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -171,9 +168,8 @@ AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
             }
         }
 
-        // NotificationHubs_ListAuthorizationRules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_NotificationHubsListAuthorizationRules()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/AuthorizationRuleList.json
@@ -206,7 +202,7 @@ AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
