@@ -77,6 +77,27 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
         }
 
+        [Test]
+        public void TestMapWebPubSubHubConfigureCustomHub()
+        {
+            var testHost = "webpubsub.azure.net";
+            var customHub = "customhub";
+            WebApplicationBuilder builder = WebApplication.CreateBuilder();
+            builder.Services
+             .AddWebPubSub(o => o.ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint=https://{testHost};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"));
+
+            using var app = builder.Build();
+            app.MapWebPubSubHub<TestHub>("/testhub", customHub);
+
+            var validator = app.Services.GetRequiredService<RequestValidator>();
+            var adaptor = app.Services.GetRequiredService<ServiceRequestHandlerAdapter>();
+
+            Assert.NotNull(validator);
+            Assert.NotNull(adaptor);
+            Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
+            Assert.NotNull(adaptor.GetHub(customHub), "Custom hub should be registered");
+        }
+
         private sealed class TestHub : WebPubSubHub
         { }
 
