@@ -11,14 +11,14 @@ using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.SecurityCenter.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_DeviceSecurityGroupResource
     {
-        // Get a device security group for the specified IoT Hub resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADeviceSecurityGroupForTheSpecifiedIoTHubResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2019-08-01/examples/DeviceSecurityGroups/GetDeviceSecurityGroups_example.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a device security group for the specified IoT hub resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateADeviceSecurityGroupForTheSpecifiedIoTHubResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2019-08-01/examples/DeviceSecurityGroups/PutDeviceSecurityGroups_example.json
@@ -84,9 +83,8 @@ new ActiveConnectionsNotInAllowedRange(true,0,30,XmlConvert.ToTimeSpan("PT05M"))
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a device security group for the specified IoT Hub resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteADeviceSecurityGroupForTheSpecifiedIoTHubResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2019-08-01/examples/DeviceSecurityGroups/DeleteDeviceSecurityGroups_example.json
@@ -107,7 +105,7 @@ new ActiveConnectionsNotInAllowedRange(true,0,30,XmlConvert.ToTimeSpan("PT05M"))
             // invoke the operation
             await deviceSecurityGroup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
