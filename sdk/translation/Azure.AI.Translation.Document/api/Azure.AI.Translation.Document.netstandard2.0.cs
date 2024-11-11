@@ -23,6 +23,7 @@ namespace Azure.AI.Translation.Document
         public System.Uri TranslatedDocumentUri { get { throw null; } }
         public string TranslatedToLanguageCode { get { throw null; } }
         public float TranslationProgressPercentage { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.DocumentStatusResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentStatusResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentStatusResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.DocumentStatusResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.DocumentStatusResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -35,8 +36,9 @@ namespace Azure.AI.Translation.Document
         public DocumentTranslateContent(Azure.AI.Translation.Document.MultipartFormFileData document, System.Collections.Generic.IList<Azure.AI.Translation.Document.MultipartFormFileData> glossaries) { }
         public Azure.AI.Translation.Document.MultipartFormFileData MultipartDocument { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.MultipartFormFileData> MultipartGlossary { get { throw null; } }
-        void global::System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentTranslateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.DocumentTranslateContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentTranslateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentTranslateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.DocumentTranslateContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.DocumentTranslateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.DocumentTranslateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.DocumentTranslateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -129,6 +131,7 @@ namespace Azure.AI.Translation.Document
         public string Format { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> FormatVersions { get { throw null; } }
         public Azure.AI.Translation.Document.FileFormatType? Type { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.DocumentTranslationFileFormat System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentTranslationFileFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentTranslationFileFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.DocumentTranslationFileFormat System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.DocumentTranslationFileFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -143,6 +146,7 @@ namespace Azure.AI.Translation.Document
         public Azure.AI.Translation.Document.StorageInputUriKind? StorageUriKind { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationTarget> Targets { get { throw null; } }
         public void AddTarget(System.Uri targetUri, string languageCode, Azure.AI.Translation.Document.TranslationGlossary glossary = null, string categoryId = null) { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.DocumentTranslationInput System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentTranslationInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentTranslationInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.DocumentTranslationInput System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.DocumentTranslationInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -285,6 +289,7 @@ namespace Azure.AI.Translation.Document
     {
         internal SupportedFileFormats() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.DocumentTranslationFileFormat> Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.SupportedFileFormats System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.SupportedFileFormats>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.SupportedFileFormats>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.SupportedFileFormats System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.SupportedFileFormats>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -295,6 +300,7 @@ namespace Azure.AI.Translation.Document
     {
         public TranslationBatch(System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.DocumentTranslationInput> inputs) { }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentTranslationInput> Inputs { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.TranslationBatch System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.TranslationBatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.TranslationBatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.TranslationBatch System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.TranslationBatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -318,6 +324,7 @@ namespace Azure.AI.Translation.Document
         public string FormatVersion { get { throw null; } set { } }
         public System.Uri GlossaryUri { get { throw null; } }
         public Azure.AI.Translation.Document.TranslationStorageSource? StorageSource { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.TranslationGlossary System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.TranslationGlossary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.TranslationGlossary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.TranslationGlossary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.TranslationGlossary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -333,6 +340,7 @@ namespace Azure.AI.Translation.Document
         public System.Uri SourceUri { get { throw null; } }
         public Azure.AI.Translation.Document.TranslationStorageSource? StorageSource { get { throw null; } set { } }
         public string Suffix { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.TranslationSource System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.TranslationSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.TranslationSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.TranslationSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.TranslationSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -354,6 +362,7 @@ namespace Azure.AI.Translation.Document
         public System.DateTimeOffset LastModified { get { throw null; } }
         public Azure.AI.Translation.Document.DocumentTranslationStatus Status { get { throw null; } }
         public long TotalCharactersCharged { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.TranslationStatusResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.TranslationStatusResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.TranslationStatusResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.TranslationStatusResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.TranslationStatusResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -385,6 +394,7 @@ namespace Azure.AI.Translation.Document
         public string LanguageCode { get { throw null; } }
         public Azure.AI.Translation.Document.TranslationStorageSource? StorageSource { get { throw null; } set { } }
         public System.Uri TargetUri { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.TranslationTarget System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.TranslationTarget>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.TranslationTarget>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Document.TranslationTarget System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.TranslationTarget>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
