@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("dnsServiceIp"u8);
                 writer.WriteStringValue(DnsServiceIP.ToString());
             }
+            if (Optional.IsDefined(L2ServiceLoadBalancerConfiguration))
+            {
+                writer.WritePropertyName("l2ServiceLoadBalancerConfiguration"u8);
+                writer.WriteObjectValue(L2ServiceLoadBalancerConfiguration, options);
+            }
             if (Optional.IsCollectionDefined(PodCidrs))
             {
                 writer.WritePropertyName("podCidrs"u8);
@@ -116,6 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ResourceIdentifier cloudServicesNetworkId = default;
             ResourceIdentifier cniNetworkId = default;
             IPAddress dnsServiceIP = default;
+            L2ServiceLoadBalancerConfiguration l2ServiceLoadBalancerConfiguration = default;
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -159,6 +165,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     dnsServiceIP = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("l2ServiceLoadBalancerConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    l2ServiceLoadBalancerConfiguration = L2ServiceLoadBalancerConfiguration.DeserializeL2ServiceLoadBalancerConfiguration(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("podCidrs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -199,6 +214,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 cloudServicesNetworkId,
                 cniNetworkId,
                 dnsServiceIP,
+                l2ServiceLoadBalancerConfiguration,
                 podCidrs ?? new ChangeTrackingList<string>(),
                 serviceCidrs ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

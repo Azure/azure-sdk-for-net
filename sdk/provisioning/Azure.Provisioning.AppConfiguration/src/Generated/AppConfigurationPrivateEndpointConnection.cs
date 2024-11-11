@@ -20,45 +20,70 @@ public partial class AppConfigurationPrivateEndpointConnection : ProvisionableRe
     /// <summary>
     /// Private endpoint connection name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// A collection of information about the state of the connection between
     /// service consumer and provider.
     /// </summary>
-    public BicepValue<AppConfigurationPrivateLinkServiceConnectionState> ConnectionState { get => _connectionState; set => _connectionState.Assign(value); }
-    private readonly BicepValue<AppConfigurationPrivateLinkServiceConnectionState> _connectionState;
+    public AppConfigurationPrivateLinkServiceConnectionState ConnectionState 
+    {
+        get { Initialize(); return _connectionState!; }
+        set { Initialize(); AssignOrReplace(ref _connectionState, value); }
+    }
+    private AppConfigurationPrivateLinkServiceConnectionState? _connectionState;
 
     /// <summary>
     /// Gets or sets Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> PrivateEndpointId { get => _privateEndpointId; set => _privateEndpointId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _privateEndpointId;
+    public BicepValue<ResourceIdentifier> PrivateEndpointId 
+    {
+        get { Initialize(); return _privateEndpointId!; }
+        set { Initialize(); _privateEndpointId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _privateEndpointId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The provisioning status of the private endpoint connection.
     /// </summary>
-    public BicepValue<AppConfigurationProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<AppConfigurationProvisioningState> _provisioningState;
+    public BicepValue<AppConfigurationProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<AppConfigurationProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent AppConfigurationStore.
     /// </summary>
-    public AppConfigurationStore? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<AppConfigurationStore> _parent;
+    public AppConfigurationStore? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<AppConfigurationStore>? _parent;
 
     /// <summary>
     /// Creates a new AppConfigurationPrivateEndpointConnection.
@@ -74,13 +99,21 @@ public partial class AppConfigurationPrivateEndpointConnection : ProvisionableRe
     public AppConfigurationPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores/privateEndpointConnections", resourceVersion ?? "2024-05-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _connectionState = BicepValue<AppConfigurationPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
-        _privateEndpointId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PrivateEndpointId", ["properties", "privateEndpoint", "id"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<AppConfigurationProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<AppConfigurationStore>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// AppConfigurationPrivateEndpointConnection.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _connectionState = DefineModelProperty<AppConfigurationPrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
+        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<AppConfigurationProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<AppConfigurationStore>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

@@ -19,13 +19,21 @@ namespace Azure.Communication.JobRouter
 
         void IJsonModel<ReclassifyJobResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ReclassifyJobResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReclassifyJobResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -41,7 +49,6 @@ namespace Azure.Communication.JobRouter
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ReclassifyJobResult IJsonModel<ReclassifyJobResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

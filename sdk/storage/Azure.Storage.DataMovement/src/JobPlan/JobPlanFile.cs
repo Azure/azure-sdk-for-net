@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -27,25 +28,28 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// List of Job Part Plan Files associated with this job.
         /// </summary>
-        public Dictionary<int, JobPartPlanFile> JobParts { get; private set; }
+        public ConcurrentDictionary<int, JobPartPlanFile> JobParts { get; private set; }
 
         /// <summary>
         /// Lock for the memory mapped file to allow only one writer.
         /// </summary>
         public readonly SemaphoreSlim WriteLock;
 
+        private const int DefaultBufferSize = 81920;
+
         private JobPlanFile(string id, string filePath)
         {
             Id = id;
             FilePath = filePath;
-            JobParts = new Dictionary<int, JobPartPlanFile>();
+            JobParts = new();
             WriteLock = new SemaphoreSlim(1);
         }
 
         public static async Task<JobPlanFile> CreateJobPlanFileAsync(
             string checkpointerPath,
             string id,
-            Stream headerStream)
+            Stream headerStream,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(checkpointerPath, nameof(checkpointerPath));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -55,9 +59,18 @@ namespace Azure.Storage.DataMovement.JobPlan
             string filePath = Path.Combine(checkpointerPath, fileName);
 
             JobPlanFile jobPlanFile = new(id, filePath);
-            using (FileStream fileStream = File.Create(jobPlanFile.FilePath))
+            try
             {
-                await headerStream.CopyToAsync(fileStream).ConfigureAwait(false);
+                using (FileStream fileStream = File.Create(jobPlanFile.FilePath))
+                {
+                    await headerStream.CopyToAsync(fileStream, DefaultBufferSize, cancellationToken).ConfigureAwait(false);
+                }
+            }
+            catch (Exception)
+            {
+                // will handle if file has not been created yet
+                File.Delete(jobPlanFile.FilePath);
+                throw;
             }
 
             return jobPlanFile;

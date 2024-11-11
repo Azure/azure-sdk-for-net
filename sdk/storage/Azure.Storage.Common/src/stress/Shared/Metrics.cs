@@ -45,14 +45,29 @@ public class Metrics
     ///   This is the metric name used to collect how many objects (e.g. local file, blob, share file) were transferred.
     /// </summary>
     ///
-    public const string ObjectsTransferred = "ObjectsTransferred";
+    public const string ItemTransferCompleted = "ItemTransferCompleted";
+
+    /// <summary>
+    ///   This is the metric name used to collect each transfer status that occurred.
+    /// </summary>
+    public const string TransferStatusChanged = "TransferStatusChanged";
+
+    /// <summary>
+    ///   This is the metric name used to keep track of the failed transfer items.
+    /// </summary>
+    public const string TransferFailedItem = "TransferFailedItem";
+
+    /// <summary>
+    ///   This is the metric name used to keep track of the skipped transfer items
+    /// </summary>
+    public const string ItemTransferSkipped = "ItemTransferSkipped";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on how many times
     ///   the individual transfer part was restarted or retried.
     /// </summary>
     ///
-    public const string TransferRetriedRestarted = "TransferRestarted";
+    public const string TransferRestarted = "TransferRestarted";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the total number of bytes that have been

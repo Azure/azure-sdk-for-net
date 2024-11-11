@@ -7,17 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CloudMac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CloudMachine.Tests", "tests\Azure.Provisioning.CloudMachine.Tests.csproj", "{46DCEF27-4157-4FB6-A283-B8484EC45665}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning", "..\Azure.Provisioning\src\Azure.Provisioning.csproj", "{2F492C07-8182-41E2-8C68-27D353C9AB74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine", "..\..\cloudmachine\Azure.CloudMachine\src\Azure.CloudMachine.csproj", "{AE9C0E9B-27D9-4220-98DA-0CB6A7936277}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.KeyVault", "..\Azure.Provisioning.KeyVault\src\Azure.Provisioning.KeyVault.csproj", "{DA43BF21-558B-438B-9DBF-1A88130C944A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.Tests", "..\..\cloudmachine\Azure.CloudMachine\tests\Azure.CloudMachine.Tests.csproj", "{246D5F77-0151-40C5-8644-26A468A57CDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ServiceBus", "..\Azure.Provisioning.ServiceBus\src\Azure.Provisioning.ServiceBus.csproj", "{48D33345-B5A8-4F94-84D6-A61F8E16271D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Deployment", "..\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj", "{4562F8C1-9FE3-4B68-BBB2-D052B49C915A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.EventGrid", "..\Azure.Provisioning.EventGrid\src\Azure.Provisioning.EventGrid.csproj", "{BCBAF45F-E078-4230-9BDC-4DE9F2FBEE9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.Web", "..\..\cloudmachine\Azure.CloudMachine.Web\src\Azure.CloudMachine.Web.csproj", "{DD18D434-4665-43CA-97C0-4D63894EE23C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CognitiveServices", "..\Azure.Provisioning.CognitiveServices\src\Azure.Provisioning.CognitiveServices.csproj", "{987279D2-202C-488A-BA47-37FCEEA51536}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Storage", "..\Azure.Provisioning.Storage\src\Azure.Provisioning.Storage.csproj", "{813E7228-2B59-41D2-9AFC-BF4092EC7090}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.All", "..\..\cloudmachine\Azure.CloudMachine.All\src\Azure.CloudMachine.All.csproj", "{4E651FF9-EF43-4302-B77B-83C08D8FD117}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,30 +31,26 @@ Global
 		{46DCEF27-4157-4FB6-A283-B8484EC45665}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46DCEF27-4157-4FB6-A283-B8484EC45665}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46DCEF27-4157-4FB6-A283-B8484EC45665}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2F492C07-8182-41E2-8C68-27D353C9AB74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F492C07-8182-41E2-8C68-27D353C9AB74}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F492C07-8182-41E2-8C68-27D353C9AB74}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F492C07-8182-41E2-8C68-27D353C9AB74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DA43BF21-558B-438B-9DBF-1A88130C944A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DA43BF21-558B-438B-9DBF-1A88130C944A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DA43BF21-558B-438B-9DBF-1A88130C944A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DA43BF21-558B-438B-9DBF-1A88130C944A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48D33345-B5A8-4F94-84D6-A61F8E16271D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48D33345-B5A8-4F94-84D6-A61F8E16271D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48D33345-B5A8-4F94-84D6-A61F8E16271D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48D33345-B5A8-4F94-84D6-A61F8E16271D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BCBAF45F-E078-4230-9BDC-4DE9F2FBEE9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BCBAF45F-E078-4230-9BDC-4DE9F2FBEE9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BCBAF45F-E078-4230-9BDC-4DE9F2FBEE9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BCBAF45F-E078-4230-9BDC-4DE9F2FBEE9A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{987279D2-202C-488A-BA47-37FCEEA51536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{987279D2-202C-488A-BA47-37FCEEA51536}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{987279D2-202C-488A-BA47-37FCEEA51536}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{987279D2-202C-488A-BA47-37FCEEA51536}.Release|Any CPU.Build.0 = Release|Any CPU
-		{813E7228-2B59-41D2-9AFC-BF4092EC7090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{813E7228-2B59-41D2-9AFC-BF4092EC7090}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{813E7228-2B59-41D2-9AFC-BF4092EC7090}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{813E7228-2B59-41D2-9AFC-BF4092EC7090}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE9C0E9B-27D9-4220-98DA-0CB6A7936277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE9C0E9B-27D9-4220-98DA-0CB6A7936277}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE9C0E9B-27D9-4220-98DA-0CB6A7936277}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE9C0E9B-27D9-4220-98DA-0CB6A7936277}.Release|Any CPU.Build.0 = Release|Any CPU
+		{246D5F77-0151-40C5-8644-26A468A57CDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{246D5F77-0151-40C5-8644-26A468A57CDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{246D5F77-0151-40C5-8644-26A468A57CDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{246D5F77-0151-40C5-8644-26A468A57CDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4562F8C1-9FE3-4B68-BBB2-D052B49C915A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4562F8C1-9FE3-4B68-BBB2-D052B49C915A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4562F8C1-9FE3-4B68-BBB2-D052B49C915A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4562F8C1-9FE3-4B68-BBB2-D052B49C915A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD18D434-4665-43CA-97C0-4D63894EE23C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD18D434-4665-43CA-97C0-4D63894EE23C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD18D434-4665-43CA-97C0-4D63894EE23C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD18D434-4665-43CA-97C0-4D63894EE23C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E651FF9-EF43-4302-B77B-83C08D8FD117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E651FF9-EF43-4302-B77B-83C08D8FD117}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E651FF9-EF43-4302-B77B-83C08D8FD117}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E651FF9-EF43-4302-B77B-83C08D8FD117}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Type of backup Manual or Scheduled
-    /// Serialized Name: BackupType
-    /// </summary>
+    /// <summary> Type of backup Manual or Scheduled. </summary>
     public readonly partial struct NetAppBackupType : IEquatable<NetAppBackupType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string ManualValue = "Manual";
         private const string ScheduledValue = "Scheduled";
 
-        /// <summary>
-        /// Manual backup
-        /// Serialized Name: BackupType.Manual
-        /// </summary>
+        /// <summary> Manual backup. </summary>
         public static NetAppBackupType Manual { get; } = new NetAppBackupType(ManualValue);
-        /// <summary>
-        /// Scheduled backup
-        /// Serialized Name: BackupType.Scheduled
-        /// </summary>
+        /// <summary> Scheduled backup. </summary>
         public static NetAppBackupType Scheduled { get; } = new NetAppBackupType(ScheduledValue);
         /// <summary> Determines if two <see cref="NetAppBackupType"/> values are the same. </summary>
         public static bool operator ==(NetAppBackupType left, NetAppBackupType right) => left.Equals(right);
