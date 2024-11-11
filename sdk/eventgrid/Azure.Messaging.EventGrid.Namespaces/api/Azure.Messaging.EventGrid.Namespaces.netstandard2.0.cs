@@ -5,6 +5,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal AcknowledgeResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.Namespaces.FailedLockToken> FailedLockTokens { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SucceededLockTokens { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -16,6 +17,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal BrokerProperties() { }
         public int DeliveryCount { get { throw null; } }
         public string LockToken { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.BrokerProperties System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.BrokerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.BrokerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.BrokerProperties System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.BrokerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -116,6 +118,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal FailedLockToken() { }
         public Azure.ResponseError Error { get { throw null; } }
         public string LockToken { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.FailedLockToken System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.FailedLockToken System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -127,6 +130,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal ReceiveDetails() { }
         public Azure.Messaging.EventGrid.Namespaces.BrokerProperties BrokerProperties { get { throw null; } }
         public Azure.Messaging.CloudEvent Event { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.ReceiveDetails System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.ReceiveDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.ReceiveDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.ReceiveDetails System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.ReceiveDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -137,6 +141,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
     {
         internal ReceiveResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.Namespaces.ReceiveDetails> Details { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.ReceiveResult System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.ReceiveResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.ReceiveResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.ReceiveResult System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.ReceiveResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -148,6 +153,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal RejectResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.Namespaces.FailedLockToken> FailedLockTokens { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SucceededLockTokens { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.RejectResult System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.RejectResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.RejectResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.RejectResult System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.RejectResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -180,6 +186,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal ReleaseResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.Namespaces.FailedLockToken> FailedLockTokens { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SucceededLockTokens { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.ReleaseResult System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.ReleaseResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.ReleaseResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.ReleaseResult System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.ReleaseResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -191,6 +198,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal RenewLocksResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.Namespaces.FailedLockToken> FailedLockTokens { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SucceededLockTokens { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.RenewLocksResult System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.RenewLocksResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.RenewLocksResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.Namespaces.RenewLocksResult System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.RenewLocksResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
