@@ -35,8 +35,6 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// </summary>
         public readonly SemaphoreSlim WriteLock;
 
-        private const int DefaultBufferSize = 81920;
-
         private JobPlanFile(string id, string filePath)
         {
             Id = id;
