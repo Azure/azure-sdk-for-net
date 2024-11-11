@@ -14,7 +14,7 @@ namespace Azure.AI.Projects
         public static string ToSerialString(this AuthenticationType value) => value switch
         {
             AuthenticationType.ApiKey => "ApiKey",
-            AuthenticationType.AAD => "AAD",
+            AuthenticationType.EntraId => "AAD",
             AuthenticationType.SAS => "SAS",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AuthenticationType value.")
         };
@@ -22,7 +22,7 @@ namespace Azure.AI.Projects
         public static AuthenticationType ToAuthenticationType(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ApiKey")) return AuthenticationType.ApiKey;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AAD")) return AuthenticationType.AAD;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AAD")) return AuthenticationType.EntraId;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "SAS")) return AuthenticationType.SAS;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AuthenticationType value.");
         }

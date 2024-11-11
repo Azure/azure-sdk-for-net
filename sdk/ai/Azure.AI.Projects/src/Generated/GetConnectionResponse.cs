@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Response from the listSecrets operation. </summary>
-    internal partial class ConnectionsListSecretsResponse
+    internal partial class GetConnectionResponse
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionsListSecretsResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetConnectionResponse"/>. </summary>
         /// <param name="id"> A unique identifier for the connection. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="properties">
         /// The properties of the resource
-        /// Please note <see cref="ConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConnectionPropertiesAADAuth"/>, <see cref="ConnectionPropertiesApiKeyAuth"/> and <see cref="ConnectionPropertiesSASAuth"/>.
+        /// Please note <see cref="InternalConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="InternalConnectionPropertiesAADAuth"/>, <see cref="InternalConnectionPropertiesApiKeyAuth"/> and <see cref="InternalConnectionPropertiesSASAuth"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        internal ConnectionsListSecretsResponse(string id, string name, ConnectionProperties properties)
+        internal GetConnectionResponse(string id, string name, InternalConnectionProperties properties)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(name, nameof(name));
@@ -65,16 +65,16 @@ namespace Azure.AI.Projects
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionsListSecretsResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetConnectionResponse"/>. </summary>
         /// <param name="id"> A unique identifier for the connection. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="properties">
         /// The properties of the resource
-        /// Please note <see cref="ConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConnectionPropertiesAADAuth"/>, <see cref="ConnectionPropertiesApiKeyAuth"/> and <see cref="ConnectionPropertiesSASAuth"/>.
+        /// Please note <see cref="InternalConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="InternalConnectionPropertiesAADAuth"/>, <see cref="InternalConnectionPropertiesApiKeyAuth"/> and <see cref="InternalConnectionPropertiesSASAuth"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionsListSecretsResponse(string id, string name, ConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetConnectionResponse(string id, string name, InternalConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -82,8 +82,8 @@ namespace Azure.AI.Projects
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionsListSecretsResponse"/> for deserialization. </summary>
-        internal ConnectionsListSecretsResponse()
+        /// <summary> Initializes a new instance of <see cref="GetConnectionResponse"/> for deserialization. </summary>
+        internal GetConnectionResponse()
         {
         }
 
@@ -93,9 +93,9 @@ namespace Azure.AI.Projects
         public string Name { get; }
         /// <summary>
         /// The properties of the resource
-        /// Please note <see cref="ConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConnectionPropertiesAADAuth"/>, <see cref="ConnectionPropertiesApiKeyAuth"/> and <see cref="ConnectionPropertiesSASAuth"/>.
+        /// Please note <see cref="InternalConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="InternalConnectionPropertiesAADAuth"/>, <see cref="InternalConnectionPropertiesApiKeyAuth"/> and <see cref="InternalConnectionPropertiesSASAuth"/>.
         /// </summary>
-        public ConnectionProperties Properties { get; }
+        public InternalConnectionProperties Properties { get; }
     }
 }

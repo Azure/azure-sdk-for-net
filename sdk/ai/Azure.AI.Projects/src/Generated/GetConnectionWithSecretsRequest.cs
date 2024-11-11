@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Response from the list operation. </summary>
-    internal partial class ConnectionsListResponse
+    /// <summary> The GetConnectionWithSecretsRequest. </summary>
+    internal partial class GetConnectionWithSecretsRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +45,31 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionsListResponse"/>. </summary>
-        /// <param name="value"> A list of connection list secrets. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ConnectionsListResponse(IEnumerable<ConnectionsListSecretsResponse> value)
+        /// <summary> Initializes a new instance of <see cref="GetConnectionWithSecretsRequest"/>. </summary>
+        /// <param name="ignored"> The body is ignored. TODO: Can we remove this?. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ignored"/> is null. </exception>
+        internal GetConnectionWithSecretsRequest(string ignored)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(ignored, nameof(ignored));
 
-            Value = value.ToList();
+            Ignored = ignored;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionsListResponse"/>. </summary>
-        /// <param name="value"> A list of connection list secrets. </param>
+        /// <summary> Initializes a new instance of <see cref="GetConnectionWithSecretsRequest"/>. </summary>
+        /// <param name="ignored"> The body is ignored. TODO: Can we remove this?. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionsListResponse(IReadOnlyList<ConnectionsListSecretsResponse> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetConnectionWithSecretsRequest(string ignored, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
+            Ignored = ignored;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionsListResponse"/> for deserialization. </summary>
-        internal ConnectionsListResponse()
+        /// <summary> Initializes a new instance of <see cref="GetConnectionWithSecretsRequest"/> for deserialization. </summary>
+        internal GetConnectionWithSecretsRequest()
         {
         }
 
-        /// <summary> A list of connection list secrets. </summary>
-        public IReadOnlyList<ConnectionsListSecretsResponse> Value { get; }
+        /// <summary> The body is ignored. TODO: Can we remove this?. </summary>
+        public string Ignored { get; }
     }
 }

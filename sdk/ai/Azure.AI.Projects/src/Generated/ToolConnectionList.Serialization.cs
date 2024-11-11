@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class ConnectionListResource : IUtf8JsonSerializable, IJsonModel<ConnectionListResource>
+    public partial class ToolConnectionList : IUtf8JsonSerializable, IJsonModel<ToolConnectionList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionListResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ToolConnectionList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConnectionListResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ToolConnectionList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionListResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ToolConnectionList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionListResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolConnectionList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.AI.Projects
             writer.WriteEndObject();
         }
 
-        ConnectionListResource IJsonModel<ConnectionListResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ToolConnectionList IJsonModel<ToolConnectionList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionListResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ToolConnectionList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionListResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolConnectionList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectionListResource(document.RootElement, options);
+            return DeserializeToolConnectionList(document.RootElement, options);
         }
 
-        internal static ConnectionListResource DeserializeConnectionListResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ToolConnectionList DeserializeToolConnectionList(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -74,7 +74,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            IList<ConnectionResource> connections = default;
+            IList<ToolConnection> connections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,10 +85,10 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    List<ConnectionResource> array = new List<ConnectionResource>();
+                    List<ToolConnection> array = new List<ToolConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionResource.DeserializeConnectionResource(item, options));
+                        array.Add(ToolConnection.DeserializeToolConnection(item, options));
                     }
                     connections = array;
                     continue;
@@ -99,46 +99,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectionListResource(connections ?? new ChangeTrackingList<ConnectionResource>(), serializedAdditionalRawData);
+            return new ToolConnectionList(connections ?? new ChangeTrackingList<ToolConnection>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConnectionListResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ToolConnectionList>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionListResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ToolConnectionList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionListResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolConnectionList)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConnectionListResource IPersistableModel<ConnectionListResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ToolConnectionList IPersistableModel<ToolConnectionList>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionListResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ToolConnectionList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConnectionListResource(document.RootElement, options);
+                        return DeserializeToolConnectionList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionListResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolConnectionList)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConnectionListResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ToolConnectionList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ConnectionListResource FromResponse(Response response)
+        internal static ToolConnectionList FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeConnectionListResource(document.RootElement);
+            return DeserializeToolConnectionList(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

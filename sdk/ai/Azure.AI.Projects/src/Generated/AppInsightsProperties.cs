@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> SamplingStrategy Definition. </summary>
-    public partial class SamplingStrategy
+    /// <summary> The properties of the Application Insights resource. </summary>
+    internal partial class AppInsightsProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,28 +45,31 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SamplingStrategy"/>. </summary>
-        /// <param name="rate"> Sampling rate. </param>
-        public SamplingStrategy(float rate)
+        /// <summary> Initializes a new instance of <see cref="AppInsightsProperties"/>. </summary>
+        /// <param name="connectionString"> Authentication type of the connection target. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
+        internal AppInsightsProperties(string connectionString)
         {
-            Rate = rate;
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+
+            ConnectionString = connectionString;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SamplingStrategy"/>. </summary>
-        /// <param name="rate"> Sampling rate. </param>
+        /// <summary> Initializes a new instance of <see cref="AppInsightsProperties"/>. </summary>
+        /// <param name="connectionString"> Authentication type of the connection target. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SamplingStrategy(float rate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppInsightsProperties(string connectionString, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Rate = rate;
+            ConnectionString = connectionString;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SamplingStrategy"/> for deserialization. </summary>
-        internal SamplingStrategy()
+        /// <summary> Initializes a new instance of <see cref="AppInsightsProperties"/> for deserialization. </summary>
+        internal AppInsightsProperties()
         {
         }
 
-        /// <summary> Sampling rate. </summary>
-        public float Rate { get; set; }
+        /// <summary> Authentication type of the connection target. </summary>
+        public string ConnectionString { get; }
     }
 }

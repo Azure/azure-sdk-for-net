@@ -36,21 +36,6 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("file_search"u8);
                 writer.WriteObjectValue(FileSearch, options);
             }
-            if (Optional.IsDefined(BingGrounding))
-            {
-                writer.WritePropertyName("bing_grounding"u8);
-                writer.WriteObjectValue(BingGrounding, options);
-            }
-            if (Optional.IsDefined(MicrosoftFabric))
-            {
-                writer.WritePropertyName("microsoft_fabric"u8);
-                writer.WriteObjectValue(MicrosoftFabric, options);
-            }
-            if (Optional.IsDefined(SharePoint))
-            {
-                writer.WritePropertyName("sharepoint"u8);
-                writer.WriteObjectValue(SharePoint, options);
-            }
             if (Optional.IsDefined(AzureAISearch))
             {
                 writer.WritePropertyName("azure_ai_search"u8);
@@ -96,9 +81,6 @@ namespace Azure.AI.Projects
             }
             CodeInterpreterToolResource codeInterpreter = default;
             FileSearchToolResource fileSearch = default;
-            ConnectionListResource bingGrounding = default;
-            ConnectionListResource microsoftFabric = default;
-            ConnectionListResource sharepoint = default;
             AzureAISearchResource azureAiSearch = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -122,33 +104,6 @@ namespace Azure.AI.Projects
                     fileSearch = FileSearchToolResource.DeserializeFileSearchToolResource(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("bing_grounding"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    bingGrounding = ConnectionListResource.DeserializeConnectionListResource(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("microsoft_fabric"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    microsoftFabric = ConnectionListResource.DeserializeConnectionListResource(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("sharepoint"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sharepoint = ConnectionListResource.DeserializeConnectionListResource(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("azure_ai_search"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -164,14 +119,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ToolResources(
-                codeInterpreter,
-                fileSearch,
-                bingGrounding,
-                microsoftFabric,
-                sharepoint,
-                azureAiSearch,
-                serializedAdditionalRawData);
+            return new ToolResources(codeInterpreter, fileSearch, azureAiSearch, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ToolResources>.Write(ModelReaderWriterOptions options)

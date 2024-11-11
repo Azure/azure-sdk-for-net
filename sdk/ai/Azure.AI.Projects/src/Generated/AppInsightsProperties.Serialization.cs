@@ -13,21 +13,21 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class ConnectionResource : IUtf8JsonSerializable, IJsonModel<ConnectionResource>
+    internal partial class AppInsightsProperties : IUtf8JsonSerializable, IJsonModel<AppInsightsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppInsightsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConnectionResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppInsightsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppInsightsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInsightsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("connection_id"u8);
-            writer.WriteStringValue(ConnectionId);
+            writer.WritePropertyName("ConnectionString"u8);
+            writer.WriteStringValue(ConnectionString);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -46,19 +46,19 @@ namespace Azure.AI.Projects
             writer.WriteEndObject();
         }
 
-        ConnectionResource IJsonModel<ConnectionResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AppInsightsProperties IJsonModel<AppInsightsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppInsightsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInsightsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectionResource(document.RootElement, options);
+            return DeserializeAppInsightsProperties(document.RootElement, options);
         }
 
-        internal static ConnectionResource DeserializeConnectionResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AppInsightsProperties DeserializeAppInsightsProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -66,14 +66,14 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string connectionId = default;
+            string connectionString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connection_id"u8))
+                if (property.NameEquals("ConnectionString"u8))
                 {
-                    connectionId = property.Value.GetString();
+                    connectionString = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -82,46 +82,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectionResource(connectionId, serializedAdditionalRawData);
+            return new AppInsightsProperties(connectionString, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConnectionResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AppInsightsProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppInsightsProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInsightsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConnectionResource IPersistableModel<ConnectionResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AppInsightsProperties IPersistableModel<AppInsightsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppInsightsProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConnectionResource(document.RootElement, options);
+                        return DeserializeAppInsightsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInsightsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConnectionResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppInsightsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ConnectionResource FromResponse(Response response)
+        internal static AppInsightsProperties FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeConnectionResource(document.RootElement);
+            return DeserializeAppInsightsProperties(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

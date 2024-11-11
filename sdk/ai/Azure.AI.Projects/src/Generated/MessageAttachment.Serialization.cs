@@ -26,8 +26,21 @@ namespace Azure.AI.Projects
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("file_id"u8);
-            writer.WriteStringValue(FileId);
+            if (Optional.IsDefined(FileId))
+            {
+                writer.WritePropertyName("file_id"u8);
+                writer.WriteStringValue(FileId);
+            }
+            if (Optional.IsCollectionDefined(DataSources))
+            {
+                writer.WritePropertyName("data_sources"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataSources)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
             foreach (var item in Tools)
@@ -86,6 +99,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             string fileId = default;
+            IList<VectorStoreDataSource> dataSources = default;
             IList<BinaryData> tools = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,6 +108,20 @@ namespace Azure.AI.Projects
                 if (property.NameEquals("file_id"u8))
                 {
                     fileId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("data_sources"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VectorStoreDataSource> array = new List<VectorStoreDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VectorStoreDataSource.DeserializeVectorStoreDataSource(item, options));
+                    }
+                    dataSources = array;
                     continue;
                 }
                 if (property.NameEquals("tools"u8))
@@ -119,7 +147,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MessageAttachment(fileId, tools, serializedAdditionalRawData);
+            return new MessageAttachment(fileId, dataSources ?? new ChangeTrackingList<VectorStoreDataSource>(), tools, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageAttachment>.Write(ModelReaderWriterOptions options)

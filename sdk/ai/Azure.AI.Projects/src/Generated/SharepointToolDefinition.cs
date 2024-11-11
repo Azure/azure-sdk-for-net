@@ -14,16 +14,31 @@ namespace Azure.AI.Projects
     public partial class SharepointToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="SharepointToolDefinition"/>. </summary>
-        public SharepointToolDefinition()
+        /// <param name="sharepointGrounding"> The list of connections used by the SharePoint tool. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharepointGrounding"/> is null. </exception>
+        public SharepointToolDefinition(ToolConnectionList sharepointGrounding)
         {
-            Type = "sharepoint";
+            Argument.AssertNotNull(sharepointGrounding, nameof(sharepointGrounding));
+
+            Type = "sharepoint_grounding";
+            SharepointGrounding = sharepointGrounding;
         }
 
         /// <summary> Initializes a new instance of <see cref="SharepointToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharepointToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
+        /// <param name="sharepointGrounding"> The list of connections used by the SharePoint tool. </param>
+        internal SharepointToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, ToolConnectionList sharepointGrounding) : base(type, serializedAdditionalRawData)
+        {
+            SharepointGrounding = sharepointGrounding;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SharepointToolDefinition"/> for deserialization. </summary>
+        internal SharepointToolDefinition()
         {
         }
+
+        /// <summary> The list of connections used by the SharePoint tool. </summary>
+        public ToolConnectionList SharepointGrounding { get; set; }
     }
 }

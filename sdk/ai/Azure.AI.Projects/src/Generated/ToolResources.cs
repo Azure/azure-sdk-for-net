@@ -57,18 +57,12 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="ToolResources"/>. </summary>
         /// <param name="codeInterpreter"> Resources to be used by the `code_interpreter tool` consisting of file IDs. </param>
         /// <param name="fileSearch"> Resources to be used by the `file_search` tool consisting of vector store IDs. </param>
-        /// <param name="bingGrounding"> Resources to be used by the `bing_grounding` tool consisting of connection IDs. </param>
-        /// <param name="microsoftFabric"> Resources to be used by the `microsoft_fabric` tool consisting of connection IDs. </param>
-        /// <param name="sharePoint"> Resources to be used by the `sharepoint` tool consisting of connection IDs. </param>
         /// <param name="azureAISearch"> Resources to be used by the `azure_ai_search` tool consisting of index IDs and names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ToolResources(CodeInterpreterToolResource codeInterpreter, FileSearchToolResource fileSearch, ConnectionListResource bingGrounding, ConnectionListResource microsoftFabric, ConnectionListResource sharePoint, AzureAISearchResource azureAISearch, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ToolResources(CodeInterpreterToolResource codeInterpreter, FileSearchToolResource fileSearch, AzureAISearchResource azureAISearch, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CodeInterpreter = codeInterpreter;
             FileSearch = fileSearch;
-            BingGrounding = bingGrounding;
-            MicrosoftFabric = microsoftFabric;
-            SharePoint = sharePoint;
             AzureAISearch = azureAISearch;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -77,12 +71,6 @@ namespace Azure.AI.Projects
         public CodeInterpreterToolResource CodeInterpreter { get; set; }
         /// <summary> Resources to be used by the `file_search` tool consisting of vector store IDs. </summary>
         public FileSearchToolResource FileSearch { get; set; }
-        /// <summary> Resources to be used by the `bing_grounding` tool consisting of connection IDs. </summary>
-        public ConnectionListResource BingGrounding { get; set; }
-        /// <summary> Resources to be used by the `microsoft_fabric` tool consisting of connection IDs. </summary>
-        public ConnectionListResource MicrosoftFabric { get; set; }
-        /// <summary> Resources to be used by the `sharepoint` tool consisting of connection IDs. </summary>
-        public ConnectionListResource SharePoint { get; set; }
         /// <summary> Resources to be used by the `azure_ai_search` tool consisting of index IDs and names. </summary>
         public AzureAISearchResource AzureAISearch { get; set; }
     }

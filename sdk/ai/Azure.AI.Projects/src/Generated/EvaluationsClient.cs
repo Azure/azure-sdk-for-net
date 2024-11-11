@@ -563,9 +563,8 @@ namespace Azure.AI.Projects
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Resource delete operation template.
+        /// [Protocol Method] Disable the evaluation schedule.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -574,21 +573,21 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
+        /// <param name="name"> Name of the evaluation schedule. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteScheduleAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> DisableScheduleAsync(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("EvaluationsClient.DeleteSchedule");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationsClient.DisableSchedule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteScheduleRequest(name, context);
+                using HttpMessage message = CreateDisableScheduleRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -598,9 +597,8 @@ namespace Azure.AI.Projects
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Resource delete operation template.
+        /// [Protocol Method] Disable the evaluation schedule.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -609,21 +607,21 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
+        /// <param name="name"> Name of the evaluation schedule. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteSchedule(string name, RequestContext context = null)
+        public virtual Response DisableSchedule(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("EvaluationsClient.DeleteSchedule");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationsClient.DisableSchedule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteScheduleRequest(name, context);
+                using HttpMessage message = CreateDisableScheduleRequest(name, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -971,11 +969,11 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateDeleteScheduleRequest(string name, RequestContext context)
+        internal HttpMessage CreateDisableScheduleRequest(string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
-            request.Method = RequestMethod.Delete;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/agents/v1.0/subscriptions/", false);
@@ -986,7 +984,8 @@ namespace Azure.AI.Projects
             uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations/schedules/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/disable", false);
+            uri.AppendQuery("apiVersion", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

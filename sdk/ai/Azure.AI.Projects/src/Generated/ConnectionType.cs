@@ -10,13 +10,15 @@ namespace Azure.AI.Projects
     /// <summary> The Type (or category) of the connection. </summary>
     public enum ConnectionType
     {
-        /// <summary> Azure OpenAI service. </summary>
+        /// <summary> Azure OpenAI Service. </summary>
         AzureOpenAI,
-        /// <summary> Serverless API service. </summary>
+        /// <summary> Serverless API Service. </summary>
         Serverless,
         /// <summary> Azure Blob Storage. </summary>
         AzureBlobStorage,
         /// <summary> Azure AI Services. </summary>
-        AIServices
+        AzureAIServices,
+        /// <summary> Azure AI Search. </summary>
+        AzureAISearch
     }
 }

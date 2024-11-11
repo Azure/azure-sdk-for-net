@@ -26,6 +26,8 @@ namespace Azure.AI.Projects
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("sharepoint_grounding"u8);
+            writer.WriteObjectValue(SharepointGrounding, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -66,11 +68,17 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
+            ToolConnectionList sharepointGrounding = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sharepoint_grounding"u8))
+                {
+                    sharepointGrounding = ToolConnectionList.DeserializeToolConnectionList(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
@@ -82,7 +90,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SharepointToolDefinition(type, serializedAdditionalRawData);
+            return new SharepointToolDefinition(type, serializedAdditionalRawData, sharepointGrounding);
         }
 
         BinaryData IPersistableModel<SharepointToolDefinition>.Write(ModelReaderWriterOptions options)

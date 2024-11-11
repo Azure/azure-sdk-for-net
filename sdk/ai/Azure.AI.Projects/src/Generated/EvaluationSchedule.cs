@@ -53,21 +53,18 @@ namespace Azure.AI.Projects
         /// Please note <see cref="Projects.Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="RecurrenceTrigger"/>.
         /// </param>
-        /// <param name="samplingStrategy"> Sampling strategy for the evaluation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/>, <paramref name="evaluators"/>, <paramref name="trigger"/> or <paramref name="samplingStrategy"/> is null. </exception>
-        public EvaluationSchedule(ApplicationInsightsConfiguration data, IDictionary<string, EvaluatorConfiguration> evaluators, Trigger trigger, SamplingStrategy samplingStrategy)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/>, <paramref name="evaluators"/> or <paramref name="trigger"/> is null. </exception>
+        public EvaluationSchedule(ApplicationInsightsConfiguration data, IDictionary<string, EvaluatorConfiguration> evaluators, Trigger trigger)
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(evaluators, nameof(evaluators));
             Argument.AssertNotNull(trigger, nameof(trigger));
-            Argument.AssertNotNull(samplingStrategy, nameof(samplingStrategy));
 
             Data = data;
             Tags = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
             Evaluators = evaluators;
             Trigger = trigger;
-            SamplingStrategy = samplingStrategy;
         }
 
         /// <summary> Initializes a new instance of <see cref="EvaluationSchedule"/>. </summary>
@@ -84,9 +81,8 @@ namespace Azure.AI.Projects
         /// Please note <see cref="Projects.Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="RecurrenceTrigger"/>.
         /// </param>
-        /// <param name="samplingStrategy"> Sampling strategy for the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationSchedule(string name, ApplicationInsightsConfiguration data, string description, SystemData systemData, string provisioningStatus, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, EvaluatorConfiguration> evaluators, Trigger trigger, SamplingStrategy samplingStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EvaluationSchedule(string name, ApplicationInsightsConfiguration data, string description, SystemData systemData, string provisioningStatus, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, EvaluatorConfiguration> evaluators, Trigger trigger, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Data = data;
@@ -97,7 +93,6 @@ namespace Azure.AI.Projects
             Properties = properties;
             Evaluators = evaluators;
             Trigger = trigger;
-            SamplingStrategy = samplingStrategy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -128,7 +123,5 @@ namespace Azure.AI.Projects
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="RecurrenceTrigger"/>.
         /// </summary>
         public Trigger Trigger { get; set; }
-        /// <summary> Sampling strategy for the evaluation. </summary>
-        public SamplingStrategy SamplingStrategy { get; set; }
     }
 }

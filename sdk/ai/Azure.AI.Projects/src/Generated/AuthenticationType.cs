@@ -12,8 +12,8 @@ namespace Azure.AI.Projects
     {
         /// <summary> API Key authentication. </summary>
         ApiKey,
-        /// <summary> Entra ID authentication. </summary>
-        AAD,
+        /// <summary> Entra ID authentication (formerly known as AAD). </summary>
+        EntraId,
         /// <summary> Shared Access Signature (SAS) authentication. </summary>
         SAS
     }

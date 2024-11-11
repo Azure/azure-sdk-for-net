@@ -7,11 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> A set of connection resources currently used by either the `bing_grounding`, `microsoft_fabric`, or `sharepoint` tools. </summary>
-    public partial class ConnectionListResource
+    /// <summary>
+    /// Vector storage configuration is the list of data sources, used when multiple
+    /// files can be used for the enterprise file search.
+    /// </summary>
+    public partial class VectorStoreConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,28 +49,31 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionListResource"/>. </summary>
-        public ConnectionListResource()
+        /// <summary> Initializes a new instance of <see cref="VectorStoreConfiguration"/>. </summary>
+        /// <param name="dataSources"> Data sources. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSources"/> is null. </exception>
+        public VectorStoreConfiguration(IEnumerable<VectorStoreDataSource> dataSources)
         {
-            ConnectionList = new ChangeTrackingList<ConnectionResource>();
+            Argument.AssertNotNull(dataSources, nameof(dataSources));
+
+            DataSources = dataSources.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionListResource"/>. </summary>
-        /// <param name="connectionList">
-        /// The connections attached to this agent. There can be a maximum of 1 connection
-        /// resource attached to the agent.
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="VectorStoreConfiguration"/>. </summary>
+        /// <param name="dataSources"> Data sources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionListResource(IList<ConnectionResource> connectionList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VectorStoreConfiguration(IList<VectorStoreDataSource> dataSources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ConnectionList = connectionList;
+            DataSources = dataSources;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The connections attached to this agent. There can be a maximum of 1 connection
-        /// resource attached to the agent.
-        /// </summary>
-        public IList<ConnectionResource> ConnectionList { get; }
+        /// <summary> Initializes a new instance of <see cref="VectorStoreConfiguration"/> for deserialization. </summary>
+        internal VectorStoreConfiguration()
+        {
+        }
+
+        /// <summary> Data sources. </summary>
+        public IList<VectorStoreDataSource> DataSources { get; }
     }
 }

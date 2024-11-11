@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ConnectionsListSecretsResponse : IUtf8JsonSerializable, IJsonModel<ConnectionsListSecretsResponse>
+    internal partial class GetWorkspaceResponse : IUtf8JsonSerializable, IJsonModel<GetWorkspaceResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionsListSecretsResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetWorkspaceResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConnectionsListSecretsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GetWorkspaceResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionsListSecretsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetWorkspaceResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionsListSecretsResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GetWorkspaceResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,19 +50,19 @@ namespace Azure.AI.Projects
             writer.WriteEndObject();
         }
 
-        ConnectionsListSecretsResponse IJsonModel<ConnectionsListSecretsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GetWorkspaceResponse IJsonModel<GetWorkspaceResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionsListSecretsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetWorkspaceResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionsListSecretsResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GetWorkspaceResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectionsListSecretsResponse(document.RootElement, options);
+            return DeserializeGetWorkspaceResponse(document.RootElement, options);
         }
 
-        internal static ConnectionsListSecretsResponse DeserializeConnectionsListSecretsResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GetWorkspaceResponse DeserializeGetWorkspaceResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -72,7 +72,7 @@ namespace Azure.AI.Projects
             }
             string id = default;
             string name = default;
-            ConnectionProperties properties = default;
+            WorkspaceProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ConnectionProperties.DeserializeConnectionProperties(property.Value, options);
+                    properties = WorkspaceProperties.DeserializeWorkspaceProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -98,46 +98,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectionsListSecretsResponse(id, name, properties, serializedAdditionalRawData);
+            return new GetWorkspaceResponse(id, name, properties, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConnectionsListSecretsResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GetWorkspaceResponse>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionsListSecretsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetWorkspaceResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionsListSecretsResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetWorkspaceResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConnectionsListSecretsResponse IPersistableModel<ConnectionsListSecretsResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GetWorkspaceResponse IPersistableModel<GetWorkspaceResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionsListSecretsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetWorkspaceResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConnectionsListSecretsResponse(document.RootElement, options);
+                        return DeserializeGetWorkspaceResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionsListSecretsResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetWorkspaceResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConnectionsListSecretsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GetWorkspaceResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ConnectionsListSecretsResponse FromResponse(Response response)
+        internal static GetWorkspaceResponse FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeConnectionsListSecretsResponse(document.RootElement);
+            return DeserializeGetWorkspaceResponse(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

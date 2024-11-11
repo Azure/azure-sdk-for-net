@@ -31,6 +31,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("max_num_results"u8);
                 writer.WriteNumberValue(MaxNumResults.Value);
             }
+            if (Optional.IsDefined(RankingOptions))
+            {
+                writer.WritePropertyName("ranking_options"u8);
+                writer.WriteObjectValue(RankingOptions, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -70,6 +75,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             int? maxNumResults = default;
+            FileSearchRankingOptions rankingOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,13 +89,22 @@ namespace Azure.AI.Projects
                     maxNumResults = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("ranking_options"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rankingOptions = FileSearchRankingOptions.DeserializeFileSearchRankingOptions(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FileSearchToolDefinitionDetails(maxNumResults, serializedAdditionalRawData);
+            return new FileSearchToolDefinitionDetails(maxNumResults, rankingOptions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileSearchToolDefinitionDetails>.Write(ModelReaderWriterOptions options)

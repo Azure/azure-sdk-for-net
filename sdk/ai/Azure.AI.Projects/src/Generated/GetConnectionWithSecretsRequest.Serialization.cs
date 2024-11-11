@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ListSecretsRequest : IUtf8JsonSerializable, IJsonModel<ListSecretsRequest>
+    internal partial class GetConnectionWithSecretsRequest : IUtf8JsonSerializable, IJsonModel<GetConnectionWithSecretsRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListSecretsRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetConnectionWithSecretsRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ListSecretsRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GetConnectionWithSecretsRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ListSecretsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetConnectionWithSecretsRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListSecretsRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GetConnectionWithSecretsRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,19 +46,19 @@ namespace Azure.AI.Projects
             writer.WriteEndObject();
         }
 
-        ListSecretsRequest IJsonModel<ListSecretsRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GetConnectionWithSecretsRequest IJsonModel<GetConnectionWithSecretsRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ListSecretsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetConnectionWithSecretsRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListSecretsRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GetConnectionWithSecretsRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeListSecretsRequest(document.RootElement, options);
+            return DeserializeGetConnectionWithSecretsRequest(document.RootElement, options);
         }
 
-        internal static ListSecretsRequest DeserializeListSecretsRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GetConnectionWithSecretsRequest DeserializeGetConnectionWithSecretsRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,46 +82,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ListSecretsRequest(ignored, serializedAdditionalRawData);
+            return new GetConnectionWithSecretsRequest(ignored, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ListSecretsRequest>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GetConnectionWithSecretsRequest>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ListSecretsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetConnectionWithSecretsRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ListSecretsRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetConnectionWithSecretsRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ListSecretsRequest IPersistableModel<ListSecretsRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GetConnectionWithSecretsRequest IPersistableModel<GetConnectionWithSecretsRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ListSecretsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetConnectionWithSecretsRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeListSecretsRequest(document.RootElement, options);
+                        return DeserializeGetConnectionWithSecretsRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListSecretsRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetConnectionWithSecretsRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ListSecretsRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GetConnectionWithSecretsRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ListSecretsRequest FromResponse(Response response)
+        internal static GetConnectionWithSecretsRequest FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeListSecretsRequest(document.RootElement);
+            return DeserializeGetConnectionWithSecretsRequest(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

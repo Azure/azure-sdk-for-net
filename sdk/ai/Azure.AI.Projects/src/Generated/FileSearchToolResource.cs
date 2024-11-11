@@ -49,6 +49,7 @@ namespace Azure.AI.Projects
         public FileSearchToolResource()
         {
             VectorStoreIds = new ChangeTrackingList<string>();
+            VectorStores = new ChangeTrackingList<VectorStoreConfigurations>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FileSearchToolResource"/>. </summary>
@@ -56,10 +57,16 @@ namespace Azure.AI.Projects
         /// The ID of the vector store attached to this agent. There can be a maximum of 1 vector
         /// store attached to the agent.
         /// </param>
+        /// <param name="vectorStores">
+        /// The list of vector store configuration objects from Azure. This list is limited to one
+        /// element. The only element of this list contains
+        /// the list of azure asset IDs used by the search tool.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileSearchToolResource(IList<string> vectorStoreIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileSearchToolResource(IList<string> vectorStoreIds, IList<VectorStoreConfigurations> vectorStores, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VectorStoreIds = vectorStoreIds;
+            VectorStores = vectorStores;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -68,5 +75,11 @@ namespace Azure.AI.Projects
         /// store attached to the agent.
         /// </summary>
         public IList<string> VectorStoreIds { get; }
+        /// <summary>
+        /// The list of vector store configuration objects from Azure. This list is limited to one
+        /// element. The only element of this list contains
+        /// the list of azure asset IDs used by the search tool.
+        /// </summary>
+        public IList<VectorStoreConfigurations> VectorStores { get; }
     }
 }

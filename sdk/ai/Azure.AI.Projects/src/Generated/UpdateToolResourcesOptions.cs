@@ -60,18 +60,12 @@ namespace Azure.AI.Projects
         /// associated with the tool.
         /// </param>
         /// <param name="fileSearch"> Overrides the vector store attached to this agent. There can be a maximum of 1 vector store attached to the agent. </param>
-        /// <param name="bingGrounding"> Overrides the list of connections to be used by the `bing_grounding` tool consisting of connection IDs. </param>
-        /// <param name="microsoftFabric"> Overrides the list of connections to be used by the `microsoft_fabric` tool consisting of connection IDs. </param>
-        /// <param name="sharePoint"> Overrides the list of connections to be used by the `sharepoint` tool consisting of connection IDs. </param>
         /// <param name="azureAISearch"> Overrides the resources to be used by the `azure_ai_search` tool consisting of index IDs and names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateToolResourcesOptions(UpdateCodeInterpreterToolResourceOptions codeInterpreter, UpdateFileSearchToolResourceOptions fileSearch, ConnectionListResource bingGrounding, ConnectionListResource microsoftFabric, ConnectionListResource sharePoint, AzureAISearchResource azureAISearch, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpdateToolResourcesOptions(UpdateCodeInterpreterToolResourceOptions codeInterpreter, UpdateFileSearchToolResourceOptions fileSearch, AzureAISearchResource azureAISearch, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CodeInterpreter = codeInterpreter;
             FileSearch = fileSearch;
-            BingGrounding = bingGrounding;
-            MicrosoftFabric = microsoftFabric;
-            SharePoint = sharePoint;
             AzureAISearch = azureAISearch;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -83,12 +77,6 @@ namespace Azure.AI.Projects
         public UpdateCodeInterpreterToolResourceOptions CodeInterpreter { get; set; }
         /// <summary> Overrides the vector store attached to this agent. There can be a maximum of 1 vector store attached to the agent. </summary>
         public UpdateFileSearchToolResourceOptions FileSearch { get; set; }
-        /// <summary> Overrides the list of connections to be used by the `bing_grounding` tool consisting of connection IDs. </summary>
-        public ConnectionListResource BingGrounding { get; set; }
-        /// <summary> Overrides the list of connections to be used by the `microsoft_fabric` tool consisting of connection IDs. </summary>
-        public ConnectionListResource MicrosoftFabric { get; set; }
-        /// <summary> Overrides the list of connections to be used by the `sharepoint` tool consisting of connection IDs. </summary>
-        public ConnectionListResource SharePoint { get; set; }
         /// <summary> Overrides the resources to be used by the `azure_ai_search` tool consisting of index IDs and names. </summary>
         public AzureAISearchResource AzureAISearch { get; set; }
     }

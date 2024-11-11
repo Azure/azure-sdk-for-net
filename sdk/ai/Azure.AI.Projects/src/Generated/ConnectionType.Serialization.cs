@@ -16,7 +16,8 @@ namespace Azure.AI.Projects
             ConnectionType.AzureOpenAI => "AzureOpenAI",
             ConnectionType.Serverless => "Serverless",
             ConnectionType.AzureBlobStorage => "AzureBlob",
-            ConnectionType.AIServices => "AIServices",
+            ConnectionType.AzureAIServices => "AIServices",
+            ConnectionType.AzureAISearch => "CognitiveSearch",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectionType value.")
         };
 
@@ -25,7 +26,8 @@ namespace Azure.AI.Projects
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureOpenAI")) return ConnectionType.AzureOpenAI;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Serverless")) return ConnectionType.Serverless;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureBlob")) return ConnectionType.AzureBlobStorage;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AIServices")) return ConnectionType.AIServices;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AIServices")) return ConnectionType.AzureAIServices;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CognitiveSearch")) return ConnectionType.AzureAISearch;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectionType value.");
         }
     }

@@ -56,10 +56,12 @@ namespace Azure.AI.Projects
         ///
         /// Note that the file search tool may output fewer than `max_num_results` results. See the file search tool documentation for more information.
         /// </param>
+        /// <param name="rankingOptions"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileSearchToolDefinitionDetails(int? maxNumResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileSearchToolDefinitionDetails(int? maxNumResults, FileSearchRankingOptions rankingOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxNumResults = maxNumResults;
+            RankingOptions = rankingOptions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,5 +71,7 @@ namespace Azure.AI.Projects
         /// Note that the file search tool may output fewer than `max_num_results` results. See the file search tool documentation for more information.
         /// </summary>
         public int? MaxNumResults { get; set; }
+        /// <summary> Gets or sets the ranking options. </summary>
+        public FileSearchRankingOptions RankingOptions { get; set; }
     }
 }

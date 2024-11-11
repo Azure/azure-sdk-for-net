@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The ListSecretsRequest. </summary>
-    internal partial class ListSecretsRequest
+    /// <summary> A connection resource. </summary>
+    public partial class ToolConnection
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +45,31 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ListSecretsRequest"/>. </summary>
-        /// <param name="ignored"> The body is ignored. TODO: Can we remove this?. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ignored"/> is null. </exception>
-        internal ListSecretsRequest(string ignored)
+        /// <summary> Initializes a new instance of <see cref="ToolConnection"/>. </summary>
+        /// <param name="connectionId"> A connection in a ToolConnectionList attached to this tool. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        public ToolConnection(string connectionId)
         {
-            Argument.AssertNotNull(ignored, nameof(ignored));
+            Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            Ignored = ignored;
+            ConnectionId = connectionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListSecretsRequest"/>. </summary>
-        /// <param name="ignored"> The body is ignored. TODO: Can we remove this?. </param>
+        /// <summary> Initializes a new instance of <see cref="ToolConnection"/>. </summary>
+        /// <param name="connectionId"> A connection in a ToolConnectionList attached to this tool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListSecretsRequest(string ignored, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ToolConnection(string connectionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Ignored = ignored;
+            ConnectionId = connectionId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListSecretsRequest"/> for deserialization. </summary>
-        internal ListSecretsRequest()
+        /// <summary> Initializes a new instance of <see cref="ToolConnection"/> for deserialization. </summary>
+        internal ToolConnection()
         {
         }
 
-        /// <summary> The body is ignored. TODO: Can we remove this?. </summary>
-        public string Ignored { get; }
+        /// <summary> A connection in a ToolConnectionList attached to this tool. </summary>
+        public string ConnectionId { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(sharePoint, nameof(sharePoint));
 
-            Type = "sharepoint";
+            Type = "sharepoint_grounding";
             SharePoint = sharePoint;
         }
 

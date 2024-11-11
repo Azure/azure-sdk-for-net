@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> A connection resource. </summary>
-    public partial class ConnectionResource
+    /// <summary> Ranking options for file search. </summary>
+    public partial class FileSearchRankingOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +45,37 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionResource"/>. </summary>
-        /// <param name="connectionId"> A connection in a ConnectionListResource attached to this agent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
-        public ConnectionResource(string connectionId)
+        /// <summary> Initializes a new instance of <see cref="FileSearchRankingOptions"/>. </summary>
+        /// <param name="ranker"> File search ranker. </param>
+        /// <param name="scoreThreshold"> Ranker search threshold. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ranker"/> is null. </exception>
+        public FileSearchRankingOptions(string ranker, float scoreThreshold)
         {
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNull(ranker, nameof(ranker));
 
-            ConnectionId = connectionId;
+            Ranker = ranker;
+            ScoreThreshold = scoreThreshold;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionResource"/>. </summary>
-        /// <param name="connectionId"> A connection in a ConnectionListResource attached to this agent. </param>
+        /// <summary> Initializes a new instance of <see cref="FileSearchRankingOptions"/>. </summary>
+        /// <param name="ranker"> File search ranker. </param>
+        /// <param name="scoreThreshold"> Ranker search threshold. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionResource(string connectionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileSearchRankingOptions(string ranker, float scoreThreshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ConnectionId = connectionId;
+            Ranker = ranker;
+            ScoreThreshold = scoreThreshold;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionResource"/> for deserialization. </summary>
-        internal ConnectionResource()
+        /// <summary> Initializes a new instance of <see cref="FileSearchRankingOptions"/> for deserialization. </summary>
+        internal FileSearchRankingOptions()
         {
         }
 
-        /// <summary> A connection in a ConnectionListResource attached to this agent. </summary>
-        public string ConnectionId { get; set; }
+        /// <summary> File search ranker. </summary>
+        public string Ranker { get; set; }
+        /// <summary> Ranker search threshold. </summary>
+        public float ScoreThreshold { get; set; }
     }
 }

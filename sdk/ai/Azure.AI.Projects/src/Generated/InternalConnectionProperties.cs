@@ -12,10 +12,10 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Connection properties
-    /// Please note <see cref="ConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ConnectionPropertiesAADAuth"/>, <see cref="ConnectionPropertiesApiKeyAuth"/> and <see cref="ConnectionPropertiesSASAuth"/>.
+    /// Please note <see cref="InternalConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="InternalConnectionPropertiesAADAuth"/>, <see cref="InternalConnectionPropertiesApiKeyAuth"/> and <see cref="InternalConnectionPropertiesSASAuth"/>.
     /// </summary>
-    internal abstract partial class ConnectionProperties
+    internal abstract partial class InternalConnectionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,21 +49,41 @@ namespace Azure.AI.Projects
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionProperties"/>. </summary>
-        protected ConnectionProperties()
+        /// <summary> Initializes a new instance of <see cref="InternalConnectionProperties"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="target"> The connection URL to be used for this service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="target"/> is null. </exception>
+        protected InternalConnectionProperties(ConnectionType category, string target)
         {
+            Argument.AssertNotNull(target, nameof(target));
+
+            Category = category;
+            Target = target;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalConnectionProperties"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="target"> The connection URL to be used for this service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionProperties(AuthenticationType authType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalConnectionProperties(AuthenticationType authType, ConnectionType category, string target, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthType = authType;
+            Category = category;
+            Target = target;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InternalConnectionProperties"/> for deserialization. </summary>
+        internal InternalConnectionProperties()
+        {
         }
 
         /// <summary> Authentication type of the connection target. </summary>
         internal AuthenticationType AuthType { get; set; }
+        /// <summary> Category of the connection. </summary>
+        public ConnectionType Category { get; }
+        /// <summary> The connection URL to be used for this service. </summary>
+        public string Target { get; }
     }
 }

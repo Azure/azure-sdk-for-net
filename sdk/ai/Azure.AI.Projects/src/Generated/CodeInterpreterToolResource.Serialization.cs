@@ -36,6 +36,16 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(DataSources))
+            {
+                writer.WritePropertyName("data_sources"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataSources)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,6 +85,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             IList<string> fileIds = default;
+            IList<VectorStoreDataSource> dataSources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,13 +104,27 @@ namespace Azure.AI.Projects
                     fileIds = array;
                     continue;
                 }
+                if (property.NameEquals("data_sources"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VectorStoreDataSource> array = new List<VectorStoreDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VectorStoreDataSource.DeserializeVectorStoreDataSource(item, options));
+                    }
+                    dataSources = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CodeInterpreterToolResource(fileIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new CodeInterpreterToolResource(fileIds ?? new ChangeTrackingList<string>(), dataSources ?? new ChangeTrackingList<VectorStoreDataSource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CodeInterpreterToolResource>.Write(ModelReaderWriterOptions options)

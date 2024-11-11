@@ -47,25 +47,25 @@ namespace Azure.AI.Projects
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MessageAttachment"/>. </summary>
-        /// <param name="fileId"> The ID of the file to attach to the message. </param>
         /// <param name="tools"> The tools to add to this file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="tools"/> is null. </exception>
-        public MessageAttachment(string fileId, IEnumerable<BinaryData> tools)
+        /// <exception cref="ArgumentNullException"> <paramref name="tools"/> is null. </exception>
+        public MessageAttachment(IEnumerable<BinaryData> tools)
         {
-            Argument.AssertNotNull(fileId, nameof(fileId));
             Argument.AssertNotNull(tools, nameof(tools));
 
-            FileId = fileId;
+            DataSources = new ChangeTrackingList<VectorStoreDataSource>();
             Tools = tools.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageAttachment"/>. </summary>
         /// <param name="fileId"> The ID of the file to attach to the message. </param>
+        /// <param name="dataSources"> Azure asset ID. </param>
         /// <param name="tools"> The tools to add to this file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MessageAttachment(string fileId, IList<BinaryData> tools, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MessageAttachment(string fileId, IList<VectorStoreDataSource> dataSources, IList<BinaryData> tools, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileId = fileId;
+            DataSources = dataSources;
             Tools = tools;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -77,6 +77,8 @@ namespace Azure.AI.Projects
 
         /// <summary> The ID of the file to attach to the message. </summary>
         public string FileId { get; set; }
+        /// <summary> Azure asset ID. </summary>
+        public IList<VectorStoreDataSource> DataSources { get; }
         /// <summary>
         /// The tools to add to this file.
         /// <para>

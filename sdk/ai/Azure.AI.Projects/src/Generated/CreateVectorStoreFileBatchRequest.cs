@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Projects
 {
@@ -47,37 +46,33 @@ namespace Azure.AI.Projects
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CreateVectorStoreFileBatchRequest"/>. </summary>
-        /// <param name="fileIds"> List of file identifiers. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileIds"/> is null. </exception>
-        internal CreateVectorStoreFileBatchRequest(IEnumerable<string> fileIds)
+        internal CreateVectorStoreFileBatchRequest()
         {
-            Argument.AssertNotNull(fileIds, nameof(fileIds));
-
-            FileIds = fileIds.ToList();
+            FileIds = new ChangeTrackingList<string>();
+            DataSources = new ChangeTrackingList<VectorStoreDataSource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateVectorStoreFileBatchRequest"/>. </summary>
         /// <param name="fileIds"> List of file identifiers. </param>
+        /// <param name="dataSources"> List of Azure assets. </param>
         /// <param name="chunkingStrategy">
         /// The chunking strategy used to chunk the file(s). If not set, will use the auto strategy.
         /// Please note <see cref="VectorStoreChunkingStrategyRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VectorStoreAutoChunkingStrategyRequest"/> and <see cref="VectorStoreStaticChunkingStrategyRequest"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateVectorStoreFileBatchRequest(IReadOnlyList<string> fileIds, VectorStoreChunkingStrategyRequest chunkingStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateVectorStoreFileBatchRequest(IReadOnlyList<string> fileIds, IReadOnlyList<VectorStoreDataSource> dataSources, VectorStoreChunkingStrategyRequest chunkingStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileIds = fileIds;
+            DataSources = dataSources;
             ChunkingStrategy = chunkingStrategy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateVectorStoreFileBatchRequest"/> for deserialization. </summary>
-        internal CreateVectorStoreFileBatchRequest()
-        {
-        }
-
         /// <summary> List of file identifiers. </summary>
         public IReadOnlyList<string> FileIds { get; }
+        /// <summary> List of Azure assets. </summary>
+        public IReadOnlyList<VectorStoreDataSource> DataSources { get; }
         /// <summary>
         /// The chunking strategy used to chunk the file(s). If not set, will use the auto strategy.
         /// Please note <see cref="VectorStoreChunkingStrategyRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

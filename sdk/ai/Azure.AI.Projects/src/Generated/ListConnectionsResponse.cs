@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> A response from a file get content operation. </summary>
-    public partial class FileContentResponse
+    /// <summary> Response from the list operation. </summary>
+    internal partial class ListConnectionsResponse
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,46 +46,31 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FileContentResponse"/>. </summary>
-        /// <param name="content"> The content of the file, in bytes. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        internal FileContentResponse(BinaryData content)
+        /// <summary> Initializes a new instance of <see cref="ListConnectionsResponse"/>. </summary>
+        /// <param name="value"> A list of connection list secrets. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ListConnectionsResponse(IEnumerable<GetConnectionResponse> value)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(value, nameof(value));
 
-            Content = content;
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileContentResponse"/>. </summary>
-        /// <param name="content"> The content of the file, in bytes. </param>
+        /// <summary> Initializes a new instance of <see cref="ListConnectionsResponse"/>. </summary>
+        /// <param name="value"> A list of connection list secrets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileContentResponse(BinaryData content, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListConnectionsResponse(IReadOnlyList<GetConnectionResponse> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Content = content;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileContentResponse"/> for deserialization. </summary>
-        internal FileContentResponse()
+        /// <summary> Initializes a new instance of <see cref="ListConnectionsResponse"/> for deserialization. </summary>
+        internal ListConnectionsResponse()
         {
         }
 
-        /// <summary>
-        /// The content of the file, in bytes.
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
-        /// <description>Creates a payload of "AQID".</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Content { get; }
+        /// <summary> A list of connection list secrets. </summary>
+        public IReadOnlyList<GetConnectionResponse> Value { get; }
     }
 }

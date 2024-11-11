@@ -109,9 +109,9 @@ namespace Azure.AI.Projects
         /// <param name="includeAll"> Indicates whether to list datastores. Service default: do not list datastores. </param>
         /// <param name="target"> Target of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<ConnectionsListSecretsResponse>> GetDefaultConnectionAsync(ConnectionType category, bool? withCredential = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<GetConnectionResponse>> GetDefaultConnectionAsync(ConnectionType category, bool? withCredential = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
         {
-            ConnectionsListResponse connections = await GetConnectionsAsync(category, includeAll, target, cancellationToken).ConfigureAwait(false);
+            ListConnectionsResponse connections = await GetConnectionsAsync(category, includeAll, target, cancellationToken).ConfigureAwait(false);
 
             if (connections?.Value == null || connections.Value.Count == 0)
             {
@@ -120,7 +120,7 @@ namespace Azure.AI.Projects
 
             var secret = connections.Value[0];
             return withCredential.GetValueOrDefault()
-                ? await GetSecretsAsync(secret.Name, "ignored").ConfigureAwait(false)
+                ? await GetConnectionWithSecretsAsync(secret.Name, "ignored").ConfigureAwait(false)
                 : await GetConnectionAsync(secret.Name).ConfigureAwait(false);
         }
 
@@ -130,9 +130,9 @@ namespace Azure.AI.Projects
         /// <param name="includeAll"> Indicates whether to list datastores. Service default: do not list datastores. </param>
         /// <param name="target"> Target of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<ConnectionsListSecretsResponse> GetDefaultConnection(ConnectionType category, bool? withCredential = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
+        internal virtual Response<GetConnectionResponse> GetDefaultConnection(ConnectionType category, bool? withCredential = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
         {
-            ConnectionsListResponse connections = GetConnections(category, includeAll, target, cancellationToken);
+            ListConnectionsResponse connections = GetConnections(category, includeAll, target, cancellationToken);
 
             if (connections?.Value == null || connections.Value.Count == 0)
             {
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects
 
             var secret = connections.Value[0];
             return withCredential.GetValueOrDefault()
-                ? GetSecrets(secret.Name, "ignored")
+                ? GetConnectionWithSecrets(secret.Name, "ignored")
                 : GetConnection(secret.Name);
         }
 
@@ -199,7 +199,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetSecretsRequest(string connectionName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetConnectionWithSecretsRequest(string connectionName, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -220,6 +220,26 @@ namespace Azure.AI.Projects
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetWorkspaceRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
     }

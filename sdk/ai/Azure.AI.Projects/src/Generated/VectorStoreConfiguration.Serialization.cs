@@ -13,22 +13,22 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ConnectionsListResponse : IUtf8JsonSerializable, IJsonModel<ConnectionsListResponse>
+    public partial class VectorStoreConfiguration : IUtf8JsonSerializable, IJsonModel<VectorStoreConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionsListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VectorStoreConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConnectionsListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VectorStoreConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VectorStoreConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionsListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VectorStoreConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("value"u8);
+            writer.WritePropertyName("data_sources"u8);
             writer.WriteStartArray();
-            foreach (var item in Value)
+            foreach (var item in DataSources)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -51,19 +51,19 @@ namespace Azure.AI.Projects
             writer.WriteEndObject();
         }
 
-        ConnectionsListResponse IJsonModel<ConnectionsListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VectorStoreConfiguration IJsonModel<VectorStoreConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VectorStoreConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionsListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VectorStoreConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectionsListResponse(document.RootElement, options);
+            return DeserializeVectorStoreConfiguration(document.RootElement, options);
         }
 
-        internal static ConnectionsListResponse DeserializeConnectionsListResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VectorStoreConfiguration DeserializeVectorStoreConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -71,19 +71,19 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            IReadOnlyList<ConnectionsListSecretsResponse> value = default;
+            IList<VectorStoreDataSource> dataSources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
+                if (property.NameEquals("data_sources"u8))
                 {
-                    List<ConnectionsListSecretsResponse> array = new List<ConnectionsListSecretsResponse>();
+                    List<VectorStoreDataSource> array = new List<VectorStoreDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionsListSecretsResponse.DeserializeConnectionsListSecretsResponse(item, options));
+                        array.Add(VectorStoreDataSource.DeserializeVectorStoreDataSource(item, options));
                     }
-                    value = array;
+                    dataSources = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -92,46 +92,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectionsListResponse(value, serializedAdditionalRawData);
+            return new VectorStoreConfiguration(dataSources, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConnectionsListResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VectorStoreConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VectorStoreConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionsListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VectorStoreConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConnectionsListResponse IPersistableModel<ConnectionsListResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VectorStoreConfiguration IPersistableModel<VectorStoreConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VectorStoreConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConnectionsListResponse(document.RootElement, options);
+                        return DeserializeVectorStoreConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionsListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VectorStoreConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConnectionsListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VectorStoreConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ConnectionsListResponse FromResponse(Response response)
+        internal static VectorStoreConfiguration FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeConnectionsListResponse(document.RootElement);
+            return DeserializeVectorStoreConfiguration(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -55,6 +55,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="CreateVectorStoreRequest"/>. </summary>
         /// <param name="fileIds"> A list of file IDs that the vector store should use. Useful for tools like `file_search` that can access files. </param>
         /// <param name="name"> The name of the vector store. </param>
+        /// <param name="storeConfiguration"> The vector store configuration, used when vector store is created from Azure asset URIs. </param>
         /// <param name="expiresAfter"> Details on when this vector store expires. </param>
         /// <param name="chunkingStrategy">
         /// The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. Only applicable if file_ids is non-empty.
@@ -63,10 +64,11 @@ namespace Azure.AI.Projects
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateVectorStoreRequest(IReadOnlyList<string> fileIds, string name, VectorStoreExpirationPolicy expiresAfter, VectorStoreChunkingStrategyRequest chunkingStrategy, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateVectorStoreRequest(IReadOnlyList<string> fileIds, string name, VectorStoreConfiguration storeConfiguration, VectorStoreExpirationPolicy expiresAfter, VectorStoreChunkingStrategyRequest chunkingStrategy, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileIds = fileIds;
             Name = name;
+            StoreConfiguration = storeConfiguration;
             ExpiresAfter = expiresAfter;
             ChunkingStrategy = chunkingStrategy;
             Metadata = metadata;
@@ -77,6 +79,8 @@ namespace Azure.AI.Projects
         public IReadOnlyList<string> FileIds { get; }
         /// <summary> The name of the vector store. </summary>
         public string Name { get; }
+        /// <summary> The vector store configuration, used when vector store is created from Azure asset URIs. </summary>
+        public VectorStoreConfiguration StoreConfiguration { get; }
         /// <summary> Details on when this vector store expires. </summary>
         public VectorStoreExpirationPolicy ExpiresAfter { get; }
         /// <summary>

@@ -80,8 +80,6 @@ namespace Azure.AI.Projects
             writer.WriteEndObject();
             writer.WritePropertyName("trigger"u8);
             writer.WriteObjectValue(Trigger, options);
-            writer.WritePropertyName("samplingStrategy"u8);
-            writer.WriteObjectValue(SamplingStrategy, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -129,7 +127,6 @@ namespace Azure.AI.Projects
             IDictionary<string, string> properties = default;
             IDictionary<string, EvaluatorConfiguration> evaluators = default;
             Trigger trigger = default;
-            SamplingStrategy samplingStrategy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,11 +203,6 @@ namespace Azure.AI.Projects
                     trigger = Trigger.DeserializeTrigger(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("samplingStrategy"u8))
-                {
-                    samplingStrategy = SamplingStrategy.DeserializeSamplingStrategy(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -227,7 +219,6 @@ namespace Azure.AI.Projects
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 evaluators,
                 trigger,
-                samplingStrategy,
                 serializedAdditionalRawData);
         }
 

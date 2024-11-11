@@ -59,9 +59,9 @@ namespace Azure.AI.Projects
         private T InitializeInferenceClient<T>(Func<Uri, AzureKeyCredential, T> clientFactory)
         {
             var connectionsClient = GetConnectionsClient();
-            ConnectionsListSecretsResponse connectionSecret = connectionsClient.GetDefaultConnection(ConnectionType.Serverless, true);
+            GetConnectionResponse connectionSecret = connectionsClient.GetDefaultConnection(ConnectionType.Serverless, true);
 
-            if (connectionSecret.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
+            if (connectionSecret.Properties is InternalConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
             {
                 if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
                 {

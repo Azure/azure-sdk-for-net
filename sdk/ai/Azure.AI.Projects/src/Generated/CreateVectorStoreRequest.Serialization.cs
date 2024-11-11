@@ -41,6 +41,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (Optional.IsDefined(StoreConfiguration))
+            {
+                writer.WritePropertyName("configuration"u8);
+                writer.WriteObjectValue(StoreConfiguration, options);
+            }
             if (Optional.IsDefined(ExpiresAfter))
             {
                 writer.WritePropertyName("expires_after"u8);
@@ -109,6 +114,7 @@ namespace Azure.AI.Projects
             }
             IReadOnlyList<string> fileIds = default;
             string name = default;
+            VectorStoreConfiguration configuration = default;
             VectorStoreExpirationPolicy expiresAfter = default;
             VectorStoreChunkingStrategyRequest chunkingStrategy = default;
             IReadOnlyDictionary<string, string> metadata = default;
@@ -133,6 +139,15 @@ namespace Azure.AI.Projects
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("configuration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    configuration = VectorStoreConfiguration.DeserializeVectorStoreConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("expires_after"u8))
@@ -176,6 +191,7 @@ namespace Azure.AI.Projects
             return new CreateVectorStoreRequest(
                 fileIds ?? new ChangeTrackingList<string>(),
                 name,
+                configuration,
                 expiresAfter,
                 chunkingStrategy,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),

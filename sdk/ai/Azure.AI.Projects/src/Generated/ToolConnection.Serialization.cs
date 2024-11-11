@@ -13,21 +13,21 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class SamplingStrategy : IUtf8JsonSerializable, IJsonModel<SamplingStrategy>
+    public partial class ToolConnection : IUtf8JsonSerializable, IJsonModel<ToolConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SamplingStrategy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ToolConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SamplingStrategy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ToolConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SamplingStrategy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ToolConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SamplingStrategy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("rate"u8);
-            writer.WriteNumberValue(Rate);
+            writer.WritePropertyName("connection_id"u8);
+            writer.WriteStringValue(ConnectionId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -46,19 +46,19 @@ namespace Azure.AI.Projects
             writer.WriteEndObject();
         }
 
-        SamplingStrategy IJsonModel<SamplingStrategy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ToolConnection IJsonModel<ToolConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SamplingStrategy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ToolConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SamplingStrategy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSamplingStrategy(document.RootElement, options);
+            return DeserializeToolConnection(document.RootElement, options);
         }
 
-        internal static SamplingStrategy DeserializeSamplingStrategy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ToolConnection DeserializeToolConnection(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -66,14 +66,14 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            float rate = default;
+            string connectionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rate"u8))
+                if (property.NameEquals("connection_id"u8))
                 {
-                    rate = property.Value.GetSingle();
+                    connectionId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -82,46 +82,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SamplingStrategy(rate, serializedAdditionalRawData);
+            return new ToolConnection(connectionId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SamplingStrategy>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ToolConnection>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SamplingStrategy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ToolConnection>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SamplingStrategy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SamplingStrategy IPersistableModel<SamplingStrategy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ToolConnection IPersistableModel<ToolConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SamplingStrategy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ToolConnection>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSamplingStrategy(document.RootElement, options);
+                        return DeserializeToolConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SamplingStrategy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolConnection)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SamplingStrategy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ToolConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SamplingStrategy FromResponse(Response response)
+        internal static ToolConnection FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSamplingStrategy(document.RootElement);
+            return DeserializeToolConnection(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

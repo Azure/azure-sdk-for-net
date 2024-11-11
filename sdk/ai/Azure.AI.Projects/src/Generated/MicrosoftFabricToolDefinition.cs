@@ -14,16 +14,31 @@ namespace Azure.AI.Projects
     public partial class MicrosoftFabricToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricToolDefinition"/>. </summary>
-        public MicrosoftFabricToolDefinition()
+        /// <param name="microsoftFabric"> The list of connections used by the Microsoft Fabric tool. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="microsoftFabric"/> is null. </exception>
+        public MicrosoftFabricToolDefinition(ToolConnectionList microsoftFabric)
         {
+            Argument.AssertNotNull(microsoftFabric, nameof(microsoftFabric));
+
             Type = "microsoft_fabric";
+            MicrosoftFabric = microsoftFabric;
         }
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MicrosoftFabricToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
+        /// <param name="microsoftFabric"> The list of connections used by the Microsoft Fabric tool. </param>
+        internal MicrosoftFabricToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, ToolConnectionList microsoftFabric) : base(type, serializedAdditionalRawData)
+        {
+            MicrosoftFabric = microsoftFabric;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MicrosoftFabricToolDefinition"/> for deserialization. </summary>
+        internal MicrosoftFabricToolDefinition()
         {
         }
+
+        /// <summary> The list of connections used by the Microsoft Fabric tool. </summary>
+        public ToolConnectionList MicrosoftFabric { get; set; }
     }
 }

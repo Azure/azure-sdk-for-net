@@ -26,7 +26,7 @@ namespace Azure.AI.Projects
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("sharepoint"u8);
+            writer.WritePropertyName("sharepoint_grounding"u8);
             writer.WriteStartObject();
             foreach (var item in SharePoint)
             {
@@ -76,21 +76,21 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            IReadOnlyDictionary<string, string> sharepoint = default;
+            IReadOnlyDictionary<string, string> sharepointGrounding = default;
             string type = default;
             string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sharepoint"u8))
+                if (property.NameEquals("sharepoint_grounding"u8))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
-                    sharepoint = dictionary;
+                    sharepointGrounding = dictionary;
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -109,7 +109,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RunStepSharepointToolCall(type, id, serializedAdditionalRawData, sharepoint);
+            return new RunStepSharepointToolCall(type, id, serializedAdditionalRawData, sharepointGrounding);
         }
 
         BinaryData IPersistableModel<RunStepSharepointToolCall>.Write(ModelReaderWriterOptions options)

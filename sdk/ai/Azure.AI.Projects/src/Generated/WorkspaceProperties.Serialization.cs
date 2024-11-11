@@ -13,21 +13,21 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class FileContentResponse : IUtf8JsonSerializable, IJsonModel<FileContentResponse>
+    internal partial class WorkspaceProperties : IUtf8JsonSerializable, IJsonModel<WorkspaceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileContentResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkspaceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FileContentResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WorkspaceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileContentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileContentResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("content"u8);
-            writer.WriteBase64StringValue(Content.ToArray(), "D");
+            writer.WritePropertyName("applicationInsights"u8);
+            writer.WriteStringValue(ApplicationInsights);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -46,19 +46,19 @@ namespace Azure.AI.Projects
             writer.WriteEndObject();
         }
 
-        FileContentResponse IJsonModel<FileContentResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WorkspaceProperties IJsonModel<WorkspaceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileContentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileContentResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFileContentResponse(document.RootElement, options);
+            return DeserializeWorkspaceProperties(document.RootElement, options);
         }
 
-        internal static FileContentResponse DeserializeFileContentResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WorkspaceProperties DeserializeWorkspaceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -66,14 +66,14 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            BinaryData content = default;
+            string applicationInsights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("content"u8))
+                if (property.NameEquals("applicationInsights"u8))
                 {
-                    content = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
+                    applicationInsights = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -82,46 +82,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FileContentResponse(content, serializedAdditionalRawData);
+            return new WorkspaceProperties(applicationInsights, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FileContentResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WorkspaceProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileContentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FileContentResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FileContentResponse IPersistableModel<FileContentResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WorkspaceProperties IPersistableModel<WorkspaceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileContentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFileContentResponse(document.RootElement, options);
+                        return DeserializeWorkspaceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileContentResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FileContentResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WorkspaceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static FileContentResponse FromResponse(Response response)
+        internal static WorkspaceProperties FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeFileContentResponse(document.RootElement);
+            return DeserializeWorkspaceProperties(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

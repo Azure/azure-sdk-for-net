@@ -13,25 +13,25 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ConnectionPropertiesAADAuth : IUtf8JsonSerializable, IJsonModel<ConnectionPropertiesAADAuth>
+    internal partial class UnknownInternalConnectionProperties : IUtf8JsonSerializable, IJsonModel<InternalConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionPropertiesAADAuth>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConnectionPropertiesAADAuth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InternalConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionPropertiesAADAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionPropertiesAADAuth)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalConnectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("authType"u8);
+            writer.WriteStringValue(AuthType.ToSerialString());
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category.ToSerialString());
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target);
-            writer.WritePropertyName("authType"u8);
-            writer.WriteStringValue(AuthType.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -50,19 +50,19 @@ namespace Azure.AI.Projects
             writer.WriteEndObject();
         }
 
-        ConnectionPropertiesAADAuth IJsonModel<ConnectionPropertiesAADAuth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        InternalConnectionProperties IJsonModel<InternalConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionPropertiesAADAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionPropertiesAADAuth)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalConnectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectionPropertiesAADAuth(document.RootElement, options);
+            return DeserializeInternalConnectionProperties(document.RootElement, options);
         }
 
-        internal static ConnectionPropertiesAADAuth DeserializeConnectionPropertiesAADAuth(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownInternalConnectionProperties DeserializeUnknownInternalConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -70,13 +70,18 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
+            AuthenticationType authType = default;
             ConnectionType category = default;
             string target = default;
-            AuthenticationType authType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("authType"u8))
+                {
+                    authType = property.Value.GetString().ToAuthenticationType();
+                    continue;
+                }
                 if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString().ToConnectionType();
@@ -87,64 +92,59 @@ namespace Azure.AI.Projects
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authType"u8))
-                {
-                    authType = property.Value.GetString().ToAuthenticationType();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectionPropertiesAADAuth(authType, serializedAdditionalRawData, category, target);
+            return new UnknownInternalConnectionProperties(authType, category, target, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConnectionPropertiesAADAuth>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<InternalConnectionProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionPropertiesAADAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionPropertiesAADAuth)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalConnectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConnectionPropertiesAADAuth IPersistableModel<ConnectionPropertiesAADAuth>.Create(BinaryData data, ModelReaderWriterOptions options)
+        InternalConnectionProperties IPersistableModel<InternalConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionPropertiesAADAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConnectionPropertiesAADAuth(document.RootElement, options);
+                        return DeserializeInternalConnectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionPropertiesAADAuth)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalConnectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConnectionPropertiesAADAuth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InternalConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ConnectionPropertiesAADAuth FromResponse(Response response)
+        internal static new UnknownInternalConnectionProperties FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeConnectionPropertiesAADAuth(document.RootElement);
+            return DeserializeUnknownInternalConnectionProperties(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<InternalConnectionProperties>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }
