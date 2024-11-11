@@ -1,14 +1,11 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.6.0 (2024-11-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for additional MySQL connection properties.
+- Added support for Azure PostgreSQL v2, updated connection strings, and corrected Linked JSON configurations.
 
 ## 1.5.0 (2024-10-24)
 

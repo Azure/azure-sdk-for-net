@@ -36,6 +36,8 @@ function Refresh-Build {
 $testProjectsLocalDir = Join-Path $packageRoot 'generator' 'TestProjects' 'Local'
 $basicTypespecTestProject = Join-Path $testProjectsLocalDir "Basic-TypeSpec"
 
+Push-Location $packageRoot
+
 Write-Host "Generating test projects ..."
 Refresh-Build
 
@@ -44,5 +46,7 @@ Invoke-LoggedCommand (Get-TspCommand "$basicTypespecTestProject/Basic-TypeSpec.t
 
 Write-Host "Building BasicTypeSpec" -ForegroundColor Cyan
 Invoke-LoggedCommand "dotnet build $packageRoot/generator/TestProjects/Local/Basic-TypeSpec/src/BasicTypeSpec.csproj"
+
+Pop-Location
 
 Write-Host 'Code generation is completed.'

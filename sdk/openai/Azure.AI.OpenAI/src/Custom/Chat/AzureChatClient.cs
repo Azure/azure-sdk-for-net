@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.OpenAI.Internal;
 using OpenAI.Chat;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Data.SqlTypes;
 using System.Diagnostics.CodeAnalysis;
 
+#pragma warning disable AOAI001
 #pragma warning disable AZC0112
 
 namespace Azure.AI.OpenAI.Chat;
@@ -63,7 +66,7 @@ internal partial class AzureChatClient : ChatClient
     /// <inheritdoc/>
     public override AsyncCollectionResult<StreamingChatCompletionUpdate> CompleteChatStreamingAsync(IEnumerable<ChatMessage> messages, ChatCompletionOptions options = null, CancellationToken cancellationToken = default)
     {
-        PostfixClearStreamOptions(ref options);
+        PostfixClearStreamOptions(messages, ref options);
         PostfixSwapMaxTokens(ref options);
         return base.CompleteChatStreamingAsync(messages, options, cancellationToken);
     }
@@ -71,25 +74,78 @@ internal partial class AzureChatClient : ChatClient
     /// <inheritdoc/>
     public override CollectionResult<StreamingChatCompletionUpdate> CompleteChatStreaming(IEnumerable<ChatMessage> messages, ChatCompletionOptions options = null, CancellationToken cancellationToken = default)
     {
-        PostfixClearStreamOptions(ref options);
+        PostfixClearStreamOptions(messages, ref options);
         PostfixSwapMaxTokens(ref options);
         return base.CompleteChatStreaming(messages, options, cancellationToken);
     }
 
-    private static void PostfixClearStreamOptions(ref ChatCompletionOptions options)
+    /**
+     * As of 2024-09-01-preview, stream_options support for include_usage (which reports token usage while streaming)
+     * is conditionally supported:
+     * - When using On Your Data (non-null data_sources), stream_options is not considered valid
+     * - When using image input (any content part of "image" type), stream_options is not considered valid
+     * - Otherwise, stream_options can be defaulted to enabled per parity surface.
+     */
+    private static void PostfixClearStreamOptions(IEnumerable<ChatMessage> messages, ref ChatCompletionOptions options)
     {
-        options ??= new();
-        options.StreamOptions = null;
+        if (AdditionalPropertyHelpers
+                .GetAdditionalListProperty<ChatDataSource>(options?.SerializedAdditionalRawData, "data_sources")?.Count > 0
+            || messages?.Any(
+                message => message?.Content?.Any(
+                    contentPart => contentPart?.Kind == ChatMessageContentPartKind.Image) == true)
+                == true)
+        {
+            options ??= new();
+            options.StreamOptions = null;
+        }
     }
 
+    /**
+     * As of 2024-09-01-preview, Azure OpenAI conditionally supports the use of the new max_completion_tokens property:
+     *   - The o1-mini and o1-preview models accept max_completion_tokens and reject max_tokens
+     *   - All other models reject max_completion_tokens and accept max_tokens
+     * To handle this, each request will manipulate serialization overrides:
+     *   - If max tokens aren't set, no action is taken
+     *   - If serialization of max_tokens has already been blocked (e.g. via the public extension method), no
+     *     additional logic is used and new serialization to max_completion_tokens will occur
+     *   - Otherwise, serialization of max_completion_tokens is blocked and an override serialization of the
+     *     corresponding max_tokens value is established
+     */
     private static void PostfixSwapMaxTokens(ref ChatCompletionOptions options)
     {
         options ??= new();
-        if (options.MaxOutputTokenCount is not null)
+        bool valueIsSet = options.MaxOutputTokenCount is not null;
+        bool oldPropertyBlocked = AdditionalPropertyHelpers.GetIsEmptySentinelValue(options.SerializedAdditionalRawData, "max_tokens");
+
+        if (valueIsSet)
         {
-            options.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-            options.SerializedAdditionalRawData["max_completion_tokens"] = BinaryData.FromObjectAsJson("__EMPTY__");
-            options.SerializedAdditionalRawData["max_tokens"] = BinaryData.FromObjectAsJson(options.MaxOutputTokenCount);
+            if (!oldPropertyBlocked)
+            {
+                options.SerializedAdditionalRawData ??= new ChangeTrackingDictionary<string, BinaryData>();
+                AdditionalPropertyHelpers.SetEmptySentinelValue(options.SerializedAdditionalRawData, "max_completion_tokens");
+                options.SerializedAdditionalRawData["max_tokens"] = BinaryData.FromObjectAsJson(options.MaxOutputTokenCount);
+            }
+            else
+            {
+                // Allow standard serialization to the new property to occur; remove overrides
+                if (options.SerializedAdditionalRawData.ContainsKey("max_completion_tokens"))
+                {
+                    options.SerializedAdditionalRawData.Remove("max_completion_tokens");
+                }
+            }
+        }
+        else
+        {
+            if (!AdditionalPropertyHelpers.GetIsEmptySentinelValue(options.SerializedAdditionalRawData, "max_tokens")
+                && options.SerializedAdditionalRawData?.ContainsKey("max_tokens") == true)
+            {
+                options.SerializedAdditionalRawData.Remove("max_tokens");
+            }
+            if (!AdditionalPropertyHelpers.GetIsEmptySentinelValue(options.SerializedAdditionalRawData, "max_completion_tokens")
+                && options.SerializedAdditionalRawData?.ContainsKey("max_completion_tokens") == true)
+            {
+                options.SerializedAdditionalRawData.Remove("max_completion_tokens");
+            }
         }
     }
 }

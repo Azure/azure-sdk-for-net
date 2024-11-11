@@ -84,6 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
+        /// <param name="identity"> The identity for the resource. </param>
         /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
         /// <param name="analyticsWorkspaceId"> The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </param>
         /// <param name="availableUpgradeVersions"> The list of cluster runtime version upgrades available for this cluster. </param>
@@ -96,6 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="clusterServicePrincipal"> The service principal to be used by the cluster during Arc Appliance installation. </param>
         /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
         /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
+        /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
         /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
         /// <param name="computeRackDefinitions">
         /// The list of rack definitions for the compute racks in a multi-rack
@@ -108,12 +110,16 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="manualActionCount"> The count of Manual Action Taken (MAT) events that have not been validated. </param>
         /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
+        /// <param name="runtimeProtectionConfiguration"> The settings for cluster runtime protection. </param>
+        /// <param name="secretArchive"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
         /// <param name="supportExpireOn"> The support end date of the runtime version of the cluster. </param>
+        /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
         /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ResourceIdentifier analyticsWorkspaceId, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, DateTimeOffset? supportExpireOn, IReadOnlyList<ResourceIdentifier> workloadResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ResourceIdentifier analyticsWorkspaceId, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, DateTimeOffset? supportExpireOn, ClusterUpdateStrategy updateStrategy, IReadOnlyList<ResourceIdentifier> workloadResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
+            Identity = identity;
             AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
             AnalyticsWorkspaceId = analyticsWorkspaceId;
             AvailableUpgradeVersions = availableUpgradeVersions;
@@ -126,6 +132,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ClusterServicePrincipal = clusterServicePrincipal;
             ClusterType = clusterType;
             ClusterVersion = clusterVersion;
+            CommandOutputSettings = commandOutputSettings;
             ComputeDeploymentThreshold = computeDeploymentThreshold;
             ComputeRackDefinitions = computeRackDefinitions;
             DetailedStatus = detailedStatus;
@@ -135,7 +142,10 @@ namespace Azure.ResourceManager.NetworkCloud
             ManualActionCount = manualActionCount;
             NetworkFabricId = networkFabricId;
             ProvisioningState = provisioningState;
+            RuntimeProtectionConfiguration = runtimeProtectionConfiguration;
+            SecretArchive = secretArchive;
             SupportExpireOn = supportExpireOn;
+            UpdateStrategy = updateStrategy;
             WorkloadResourceIds = workloadResourceIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -147,6 +157,8 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> The extended location of the cluster manager associated with the cluster. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> The identity for the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </summary>
         public NetworkCloudRackDefinition AggregatorOrSingleRackDefinition { get; set; }
         /// <summary> The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </summary>
@@ -171,6 +183,8 @@ namespace Azure.ResourceManager.NetworkCloud
         public ClusterType ClusterType { get; set; }
         /// <summary> The current runtime version of the cluster. </summary>
         public string ClusterVersion { get; set; }
+        /// <summary> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </summary>
+        public CommandOutputSettings CommandOutputSettings { get; set; }
         /// <summary> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </summary>
         public ValidationThreshold ComputeDeploymentThreshold { get; set; }
         /// <summary>
@@ -192,8 +206,26 @@ namespace Azure.ResourceManager.NetworkCloud
         public ResourceIdentifier NetworkFabricId { get; set; }
         /// <summary> The provisioning state of the cluster. </summary>
         public ClusterProvisioningState? ProvisioningState { get; }
+        /// <summary> The settings for cluster runtime protection. </summary>
+        internal RuntimeProtectionConfiguration RuntimeProtectionConfiguration { get; set; }
+        /// <summary> The mode of operation for runtime protection. </summary>
+        public RuntimeProtectionEnforcementLevel? RuntimeProtectionEnforcementLevel
+        {
+            get => RuntimeProtectionConfiguration is null ? default : RuntimeProtectionConfiguration.EnforcementLevel;
+            set
+            {
+                if (RuntimeProtectionConfiguration is null)
+                    RuntimeProtectionConfiguration = new RuntimeProtectionConfiguration();
+                RuntimeProtectionConfiguration.EnforcementLevel = value;
+            }
+        }
+
+        /// <summary> The configuration for use of a key vault to store secrets for later retrieval by the operator. </summary>
+        public ClusterSecretArchive SecretArchive { get; set; }
         /// <summary> The support end date of the runtime version of the cluster. </summary>
         public DateTimeOffset? SupportExpireOn { get; }
+        /// <summary> The strategy for updating the cluster. </summary>
+        public ClusterUpdateStrategy UpdateStrategy { get; set; }
         /// <summary> The list of workload resource IDs that are hosted within this cluster. </summary>
         public IReadOnlyList<ResourceIdentifier> WorkloadResourceIds { get; }
     }

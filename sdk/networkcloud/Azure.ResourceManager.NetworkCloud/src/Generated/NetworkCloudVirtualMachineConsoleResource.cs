@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -171,90 +171,6 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Delete the provided virtual machine console.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/virtualMachines/{virtualMachineName}/consoles/{consoleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Consoles_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudVirtualMachineConsoleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _networkCloudVirtualMachineConsoleConsolesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineConsoleResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _networkCloudVirtualMachineConsoleConsolesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation(_networkCloudVirtualMachineConsoleConsolesClientDiagnostics, Pipeline, _networkCloudVirtualMachineConsoleConsolesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete the provided virtual machine console.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/virtualMachines/{virtualMachineName}/consoles/{consoleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Consoles_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudVirtualMachineConsoleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _networkCloudVirtualMachineConsoleConsolesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineConsoleResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _networkCloudVirtualMachineConsoleConsolesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation(_networkCloudVirtualMachineConsoleConsolesClientDiagnostics, Pipeline, _networkCloudVirtualMachineConsoleConsolesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Patch the properties of the provided virtual machine console, or update the tags associated with the virtual machine console. Properties and tag updates can be done independently.
         /// <list type="bullet">
         /// <item>
@@ -267,7 +183,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -313,7 +229,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -359,7 +275,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -421,7 +337,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -483,7 +399,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -540,7 +456,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -597,7 +513,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -657,7 +573,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -2236,9 +2236,20 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzurePostgreSqlLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlLinkedService>
     {
         public AzurePostgreSqlLinkedService() { }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> CommandTimeout { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ConnectionString { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Database { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Encoding { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecret Password { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> Port { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> ReadBufferSize { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Server { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> SslMode { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> Timeout { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Timezone { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> TrustServerCertificate { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Username { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlLinkedService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlLinkedService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlLinkedService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8338,14 +8349,21 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MySqlLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.MySqlLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.MySqlLinkedService>
     {
         public MySqlLinkedService() { }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> AllowZeroDateTime { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ConnectionString { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> ConnectionTimeout { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> ConvertZeroDateTime { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Database { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> DriverVersion { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> GuidFormat { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecret Password { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> Port { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Server { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SslCert { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SslKey { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> SslMode { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> TreatTinyAsBoolean { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Username { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> UseSystemTrustStore { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

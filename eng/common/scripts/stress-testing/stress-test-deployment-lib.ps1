@@ -121,7 +121,7 @@ function DeployStressTests(
             Write-Warning "Overriding cluster group and subscription with defaults for 'prod' environment."
         }
         $clusterGroup = 'rg-stress-cluster-prod'
-        $subscription = 'Azure SDK Test Resources'
+        $subscription = 'Azure SDK Test Resources - TME'
     } elseif ($environment -eq 'storage') {
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'storage' environment."

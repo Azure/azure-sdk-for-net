@@ -159,7 +159,7 @@ namespace Azure.Storage.DataMovement
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
-            await SetDataTransfers(cancellationToken).ConfigureAwait(false);
+            await SetDataTransfersAsync(cancellationToken).ConfigureAwait(false);
             IEnumerable<DataTransfer> totalTransfers;
             if (filterByStatus == default || filterByStatus.Count == 0)
             {
@@ -369,24 +369,40 @@ namespace Azure.Storage.DataMovement
             transferOptions ??= new DataTransferOptions();
 
             string transferId = _generateTransferId();
-            await _checkpointer.AddNewJobAsync(
-                transferId,
-                sourceResource,
-                destinationResource,
-                cancellationToken).ConfigureAwait(false);
+            try
+            {
+                await _checkpointer.AddNewJobAsync(
+                    transferId,
+                    sourceResource,
+                    destinationResource,
+                    cancellationToken).ConfigureAwait(false);
 
-            // TODO: if the below fails for any reason, this job will still be in the checkpointer.
-            // That seems not desirable.
+                DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
+                    sourceResource,
+                    destinationResource,
+                    transferOptions,
+                    transferId,
+                    false,
+                    cancellationToken).ConfigureAwait(false);
 
-            DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
-                sourceResource,
-                destinationResource,
-                transferOptions,
-                transferId,
-                false,
-                cancellationToken).ConfigureAwait(false);
-
-            return dataTransfer;
+                return dataTransfer;
+            }
+            catch (Exception ex)
+            {
+                // cleanup any state for a job that didn't even start
+                try
+                {
+                    // No need to check if we were able to remove the transfer or not.
+                    // If there's no stale DataTransfer to remove, move on, because this is a cleanup
+                    _dataTransfers.TryRemove(transferId, out DataTransfer transfer);
+                    await _checkpointer.TryRemoveStoredTransferAsync(transferId, cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception cleanupEx)
+                {
+                    throw new AggregateException(ex, cleanupEx);
+                }
+                throw;
+            }
         }
 
         private async Task<DataTransfer> BuildAndAddTransferJobAsync(
@@ -419,7 +435,7 @@ namespace Azure.Storage.DataMovement
         }
         #endregion
 
-        private async Task SetDataTransfers(CancellationToken cancellationToken = default)
+        private async Task SetDataTransfersAsync(CancellationToken cancellationToken = default)
         {
             _dataTransfers.Clear();
 

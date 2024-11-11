@@ -106,6 +106,10 @@ class PackageProps {
     }
 
     [void]InitializeCIArtifacts() {
+        if (-not $env:SYSTEM_TEAMPROJECTID  -and -not $env:GITHUB_ACTIONS) {
+            return
+        }
+
         $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
 
         $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)
@@ -168,7 +172,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         $lookup[$lookupKey] = $pkg
 
         foreach ($file in $targetedFiles) {
-            $filePath = Resolve-Path (Join-Path $RepoRoot $file)
+            $filePath = (Join-Path $RepoRoot $file)
             $shouldInclude = $filePath -like "$pkgDirectory*"
             if ($shouldInclude) {
                 $packagesWithChanges += $pkg

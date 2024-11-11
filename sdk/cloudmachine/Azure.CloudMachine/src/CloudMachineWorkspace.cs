@@ -13,6 +13,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.CloudMachine;
 
+/// <summary>
+/// The cloud machine workspace.
+/// </summary>
 public class CloudMachineWorkspace : ClientWorkspace
 {
     private TokenCredential Credential { get; } = new ChainedTokenCredential(
@@ -20,9 +23,18 @@ public class CloudMachineWorkspace : ClientWorkspace
         new AzureDeveloperCliCredential()
     );
 
+    /// <summary>
+    /// The cloud machine ID.
+    /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public string Id { get; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CloudMachineWorkspace"/> class.
+    /// </summary>
+    /// <param name="credential"></param>
+    /// <param name="configuration"></param>
+    /// <exception cref="Exception"></exception>
     [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>")]
     public CloudMachineWorkspace(TokenCredential credential = default, IConfiguration configuration = default)
     {
@@ -46,26 +58,35 @@ public class CloudMachineWorkspace : ClientWorkspace
         Id = cmid!;
     }
 
+    /// <summary>
+    /// Retrieves the connection options for a specified client type and instance ID.
+    /// </summary>
+    /// <param name="clientType"></param>
+    /// <param name="instanceId"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ClientConnectionOptions GetConnectionOptions(Type clientType, string instanceId = default)
+    public override ClientConnectionOptions GetConnectionOptions(Type clientType, string instanceId)
     {
         string clientId = clientType.FullName;
+        if (instanceId != null && instanceId.StartsWith("$")) clientId = $"{clientType.FullName}{instanceId}";
+
         switch (clientId)
         {
             case "Azure.Security.KeyVault.Secrets.SecretClient":
-                return new ClientConnectionOptions(new($"https://{this.Id}.vault.azure.net/"), Credential);
+                return new ClientConnectionOptions(new($"https://{Id}.vault.azure.net/"), Credential);
             case "Azure.Messaging.ServiceBus.ServiceBusClient":
-                return new ClientConnectionOptions(new($"https://{this.Id}.servicebus.windows.net"), Credential);
+                return new ClientConnectionOptions(new($"https://{Id}.servicebus.windows.net"), Credential);
             case "Azure.Messaging.ServiceBus.ServiceBusSender":
-                if (instanceId == default)
-                    instanceId = "cm_servicebus_subscription_private";
-                return new ClientConnectionOptions(instanceId);
+                return new ClientConnectionOptions(instanceId?? "cm_servicebus_default_topic");
+            case "Azure.Messaging.ServiceBus.ServiceBusProcessor":
+                return new ClientConnectionOptions("cm_servicebus_default_topic/cm_servicebus_subscription_default");
+            case "Azure.Messaging.ServiceBus.ServiceBusProcessor$private":
+                return new ClientConnectionOptions("cm_servicebus_topic_private/cm_servicebus_subscription_private");
             case "Azure.Storage.Blobs.BlobContainerClient":
-                if (instanceId == default)
-                    instanceId = "default";
-                return new ClientConnectionOptions(new($"https://{this.Id}.blob.core.windows.net/{instanceId}"), Credential);
+                return new ClientConnectionOptions(new($"https://{Id}.blob.core.windows.net/{instanceId??"default"}"), Credential);
             case "Azure.AI.OpenAI.AzureOpenAIClient":
-                return new ClientConnectionOptions(new($"https://{this.Id}.openai.azure.com"), Credential);
+                return new ClientConnectionOptions(new($"https://{Id}.openai.azure.com"), Credential);
             case "OpenAI.Chat.ChatClient":
                 return new ClientConnectionOptions(Id);
             case "OpenAI.Embeddings.EmbeddingClient":
@@ -75,10 +96,15 @@ public class CloudMachineWorkspace : ClientWorkspace
         }
     }
 
+    /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override bool Equals(object obj) => base.Equals(obj);
+
+    /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override int GetHashCode() => base.GetHashCode();
+
+    /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => Id;
 

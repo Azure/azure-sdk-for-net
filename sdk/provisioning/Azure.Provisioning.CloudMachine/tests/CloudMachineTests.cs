@@ -3,14 +3,9 @@
 
 #nullable enable
 
-using System;
-using System.Threading;
-using Azure.Provisioning.CloudMachine;
-using Azure.Provisioning.CloudMachine.KeyVault;
-using Azure.Provisioning.CloudMachine.OpenAI;
-using Azure.Security.KeyVault.Secrets;
+using Azure.CloudMachine.KeyVault;
+using Azure.CloudMachine.OpenAI;
 using NUnit.Framework;
-using OpenAI.Chat;
 
 namespace Azure.CloudMachine.Tests;
 

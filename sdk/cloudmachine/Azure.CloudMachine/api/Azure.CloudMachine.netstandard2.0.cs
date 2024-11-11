@@ -15,7 +15,7 @@ namespace Azure.CloudMachine
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override Azure.Core.ClientConnectionOptions GetConnectionOptions(System.Type clientType, string instanceId = null) { throw null; }
+        public override Azure.Core.ClientConnectionOptions GetConnectionOptions(System.Type clientType, string instanceId) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -26,7 +26,8 @@ namespace Azure.CloudMachine
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public void SendMessage(object serializable) { }
+        public void SendJson(object serializable) { }
+        public System.Threading.Tasks.Task SendJsonAsync(object serializable) { throw null; }
         public void WhenMessageReceived(System.Action<string> received) { }
     }
     public partial class StorageFile
@@ -36,6 +37,7 @@ namespace Azure.CloudMachine
         public string Path { get { throw null; } }
         public string RequestId { get { throw null; } }
         public void Delete() { }
+        public System.Threading.Tasks.Task DeleteAsync() { throw null; }
         public System.BinaryData Download() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -50,14 +52,18 @@ namespace Azure.CloudMachine
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public void DeleteBlob(string path) { }
-        public System.BinaryData DownloadBlob(string path) { throw null; }
-        public string UploadBinaryData(System.BinaryData data, string name = null, bool overwrite = false) { throw null; }
-        public string UploadBytes(byte[] bytes, string name = null, bool overwrite = false) { throw null; }
-        public string UploadBytes(System.ReadOnlyMemory<byte> bytes, string name = null, bool overwrite = false) { throw null; }
+        public void Delete(string path) { }
+        public System.Threading.Tasks.Task DeleteAsync(string path) { throw null; }
+        public System.BinaryData Download(string path) { throw null; }
+        public System.Threading.Tasks.Task<System.BinaryData> DownloadAsync(string path) { throw null; }
+        public string Upload(System.BinaryData data, string name = null, bool overwrite = false) { throw null; }
+        public string Upload(System.IO.Stream fileStream, string name = null, string contentType = null, bool overwrite = false) { throw null; }
+        public System.Threading.Tasks.Task<string> UploadAsync(System.BinaryData data, string name = null, bool overwrite = false) { throw null; }
+        public System.Threading.Tasks.Task<string> UploadAsync(System.IO.Stream fileStream, string name = null, string contentType = null, bool overwrite = false) { throw null; }
         public string UploadJson(object json, string name = null, bool overwrite = false) { throw null; }
-        public string UploadStream(System.IO.Stream fileStream, string name = null, bool overwrite = false) { throw null; }
-        public void WhenBlobUploaded(System.Action<Azure.CloudMachine.StorageFile> function) { }
+        public System.Threading.Tasks.Task<string> UploadJsonAsync(object json, string name = null, bool overwrite = false) { throw null; }
+        public void WhenUploaded(System.Action<Azure.CloudMachine.StorageFile> function) { }
+        public void WhenUploaded(System.Action<System.BinaryData> function) { }
     }
 }
 namespace Azure.CloudMachine.KeyVault
@@ -71,8 +77,58 @@ namespace Azure.CloudMachine.OpenAI
 {
     public static partial class AzureOpenAIExtensions
     {
+        public static void Add(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages, OpenAI.Chat.ChatCompletion completion) { }
+        public static void Add(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages, System.Collections.Generic.IEnumerable<Azure.CloudMachine.OpenAI.VectorbaseEntry> entries) { }
         public static OpenAI.Chat.ChatClient GetOpenAIChatClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
         public static OpenAI.Embeddings.EmbeddingClient GetOpenAIEmbeddingsClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
+        public static void Trim(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages) { }
+    }
+    public partial class ChatTools
+    {
+        public ChatTools(params System.Type[] tools) { }
+        public System.Collections.Generic.IList<OpenAI.Chat.ChatTool> Definitions { get { throw null; } }
+        public void Add(System.Reflection.MethodInfo function) { }
+        public void Add(System.Type functions) { }
+        public string Call(OpenAI.Chat.ChatToolCall call) { throw null; }
+        public string Call(string name, object[] arguments) { throw null; }
+        public System.Collections.Generic.IEnumerable<OpenAI.Chat.ToolChatMessage> CallAll(System.Collections.Generic.IEnumerable<OpenAI.Chat.ChatToolCall> toolCalls) { throw null; }
+        protected string ClrToJsonTypeUtf16(System.Type clrType) { throw null; }
+        protected System.ReadOnlySpan<byte> ClrToJsonTypeUtf8(System.Type clrType) { throw null; }
+        protected virtual string GetMethodInfoToDescription(System.Reflection.MethodInfo function) { throw null; }
+        protected virtual string GetMethodInfoToName(System.Reflection.MethodInfo function) { throw null; }
+        protected virtual string GetParameterInfoToDescription(System.Reflection.ParameterInfo parameter) { throw null; }
+        public static implicit operator OpenAI.Chat.ChatCompletionOptions (Azure.CloudMachine.OpenAI.ChatTools tools) { throw null; }
+    }
+    public partial class EmbeddingsVectorbase
+    {
+        public EmbeddingsVectorbase(OpenAI.Embeddings.EmbeddingClient client, Azure.CloudMachine.OpenAI.VectorbaseStore store = null, int factChunkSize = 1000) { }
+        public void Add(System.BinaryData data) { }
+        public void Add(string text) { }
+        public System.Collections.Generic.IEnumerable<Azure.CloudMachine.OpenAI.VectorbaseEntry> Find(string text, Azure.CloudMachine.OpenAI.FindOptions options = null) { throw null; }
+    }
+    public partial class FindOptions
+    {
+        public FindOptions() { }
+        public int MaxEntries { get { throw null; } set { } }
+        public float Threshold { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VectorbaseEntry
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VectorbaseEntry(System.ReadOnlyMemory<float> vector, System.BinaryData data, int? id = default(int?)) { throw null; }
+        public System.BinaryData Data { get { throw null; } }
+        public int? Id { get { throw null; } }
+        public System.ReadOnlyMemory<float> Vector { get { throw null; } }
+    }
+    public abstract partial class VectorbaseStore
+    {
+        protected VectorbaseStore() { }
+        public abstract int Add(Azure.CloudMachine.OpenAI.VectorbaseEntry entry);
+        public abstract void Add(System.Collections.Generic.IReadOnlyList<Azure.CloudMachine.OpenAI.VectorbaseEntry> entry);
+        public static float CosineSimilarity(System.ReadOnlySpan<float> x, System.ReadOnlySpan<float> y) { throw null; }
+        public abstract System.Collections.Generic.IEnumerable<Azure.CloudMachine.OpenAI.VectorbaseEntry> Find(System.ReadOnlyMemory<float> vector, Azure.CloudMachine.OpenAI.FindOptions options);
     }
 }
 namespace Azure.Core

@@ -14,11 +14,11 @@ namespace BasicTypeSpec
 {
     internal static partial class ClientPipelineExtensions
     {
-        public static async ValueTask<Response> ProcessMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext options)
+        public static async ValueTask<Response> ProcessMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
             await pipeline.SendAsync(message, default).ConfigureAwait(false);
 
-            if (message.Response.IsError && (options?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+            if (message.Response.IsError && (context?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
             {
                 throw new RequestFailedException(message.Response);
             }
@@ -27,11 +27,11 @@ namespace BasicTypeSpec
             return response;
         }
 
-        public static Response ProcessMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext options)
+        public static Response ProcessMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
             pipeline.Send(message, default);
 
-            if (message.Response.IsError && (options?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+            if (message.Response.IsError && (context?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
             {
                 throw new RequestFailedException(message.Response);
             }
@@ -40,9 +40,9 @@ namespace BasicTypeSpec
             return response;
         }
 
-        public static async ValueTask<Response<bool>> ProcessHeadAsBoolMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext options)
+        public static async ValueTask<Response<bool>> ProcessHeadAsBoolMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
-            Response response = await pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            Response response = await pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             switch (response.Status)
             {
                 case >= 200 and < 300:
@@ -54,9 +54,9 @@ namespace BasicTypeSpec
             }
         }
 
-        public static Response<bool> ProcessHeadAsBoolMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext options)
+        public static Response<bool> ProcessHeadAsBoolMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
-            Response response = pipeline.ProcessMessage(message, options);
+            Response response = pipeline.ProcessMessage(message, context);
             switch (response.Status)
             {
                 case >= 200 and < 300:
