@@ -58,6 +58,30 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task BearerTokenAuthenticationPolicy_RequestsTokenEveryRequest_InvalidExpiresOn()
+        {
+            var accessTokens = new Queue<AccessToken>();
+            accessTokens.Enqueue(new AccessToken("token1", default));
+            accessTokens.Enqueue(new AccessToken("token2", default));
+
+            var credential = new TokenCredentialStub(
+                (r, c) => r.Scopes.SequenceEqual(new[] { "scope1", "scope2" }) ? accessTokens.Dequeue() : default,
+                IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, new[] { "scope1", "scope2" });
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
+
+            Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth1Value));
+            Assert.True(transport.Requests[1].Headers.TryGetValue("Authorization", out string auth2Value));
+
+            Assert.AreEqual("Bearer token1", auth1Value);
+            Assert.AreEqual("Bearer token2", auth2Value);
+        }
+
+        [Test]
         public async Task BearerTokenAuthenticationPolicy_CachesHeaderValue()
         {
             var credential = new TokenCredentialStub(
