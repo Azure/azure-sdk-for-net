@@ -493,8 +493,8 @@ namespace Azure.Storage.DataMovement
                     await TransferFailedEventHandler.RaiseAsync(
                         new TransferItemFailedEventArgs(
                             _dataTransfer.Id,
-                            _sourceResource,
-                            _destinationResource,
+                            (StorageResource)_sourceResource ?? _sourceResourceContainer,
+                            (StorageResource)_destinationResource ?? _destinationResourceContainer,
                             ex,
                             false,
                             _cancellationToken),
