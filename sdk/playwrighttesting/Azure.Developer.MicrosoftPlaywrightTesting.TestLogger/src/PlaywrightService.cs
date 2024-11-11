@@ -145,6 +145,7 @@ public class PlaywrightService
             // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
             // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, null);
+            return;
         }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
         if (ServiceAuth == ServiceAuthType.AccessToken)
