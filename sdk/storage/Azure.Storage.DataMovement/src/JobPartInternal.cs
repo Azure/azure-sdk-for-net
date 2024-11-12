@@ -225,7 +225,7 @@ namespace Azure.Storage.DataMovement
                     }
                     catch (Exception ex)
                     {
-                        await InvokeFailedArg(ex).ConfigureAwait(false);
+                        await InvokeFailedArgAsync(ex).ConfigureAwait(false);
                     }
                     Interlocked.Increment(ref _completedChunkCount);
                     await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
@@ -234,9 +234,9 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Processes the job to job parts
+        /// Processes the job part to chunks
         /// </summary>
-        /// <returns>An IEnumerable that contains the job chunks</returns>
+        /// <returns>The task that's queueing up the chunks</returns>
         public abstract Task ProcessPartToChunkAsync();
 
         /// <summary>
@@ -285,11 +285,11 @@ namespace Azure.Storage.DataMovement
                 else if (JobPartStatus.HasCompletedSuccessfully)
                 {
                     _progressTracker.IncrementCompletedFiles();
-                    await InvokeSingleCompletedArg().ConfigureAwait(false);
+                    await InvokeSingleCompletedArgAsync().ConfigureAwait(false);
                 }
 
                 // Set the status in the checkpointer
-                await SetCheckpointerStatus().ConfigureAwait(false);
+                await SetCheckpointerStatusAsync().ConfigureAwait(false);
 
                 await PartTransferStatusEventHandler.RaiseAsync(
                     new TransferStatusEventArgs(
@@ -313,7 +313,7 @@ namespace Azure.Storage.DataMovement
             _progressTracker.IncrementBytesTransferred(bytesTransferred);
         }
 
-        public async virtual Task InvokeSingleCompletedArg()
+        public async virtual Task InvokeSingleCompletedArgAsync()
         {
             if (SingleTransferCompletedEventHandler != null)
             {
@@ -334,7 +334,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Invokes Skipped Argument Event.
         /// </summary>
-        public async virtual Task InvokeSkippedArg()
+        public async virtual Task InvokeSkippedArgAsync()
         {
             if (TransferSkippedEventHandler != null)
             {
@@ -375,7 +375,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Invokes Failed Argument Event.
         /// </summary>
-        public async virtual Task InvokeFailedArg(Exception ex)
+        public async virtual Task InvokeFailedArgAsync(Exception ex)
         {
             if (ex is not OperationCanceledException &&
                 ex is not TaskCanceledException &&
@@ -485,7 +485,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async virtual Task SetCheckpointerStatus()
+        internal async virtual Task SetCheckpointerStatusAsync()
         {
             await _checkpointer.SetJobPartStatusAsync(
                 transferId: _dataTransfer.Id,

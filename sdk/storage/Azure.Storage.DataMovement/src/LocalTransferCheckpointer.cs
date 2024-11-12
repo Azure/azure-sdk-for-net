@@ -113,6 +113,13 @@ namespace Azure.Storage.DataMovement
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             headerStream.Position = 0;
 
+            if (!_transferStates.ContainsKey(transferId))
+            {
+                // We should never get here because AddNewJobAsync should
+                // always be called first.
+                throw Errors.MissingTransferIdAddPartCheckpointer(transferId, partNumber);
+            }
+
             JobPartPlanFile mappedFile = await JobPartPlanFile.CreateJobPartPlanFileAsync(
                 _pathToCheckpointer,
                 transferId,
@@ -121,15 +128,9 @@ namespace Azure.Storage.DataMovement
                 cancellationToken).ConfigureAwait(false);
 
             // Add the job part into the current state
-            if (_transferStates.ContainsKey(transferId))
+            if (!_transferStates[transferId].JobParts.TryAdd(partNumber, mappedFile))
             {
-                _transferStates[transferId].JobParts.Add(partNumber, mappedFile);
-            }
-            else
-            {
-                // We should never get here because AddNewJobAsync should
-                // always be called first.
-                throw Errors.MissingTransferIdAddPartCheckpointer(transferId, partNumber);
+                throw Errors.CollisionJobPart(transferId, partNumber);
             }
         }
 
@@ -151,8 +152,8 @@ namespace Azure.Storage.DataMovement
             int length,
             CancellationToken cancellationToken = default)
         {
-            int maxArraySize = length > 0 ? length : DataMovementConstants.DefaultArrayPoolArraySize;
-            Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, maxArraySize);
+            int bufferSize = length > 0 ? length : DataMovementConstants.DefaultStreamCopyBufferSize;
+            Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, bufferSize);
 
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
@@ -163,7 +164,7 @@ namespace Azure.Storage.DataMovement
                     using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPlanFile.FilePath))
                     using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, length, MemoryMappedFileAccess.Read))
                     {
-                        await mmfStream.CopyToAsync(copiedStream).ConfigureAwait(false);
+                        await mmfStream.CopyToAsync(copiedStream, bufferSize, cancellationToken).ConfigureAwait(false);
                     }
 
                     copiedStream.Position = 0;
@@ -192,8 +193,8 @@ namespace Azure.Storage.DataMovement
             {
                 if (jobPlanFile.JobParts.TryGetValue(partNumber, out JobPartPlanFile jobPartPlanFile))
                 {
-                    int maxArraySize = length > 0 ? length : DataMovementConstants.DefaultArrayPoolArraySize;
-                    Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, maxArraySize);
+                    int bufferSize = length > 0 ? length : DataMovementConstants.DefaultStreamCopyBufferSize;
+                    Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, bufferSize);
 
                     await jobPartPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
                     try
@@ -201,7 +202,7 @@ namespace Azure.Storage.DataMovement
                         using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPartPlanFile.FilePath))
                         using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, length, MemoryMappedFileAccess.Read))
                         {
-                            await mmfStream.CopyToAsync(copiedStream).ConfigureAwait(false);
+                            await mmfStream.CopyToAsync(copiedStream, bufferSize, cancellationToken).ConfigureAwait(false);
                         }
 
                         copiedStream.Position = 0;
@@ -415,7 +416,7 @@ namespace Azure.Storage.DataMovement
                     // Job plan file should already exist since we already iterated job plan files
                     if (_transferStates.TryGetValue(partPlanFileName.Id, out JobPlanFile jobPlanFile))
                     {
-                        jobPlanFile.JobParts.Add(
+                        jobPlanFile.JobParts.TryAdd(
                             partPlanFileName.JobPartNumber,
                             JobPartPlanFile.CreateExistingPartPlanFile(partPlanFileName));
                     }

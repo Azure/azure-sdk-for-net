@@ -6,6 +6,7 @@ using Azure.Core.Pipeline;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Expressions;
 using Microsoft.Generator.CSharp.Primitives;
+using Microsoft.Generator.CSharp.Statements;
 using static Microsoft.Generator.CSharp.Snippets.Snippet;
 
 namespace Azure.Generator.Providers.Abstraction
@@ -28,9 +29,6 @@ namespace Azure.Generator.Providers.Abstraction
         public override ValueExpression Create(ValueExpression options, ValueExpression perRetryPolicies)
             => Static(typeof(HttpPipelineBuilder)).Invoke(nameof(HttpPipelineBuilder.Build), [options, perRetryPolicies]);
 
-        public override HttpMessageApi CreateMessage()
-            => new HttpMessageProvider(Original.Invoke(nameof(HttpPipeline.CreateMessage)));
-
         public override ValueExpression CreateMessage(HttpRequestOptionsApi requestOptions, ValueExpression responseClassifier)
             => Original.Invoke(nameof(HttpPipeline.CreateMessage), requestOptions, responseClassifier).As<HttpMessage>();
 
@@ -40,12 +38,12 @@ namespace Azure.Generator.Providers.Abstraction
         public override ValueExpression PerRetryPolicy(params ValueExpression[] arguments)
             => Empty; // TODO: implement with default retry policy for Azure
 
-        public override InvokeMethodExpression Send(HttpMessageApi message)
-            => Original.Invoke(nameof(HttpPipeline.Send), [message, Default]);
-
-        public override InvokeMethodExpression SendAsync(HttpMessageApi message)
-            => Original.Invoke(nameof(HttpPipeline.SendAsync), [message, Default], true);
-
         public override ClientPipelineApi ToExpression() => this;
+
+        public override MethodBodyStatement Send(HttpMessageApi message, HttpRequestOptionsApi options)
+            => Original.Invoke(nameof(HttpPipeline.Send), [message, Default]).Terminate();
+
+        public override MethodBodyStatement SendAsync(HttpMessageApi message, HttpRequestOptionsApi options)
+            => Original.Invoke(nameof(HttpPipeline.SendAsync), [message, Default], true).Terminate();
     }
 }

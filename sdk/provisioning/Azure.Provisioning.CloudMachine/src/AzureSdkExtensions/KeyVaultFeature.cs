@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Authorization;
+using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.KeyVault;
 
-namespace Azure.Provisioning.CloudMachine.KeyVault;
+namespace Azure.CloudMachine.KeyVault;
 
 public class KeyVaultFeature : CloudMachineFeature
 {
