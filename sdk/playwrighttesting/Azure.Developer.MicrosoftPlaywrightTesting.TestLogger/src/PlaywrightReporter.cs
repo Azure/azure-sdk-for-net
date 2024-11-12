@@ -136,7 +136,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         var cloudRunMetadata = new CloudRunMetadata
         {
             RunId = cloudRunId,
-            RunName = runName.ToString(),
+            RunName = runName?.ToString(),
             WorkspaceId = workspaceId,
             BaseUri = baseUri,
             EnableResultPublish = _enableResultPublish,

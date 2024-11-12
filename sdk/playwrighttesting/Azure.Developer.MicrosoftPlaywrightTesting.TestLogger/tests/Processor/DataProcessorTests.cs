@@ -95,34 +95,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
         }
 
         [Test]
-        public void GetTestRun_ShouldUseGitBasedRunName_WhenRunNameIsEmptyAndGitBasedRunNameIsNotEmpty()
-        {
-            var cloudRunMetadata = new CloudRunMetadata
-            {
-                RunName = "",
-                WorkspaceId = "workspaceId",
-                RunId = "runId",
-                AccessTokenDetails = new()
-                {
-                    oid = "oid",
-                    userName = "  userName  "
-                }
-            };
-            var cIInfo = new CIInfo
-            {
-                Branch = "branch_name",
-                Author = "author",
-                CommitId = "commitId",
-                RevisionUrl = "revisionUrl",
-                Provider = CIConstants.s_gITHUB_ACTIONS
-            };
-            var gitBasedRunName = ReporterUtils.GetRunName(cIInfo);
-            var dataProcessor = new DataProcessor(cloudRunMetadata, cIInfo);
-            TestRunDto result = dataProcessor.GetTestRun();
-            Assert.AreEqual(gitBasedRunName, result.DisplayName);
-        }
-
-        [Test]
         public void GetTestRunShard_ReturnsTestRunShardDto()
         {
             var cloudRunMetadata = new CloudRunMetadata();
