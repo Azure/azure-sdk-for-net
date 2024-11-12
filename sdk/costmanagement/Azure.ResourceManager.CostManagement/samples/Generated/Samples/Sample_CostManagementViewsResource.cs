@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CostManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CostManagement.Samples
 {
     public partial class Sample_CostManagementViewsResource
     {
-        // ResourceGroupView
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ResourceGroupView()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ViewByResourceGroup.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ResourceGroupCreateOrUpdateView
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ResourceGroupCreateOrUpdateView()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ViewCreateOrUpdateByResourceGroup.json
@@ -134,9 +133,8 @@ Direction = ReportConfigSortingType.Ascending,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ResourceGroupDeleteView
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ResourceGroupDeleteView()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ViewDeleteByResourceGroup.json
@@ -157,7 +155,7 @@ Direction = ReportConfigSortingType.Ascending,
             // invoke the operation
             await costManagementViews.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

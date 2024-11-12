@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HDInsight.Containers.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Samples
 {
     public partial class Sample_HDInsightClusterCollection
     {
-        // HDInsightClustersListByClusterPoolName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_HDInsightClustersListByClusterPoolName()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClustersByClusterPoolName.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // HDInsightClusterGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_HDInsightClusterGet()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/GetCluster.json
@@ -87,9 +86,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HDInsightClusterGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_HDInsightClusterGet()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/GetCluster.json
@@ -118,9 +116,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // HDInsightClusterGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_HDInsightClusterGet()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/GetCluster.json
@@ -149,7 +146,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -161,9 +158,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             }
         }
 
-        // HDInsightClusterPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_HDInsightClusterPut()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/CreateAutoscaleCluster.json
@@ -250,9 +246,8 @@ new ScalingRule(ScaleActionType.ScaleUp,3,"cpu",new HDInsightComparisonRule(HDIn
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HDInsightRangerClusterPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_HDInsightRangerClusterPut()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/CreateRangerCluster.json
@@ -334,9 +329,8 @@ new HDInsightManagedIdentitySpec(HDInsightManagedIdentityType.Cluster,new Resour
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HDInsightSparkClusterPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_HDInsightSparkClusterPut()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/CreateSparkCluster.json
@@ -438,9 +432,8 @@ Values =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HDInsightSparkClusterPutWithInternalIngress
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_HDInsightSparkClusterPutWithInternalIngress()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/CreateSparkClusterWithInternalIngress.json

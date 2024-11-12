@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.StorageCache.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageCache.Samples
 {
     public partial class Sample_StorageTargetCollection
     {
-        // StorageTargets_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_StorageTargetsList()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/StorageTargets_ListByCache.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.StorageCache.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageTargets_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageTargetsGet()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/StorageTargets_Get.json
@@ -87,9 +86,8 @@ namespace Azure.ResourceManager.StorageCache.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageTargets_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_StorageTargetsGet()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/StorageTargets_Get.json
@@ -118,9 +116,8 @@ namespace Azure.ResourceManager.StorageCache.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageTargets_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StorageTargetsGet()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/StorageTargets_Get.json
@@ -149,7 +146,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -161,9 +158,8 @@ namespace Azure.ResourceManager.StorageCache.Samples
             }
         }
 
-        // StorageTargets_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageTargetsCreateOrUpdate()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/StorageTargets_CreateOrUpdate.json
@@ -223,9 +219,8 @@ NfsAccessPolicy = "rootSquash",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageTargets_CreateOrUpdate_BlobNfs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageTargetsCreateOrUpdateBlobNfs()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/StorageTargets_CreateOrUpdate_BlobNfs.json
@@ -277,9 +272,8 @@ NamespacePath = "/blobnfs",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageTargets_CreateOrUpdate_NoJunctions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageTargetsCreateOrUpdateNoJunctions()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/StorageTargets_CreateOrUpdate_NoJunctions.json

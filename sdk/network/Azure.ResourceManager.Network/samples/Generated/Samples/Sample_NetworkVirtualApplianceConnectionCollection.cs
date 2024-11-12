@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_NetworkVirtualApplianceConnectionCollection
     {
-        // NetworkVirtualApplianceConnectionPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NetworkVirtualApplianceConnectionPut()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkVirtualApplianceConnectionPut.json
@@ -84,9 +84,8 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkVirtualApplianceConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkVirtualApplianceConnectionGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkVirtualApplianceConnectionGet.json
@@ -119,9 +118,8 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkVirtualApplianceConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_NetworkVirtualApplianceConnectionGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkVirtualApplianceConnectionGet.json
@@ -150,9 +148,8 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkVirtualApplianceConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NetworkVirtualApplianceConnectionGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkVirtualApplianceConnectionGet.json
@@ -181,7 +178,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -193,9 +190,8 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
             }
         }
 
-        // NetworkVirtualApplianceConnectionList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_NetworkVirtualApplianceConnectionList()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkVirtualApplianceConnectionList.json
@@ -227,7 +223,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

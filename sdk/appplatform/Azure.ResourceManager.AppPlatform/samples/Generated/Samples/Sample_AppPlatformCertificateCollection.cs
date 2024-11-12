@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppPlatform.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppPlatform.Samples
 {
     public partial class Sample_AppPlatformCertificateCollection
     {
-        // Certificates_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CertificatesGet()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Certificates_Get.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Certificates_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_CertificatesGet()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Certificates_Get.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Certificates_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CertificatesGet()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Certificates_Get.json
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -124,9 +122,8 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             }
         }
 
-        // Certificates_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CertificatesCreateOrUpdate()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Certificates_CreateOrUpdate.json
@@ -167,9 +164,8 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Certificates_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_CertificatesList()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Certificates_List.json
@@ -201,7 +197,7 @@ namespace Azure.ResourceManager.AppPlatform.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 {
     public partial class Sample_VirtualEndpointResourceCollection
     {
-        // Create a new virtual endpoint for a flexible server
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateANewVirtualEndpointForAFlexibleServer()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/VirtualEndpointCreate.json
@@ -59,9 +59,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual endpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualEndpoint()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/VirtualEndpointsGet.json
@@ -94,9 +93,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual endpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAVirtualEndpoint()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/VirtualEndpointsGet.json
@@ -125,9 +123,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a virtual endpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAVirtualEndpoint()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/VirtualEndpointsGet.json
@@ -156,7 +153,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -168,9 +165,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             }
         }
 
-        // VirtualEndpointListByServer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VirtualEndpointListByServer()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/VirtualEndpointsListByServer.json
@@ -202,7 +198,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

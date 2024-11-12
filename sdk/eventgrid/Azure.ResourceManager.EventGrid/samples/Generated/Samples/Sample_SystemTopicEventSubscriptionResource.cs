@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventGrid.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {
     public partial class Sample_SystemTopicEventSubscriptionResource
     {
-        // SystemTopicEventSubscriptions_GetDeliveryAttributes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDeliveryAttributes_SystemTopicEventSubscriptionsGetDeliveryAttributes()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopicEventSubscriptions_GetDeliveryAttributes.json
@@ -43,12 +43,11 @@ namespace Azure.ResourceManager.EventGrid.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SystemTopicEventSubscriptions_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SystemTopicEventSubscriptionsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopicEventSubscriptions_Get.json
@@ -78,9 +77,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SystemTopicEventSubscriptions_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SystemTopicEventSubscriptionsDelete()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopicEventSubscriptions_Delete.json
@@ -103,12 +101,11 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // invoke the operation
             await systemTopicEventSubscription.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SystemTopicEventSubscriptions_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SystemTopicEventSubscriptionsUpdate()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopicEventSubscriptions_Update.json
@@ -156,9 +153,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SystemTopicEventSubscriptions_GetFullUrl
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFullUri_SystemTopicEventSubscriptionsGetFullUrl()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopicEventSubscriptions_GetFullUrl.json

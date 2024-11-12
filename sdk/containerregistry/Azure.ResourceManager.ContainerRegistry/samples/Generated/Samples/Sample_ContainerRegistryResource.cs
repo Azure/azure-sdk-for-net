@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerRegistry.Samples
 {
     public partial class Sample_ContainerRegistryResource
     {
-        // ImportImageByManifestDigest
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ImportImage_ImportImageByManifestDigest()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ImportImageByManifestDigest.json
@@ -55,12 +55,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             };
             await containerRegistry.ImportImageAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ImportImageByTag
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ImportImage_ImportImageByTag()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ImportImageByTag.json
@@ -97,12 +96,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             };
             await containerRegistry.ImportImageAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ImportImageFromPublicRegistry
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ImportImage_ImportImageFromPublicRegistry()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ImportImageFromPublicRegistry.json
@@ -139,12 +137,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             };
             await containerRegistry.ImportImageAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RegistryCheckNameAvailable
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckContainerRegistryNameAvailability_RegistryCheckNameAvailable()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryCheckNameAvailable.json
@@ -168,9 +165,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RegistryCheckNameNotAvailable
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckContainerRegistryNameAvailability_RegistryCheckNameNotAvailable()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryCheckNameNotAvailable.json
@@ -194,9 +190,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RegistryList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContainerRegistries_RegistryList()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryList.json
@@ -223,12 +218,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RegistryGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RegistryGet()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryGet.json
@@ -257,9 +251,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RegistryDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RegistryDelete()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryDelete.json
@@ -281,12 +274,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             // invoke the operation
             await containerRegistry.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RegistryUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RegistryUpdate()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryUpdate.json
@@ -325,9 +317,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RegistryListUsages
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUsages_RegistryListUsages()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryListUsages.json
@@ -352,12 +343,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RegistryListCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCredentials_RegistryListCredentials()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryListCredentials.json
@@ -382,9 +372,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RegistryRegenerateCredential
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateCredential_RegistryRegenerateCredential()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryRegenerateCredential.json
@@ -410,9 +399,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RegistryGenerateCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateCredentials_RegistryGenerateCredentials()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryGenerateCredentials.json
@@ -443,9 +431,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Registries_ScheduleRun
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRun()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun.json
@@ -500,9 +487,8 @@ IsSecret = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_ScheduleRun_EncodedTaskRun
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunEncodedTaskRun()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_EncodedTaskRun.json
@@ -547,9 +533,8 @@ IsSecret = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_ScheduleRun_FileTaskRun
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunFileTaskRun()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_FileTaskRun.json
@@ -595,9 +580,8 @@ IsSecret = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_ScheduleRun_Task
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunTask()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_Task.json
@@ -656,9 +640,8 @@ IsSecret = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_ScheduleRun_Task_WithCustomCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunTaskWithCustomCredentials()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_FileTask_WithCustomCredentials.json
@@ -721,9 +704,8 @@ ObjectType = ContainerRegistrySecretObjectType.Opaque,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_ScheduleRun_WithCustomCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunWithCustomCredentials()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_WithCustomCredentials.json
@@ -812,9 +794,8 @@ ObjectType = ContainerRegistrySecretObjectType.Opaque,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_ScheduleRun_WithLogTemplate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunWithLogTemplate()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_WithLogTemplate.json
@@ -870,9 +851,8 @@ IsSecret = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_GetBuildSourceUploadUrl
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBuildSourceUploadUrl_RegistriesGetBuildSourceUploadUrl()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesGetBuildSourceUploadUrl.json

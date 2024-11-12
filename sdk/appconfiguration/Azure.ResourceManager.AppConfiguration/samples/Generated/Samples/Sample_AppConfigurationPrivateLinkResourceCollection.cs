@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppConfiguration.Samples
 {
     public partial class Sample_AppConfigurationPrivateLinkResourceCollection
     {
-        // PrivateLinkResources_ListGroupIds
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_PrivateLinkResourcesListGroupIds()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/PrivateLinkResourcesListByConfigurationStore.json
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PrivateLinkResources_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateLinkResourcesGet()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/PrivateLinkResourceGet.json
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateLinkResources_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_PrivateLinkResourcesGet()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/PrivateLinkResourceGet.json
@@ -117,9 +115,8 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PrivateLinkResources_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PrivateLinkResourcesGet()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/PrivateLinkResourceGet.json
@@ -148,7 +145,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
 {
     public partial class Sample_NetworkCloudKubernetesClusterFeatureResource
     {
-        // Get Kubernetes cluster feature
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetKubernetesClusterFeature()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/KubernetesClusterFeatures_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Kubernetes cluster feature
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteKubernetesClusterFeature()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/KubernetesClusterFeatures_Delete.json
@@ -76,9 +75,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Patch Kubernetes cluster feature
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchKubernetesClusterFeature()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/KubernetesClusterFeatures_Patch.json

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ServiceBus.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Samples
 {
     public partial class Sample_ServiceBusNetworkRuleSetResource
     {
-        // NameSpaceNetworkRuleSetCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NameSpaceNetworkRuleSetCreate()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/VirtualNetworkRule/SBNetworkRuleSetCreate.json
@@ -91,9 +91,8 @@ Action = ServiceBusNetworkRuleIPAction.Allow,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NameSpaceNetworkRuleSetGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NameSpaceNetworkRuleSetGet()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/VirtualNetworkRule/SBNetworkRuleSetGet.json

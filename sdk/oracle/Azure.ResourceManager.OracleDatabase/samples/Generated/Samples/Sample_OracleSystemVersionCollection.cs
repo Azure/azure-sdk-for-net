@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OracleDatabase.Samples
 {
     public partial class Sample_OracleSystemVersionCollection
     {
-        // List Exadata System Versions by the provided filter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListExadataSystemVersionsByTheProvidedFilter()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/systemVersions_listByLocation.json
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // systemVersions_listByLocation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SystemVersionsListByLocation()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/systemVersions_listByLocation.json
@@ -84,12 +83,11 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Exadata System Version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetExadataSystemVersion()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/systemVersions_get.json
@@ -121,9 +119,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Exadata System Version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetExadataSystemVersion()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/systemVersions_get.json
@@ -151,9 +148,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Exadata System Version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetExadataSystemVersion()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/systemVersions_get.json
@@ -181,7 +177,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -193,9 +189,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             }
         }
 
-        // systemVersions_listSystemVersions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SystemVersionsListSystemVersions()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/systemVersions_get.json
@@ -227,9 +222,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // systemVersions_listSystemVersions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SystemVersionsListSystemVersions()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/systemVersions_get.json
@@ -257,9 +251,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // systemVersions_listSystemVersions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SystemVersionsListSystemVersions()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/systemVersions_get.json
@@ -287,7 +280,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

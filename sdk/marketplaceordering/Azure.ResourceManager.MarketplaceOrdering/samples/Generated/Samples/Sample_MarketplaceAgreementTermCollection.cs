@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MarketplaceOrdering.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MarketplaceOrdering.Samples
 {
     public partial class Sample_MarketplaceAgreementTermCollection
     {
-        // GetMarketplaceTerms
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMarketplaceTerms()
         {
             // Generated from example definition: specification/marketplaceordering/resource-manager/Microsoft.MarketplaceOrdering/stable/2021-01-01/examples/GetMarketplaceTerms.json
@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetMarketplaceTerms
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetMarketplaceTerms()
         {
             // Generated from example definition: specification/marketplaceordering/resource-manager/Microsoft.MarketplaceOrdering/stable/2021-01-01/examples/GetMarketplaceTerms.json
@@ -84,9 +83,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetMarketplaceTerms
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetMarketplaceTerms()
         {
             // Generated from example definition: specification/marketplaceordering/resource-manager/Microsoft.MarketplaceOrdering/stable/2021-01-01/examples/GetMarketplaceTerms.json
@@ -116,7 +114,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -128,9 +126,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Samples
             }
         }
 
-        // SetMarketplaceTerms
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SetMarketplaceTerms()
         {
             // Generated from example definition: specification/marketplaceordering/resource-manager/Microsoft.MarketplaceOrdering/stable/2021-01-01/examples/SetMarketplaceTerms.json

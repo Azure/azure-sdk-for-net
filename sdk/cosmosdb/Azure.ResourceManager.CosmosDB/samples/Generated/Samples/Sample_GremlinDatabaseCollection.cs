@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CosmosDB.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
     public partial class Sample_GremlinDatabaseCollection
     {
-        // CosmosDBGremlinDatabaseList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_CosmosDBGremlinDatabaseList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBGremlinDatabaseList.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.CosmosDB.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBGremlinDatabaseGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBGremlinDatabaseGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBGremlinDatabaseGet.json
@@ -87,9 +86,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBGremlinDatabaseGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_CosmosDBGremlinDatabaseGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBGremlinDatabaseGet.json
@@ -118,9 +116,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CosmosDBGremlinDatabaseGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CosmosDBGremlinDatabaseGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBGremlinDatabaseGet.json
@@ -149,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -161,9 +158,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             }
         }
 
-        // CosmosDBGremlinDatabaseCreateUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CosmosDBGremlinDatabaseCreateUpdate()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBGremlinDatabaseCreateUpdate.json

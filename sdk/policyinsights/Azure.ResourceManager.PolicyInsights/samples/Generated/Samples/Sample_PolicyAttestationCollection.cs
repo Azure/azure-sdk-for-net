@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.PolicyInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PolicyInsights.Samples
 {
     public partial class Sample_PolicyAttestationCollection
     {
-        // List attestations at individual resource scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAttestationsAtIndividualResourceScope()
         {
             // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2022-09-01/examples/Attestations_ListResourceScope.json
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List attestations at individual resource scope with query parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAttestationsAtIndividualResourceScopeWithQueryParameters()
         {
             // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2022-09-01/examples/Attestations_ListResourceScope_WithQuery.json
@@ -81,12 +80,11 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Create attestation at individual resource scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAttestationAtIndividualResourceScope()
         {
             // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2022-09-01/examples/Attestations_CreateResourceScope.json
@@ -138,9 +136,8 @@ SourceUri = new Uri("https://gist.github.com/contoso/9573e238762c60166c090ae16b8
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get attestation at individual resource scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAttestationAtIndividualResourceScope()
         {
             // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2022-09-01/examples/Attestations_GetResourceScope.json
@@ -170,9 +167,8 @@ SourceUri = new Uri("https://gist.github.com/contoso/9573e238762c60166c090ae16b8
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get attestation at individual resource scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAttestationAtIndividualResourceScope()
         {
             // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2022-09-01/examples/Attestations_GetResourceScope.json
@@ -198,9 +194,8 @@ SourceUri = new Uri("https://gist.github.com/contoso/9573e238762c60166c090ae16b8
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get attestation at individual resource scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAttestationAtIndividualResourceScope()
         {
             // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2022-09-01/examples/Attestations_GetResourceScope.json
@@ -226,7 +221,7 @@ SourceUri = new Uri("https://gist.github.com/contoso/9573e238762c60166c090ae16b8
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

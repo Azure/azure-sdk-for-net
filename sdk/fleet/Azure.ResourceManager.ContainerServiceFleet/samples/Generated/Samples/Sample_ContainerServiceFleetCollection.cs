@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 {
     public partial class Sample_ContainerServiceFleetCollection
     {
-        // Lists the Fleet resources in a resource group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListsTheFleetResourcesInAResourceGroup()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/Fleets_ListByResourceGroup.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets a Fleet resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAFleetResource()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/Fleets_Get.json
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets a Fleet resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsAFleetResource()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/Fleets_Get.json
@@ -116,9 +114,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets a Fleet resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsAFleetResource()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/Fleets_Get.json
@@ -146,7 +143,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -158,9 +155,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             }
         }
 
-        // Creates a Fleet resource with a long running operation.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesAFleetResourceWithALongRunningOperation()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/Fleets_CreateOrUpdate.json

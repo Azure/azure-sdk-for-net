@@ -182,6 +182,11 @@ public class RunSettingKey
     public static readonly string EnableResultPublish = "EnableResultPublish";
 
     /// <summary>
+    /// Number of NUnit test workers.
+    /// </summary>
+    public static readonly string NumberOfTestWorkers = "NumberOfTestWorkers";
+
+    /// <summary>
     /// The run name setting key.
     /// </summary>
     public static readonly string RunName = "RunName";

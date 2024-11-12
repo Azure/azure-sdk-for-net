@@ -13,14 +13,14 @@ using Azure.ResourceManager.ComputeFleet.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ComputeFleet.Samples
 {
     public partial class Sample_ComputeFleetResource
     {
-        // Fleets_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FleetsGet()
         {
             // Generated from example definition: 2024-11-01/Fleets_Get.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Fleets_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_FleetsUpdate()
         {
             // Generated from example definition: 2024-11-01/Fleets_Update.json
@@ -464,9 +463,8 @@ IsAutomaticUpgradeEnabled = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Fleets_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_FleetsDelete()
         {
             // Generated from example definition: 2024-11-01/Fleets_Delete.json
@@ -488,12 +486,11 @@ IsAutomaticUpgradeEnabled = true,
             // invoke the operation
             await computeFleet.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Fleets_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetComputeFleets_FleetsListBySubscription()
         {
             // Generated from example definition: 2024-11-01/Fleets_ListBySubscription.json
@@ -520,12 +517,11 @@ IsAutomaticUpgradeEnabled = true,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Fleets_ListVirtualMachineScaleSets
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualMachineScaleSets_FleetsListVirtualMachineScaleSets()
         {
             // Generated from example definition: 2024-11-01/Fleets_ListVirtualMachineScaleSets.json
@@ -550,7 +546,7 @@ IsAutomaticUpgradeEnabled = true,
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

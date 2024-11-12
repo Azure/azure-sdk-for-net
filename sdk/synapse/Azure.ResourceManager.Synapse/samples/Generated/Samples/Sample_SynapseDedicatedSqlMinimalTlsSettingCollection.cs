@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseDedicatedSqlMinimalTlsSettingCollection
     {
-        // Get workspace managed sql server dedicated sql minimal tls settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWorkspaceManagedSqlServerDedicatedSqlMinimalTlsSettings()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetWorkspaceManagedSqlServerDedicatedSQLminimalTlsSettings.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get workspace managed sql server dedicated sql minimal tls settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetWorkspaceManagedSqlServerDedicatedSqlMinimalTlsSettings()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetWorkspaceManagedSqlServerDedicatedSQLminimalTlsSettings.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get workspace managed sql server dedicated sql minimal tls settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetWorkspaceManagedSqlServerDedicatedSqlMinimalTlsSettings()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetWorkspaceManagedSqlServerDedicatedSQLminimalTlsSettings.json
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -123,9 +121,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             }
         }
 
-        // List dedicated sql minimal tls settings of the workspace managed sql server
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDedicatedSqlMinimalTlsSettingsOfTheWorkspaceManagedSqlServer()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/ListWorkspaceManagedSqlServerDedicatedSQLminimalTlsSettings.json
@@ -157,7 +154,7 @@ namespace Azure.ResourceManager.Synapse.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
 {
     public partial class Sample_NetworkCloudAgentPoolResource
     {
-        // Get Kubernetes cluster agent pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetKubernetesClusterAgentPool()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/AgentPools_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch Kubernetes cluster agent pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchKubernetesClusterAgentPool()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/AgentPools_Patch.json
