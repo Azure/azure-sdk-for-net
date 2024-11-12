@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Kubernetes.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kubernetes.Samples
 {
     public partial class Sample_ConnectedClusterResource
     {
-        // UpdateClusterExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateClusterExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/UpdateClusterExample.json
@@ -55,9 +55,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetClusterExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetClusterExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/GetClusterExample.json
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteClusterExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteClusterExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/DeleteClusterExample.json
@@ -110,12 +108,11 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             // invoke the operation
             await connectedCluster.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ListClusterUserCredentialCSPExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterUserCredential_ListClusterUserCredentialCSPExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/ConnectedClustersListClusterCredentialResultHPAAD.json
@@ -141,9 +138,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListClusterUserCredentialExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterUserCredential_ListClusterUserCredentialExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/ConnectedClustersListClusterCredentialResultCSPAAD.json
@@ -169,9 +165,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListClusterUserCredentialNonAadCSPExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterUserCredential_ListClusterUserCredentialNonAadCSPExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/ConnectedClustersListClusterCredentialResultHPToken.json
@@ -197,9 +192,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListClusterUserCredentialNonAadExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterUserCredential_ListClusterUserCredentialNonAadExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/ConnectedClustersListClusterCredentialResultCSPToken.json
@@ -225,9 +219,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetClustersExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConnectedClusters_GetClustersExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/GetClustersBySubscriptionExample.json
@@ -254,7 +247,7 @@ namespace Azure.ResourceManager.Kubernetes.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

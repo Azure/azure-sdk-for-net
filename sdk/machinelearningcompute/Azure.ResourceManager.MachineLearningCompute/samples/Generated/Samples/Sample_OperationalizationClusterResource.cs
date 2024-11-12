@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MachineLearningCompute.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Samples
 {
     public partial class Sample_OperationalizationClusterResource
     {
-        // GET Operationalization Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GETOperationalizationCluster()
         {
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PATCH Operationalization Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PATCHOperationalizationCluster()
         {
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_Update.json
@@ -85,9 +84,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DELETE Operationalization Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DELETEOperationalizationCluster()
         {
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_Delete.json
@@ -109,12 +107,11 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
             // invoke the operation
             await operationalizationCluster.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List Keys of an Operationalization Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_ListKeysOfAnOperationalizationCluster()
         {
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_ListKeys.json
@@ -139,9 +136,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Check Update for an Operationalization Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckSystemServicesUpdatesAvailable_CheckUpdateForAnOperationalizationCluster()
         {
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_CheckSystemServicesUpdatesAvailable.json
@@ -166,9 +162,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Update System Services in an Operationalization Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateSystemServices_UpdateSystemServicesInAnOperationalizationCluster()
         {
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_UpdateSystemServices.json
@@ -194,9 +189,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List Operationalization Clusters by Subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetOperationalizationClusters_ListOperationalizationClustersBySubscription()
         {
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_ListBySubscription.json
@@ -223,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

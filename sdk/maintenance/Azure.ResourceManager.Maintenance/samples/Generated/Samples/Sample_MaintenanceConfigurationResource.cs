@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Maintenance.Samples
 {
     public partial class Sample_MaintenanceConfigurationResource
     {
-        // MaintenanceConfigurations_GetForResource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MaintenanceConfigurationsGetForResource()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/MaintenanceConfigurations_GetForResource.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Maintenance.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // MaintenanceConfigurations_GetForResource_GuestOSPatchLinux
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MaintenanceConfigurationsGetForResourceGuestOSPatchLinux()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/MaintenanceConfigurations_GetForResource_GuestOSPatchLinux.json
@@ -78,9 +77,8 @@ namespace Azure.ResourceManager.Maintenance.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // MaintenanceConfigurations_GetForResource_GuestOSPatchWindows
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MaintenanceConfigurationsGetForResourceGuestOSPatchWindows()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/MaintenanceConfigurations_GetForResource_GuestOSPatchWindows.json
@@ -109,9 +107,8 @@ namespace Azure.ResourceManager.Maintenance.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // MaintenanceConfigurations_DeleteForResource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_MaintenanceConfigurationsDeleteForResource()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/MaintenanceConfigurations_DeleteForResource.json
@@ -133,12 +130,11 @@ namespace Azure.ResourceManager.Maintenance.Samples
             // invoke the operation
             await maintenanceConfiguration.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // MaintenanceConfigurations_UpdateForResource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_MaintenanceConfigurationsUpdateForResource()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/MaintenanceConfigurations_UpdateForResource.json
@@ -178,9 +174,8 @@ namespace Azure.ResourceManager.Maintenance.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // MaintenanceConfigurations_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMaintenanceConfigurations_MaintenanceConfigurationsList()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/MaintenanceConfigurations_List.json
@@ -207,7 +202,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
