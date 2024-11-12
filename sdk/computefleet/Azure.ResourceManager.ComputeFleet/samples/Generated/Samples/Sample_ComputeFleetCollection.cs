@@ -13,14 +13,14 @@ using Azure.ResourceManager.ComputeFleet.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ComputeFleet.Samples
 {
     public partial class Sample_ComputeFleetCollection
     {
-        // Fleets_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FleetsGet()
         {
             // Generated from example definition: 2024-11-01/Fleets_Get.json
@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Fleets_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_FleetsGet()
         {
             // Generated from example definition: 2024-11-01/Fleets_Get.json
@@ -82,9 +81,8 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Fleets_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_FleetsGet()
         {
             // Generated from example definition: 2024-11-01/Fleets_Get.json
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -124,9 +122,8 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
             }
         }
 
-        // Fleets_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_FleetsCreateOrUpdate()
         {
             // Generated from example definition: 2024-11-01/Fleets_CreateOrUpdate.json
@@ -553,9 +550,8 @@ IsAutomaticUpgradeEnabled = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Fleets_CreateOrUpdate_MinimumSet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_FleetsCreateOrUpdateMinimumSet()
         {
             // Generated from example definition: 2024-11-01/Fleets_CreateOrUpdate_MinimumSet.json
@@ -682,9 +678,8 @@ IsIPForwardingEnabled = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Fleets_ListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_FleetsListByResourceGroup()
         {
             // Generated from example definition: 2024-11-01/Fleets_ListByResourceGroup.json
@@ -715,7 +710,7 @@ IsIPForwardingEnabled = true,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
