@@ -14,14 +14,14 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// <see cref="PlayCompleted"/> event will be returned once the play is completed successfully.
         /// </summary>
-        public PlayCompleted SuccessResult { get; }
+        public CallAutomationEventBase SuccessResult { get; }
 
         /// <summary>
         /// <see cref="PlayFailed"/> event will be returned once the play failed.
         /// </summary>
         public PlayFailed FailureResult { get; }
 
-        internal PlayEventResult(bool isSuccess, PlayCompleted successResult, PlayFailed failureResult)
+        internal PlayEventResult(bool isSuccess, CallAutomationEventBase successResult, PlayFailed failureResult)
         {
             IsSuccess = isSuccess;
             SuccessResult = successResult;
