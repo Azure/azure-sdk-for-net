@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.OracleDatabase.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OracleDatabase.Samples
 {
     public partial class Sample_CloudVmClusterDBNodeResource
     {
-        // Get DbNode
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDbNode()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dbNodes_get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DbNodes_Action
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Action_DbNodesAction()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dbNodes_action.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VM actions on DbNodes of VM Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Action_VMActionsOnDbNodesOfVMCluster()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dbNodes_action.json

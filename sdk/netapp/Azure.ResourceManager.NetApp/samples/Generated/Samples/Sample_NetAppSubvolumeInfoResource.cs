@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetApp.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Samples
 {
     public partial class Sample_NetAppSubvolumeInfoResource
     {
-        // Subvolumes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SubvolumesGet()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Subvolumes_Get.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Subvolumes_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SubvolumesUpdate()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Subvolumes_Update.json
@@ -88,9 +87,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Subvolumes_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SubvolumesDelete()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Subvolumes_Delete.json
@@ -115,12 +113,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             await netAppSubvolumeInfo.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Subvolumes_Metadata
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetadata_SubvolumesMetadata()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Subvolumes_Metadata.json

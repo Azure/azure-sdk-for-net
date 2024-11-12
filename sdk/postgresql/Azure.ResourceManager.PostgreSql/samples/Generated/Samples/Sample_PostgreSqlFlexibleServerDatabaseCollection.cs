@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 {
     public partial class Sample_PostgreSqlFlexibleServerDatabaseCollection
     {
-        // Create a database
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateADatabase()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/DatabaseCreate.json
@@ -55,9 +55,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a database
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADatabase()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/DatabaseGet.json
@@ -90,9 +89,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a database
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetADatabase()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/DatabaseGet.json
@@ -121,9 +119,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a database
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetADatabase()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/DatabaseGet.json
@@ -152,7 +149,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -164,9 +161,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             }
         }
 
-        // List databases in a server
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDatabasesInAServer()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/DatabasesListByServer.json
@@ -198,7 +194,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

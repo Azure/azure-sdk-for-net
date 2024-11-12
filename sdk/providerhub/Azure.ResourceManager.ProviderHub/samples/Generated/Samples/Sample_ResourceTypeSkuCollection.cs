@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ProviderHub.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ProviderHub.Samples
 {
     public partial class Sample_ResourceTypeSkuCollection
     {
-        // Skus_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SkusGet()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_Get.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Skus_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SkusGet()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_Get.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Skus_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SkusGet()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_Get.json
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -124,9 +122,8 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             }
         }
 
-        // Skus_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SkusCreateOrUpdate()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_CreateOrUpdate.json
@@ -179,9 +176,8 @@ new ResourceTypeSkuCost("xxx")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Skus_ListByResourceTypeRegistrations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SkusListByResourceTypeRegistrations()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_ListByResourceTypeRegistrations.json
@@ -213,7 +209,7 @@ new ResourceTypeSkuCost("xxx")
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Media.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Samples
 {
     public partial class Sample_StreamingLocatorResource
     {
-        // Get a Streaming Locator by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAStreamingLocatorByName()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-locators-get-by-name.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a Streaming Locator with clear streaming
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesAStreamingLocatorWithClearStreaming()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-locators-create-clear.json
@@ -85,9 +84,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a Streaming Locator with secure streaming
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesAStreamingLocatorWithSecureStreaming()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-locators-create-secure.json
@@ -125,9 +123,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a Streaming Locator with user defined content keys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesAStreamingLocatorWithUserDefinedContentKeys()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-locators-create-secure-userDefinedContentKeys.json
@@ -180,9 +177,8 @@ Value = "7UqLohAfWsEGkULYxHjYZg==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a Streaming Locator
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAStreamingLocator()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-locators-delete.json
@@ -205,12 +201,11 @@ Value = "7UqLohAfWsEGkULYxHjYZg==",
             // invoke the operation
             await streamingLocator.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List Content Keys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContentKeys_ListContentKeys()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-locators-list-content-keys.json
@@ -236,12 +231,11 @@ Value = "7UqLohAfWsEGkULYxHjYZg==",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List Paths which has streaming paths and download paths
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetStreamingPaths_ListPathsWhichHasStreamingPathsAndDownloadPaths()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-locators-list-paths-streaming-and-download.json
@@ -267,9 +261,8 @@ Value = "7UqLohAfWsEGkULYxHjYZg==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List Paths which has streaming paths only
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetStreamingPaths_ListPathsWhichHasStreamingPathsOnly()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-locators-list-paths-streaming-only.json

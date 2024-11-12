@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // CapabilitiesList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExecuteLocationBasedCapabilities_CapabilitiesList()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/CapabilitiesByLocation.json
@@ -42,12 +42,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // NameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckPostgreSqlFlexibleServerNameAvailability_NameAvailability()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/CheckNameAvailability.json
@@ -74,9 +73,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation_NameAvailability()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/CheckNameAvailabilityLocationBased.json
@@ -104,9 +102,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualNetworkSubnetUsageList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExecuteVirtualNetworkSubnetUsage_VirtualNetworkSubnetUsageList()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/VirtualNetworkSubnetUsage.json

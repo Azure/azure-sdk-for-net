@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetApp.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Samples
 {
     public partial class Sample_NetAppVolumeQuotaRuleCollection
     {
-        // VolumeQuotaRules_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VolumeQuotaRulesList()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeQuotaRules_List.json
@@ -51,12 +51,11 @@ namespace Azure.ResourceManager.NetApp.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VolumeQuotaRules_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeQuotaRulesGet()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeQuotaRules_Get.json
@@ -91,9 +90,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VolumeQuotaRules_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_VolumeQuotaRulesGet()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeQuotaRules_Get.json
@@ -124,9 +122,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VolumeQuotaRules_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VolumeQuotaRulesGet()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeQuotaRules_Get.json
@@ -157,7 +154,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -169,9 +166,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             }
         }
 
-        // VolumeQuotaRules_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VolumeQuotaRulesCreate()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeQuotaRules_Create.json

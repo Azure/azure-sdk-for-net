@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.OracleDatabase.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OracleDatabase.Samples
 {
     public partial class Sample_AutonomousDatabaseBackupResource
     {
-        // AutonomousDatabaseBackups_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AutonomousDatabaseBackupsGet()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Autonomous Database Backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAutonomousDatabaseBackup()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AutonomousDatabaseBackups_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AutonomousDatabaseBackupsUpdate()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_patch.json
@@ -113,9 +111,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch Autonomous Database Backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchAutonomousDatabaseBackup()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_patch.json
@@ -147,9 +144,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AutonomousDatabaseBackups_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AutonomousDatabaseBackupsDelete()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_delete.json
@@ -172,12 +168,11 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // invoke the operation
             await autonomousDatabaseBackup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Delete Autonomous Database Backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAutonomousDatabaseBackup()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_delete.json
@@ -200,7 +195,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // invoke the operation
             await autonomousDatabaseBackup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
