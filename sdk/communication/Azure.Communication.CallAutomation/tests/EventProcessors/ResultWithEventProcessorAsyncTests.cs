@@ -283,7 +283,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 });
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.GetCallMedia().PlayToAll(new PlayToAllOptions(new FileSource(new Uri(CallBackUri))) { OperationContext = OperationContext, Loop = true });
+            // hold participant
+            var response = callConnection.GetCallMedia().Play(
+                new PlayOptions(new FileSource(new Uri(CallBackUri)), new List<CommunicationIdentifier> { new CommunicationUserIdentifier(TargetUser) })
+                { OperationContext = OperationContext, Loop = true });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // interrupting the hold
@@ -314,6 +317,11 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendAndProcessEvent(handler, new PlayCompleted(CallConnectionId, ServerCallId, CorrelationId, interruptOperationContext, new ResultInformation() { }));
             returnedInterruptResult = await interruptResponse.Value.WaitForEventProcessorAsync();
             AssertReceivedEvent(returnedInterruptResult, typeof(PlayCompleted), interruptOperationContext);
+
+            // hold audio resumed
+            SendAndProcessEvent(handler, new PlayResumed(CallConnectionId, ServerCallId, CorrelationId, OperationContext, new ResultInformation() { }));
+            returnedResult = await response.Value.WaitForEventProcessorAsync();
+            AssertReceivedEvent(returnedResult, typeof(PlayResumed));
         }
 
         private static void AssertReceivedEvent(PlayEventResult returnedResult, System.Type expectedType, string expectedOperationContext = OperationContext)

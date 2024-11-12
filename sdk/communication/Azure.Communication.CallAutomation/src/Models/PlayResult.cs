@@ -43,6 +43,7 @@ namespace Azure.Communication.CallAutomation
                 && (filter.GetType() == typeof(PlayCompleted)
                 || filter.GetType() == typeof(PlayStarted)
                 || filter.GetType() == typeof(PlayPaused)
+                || filter.GetType() == typeof(PlayResumed)
                 || filter.GetType() == typeof(PlayFailed)),
                 cancellationToken);
 
@@ -66,6 +67,7 @@ namespace Azure.Communication.CallAutomation
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(PlayStarted)
                 || filter.GetType() == typeof(PlayPaused)
+                || filter.GetType() == typeof(PlayResumed)
                 || filter.GetType() == typeof(PlayCompleted)
                 || filter.GetType() == typeof(PlayFailed)),
                 cancellationToken).ConfigureAwait(false);
@@ -83,6 +85,9 @@ namespace Azure.Communication.CallAutomation
                     break;
                 case PlayPaused:
                     result = new PlayEventResult(true, (PlayPaused)returnedEvent, null);
+                    break;
+                case PlayResumed:
+                    result = new PlayEventResult(true, (PlayResumed)returnedEvent, null);
                     break;
                 case PlayCompleted:
                     result = new PlayEventResult(true, (PlayCompleted)returnedEvent, null);
