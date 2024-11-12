@@ -1,6 +1,6 @@
-# Microsoft Azure InformaticaDataManagement management client library for .NET
+# Microsoft Azure Durable Task Scheduler management client library for .NET
 
-**[Describe the service briefly first.]**
+**Durable Task Scheduler is a high performance managed storage backend for Durable Functions and the Durable Task Framework.**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

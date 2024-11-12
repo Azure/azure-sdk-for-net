@@ -2,7 +2,7 @@
 
 ## 1.0.0-beta.1 (Unreleased)
 
-
+Initial release of the Durable Task Scheduler management SDK
 
 ### Features Added
 
