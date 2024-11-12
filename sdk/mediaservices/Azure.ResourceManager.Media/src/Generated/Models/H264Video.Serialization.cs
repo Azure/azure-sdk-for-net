@@ -6,17 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class H264Video : IUtf8JsonSerializable
+    public partial class H264Video : IUtf8JsonSerializable, IJsonModel<H264Video>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<H264Video>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<H264Video>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<H264Video>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(H264Video)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Complexity))
             {
                 writer.WritePropertyName("complexity"u8);
@@ -28,7 +46,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,46 +60,39 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("sceneChangeDetection"u8);
                 writer.WriteBooleanValue(UseSceneChangeDetection.Value);
             }
-            if (Optional.IsDefined(KeyFrameInterval))
-            {
-                writer.WritePropertyName("keyFrameInterval"u8);
-                writer.WriteStringValue(KeyFrameInterval.Value, "P");
-            }
-            if (Optional.IsDefined(StretchMode))
-            {
-                writer.WritePropertyName("stretchMode"u8);
-                writer.WriteStringValue(StretchMode.Value.ToString());
-            }
-            if (Optional.IsDefined(SyncMode))
-            {
-                writer.WritePropertyName("syncMode"u8);
-                writer.WriteStringValue(SyncMode.Value.ToString());
-            }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(Label))
-            {
-                writer.WritePropertyName("label"u8);
-                writer.WriteStringValue(Label);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static H264Video DeserializeH264Video(JsonElement element)
+        H264Video IJsonModel<H264Video>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<H264Video>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(H264Video)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeH264Video(document.RootElement, options);
+        }
+
+        internal static H264Video DeserializeH264Video(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<H264Complexity> complexity = default;
-            Optional<IList<H264Layer>> layers = default;
-            Optional<H264RateControlMode> rateControlMode = default;
-            Optional<bool> sceneChangeDetection = default;
-            Optional<TimeSpan> keyFrameInterval = default;
-            Optional<InputVideoStretchMode> stretchMode = default;
-            Optional<VideoSyncMode> syncMode = default;
+            H264Complexity? complexity = default;
+            IList<H264Layer> layers = default;
+            H264RateControlMode? rateControlMode = default;
+            bool? sceneChangeDetection = default;
+            TimeSpan? keyFrameInterval = default;
+            InputVideoStretchMode? stretchMode = default;
+            VideoSyncMode? syncMode = default;
             string odataType = default;
-            Optional<string> label = default;
+            string label = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complexity"u8))
@@ -102,7 +113,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<H264Layer> array = new List<H264Layer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(H264Layer.DeserializeH264Layer(item));
+                        array.Add(H264Layer.DeserializeH264Layer(item, options));
                     }
                     layers = array;
                     continue;
@@ -162,8 +173,54 @@ namespace Azure.ResourceManager.Media.Models
                     label = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new H264Video(odataType, label.Value, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), Optional.ToNullable(complexity), Optional.ToList(layers), Optional.ToNullable(rateControlMode), Optional.ToNullable(sceneChangeDetection));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new H264Video(
+                odataType,
+                label,
+                serializedAdditionalRawData,
+                keyFrameInterval,
+                stretchMode,
+                syncMode,
+                complexity,
+                layers ?? new ChangeTrackingList<H264Layer>(),
+                rateControlMode,
+                sceneChangeDetection);
         }
+
+        BinaryData IPersistableModel<H264Video>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<H264Video>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(H264Video)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        H264Video IPersistableModel<H264Video>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<H264Video>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeH264Video(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(H264Video)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<H264Video>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

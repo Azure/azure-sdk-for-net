@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation.Samples
@@ -76,7 +73,7 @@ namespace Azure.ResourceManager.Automation.Samples
             AutomationWatcherPatch patch = new AutomationWatcherPatch()
             {
                 Name = "MyTestWatcher",
-                ExecutionFrequencyInSeconds = 600,
+                ExecutionFrequencyInSeconds = 600L,
             };
             AutomationWatcherResource result = await automationWatcher.UpdateAsync(patch);
 

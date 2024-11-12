@@ -2,12 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -33,7 +28,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // set `distributionPolicyId` to an existing distribution policy
             string jobQueueId = "job-queue-id";
 
-            Response<Models.RouterQueue> jobQueue = routerAdministrationClient.CreateQueue(
+            Response<RouterQueue> jobQueue = routerAdministrationClient.CreateQueue(
                 options: new CreateQueueOptions(jobQueueId, distributionPolicyId) // this is optional
                 {
                     Name = "My job queue"
@@ -45,7 +40,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueue
 
-            Response<Models.RouterQueue> queriedJobQueue = routerAdministrationClient.GetQueue(jobQueueId);
+            Response<RouterQueue> queriedJobQueue = routerAdministrationClient.GetQueue(jobQueueId);
 
             Console.WriteLine($"Successfully fetched queue with id: {queriedJobQueue.Value.Id}");
 
@@ -53,40 +48,29 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueueStat
 
-            Response<RouterQueueStatistics> queueStatistics = routerClient.GetQueueStatistics(queueId: jobQueueId);
+            Response<RouterQueueStatistics> queueStatistics = routerClient.GetQueueStatistics(jobQueueId);
 
             Console.WriteLine($"Queue statistics successfully retrieved for queue: {JsonSerializer.Serialize(queueStatistics.Value)}");
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueueStat
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateQueueRemoveProp
-
-            Response updatedJobQueueWithoutName = routerAdministrationClient.UpdateQueue(jobQueueId,
-                RequestContent.Create(new { Name = (string?)null }));
-
-            Response<Models.RouterQueue> queriedJobQueueWithoutName = routerAdministrationClient.GetQueue(jobQueueId);
-
-            Console.WriteLine($"Queue successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedJobQueueWithoutName.Value.Name)}");
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateQueueRemoveProp
-
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateGetJobQueue
 
-            Response<Models.RouterQueue> updatedJobQueue = routerAdministrationClient.UpdateQueue(
-                options: new UpdateQueueOptions(jobQueueId)
-                {
-                    Labels = { ["Additional-Queue-Label"] = new LabelValue("ChatQueue") }
-                });
+            Response<RouterQueue> updatedJobQueue = routerAdministrationClient.UpdateQueue(new RouterQueue(jobQueueId)
+            {
+                Labels = { ["Additional-Queue-Label"] = new RouterValue("ChatQueue") }
+            });
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateGetJobQueue
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueues
 
-            Pageable<Models.RouterQueueItem> jobQueues = routerAdministrationClient.GetQueues();
-            foreach (Page<Models.RouterQueueItem> asPage in jobQueues.AsPages(pageSizeHint: 10))
+            Pageable<RouterQueue> jobQueues = routerAdministrationClient.GetQueues(cancellationToken: default);
+            foreach (Page<RouterQueue> asPage in jobQueues.AsPages(pageSizeHint: 10))
             {
-                foreach (Models.RouterQueueItem? policy in asPage.Values)
+                foreach (RouterQueue? policy in asPage.Values)
                 {
-                    Console.WriteLine($"Listing job queue with id: {policy.Queue.Id}");
+                    Console.WriteLine($"Listing job queue with id: {policy.Id}");
                 }
             }
 

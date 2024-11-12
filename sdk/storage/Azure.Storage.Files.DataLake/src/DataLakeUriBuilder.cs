@@ -181,7 +181,7 @@ namespace Azure.Storage.Files.DataLake
             // Find the share & directory/file path (if any)
             if (!string.IsNullOrEmpty(uri.AbsolutePath))
             {
-                var path = uri.GetPath();
+                var path = string.Concat(uri.GetPath(), uri.Fragment);
 
                 var startIndex = 0;
 

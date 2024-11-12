@@ -51,9 +51,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<MotionDetectionSensitivity> sensitivity = default;
-            Optional<bool> outputMotionRegion = default;
-            Optional<string> eventAggregationWindow = default;
+            MotionDetectionSensitivity? sensitivity = default;
+            bool? outputMotionRegion = default;
+            string eventAggregationWindow = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -103,7 +103,29 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new MotionDetectionProcessor(type, name, inputs, Optional.ToNullable(sensitivity), Optional.ToNullable(outputMotionRegion), eventAggregationWindow.Value);
+            return new MotionDetectionProcessor(
+                type,
+                name,
+                inputs,
+                sensitivity,
+                outputMotionRegion,
+                eventAggregationWindow);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MotionDetectionProcessor FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMotionDetectionProcessor(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

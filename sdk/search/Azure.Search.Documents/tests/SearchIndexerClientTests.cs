@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30, SearchClientOptions.ServiceVersion.V2021_04_30_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2024_09_01_Preview)]
     public class SearchIndexerClientTests : SearchTestBase
     {
         public SearchIndexerClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -85,16 +85,20 @@ namespace Azure.Search.Documents.Tests
                 dataSource.Name,
                 resources.IndexName);
 
-            SearchIndexer actualIndexer = await serviceClient.CreateIndexerAsync(
-                indexer);
+            await serviceClient.CreateIndexerAsync(indexer);
+
+            // Wait till the indexer is done.
+            await WaitForIndexingAsync(serviceClient, indexer.Name);
+
+            // Remove this workaround once the service issue is fixed: https://github.com/Azure/azure-sdk-for-net/issues/39104#issuecomment-1749469582
+            // Tracking issue: https://msdata.visualstudio.com/Azure%20Search/_workitems/edit/2737454
+            SearchIndexer actualIndexer = await serviceClient.GetIndexerAsync(indexer.Name);
 
             // Update the indexer.
             actualIndexer.Description = "Updated description";
             await serviceClient.CreateOrUpdateIndexerAsync(
                 actualIndexer,
                 onlyIfUnchanged: true);
-
-            await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
             // Run the indexer.
             await serviceClient.RunIndexerAsync(
@@ -422,8 +426,9 @@ namespace Azure.Search.Documents.Tests
                 },
                 new[]
                 {
-                    new OutputFieldMappingEntry("score") { TargetName = "Sentiment" },
-                })
+                    new OutputFieldMappingEntry("confidenceScores") { TargetName = "Sentiment" },
+                },
+                 SentimentSkill.SkillVersion.V3)
             {
                 Context = "/document/reviews_text/pages/*",
                 DefaultLanguageCode = SentimentSkillLanguage.En,
@@ -624,10 +629,9 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_09_01_Preview)]
         public async Task RoundtripAllSkills()
         {
-            // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/15108
-
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
 
             SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions(ServiceVersion));
@@ -649,6 +653,8 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(TextTranslationSkill) => new TextTranslationSkill(inputs, outputs, TextTranslationSkillLanguage.En),
                     Type _ when t == typeof(WebApiSkill) => new WebApiSkill(inputs, outputs, "https://microsoft.com"),
                     Type _ when t == typeof(AzureMachineLearningSkill) => new AzureMachineLearningSkill(inputs, outputs, new Uri("https://microsoft.com")),
+                    Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => new AzureOpenAIEmbeddingSkill(inputs, outputs) { ResourceUri = new Uri("https://test-sample.openai.azure.com"), ApiKey = "api-key", DeploymentName = "model", ModelName = "text-embedding-3-large" },
+                    Type _ when t == typeof(VisionVectorizeSkill) => new VisionVectorizeSkill(inputs, outputs, "latest"),
                     _ => (SearchIndexerSkill)Activator.CreateInstance(t, new object[] { inputs, outputs }),
                 };
             }
@@ -698,21 +704,25 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(CustomEntityLookupSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "entities" }),
                     Type _ when t == typeof(DocumentExtractionSkill) => CreateSkill(t, new[] { "file_data" }, new[] { "content", "normalized_images" }),
                     Type _ when t == typeof(EntityLinkingSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "entities" }),
-                    Type _ when t == typeof(EntityRecognitionSkill) => CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion.V1),
+                    Type _ when t == typeof(EntityRecognitionSkill) => CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion.V3),
                     Type _ when t == typeof(ImageAnalysisSkill) => CreateSkill(t, new[] { "image" }, new[] { "categories" }),
                     Type _ when t == typeof(KeyPhraseExtractionSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "keyPhrases" }),
                     Type _ when t == typeof(LanguageDetectionSkill) => CreateSkill(t, new[] { "text" }, new[] { "languageCode", "languageName", "score" }),
                     Type _ when t == typeof(MergeSkill) => CreateSkill(t, new[] { "text", "itemsToInsert", "offsets" }, new[] { "mergedText" }),
                     Type _ when t == typeof(OcrSkill) => CreateSkill(t, new[] { "image" }, new[] { "text", "layoutText" }),
                     Type _ when t == typeof(PiiDetectionSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "piiEntities", "maskedText" }),
-                    Type _ when t == typeof(SentimentSkill) => CreateSentimentSkill(SentimentSkill.SkillVersion.V1),
+                    Type _ when t == typeof(SentimentSkill) => CreateSentimentSkill(SentimentSkill.SkillVersion.V3),
                     Type _ when t == typeof(ShaperSkill) => CreateSkill(t, new[] { "text" }, new[] { "output" }),
                     Type _ when t == typeof(SplitSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "textItems" }),
                     Type _ when t == typeof(TextTranslationSkill) => CreateSkill(t, new[] { "text", "toLanguageCode", "fromLanguageCode" }, new[] { "translatedText", "translatedToLanguageCode", "translatedFromLanguageCode" }),
                     Type _ when t == typeof(WebApiSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
                     Type _ when t == typeof(AzureMachineLearningSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
+                    Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => CreateSkill(t, new[] { "text" }, new[] { "embedding" }),
+                    Type _ when t == typeof(VisionVectorizeSkill) =>
+                    TestEnvironment.AzureEnvironment != "AzureUSGovernment" ? CreateSkill(t, new[] { "image" }, new[] { "vector" }) : null,
                     _ => throw new NotSupportedException($"{t.FullName}"),
                 })
+                .Where(skill => skill != null)
                 .ToList();
 
             skills.Add(CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion.V3));

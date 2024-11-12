@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ResourceMover.Models;
@@ -33,8 +32,27 @@ namespace Azure.ResourceManager.ResourceMover
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2023-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/moveResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, string filter)
@@ -122,6 +140,22 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, string moverResourceName, MoverResourceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/moveResources/", false);
+            uri.AppendPath(moverResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, string moverResourceName, MoverResourceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -142,7 +176,7 @@ namespace Azure.ResourceManager.ResourceMover
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -153,7 +187,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
-        /// <param name="data"> The MoverResource to use. </param>
+        /// <param name="data"> The <see cref="MoverResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moverResourceSetName"/>, <paramref name="moverResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moverResourceSetName"/> or <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -182,7 +216,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
-        /// <param name="data"> The MoverResource to use. </param>
+        /// <param name="data"> The <see cref="MoverResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moverResourceSetName"/>, <paramref name="moverResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moverResourceSetName"/> or <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -204,6 +238,22 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, string moverResourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/moveResources/", false);
+            uri.AppendPath(moverResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, string moverResourceName)
@@ -282,6 +332,22 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, string moverResourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/moveResources/", false);
+            uri.AppendPath(moverResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, string moverResourceName)
@@ -370,6 +436,14 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string moverResourceSetName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string moverResourceSetName, string filter)

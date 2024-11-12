@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
         {
             Target = targetPhoneNumberIdentity;
             SourceCallerIdNumber = callerIdNumber;
-            CustomContext = new CustomContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: null);
+            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: null);
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         public CallInvite(CommunicationUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomContext = new CustomContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -39,7 +39,17 @@ namespace Azure.Communication.CallAutomation
         public CallInvite(MicrosoftTeamsUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomContext = new CustomContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+        }
+
+        /// <summary>
+        /// Creates a new CallInvite object.
+        /// </summary>
+        /// <param name="targetIdentity"></param>
+        public CallInvite(MicrosoftTeamsAppIdentifier targetIdentity)
+        {
+            Target = targetIdentity;
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -52,7 +62,7 @@ namespace Azure.Communication.CallAutomation
         /// The caller ID number to appear on target PSTN callee.
         /// </summary>
         /// <value></value>
-        public PhoneNumberIdentifier SourceCallerIdNumber { get; }
+        public PhoneNumberIdentifier SourceCallerIdNumber { get; set;  }
 
         /// <summary>
         /// The display name to appear on target callee.
@@ -63,6 +73,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The Custom Context which contains SIP and voip headers
         /// </summary>
-        public CustomContext CustomContext { get; }
+        public CustomCallingContext CustomCallingContext { get; }
     }
 }

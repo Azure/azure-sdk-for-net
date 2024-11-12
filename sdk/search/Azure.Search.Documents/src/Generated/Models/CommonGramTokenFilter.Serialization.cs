@@ -47,8 +47,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> commonWords = default;
-            Optional<bool> ignoreCase = default;
-            Optional<bool> queryMode = default;
+            bool? ignoreCase = default;
+            bool? queryMode = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CommonGramTokenFilter(odataType, name, commonWords, Optional.ToNullable(ignoreCase), Optional.ToNullable(queryMode));
+            return new CommonGramTokenFilter(odataType, name, commonWords, ignoreCase, queryMode);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CommonGramTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCommonGramTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

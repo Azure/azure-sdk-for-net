@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines an early termination policy based on running averages of the primary metric of all runs. </summary>
     public partial class MedianStoppingPolicy : MachineLearningEarlyTerminationPolicy
     {
-        /// <summary> Initializes a new instance of MedianStoppingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MedianStoppingPolicy"/>. </summary>
         public MedianStoppingPolicy()
         {
             PolicyType = EarlyTerminationPolicyType.MedianStopping;
         }
 
-        /// <summary> Initializes a new instance of MedianStoppingPolicy. </summary>
-        /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
-        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
+        /// <summary> Initializes a new instance of <see cref="MedianStoppingPolicy"/>. </summary>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>
-        internal MedianStoppingPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType) : base(delayEvaluation, evaluationInterval, policyType)
+        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
+        /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MedianStoppingPolicy(EarlyTerminationPolicyType policyType, int? evaluationInterval, int? delayEvaluation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(policyType, evaluationInterval, delayEvaluation, serializedAdditionalRawData)
         {
             PolicyType = policyType;
         }

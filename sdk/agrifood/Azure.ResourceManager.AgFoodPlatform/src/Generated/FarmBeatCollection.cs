@@ -11,18 +11,17 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FarmBeatResource" /> and their operations.
-    /// Each <see cref="FarmBeatResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="FarmBeatCollection" /> instance call the GetFarmBeats method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="FarmBeatResource"/> and their operations.
+    /// Each <see cref="FarmBeatResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="FarmBeatCollection"/> instance call the GetFarmBeats method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class FarmBeatCollection : ArmCollection, IEnumerable<FarmBeatResource>, IAsyncEnumerable<FarmBeatResource>
     {
@@ -64,6 +63,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -82,7 +89,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
             try
             {
                 var response = await _farmBeatFarmBeatsModelsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AgFoodPlatformArmOperation<FarmBeatResource>(Response.FromValue(new FarmBeatResource(Client, response), response.GetRawResponse()));
+                var uri = _farmBeatFarmBeatsModelsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AgFoodPlatformArmOperation<FarmBeatResource>(Response.FromValue(new FarmBeatResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -105,6 +114,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -123,7 +140,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
             try
             {
                 var response = _farmBeatFarmBeatsModelsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, data, cancellationToken);
-                var operation = new AgFoodPlatformArmOperation<FarmBeatResource>(Response.FromValue(new FarmBeatResource(Client, response), response.GetRawResponse()));
+                var uri = _farmBeatFarmBeatsModelsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AgFoodPlatformArmOperation<FarmBeatResource>(Response.FromValue(new FarmBeatResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -145,6 +164,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +210,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="farmBeatsResourceName"> FarmBeats resource name. </param>
@@ -220,6 +255,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxPageSize">
@@ -228,12 +271,12 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </param>
         /// <param name="skipToken"> Continuation token for getting next set of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FarmBeatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FarmBeatResource> GetAllAsync(int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _farmBeatFarmBeatsModelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _farmBeatFarmBeatsModelsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), _farmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "FarmBeatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), _farmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "FarmBeatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -247,6 +290,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxPageSize">
@@ -255,12 +306,12 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </param>
         /// <param name="skipToken"> Continuation token for getting next set of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FarmBeatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FarmBeatResource> GetAll(int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _farmBeatFarmBeatsModelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _farmBeatFarmBeatsModelsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), _farmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "FarmBeatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), _farmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "FarmBeatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -273,6 +324,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,6 +368,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="farmBeatsResourceName"> FarmBeats resource name. </param>
@@ -325,6 +392,96 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 var response = _farmBeatFarmBeatsModelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsModels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="farmBeatsResourceName"> FarmBeats resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="farmBeatsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FarmBeatResource>> GetIfExistsAsync(string farmBeatsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+
+            using var scope = _farmBeatFarmBeatsModelsClientDiagnostics.CreateScope("FarmBeatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _farmBeatFarmBeatsModelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FarmBeatResource>(response.GetRawResponse());
+                return Response.FromValue(new FarmBeatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsModels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="farmBeatsResourceName"> FarmBeats resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="farmBeatsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> is null. </exception>
+        public virtual NullableResponse<FarmBeatResource> GetIfExists(string farmBeatsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+
+            using var scope = _farmBeatFarmBeatsModelsClientDiagnostics.CreateScope("FarmBeatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _farmBeatFarmBeatsModelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FarmBeatResource>(response.GetRawResponse());
+                return Response.FromValue(new FarmBeatResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

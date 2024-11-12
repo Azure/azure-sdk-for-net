@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Select video tracks from the input by specifying a track identifier. </summary>
     public partial class SelectVideoTrackById : VideoTrackDescriptor
     {
-        /// <summary> Initializes a new instance of SelectVideoTrackById. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectVideoTrackById"/>. </summary>
         /// <param name="trackId"> Track identifier to select. </param>
         public SelectVideoTrackById(long trackId)
         {
@@ -18,13 +21,19 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.SelectVideoTrackById";
         }
 
-        /// <summary> Initializes a new instance of SelectVideoTrackById. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectVideoTrackById"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="trackId"> Track identifier to select. </param>
-        internal SelectVideoTrackById(string odataType, long trackId) : base(odataType)
+        internal SelectVideoTrackById(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, long trackId) : base(odataType, serializedAdditionalRawData)
         {
             TrackId = trackId;
             OdataType = odataType ?? "#Microsoft.Media.SelectVideoTrackById";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SelectVideoTrackById"/> for deserialization. </summary>
+        internal SelectVideoTrackById()
+        {
         }
 
         /// <summary> Track identifier to select. </summary>

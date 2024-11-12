@@ -9,17 +9,15 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkFeatureResource" /> and their operations.
-    /// Each <see cref="NetworkFeatureResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="NetworkFeatureCollection" /> instance call the GetNetworkFeatures method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="NetworkFeatureResource"/> and their operations.
+    /// Each <see cref="NetworkFeatureResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="NetworkFeatureCollection"/> instance call the GetNetworkFeatures method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
     public partial class NetworkFeatureCollection : ArmCollection
     {
@@ -61,6 +59,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListNetworkFeaturesSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
@@ -97,6 +103,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_ListNetworkFeaturesSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +149,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListNetworkFeaturesSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
@@ -170,6 +192,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListNetworkFeaturesSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
@@ -186,6 +216,96 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _networkFeatureWebAppsRestClient.ListNetworkFeaturesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListNetworkFeaturesSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFeatureResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFeatureResource>> GetIfExistsAsync(string view, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
+
+            using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFeatureWebAppsRestClient.ListNetworkFeaturesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFeatureResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatureResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListNetworkFeaturesSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFeatureResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
+        public virtual NullableResponse<NetworkFeatureResource> GetIfExists(string view, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
+
+            using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFeatureWebAppsRestClient.ListNetworkFeaturesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFeatureResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

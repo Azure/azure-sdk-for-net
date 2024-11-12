@@ -6,24 +6,20 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppConfigurationKeyValueResource" /> and their operations.
-    /// Each <see cref="AppConfigurationKeyValueResource" /> in the collection will belong to the same instance of <see cref="AppConfigurationStoreResource" />.
-    /// To get an <see cref="AppConfigurationKeyValueCollection" /> instance call the GetAppConfigurationKeyValues method from an instance of <see cref="AppConfigurationStoreResource" />.
+    /// A class representing a collection of <see cref="AppConfigurationKeyValueResource"/> and their operations.
+    /// Each <see cref="AppConfigurationKeyValueResource"/> in the collection will belong to the same instance of <see cref="AppConfigurationStoreResource"/>.
+    /// To get an <see cref="AppConfigurationKeyValueCollection"/> instance call the GetAppConfigurationKeyValues method from an instance of <see cref="AppConfigurationStoreResource"/>.
     /// </summary>
-    public partial class AppConfigurationKeyValueCollection : ArmCollection, IEnumerable<AppConfigurationKeyValueResource>, IAsyncEnumerable<AppConfigurationKeyValueResource>
+    public partial class AppConfigurationKeyValueCollection : ArmCollection
     {
         private readonly ClientDiagnostics _appConfigurationKeyValueKeyValuesClientDiagnostics;
         private readonly KeyValuesRestOperations _appConfigurationKeyValueKeyValuesRestClient;
@@ -53,7 +49,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary>
-        /// Creates a key-value.
+        /// Creates a key-value. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration key-values the data plane API should be used instead.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -62,6 +58,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KeyValues_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,7 +85,9 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = await _appConfigurationKeyValueKeyValuesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation<AppConfigurationKeyValueResource>(Response.FromValue(new AppConfigurationKeyValueResource(Client, response), response.GetRawResponse()));
+                var uri = _appConfigurationKeyValueKeyValuesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppConfigurationArmOperation<AppConfigurationKeyValueResource>(Response.FromValue(new AppConfigurationKeyValueResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +100,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary>
-        /// Creates a key-value.
+        /// Creates a key-value. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration key-values the data plane API should be used instead.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -103,6 +109,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KeyValues_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +136,9 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = _appConfigurationKeyValueKeyValuesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data, cancellationToken);
-                var operation = new AppConfigurationArmOperation<AppConfigurationKeyValueResource>(Response.FromValue(new AppConfigurationKeyValueResource(Client, response), response.GetRawResponse()));
+                var uri = _appConfigurationKeyValueKeyValuesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppConfigurationArmOperation<AppConfigurationKeyValueResource>(Response.FromValue(new AppConfigurationKeyValueResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -135,7 +151,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary>
-        /// Gets the properties of the specified key-value.
+        /// Gets the properties of the specified key-value. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration key-values the data plane API should be used instead.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -144,6 +160,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KeyValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,7 +196,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary>
-        /// Gets the properties of the specified key-value.
+        /// Gets the properties of the specified key-value. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration key-values the data plane API should be used instead.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -181,6 +205,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KeyValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,52 +241,6 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary>
-        /// Lists the key-values for a given configuration store.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KeyValues_ListByConfigurationStore</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppConfigurationKeyValueResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppConfigurationKeyValueResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationKeyValueKeyValuesRestClient.CreateListByConfigurationStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationKeyValueKeyValuesRestClient.CreateListByConfigurationStoreNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationKeyValueResource(Client, AppConfigurationKeyValueData.DeserializeAppConfigurationKeyValueData(e)), _appConfigurationKeyValueKeyValuesClientDiagnostics, Pipeline, "AppConfigurationKeyValueCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the key-values for a given configuration store.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KeyValues_ListByConfigurationStore</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppConfigurationKeyValueResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppConfigurationKeyValueResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationKeyValueKeyValuesRestClient.CreateListByConfigurationStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationKeyValueKeyValuesRestClient.CreateListByConfigurationStoreNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationKeyValueResource(Client, AppConfigurationKeyValueData.DeserializeAppConfigurationKeyValueData(e)), _appConfigurationKeyValueKeyValuesClientDiagnostics, Pipeline, "AppConfigurationKeyValueCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -264,6 +250,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KeyValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +294,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>KeyValues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
@@ -324,19 +326,94 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        IEnumerator<AppConfigurationKeyValueResource> IEnumerable<AppConfigurationKeyValueResource>.GetEnumerator()
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KeyValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppConfigurationKeyValueResource>> GetIfExistsAsync(string keyValueName, CancellationToken cancellationToken = default)
         {
-            return GetAll().GetEnumerator();
+            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
+
+            using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appConfigurationKeyValueKeyValuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppConfigurationKeyValueResource>(response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationKeyValueResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KeyValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        public virtual NullableResponse<AppConfigurationKeyValueResource> GetIfExists(string keyValueName, CancellationToken cancellationToken = default)
         {
-            return GetAll().GetEnumerator();
-        }
+            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
-        IAsyncEnumerator<AppConfigurationKeyValueResource> IAsyncEnumerable<AppConfigurationKeyValueResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appConfigurationKeyValueKeyValuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppConfigurationKeyValueResource>(response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationKeyValueResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

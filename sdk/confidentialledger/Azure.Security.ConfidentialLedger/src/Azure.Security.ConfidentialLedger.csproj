@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>Client SDK for the Azure Confidential Ledger service</Description>
     <AssemblyTitle>Azure Confidential Ledger</AssemblyTitle>
-    <Version>1.2.0-beta.1</Version>
+    <Version>1.4.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.1.0</ApiCompatVersion>
+    <ApiCompatVersion>1.3.0</ApiCompatVersion>
     <PackageTags>Azure ConfidentialLedger</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefineConstants>$(DefineConstants)</DefineConstants>

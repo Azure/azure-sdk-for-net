@@ -34,8 +34,16 @@ Optional location to use for cspell.json path. Default value is
 .PARAMETER ExitWithError
 Exit with error code 1 if spelling errors are detected.
 
-.PARAMETER Test
-Run test functions against the script logic
+.PARAMETER SourceCommittish
+Commit SHA (or ref) used for file list generation. This is the later commit. The
+default value is useful for Azure DevOps pipelines. The default value is
+`${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}`
+
+.PARAMETER TargetCommittish
+Commit SHA (or ref) used for file list generation. This is the "base" commit.
+The default value is useful for Azure DevOps pipelines. The default value is
+`origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}` with some string manipulation to
+remove the `refs/heads/` prefix.
 
 .EXAMPLE
 ./eng/common/scripts/check-spelling-in-changed-files.ps1 
@@ -57,198 +65,13 @@ Param (
     [switch] $ExitWithError,
 
     [Parameter()]
-    [switch] $Test
+    [string]$SourceCommittish = "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}",
+
+    [Parameter()]
+    [string]$TargetCommittish = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/")
 )
 
 Set-StrictMode -Version 3.0
-
-function TestSpellChecker() {
-    Test-Exit0WhenAllFilesExcluded
-    ResetTest
-    Test-Exit1WhenIncludedFileHasSpellingError
-    ResetTest
-    Test-Exit0WhenIncludedFileHasNoSpellingError
-    ResetTest
-    Test-Exit1WhenChangedFileAlreadyHasSpellingError
-    ResetTest
-    Test-Exit0WhenUnalteredFileHasSpellingError
-    ResetTest
-    Test-Exit0WhenSpellingErrorsAndNoExitWithError
-}
-
-function Test-Exit0WhenAllFilesExcluded() {
-    # Arrange
-    "sepleing errrrrorrrrr" > ./excluded/excluded-file.txt
-    git add -A
-    git commit -m "One change"
-
-    # Act
-    &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -CspellConfigPath "./.vscode/cspell.json" `
-        -SpellCheckRoot "./" `
-        -ExitWithError
-
-    # Assert
-    if ($LASTEXITCODE -ne 0) {
-        throw "`$LASTEXITCODE != 0"
-    }
-}
-
-function Test-Exit1WhenIncludedFileHasSpellingError() {
-    # Arrange
-    "sepleing errrrrorrrrr" > ./included/included-file.txt
-    git add -A
-    git commit -m "One change"
-
-    # Act
-    &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -CspellConfigPath "./.vscode/cspell.json" `
-        -SpellCheckRoot "./" `
-        -ExitWithError
-
-    # Assert
-    if ($LASTEXITCODE -ne 1) {
-        throw "`$LASTEXITCODE != 1"
-    }
-}
-
-function Test-Exit0WhenIncludedFileHasNoSpellingError() {
-    # Arrange
-    "correct spelling" > ./included/included-file.txt
-    git add -A
-    git commit -m "One change"
-
-    # Act
-    &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -CspellConfigPath "./.vscode/cspell.json" `
-        -SpellCheckRoot "./" `
-        -ExitWithError
-
-    # Assert
-    if ($LASTEXITCODE -ne 0) {
-        throw "`$LASTEXITCODE != 0"
-    }
-}
-
-function Test-Exit1WhenChangedFileAlreadyHasSpellingError() {
-    # Arrange
-    "sepleing errrrrorrrrr" > ./included/included-file.txt
-    git add -A
-    git commit -m "First change"
-
-    "A statement without spelling errors" >> ./included/included-file.txt
-    git add -A
-    git commit -m "Second change"
-
-    # Act
-    &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -CspellConfigPath "./.vscode/cspell.json" `
-        -SpellCheckRoot "./" `
-        -ExitWithError
-
-    # Assert
-    if ($LASTEXITCODE -ne 1) {
-        throw "`$LASTEXITCODE != 1"
-    }
-}
-
-function Test-Exit0WhenUnalteredFileHasSpellingError() {
-    # Arrange
-    "sepleing errrrrorrrrr" > ./included/included-file-1.txt
-    git add -A
-    git commit -m "One change"
-
-    "A statement without spelling errors" > ./included/included-file-2.txt
-    git add -A
-    git commit -m "Second change"
-
-    # Act
-    &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -CspellConfigPath "./.vscode/cspell.json" `
-        -SpellCheckRoot "./" `
-        -ExitWithError
-
-    # Assert
-    if ($LASTEXITCODE -ne 0) {
-        throw "`$LASTEXITCODE != 0"
-    }
-}
-
-function Test-Exit0WhenSpellingErrorsAndNoExitWithError() {
-    # Arrange
-    "sepleing errrrrorrrrr" > ./included/included-file-1.txt
-    git add -A
-    git commit -m "One change"
-
-    # Act
-    &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -CspellConfigPath "./.vscode/cspell.json" `
-        -SpellCheckRoot "./"
-
-    # Assert
-    if ($LASTEXITCODE -ne 0) {
-        throw "`$LASTEXITCODE != 0"
-    }
-}
-
-function SetupTest($workingDirectory) {
-    Write-Host "Create test temp dir: $workingDirectory"
-    New-Item -ItemType Directory -Force -Path $workingDirectory | Out-Null
-
-    Push-Location $workingDirectory | Out-Null
-    git init
-
-    New-Item -ItemType Directory -Force -Path "./excluded"
-    New-Item -ItemType Directory -Force -Path "./included"
-    New-Item -ItemType Directory -Force -Path "./.vscode"
-
-    "Placeholder" > "./excluded/placeholder.txt"
-    "Placeholder" > "./included/placeholder.txt"
-
-    $configJsonContent = @"
-{
-    "version": "0.1",
-    "language": "en",
-    "ignorePaths": [
-        ".vscode/cspell.json",
-        "excluded/**"
-    ]
-}
-"@
-    $configJsonContent > "./.vscode/cspell.json"
-
-    git add -A
-    git commit -m "Init"
-}
-
-function ResetTest() {
-    # Empty out the working tree
-    git checkout .
-    git clean -xdf
-
-    $revCount = git rev-list --count HEAD
-    if ($revCount -gt 1) {
-        # Reset N-1 changes so there is only the initial commit
-        $revisionsToReset = $revCount - 1
-        git reset --hard HEAD~$revisionsToReset
-    }
-}
-
-function TeardownTest($workingDirectory) {
-    Pop-Location | Out-Null
-    Write-Host "Remove  test temp dir: $workingDirectory"
-    Remove-Item -Path $workingDirectory -Recurse -Force | Out-Null
-}
-
-if ($Test) {
-    $workingDirectory = Join-Path ([System.IO.Path]::GetTempPath()) ([System.IO.Path]::GetRandomFileName())
-
-    SetupTest $workingDirectory
-    TestSpellChecker
-    TeardownTest $workingDirectory
-    Write-Host "Test complete"
-    exit 0
-}
 
 $ErrorActionPreference = "Continue"
 . $PSScriptRoot/common.ps1
@@ -266,7 +89,9 @@ if (!(Test-Path $CspellConfigPath)) {
 # Lists names of files that were in some way changed between the
 # current branch and default target branch. Excludes files that were deleted to
 # prevent errors in Resolve-Path
-$changedFilesList = Get-ChangedFiles
+$changedFilesList = Get-ChangedFiles `
+    -SourceCommittish $SourceCommittish `
+    -TargetCommittish $TargetCommittish
 
 $changedFiles = @()
 foreach ($file in $changedFilesList) {

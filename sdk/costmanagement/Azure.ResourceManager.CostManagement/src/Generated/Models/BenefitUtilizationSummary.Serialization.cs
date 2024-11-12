@@ -5,24 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class BenefitUtilizationSummary : IUtf8JsonSerializable
+    public partial class BenefitUtilizationSummary : IUtf8JsonSerializable, IJsonModel<BenefitUtilizationSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BenefitUtilizationSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BenefitUtilizationSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static BenefitUtilizationSummary DeserializeBenefitUtilizationSummary(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BenefitUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+        }
+
+        BenefitUtilizationSummary IJsonModel<BenefitUtilizationSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BenefitUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBenefitUtilizationSummary(document.RootElement, options);
+        }
+
+        internal static BenefitUtilizationSummary DeserializeBenefitUtilizationSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,48 +62,42 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "IncludedQuantity": return IncludedQuantityUtilizationSummary.DeserializeIncludedQuantityUtilizationSummary(element);
-                    case "SavingsPlan": return SavingsPlanUtilizationSummary.DeserializeSavingsPlanUtilizationSummary(element);
+                    case "IncludedQuantity": return IncludedQuantityUtilizationSummary.DeserializeIncludedQuantityUtilizationSummary(element, options);
+                    case "SavingsPlan": return SavingsPlanUtilizationSummary.DeserializeSavingsPlanUtilizationSummary(element, options);
                 }
             }
-            BillingAccountBenefitKind kind = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new BillingAccountBenefitKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
-                    continue;
-                }
-            }
-            return new BenefitUtilizationSummary(id, name, type, systemData.Value, kind);
+            return UnknownBenefitUtilizationSummary.DeserializeUnknownBenefitUtilizationSummary(element, options);
         }
+
+        BinaryData IPersistableModel<BenefitUtilizationSummary>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BenefitUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BenefitUtilizationSummary IPersistableModel<BenefitUtilizationSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BenefitUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBenefitUtilizationSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BenefitUtilizationSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

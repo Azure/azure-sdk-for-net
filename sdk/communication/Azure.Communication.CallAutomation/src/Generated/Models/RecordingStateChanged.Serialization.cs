@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -19,29 +18,15 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
-            Optional<string> recordingId = default;
-            Optional<RecordingState> state = default;
-            Optional<DateTimeOffset> startDateTime = default;
+            string recordingId = default;
+            RecordingState state = default;
+            DateTimeOffset? startDateTime = default;
+            RecordingKind? recordingKind = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callConnectionId"u8))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("recordingId"u8))
                 {
                     recordingId = property.Value.GetString();
@@ -65,8 +50,47 @@ namespace Azure.Communication.CallAutomation
                     startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("recordingKind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingKind = new RecordingKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("callConnectionId"u8))
+                {
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"u8))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new RecordingStateChanged(callConnectionId.Value, serverCallId.Value, correlationId.Value, recordingId.Value, state, Optional.ToNullable(startDateTime));
+            return new RecordingStateChanged(
+                recordingId,
+                state,
+                startDateTime,
+                recordingKind,
+                callConnectionId,
+                serverCallId,
+                correlationId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RecordingStateChanged FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRecordingStateChanged(document.RootElement);
         }
     }
 }

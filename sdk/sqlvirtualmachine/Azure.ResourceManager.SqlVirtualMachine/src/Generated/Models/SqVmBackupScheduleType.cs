@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static bool operator ==(SqVmBackupScheduleType left, SqVmBackupScheduleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqVmBackupScheduleType"/> values are not the same. </summary>
         public static bool operator !=(SqVmBackupScheduleType left, SqVmBackupScheduleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqVmBackupScheduleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqVmBackupScheduleType"/>. </summary>
         public static implicit operator SqVmBackupScheduleType(string value) => new SqVmBackupScheduleType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

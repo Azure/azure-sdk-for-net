@@ -175,10 +175,9 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
                 Assert.AreEqual(location, account.Data.Location.ToString());
 
                 Assert.NotNull(account.Data.Tags);
-                Assert.AreEqual(DefaultTags.Count, account.Data.Tags.Count);
-                foreach (var tag in account.Data.Tags)
+                foreach (var tag in DefaultTags)
                 {
-                    Assert.AreEqual(DefaultTags[tag.Key], tag.Value);
+                    Assert.AreEqual(account.Data.Tags[tag.Key], tag.Value);
                 }
             }
         }
@@ -227,10 +226,9 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
                 Assert.AreEqual(DefaultLocation, pool.Data.Location);
 
                 Assert.NotNull(pool.Data.Tags);
-                Assert.AreEqual(DefaultTags.Count, pool.Data.Tags.Count);
-                foreach (var tag in pool.Data.Tags)
+                foreach (var tag in DefaultTags)
                 {
-                    Assert.AreEqual(DefaultTags[tag.Key], tag.Value);
+                    Assert.AreEqual(pool.Data.Tags[tag.Key], tag.Value);
                 }
                 Assert.AreEqual(NetAppFileServiceLevel.Premium, pool.Data.ServiceLevel);
                 Assert.AreEqual(_poolSize, pool.Data.Size);
@@ -281,7 +279,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             return capactiyPoolResource1;
         }
 
-        public async Task<NetAppVolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName, ResourceIdentifier subnetId = null, List<string> protocolTypes = null, NetAppVolumeExportPolicyRule exportPolicyRule = null, NetAppVolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "")
+        public async Task<NetAppVolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName, ResourceIdentifier subnetId = null, List<string> protocolTypes = null, NetAppVolumeExportPolicyRule exportPolicyRule = null, NetAppVolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "", string volumeType = "")
         {
             location = string.IsNullOrEmpty(location) ? DefaultLocationString : location;
             if (volumeCollection == null)
@@ -314,6 +312,10 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
                 {
                     volumeData.ProtocolTypes.Add(protocolType);
                 }
+            }
+            if (!string.IsNullOrWhiteSpace(volumeType))
+            {
+                volumeData.VolumeType = volumeType;
             }
             volumeData.Tags.InitializeFrom(DefaultTags);
             NetAppVolumeResource volumeResource = (await volumeCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, volumeData)).Value;

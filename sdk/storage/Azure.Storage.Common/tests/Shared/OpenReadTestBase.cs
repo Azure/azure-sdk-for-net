@@ -103,6 +103,16 @@ namespace Azure.Storage.Test.Shared
             TRequestConditions conditions = default,
             bool allowModifications = false);
 
+        /// <summary>
+        /// Calls the 1:1 download method for the given resource client.
+        /// </summary>
+        /// <param name="client">Client to call the download on.</param>
+        protected abstract Task<Stream> OpenReadAsyncOverload(
+            TResourceClient client,
+            int? bufferSize = default,
+            long position = default,
+            bool allowModifications = false);
+
         protected abstract Task<string> SetupLeaseAsync(TResourceClient client, string leaseId, string garbageLeaseId);
         protected abstract Task<string> GetMatchConditionAsync(TResourceClient client, string match);
         protected abstract TRequestConditions BuildRequestConditions(AccessConditionParameters parameters, bool lease = true);
@@ -641,6 +651,76 @@ namespace Azure.Storage.Test.Shared
             // Assert
             Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
             TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
+        }
+
+        [RecordedTest]
+        public async Task OpenReadAsyncOverload_AllowModifications()
+        {
+            int size = Constants.KB;
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            byte[] data0 = GetRandomBuffer(size);
+            byte[] data1 = GetRandomBuffer(size);
+            byte[] expectedDataBeforeModify = new byte[size];
+            byte[] expectedDataAfterModify = new byte[size];
+            Array.Copy(data0, 0, expectedDataBeforeModify, 0, size);
+            Array.Copy(data1, 0, expectedDataAfterModify, 0, size);
+
+            TResourceClient client = GetResourceClient(disposingContainer.Container);
+            await StageDataAsync(client, new MemoryStream(data0));
+
+            // Act
+            Stream outputStream = await OpenReadAsyncOverload(client, allowModifications: true);
+            byte[] outputBytesBeforeModify = new byte[size];
+            await outputStream.ReadAsync(outputBytesBeforeModify, 0, size);
+
+            // Modify the blob.
+            await ModifyDataAsync(client, new MemoryStream(data1), ModifyDataMode.Append);
+
+            byte[] outputBytesAfterModify = new byte[size];
+            byte[] emptyBytes = new byte[size];
+            await outputStream.ReadAsync(outputBytesAfterModify, 0, size);
+
+            // Assert
+            TestHelper.AssertSequenceEqual(expectedDataBeforeModify, outputBytesBeforeModify);
+            TestHelper.AssertSequenceEqual(expectedDataAfterModify, outputBytesAfterModify);
+            Assert.AreNotEqual(emptyBytes, outputBytesAfterModify);
+        }
+
+        [RecordedTest]
+        public async Task OpenReadAsyncOverload_NotAllowModifications()
+        {
+            int size = Constants.KB;
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            byte[] data0 = GetRandomBuffer(size);
+            byte[] data1 = GetRandomBuffer(size);
+            byte[] expectedDataBeforeModify = new byte[size];
+            byte[] expectedDataAfterModify = new byte[size];
+            Array.Copy(data0, 0, expectedDataBeforeModify, 0, size);
+            Array.Copy(data1, 0, expectedDataAfterModify, 0, size);
+
+            TResourceClient client = GetResourceClient(disposingContainer.Container);
+            await StageDataAsync(client, new MemoryStream(data0));
+
+            // Act
+            Stream outputStream = await OpenReadAsyncOverload(client, allowModifications: false);
+            byte[] outputBytesBeforeModify = new byte[size];
+            await outputStream.ReadAsync(outputBytesBeforeModify, 0, size);
+
+            // Modify the blob.
+            await ModifyDataAsync(client, new MemoryStream(data1), ModifyDataMode.Append);
+
+            byte[] outputBytesAfterModify = new byte[size];
+            byte[] emptyBytes = new byte[size];
+            await outputStream.ReadAsync(outputBytesAfterModify, 0, size);
+
+            // Assert
+            TestHelper.AssertSequenceEqual(expectedDataBeforeModify, outputBytesBeforeModify);
+            Assert.AreNotEqual(expectedDataAfterModify, outputBytesAfterModify);
+            TestHelper.AssertSequenceEqual(emptyBytes, outputBytesAfterModify);
         }
     }
 }

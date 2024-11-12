@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -41,10 +42,10 @@ namespace Azure.AI.ContentSafety.Tests.Samples
                 throw;
             }
 
-            Console.WriteLine("Hate severity: {0}", response.Value.HateResult?.Severity ?? 0);
-            Console.WriteLine("SelfHarm severity: {0}", response.Value.SelfHarmResult?.Severity ?? 0);
-            Console.WriteLine("Sexual severity: {0}", response.Value.SexualResult?.Severity ?? 0);
-            Console.WriteLine("Violence severity: {0}", response.Value.ViolenceResult?.Severity ?? 0);
+            Console.WriteLine("Hate severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate)?.Severity ?? 0);
+            Console.WriteLine("SelfHarm severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.SelfHarm)?.Severity ?? 0);
+            Console.WriteLine("Sexual severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Sexual)?.Severity ?? 0);
+            Console.WriteLine("Violence severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Violence)?.Severity ?? 0);
 
             #endregion Snippet:Azure_AI_ContentSafety_AnalyzeText
         }

@@ -80,6 +80,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to JSON is null or empty..
+        /// </summary>
+        internal static string Ex_Empty_Json {
+            get {
+                return ResourceManager.GetString("Ex_Empty_Json", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot determine the event from payload, please check that the incoming payload is a valid JSON string and contains the event type..
         /// </summary>
         internal static string Ex_Event_Missing {
@@ -112,6 +121,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         internal static string Ex_Invalid_Action {
             get {
                 return ResourceManager.GetString("Ex_Invalid_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authorized Party Application ID &apos;{0}&apos; from token does match Authentication Event Trigger configuration AuthorizedPartyAppId &apos;{1}&apos;..
+        /// </summary>
+        internal static string Ex_Invalid_AuthorizedPartyApplicationId {
+            get {
+                return ResourceManager.GetString("Ex_Invalid_AuthorizedPartyApplicationId", resourceCulture);
             }
         }
         
@@ -170,11 +188,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid Payload detected..
+        ///   Looks up a localized string similar to Invalid Json Payload.
         /// </summary>
-        internal static string Ex_Invalid_Payload {
+        internal static string Ex_Invalid_JsonPayload {
             get {
-                return ResourceManager.GetString("Ex_Invalid_Payload", resourceCulture);
+                return ResourceManager.GetString("Ex_Invalid_JsonPayload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not able to retrive Open ID Configuration with configured Authority URL &apos;{0}&apos;. Please verify Authority URL..
+        /// </summary>
+        internal static string Ex_Invalid_OIDC {
+            get {
+                return ResourceManager.GetString("Ex_Invalid_OIDC", resourceCulture);
             }
         }
         
@@ -188,7 +215,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return..
+        ///   Looks up a localized string similar to Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.
         /// </summary>
         internal static string Ex_Invalid_Return {
             get {
@@ -202,6 +229,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         internal static string Ex_Invalid_SchemaVersion {
             get {
                 return ResourceManager.GetString("Ex_Invalid_SchemaVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Access Token in request found..
+        /// </summary>
+        internal static string Ex_No_AccessToken {
+            get {
+                return ResourceManager.GetString("Ex_No_AccessToken", resourceCulture);
             }
         }
         
@@ -269,6 +305,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actions can not contain null items..
+        /// </summary>
+        internal static string Ex_Null_Action_Items {
+            get {
+                return ResourceManager.GetString("Ex_Null_Action_Items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No associated open api document found for version..
         /// </summary>
         internal static string Ex_OpenApi_Missing {
@@ -305,11 +350,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please supply both the TenantId and AudienceAppId in variables in your binding configuration. (Or app settings {0} and {1}).
+        ///   Looks up a localized string similar to Please supply the ApplicationId {0} in variables in your binding configuration..
         /// </summary>
-        internal static string Ex_Trigger_Required_Attrs {
+        internal static string Ex_Trigger_ApplicationId_Required {
             get {
-                return ResourceManager.GetString("Ex_Trigger_Required_Attrs", resourceCulture);
+                return ResourceManager.GetString("Ex_Trigger_ApplicationId_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please supply the Authority URL {0} in variables in your binding configuration..
+        /// </summary>
+        internal static string Ex_Trigger_AuthorityUrl_Required {
+            get {
+                return ResourceManager.GetString("Ex_Trigger_AuthorityUrl_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please supply the AuthorizedPartyApplicationId {0} in variables in your binding configuration..
+        /// </summary>
+        internal static string Ex_Trigger_AuthorizedPartyApplicationId_Required {
+            get {
+                return ResourceManager.GetString("Ex_Trigger_AuthorizedPartyApplicationId_Required", resourceCulture);
             }
         }
         

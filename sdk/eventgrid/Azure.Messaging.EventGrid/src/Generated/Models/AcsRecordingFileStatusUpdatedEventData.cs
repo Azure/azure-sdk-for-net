@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RecordingFileStatusUpdated event. </summary>
     public partial class AcsRecordingFileStatusUpdatedEventData
     {
-        /// <summary> Initializes a new instance of AcsRecordingFileStatusUpdatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRecordingFileStatusUpdatedEventData"/>. </summary>
         internal AcsRecordingFileStatusUpdatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsRecordingFileStatusUpdatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRecordingFileStatusUpdatedEventData"/>. </summary>
         /// <param name="recordingStorageInfo"> The details of recording storage information. </param>
         /// <param name="recordingStartTime"> The time at which the recording started. </param>
         /// <param name="recordingDurationMs"> The recording duration in milliseconds. </param>

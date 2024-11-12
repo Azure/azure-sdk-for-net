@@ -7,15 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Key Vault linked service. </summary>
-    public partial class AzureKeyVaultLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class AzureKeyVaultLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzureKeyVaultLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultLinkedService"/>. </summary>
         /// <param name="baseUri"> The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseUri"/> is null. </exception>
         public AzureKeyVaultLinkedService(DataFactoryElement<string> baseUri)
@@ -26,8 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "AzureKeyVault";
         }
 
-        /// <summary> Initializes a new instance of AzureKeyVaultLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -35,11 +35,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="baseUri"> The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureKeyVaultLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> baseUri, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureKeyVaultLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> baseUri, DataFactoryCredentialReference credential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             BaseUri = baseUri;
             Credential = credential;
             LinkedServiceType = linkedServiceType ?? "AzureKeyVault";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultLinkedService"/> for deserialization. </summary>
+        internal AzureKeyVaultLinkedService()
+        {
         }
 
         /// <summary> The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string). </summary>

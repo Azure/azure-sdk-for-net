@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// Provisioning state of the resource.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> Provisioning state of resource. </summary>
     public readonly partial struct SphereProvisioningState : IEquatable<SphereProvisioningState>
     {
         private readonly string _value;
@@ -33,46 +30,25 @@ namespace Azure.ResourceManager.Sphere.Models
         private const string DeletingValue = "Deleting";
         private const string AcceptedValue = "Accepted";
 
-        /// <summary>
-        /// Resource has been created.
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Resource has been created. </summary>
         public static SphereProvisioningState Succeeded { get; } = new SphereProvisioningState(SucceededValue);
-        /// <summary>
-        /// Resource creation failed.
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Resource creation failed. </summary>
         public static SphereProvisioningState Failed { get; } = new SphereProvisioningState(FailedValue);
-        /// <summary>
-        /// Resource creation was canceled.
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static SphereProvisioningState Canceled { get; } = new SphereProvisioningState(CanceledValue);
-        /// <summary>
-        /// The resource is being provisioned
-        /// Serialized Name: ProvisioningState.Provisioning
-        /// </summary>
+        /// <summary> The resource is being provisioned. </summary>
         public static SphereProvisioningState Provisioning { get; } = new SphereProvisioningState(ProvisioningValue);
-        /// <summary>
-        /// The resource is being updated
-        /// Serialized Name: ProvisioningState.Updating
-        /// </summary>
+        /// <summary> The resource is being updated. </summary>
         public static SphereProvisioningState Updating { get; } = new SphereProvisioningState(UpdatingValue);
-        /// <summary>
-        /// The resource is being deleted
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> The resource is being deleted. </summary>
         public static SphereProvisioningState Deleting { get; } = new SphereProvisioningState(DeletingValue);
-        /// <summary>
-        /// The resource create request has been accepted
-        /// Serialized Name: ProvisioningState.Accepted
-        /// </summary>
+        /// <summary> The resource create request has been accepted. </summary>
         public static SphereProvisioningState Accepted { get; } = new SphereProvisioningState(AcceptedValue);
         /// <summary> Determines if two <see cref="SphereProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SphereProvisioningState left, SphereProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SphereProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(SphereProvisioningState left, SphereProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SphereProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SphereProvisioningState"/>. </summary>
         public static implicit operator SphereProvisioningState(string value) => new SphereProvisioningState(value);
 
         /// <inheritdoc />
@@ -83,7 +59,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -151,9 +151,12 @@ namespace Azure.Security.KeyVault.Administration
                     _requestFailedException = new RequestFailedException("Unexpected failure", ex);
                     throw _requestFailedException;
                 }
+
                 if (_value != null && _value.EndTime.HasValue && _value.Error != null)
                 {
-                    _requestFailedException = new RequestFailedException($"{_value.Error.Message}\nInnerError: {_value.Error.InnerError}\nCode: {_value.Error.Code}");
+                    _requestFailedException = _response != null ?
+                        new RequestFailedException(_response)
+                        : new RequestFailedException($"{_value.Error.Message}\nInnerError: {_value.Error.InnerError}\nCode: {_value.Error.Code}");
                     throw _requestFailedException;
                 }
             }

@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class DscConfigurationParameterDefinition : IUtf8JsonSerializable
+    public partial class DscConfigurationParameterDefinition : IUtf8JsonSerializable, IJsonModel<DscConfigurationParameterDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscConfigurationParameterDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DscConfigurationParameterDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DscConfigurationParameterDefinition)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(DscConfigurationParameterType))
             {
                 writer.WritePropertyName("type"u8);
@@ -35,19 +54,49 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DscConfigurationParameterDefinition DeserializeDscConfigurationParameterDefinition(JsonElement element)
+        DscConfigurationParameterDefinition IJsonModel<DscConfigurationParameterDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DscConfigurationParameterDefinition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDscConfigurationParameterDefinition(document.RootElement, options);
+        }
+
+        internal static DscConfigurationParameterDefinition DeserializeDscConfigurationParameterDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<bool> isMandatory = default;
-            Optional<int> position = default;
-            Optional<string> defaultValue = default;
+            string type = default;
+            bool? isMandatory = default;
+            int? position = default;
+            string defaultValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -78,8 +127,44 @@ namespace Azure.ResourceManager.Automation.Models
                     defaultValue = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DscConfigurationParameterDefinition(type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(position), defaultValue.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DscConfigurationParameterDefinition(type, isMandatory, position, defaultValue, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DscConfigurationParameterDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DscConfigurationParameterDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DscConfigurationParameterDefinition IPersistableModel<DscConfigurationParameterDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDscConfigurationParameterDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DscConfigurationParameterDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DscConfigurationParameterDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,11 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class ErrorAdditionalInfo
+    public partial class ErrorAdditionalInfo
     {
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {
@@ -18,8 +18,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<object> info = default;
+            string type = default;
+            object info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -37,7 +37,15 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new ErrorAdditionalInfo(type.Value, info.Value);
+            return new ErrorAdditionalInfo(type, info);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorAdditionalInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeErrorAdditionalInfo(document.RootElement);
         }
     }
 }

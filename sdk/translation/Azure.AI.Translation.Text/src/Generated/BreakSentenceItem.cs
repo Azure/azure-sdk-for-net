@@ -8,36 +8,74 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Item containing break sentence result. </summary>
     public partial class BreakSentenceItem
     {
-        /// <summary> Initializes a new instance of BreakSentenceItem. </summary>
-        /// <param name="sentLen">
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BreakSentenceItem"/>. </summary>
+        /// <param name="sentencesLengths">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sentLen"/> is null. </exception>
-        internal BreakSentenceItem(IEnumerable<int> sentLen)
+        /// <exception cref="ArgumentNullException"> <paramref name="sentencesLengths"/> is null. </exception>
+        internal BreakSentenceItem(IEnumerable<int> sentencesLengths)
         {
-            Argument.AssertNotNull(sentLen, nameof(sentLen));
+            Argument.AssertNotNull(sentencesLengths, nameof(sentencesLengths));
 
-            SentLen = sentLen.ToList();
+            SentencesLengths = sentencesLengths.ToList();
         }
 
-        /// <summary> Initializes a new instance of BreakSentenceItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="BreakSentenceItem"/>. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
-        /// <param name="sentLen">
+        /// <param name="sentencesLengths">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
-        internal BreakSentenceItem(DetectedLanguage detectedLanguage, IReadOnlyList<int> sentLen)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BreakSentenceItem(DetectedLanguage detectedLanguage, IReadOnlyList<int> sentencesLengths, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DetectedLanguage = detectedLanguage;
-            SentLen = sentLen;
+            SentencesLengths = sentencesLengths;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BreakSentenceItem"/> for deserialization. </summary>
+        internal BreakSentenceItem()
+        {
         }
 
         /// <summary> The detectedLanguage property is only present in the result object when language auto-detection is requested. </summary>
@@ -46,6 +84,6 @@ namespace Azure.AI.Translation.Text
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </summary>
-        public IReadOnlyList<int> SentLen { get; }
+        public IReadOnlyList<int> SentencesLengths { get; }
     }
 }

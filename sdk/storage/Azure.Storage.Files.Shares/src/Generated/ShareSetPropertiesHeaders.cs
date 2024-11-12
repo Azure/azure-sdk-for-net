@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
@@ -22,5 +21,21 @@ namespace Azure.Storage.Files.Shares
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
         /// <summary> Indicates the version of the File service used to execute the request. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
+        /// <summary> Returns the current share quota in GB. </summary>
+        public long? Quota => _response.Headers.TryGetValue("x-ms-share-quota", out long? value) ? value : null;
+        /// <summary> Returns the current share provisioned ipos. </summary>
+        public long? ProvisionedIops => _response.Headers.TryGetValue("x-ms-share-provisioned-iops", out long? value) ? value : null;
+        /// <summary> Returns the current share provisioned bandwidth in mebibytes per second. </summary>
+        public long? ProvisionedBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-provisioned-bandwidth-mibps", out long? value) ? value : null;
+        /// <summary> Return the calculated burst IOPS of the share. </summary>
+        public long? IncludedBurstIops => _response.Headers.TryGetValue("x-ms-share-included-burst-iops", out long? value) ? value : null;
+        /// <summary> Returned the calculated maximum burst credits. This is not the current burst credit level, but the maximum burst credits the share can have. </summary>
+        public long? MaxBurstCreditsForIops => _response.Headers.TryGetValue("x-ms-share-max-burst-credits-for-iops", out long? value) ? value : null;
+        /// <summary> Returns the current share next allowed quota downgrade time. </summary>
+        public DateTimeOffset? NextAllowedQuotaDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-quota-downgrade-time", out DateTimeOffset? value) ? value : null;
+        /// <summary> Returns the current share next allowed provisioned iops downgrade time. </summary>
+        public DateTimeOffset? NextAllowedProvisionedIopsDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-iops-downgrade-time", out DateTimeOffset? value) ? value : null;
+        /// <summary> Returns the current share next allowed provisioned bandwidth downgrade time. </summary>
+        public DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-bandwidth-downgrade-time", out DateTimeOffset? value) ? value : null;
     }
 }

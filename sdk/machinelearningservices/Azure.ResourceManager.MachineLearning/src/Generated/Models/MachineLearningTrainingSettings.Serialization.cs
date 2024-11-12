@@ -6,30 +6,51 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningTrainingSettings : IUtf8JsonSerializable
+    public partial class MachineLearningTrainingSettings : IUtf8JsonSerializable, IJsonModel<MachineLearningTrainingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningTrainingSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningTrainingSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsDnnTrainingEnabled))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("enableDnnTraining"u8);
-                writer.WriteBooleanValue(IsDnnTrainingEnabled.Value);
+                throw new FormatException($"The model {nameof(MachineLearningTrainingSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsModelExplainabilityEnabled))
-            {
-                writer.WritePropertyName("enableModelExplainability"u8);
-                writer.WriteBooleanValue(IsModelExplainabilityEnabled.Value);
-            }
+
             if (Optional.IsDefined(IsOnnxCompatibleModelsEnabled))
             {
                 writer.WritePropertyName("enableOnnxCompatibleModels"u8);
                 writer.WriteBooleanValue(IsOnnxCompatibleModelsEnabled.Value);
+            }
+            if (Optional.IsDefined(StackEnsembleSettings))
+            {
+                if (StackEnsembleSettings != null)
+                {
+                    writer.WritePropertyName("stackEnsembleSettings"u8);
+                    writer.WriteObjectValue(StackEnsembleSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("stackEnsembleSettings");
+                }
             }
             if (Optional.IsDefined(IsStackEnsembleEnabled))
             {
@@ -46,54 +67,64 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("ensembleModelDownloadTimeout"u8);
                 writer.WriteStringValue(EnsembleModelDownloadTimeout.Value, "P");
             }
-            if (Optional.IsDefined(StackEnsembleSettings))
+            if (Optional.IsDefined(IsModelExplainabilityEnabled))
             {
-                if (StackEnsembleSettings != null)
+                writer.WritePropertyName("enableModelExplainability"u8);
+                writer.WriteBooleanValue(IsModelExplainabilityEnabled.Value);
+            }
+            if (Optional.IsDefined(IsDnnTrainingEnabled))
+            {
+                writer.WritePropertyName("enableDnnTraining"u8);
+                writer.WriteBooleanValue(IsDnnTrainingEnabled.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName("stackEnsembleSettings"u8);
-                    writer.WriteObjectValue(StackEnsembleSettings);
-                }
-                else
-                {
-                    writer.WriteNull("stackEnsembleSettings");
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
             }
-            writer.WriteEndObject();
         }
 
-        internal static MachineLearningTrainingSettings DeserializeMachineLearningTrainingSettings(JsonElement element)
+        MachineLearningTrainingSettings IJsonModel<MachineLearningTrainingSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningTrainingSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningTrainingSettings(document.RootElement, options);
+        }
+
+        internal static MachineLearningTrainingSettings DeserializeMachineLearningTrainingSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> enableDnnTraining = default;
-            Optional<bool> enableModelExplainability = default;
-            Optional<bool> enableOnnxCompatibleModels = default;
-            Optional<bool> enableStackEnsemble = default;
-            Optional<bool> enableVoteEnsemble = default;
-            Optional<TimeSpan> ensembleModelDownloadTimeout = default;
-            Optional<MachineLearningStackEnsembleSettings> stackEnsembleSettings = default;
+            bool? enableOnnxCompatibleModels = default;
+            MachineLearningStackEnsembleSettings stackEnsembleSettings = default;
+            bool? enableStackEnsemble = default;
+            bool? enableVoteEnsemble = default;
+            TimeSpan? ensembleModelDownloadTimeout = default;
+            bool? enableModelExplainability = default;
+            bool? enableDnnTraining = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableDnnTraining"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableDnnTraining = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("enableModelExplainability"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableModelExplainability = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("enableOnnxCompatibleModels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -101,6 +132,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     enableOnnxCompatibleModels = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("stackEnsembleSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        stackEnsembleSettings = null;
+                        continue;
+                    }
+                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableStackEnsemble"u8))
@@ -130,18 +171,198 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     ensembleModelDownloadTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("stackEnsembleSettings"u8))
+                if (property.NameEquals("enableModelExplainability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        stackEnsembleSettings = null;
                         continue;
                     }
-                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value);
+                    enableModelExplainability = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("enableDnnTraining"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableDnnTraining = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningTrainingSettings(Optional.ToNullable(enableDnnTraining), Optional.ToNullable(enableModelExplainability), Optional.ToNullable(enableOnnxCompatibleModels), Optional.ToNullable(enableStackEnsemble), Optional.ToNullable(enableVoteEnsemble), Optional.ToNullable(ensembleModelDownloadTimeout), stackEnsembleSettings.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningTrainingSettings(
+                enableOnnxCompatibleModels,
+                stackEnsembleSettings,
+                enableStackEnsemble,
+                enableVoteEnsemble,
+                ensembleModelDownloadTimeout,
+                enableModelExplainability,
+                enableDnnTraining,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsOnnxCompatibleModelsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableOnnxCompatibleModels: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsOnnxCompatibleModelsEnabled))
+                {
+                    builder.Append("  enableOnnxCompatibleModels: ");
+                    var boolValue = IsOnnxCompatibleModelsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StackEnsembleSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stackEnsembleSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StackEnsembleSettings))
+                {
+                    builder.Append("  stackEnsembleSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, StackEnsembleSettings, options, 2, false, "  stackEnsembleSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStackEnsembleEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableStackEnsemble: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsStackEnsembleEnabled))
+                {
+                    builder.Append("  enableStackEnsemble: ");
+                    var boolValue = IsStackEnsembleEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVoteEnsembleEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableVoteEnsemble: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsVoteEnsembleEnabled))
+                {
+                    builder.Append("  enableVoteEnsemble: ");
+                    var boolValue = IsVoteEnsembleEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnsembleModelDownloadTimeout), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ensembleModelDownloadTimeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnsembleModelDownloadTimeout))
+                {
+                    builder.Append("  ensembleModelDownloadTimeout: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(EnsembleModelDownloadTimeout.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsModelExplainabilityEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableModelExplainability: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsModelExplainabilityEnabled))
+                {
+                    builder.Append("  enableModelExplainability: ");
+                    var boolValue = IsModelExplainabilityEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDnnTrainingEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableDnnTraining: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDnnTrainingEnabled))
+                {
+                    builder.Append("  enableDnnTraining: ");
+                    var boolValue = IsDnnTrainingEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningTrainingSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningTrainingSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningTrainingSettings IPersistableModel<MachineLearningTrainingSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningTrainingSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningTrainingSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningTrainingSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

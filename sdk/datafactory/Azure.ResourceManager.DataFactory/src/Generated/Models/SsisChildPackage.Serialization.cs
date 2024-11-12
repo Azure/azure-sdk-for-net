@@ -5,17 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisChildPackage : IUtf8JsonSerializable
+    public partial class SsisChildPackage : IUtf8JsonSerializable, IJsonModel<SsisChildPackage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SsisChildPackage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SsisChildPackage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisChildPackage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SsisChildPackage)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("packagePath"u8);
             JsonSerializer.Serialize(writer, PackagePath);
             if (Optional.IsDefined(PackageName))
@@ -30,19 +49,49 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SsisChildPackage DeserializeSsisChildPackage(JsonElement element)
+        SsisChildPackage IJsonModel<SsisChildPackage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisChildPackage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SsisChildPackage)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSsisChildPackage(document.RootElement, options);
+        }
+
+        internal static SsisChildPackage DeserializeSsisChildPackage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataFactoryElement<string> packagePath = default;
-            Optional<string> packageName = default;
+            string packageName = default;
             DataFactoryElement<string> packageContent = default;
-            Optional<string> packageLastModifiedDate = default;
+            string packageLastModifiedDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packagePath"u8))
@@ -65,8 +114,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                     packageLastModifiedDate = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SsisChildPackage(packagePath, packageName.Value, packageContent, packageLastModifiedDate.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SsisChildPackage(packagePath, packageName, packageContent, packageLastModifiedDate, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SsisChildPackage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisChildPackage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SsisChildPackage)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SsisChildPackage IPersistableModel<SsisChildPackage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisChildPackage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSsisChildPackage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SsisChildPackage)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SsisChildPackage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

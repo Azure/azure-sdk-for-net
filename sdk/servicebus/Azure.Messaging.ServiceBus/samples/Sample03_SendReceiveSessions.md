@@ -7,16 +7,17 @@ This sample demonstrates how to send and receive session messages from a session
 Receiving from sessions is performed using the `ServiceBusSessionReceiver`. This type derives from `ServiceBusReceiver` and exposes session-related functionality.
 
 ```C# Snippet:ServiceBusSendAndReceiveSessionMessage
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
+
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a session message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"))
+ServiceBusMessage message = new(Encoding.UTF8.GetBytes("Hello world!"))
 {
     SessionId = "mySessionId"
 };

@@ -5,25 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AvailableServiceAlias
+    public partial class AvailableServiceAlias : IUtf8JsonSerializable, IJsonModel<AvailableServiceAlias>
     {
-        internal static AvailableServiceAlias DeserializeAvailableServiceAlias(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableServiceAlias>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AvailableServiceAlias>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailableServiceAlias>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvailableServiceAlias)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ResourceName))
+            {
+                writer.WritePropertyName("resourceName"u8);
+                writer.WriteStringValue(ResourceName);
+            }
+        }
+
+        AvailableServiceAlias IJsonModel<AvailableServiceAlias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailableServiceAlias>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvailableServiceAlias)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailableServiceAlias(document.RootElement, options);
+        }
+
+        internal static AvailableServiceAlias DeserializeAvailableServiceAlias(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> resourceName = default;
+            string resourceName = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceName"u8))
@@ -55,8 +101,50 @@ namespace Azure.ResourceManager.Network.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AvailableServiceAlias(id, name, type, systemData.Value, resourceName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AvailableServiceAlias(
+                id,
+                name,
+                type,
+                systemData,
+                resourceName,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AvailableServiceAlias>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailableServiceAlias>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AvailableServiceAlias)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AvailableServiceAlias IPersistableModel<AvailableServiceAlias>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailableServiceAlias>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAvailableServiceAlias(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvailableServiceAlias)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AvailableServiceAlias>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

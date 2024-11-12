@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(DHGroup left, DHGroup right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DHGroup"/> values are not the same. </summary>
         public static bool operator !=(DHGroup left, DHGroup right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DHGroup"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DHGroup"/>. </summary>
         public static implicit operator DHGroup(string value) => new DHGroup(value);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

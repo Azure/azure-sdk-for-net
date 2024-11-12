@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.Automanage.Tests
         {
             // Ignore the api-version of deployment operations
             UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/providers/Microsoft.Resources/deployments/[^/]+(/operationStatuses/[^/]+)?pi-version=(?<group>[a-z0-9-]+)", "**"
-            )
+                @"/providers/Microsoft.Resources/deployments/[^/]+(/operationStatuses/[^/]+)?pi-version=(?<group>[a-z0-9-]+)")
             {
-                GroupForReplace = "group"
+                GroupForReplace = "group",
+                Value = "**"
             });
         }
     }

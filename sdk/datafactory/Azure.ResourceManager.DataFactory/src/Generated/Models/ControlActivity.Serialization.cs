@@ -6,70 +6,65 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ControlActivity : IUtf8JsonSerializable
+    public partial class ControlActivity : IUtf8JsonSerializable, IJsonModel<ControlActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControlActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ControlActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ControlActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                throw new FormatException($"The model {nameof(ControlActivity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Optional.IsDefined(OnInactiveMarkAs))
-            {
-                writer.WritePropertyName("onInactiveMarkAs"u8);
-                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(DependsOn))
-            {
-                writer.WritePropertyName("dependsOn"u8);
-                writer.WriteStartArray();
-                foreach (var item in DependsOn)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(UserProperties))
-            {
-                writer.WritePropertyName("userProperties"u8);
-                writer.WriteStartArray();
-                foreach (var item in UserProperties)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
+
+            base.JsonModelWriteCore(writer, options);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static ControlActivity DeserializeControlActivity(JsonElement element)
+        ControlActivity IJsonModel<ControlActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ControlActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ControlActivity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeControlActivity(document.RootElement, options);
+        }
+
+        internal static ControlActivity DeserializeControlActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,27 +73,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AppendVariable": return AppendVariableActivity.DeserializeAppendVariableActivity(element);
-                    case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element);
-                    case "Fail": return FailActivity.DeserializeFailActivity(element);
-                    case "Filter": return FilterActivity.DeserializeFilterActivity(element);
-                    case "ForEach": return ForEachActivity.DeserializeForEachActivity(element);
-                    case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element);
-                    case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element);
-                    case "Switch": return SwitchActivity.DeserializeSwitchActivity(element);
-                    case "Until": return UntilActivity.DeserializeUntilActivity(element);
-                    case "Validation": return ValidationActivity.DeserializeValidationActivity(element);
-                    case "Wait": return WaitActivity.DeserializeWaitActivity(element);
-                    case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element);
+                    case "AppendVariable": return AppendVariableActivity.DeserializeAppendVariableActivity(element, options);
+                    case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element, options);
+                    case "Fail": return FailActivity.DeserializeFailActivity(element, options);
+                    case "Filter": return FilterActivity.DeserializeFilterActivity(element, options);
+                    case "ForEach": return ForEachActivity.DeserializeForEachActivity(element, options);
+                    case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element, options);
+                    case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element, options);
+                    case "Switch": return SwitchActivity.DeserializeSwitchActivity(element, options);
+                    case "Until": return UntilActivity.DeserializeUntilActivity(element, options);
+                    case "Validation": return ValidationActivity.DeserializeValidationActivity(element, options);
+                    case "Wait": return WaitActivity.DeserializeWaitActivity(element, options);
+                    case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element, options);
                 }
             }
             string name = default;
             string type = "Container";
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<ActivityUserProperty>> userProperties = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    state = new ActivityState(property.Value.GetString());
+                    state = new PipelineActivityState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("onInactiveMarkAs"u8))
@@ -133,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    onInactiveMarkAs = new ActivityOnInactiveMarkA(property.Value.GetString());
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -142,10 +137,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<ActivityDependency> array = new List<ActivityDependency>();
+                    List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -156,10 +151,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
+                    List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -167,7 +162,46 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ControlActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties);
+            return new ControlActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<ControlActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ControlActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ControlActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ControlActivity IPersistableModel<ControlActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ControlActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeControlActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ControlActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ControlActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

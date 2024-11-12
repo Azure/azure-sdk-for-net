@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory.Samples
@@ -41,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryManagedVirtualNetworkResource dataFactoryManagedVirtualNetwork = client.GetDataFactoryManagedVirtualNetworkResource(dataFactoryManagedVirtualNetworkResourceId);
 
             // invoke the operation
-            DataFactoryManagedVirtualNetworkData data = new DataFactoryManagedVirtualNetworkData(new ManagedVirtualNetwork());
+            DataFactoryManagedVirtualNetworkData data = new DataFactoryManagedVirtualNetworkData(new DataFactoryManagedVirtualNetworkProperties());
             ArmOperation<DataFactoryManagedVirtualNetworkResource> lro = await dataFactoryManagedVirtualNetwork.UpdateAsync(WaitUntil.Completed, data);
             DataFactoryManagedVirtualNetworkResource result = lro.Value;
 

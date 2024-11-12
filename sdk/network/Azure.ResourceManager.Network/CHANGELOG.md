@@ -1,8 +1,10 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
@@ -10,32 +12,108 @@
 
 ### Other Changes
 
-## 1.3.0 (2023-06-30)
+## 1.9.0 (2024-09-12)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-11' to 'package-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/738879cc6e1c5569b01130fd69a2587388fc34b3/specification/network/resource-manager/readme.md.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Added experimental Bicep serialization.
+
+## 1.8.0 (2024-06-24)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-09' to 'package-2023-11'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c4e661cdf92c8f579574008d0cd11874cc303da0/specification/network/resource-manager/readme.md.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Updated .Net SDK to older SDK by removing identity field for flowLog networkWatcher resource.
+
+## 1.7.0 (2024-01-12)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-06' to 'package-2023-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2f74f79b243484837a6d7b6dfa78b3e16274d006/specification/network/resource-manager/readme.md.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+## 1.6.0 (2023-11-21)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-05' to 'package-2023-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/4b55e2d0e29fb2e829985485c9150f46157c3b80/specification/network/resource-manager/readme.md.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Bugs Fixed
+
+- Fixed an issue that the `DeserializeHopLink` can't handle empty `resourceId`.
 
 ### Other Changes
 
-- Upgraded api-version tag from 'package-2022-09' to 'package-2023-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0b4a0a3f4bfc198df608f373784505e42e248c2c/specification/network/resource-manager/readme.md
-- Upgraded Azure.Core from 1.31.0 to 1.33.0
-- Upgraded Azure.ResourceManager from 1.5.0 to 1.6.0
-- Obsoleted method 'ArmOperation<PeerRouteList> GetAdvertisedRoutesVirtualHubBgpConnection(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource
-- Obsoleted method 'Task<ArmOperation<PeerRouteList>> GetAdvertisedRoutesVirtualHubBgpConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource
-- Obsoleted method 'ArmOperation<PeerRouteList> GetLearnedRoutesVirtualHubBgpConnection(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource
-- Obsoleted method 'Task<ArmOperation<PeerRouteList>> GetLearnedRoutesVirtualHubBgpConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource
-- Obsoleted method 'ArmOperation GetEffectiveVirtualHubRoutes(WaitUntil waitUntil, EffectiveRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource
-- Obsoleted method 'Task<ArmOperation> GetEffectiveVirtualHubRoutesAsync(WaitUntil waitUntil, EffectiveRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource
-- Obsoleted method 'ArmOperation GetInboundRoutes(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource
-- Obsoleted method 'Task<ArmOperation> GetInboundRoutesAsync(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource
-- Obsoleted method 'ArmOperation GetOutboundRoutes(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource
-- Obsoleted method 'Task<ArmOperation> GetOutboundRoutesAsync(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource
-- Obsoleted property 'ApplicationGatewayCustomErrorStatusCode HttpStatus499' in type Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode
-- Obsoleted property 'LoadBalancerBackendAddressAdminState Drain' in type Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState
-- Obsoleted type 'Azure.ResourceManager.Network.Models.PeerRouteList'
+- Upgraded Azure.ResourceManager to 1.9.0.
+
+## 1.6.0-beta.1 (2023-09-25)
+
+### Features Added
+
+- Added support to VMSS features.
+
+## 1.5.0 (2023-09-16)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-04' to 'package-2023-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0762e82bcccef4a032e29dda5e4c07fd7cc822a6/specification/network/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.34.0 to 1.35.0
+
+## 1.5.0-beta.1 (2023-08-14)
+
+### Features Added
+
+- Maked `NetworkArmClientMockingExtension`, `NetworkManagementGroupMockingExtension`, `NetworkResourceGroupMockingExtension`, `NetworkSubscriptionMockingExtension` public for mocking the extension methods.
+
+## 1.4.0 (2023-07-31)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-02' to 'package-2023-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f5cb37608399dd19760b9ef985a707294e32fbda/specification/network/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.33.0 to 1.34.0.
+- Upgraded Azure.ResourceManager from 1.6.0 to 1.7.0.
+- Obsoleted method 'ArmOperation<VpnProfileResponse> Generatevirtualwanvpnserverconfigurationvpnprofile(WaitUntil waitUntil, VirtualWanVpnProfileContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualWanResource.
+- Obsoleted method 'Task<ArmOperation<VpnProfileResponse>> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(WaitUntil waitUntil, VirtualWanVpnProfileContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualWanResource.
+
+## 1.3.0 (2023-06-30)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2022-09' to 'package-2023-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0b4a0a3f4bfc198df608f373784505e42e248c2c/specification/network/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.31.0 to 1.33.0.
+- Upgraded Azure.ResourceManager from 1.5.0 to 1.6.0.
+- Obsoleted method 'ArmOperation<PeerRouteList> GetAdvertisedRoutesVirtualHubBgpConnection(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource.
+- Obsoleted method 'Task<ArmOperation<PeerRouteList>> GetAdvertisedRoutesVirtualHubBgpConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource.
+- Obsoleted method 'ArmOperation<PeerRouteList> GetLearnedRoutesVirtualHubBgpConnection(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource.
+- Obsoleted method 'Task<ArmOperation<PeerRouteList>> GetLearnedRoutesVirtualHubBgpConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource.
+- Obsoleted method 'ArmOperation GetEffectiveVirtualHubRoutes(WaitUntil waitUntil, EffectiveRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource.
+- Obsoleted method 'Task<ArmOperation> GetEffectiveVirtualHubRoutesAsync(WaitUntil waitUntil, EffectiveRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource.
+- Obsoleted method 'ArmOperation GetInboundRoutes(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource.
+- Obsoleted method 'Task<ArmOperation> GetInboundRoutesAsync(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource.
+- Obsoleted method 'ArmOperation GetOutboundRoutes(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource.
+- Obsoleted method 'Task<ArmOperation> GetOutboundRoutesAsync(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource.
+- Obsoleted property 'ApplicationGatewayCustomErrorStatusCode HttpStatus499' in type Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode.
+- Obsoleted property 'LoadBalancerBackendAddressAdminState Drain' in type Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState.
+- Obsoleted type 'Azure.ResourceManager.Network.Models.PeerRouteList'.
 
 ## 1.3.0-beta.1 (2023-05-30)
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 
@@ -46,7 +124,7 @@
 
 ### Features Added
 
-Add new resources:
+Added new resources:
 - `AdminRuleGroupResource`
 - `ApplicationGatewayWafDynamicManifestResource`
 - `BaseAdminRuleResource`
@@ -115,7 +193,7 @@ This release is the first stable release of the Network Management client librar
 
 ### Features Added
 
-- Added Update methods in resource classes.
+- Added Updated methods in resource classes.
 
 ### Breaking Changes
 

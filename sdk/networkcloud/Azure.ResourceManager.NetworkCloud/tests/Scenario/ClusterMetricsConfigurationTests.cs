@@ -17,18 +17,19 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public ClusterMetricsConfigurationTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task ClusterMetricsConfiguration()
         {
             // retrieve a parent cluster
-            ClusterResource cluster = Client.GetClusterResource(TestEnvironment.ClusterId);
+            NetworkCloudClusterResource cluster = Client.GetNetworkCloudClusterResource(TestEnvironment.ClusterId);
             cluster = await cluster.GetAsync();
 
-            ClusterMetricsConfigurationCollection collection = cluster.GetClusterMetricsConfigurations();
+            NetworkCloudClusterMetricsConfigurationCollection collection = cluster.GetNetworkCloudClusterMetricsConfigurations();
 
             // Create
             // invoke the operation
             string metricsConfigurationName = "default";
-            ClusterMetricsConfigurationData createData = new ClusterMetricsConfigurationData
+            NetworkCloudClusterMetricsConfigurationData createData = new NetworkCloudClusterMetricsConfigurationData
             (
                 cluster.Data.Location,
                 cluster.Data.ClusterExtendedLocation,
@@ -41,16 +42,16 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key1"] = "myvalue1",
                 },
             };
-            ArmOperation<ClusterMetricsConfigurationResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, metricsConfigurationName, createData);
+            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, metricsConfigurationName, createData);
             Assert.AreEqual(metricsConfigurationName, createResult.Value.Data.Name);
 
             // Get
-            ClusterMetricsConfigurationResource clusterMetricsConfiguration = Client.GetClusterMetricsConfigurationResource(createResult.Value.Data.Id);
+            NetworkCloudClusterMetricsConfigurationResource clusterMetricsConfiguration = Client.GetNetworkCloudClusterMetricsConfigurationResource(createResult.Value.Data.Id);
             var getResult = await clusterMetricsConfiguration.GetAsync();
             Assert.AreEqual(metricsConfigurationName, getResult.Value.Data.Name);
 
             // Update
-            ClusterMetricsConfigurationPatch patch = new ClusterMetricsConfigurationPatch()
+            NetworkCloudClusterMetricsConfigurationPatch patch = new NetworkCloudClusterMetricsConfigurationPatch()
             {
                 Tags =
                 {
@@ -58,10 +59,10 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "myvalue2",
                 },
             };
-            ArmOperation<ClusterMetricsConfigurationResource> updateResult = await clusterMetricsConfiguration.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> updateResult = await clusterMetricsConfiguration.UpdateAsync(WaitUntil.Completed, patch);
 
             // List by cluster
-            var listByCluster = new List<ClusterMetricsConfigurationResource>();
+            var listByCluster = new List<NetworkCloudClusterMetricsConfigurationResource>();
             await foreach (var item in collection.GetAllAsync())
             {
                 listByCluster.Add(item);

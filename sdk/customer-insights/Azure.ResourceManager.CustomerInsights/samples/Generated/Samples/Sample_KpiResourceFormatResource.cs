@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CustomerInsights;
 using Azure.ResourceManager.CustomerInsights.Models;
 
 namespace Azure.ResourceManager.CustomerInsights.Samples
@@ -61,7 +58,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 {
 "SavingAccountBalance"
 },
-                ThresHolds = new KpiThresholds(5, 50, true),
+                ThresHolds = new KpiThresholds(5M, 50M, true),
                 Aliases =
 {
 new KpiAlias("alias","Id+4")

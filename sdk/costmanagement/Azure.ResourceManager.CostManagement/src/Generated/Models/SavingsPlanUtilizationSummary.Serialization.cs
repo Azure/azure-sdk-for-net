@@ -6,32 +6,97 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class SavingsPlanUtilizationSummary : IUtf8JsonSerializable
+    public partial class SavingsPlanUtilizationSummary : IUtf8JsonSerializable, IJsonModel<SavingsPlanUtilizationSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanUtilizationSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SavingsPlanUtilizationSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
+            {
+                writer.WritePropertyName("armSkuName"u8);
+                writer.WriteStringValue(ArmSkuName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BenefitId))
+            {
+                writer.WritePropertyName("benefitId"u8);
+                writer.WriteStringValue(BenefitId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BenefitOrderId))
+            {
+                writer.WritePropertyName("benefitOrderId"u8);
+                writer.WriteStringValue(BenefitOrderId);
+            }
             if (Optional.IsDefined(BenefitType))
             {
                 writer.WritePropertyName("benefitType"u8);
                 writer.WriteStringValue(BenefitType.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(UsageOn))
+            {
+                writer.WritePropertyName("usageDate"u8);
+                writer.WriteStringValue(UsageOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(AvgUtilizationPercentage))
+            {
+                writer.WritePropertyName("avgUtilizationPercentage"u8);
+                writer.WriteNumberValue(AvgUtilizationPercentage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MinUtilizationPercentage))
+            {
+                writer.WritePropertyName("minUtilizationPercentage"u8);
+                writer.WriteNumberValue(MinUtilizationPercentage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxUtilizationPercentage))
+            {
+                writer.WritePropertyName("maxUtilizationPercentage"u8);
+                writer.WriteNumberValue(MaxUtilizationPercentage.Value);
+            }
             writer.WriteEndObject();
         }
 
-        internal static SavingsPlanUtilizationSummary DeserializeSavingsPlanUtilizationSummary(JsonElement element)
+        SavingsPlanUtilizationSummary IJsonModel<SavingsPlanUtilizationSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSavingsPlanUtilizationSummary(document.RootElement, options);
+        }
+
+        internal static SavingsPlanUtilizationSummary DeserializeSavingsPlanUtilizationSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,15 +105,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> armSkuName = default;
-            Optional<string> benefitId = default;
-            Optional<string> benefitOrderId = default;
-            Optional<BillingAccountBenefitKind> benefitType = default;
-            Optional<DateTimeOffset> usageDate = default;
-            Optional<decimal> avgUtilizationPercentage = default;
-            Optional<decimal> minUtilizationPercentage = default;
-            Optional<decimal> maxUtilizationPercentage = default;
+            SystemData systemData = default;
+            string armSkuName = default;
+            string benefitId = default;
+            string benefitOrderId = default;
+            BillingAccountBenefitKind? benefitType = default;
+            DateTimeOffset? usageDate = default;
+            decimal? avgUtilizationPercentage = default;
+            decimal? minUtilizationPercentage = default;
+            decimal? maxUtilizationPercentage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -152,8 +219,58 @@ namespace Azure.ResourceManager.CostManagement.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SavingsPlanUtilizationSummary(id, name, type, systemData.Value, kind, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Optional.ToNullable(benefitType), Optional.ToNullable(usageDate), Optional.ToNullable(avgUtilizationPercentage), Optional.ToNullable(minUtilizationPercentage), Optional.ToNullable(maxUtilizationPercentage));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SavingsPlanUtilizationSummary(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                armSkuName,
+                benefitId,
+                benefitOrderId,
+                benefitType,
+                usageDate,
+                avgUtilizationPercentage,
+                minUtilizationPercentage,
+                maxUtilizationPercentage);
         }
+
+        BinaryData IPersistableModel<SavingsPlanUtilizationSummary>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SavingsPlanUtilizationSummary IPersistableModel<SavingsPlanUtilizationSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSavingsPlanUtilizationSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SavingsPlanUtilizationSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

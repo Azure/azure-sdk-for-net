@@ -5,28 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Result of the transfer eligibility validation. </summary>
     public partial class BillingSubscriptionValidateMoveEligibilityResult
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionValidateMoveEligibilityResult"/>. </summary>
         internal BillingSubscriptionValidateMoveEligibilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityResult. </summary>
-        /// <param name="isMoveEligible"> Specifies whether the subscription is eligible to move. </param>
-        /// <param name="errorDetails"> Validation error details. </param>
-        internal BillingSubscriptionValidateMoveEligibilityResult(bool? isMoveEligible, BillingSubscriptionValidateMoveEligibilityError errorDetails)
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionValidateMoveEligibilityResult"/>. </summary>
+        /// <param name="isMoveEligible"> Specifies whether the subscription is eligible to be transferred. </param>
+        /// <param name="errorDetails"> Error details of the transfer eligibility validation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingSubscriptionValidateMoveEligibilityResult(bool? isMoveEligible, BillingSubscriptionValidateMoveEligibilityError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsMoveEligible = isMoveEligible;
             ErrorDetails = errorDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies whether the subscription is eligible to move. </summary>
+        /// <summary> Specifies whether the subscription is eligible to be transferred. </summary>
+        [WirePath("isMoveEligible")]
         public bool? IsMoveEligible { get; }
-        /// <summary> Validation error details. </summary>
+        /// <summary> Error details of the transfer eligibility validation. </summary>
+        [WirePath("errorDetails")]
         public BillingSubscriptionValidateMoveEligibilityError ErrorDetails { get; }
     }
 }

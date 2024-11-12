@@ -19,14 +19,46 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class StreamingLocatorData : ResourceData
     {
-        /// <summary> Initializes a new instance of StreamingLocatorData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorData"/>. </summary>
         public StreamingLocatorData()
         {
             ContentKeys = new ChangeTrackingList<StreamingLocatorContentKey>();
             Filters = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StreamingLocatorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +73,8 @@ namespace Azure.ResourceManager.Media
         /// <param name="contentKeys"> The ContentKeys used by this Streaming Locator. </param>
         /// <param name="alternativeMediaId"> Alternative Media ID of this Streaming Locator. </param>
         /// <param name="filters"> A list of asset or account filters which apply to this streaming locator. </param>
-        internal StreamingLocatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string assetName, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? streamingLocatorId, string streamingPolicyName, string defaultContentKeyPolicyName, IList<StreamingLocatorContentKey> contentKeys, string alternativeMediaId, IList<string> filters) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingLocatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string assetName, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? streamingLocatorId, string streamingPolicyName, string defaultContentKeyPolicyName, IList<StreamingLocatorContentKey> contentKeys, string alternativeMediaId, IList<string> filters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AssetName = assetName;
             CreatedOn = createdOn;
@@ -53,6 +86,7 @@ namespace Azure.ResourceManager.Media
             ContentKeys = contentKeys;
             AlternativeMediaId = alternativeMediaId;
             Filters = filters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Asset Name. </summary>

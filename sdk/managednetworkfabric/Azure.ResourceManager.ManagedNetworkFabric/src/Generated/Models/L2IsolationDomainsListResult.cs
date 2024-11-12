@@ -5,32 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of L2IsolationDomains. </summary>
+    /// <summary> List of L2 Isolation Domains. </summary>
     internal partial class L2IsolationDomainsListResult
     {
-        /// <summary> Initializes a new instance of L2IsolationDomainsListResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="L2IsolationDomainsListResult"/>. </summary>
         internal L2IsolationDomainsListResult()
         {
-            Value = new ChangeTrackingList<L2IsolationDomainData>();
+            Value = new ChangeTrackingList<NetworkFabricL2IsolationDomainData>();
         }
 
-        /// <summary> Initializes a new instance of L2IsolationDomainsListResult. </summary>
-        /// <param name="value"> Displays list of L2IsolationDomain resources. </param>
+        /// <summary> Initializes a new instance of <see cref="L2IsolationDomainsListResult"/>. </summary>
+        /// <param name="value"> Displays list of L2 Isolation Domain resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal L2IsolationDomainsListResult(IReadOnlyList<L2IsolationDomainData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal L2IsolationDomainsListResult(IReadOnlyList<NetworkFabricL2IsolationDomainData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Displays list of L2IsolationDomain resources. </summary>
-        public IReadOnlyList<L2IsolationDomainData> Value { get; }
+        /// <summary> Displays list of L2 Isolation Domain resources. </summary>
+        public IReadOnlyList<NetworkFabricL2IsolationDomainData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

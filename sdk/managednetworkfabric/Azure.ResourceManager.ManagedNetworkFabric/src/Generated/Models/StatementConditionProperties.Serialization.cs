@@ -5,17 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class StatementConditionProperties : IUtf8JsonSerializable
+    public partial class StatementConditionProperties : IUtf8JsonSerializable, IJsonModel<StatementConditionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatementConditionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StatementConditionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StatementConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StatementConditionProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(RoutePolicyConditionType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(RoutePolicyConditionType.Value.ToString());
+            }
             if (Optional.IsDefined(IPPrefixId))
             {
                 writer.WritePropertyName("ipPrefixId"u8);
@@ -27,37 +51,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPExtendedCommunityIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPCommunityIds))
-            {
-                writer.WritePropertyName("ipCommunityIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in IPCommunityIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        internal static StatementConditionProperties DeserializeStatementConditionProperties(JsonElement element)
+        StatementConditionProperties IJsonModel<StatementConditionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StatementConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StatementConditionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStatementConditionProperties(document.RootElement, options);
+        }
+
+        internal static StatementConditionProperties DeserializeStatementConditionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> ipPrefixId = default;
-            Optional<IList<string>> ipExtendedCommunityIds = default;
-            Optional<IList<string>> ipCommunityIds = default;
+            RoutePolicyConditionType? type = default;
+            ResourceIdentifier ipPrefixId = default;
+            IList<ResourceIdentifier> ipExtendedCommunityIds = default;
+            IList<ResourceIdentifier> ipCommunityIds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new RoutePolicyConditionType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("ipPrefixId"u8))
                 {
-                    ipPrefixId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipPrefixId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipExtendedCommunityIds"u8))
@@ -66,10 +114,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     ipExtendedCommunityIds = array;
                     continue;
@@ -80,16 +135,59 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     ipCommunityIds = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StatementConditionProperties(Optional.ToList(ipCommunityIds), ipPrefixId.Value, Optional.ToList(ipExtendedCommunityIds));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StatementConditionProperties(ipCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData, type, ipPrefixId, ipExtendedCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>());
         }
+
+        BinaryData IPersistableModel<StatementConditionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StatementConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StatementConditionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StatementConditionProperties IPersistableModel<StatementConditionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StatementConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStatementConditionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StatementConditionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StatementConditionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

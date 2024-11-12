@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Support.Models;
@@ -18,12 +19,66 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class SupportTicketData : ResourceData
     {
-        /// <summary> Initializes a new instance of SupportTicketData. </summary>
-        public SupportTicketData()
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportTicketData"/>. </summary>
+        /// <param name="description"> Detailed description of the question or issue. </param>
+        /// <param name="problemClassificationId"> Each Azure service has its own set of issue categories, also known as problem classification. This parameter is the unique Id for the type of problem you are experiencing. </param>
+        /// <param name="severity"> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: 'Highest critical impact', also known as the 'Emergency - Severe impact' level in the Azure portal is reserved only for our Premium customers. </param>
+        /// <param name="advancedDiagnosticConsent"> Advanced diagnostic consent to be updated on the support ticket. </param>
+        /// <param name="contactDetails"> Contact information of the user requesting to create a support ticket. </param>
+        /// <param name="title"> Title of the support ticket. </param>
+        /// <param name="serviceId"> This is the resource Id of the Azure service resource associated with the support ticket. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="description"/>, <paramref name="problemClassificationId"/>, <paramref name="contactDetails"/>, <paramref name="title"/> or <paramref name="serviceId"/> is null. </exception>
+        public SupportTicketData(string description, string problemClassificationId, SupportSeverityLevel severity, AdvancedDiagnosticConsent advancedDiagnosticConsent, SupportContactProfile contactDetails, string title, string serviceId)
         {
+            Argument.AssertNotNull(description, nameof(description));
+            Argument.AssertNotNull(problemClassificationId, nameof(problemClassificationId));
+            Argument.AssertNotNull(contactDetails, nameof(contactDetails));
+            Argument.AssertNotNull(title, nameof(title));
+            Argument.AssertNotNull(serviceId, nameof(serviceId));
+
+            Description = description;
+            ProblemClassificationId = problemClassificationId;
+            Severity = severity;
+            AdvancedDiagnosticConsent = advancedDiagnosticConsent;
+            ContactDetails = contactDetails;
+            Title = title;
+            ServiceId = serviceId;
+            SecondaryConsent = new ChangeTrackingList<SecondaryConsent>();
         }
 
-        /// <summary> Initializes a new instance of SupportTicketData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,10 +90,14 @@ namespace Azure.ResourceManager.Support
         /// <param name="severity"> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: 'Highest critical impact', also known as the 'Emergency - Severe impact' level in the Azure portal is reserved only for our Premium customers. </param>
         /// <param name="enrollmentId"> Enrollment Id associated with the support ticket. </param>
         /// <param name="require24X7Response"> Indicates if this requires a 24x7 response from Azure. </param>
+        /// <param name="advancedDiagnosticConsent"> Advanced diagnostic consent to be updated on the support ticket. </param>
+        /// <param name="problemScopingQuestions"> Problem scoping questions associated with the support ticket. </param>
+        /// <param name="supportPlanId"> Support plan id associated with the support ticket. </param>
         /// <param name="contactDetails"> Contact information of the user requesting to create a support ticket. </param>
         /// <param name="serviceLevelAgreement"> Service Level Agreement information for this support ticket. </param>
         /// <param name="supportEngineer"> Information about the support engineer working on this support ticket. </param>
         /// <param name="supportPlanType"> Support plan type associated with the support ticket. </param>
+        /// <param name="supportPlanDisplayName"> Support plan type associated with the support ticket. </param>
         /// <param name="title"> Title of the support ticket. </param>
         /// <param name="problemStartOn"> Time in UTC (ISO 8601 format) when the problem started. </param>
         /// <param name="serviceId"> This is the resource Id of the Azure service resource associated with the support ticket. </param>
@@ -46,9 +105,13 @@ namespace Azure.ResourceManager.Support
         /// <param name="status"> Status of the support ticket. </param>
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the support ticket was created. </param>
         /// <param name="modifiedOn"> Time in UTC (ISO 8601 format) when the support ticket was last modified. </param>
+        /// <param name="fileWorkspaceName"> File workspace name. </param>
+        /// <param name="isTemporaryTicket"> This property indicates if support ticket is a temporary ticket. </param>
         /// <param name="technicalTicketDetails"> Additional ticket details associated with a technical support ticket request. </param>
         /// <param name="quotaTicketDetails"> Additional ticket details associated with a quota support ticket request. </param>
-        internal SupportTicketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, SupportSeverityLevel? severity, string enrollmentId, bool? require24X7Response, SupportContactProfile contactDetails, SupportServiceLevelAgreement serviceLevelAgreement, SupportEngineer supportEngineer, string supportPlanType, string title, DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, TechnicalTicketDetails technicalTicketDetails, QuotaTicketDetails quotaTicketDetails) : base(id, name, resourceType, systemData)
+        /// <param name="secondaryConsent"> This property indicates secondary consents for the support ticket. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportTicketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, SupportSeverityLevel severity, string enrollmentId, bool? require24X7Response, AdvancedDiagnosticConsent advancedDiagnosticConsent, string problemScopingQuestions, string supportPlanId, SupportContactProfile contactDetails, SupportServiceLevelAgreement serviceLevelAgreement, SupportEngineer supportEngineer, string supportPlanType, string supportPlanDisplayName, string title, DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string fileWorkspaceName, IsTemporaryTicket? isTemporaryTicket, TechnicalTicketDetails technicalTicketDetails, QuotaTicketDetails quotaTicketDetails, IList<SecondaryConsent> secondaryConsent, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SupportTicketId = supportTicketId;
             Description = description;
@@ -57,10 +120,14 @@ namespace Azure.ResourceManager.Support
             Severity = severity;
             EnrollmentId = enrollmentId;
             Require24X7Response = require24X7Response;
+            AdvancedDiagnosticConsent = advancedDiagnosticConsent;
+            ProblemScopingQuestions = problemScopingQuestions;
+            SupportPlanId = supportPlanId;
             ContactDetails = contactDetails;
             ServiceLevelAgreement = serviceLevelAgreement;
             SupportEngineer = supportEngineer;
             SupportPlanType = supportPlanType;
+            SupportPlanDisplayName = supportPlanDisplayName;
             Title = title;
             ProblemStartOn = problemStartOn;
             ServiceId = serviceId;
@@ -68,8 +135,17 @@ namespace Azure.ResourceManager.Support
             Status = status;
             CreatedOn = createdOn;
             ModifiedOn = modifiedOn;
+            FileWorkspaceName = fileWorkspaceName;
+            IsTemporaryTicket = isTemporaryTicket;
             TechnicalTicketDetails = technicalTicketDetails;
             QuotaTicketDetails = quotaTicketDetails;
+            SecondaryConsent = secondaryConsent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SupportTicketData"/> for deserialization. </summary>
+        internal SupportTicketData()
+        {
         }
 
         /// <summary> System generated support ticket Id that is unique. </summary>
@@ -81,11 +157,17 @@ namespace Azure.ResourceManager.Support
         /// <summary> Localized name of problem classification. </summary>
         public string ProblemClassificationDisplayName { get; }
         /// <summary> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: 'Highest critical impact', also known as the 'Emergency - Severe impact' level in the Azure portal is reserved only for our Premium customers. </summary>
-        public SupportSeverityLevel? Severity { get; set; }
+        public SupportSeverityLevel Severity { get; set; }
         /// <summary> Enrollment Id associated with the support ticket. </summary>
-        public string EnrollmentId { get; }
+        public string EnrollmentId { get; set; }
         /// <summary> Indicates if this requires a 24x7 response from Azure. </summary>
         public bool? Require24X7Response { get; set; }
+        /// <summary> Advanced diagnostic consent to be updated on the support ticket. </summary>
+        public AdvancedDiagnosticConsent AdvancedDiagnosticConsent { get; set; }
+        /// <summary> Problem scoping questions associated with the support ticket. </summary>
+        public string ProblemScopingQuestions { get; set; }
+        /// <summary> Support plan id associated with the support ticket. </summary>
+        public string SupportPlanId { get; set; }
         /// <summary> Contact information of the user requesting to create a support ticket. </summary>
         public SupportContactProfile ContactDetails { get; set; }
         /// <summary> Service Level Agreement information for this support ticket. </summary>
@@ -100,6 +182,8 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Support plan type associated with the support ticket. </summary>
         public string SupportPlanType { get; }
+        /// <summary> Support plan type associated with the support ticket. </summary>
+        public string SupportPlanDisplayName { get; }
         /// <summary> Title of the support ticket. </summary>
         public string Title { get; set; }
         /// <summary> Time in UTC (ISO 8601 format) when the problem started. </summary>
@@ -114,6 +198,10 @@ namespace Azure.ResourceManager.Support
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Time in UTC (ISO 8601 format) when the support ticket was last modified. </summary>
         public DateTimeOffset? ModifiedOn { get; }
+        /// <summary> File workspace name. </summary>
+        public string FileWorkspaceName { get; set; }
+        /// <summary> This property indicates if support ticket is a temporary ticket. </summary>
+        public IsTemporaryTicket? IsTemporaryTicket { get; }
         /// <summary> Additional ticket details associated with a technical support ticket request. </summary>
         internal TechnicalTicketDetails TechnicalTicketDetails { get; set; }
         /// <summary> This is the resource Id of the Azure service resource (For example: A virtual machine resource or an HDInsight resource) for which the support ticket is created. </summary>
@@ -130,5 +218,7 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Additional ticket details associated with a quota support ticket request. </summary>
         public QuotaTicketDetails QuotaTicketDetails { get; set; }
+        /// <summary> This property indicates secondary consents for the support ticket. </summary>
+        public IList<SecondaryConsent> SecondaryConsent { get; }
     }
 }

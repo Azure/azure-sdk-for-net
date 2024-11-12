@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Route Policy Statement properties.. </summary>
-    public partial class RoutePolicyStatementProperties : AnnotationResource
+    /// <summary> Route Policy Statement properties. </summary>
+    public partial class RoutePolicyStatementProperties : AnnotationResourceProperties
     {
-        /// <summary> Initializes a new instance of RoutePolicyStatementProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutePolicyStatementProperties"/>. </summary>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. </param>
         /// <param name="condition"> Route policy condition properties. </param>
         /// <param name="action"> Route policy action properties. </param>
@@ -28,16 +28,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of RoutePolicyStatementProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutePolicyStatementProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. </param>
         /// <param name="condition"> Route policy condition properties. </param>
         /// <param name="action"> Route policy action properties. </param>
-        internal RoutePolicyStatementProperties(string annotation, long sequenceNumber, StatementConditionProperties condition, StatementActionProperties action) : base(annotation)
+        internal RoutePolicyStatementProperties(string annotation, IDictionary<string, BinaryData> serializedAdditionalRawData, long sequenceNumber, StatementConditionProperties condition, StatementActionProperties action) : base(annotation, serializedAdditionalRawData)
         {
             SequenceNumber = sequenceNumber;
             Condition = condition;
             Action = action;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoutePolicyStatementProperties"/> for deserialization. </summary>
+        internal RoutePolicyStatementProperties()
+        {
         }
 
         /// <summary> Sequence to insert to/delete from existing route. </summary>

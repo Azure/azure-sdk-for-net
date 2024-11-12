@@ -31,6 +31,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string IncidentLabelValue = "IncidentLabel";
         private const string IncidentProviderNameValue = "IncidentProviderName";
         private const string IncidentUpdatedBySourceValue = "IncidentUpdatedBySource";
+        private const string IncidentCustomDetailsKeyValue = "IncidentCustomDetailsKey";
+        private const string IncidentCustomDetailsValueValue = "IncidentCustomDetailsValue";
         private const string AccountAadTenantIdValue = "AccountAadTenantId";
         private const string AccountAadUserIdValue = "AccountAadUserId";
         private const string AccountNameValue = "AccountName";
@@ -97,6 +99,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AutomationRulePropertyConditionSupportedProperty IncidentProviderName { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentProviderNameValue);
         /// <summary> The update source of the incident. </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentUpdatedBySource { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentUpdatedBySourceValue);
+        /// <summary> The incident custom detail key. </summary>
+        public static AutomationRulePropertyConditionSupportedProperty IncidentCustomDetailsKey { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentCustomDetailsKeyValue);
+        /// <summary> The incident custom detail value. </summary>
+        public static AutomationRulePropertyConditionSupportedProperty IncidentCustomDetailsValue { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentCustomDetailsValueValue);
         /// <summary> The account Azure Active Directory tenant id. </summary>
         public static AutomationRulePropertyConditionSupportedProperty AccountAadTenantId { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountAadTenantIdValue);
         /// <summary> The account Azure Active Directory user id. </summary>
@@ -195,7 +201,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(AutomationRulePropertyConditionSupportedProperty left, AutomationRulePropertyConditionSupportedProperty right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationRulePropertyConditionSupportedProperty"/> values are not the same. </summary>
         public static bool operator !=(AutomationRulePropertyConditionSupportedProperty left, AutomationRulePropertyConditionSupportedProperty right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutomationRulePropertyConditionSupportedProperty"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationRulePropertyConditionSupportedProperty"/>. </summary>
         public static implicit operator AutomationRulePropertyConditionSupportedProperty(string value) => new AutomationRulePropertyConditionSupportedProperty(value);
 
         /// <inheritdoc />
@@ -206,7 +212,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

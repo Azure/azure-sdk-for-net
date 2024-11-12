@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory.Samples
@@ -42,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryPrivateEndpointResource dataFactoryPrivateEndpoint = client.GetDataFactoryPrivateEndpointResource(dataFactoryPrivateEndpointResourceId);
 
             // invoke the operation
-            DataFactoryPrivateEndpointData data = new DataFactoryPrivateEndpointData(new ManagedPrivateEndpoint()
+            DataFactoryPrivateEndpointData data = new DataFactoryPrivateEndpointData(new DataFactoryPrivateEndpointProperties()
             {
                 Fqdns =
 {

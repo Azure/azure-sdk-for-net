@@ -5,43 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ProcessNotAllowed : IUtf8JsonSerializable
+    public partial class ProcessNotAllowed : IUtf8JsonSerializable, IJsonModel<ProcessNotAllowed>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProcessNotAllowed>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ProcessNotAllowed>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allowlistValues"u8);
-            writer.WriteStartArray();
-            foreach (var item in AllowlistValues)
-            {
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("isEnabled"u8);
-            writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ProcessNotAllowed DeserializeProcessNotAllowed(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProcessNotAllowed>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProcessNotAllowed)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        ProcessNotAllowed IJsonModel<ProcessNotAllowed>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProcessNotAllowed>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProcessNotAllowed)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProcessNotAllowed(document.RootElement, options);
+        }
+
+        internal static ProcessNotAllowed DeserializeProcessNotAllowed(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> allowlistValues = default;
-            Optional<SecurityValueType> valueType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            SecurityValueType? valueType = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowlistValues"u8))
@@ -83,8 +106,51 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ruleType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProcessNotAllowed(displayName.Value, description.Value, isEnabled, ruleType, Optional.ToNullable(valueType), allowlistValues);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ProcessNotAllowed(
+                displayName,
+                description,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                valueType,
+                allowlistValues);
         }
+
+        BinaryData IPersistableModel<ProcessNotAllowed>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProcessNotAllowed>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ProcessNotAllowed)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ProcessNotAllowed IPersistableModel<ProcessNotAllowed>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProcessNotAllowed>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProcessNotAllowed(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProcessNotAllowed)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProcessNotAllowed>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

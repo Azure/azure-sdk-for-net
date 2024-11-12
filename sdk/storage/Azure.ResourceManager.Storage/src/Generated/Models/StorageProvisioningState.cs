@@ -15,6 +15,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> ResolvingDNS. </summary>
         ResolvingDns,
         /// <summary> Succeeded. </summary>
-        Succeeded
+        Succeeded,
+        /// <summary> ValidateSubscriptionQuotaBegin. </summary>
+        ValidateSubscriptionQuotaBegin,
+        /// <summary> ValidateSubscriptionQuotaEnd. </summary>
+        ValidateSubscriptionQuotaEnd,
+        /// <summary> Deleting. </summary>
+        Deleting,
+        /// <summary> Canceled. </summary>
+        Canceled,
+        /// <summary> Failed. </summary>
+        Failed
     }
 }

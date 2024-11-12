@@ -6,16 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingEventHubProperties : IUtf8JsonSerializable
+    public partial class RoutingEventHubProperties : IUtf8JsonSerializable, IJsonModel<RoutingEventHubProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingEventHubProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RoutingEventHubProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingEventHubProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutingEventHubProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -44,7 +62,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue(Identity, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -58,24 +76,54 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static RoutingEventHubProperties DeserializeRoutingEventHubProperties(JsonElement element)
+        RoutingEventHubProperties IJsonModel<RoutingEventHubProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingEventHubProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutingEventHubProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoutingEventHubProperties(document.RootElement, options);
+        }
+
+        internal static RoutingEventHubProperties DeserializeRoutingEventHubProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> connectionString = default;
-            Optional<string> endpointUri = default;
-            Optional<string> entityPath = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
+            Guid? id = default;
+            string connectionString = default;
+            string endpointUri = default;
+            string entityPath = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
             string name = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -117,7 +165,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -135,8 +183,54 @@ namespace Azure.ResourceManager.IotHub.Models
                     resourceGroup = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoutingEventHubProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, entityPath.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RoutingEventHubProperties(
+                id,
+                connectionString,
+                endpointUri,
+                entityPath,
+                authenticationType,
+                identity,
+                name,
+                subscriptionId,
+                resourceGroup,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RoutingEventHubProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingEventHubProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RoutingEventHubProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RoutingEventHubProperties IPersistableModel<RoutingEventHubProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingEventHubProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoutingEventHubProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoutingEventHubProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoutingEventHubProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

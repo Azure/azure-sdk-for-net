@@ -5,28 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseSsisProject
+    public partial class SynapseSsisProject : IUtf8JsonSerializable, IJsonModel<SynapseSsisProject>
     {
-        internal static SynapseSsisProject DeserializeSynapseSsisProject(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSsisProject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SynapseSsisProject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSsisProject>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseSsisProject)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(FolderId))
+            {
+                writer.WritePropertyName("folderId"u8);
+                writer.WriteNumberValue(FolderId.Value);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (Optional.IsCollectionDefined(EnvironmentRefs))
+            {
+                writer.WritePropertyName("environmentRefs"u8);
+                writer.WriteStartArray();
+                foreach (var item in EnvironmentRefs)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters"u8);
+                writer.WriteStartArray();
+                foreach (var item in Parameters)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+        }
+
+        SynapseSsisProject IJsonModel<SynapseSsisProject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSsisProject>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseSsisProject)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSsisProject(document.RootElement, options);
+        }
+
+        internal static SynapseSsisProject DeserializeSynapseSsisProject(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<long> folderId = default;
-            Optional<long> version = default;
-            Optional<IReadOnlyList<SynapseSsisEnvironmentReference>> environmentRefs = default;
-            Optional<IReadOnlyList<SynapseSsisParameter>> parameters = default;
+            long? folderId = default;
+            long? version = default;
+            IReadOnlyList<SynapseSsisEnvironmentReference> environmentRefs = default;
+            IReadOnlyList<SynapseSsisParameter> parameters = default;
             SynapseSsisObjectMetadataType type = default;
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            long? id = default;
+            string name = default;
+            string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("folderId"u8))
@@ -56,7 +126,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSsisEnvironmentReference> array = new List<SynapseSsisEnvironmentReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSsisEnvironmentReference.DeserializeSynapseSsisEnvironmentReference(item));
+                        array.Add(SynapseSsisEnvironmentReference.DeserializeSynapseSsisEnvironmentReference(item, options));
                     }
                     environmentRefs = array;
                     continue;
@@ -70,7 +140,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSsisParameter> array = new List<SynapseSsisParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSsisParameter.DeserializeSynapseSsisParameter(item));
+                        array.Add(SynapseSsisParameter.DeserializeSynapseSsisParameter(item, options));
                     }
                     parameters = array;
                     continue;
@@ -99,8 +169,53 @@ namespace Azure.ResourceManager.Synapse.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseSsisProject(type, Optional.ToNullable(id), name.Value, description.Value, Optional.ToNullable(folderId), Optional.ToNullable(version), Optional.ToList(environmentRefs), Optional.ToList(parameters));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SynapseSsisProject(
+                type,
+                id,
+                name,
+                description,
+                serializedAdditionalRawData,
+                folderId,
+                version,
+                environmentRefs ?? new ChangeTrackingList<SynapseSsisEnvironmentReference>(),
+                parameters ?? new ChangeTrackingList<SynapseSsisParameter>());
         }
+
+        BinaryData IPersistableModel<SynapseSsisProject>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSsisProject>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseSsisProject)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SynapseSsisProject IPersistableModel<SynapseSsisProject>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSsisProject>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseSsisProject(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseSsisProject)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseSsisProject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

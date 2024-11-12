@@ -7,15 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A file in an HTTP web server. </summary>
-    public partial class DataFactoryHttpDataset : DataFactoryDatasetDefinition
+    public partial class DataFactoryHttpDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryHttpDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryHttpDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public DataFactoryHttpDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "HttpFile";
         }
 
-        /// <summary> Initializes a new instance of DataFactoryHttpDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryHttpDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -58,6 +57,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Format = format;
             Compression = compression;
             DatasetType = datasetType ?? "HttpFile";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryHttpDataset"/> for deserialization. </summary>
+        internal DataFactoryHttpDataset()
+        {
         }
 
         /// <summary> The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string). </summary>

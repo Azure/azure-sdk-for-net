@@ -362,8 +362,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [questionanswering_docs_features]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#features
 [questionanswering_nuget_package]: https://nuget.org/packages/Azure.AI.Language.QuestionAnswering/
 [questionanswering_refdocs]: https://docs.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
-[questionanswering_rest_docs]: https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering
-[questionanswering_rest_docs_projects]: https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects
+[questionanswering_rest_docs]: https://learn.microsoft.com/rest/api/language/question-answering
+[questionanswering_rest_docs_projects]: https://learn.microsoft.com/rest/api/language/question-answering-projects
 [questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
 [migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/MigrationGuide.md
 [questionansweringauthoring_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/Generated/QuestionAnsweringAuthoringClient.cs

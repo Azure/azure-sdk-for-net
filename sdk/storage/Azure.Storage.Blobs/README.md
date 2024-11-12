@@ -114,8 +114,8 @@ blob.Upload(filePath);
 // Get a temporary path on disk where we can download the file
 string downloadPath = "hello.jpg";
 
-// Download the public blob at https://aka.ms/bloburl
-new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadTo(downloadPath);
+// Download the public MacBeth copy at https://www.gutenberg.org/cache/epub/1533/pg1533.txt
+new BlobClient(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.txt")).DownloadTo(downloadPath);
 ```
 
 ### Enumerating blobs
@@ -149,8 +149,8 @@ We fully support both synchronous and asynchronous APIs.
 // Get a temporary path on disk where we can download the file
 string downloadPath = "hello.jpg";
 
-// Download the public blob at https://aka.ms/bloburl
-await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadToAsync(downloadPath);
+// Download the public MacBeth copy at https://www.gutenberg.org/cache/epub/1533/pg1533.txt
+await new BlobClient(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.txt")).DownloadToAsync(downloadPath);
 ```
 
 ## Troubleshooting

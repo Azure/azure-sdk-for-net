@@ -5,48 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RecoveryServiceVaultProtectionIntent : IUtf8JsonSerializable
+    public partial class RecoveryServiceVaultProtectionIntent : IUtf8JsonSerializable, IJsonModel<RecoveryServiceVaultProtectionIntent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServiceVaultProtectionIntent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RecoveryServiceVaultProtectionIntent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("protectionIntentItemType"u8);
-            writer.WriteStringValue(ProtectionIntentItemType.ToString());
-            if (Optional.IsDefined(BackupManagementType))
-            {
-                writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
-            }
-            if (Optional.IsDefined(SourceResourceId))
-            {
-                writer.WritePropertyName("sourceResourceId"u8);
-                writer.WriteStringValue(SourceResourceId);
-            }
-            if (Optional.IsDefined(ItemId))
-            {
-                writer.WritePropertyName("itemId"u8);
-                writer.WriteStringValue(ItemId);
-            }
-            if (Optional.IsDefined(PolicyId))
-            {
-                writer.WritePropertyName("policyId"u8);
-                writer.WriteStringValue(PolicyId);
-            }
-            if (Optional.IsDefined(ProtectionState))
-            {
-                writer.WritePropertyName("protectionState"u8);
-                writer.WriteStringValue(ProtectionState.Value.ToString());
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static RecoveryServiceVaultProtectionIntent DeserializeRecoveryServiceVaultProtectionIntent(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServiceVaultProtectionIntent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryServiceVaultProtectionIntent)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        RecoveryServiceVaultProtectionIntent IJsonModel<RecoveryServiceVaultProtectionIntent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServiceVaultProtectionIntent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryServiceVaultProtectionIntent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryServiceVaultProtectionIntent(document.RootElement, options);
+        }
+
+        internal static RecoveryServiceVaultProtectionIntent DeserializeRecoveryServiceVaultProtectionIntent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,16 +61,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureWorkloadAutoProtectionIntent": return WorkloadAutoProtectionIntent.DeserializeWorkloadAutoProtectionIntent(element);
-                    case "AzureWorkloadSQLAutoProtectionIntent": return WorkloadSqlAutoProtectionIntent.DeserializeWorkloadSqlAutoProtectionIntent(element);
+                    case "AzureWorkloadAutoProtectionIntent": return WorkloadAutoProtectionIntent.DeserializeWorkloadAutoProtectionIntent(element, options);
+                    case "AzureWorkloadSQLAutoProtectionIntent": return WorkloadSqlAutoProtectionIntent.DeserializeWorkloadSqlAutoProtectionIntent(element, options);
                 }
             }
             ProtectionIntentItemType protectionIntentItemType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> itemId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<BackupProtectionStatus> protectionState = default;
+            BackupManagementType? backupManagementType = default;
+            ResourceIdentifier sourceResourceId = default;
+            ResourceIdentifier itemId = default;
+            ResourceIdentifier policyId = default;
+            BackupProtectionStatus? protectionState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectionIntentItemType"u8))
@@ -117,8 +125,51 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecoveryServiceVaultProtectionIntent(protectionIntentItemType, Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Optional.ToNullable(protectionState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RecoveryServiceVaultProtectionIntent(
+                protectionIntentItemType,
+                backupManagementType,
+                sourceResourceId,
+                itemId,
+                policyId,
+                protectionState,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RecoveryServiceVaultProtectionIntent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServiceVaultProtectionIntent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryServiceVaultProtectionIntent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RecoveryServiceVaultProtectionIntent IPersistableModel<RecoveryServiceVaultProtectionIntent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServiceVaultProtectionIntent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRecoveryServiceVaultProtectionIntent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryServiceVaultProtectionIntent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RecoveryServiceVaultProtectionIntent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

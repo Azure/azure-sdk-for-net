@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
 
@@ -119,6 +116,48 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // ComponentGet
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_ComponentGet()
+        {
+            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsGet.json
+            // this example is just showing the usage of "Components_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "my-resource-group";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ApplicationInsightsComponentResource
+            ApplicationInsightsComponentCollection collection = resourceGroupResource.GetApplicationInsightsComponents();
+
+            // invoke the operation
+            string resourceName = "my-component";
+            NullableResponse<ApplicationInsightsComponentResource> response = await collection.GetIfExistsAsync(resourceName);
+            ApplicationInsightsComponentResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ApplicationInsightsComponentData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // ComponentCreate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -146,10 +185,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             string resourceName = "my-component";
             ApplicationInsightsComponentData data = new ApplicationInsightsComponentData(new AzureLocation("South Central US"), "web")
             {
-                ApplicationType = ApplicationType.Web,
-                FlowType = FlowType.Bluefield,
-                RequestSource = RequestSource.Rest,
-                WorkspaceResourceId = "/subscriptions/subid/resourcegroups/my-resource-group/providers/microsoft.operationalinsights/workspaces/my-workspace",
+                ApplicationType = ApplicationInsightsApplicationType.Web,
+                FlowType = ComponentFlowType.Bluefield,
+                RequestSource = ComponentRequestSource.Rest,
+                WorkspaceResourceId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/my-resource-group/providers/microsoft.operationalinsights/workspaces/my-workspace"),
             };
             ArmOperation<ApplicationInsightsComponentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
             ApplicationInsightsComponentResource result = lro.Value;

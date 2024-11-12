@@ -5,40 +5,89 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxDiskGranularCopyProgress
+    public partial class DataBoxDiskGranularCopyProgress : IUtf8JsonSerializable, IJsonModel<DataBoxDiskGranularCopyProgress>
     {
-        internal static DataBoxDiskGranularCopyProgress DeserializeDataBoxDiskGranularCopyProgress(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxDiskGranularCopyProgress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataBoxDiskGranularCopyProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskGranularCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxDiskGranularCopyProgress)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            {
+                writer.WritePropertyName("serialNumber"u8);
+                writer.WriteStringValue(SerialNumber);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CopyStatus))
+            {
+                writer.WritePropertyName("copyStatus"u8);
+                writer.WriteStringValue(CopyStatus.Value.ToString());
+            }
+        }
+
+        DataBoxDiskGranularCopyProgress IJsonModel<DataBoxDiskGranularCopyProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskGranularCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxDiskGranularCopyProgress)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxDiskGranularCopyProgress(document.RootElement, options);
+        }
+
+        internal static DataBoxDiskGranularCopyProgress DeserializeDataBoxDiskGranularCopyProgress(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> serialNumber = default;
-            Optional<DataBoxCopyStatus> copyStatus = default;
-            Optional<string> storageAccountName = default;
-            Optional<DataBoxJobTransferType> transferType = default;
-            Optional<DataAccountType> dataAccountType = default;
-            Optional<ResourceIdentifier> accountId = default;
-            Optional<long> bytesProcessed = default;
-            Optional<long> totalBytesToProcess = default;
-            Optional<long> filesProcessed = default;
-            Optional<long> totalFilesToProcess = default;
-            Optional<long> invalidFilesProcessed = default;
-            Optional<long> invalidFileBytesUploaded = default;
-            Optional<long> renamedContainerCount = default;
-            Optional<long> filesErroredOut = default;
-            Optional<long> directoriesErroredOut = default;
-            Optional<long> invalidDirectoriesProcessed = default;
-            Optional<bool> isEnumerationInProgress = default;
-            Optional<ResponseError> error = default;
-            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
+            string serialNumber = default;
+            DataBoxCopyStatus? copyStatus = default;
+            string storageAccountName = default;
+            DataBoxJobTransferType? transferType = default;
+            DataAccountType? dataAccountType = default;
+            ResourceIdentifier accountId = default;
+            long? bytesProcessed = default;
+            long? totalBytesToProcess = default;
+            long? filesProcessed = default;
+            long? totalFilesToProcess = default;
+            long? invalidFilesProcessed = default;
+            long? invalidFileBytesUploaded = default;
+            long? renamedContainerCount = default;
+            long? filesErroredOut = default;
+            long? directoriesErroredOut = default;
+            long? invalidDirectoriesProcessed = default;
+            bool? isEnumerationInProgress = default;
+            ResponseError error = default;
+            IReadOnlyList<CustomerResolutionCode> actions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serialNumber"u8))
@@ -209,8 +258,64 @@ namespace Azure.ResourceManager.DataBox.Models
                     actions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxDiskGranularCopyProgress(storageAccountName.Value, Optional.ToNullable(transferType), Optional.ToNullable(dataAccountType), accountId.Value, Optional.ToNullable(bytesProcessed), Optional.ToNullable(totalBytesToProcess), Optional.ToNullable(filesProcessed), Optional.ToNullable(totalFilesToProcess), Optional.ToNullable(invalidFilesProcessed), Optional.ToNullable(invalidFileBytesUploaded), Optional.ToNullable(renamedContainerCount), Optional.ToNullable(filesErroredOut), Optional.ToNullable(directoriesErroredOut), Optional.ToNullable(invalidDirectoriesProcessed), Optional.ToNullable(isEnumerationInProgress), error.Value, Optional.ToList(actions), serialNumber.Value, Optional.ToNullable(copyStatus));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxDiskGranularCopyProgress(
+                storageAccountName,
+                transferType,
+                dataAccountType,
+                accountId,
+                bytesProcessed,
+                totalBytesToProcess,
+                filesProcessed,
+                totalFilesToProcess,
+                invalidFilesProcessed,
+                invalidFileBytesUploaded,
+                renamedContainerCount,
+                filesErroredOut,
+                directoriesErroredOut,
+                invalidDirectoriesProcessed,
+                isEnumerationInProgress,
+                error,
+                actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
+                serializedAdditionalRawData,
+                serialNumber,
+                copyStatus);
         }
+
+        BinaryData IPersistableModel<DataBoxDiskGranularCopyProgress>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskGranularCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxDiskGranularCopyProgress)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxDiskGranularCopyProgress IPersistableModel<DataBoxDiskGranularCopyProgress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskGranularCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataBoxDiskGranularCopyProgress(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxDiskGranularCopyProgress)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxDiskGranularCopyProgress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

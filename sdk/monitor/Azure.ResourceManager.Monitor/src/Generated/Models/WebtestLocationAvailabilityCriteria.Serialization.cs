@@ -6,39 +6,71 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class WebtestLocationAvailabilityCriteria : IUtf8JsonSerializable
+    public partial class WebtestLocationAvailabilityCriteria : IUtf8JsonSerializable, IJsonModel<WebtestLocationAvailabilityCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebtestLocationAvailabilityCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<WebtestLocationAvailabilityCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebtestLocationAvailabilityCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebtestLocationAvailabilityCriteria)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("webTestId"u8);
             writer.WriteStringValue(WebTestId);
             writer.WritePropertyName("componentId"u8);
             writer.WriteStringValue(ComponentId);
             writer.WritePropertyName("failedLocationCount"u8);
             writer.WriteNumberValue(FailedLocationCount);
-            writer.WritePropertyName("odata.type"u8);
-            writer.WriteStringValue(OdataType.ToString());
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static WebtestLocationAvailabilityCriteria DeserializeWebtestLocationAvailabilityCriteria(JsonElement element)
+        WebtestLocationAvailabilityCriteria IJsonModel<WebtestLocationAvailabilityCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebtestLocationAvailabilityCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebtestLocationAvailabilityCriteria)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebtestLocationAvailabilityCriteria(document.RootElement, options);
+        }
+
+        internal static WebtestLocationAvailabilityCriteria DeserializeWebtestLocationAvailabilityCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,5 +108,36 @@ namespace Azure.ResourceManager.Monitor.Models
             additionalProperties = additionalPropertiesDictionary;
             return new WebtestLocationAvailabilityCriteria(odataType, additionalProperties, webTestId, componentId, failedLocationCount);
         }
+
+        BinaryData IPersistableModel<WebtestLocationAvailabilityCriteria>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebtestLocationAvailabilityCriteria>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WebtestLocationAvailabilityCriteria)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WebtestLocationAvailabilityCriteria IPersistableModel<WebtestLocationAvailabilityCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebtestLocationAvailabilityCriteria>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebtestLocationAvailabilityCriteria(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebtestLocationAvailabilityCriteria)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebtestLocationAvailabilityCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

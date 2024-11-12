@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -19,7 +18,8 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             string endpoint = TestEnvironment.Endpoint;
             string key = TestEnvironment.Key;
 
-            ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
+            ContentSafetyClient contentSafetyClient = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
+            BlocklistClient blocklistClient = new BlocklistClient(new Uri(endpoint), new AzureKeyCredential(key));
 
             #region Snippet:Azure_AI_ContentSafety_CreateNewBlocklist
 
@@ -31,7 +31,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
                 description = blocklistDescription,
             };
 
-            var createResponse = client.CreateOrUpdateTextBlocklist(blocklistName, RequestContent.Create(data));
+            var createResponse = blocklistClient.CreateOrUpdateTextBlocklist(blocklistName, RequestContent.Create(data));
             if (createResponse.Status == 201)
             {
                 Console.WriteLine("\nBlocklist {0} created.", blocklistName);
@@ -48,15 +48,15 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             string blockItemText1 = "k*ll";
             string blockItemText2 = "h*te";
 
-            var blockItems = new TextBlockItemInfo[] { new TextBlockItemInfo(blockItemText1), new TextBlockItemInfo(blockItemText2) };
-            var addedBlockItems = client.AddBlockItems(blocklistName, new AddBlockItemsOptions(blockItems));
+            var blockItems = new TextBlocklistItem[] { new TextBlocklistItem(blockItemText1), new TextBlocklistItem(blockItemText2) };
+            var addedBlockItems = blocklistClient.AddOrUpdateBlocklistItems(blocklistName, new AddOrUpdateTextBlocklistItemsOptions(blockItems));
 
             if (addedBlockItems != null && addedBlockItems.Value != null)
             {
                 Console.WriteLine("\nBlockItems added:");
-                foreach (var addedBlockItem in addedBlockItems.Value.Value)
+                foreach (var addedBlockItem in addedBlockItems.Value.BlocklistItems)
                 {
-                    Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", addedBlockItem.BlockItemId, addedBlockItem.Text, addedBlockItem.Description);
+                    Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", addedBlockItem.BlocklistItemId, addedBlockItem.Text, addedBlockItem.Description);
                 }
             }
 
@@ -67,12 +67,12 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             // After you edit your blocklist, it usually takes effect in 5 minutes, please wait some time before analyzing with blocklist after editing.
             var request = new AnalyzeTextOptions("I h*te you and I want to k*ll you");
             request.BlocklistNames.Add(blocklistName);
-            request.BreakByBlocklists = true;
+            request.HaltOnBlocklistHit = true;
 
             Response<AnalyzeTextResult> response;
             try
             {
-                response = client.AnalyzeText(request);
+                response = contentSafetyClient.AnalyzeText(request);
             }
             catch (RequestFailedException ex)
             {
@@ -80,13 +80,12 @@ namespace Azure.AI.ContentSafety.Tests.Samples
                 throw;
             }
 
-            if (response.Value.BlocklistsMatchResults != null)
+            if (response.Value.BlocklistsMatch != null)
             {
                 Console.WriteLine("\nBlocklist match result:");
-                foreach (var matchResult in response.Value.BlocklistsMatchResults)
+                foreach (var matchResult in response.Value.BlocklistsMatch)
                 {
-                    Console.WriteLine("Blockitem was hit in text: Offset: {0}, Length: {1}", matchResult.Offset, matchResult.Length);
-                    Console.WriteLine("BlocklistName: {0}, BlockItemId: {1}, BlockItemText: {2}, ", matchResult.BlocklistName, matchResult.BlockItemId, matchResult.BlockItemText);
+                    Console.WriteLine("BlocklistName: {0}, BlocklistItemId: {1}, BlocklistText: {2}, ", matchResult.BlocklistName, matchResult.BlocklistItemId, matchResult.BlocklistItemText);
                 }
             }
 
@@ -94,51 +93,51 @@ namespace Azure.AI.ContentSafety.Tests.Samples
 
             #region Snippet:Azure_AI_ContentSafety_ListBlocklists
 
-            var blocklists = client.GetTextBlocklists();
+            var blocklists = blocklistClient.GetTextBlocklists();
             Console.WriteLine("\nList blocklists:");
             foreach (var blocklist in blocklists)
             {
-                Console.WriteLine("BlocklistName: {0}, Description: {1}", blocklist.BlocklistName, blocklist.Description);
+                Console.WriteLine("BlocklistName: {0}, Description: {1}", blocklist.Name, blocklist.Description);
             }
 
             #endregion Snippet:Azure_AI_ContentSafety_ListBlocklists
 
             #region Snippet:Azure_AI_ContentSafety_GetBlocklist
 
-            var getBlocklist = client.GetTextBlocklist(blocklistName);
+            var getBlocklist = blocklistClient.GetTextBlocklist(blocklistName);
             if (getBlocklist != null && getBlocklist.Value != null)
             {
                 Console.WriteLine("\nGet blocklist:");
-                Console.WriteLine("BlocklistName: {0}, Description: {1}", getBlocklist.Value.BlocklistName, getBlocklist.Value.Description);
+                Console.WriteLine("BlocklistName: {0}, Description: {1}", getBlocklist.Value.Name, getBlocklist.Value.Description);
             }
 
             #endregion Snippet:Azure_AI_ContentSafety_GetBlocklist
 
             #region Snippet:Azure_AI_ContentSafety_ListBlockItems
 
-            var allBlockitems = client.GetTextBlocklistItems(blocklistName);
+            var allBlockitems = blocklistClient.GetTextBlocklistItems(blocklistName);
             Console.WriteLine("\nList BlockItems:");
             foreach (var blocklistItem in allBlockitems)
             {
-                Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", blocklistItem.BlockItemId, blocklistItem.Text, blocklistItem.Description);
+                Console.WriteLine("BlocklistItemId: {0}, Text: {1}, Description: {2}", blocklistItem.BlocklistItemId, blocklistItem.Text, blocklistItem.Description);
             }
 
             #endregion Snippet:Azure_AI_ContentSafety_ListBlockItems
 
             #region Snippet:Azure_AI_ContentSafety_GetBlockItem
 
-            var getBlockItemId = addedBlockItems.Value.Value[0].BlockItemId;
-            var getBlockItem = client.GetTextBlocklistItem(blocklistName, getBlockItemId);
+            var getBlockItemId = addedBlockItems.Value.BlocklistItems[0].BlocklistItemId;
+            var getBlockItem = blocklistClient.GetTextBlocklistItem(blocklistName, getBlockItemId);
             Console.WriteLine("\nGet BlockItem:");
-            Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", getBlockItem.Value.BlockItemId, getBlockItem.Value.Text, getBlockItem.Value.Description);
+            Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", getBlockItem.Value.BlocklistItemId, getBlockItem.Value.Text, getBlockItem.Value.Description);
 
             #endregion Snippet:Azure_AI_ContentSafety_GetBlockItem
 
             #region Snippet:Azure_AI_ContentSafety_RemoveBlockItems
 
-            var removeBlockItemId = addedBlockItems.Value.Value[0].BlockItemId;
+            var removeBlockItemId = addedBlockItems.Value.BlocklistItems[0].BlocklistItemId;
             var removeBlockItemIds = new List<string> { removeBlockItemId };
-            var removeResult = client.RemoveBlockItems(blocklistName, new RemoveBlockItemsOptions(removeBlockItemIds));
+            var removeResult = blocklistClient.RemoveBlocklistItems(blocklistName, new RemoveTextBlocklistItemsOptions(removeBlockItemIds));
 
             if (removeResult != null && removeResult.Status == 204)
             {
@@ -149,7 +148,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
 
             #region Snippet:Azure_AI_ContentSafety_DeleteBlocklist
 
-            var deleteResult = client.DeleteTextBlocklist(blocklistName);
+            var deleteResult = blocklistClient.DeleteTextBlocklist(blocklistName);
             if (deleteResult != null && deleteResult.Status == 204)
             {
                 Console.WriteLine("\nDeleted blocklist.");

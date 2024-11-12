@@ -10,6 +10,7 @@ using System.Net;
 using Azure.Core.TestFramework;
 using Azure.Health.Insights.ClinicalMatching.Tests.Infrastructure;
 using Azure.Health.Insights.ClinicalMatching;
+using System.Text.Json;
 
 namespace Azure.Health.Insights.ClinicalMatching.Tests
 {
@@ -42,9 +43,9 @@ namespace Azure.Health.Insights.ClinicalMatching.Tests
             Response response = operation.GetRawResponse();
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Status == (int)HttpStatusCode.OK);
-            TrialMatcherResult matcherResponse = TrialMatcherResult.FromResponse(response);
-            Assert.IsNotEmpty(matcherResponse.Results.Patients);
-            var patient = matcherResponse.Results.Patients[0];
+            TrialMatcherResults results = FetchResults(response);
+            Assert.IsNotEmpty(results.Patients);
+            var patient = results.Patients[0];
             Assert.IsNotEmpty(patient.Inferences);
         }
 
@@ -55,6 +56,12 @@ namespace Azure.Health.Insights.ClinicalMatching.Tests
             using StreamReader reader = new StreamReader(content);
             string data = reader.ReadToEnd();
             return RequestContent.Create(data);
+        }
+
+        private TrialMatcherResults FetchResults(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return TrialMatcherResults.DeserializeTrialMatcherResults(document.RootElement.GetProperty("results"));
         }
     }
 }

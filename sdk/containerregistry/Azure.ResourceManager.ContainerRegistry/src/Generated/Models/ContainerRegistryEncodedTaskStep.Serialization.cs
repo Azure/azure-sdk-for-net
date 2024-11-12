@@ -5,17 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryEncodedTaskStep : IUtf8JsonSerializable
+    public partial class ContainerRegistryEncodedTaskStep : IUtf8JsonSerializable, IJsonModel<ContainerRegistryEncodedTaskStep>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryEncodedTaskStep>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContainerRegistryEncodedTaskStep>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskStep>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("encodedTaskContent"u8);
             writer.WriteStringValue(EncodedTaskContent);
             if (Optional.IsDefined(EncodedValuesContent))
@@ -29,38 +50,41 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ContainerRegistryTaskStepType.ToString());
-            if (Optional.IsDefined(ContextPath))
-            {
-                writer.WritePropertyName("contextPath"u8);
-                writer.WriteStringValue(ContextPath);
-            }
-            if (Optional.IsDefined(ContextAccessToken))
-            {
-                writer.WritePropertyName("contextAccessToken"u8);
-                writer.WriteStringValue(ContextAccessToken);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryEncodedTaskStep DeserializeContainerRegistryEncodedTaskStep(JsonElement element)
+        ContainerRegistryEncodedTaskStep IJsonModel<ContainerRegistryEncodedTaskStep>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskStep>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryEncodedTaskStep(document.RootElement, options);
+        }
+
+        internal static ContainerRegistryEncodedTaskStep DeserializeContainerRegistryEncodedTaskStep(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string encodedTaskContent = default;
-            Optional<string> encodedValuesContent = default;
-            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
+            string encodedValuesContent = default;
+            IList<ContainerRegistryTaskOverridableValue> values = default;
             ContainerRegistryTaskStepType type = default;
-            Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
-            Optional<string> contextPath = default;
-            Optional<string> contextAccessToken = default;
+            IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies = default;
+            string contextPath = default;
+            string contextAccessToken = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encodedTaskContent"u8))
@@ -82,7 +106,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTaskOverridableValue> array = new List<ContainerRegistryTaskOverridableValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item));
+                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item, options));
                     }
                     values = array;
                     continue;
@@ -101,7 +125,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryBaseImageDependency> array = new List<ContainerRegistryBaseImageDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item));
+                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item, options));
                     }
                     baseImageDependencies = array;
                     continue;
@@ -116,8 +140,219 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     contextAccessToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerRegistryEncodedTaskStep(type, Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value, encodedTaskContent, encodedValuesContent.Value, Optional.ToList(values));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerRegistryEncodedTaskStep(
+                type,
+                baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(),
+                contextPath,
+                contextAccessToken,
+                serializedAdditionalRawData,
+                encodedTaskContent,
+                encodedValuesContent,
+                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncodedTaskContent), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  encodedTaskContent: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncodedTaskContent))
+                {
+                    builder.Append("  encodedTaskContent: ");
+                    if (EncodedTaskContent.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EncodedTaskContent}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EncodedTaskContent}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncodedValuesContent), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  encodedValuesContent: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncodedValuesContent))
+                {
+                    builder.Append("  encodedValuesContent: ");
+                    if (EncodedValuesContent.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EncodedValuesContent}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EncodedValuesContent}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Values), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  values: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Values))
+                {
+                    if (Values.Any())
+                    {
+                        builder.Append("  values: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Values)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  values: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerRegistryTaskStepType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  type: ");
+                builder.AppendLine($"'{ContainerRegistryTaskStepType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseImageDependencies), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  baseImageDependencies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BaseImageDependencies))
+                {
+                    if (BaseImageDependencies.Any())
+                    {
+                        builder.Append("  baseImageDependencies: ");
+                        builder.AppendLine("[");
+                        foreach (var item in BaseImageDependencies)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  baseImageDependencies: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContextPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contextPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContextPath))
+                {
+                    builder.Append("  contextPath: ");
+                    if (ContextPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContextPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContextPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContextAccessToken), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contextAccessToken: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContextAccessToken))
+                {
+                    builder.Append("  contextAccessToken: ");
+                    if (ContextAccessToken.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContextAccessToken}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContextAccessToken}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ContainerRegistryEncodedTaskStep>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskStep>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerRegistryEncodedTaskStep IPersistableModel<ContainerRegistryEncodedTaskStep>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskStep>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerRegistryEncodedTaskStep(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerRegistryEncodedTaskStep>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

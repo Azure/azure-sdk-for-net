@@ -10,19 +10,23 @@ namespace Azure.Search.Documents.Models
     /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
     public partial class DocumentDebugInfo
     {
-        /// <summary> Initializes a new instance of DocumentDebugInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentDebugInfo"/>. </summary>
         internal DocumentDebugInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DocumentDebugInfo. </summary>
-        /// <param name="semantic"> Contains debugging information specific to semantic search queries. </param>
-        internal DocumentDebugInfo(SemanticDebugInfo semantic)
+        /// <summary> Initializes a new instance of <see cref="DocumentDebugInfo"/>. </summary>
+        /// <param name="semantic"> Contains debugging information specific to semantic ranking requests. </param>
+        /// <param name="vectors"> Contains debugging information specific to vector and hybrid search. </param>
+        internal DocumentDebugInfo(SemanticDebugInfo semantic, VectorsDebugInfo vectors)
         {
             Semantic = semantic;
+            Vectors = vectors;
         }
 
-        /// <summary> Contains debugging information specific to semantic search queries. </summary>
+        /// <summary> Contains debugging information specific to semantic ranking requests. </summary>
         public SemanticDebugInfo Semantic { get; }
+        /// <summary> Contains debugging information specific to vector and hybrid search. </summary>
+        public VectorsDebugInfo Vectors { get; }
     }
 }

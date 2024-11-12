@@ -48,8 +48,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<LinkedServiceReference>> linkedServices = default;
-            Optional<IList<DatasetReference>> datasets = default;
+            IList<LinkedServiceReference> linkedServices = default;
+            IList<DatasetReference> datasets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServices"u8))
@@ -81,7 +81,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new CustomActivityReferenceObject(Optional.ToList(linkedServices), Optional.ToList(datasets));
+            return new CustomActivityReferenceObject(linkedServices ?? new ChangeTrackingList<LinkedServiceReference>(), datasets ?? new ChangeTrackingList<DatasetReference>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CustomActivityReferenceObject FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomActivityReferenceObject(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class CustomActivityReferenceObjectConverter : JsonConverter<CustomActivityReferenceObject>
@@ -90,6 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override CustomActivityReferenceObject Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

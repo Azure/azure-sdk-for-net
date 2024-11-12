@@ -6,32 +6,81 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ActiveConnectivityConfiguration
+    public partial class ActiveConnectivityConfiguration : IUtf8JsonSerializable, IJsonModel<ActiveConnectivityConfiguration>
     {
-        internal static ActiveConnectivityConfiguration DeserializeActiveConnectivityConfiguration(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActiveConnectivityConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ActiveConnectivityConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ActiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(CommittedOn))
+            {
+                writer.WritePropertyName("commitTime"u8);
+                writer.WriteStringValue(CommittedOn.Value, "O");
+            }
+            if (Optional.IsDefined(Region))
+            {
+                writer.WritePropertyName("region"u8);
+                writer.WriteStringValue(Region.Value);
+            }
+        }
+
+        ActiveConnectivityConfiguration IJsonModel<ActiveConnectivityConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ActiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeActiveConnectivityConfiguration(document.RootElement, options);
+        }
+
+        internal static ActiveConnectivityConfiguration DeserializeActiveConnectivityConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> commitTime = default;
-            Optional<AzureLocation> region = default;
-            Optional<string> id = default;
-            Optional<IReadOnlyList<NetworkConfigurationGroup>> configurationGroups = default;
-            Optional<string> description = default;
-            Optional<ConnectivityTopology> connectivityTopology = default;
-            Optional<IReadOnlyList<ConnectivityHub>> hubs = default;
-            Optional<GlobalMeshSupportFlag> isGlobal = default;
-            Optional<IReadOnlyList<ConnectivityGroupItem>> appliesToGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<DeleteExistingPeering> deleteExistingPeering = default;
-            Optional<Guid> resourceGuid = default;
+            DateTimeOffset? commitTime = default;
+            AzureLocation? region = default;
+            string id = default;
+            IReadOnlyList<NetworkConfigurationGroup> configurationGroups = default;
+            string description = default;
+            ConnectivityTopology? connectivityTopology = default;
+            IReadOnlyList<ConnectivityHub> hubs = default;
+            GlobalMeshSupportFlag? isGlobal = default;
+            IReadOnlyList<ConnectivityGroupItem> appliesToGroups = default;
+            NetworkProvisioningState? provisioningState = default;
+            DeleteExistingPeering? deleteExistingPeering = default;
+            Guid? resourceGuid = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitTime"u8))
@@ -66,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item));
+                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item, options));
                     }
                     configurationGroups = array;
                     continue;
@@ -103,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectivityHub> array = new List<ConnectivityHub>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectivityHub.DeserializeConnectivityHub(item));
+                                array.Add(ConnectivityHub.DeserializeConnectivityHub(item, options));
                             }
                             hubs = array;
                             continue;
@@ -126,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectivityGroupItem> array = new List<ConnectivityGroupItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectivityGroupItem.DeserializeConnectivityGroupItem(item));
+                                array.Add(ConnectivityGroupItem.DeserializeConnectivityGroupItem(item, options));
                             }
                             appliesToGroups = array;
                             continue;
@@ -161,8 +210,57 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ActiveConnectivityConfiguration(id.Value, Optional.ToList(configurationGroups), description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(resourceGuid), Optional.ToNullable(commitTime), Optional.ToNullable(region));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ActiveConnectivityConfiguration(
+                id,
+                configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                description,
+                connectivityTopology,
+                hubs ?? new ChangeTrackingList<ConnectivityHub>(),
+                isGlobal,
+                appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
+                provisioningState,
+                deleteExistingPeering,
+                resourceGuid,
+                serializedAdditionalRawData,
+                commitTime,
+                region);
         }
+
+        BinaryData IPersistableModel<ActiveConnectivityConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ActiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ActiveConnectivityConfiguration IPersistableModel<ActiveConnectivityConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ActiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeActiveConnectivityConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ActiveConnectivityConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

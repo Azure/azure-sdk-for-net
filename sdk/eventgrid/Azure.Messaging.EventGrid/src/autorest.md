@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/0d41e635294dce73dfa99b07f3da4b68a9c9e29c/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/012021c786c360e0c34faf7af888c7fd7dbe2df5/specification/eventgrid/data-plane/readme.md
 generation1-convenience-client: true
 model-factory-for-hlc:
 - MediaJobOutputAsset
@@ -95,7 +95,7 @@ directive:
     const namespace = "Azure.Messaging.EventGrid.SystemEvents";
     for (var path in $)
     {
-      if (!path.includes("CloudEvent") && !path.includes("EventGridEvent"))
+      if (!path.includes("CloudEventEvent") && !path.includes("EventGridEvent"))
       {
         $[path]["x-namespace"] = namespace;
       }
@@ -147,6 +147,40 @@ directive:
           $[path]["properties"]["status"]["x-namespace"] = namespace;
           $[path]["properties"]["summaryReportBlobUrl"]["x-ms-client-name"] = "SummaryReportBlobUri";
       }
+      if (path.includes("StorageTaskAssignmentCompletedEventData"))
+      {
+          $[path]["properties"]["status"]["x-namespace"] = namespace;
+      }
+      if (path.includes("EventGridMQTTClientCreatedOrUpdatedEventData"))
+      {
+          $[path]["properties"]["state"]["x-namespace"] = namespace;
+      }
+      if (path.includes("EventGridMQTTClientSessionDisconnectedEventData"))
+      {
+          $[path]["properties"]["disconnectionReason"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsRouterJobReceivedEventData"))
+      {
+          $[path]["properties"]["jobStatus"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsRouterWorkerSelector"))
+      {
+          $[path]["properties"]["labelOperator"]["x-namespace"] = namespace;
+          $[path]["properties"]["state"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsMessageDeliveryStatusUpdatedEventData"))
+      {
+          $[path]["properties"]["status"]["x-namespace"] = namespace;
+          $[path]["properties"]["channelType"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsRouterWorkerUpdatedEventData"))
+      {
+          $[path]["properties"]["updatedWorkerProperties"]["items"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsMessageInteractiveContent"))
+      {
+          $[path]["properties"]["type"]["x-namespace"] = namespace;
+      }
     }
 ```
 
@@ -157,7 +191,6 @@ directive:
 - from: swagger-document
   where: $.definitions.MediaJobOutput
   transform: >
-    $.required.push("@odata.type");
     $["x-csharp-usage"] = "model,output";
 ```
 

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,18 +14,28 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoIotHubDataConnection : IUtf8JsonSerializable
+    public partial class KustoIotHubDataConnection : IUtf8JsonSerializable, IJsonModel<KustoIotHubDataConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoIotHubDataConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KustoIotHubDataConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoIotHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                throw new FormatException($"The model {nameof(KustoIotHubDataConnection)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IotHubResourceId))
@@ -77,32 +88,52 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("retrievalStartDate"u8);
                 writer.WriteStringValue(RetrievalStartOn.Value, "O");
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoIotHubDataConnection DeserializeKustoIotHubDataConnection(JsonElement element)
+        KustoIotHubDataConnection IJsonModel<KustoIotHubDataConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoIotHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KustoIotHubDataConnection)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoIotHubDataConnection(document.RootElement, options);
+        }
+
+        internal static KustoIotHubDataConnection DeserializeKustoIotHubDataConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             DataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> iotHubResourceId = default;
-            Optional<string> consumerGroup = default;
-            Optional<string> tableName = default;
-            Optional<string> mappingRuleName = default;
-            Optional<KustoIotHubDataFormat> dataFormat = default;
-            Optional<IList<string>> eventSystemProperties = default;
-            Optional<string> sharedAccessPolicyName = default;
-            Optional<KustoDatabaseRouting> databaseRouting = default;
-            Optional<DateTimeOffset> retrievalStartDate = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            ResourceIdentifier iotHubResourceId = default;
+            string consumerGroup = default;
+            string tableName = default;
+            string mappingRuleName = default;
+            KustoIotHubDataFormat? dataFormat = default;
+            IList<string> eventSystemProperties = default;
+            string sharedAccessPolicyName = default;
+            KustoDatabaseRouting? databaseRouting = default;
+            DateTimeOffset? retrievalStartDate = default;
+            KustoProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -234,8 +265,61 @@ namespace Azure.ResourceManager.Kusto.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KustoIotHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, iotHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), sharedAccessPolicyName.Value, Optional.ToNullable(databaseRouting), Optional.ToNullable(retrievalStartDate), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KustoIotHubDataConnection(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData,
+                iotHubResourceId,
+                consumerGroup,
+                tableName,
+                mappingRuleName,
+                dataFormat,
+                eventSystemProperties ?? new ChangeTrackingList<string>(),
+                sharedAccessPolicyName,
+                databaseRouting,
+                retrievalStartDate,
+                provisioningState);
         }
+
+        BinaryData IPersistableModel<KustoIotHubDataConnection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoIotHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KustoIotHubDataConnection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KustoIotHubDataConnection IPersistableModel<KustoIotHubDataConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoIotHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKustoIotHubDataConnection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoIotHubDataConnection)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KustoIotHubDataConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

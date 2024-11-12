@@ -5,52 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class DDAudio : IUtf8JsonSerializable
+    public partial class DDAudio : IUtf8JsonSerializable, IJsonModel<DDAudio>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DDAudio>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DDAudio>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Channels))
-            {
-                writer.WritePropertyName("channels"u8);
-                writer.WriteNumberValue(Channels.Value);
-            }
-            if (Optional.IsDefined(SamplingRate))
-            {
-                writer.WritePropertyName("samplingRate"u8);
-                writer.WriteNumberValue(SamplingRate.Value);
-            }
-            if (Optional.IsDefined(Bitrate))
-            {
-                writer.WritePropertyName("bitrate"u8);
-                writer.WriteNumberValue(Bitrate.Value);
-            }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(Label))
-            {
-                writer.WritePropertyName("label"u8);
-                writer.WriteStringValue(Label);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DDAudio DeserializeDDAudio(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DDAudio>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DDAudio)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        DDAudio IJsonModel<DDAudio>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DDAudio>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DDAudio)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDDAudio(document.RootElement, options);
+        }
+
+        internal static DDAudio DeserializeDDAudio(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> channels = default;
-            Optional<int> samplingRate = default;
-            Optional<int> bitrate = default;
+            int? channels = default;
+            int? samplingRate = default;
+            int? bitrate = default;
             string odataType = default;
-            Optional<string> label = default;
+            string label = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("channels"u8))
@@ -90,8 +103,50 @@ namespace Azure.ResourceManager.Media.Models
                     label = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DDAudio(odataType, label.Value, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DDAudio(
+                odataType,
+                label,
+                serializedAdditionalRawData,
+                channels,
+                samplingRate,
+                bitrate);
         }
+
+        BinaryData IPersistableModel<DDAudio>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DDAudio>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DDAudio)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DDAudio IPersistableModel<DDAudio>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DDAudio>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDDAudio(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DDAudio)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DDAudio>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

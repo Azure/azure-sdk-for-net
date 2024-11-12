@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -38,7 +37,7 @@ namespace Azure.MixedReality.Authentication
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateGetTokenRequest(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions)
+        internal HttpMessage CreateGetTokenRequest(Guid accountId, MixedRealityTokenRequestOptions mixedRealityTokenRequestOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -50,9 +49,9 @@ namespace Azure.MixedReality.Authentication
             uri.AppendPath("/token", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (tokenRequestOptions?.ClientRequestId != null)
+            if (mixedRealityTokenRequestOptions?.ClientRequestId != null)
             {
-                request.Headers.Add("X-MRC-CV", tokenRequestOptions.ClientRequestId);
+                request.Headers.Add("X-MRC-CV", mixedRealityTokenRequestOptions.ClientRequestId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -60,11 +59,11 @@ namespace Azure.MixedReality.Authentication
 
         /// <summary> Gets an access token to be used with Mixed Reality services. </summary>
         /// <param name="accountId"> The Mixed Reality account identifier. </param>
-        /// <param name="tokenRequestOptions"> Parameter group. </param>
+        /// <param name="mixedRealityTokenRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders>> GetTokenAsync(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders>> GetTokenAsync(Guid accountId, MixedRealityTokenRequestOptions mixedRealityTokenRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetTokenRequest(accountId, tokenRequestOptions);
+            using var message = CreateGetTokenRequest(accountId, mixedRealityTokenRequestOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new MixedRealityStsGetTokenHeaders(message.Response);
             switch (message.Response.Status)
@@ -83,11 +82,11 @@ namespace Azure.MixedReality.Authentication
 
         /// <summary> Gets an access token to be used with Mixed Reality services. </summary>
         /// <param name="accountId"> The Mixed Reality account identifier. </param>
-        /// <param name="tokenRequestOptions"> Parameter group. </param>
+        /// <param name="mixedRealityTokenRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders> GetToken(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders> GetToken(Guid accountId, MixedRealityTokenRequestOptions mixedRealityTokenRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetTokenRequest(accountId, tokenRequestOptions);
+            using var message = CreateGetTokenRequest(accountId, mixedRealityTokenRequestOptions);
             _pipeline.Send(message, cancellationToken);
             var headers = new MixedRealityStsGetTokenHeaders(message.Response);
             switch (message.Response.Status)

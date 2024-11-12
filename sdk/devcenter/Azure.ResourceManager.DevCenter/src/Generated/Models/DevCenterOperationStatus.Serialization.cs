@@ -6,32 +6,87 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterOperationStatus
+    public partial class DevCenterOperationStatus : IUtf8JsonSerializable, IJsonModel<DevCenterOperationStatus>
     {
-        internal static DevCenterOperationStatus DeserializeDevCenterOperationStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterOperationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DevCenterOperationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevCenterOperationStatus)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Properties);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Properties))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+        }
+
+        DevCenterOperationStatus IJsonModel<DevCenterOperationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevCenterOperationStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevCenterOperationStatus(document.RootElement, options);
+        }
+
+        internal static DevCenterOperationStatus DeserializeDevCenterOperationStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<BinaryData> properties = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
+            ResourceIdentifier resourceId = default;
+            BinaryData properties = default;
+            ResourceIdentifier id = default;
+            string name = default;
             string status = default;
-            Optional<float> percentComplete = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<OperationStatusResult>> operations = default;
-            Optional<ResponseError> error = default;
+            float? percentComplete = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IReadOnlyList<OperationStatusResult> operations = default;
+            ResponseError error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -75,6 +130,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        percentComplete = null;
                         continue;
                     }
                     percentComplete = property.Value.GetSingle();
@@ -84,6 +140,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        startTime = null;
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -93,6 +150,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        endTime = null;
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -107,7 +165,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<OperationStatusResult> array = new List<OperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.GetRawText()));
+                        }
                     }
                     operations = array;
                     continue;
@@ -121,8 +186,55 @@ namespace Azure.ResourceManager.DevCenter.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevCenterOperationStatus(id.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value, resourceId.Value, properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevCenterOperationStatus(
+                id,
+                name,
+                status,
+                percentComplete,
+                startTime,
+                endTime,
+                operations ?? new ChangeTrackingList<OperationStatusResult>(),
+                error,
+                resourceId,
+                properties,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevCenterOperationStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevCenterOperationStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DevCenterOperationStatus IPersistableModel<DevCenterOperationStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevCenterOperationStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevCenterOperationStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevCenterOperationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

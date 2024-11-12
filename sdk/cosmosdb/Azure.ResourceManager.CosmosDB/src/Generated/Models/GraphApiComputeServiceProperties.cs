@@ -7,21 +7,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Properties for GraphAPIComputeServiceResource. </summary>
     public partial class GraphApiComputeServiceProperties : CosmosDBServiceProperties
     {
-        /// <summary> Initializes a new instance of GraphApiComputeServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphApiComputeServiceProperties"/>. </summary>
         public GraphApiComputeServiceProperties()
         {
             Locations = new ChangeTrackingList<GraphApiComputeRegionalService>();
             ServiceType = CosmosDBServiceType.GraphApiCompute;
         }
 
-        /// <summary> Initializes a new instance of GraphApiComputeServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphApiComputeServiceProperties"/>. </summary>
         /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
@@ -38,8 +37,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> GraphAPICompute endpoint for the service. </summary>
+        [WirePath("graphApiComputeEndpoint")]
         public string GraphApiComputeEndpoint { get; set; }
         /// <summary> An array that contains all of the locations for the service. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<GraphApiComputeRegionalService> Locations { get; }
     }
 }

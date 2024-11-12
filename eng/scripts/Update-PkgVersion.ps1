@@ -53,6 +53,11 @@ $csproj.Load($csprojPath)
 $propertyGroup = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node.ParentNode
 $packageVersion = $propertyGroup.Version
 
+if (!$packageVersion) {
+  Write-Error "Could not find the <Version> element in your project $csprojPath, be sure it has a Version property and not a VersionPrefix property."
+  exit 1
+}
+
 $packageSemVer = [AzureEngSemanticVersion]::new($packageVersion)
 $packageOldSemVer = [AzureEngSemanticVersion]::new($packageVersion)
 Write-Host "Current Version: ${PackageVersion}"

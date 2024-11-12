@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerExecRequestTerminalSize : IUtf8JsonSerializable
+    public partial class ContainerExecRequestTerminalSize : IUtf8JsonSerializable, IJsonModel<ContainerExecRequestTerminalSize>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerExecRequestTerminalSize>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContainerExecRequestTerminalSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerExecRequestTerminalSize>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Rows))
             {
                 writer.WritePropertyName("rows"u8);
@@ -25,7 +44,105 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("cols"u8);
                 writer.WriteNumberValue(Cols.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
+
+        ContainerExecRequestTerminalSize IJsonModel<ContainerExecRequestTerminalSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerExecRequestTerminalSize>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerExecRequestTerminalSize(document.RootElement, options);
+        }
+
+        internal static ContainerExecRequestTerminalSize DeserializeContainerExecRequestTerminalSize(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? rows = default;
+            int? cols = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("rows"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rows = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("cols"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cols = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerExecRequestTerminalSize(rows, cols, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ContainerExecRequestTerminalSize>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerExecRequestTerminalSize>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerExecRequestTerminalSize IPersistableModel<ContainerExecRequestTerminalSize>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerExecRequestTerminalSize>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerExecRequestTerminalSize(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerExecRequestTerminalSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

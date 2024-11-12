@@ -90,7 +90,26 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateShallowCloneCopiesAllProperties([Values]bool useTenantId)
+        public void DeprecatedTenantIdPropertiesCannotMismatch()
+        {
+            var options = new DefaultAzureCredentialOptions();
+            options.TenantId = "1";
+            Assert.Throws<InvalidOperationException>(() => options.InteractiveBrowserTenantId = "2");
+            Assert.Throws<InvalidOperationException>(() => options.SharedTokenCacheTenantId = "2");
+            Assert.Throws<InvalidOperationException>(() => options.VisualStudioTenantId = "2");
+            Assert.Throws<InvalidOperationException>(() => options.VisualStudioCodeTenantId = "2");
+        }
+
+        [Test]
+        public void TenantIdCanBeSetTwice()
+        {
+            var options = new DefaultAzureCredentialOptions();
+            options.TenantId = "1";
+            options.TenantId = "2";
+        }
+
+        [Test]
+        public void ValidateShallowCloneCopiesAllProperties([Values] bool useTenantId)
         {
             Random rand = new Random();
 

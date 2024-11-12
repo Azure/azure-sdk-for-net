@@ -6,23 +6,40 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
 {
-    public partial class RelayNamespacePatch : IUtf8JsonSerializable
+    public partial class RelayNamespacePatch : IUtf8JsonSerializable, IJsonModel<RelayNamespacePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelayNamespacePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RelayNamespacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RelayNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -37,13 +54,43 @@ namespace Azure.ResourceManager.Relay.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdAt"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updatedAt"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceBusEndpoint))
+            {
+                writer.WritePropertyName("serviceBusEndpoint"u8);
+                writer.WriteStringValue(ServiceBusEndpoint);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MetricId))
+            {
+                writer.WritePropertyName("metricId"u8);
+                writer.WriteStringValue(MetricId);
+            }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,29 +100,44 @@ namespace Azure.ResourceManager.Relay.Models
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static RelayNamespacePatch DeserializeRelayNamespacePatch(JsonElement element)
+        RelayNamespacePatch IJsonModel<RelayNamespacePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RelayNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRelayNamespacePatch(document.RootElement, options);
+        }
+
+        internal static RelayNamespacePatch DeserializeRelayNamespacePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<RelaySku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            RelaySku sku = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<string> serviceBusEndpoint = default;
-            Optional<string> metricId = default;
-            Optional<IList<RelayPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<RelayPublicNetworkAccess> publicNetworkAccess = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string status = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            string serviceBusEndpoint = default;
+            string metricId = default;
+            IList<RelayPrivateEndpointConnectionData> privateEndpointConnections = default;
+            RelayPublicNetworkAccess? publicNetworkAccess = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -84,7 +146,7 @@ namespace Azure.ResourceManager.Relay.Models
                     {
                         continue;
                     }
-                    sku = RelaySku.DeserializeRelaySku(property.Value);
+                    sku = RelaySku.DeserializeRelaySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -181,7 +243,7 @@ namespace Azure.ResourceManager.Relay.Models
                             List<RelayPrivateEndpointConnectionData> array = new List<RelayPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelayPrivateEndpointConnectionData.DeserializeRelayPrivateEndpointConnectionData(item));
+                                array.Add(RelayPrivateEndpointConnectionData.DeserializeRelayPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -198,8 +260,59 @@ namespace Azure.ResourceManager.Relay.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RelayNamespacePatch(id, name, type, systemData.Value, sku.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToDictionary(tags));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RelayNamespacePatch(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                provisioningState,
+                status,
+                createdAt,
+                updatedAt,
+                serviceBusEndpoint,
+                metricId,
+                privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RelayNamespacePatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RelayNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RelayNamespacePatch IPersistableModel<RelayNamespacePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RelayNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRelayNamespacePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RelayNamespacePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

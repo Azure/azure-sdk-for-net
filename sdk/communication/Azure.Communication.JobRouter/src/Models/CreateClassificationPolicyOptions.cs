@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -14,9 +13,9 @@ namespace Azure.Communication.JobRouter
     public class CreateClassificationPolicyOptions
     {
         /// <summary>
-        /// Public constructor.
+        /// Initializes a new instance of CreateClassificationPolicyOptions.
         /// </summary>
-        /// <param name="classificationPolicyId"> The id of this policy. </param>
+        /// <param name="classificationPolicyId"> Id of a classification policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
         public CreateClassificationPolicyOptions(string classificationPolicyId)
         {
@@ -26,29 +25,30 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// Unique key that identifies this policy.
+        /// Id of a classification policy.
         /// </summary>
         public string ClassificationPolicyId { get; }
 
         /// <summary> Friendly name of this policy. </summary>
         public string Name { get; set; }
-        /// <summary> The fallback queue to select if the queue selector does not find a match. </summary>
+
+        /// <summary> Id of a fallback queue to select if queue selector attachments doesn't find a match. </summary>
         public string FallbackQueueId { get; set; }
 
         /// <summary>
-        /// A rule of one of the following types:
-        ///
-        /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
-        /// DirectMapRule:  A rule that return the same labels as the input labels.
-        /// ExpressionRule: A rule providing inline expression rules.
-        /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// A rule to determine a priority score for a job.
         /// </summary>
         public RouterRule PrioritizationRule { get; set; }
 
-        /// <summary> The queue selectors to resolve a queue for a given job. </summary>
-        public List<QueueSelectorAttachment> QueueSelectors { get; } = new List<QueueSelectorAttachment>();
+        /// <summary> Queue selector attachments used to resolve a queue for a job. </summary>
+        public IList<QueueSelectorAttachment> QueueSelectorAttachments { get; } = new List<QueueSelectorAttachment>();
 
-        /// <summary> The worker label selectors to attach to a given job. </summary>
-        public List<WorkerSelectorAttachment> WorkerSelectors { get; } = new List<WorkerSelectorAttachment>();
+        /// <summary> Worker selector attachments used to attach worker selectors to a job. </summary>
+        public IList<WorkerSelectorAttachment> WorkerSelectorAttachments { get; } = new List<WorkerSelectorAttachment>();
+
+        /// <summary>
+        /// The content to send as the request conditions of the request.
+        /// </summary>
+        public RequestConditions RequestConditions { get; set; } = new();
     }
 }

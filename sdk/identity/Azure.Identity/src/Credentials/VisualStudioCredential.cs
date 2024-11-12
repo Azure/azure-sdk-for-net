@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using data from Visual Studio 2017 or later. See
+    /// Enables authentication to Microsoft Entra ID using data from Visual Studio 2017 or later. See
     /// <seealso href="https://learn.microsoft.com/dotnet/azure/configure-visual-studio" /> for more information
     /// on how to configure Visual Studio for Azure development.
     /// </summary>
@@ -35,8 +35,8 @@ namespace Azure.Identity
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
         internal bool _isChainedCredential;
-
         internal TimeSpan ProcessTimeout { get; private set; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
@@ -53,22 +53,35 @@ namespace Azure.Identity
 
         internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService, VisualStudioCredentialOptions options = null)
         {
-            _logPII = options?.IsSupportLoggingEnabled ?? false;
+            _logPII = options?.IsUnsafeSupportLoggingEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             TenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(30);
             _isChainedCredential = options?.IsChainedCredential ?? false;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Obtains a access token from account signed in to Visual Studio.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             => await GetTokenImplAsync(requestContext, true, cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Obtains a access token from account signed in to Visual Studio.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
             => GetTokenImplAsync(requestContext, false, cancellationToken).EnsureCompleted();
 

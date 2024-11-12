@@ -3,44 +3,38 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ExceptionPolicy")]
-    [CodeGenSuppress("ExceptionPolicy")]
     public partial class ExceptionPolicy
     {
-        /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
-        internal ExceptionPolicy()
+        /// <summary> Initializes a new instance of an exception policy. </summary>
+        /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
+        public ExceptionPolicy(string exceptionPolicyId)
         {
-            _exceptionRules = new ChangeTrackingDictionary<string, ExceptionRule>();
+            Argument.AssertNotNullOrWhiteSpace(exceptionPolicyId, nameof(exceptionPolicyId));
+
+            Id = exceptionPolicyId;
         }
 
-        [CodeGenMember("ExceptionRules")]
-        internal IDictionary<string, ExceptionRule> _exceptionRules
+        /// <summary> A collection of exception rules on the exception policy. </summary>
+        public IList<ExceptionRule> ExceptionRules { get; } = new List<ExceptionRule>();
+
+        /// <summary> Friendly name of this policy. </summary>
+        public string Name { get; set; }
+
+        /// <summary> The entity tag for this resource. </summary>
+        [CodeGenMember("Etag")]
+        public ETag ETag { get; internal set; }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
         {
-            get
-            {
-                return ExceptionRules != null && ExceptionRules.Count != 0
-                    ? ExceptionRules?.ToDictionary(x => x.Key, x => x.Value)
-                    : new ChangeTrackingDictionary<string, ExceptionRule>();
-            }
-            set
-            {
-                if (value != null && value.Any())
-                {
-                    ExceptionRules.Append(value);
-                }
-            }
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
-
-        /// <summary> (Optional) A dictionary collection of exception rules on the exception policy. Key is the Id of each exception rule. </summary>
-        public IDictionary<string, ExceptionRule> ExceptionRules { get; } = new Dictionary<string, ExceptionRule>();
-
-        /// <summary> (Optional) The name of the exception policy. </summary>
-        public string Name { get; internal set; }
     }
 }

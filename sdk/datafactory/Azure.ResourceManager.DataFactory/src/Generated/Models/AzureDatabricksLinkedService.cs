@@ -7,15 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Databricks linked service. </summary>
-    public partial class AzureDatabricksLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class AzureDatabricksLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzureDatabricksLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksLinkedService"/>. </summary>
         /// <param name="domain"> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
         public AzureDatabricksLinkedService(DataFactoryElement<string> domain)
@@ -29,8 +28,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "AzureDatabricks";
         }
 
-        /// <summary> Initializes a new instance of AzureDatabricksLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="policyId"> The policy id for limiting the ability to configure clusters based on a user defined set of rules. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureDatabricksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> domain, DataFactorySecretBaseDefinition accessToken, DataFactoryElement<string> authentication, DataFactoryElement<string> workspaceResourceId, DataFactoryElement<string> existingClusterId, DataFactoryElement<string> instancePoolId, DataFactoryElement<string> newClusterVersion, DataFactoryElement<string> newClusterNumOfWorker, DataFactoryElement<string> newClusterNodeType, IDictionary<string, BinaryData> newClusterSparkConf, IDictionary<string, BinaryData> newClusterSparkEnvVars, IDictionary<string, BinaryData> newClusterCustomTags, DataFactoryElement<string> newClusterLogDestination, DataFactoryElement<string> newClusterDriverNodeType, DataFactoryElement<IList<string>> newClusterInitScripts, DataFactoryElement<bool> newClusterEnableElasticDisk, BinaryData encryptedCredential, DataFactoryElement<string> policyId, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureDatabricksLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> domain, DataFactorySecret accessToken, DataFactoryElement<string> authentication, DataFactoryElement<string> workspaceResourceId, DataFactoryElement<string> existingClusterId, DataFactoryElement<string> instancePoolId, DataFactoryElement<string> newClusterVersion, DataFactoryElement<string> newClusterNumOfWorker, DataFactoryElement<string> newClusterNodeType, IDictionary<string, BinaryData> newClusterSparkConf, IDictionary<string, BinaryData> newClusterSparkEnvVars, IDictionary<string, BinaryData> newClusterCustomTags, DataFactoryElement<string> newClusterLogDestination, DataFactoryElement<string> newClusterDriverNodeType, DataFactoryElement<IList<string>> newClusterInitScripts, DataFactoryElement<bool> newClusterEnableElasticDisk, string encryptedCredential, DataFactoryElement<string> policyId, DataFactoryCredentialReference credential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             Domain = domain;
             AccessToken = accessToken;
@@ -79,10 +79,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureDatabricks";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksLinkedService"/> for deserialization. </summary>
+        internal AzureDatabricksLinkedService()
+        {
+        }
+
         /// <summary> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Domain { get; set; }
         /// <summary> Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string (or Expression with resultType string). </summary>
-        public DataFactorySecretBaseDefinition AccessToken { get; set; }
+        public DataFactorySecret AccessToken { get; set; }
         /// <summary> Required to specify MSI, if using Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Authentication { get; set; }
         /// <summary> Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </summary>
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -134,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -165,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -198,37 +203,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<IList<string>> NewClusterInitScripts { get; set; }
         /// <summary> Enable the elastic disk on the new cluster. This property is now ignored, and takes the default elastic disk behavior in Databricks (elastic disks are always enabled). Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> NewClusterEnableElasticDisk { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
         /// <summary> The policy id for limiting the ability to configure clusters based on a user defined set of rules. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PolicyId { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>

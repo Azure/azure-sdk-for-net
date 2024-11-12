@@ -1,20 +1,20 @@
 # Import a project
 
-This sample demonstrates how to import a project. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
+This sample demonstrates how to import a project. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/Azure.AI.Language.Conversations_1.1.0/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
-You can work with request and response content more easily by using our [Dynamic JSON](https://aka.ms/azsdk/net/dynamiccontent) feature. This is illustrated in the following sample.
+> [!NOTE]
+> Conversational Authoring is not supported in version 2.0.0-beta.1. If you use Conversational Authoring, please continue to use version 1.1.0.
 
 Start by importing the namespace for the `ConversationAuthoringClient` and related classes:
 
-```C# Snippet:ConversationAuthoringClient_Namespaces
+```C#
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations.Authoring;
 ```
 
 To import a project, you'll need to first create a `ConversationAuthoringClient` using an endpoint and an API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
-```C# Snippet:ConversationAuthoringClient_Create
+```C#
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
@@ -25,34 +25,34 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 ## Synchronous
 
-```C# Snippet:ConversationAuthoringClient_ImportProject
+```C#
 string projectName = "Menu";
 
 // Define our project assets and import. In practice this would most often be read from a file.
 var importData = new
 {
-    ProjectFileVersion = "2022-05-01",
-    Metadata = new {
-        ProjectName = projectName,
-        ProjectKind = "Conversation",
-        Multilingual = true,
-        Language = "en",
+    projectFileVersion = "2022-05-01",
+    metadata = new {
+        projectName,
+        projectKind = "Conversation",
+        multilingual = true,
+        language = "en",
     },
 
-    Assets = new
+    assets = new
     {
-        ProjectKind = "Conversation",
-        Entities = new[] // ConversationalAnalysisAuthoringConversationExportedEntity
+        projectKind = "Conversation",
+        entities = new[] // ConversationalAnalysisAuthoringConversationExportedEntity
         {
             new
             {
-                Category = "Contact",
-                CompositionSetting = "combineComponents",
-                Prebuilts = new[]
+                category = "Contact",
+                compositionSetting = "combineComponents",
+                prebuilts = new[]
                 {
                     new
                     {
-                        Category = "Person.Name",
+                        category = "Person.Name",
                     },
                 },
 
@@ -60,45 +60,45 @@ var importData = new
             }
         },
 
-        Intents = new[] // ConversationalAnalysisAuthoringConversationExportedIntent
+        intents = new[] // ConversationalAnalysisAuthoringConversationExportedIntent
         {
             new
             {
-                Category = "Send",
+                category = "Send",
             },
 
             // ... more intents.
         },
 
-        Utterances = new[] // ConversationalAnalysisAuthoringConversationExportedUtterance
+        utterances = new[] // ConversationalAnalysisAuthoringConversationExportedUtterance
         {
             new
             {
-                Text = "Send an email to Johnson",
-                Language = "en",
-                Intent = "Send",
-                Entities = new[]
+                text = "Send an email to Johnson",
+                language = "en",
+                intent = "Send",
+                entities = new[]
                 {
                     new
                     {
-                        Category = "Contact",
-                        Offset = 17,
-                        Length = 7,
+                        category = "Contact",
+                        offset = 17,
+                        length = 7,
                     },
                 },
             },
             new
             {
-                Text = "Send Kathy a calendar invite",
-                Language = "en",
-                Intent = "Send",
-                Entities = new[]
+                text = "Send Kathy a calendar invite",
+                language = "en",
+                intent = "Send",
+                entities = new[]
                 {
                     new
                     {
-                        Category = "Contact",
-                        Offset = 5,
-                        Length = 5,
+                        category = "Contact",
+                        offset = 5,
+                        length = 5,
                     },
                 },
             },
@@ -108,39 +108,10 @@ var importData = new
     },
 
     // Use Utf16CodeUnit for strings in .NET.
-    StringIndexType = "Utf16CodeUnit",
+    stringIndexType = "Utf16CodeUnit",
 };
 
-Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Completed, projectName, RequestContent.Create(importData, JsonPropertyNames.CamelCase));
-
-// Train the model.
-var trainData = new
-{
-    ModelLabel = "Sample5",
-    TrainingMode = "standard",
-};
-
-Console.WriteLine($"Training project {projectName}...");
-Operation<BinaryData> trainOperation = client.Train(WaitUntil.Completed, projectName, RequestContent.Create(trainData, JsonPropertyNames.CamelCase));
-
-// Deploy the model.
-var deployData = new
-{
-    TrainedModelLabel = "Sample5",
-};
-
-Console.WriteLine($"Deploying project {projectName} to production...");
-Operation<BinaryData> deployOperation = client.DeployProject(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData, JsonPropertyNames.CamelCase));
-
-Console.WriteLine("Import complete");
-```
-
-## Asynchronous
-
-Using the same `importData` definition above, you can make an asynchronous request by calling `ImportProjectAsync`:
-
-```C# Snippet:ConversationAuthoringClient_ImportProjectAsync
-Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Completed, projectName, RequestContent.Create(importData, JsonPropertyNames.CamelCase));
+Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Completed, projectName, RequestContent.Create(importData));
 
 // Train the model.
 var trainData = new
@@ -150,7 +121,36 @@ var trainData = new
 };
 
 Console.WriteLine($"Training project {projectName}...");
-Operation<BinaryData> trainOperation = await client.TrainAsync(WaitUntil.Completed, projectName, RequestContent.Create(trainData, JsonPropertyNames.CamelCase));
+Operation<BinaryData> trainOperation = client.Train(WaitUntil.Completed, projectName, RequestContent.Create(trainData));
+
+    // Deploy the model.
+    var deployData = new
+    {
+        trainedModelLabel = "Sample5",
+    };
+
+Console.WriteLine($"Deploying project {projectName} to production...");
+Operation<BinaryData> deployOperation = client.DeployProject(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData));
+
+Console.WriteLine("Import complete");
+```
+
+## Asynchronous
+
+Using the same `importData` definition above, you can make an asynchronous request by calling `ImportProjectAsync`:
+
+```C#
+Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Completed, projectName, RequestContent.Create(importData));
+
+// Train the model.
+var trainData = new
+{
+    modelLabel = "Sample5",
+    trainingMode = "standard",
+};
+
+Console.WriteLine($"Training project {projectName}...");
+Operation<BinaryData> trainOperation = await client.TrainAsync(WaitUntil.Completed, projectName, RequestContent.Create(trainData));
 
 // Deploy the model.
 var deployData = new
@@ -159,7 +159,7 @@ var deployData = new
 };
 
 Console.WriteLine($"Deploying project {projectName} to production...");
-Operation<BinaryData> deployOperation = await client.DeployProjectAsync(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData, JsonPropertyNames.CamelCase));
+Operation<BinaryData> deployOperation = await client.DeployProjectAsync(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData));
 
 Console.WriteLine("Import complete");
 ```

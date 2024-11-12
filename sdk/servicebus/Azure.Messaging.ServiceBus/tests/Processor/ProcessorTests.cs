@@ -123,8 +123,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
-            var client = new ServiceBusClient(connString);
+            var client = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>());
             var identifier = "MyProcessor";
             var options = new ServiceBusProcessorOptions
             {
@@ -178,6 +177,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             options.PrefetchCount = 0;
             options.MaxReceiveWaitTime = TimeSpan.FromSeconds(1);
             options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(0);
+            options.MaxAutoLockRenewalDuration = Timeout.InfiniteTimeSpan;
         }
 
         [Test]
@@ -441,7 +441,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             mockConnection
                 .Setup(connection => connection.CreateTransportClient(
                     It.IsAny<ServiceBusTokenCredential>(),
-                    It.IsAny<ServiceBusClientOptions>()))
+                    It.IsAny<ServiceBusClientOptions>(),
+                    It.IsAny<bool>()))
                 .Returns(mockTransportClient.Object);
 
             var processor = new ServiceBusProcessor(
@@ -459,6 +460,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
 
             await processor.DisposeAsync();
+        }
+
+        [Test]
+        public void CanUpdateConcurrencyOnMockProcessor()
+        {
+            var mockProcessor = new Mock<ServiceBusProcessor> { CallBase = true };
+            mockProcessor.Object.UpdateConcurrency(5);
+            Assert.AreEqual(5, mockProcessor.Object.MaxConcurrentCalls);
+        }
+
+        [Test]
+        public void CanUpdatePrefetchOnMockProcessor()
+        {
+            var mockProcessor = new Mock<ServiceBusProcessor>() { CallBase = true };
+            mockProcessor.Object.UpdatePrefetchCount(10);
+            Assert.AreEqual(10, mockProcessor.Object.PrefetchCount);
         }
 
         [Test]

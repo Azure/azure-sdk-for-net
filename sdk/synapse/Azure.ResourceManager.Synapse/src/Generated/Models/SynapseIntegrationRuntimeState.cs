@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseIntegrationRuntimeState left, SynapseIntegrationRuntimeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeState"/> values are not the same. </summary>
         public static bool operator !=(SynapseIntegrationRuntimeState left, SynapseIntegrationRuntimeState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseIntegrationRuntimeState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseIntegrationRuntimeState"/>. </summary>
         public static implicit operator SynapseIntegrationRuntimeState(string value) => new SynapseIntegrationRuntimeState(value);
 
         /// <inheritdoc />
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

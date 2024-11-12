@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -19,27 +18,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            DocumentPageKind kind = default;
             int pageNumber = default;
-            Optional<float> angle = default;
-            Optional<float> width = default;
-            Optional<float> height = default;
-            Optional<V3LengthUnit> unit = default;
+            float? angle = default;
+            float? width = default;
+            float? height = default;
+            V3LengthUnit? unit = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyList<DocumentWord>> words = default;
-            Optional<IReadOnlyList<DocumentSelectionMark>> selectionMarks = default;
-            Optional<IReadOnlyList<DocumentLine>> lines = default;
-            Optional<IReadOnlyList<DocumentAnnotation>> annotations = default;
-            Optional<IReadOnlyList<DocumentBarcode>> barcodes = default;
-            Optional<IReadOnlyList<DocumentFormula>> formulas = default;
-            Optional<IReadOnlyList<DocumentImage>> images = default;
+            IReadOnlyList<DocumentWord> words = default;
+            IReadOnlyList<DocumentSelectionMark> selectionMarks = default;
+            IReadOnlyList<DocumentLine> lines = default;
+            IReadOnlyList<DocumentBarcode> barcodes = default;
+            IReadOnlyList<DocumentFormula> formulas = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new DocumentPageKind(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("pageNumber"u8))
                 {
                     pageNumber = property.Value.GetInt32();
@@ -133,20 +124,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     lines = array;
                     continue;
                 }
-                if (property.NameEquals("annotations"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DocumentAnnotation> array = new List<DocumentAnnotation>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DocumentAnnotation.DeserializeDocumentAnnotation(item));
-                    }
-                    annotations = array;
-                    continue;
-                }
                 if (property.NameEquals("barcodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -175,22 +152,27 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     formulas = array;
                     continue;
                 }
-                if (property.NameEquals("images"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DocumentImage> array = new List<DocumentImage>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DocumentImage.DeserializeDocumentImage(item));
-                    }
-                    images = array;
-                    continue;
-                }
             }
-            return new DocumentPage(kind, pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(lines), Optional.ToList(annotations), Optional.ToList(barcodes), Optional.ToList(formulas), Optional.ToList(images));
+            return new DocumentPage(
+                pageNumber,
+                angle,
+                width,
+                height,
+                unit,
+                spans,
+                words ?? new ChangeTrackingList<DocumentWord>(),
+                selectionMarks ?? new ChangeTrackingList<DocumentSelectionMark>(),
+                lines ?? new ChangeTrackingList<DocumentLine>(),
+                barcodes ?? new ChangeTrackingList<DocumentBarcode>(),
+                formulas ?? new ChangeTrackingList<DocumentFormula>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentPage FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentPage(document.RootElement);
         }
     }
 }

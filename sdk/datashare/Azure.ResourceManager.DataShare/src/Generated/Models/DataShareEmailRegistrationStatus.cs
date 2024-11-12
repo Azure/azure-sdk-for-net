@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static bool operator ==(DataShareEmailRegistrationStatus left, DataShareEmailRegistrationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataShareEmailRegistrationStatus"/> values are not the same. </summary>
         public static bool operator !=(DataShareEmailRegistrationStatus left, DataShareEmailRegistrationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataShareEmailRegistrationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataShareEmailRegistrationStatus"/>. </summary>
         public static implicit operator DataShareEmailRegistrationStatus(string value) => new DataShareEmailRegistrationStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

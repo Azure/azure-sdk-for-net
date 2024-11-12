@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.PolicyInsights.PolicyStateDeleted event. </summary>
     public partial class PolicyInsightsPolicyStateDeletedEventData
     {
-        /// <summary> Initializes a new instance of PolicyInsightsPolicyStateDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateDeletedEventData"/>. </summary>
         internal PolicyInsightsPolicyStateDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyInsightsPolicyStateDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateDeletedEventData"/>. </summary>
         /// <param name="timestamp"> The time that the resource was scanned by Azure Policy in the Universal ISO 8601 DateTime format yyyy-MM-ddTHH:mm:ss.fffffffZ. </param>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The resource ID of the policy definition. </param>

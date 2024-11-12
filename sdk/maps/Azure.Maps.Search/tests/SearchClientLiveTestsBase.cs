@@ -13,9 +13,9 @@ namespace Azure.Maps.Search.Tests
 
         protected MapsSearchClient CreateClient()
         {
+            var subscriptionKey = System.Environment.GetEnvironmentVariable("MAPS_SUBSCRIPTION_KEY") ?? "<My Subscription Key>";
             return InstrumentClient(new MapsSearchClient(
-                credential: TestEnvironment.Credential,
-                clientId: TestEnvironment.MapAccountClientId,
+                credential: new AzureKeyCredential(subscriptionKey),
                 options: InstrumentClientOptions(new MapsSearchClientOptions())
             ));
         }

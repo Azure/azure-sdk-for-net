@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(SecurityAssessmentResourceCategory left, SecurityAssessmentResourceCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAssessmentResourceCategory"/> values are not the same. </summary>
         public static bool operator !=(SecurityAssessmentResourceCategory left, SecurityAssessmentResourceCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityAssessmentResourceCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAssessmentResourceCategory"/>. </summary>
         public static implicit operator SecurityAssessmentResourceCategory(string value) => new SecurityAssessmentResourceCategory(value);
 
         /// <inheritdoc />
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

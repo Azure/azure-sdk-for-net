@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.GraphServices.Models
         public static bool operator ==(GraphServicesProvisioningState left, GraphServicesProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GraphServicesProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(GraphServicesProvisioningState left, GraphServicesProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GraphServicesProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GraphServicesProvisioningState"/>. </summary>
         public static implicit operator GraphServicesProvisioningState(string value) => new GraphServicesProvisioningState(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.GraphServices.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

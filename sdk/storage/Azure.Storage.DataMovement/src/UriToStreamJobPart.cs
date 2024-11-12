@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class UriToStreamJobPart : JobPartInternal, IAsyncDisposable
+    internal class UriToStreamJobPart : JobPartInternal, IDisposable
     {
         public delegate Task CommitBlockTaskInternal(CancellationToken cancellationToken);
         public CommitBlockTaskInternal CommitBlockTask { get; internal set; }
@@ -25,26 +26,24 @@ namespace Azure.Storage.DataMovement
         /// Creating job part based on a single transfer job
         /// </summary>
         private UriToStreamJobPart(
-            UriToStreamTransferJob job,
-            int partNumber,
-            bool isFinalPart)
+            TransferJobInternal job,
+            int partNumber)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
                   destinationResource: job._destinationResource,
-                  maximumTransferChunkSize: job._maximumTransferChunkSize,
+                  transferChunkSize: job._maximumTransferChunkSize,
                   initialTransferSize: job._initialTransferSize,
-                  errorHandling: job._errorHandling,
-                  createMode: job._createMode,
+                  errorHandling: job._errorMode,
+                  createMode: job._creationPreference,
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
-                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
-                  singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
+                  singleTransferEventHandler: job.TransferItemCompletedEventHandler,
                   clientDiagnostics: job.ClientDiagnostics,
                   cancellationToken: job._cancellationToken)
         { }
@@ -53,85 +52,135 @@ namespace Azure.Storage.DataMovement
         /// Creating transfer job based on a storage resource created from listing.
         /// </summary>
         private UriToStreamJobPart(
-            UriToStreamTransferJob job,
+            TransferJobInternal job,
             int partNumber,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource,
-            bool isFinalPart,
-            StorageTransferStatus jobPartStatus = StorageTransferStatus.Queued,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
             long? length = default)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
-                  maximumTransferChunkSize: job._maximumTransferChunkSize,
+                  transferChunkSize: job._maximumTransferChunkSize,
                   initialTransferSize: job._initialTransferSize,
-                  errorHandling: job._errorHandling,
-                  createMode: job._createMode,
+                  errorHandling: job._errorMode,
+                  createMode: job._creationPreference,
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
-                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
-                  singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
+                  singleTransferEventHandler: job.TransferItemCompletedEventHandler,
                   clientDiagnostics: job.ClientDiagnostics,
                   cancellationToken: job._cancellationToken,
-                  jobPartStatus: jobPartStatus,
+                  jobPartStatus: default,
                   length: length)
-        { }
-
-        public static async Task<UriToStreamJobPart> CreateJobPartAsync(
-            UriToStreamTransferJob job,
-            int partNumber,
-            bool isFinalPart)
         {
-            // Create Job Part file as we're intializing the job part
-            UriToStreamJobPart part = new UriToStreamJobPart(
-                job: job,
-                partNumber: partNumber,
-                isFinalPart: isFinalPart);
-            await part.AddJobPartToCheckpointerAsync(
-                chunksTotal: 1,
-                isFinalPart: isFinalPart).ConfigureAwait(false); // For now we only store 1 chunk
-            return part;
-        }
-
-        public static async Task<UriToStreamJobPart> CreateJobPartAsync(
-            UriToStreamTransferJob job,
-            int partNumber,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource,
-            bool isFinalPart,
-            StorageTransferStatus jobPartStatus = default,
-            long? length = default,
-            bool partPlanFileExists = false)
-        {
-            // Create Job Part file as we're intializing the job part
-            UriToStreamJobPart part = new UriToStreamJobPart(
-                job: job,
-                partNumber: partNumber,
-                jobPartStatus: jobPartStatus,
-                sourceResource: sourceResource,
-                destinationResource: destinationResource,
-                isFinalPart: isFinalPart,
-                length: length);
-            if (!partPlanFileExists)
-            {
-                await part.AddJobPartToCheckpointerAsync(1, isFinalPart).ConfigureAwait(false); // For now we only store 1 chunk
-            }
-            return part;
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            await DisposeHandlers().ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Processes the job to job parts
+        /// Creating transfer job based on a checkpoint file.
+        /// </summary>
+        private UriToStreamJobPart(
+            TransferJobInternal job,
+            int partNumber,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
+            DataTransferStatus jobPartStatus,
+            long initialTransferSize,
+            long transferChunkSize,
+            StorageResourceCreationPreference createPreference)
+            : base(dataTransfer: job._dataTransfer,
+                  partNumber: partNumber,
+                  sourceResource: sourceResource,
+                  destinationResource: destinationResource,
+                  transferChunkSize: transferChunkSize,
+                  initialTransferSize: initialTransferSize,
+                  errorHandling: job._errorMode,
+                  createMode: createPreference,
+                  checkpointer: job._checkpointer,
+                  progressTracker: job._progressTracker,
+                  arrayPool: job.UploadArrayPool,
+                  jobPartEventHandler: job.GetJobPartStatus(),
+                  statusEventHandler: job.TransferStatusEventHandler,
+                  failedEventHandler: job.TransferFailedEventHandler,
+                  skippedEventHandler: job.TransferSkippedEventHandler,
+                  singleTransferEventHandler: job.TransferItemCompletedEventHandler,
+                  clientDiagnostics: job.ClientDiagnostics,
+                  cancellationToken: job._cancellationToken,
+                  jobPartStatus: jobPartStatus,
+                  length: default)
+        {
+        }
+
+        public void Dispose()
+        {
+            DisposeHandlers();
+        }
+
+        /// <summary>
+        /// Called when creating a job part from a single transfer.
+        /// </summary>
+        public static async Task<JobPartInternal> CreateJobPartAsync(
+            TransferJobInternal job,
+            int partNumber)
+        {
+            // Create Job Part file as we're initializing the job part
+            UriToStreamJobPart part = new UriToStreamJobPart(job, partNumber);
+            await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
+            return part;
+        }
+
+        /// <summary>
+        /// Called when creating a job part from a container transfer.
+        /// </summary>
+        public static async Task<JobPartInternal> CreateJobPartAsync(
+            TransferJobInternal job,
+            int partNumber,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource)
+        {
+            Argument.AssertNotNull(sourceResource, nameof(sourceResource));
+            Argument.AssertNotNull(destinationResource, nameof(destinationResource));
+
+            // Create Job Part file as we're initializing the job part
+            UriToStreamJobPart part = new UriToStreamJobPart(
+                job: job,
+                partNumber: partNumber,
+                sourceResource: sourceResource,
+                destinationResource: destinationResource);
+            await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
+            return part;
+        }
+
+        /// <summary>
+        /// Called when creating a job part from a checkpoint file on resume.
+        /// </summary>
+        public static UriToStreamJobPart CreateJobPartFromCheckpoint(
+            TransferJobInternal job,
+            int partNumber,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
+            DataTransferStatus jobPartStatus,
+            long initialTransferSize,
+            long transferChunkSize,
+            StorageResourceCreationPreference createPreference)
+        {
+            return new UriToStreamJobPart(
+                job: job,
+                partNumber: partNumber,
+                sourceResource: sourceResource,
+                destinationResource: destinationResource,
+                jobPartStatus: jobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
+        }
+
+        /// <summary>
+        /// Processes the job part to chunks
         ///
         /// Just start downloading using an initial range.  If it's a
         /// small blob, we'll get the whole thing in one shot.  If it's
@@ -147,10 +196,9 @@ namespace Azure.Storage.DataMovement
         {
             // we can default the length to 0 because we know the destination is local and
             // does not require a length to be created.
-            await OnTransferStatusChanged(StorageTransferStatus.InProgress).ConfigureAwait(false);
-
             try
             {
+                await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
                 if (!_sourceResource.Length.HasValue)
                 {
                     await UnknownDownloadInternal().ConfigureAwait(false);
@@ -163,20 +211,20 @@ namespace Azure.Storage.DataMovement
             catch (Exception ex)
             {
                 // The file either does not exist any more, got moved, or renamed.
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
         }
 
         internal async Task UnknownDownloadInternal()
         {
-            Task<ReadStreamStorageResourceResult> initialTask = _sourceResource.ReadStreamAsync(
+            Task<StorageResourceReadStreamResult> initialTask = _sourceResource.ReadStreamAsync(
                         position: 0,
                         length: _initialTransferSize,
                         _cancellationToken);
 
             try
             {
-                ReadStreamStorageResourceResult initialResult = default;
+                StorageResourceReadStreamResult initialResult = default;
                 try
                 {
                     initialResult = await initialTask.ConfigureAwait(false);
@@ -190,69 +238,44 @@ namespace Azure.Storage.DataMovement
                 }
                 // If the initial request returned no content (i.e., a 304),
                 // we'll pass that back to the user immediately
-                long initialLength = initialResult.Properties.ContentLength;
+                long? initialLength = initialResult?.ContentLength;
 
                 // There needs to be at least 1 chunk to create the blob even if the
                 // length is 0 bytes.
-                if (initialResult == default || initialLength == 0)
+                if (initialResult == default || (initialLength ?? 0) == 0)
                 {
                     await CreateZeroLengthDownload().ConfigureAwait(false);
                     return;
                 }
 
                 // TODO: Change to use buffer instead of converting to stream
-                long totalLength = ParseRangeTotalLength(initialResult.ContentRange);
-                bool succesfulInitialCopy = await CopyToStreamInternal(
+                long totalLength = initialResult.ResourceLength.Value;
+                bool successfulInitialCopy = await CopyToStreamInternal(
                     offset: 0,
-                    sourceLength: initialLength,
+                    sourceLength: initialLength.Value,
                     source: initialResult.Content,
                     expectedLength: totalLength).ConfigureAwait(false);
-                if (succesfulInitialCopy)
+                if (successfulInitialCopy)
                 {
-                    ReportBytesWritten(initialLength);
+                    ReportBytesWritten(initialLength.Value);
                     if (totalLength == initialLength)
                     {
                         // Complete download since it was done in one go
-                        await QueueChunkToChannelAsync(
-                            async () =>
-                            await CompleteFileDownload().ConfigureAwait(false))
-                            .ConfigureAwait(false);
+                        await QueueCompleteFileDownload().ConfigureAwait(false);
                     }
                     else
                     {
-                        // Set rangeSize
-                        long rangeSize = CalculateBlockSize(totalLength);
-
-                        // Get list of ranges of the blob
-                        IList<HttpRange> ranges = GetRangesList(initialLength, totalLength, rangeSize);
-                        // Create Download Chunk event handler to manage when the ranges finish downloading
-                        _downloadChunkHandler = GetDownloadChunkHandler(
-                            currentTranferred: initialLength,
-                            expectedLength: totalLength,
-                            ranges: ranges,
-                            jobPart: this);
-
-                        // Fill the queue with tasks to download each of the remaining
-                        // ranges in the blob
-                        foreach (HttpRange httpRange in ranges)
-                        {
-                            // Add the next Task (which will start the download but
-                            // return before it's completed downloading)
-                            await QueueChunkToChannelAsync(
-                                async () =>
-                                await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false))
-                                .ConfigureAwait(false);
-                        }
+                        await QueueChunksToChannel(initialLength.Value, totalLength).ConfigureAwait(false);
                     }
                 }
                 else
                 {
-                    await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+                    await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
             {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
         }
 
@@ -268,11 +291,11 @@ namespace Azure.Storage.DataMovement
             {
                 // To prevent requesting a range that is invalid when
                 // we already know the length we can just make one get blob request.
-                ReadStreamStorageResourceResult result = await _sourceResource.
-                    ReadStreamAsync(cancellationToken: _cancellationToken)
+                StorageResourceReadStreamResult result = await _sourceResource.
+                    ReadStreamAsync(length: totalLength, cancellationToken: _cancellationToken)
                     .ConfigureAwait(false);
 
-                long downloadLength = result.Properties.ContentLength;
+                long downloadLength = result.ContentLength.Value;
                 // This should not occur but add a check just in case
                 if (downloadLength != totalLength)
                 {
@@ -288,43 +311,51 @@ namespace Azure.Storage.DataMovement
                 {
                     ReportBytesWritten(downloadLength);
                     // Queue the work to end the download
-                    await QueueChunkToChannelAsync(
-                        async () =>
-                        await CompleteFileDownload().ConfigureAwait(false))
-                        .ConfigureAwait(false);
+                    await QueueCompleteFileDownload().ConfigureAwait(false);
                 }
             }
             // Download in chunks
             else
             {
-                // Set rangeSize
-                long rangeSize = CalculateBlockSize(totalLength);
-
-                // Get list of ranges of the blob
-                IList<HttpRange> ranges = GetRangesList(0, totalLength, rangeSize);
-
-                // Create Download Chunk event handler to manage when the ranges finish downloading
-                _downloadChunkHandler = GetDownloadChunkHandler(
-                    currentTranferred: 0,
-                    expectedLength: totalLength,
-                    ranges: ranges,
-                    jobPart: this);
-
-                // Fill the queue with tasks to download each of the remaining
-                // ranges in the blob
-                foreach (HttpRange httpRange in ranges)
-                {
-                    // Add the next Task (which will start the download but
-                    // return before it's completed downloading)
-                    await QueueChunkToChannelAsync(
-                        async () =>
-                        await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false))
-                        .ConfigureAwait(false);
-                }
+                await QueueChunksToChannel(0, totalLength).ConfigureAwait(false);
             }
         }
 
         #region PartitionedDownloader
+        private async Task QueueChunksToChannel(long initialLength, long totalLength)
+        {
+            // Get list of ranges of the blob
+            IList<HttpRange> ranges = GetRangesList(initialLength, totalLength, _transferChunkSize);
+
+            // Create Download Chunk event handler to manage when the ranges finish downloading
+            _downloadChunkHandler = GetDownloadChunkHandler(
+                currentTransferred: initialLength,
+                expectedLength: totalLength,
+                ranges: ranges,
+                jobPart: this);
+
+            // Fill the queue with tasks to download each of the remaining
+            // ranges in the file
+            _queueingTasks = true;
+            foreach (HttpRange httpRange in ranges)
+            {
+                if (_cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
+
+                // Add the next Task (which will start the download but
+                // return before it's completed downloading)
+                await QueueChunkToChannelAsync(
+                    async () =>
+                    await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false))
+                    .ConfigureAwait(false);
+            }
+
+            _queueingTasks = false;
+            await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+        }
+
         internal async Task CompleteFileDownload()
         {
             try
@@ -333,18 +364,18 @@ namespace Azure.Storage.DataMovement
 
                 // Apply necessary transfer completions on the destination.
                 await _destinationResource.CompleteTransferAsync(
-                    overwrite: _createMode == StorageResourceCreateMode.Overwrite,
+                    overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
-                await DisposeHandlers().ConfigureAwait(false);
+                DisposeHandlers();
 
                 // Update the transfer status
-                await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
         }
 
@@ -352,19 +383,30 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                ReadStreamStorageResourceResult result = await _sourceResource.ReadStreamAsync(
+                // If the job part is not InProgress, we should just stop processing any queued chunks.
+                if (JobPartStatus.State != DataTransferState.InProgress)
+                {
+                    return;
+                }
+
+                StorageResourceReadStreamResult result = await _sourceResource.ReadStreamAsync(
                     range.Offset,
                     (long)range.Length,
                     _cancellationToken).ConfigureAwait(false);
-                await _downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
-                    transferId: _dataTransfer.Id,
-                    success: true,
-                    offset: range.Offset,
-                    bytesTransferred: (long)range.Length,
-                    result: result.Content,
-                    exception: default,
-                    false,
-                    _cancellationToken)).ConfigureAwait(false);
+
+                // The chunk handler may have been disposed in failure case
+                if (_downloadChunkHandler != null)
+                {
+                    await _downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+                        transferId: _dataTransfer.Id,
+                        success: true,
+                        offset: range.Offset,
+                        bytesTransferred: (long)range.Length,
+                        result: result.Content,
+                        exception: default,
+                        false,
+                        _cancellationToken)).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
@@ -384,9 +426,8 @@ namespace Azure.Storage.DataMovement
                 {
                     // If the _downloadChunkHandler has been disposed before we call to it
                     // we should at least filter the exception to error handling just in case.
-                    await InvokeFailedArg(ex).ConfigureAwait(false);
+                    await InvokeFailedArgAsync(ex).ConfigureAwait(false);
                 }
-                return;
             }
         }
 
@@ -401,22 +442,24 @@ namespace Azure.Storage.DataMovement
             try
             {
                 // TODO: change to custom offset based on chunk offset
-                await _destinationResource.WriteFromStreamAsync(
+                await _destinationResource.CopyFromStreamAsync(
                     stream: source,
-                    overwrite: _createMode == StorageResourceCreateMode.Overwrite,
-                    position: offset,
+                    overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
                     streamLength: sourceLength,
                     completeLength: expectedLength,
-                    options: default,
+                    options: new StorageResourceWriteToOffsetOptions()
+                    {
+                        Position = offset,
+                    },
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
                 return true;
             }
             catch (IOException ex)
-            when (_createMode == StorageResourceCreateMode.Skip &&
+            when (_createMode == StorageResourceCreationPreference.SkipIfExists &&
                 ex.Message.Contains("Cannot overwrite file."))
             {
                 // Skip file that already exists on the destination.
-                await InvokeSkippedArg().ConfigureAwait(false);
+                await InvokeSkippedArgAsync().ConfigureAwait(false);
             }
             return false;
         }
@@ -436,12 +479,12 @@ namespace Azure.Storage.DataMovement
         }
 
         internal DownloadChunkHandler GetDownloadChunkHandler(
-            long currentTranferred,
+            long currentTransferred,
             long expectedLength,
             IList<HttpRange> ranges,
             UriToStreamJobPart jobPart)
             => new DownloadChunkHandler(
-                currentTranferred,
+                currentTransferred,
                 expectedLength,
                 ranges,
                 GetDownloadChunkHandlerBehaviors(jobPart),
@@ -452,14 +495,17 @@ namespace Azure.Storage.DataMovement
         {
             return new DownloadChunkHandler.Behaviors()
             {
-                CopyToDestinationFile = (offset, length, result, expectedLength) => job.CopyToStreamInternal(offset, length, result, expectedLength),
-                CopyToChunkFile = (chunkFilePath, source) => job.WriteChunkToTempFile(chunkFilePath, source),
-                ReportProgressInBytes= (progress) => job.ReportBytesWritten(progress),
-                InvokeFailedHandler = async (ex) => await job.InvokeFailedArg(ex).ConfigureAwait(false),
-                QueueCompleteFileDownload = () => job.QueueChunkToChannelAsync(
-                    async ()
-                    => await job.CompleteFileDownload().ConfigureAwait(false))
+                CopyToDestinationFile = job.CopyToStreamInternal,
+                CopyToChunkFile = job.WriteChunkToTempFile,
+                ReportProgressInBytes = job.ReportBytesWritten,
+                InvokeFailedHandler = job.InvokeFailedArgAsync,
+                QueueCompleteFileDownload = job.QueueCompleteFileDownload
             };
+        }
+
+        private Task QueueCompleteFileDownload()
+        {
+            return QueueChunkToChannelAsync(CompleteFileDownload);
         }
 
         private static IList<HttpRange> GetRangesList(long initialLength, long totalLength, long rangeSize)
@@ -473,44 +519,43 @@ namespace Azure.Storage.DataMovement
         }
         #endregion PartitionedDownloader
 
-        public override async Task InvokeSkippedArg()
+        public override async Task InvokeSkippedArgAsync()
         {
-            await DisposeHandlers().ConfigureAwait(false);
-            await base.InvokeSkippedArg().ConfigureAwait(false);
+            DisposeHandlers();
+            await base.InvokeSkippedArgAsync().ConfigureAwait(false);
         }
 
-        public override async Task InvokeFailedArg(Exception ex)
+        public override async Task InvokeFailedArgAsync(Exception ex)
         {
-            await DisposeHandlers().ConfigureAwait(false);
-            await base.InvokeFailedArg(ex).ConfigureAwait(false);
+            DisposeHandlers();
+            await base.InvokeFailedArgAsync(ex).ConfigureAwait(false);
         }
 
-        internal async Task DisposeHandlers()
+        internal void DisposeHandlers()
         {
             if (_downloadChunkHandler != default)
             {
-                await _downloadChunkHandler.DisposeAsync().ConfigureAwait(false);
+                _downloadChunkHandler.Dispose();
+                _downloadChunkHandler = null;
             }
         }
 
         private async Task CreateZeroLengthDownload()
         {
             // We just need to at minimum create the file
-            bool succesfulCreation = await CopyToStreamInternal(
+            bool successfulCreation = await CopyToStreamInternal(
                 offset: 0,
                 sourceLength: 0,
                 source: default,
                 expectedLength: 0).ConfigureAwait(false);
-            if (succesfulCreation)
+            if (successfulCreation)
             {
                 // Queue the work to end the download
-                await QueueChunkToChannelAsync(
-                    async () =>
-                    await CompleteFileDownload().ConfigureAwait(false)).ConfigureAwait(false);
+                await QueueCompleteFileDownload().ConfigureAwait(false);
             }
             else
             {
-                await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
             }
         }
     }

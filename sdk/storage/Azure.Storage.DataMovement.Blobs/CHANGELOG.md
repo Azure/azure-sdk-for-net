@@ -1,29 +1,60 @@
 # Release History
 
-## 12.0.0-beta.4 (Unreleased)
+## 12.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
-- [BREAKING CHANGE] Made the following members `public` to `protected` members (including all derived classes):
-    - `BlobStorageResourceContainer.CanProduceUri`
-    - `BlobStorageResourceContainer.GetStorageResourcesAsync`
-    - `*BlobStorageResource.CanProduceUri`
-    - `*BlobStorageResource.Length`
-    - `*BlobStorageResource.MaxChunkSize`
-    - `*BlobStorageResource.ResourceId`
-    - `*BlobStorageResource.TransferType`
-    - `*BlobStorageResource.CompleteTransferAsync`
-    - `*BlobStorageResource.CopyBlockFromUriAsync`
-    - `*BlobStorageResource.CopyFromUriAsync`
-    - `*BlobStorageResource.DeleteIfExistsAsync`
-    - `*BlobStorageResource.GetCopyAuthorizationHeaderAsync`
-    - `*BlobStorageResource.GetPropertiesAsync`
-    - `*BlobStorageResource.ReadStreamAsync`
-    - `*BlobStorageResource.WriteFromStreamAsync`
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.0.0-beta.6 (2024-10-14)
+
+### Breaking Changes
+- Changed `FromContainer(string containerUri, BlobStorageResourceContainerOptions options = default)` to `FromContainer(Uri containerUri, BlobStorageResourceContainerOptions options = default)`
+- Changed `FromBlob(string blobUri, BlobStorageResourceOptions options = default)` to `FromBlob(Uri blobUri, BlobStorageResourceOptions options = default)`
+
+### Bugs Fixed
+- Fixed bug where using OAuth would not preserve source properties to destination properties.
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.0.0-beta.5 (2024-07-16)
+
+### Features Added
+- Added ability to preserve Blob Metadata and properties on Blob to Blob copy.
+- Added ability to preserve Blob Type on Blob Container to Blob Container copy.
+
+### Breaking Changes
+- Changed `BlobStorageResourceOptions` members to be wrapped by `DataTransferProperty` type to allow preserving. The following members are affected:
+    - `BlobStorageResourceOptions.ContentType`
+    - `BlobStorageResourceOptions.ContentLanguage`
+    - `BlobStorageResourceOptions.ContentEncoding`
+    - `BlobStorageResourceOptions.ContentDisposition`
+    - `BlobStorageResourceOptions.CacheControl`
+    - `BlobStorageResourceOptions.Metadata`
+- Changed `BlobStorageResourceContainerOptions.BlobType` from `Azure.Storage.Blobs.Models.BlobType` to `DataTransferProperty<Azure.Storage.Blobs.Models.BlobType>`
+
+## 12.0.0-beta.4 (2023-12-05)
+
+### Breaking Changes
+- [BREAKING CHANGE] Removed `BlobStorageResourceProvider.MakeResourceAsync`. Instead use the appropriate `BlobStorageResourceProvider` constructor to pass credentials, and `.FromBlob()`, `.FromContainer()`, and `.FromClient()` to obtain a Blob `StorageResource`.
+- [BREAKING CHANGE] Renamed `BlobStorageResourceContainerOptions.DirectoryPrefix` to `BlobDirectoryPrefix`
+- [BREAKING CHANGE] Renamed `BlobStorageResourceContainerOptions.ResourceOptions` to `BlobOptions`
+- [BREAKING CHANGE] Moved `BlobContainerClientTransferOptions` to the `Azure.Storage.DataMovement.Blobs` namespace
+- [BREAKING CHANGE] Removed `position` parameter from `*BlobStorageResource.WriteFromStreamAsync`. Use `StorageResourceWriteToOffsetOptions.Position` instead.
+- [BREAKING CHANGE] Made parameter `completeLength` from `*BlobStorageResource.CopyBlockFromUriAsync` mandatory.
+- [BREAKING CHANGE] Removed `StorageResource.CanProduceUri` (including it's derived classes).
+- [BREAKING CHANGE] Removed `StorageResource.Path`, use `StorageResource.Uri` instead.
+- [BREAKING CHANGE] Removed `DestinationImmutabilityPolicy`, `LegalHold`, `UploadTransferValidationOptions`, and `DownloadTransferValidationOptions` from `BlobStorageResourceOptions` as they were not fully supported.
+- [BREAKING CHANGE] Made the following from `public` to `internal` (Use `BlobStorageResourceProvider` instead to create `StorageResource`s):
+    - `AppendBlobStorageResource`
+    - `BlockBlobStorageResource`
+    - `PageBlobStorageResource`
+    - `BlobStorageResourceContainer`
 
 ## 12.0.0-beta.3 (2023-07-11)
 

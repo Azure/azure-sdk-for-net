@@ -6,17 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformConfigurationServiceGitRepository : IUtf8JsonSerializable
+    public partial class AppPlatformConfigurationServiceGitRepository : IUtf8JsonSerializable, IJsonModel<AppPlatformConfigurationServiceGitRepository>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformConfigurationServiceGitRepository>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppPlatformConfigurationServiceGitRepository>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformConfigurationServiceGitRepository>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceGitRepository)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("patterns"u8);
@@ -70,11 +87,39 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("strictHostKeyChecking"u8);
                 writer.WriteBooleanValue(IsHostKeyCheckingStrict.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AppPlatformConfigurationServiceGitRepository DeserializeAppPlatformConfigurationServiceGitRepository(JsonElement element)
+        AppPlatformConfigurationServiceGitRepository IJsonModel<AppPlatformConfigurationServiceGitRepository>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformConfigurationServiceGitRepository>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceGitRepository)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformConfigurationServiceGitRepository(document.RootElement, options);
+        }
+
+        internal static AppPlatformConfigurationServiceGitRepository DeserializeAppPlatformConfigurationServiceGitRepository(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -83,13 +128,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             IList<string> patterns = default;
             Uri uri = default;
             string label = default;
-            Optional<IList<string>> searchPaths = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> hostKey = default;
-            Optional<string> hostKeyAlgorithm = default;
-            Optional<string> privateKey = default;
-            Optional<bool> strictHostKeyChecking = default;
+            IList<string> searchPaths = default;
+            string username = default;
+            string password = default;
+            string hostKey = default;
+            string hostKeyAlgorithm = default;
+            string privateKey = default;
+            bool? strictHostKeyChecking = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -165,8 +212,56 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     strictHostKeyChecking = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformConfigurationServiceGitRepository(name, patterns, uri, label, Optional.ToList(searchPaths), username.Value, password.Value, hostKey.Value, hostKeyAlgorithm.Value, privateKey.Value, Optional.ToNullable(strictHostKeyChecking));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformConfigurationServiceGitRepository(
+                name,
+                patterns,
+                uri,
+                label,
+                searchPaths ?? new ChangeTrackingList<string>(),
+                username,
+                password,
+                hostKey,
+                hostKeyAlgorithm,
+                privateKey,
+                strictHostKeyChecking,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformConfigurationServiceGitRepository>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformConfigurationServiceGitRepository>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceGitRepository)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformConfigurationServiceGitRepository IPersistableModel<AppPlatformConfigurationServiceGitRepository>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformConfigurationServiceGitRepository>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformConfigurationServiceGitRepository(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceGitRepository)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformConfigurationServiceGitRepository>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

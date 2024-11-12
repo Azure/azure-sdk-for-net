@@ -5,45 +5,186 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ItemLevelRestoreTargetInfo : IUtf8JsonSerializable
+    public partial class ItemLevelRestoreTargetInfo : IUtf8JsonSerializable, IJsonModel<ItemLevelRestoreTargetInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ItemLevelRestoreTargetInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ItemLevelRestoreTargetInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreTargetInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("restoreCriteria"u8);
             writer.WriteStartArray();
             foreach (var item in RestoreCriteria)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("datasourceInfo"u8);
-            writer.WriteObjectValue(DatasourceInfo);
+            writer.WriteObjectValue(DatasourceInfo, options);
             if (Optional.IsDefined(DatasourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
-                writer.WriteObjectValue(DatasourceSetInfo);
+                writer.WriteObjectValue(DatasourceSetInfo, options);
             }
             if (Optional.IsDefined(DatasourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue(DatasourceAuthCredentials);
+                writer.WriteObjectValue(DatasourceAuthCredentials, options);
             }
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
-            writer.WritePropertyName("recoveryOption"u8);
-            writer.WriteStringValue(RecoverySetting.ToString());
-            if (Optional.IsDefined(RestoreLocation))
-            {
-                writer.WritePropertyName("restoreLocation"u8);
-                writer.WriteStringValue(RestoreLocation.Value);
-            }
-            writer.WriteEndObject();
         }
+
+        ItemLevelRestoreTargetInfo IJsonModel<ItemLevelRestoreTargetInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreTargetInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeItemLevelRestoreTargetInfo(document.RootElement, options);
+        }
+
+        internal static ItemLevelRestoreTargetInfo DeserializeItemLevelRestoreTargetInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<ItemLevelRestoreCriteria> restoreCriteria = default;
+            DataSourceInfo datasourceInfo = default;
+            DataSourceSetInfo datasourceSetInfo = default;
+            DataProtectionBackupAuthCredentials datasourceAuthCredentials = default;
+            string objectType = default;
+            RecoverySetting recoveryOption = default;
+            AzureLocation? restoreLocation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("restoreCriteria"u8))
+                {
+                    List<ItemLevelRestoreCriteria> array = new List<ItemLevelRestoreCriteria>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ItemLevelRestoreCriteria.DeserializeItemLevelRestoreCriteria(item, options));
+                    }
+                    restoreCriteria = array;
+                    continue;
+                }
+                if (property.NameEquals("datasourceInfo"u8))
+                {
+                    datasourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("datasourceSetInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    datasourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("datasourceAuthCredentials"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryOption"u8))
+                {
+                    recoveryOption = new RecoverySetting(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("restoreLocation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restoreLocation = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ItemLevelRestoreTargetInfo(
+                objectType,
+                recoveryOption,
+                restoreLocation,
+                serializedAdditionalRawData,
+                restoreCriteria,
+                datasourceInfo,
+                datasourceSetInfo,
+                datasourceAuthCredentials);
+        }
+
+        BinaryData IPersistableModel<ItemLevelRestoreTargetInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreTargetInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ItemLevelRestoreTargetInfo IPersistableModel<ItemLevelRestoreTargetInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreTargetInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeItemLevelRestoreTargetInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ItemLevelRestoreTargetInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

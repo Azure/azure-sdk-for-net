@@ -14,6 +14,11 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+use-write-core: true
 
 # mgmt-debug:
 #   show-serialized-names: true
@@ -24,7 +29,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -111,16 +116,13 @@ rename-mapping:
   BuildServiceAgentPoolResourceCollection: BuildServiceAgentPoolResourceList
   ConfigurationServiceResourceCollection: ConfigurationServiceResourceList
   ServiceRegistryResourceCollection: ServiceRegistryResourceList
-  LoadedCertificateCollection: LoadedCertificateList
   AppResourceCollection: AppResourceList
   ActiveDeploymentCollection: ActiveAppPlatformDeploymentsContent
   BindingResourceCollection: BindingResourceList
   CertificateResourceCollection: CertificateResourceList
   StorageResourceCollection: StorageResourceList
-  CustomPersistentDiskCollection: CustomPersistentDiskList
   CustomDomainResourceCollection: CustomDomainResourceList
   DeploymentResourceCollection: DeploymentResourceList
-  AvailableOperations: AvailableOperationsInfo
   ResourceSkuCollection: ResourceSkuList
   BuildpackBindingResourceCollection: BuildpackBindingResourceList
   GatewayResourceCollection: GatewayResourceList

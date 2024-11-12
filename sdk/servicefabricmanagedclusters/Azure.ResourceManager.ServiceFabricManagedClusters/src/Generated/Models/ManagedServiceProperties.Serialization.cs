@@ -5,23 +5,46 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedServiceProperties : IUtf8JsonSerializable
+    public partial class ManagedServiceProperties : IUtf8JsonSerializable, IJsonModel<ManagedServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServiceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManagedServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedServiceProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             writer.WritePropertyName("serviceKind"u8);
             writer.WriteStringValue(ServiceKind.ToString());
             writer.WritePropertyName("serviceTypeName"u8);
             writer.WriteStringValue(ServiceTypeName);
             writer.WritePropertyName("partitionDescription"u8);
-            writer.WriteObjectValue(PartitionDescription);
+            writer.WriteObjectValue(PartitionDescription, options);
             if (Optional.IsDefined(ServicePackageActivationMode))
             {
                 writer.WritePropertyName("servicePackageActivationMode"u8);
@@ -32,61 +55,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("serviceDnsName"u8);
                 writer.WriteStringValue(ServiceDnsName);
             }
-            if (Optional.IsDefined(PlacementConstraints))
-            {
-                writer.WritePropertyName("placementConstraints"u8);
-                writer.WriteStringValue(PlacementConstraints);
-            }
-            if (Optional.IsCollectionDefined(CorrelationScheme))
-            {
-                writer.WritePropertyName("correlationScheme"u8);
-                writer.WriteStartArray();
-                foreach (var item in CorrelationScheme)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
-            {
-                writer.WritePropertyName("serviceLoadMetrics"u8);
-                writer.WriteStartArray();
-                foreach (var item in ServiceLoadMetrics)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
-            {
-                writer.WritePropertyName("servicePlacementPolicies"u8);
-                writer.WriteStartArray();
-                foreach (var item in ServicePlacementPolicies)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(DefaultMoveCost))
-            {
-                writer.WritePropertyName("defaultMoveCost"u8);
-                writer.WriteStringValue(DefaultMoveCost.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(ScalingPolicies))
-            {
-                writer.WritePropertyName("scalingPolicies"u8);
-                writer.WriteStartArray();
-                foreach (var item in ScalingPolicies)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        internal static ManagedServiceProperties DeserializeManagedServiceProperties(JsonElement element)
+        ManagedServiceProperties IJsonModel<ManagedServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedServiceProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServiceProperties(document.RootElement, options);
+        }
+
+        internal static ManagedServiceProperties DeserializeManagedServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,130 +81,42 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Stateful": return StatefulServiceProperties.DeserializeStatefulServiceProperties(element);
-                    case "Stateless": return StatelessServiceProperties.DeserializeStatelessServiceProperties(element);
+                    case "Stateful": return StatefulServiceProperties.DeserializeStatefulServiceProperties(element, options);
+                    case "Stateless": return StatelessServiceProperties.DeserializeStatelessServiceProperties(element, options);
                 }
             }
-            Optional<string> provisioningState = default;
-            ServiceKind serviceKind = default;
-            string serviceTypeName = default;
-            ManagedServicePartitionScheme partitionDescription = default;
-            Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
-            Optional<string> serviceDnsName = default;
-            Optional<string> placementConstraints = default;
-            Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
-            Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
-            Optional<IList<ManagedServicePlacementPolicy>> servicePlacementPolicies = default;
-            Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
-            Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    provisioningState = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serviceKind"u8))
-                {
-                    serviceKind = new ServiceKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("serviceTypeName"u8))
-                {
-                    serviceTypeName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("partitionDescription"u8))
-                {
-                    partitionDescription = ManagedServicePartitionScheme.DeserializeManagedServicePartitionScheme(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("servicePackageActivationMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    servicePackageActivationMode = new ManagedServicePackageActivationMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("serviceDnsName"u8))
-                {
-                    serviceDnsName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("placementConstraints"u8))
-                {
-                    placementConstraints = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationScheme"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ManagedServiceCorrelation> array = new List<ManagedServiceCorrelation>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ManagedServiceCorrelation.DeserializeManagedServiceCorrelation(item));
-                    }
-                    correlationScheme = array;
-                    continue;
-                }
-                if (property.NameEquals("serviceLoadMetrics"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ManagedServiceLoadMetric> array = new List<ManagedServiceLoadMetric>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ManagedServiceLoadMetric.DeserializeManagedServiceLoadMetric(item));
-                    }
-                    serviceLoadMetrics = array;
-                    continue;
-                }
-                if (property.NameEquals("servicePlacementPolicies"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ManagedServicePlacementPolicy> array = new List<ManagedServicePlacementPolicy>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ManagedServicePlacementPolicy.DeserializeManagedServicePlacementPolicy(item));
-                    }
-                    servicePlacementPolicies = array;
-                    continue;
-                }
-                if (property.NameEquals("defaultMoveCost"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    defaultMoveCost = new ServiceFabricManagedServiceMoveCost(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("scalingPolicies"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ManagedServiceScalingPolicy> array = new List<ManagedServiceScalingPolicy>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ManagedServiceScalingPolicy.DeserializeManagedServiceScalingPolicy(item));
-                    }
-                    scalingPolicies = array;
-                    continue;
-                }
-            }
-            return new ManagedServiceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value);
+            return UnknownServiceResourceProperties.DeserializeUnknownServiceResourceProperties(element, options);
         }
+
+        BinaryData IPersistableModel<ManagedServiceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedServiceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedServiceProperties IPersistableModel<ManagedServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedServiceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedServiceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

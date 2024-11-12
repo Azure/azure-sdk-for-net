@@ -9,8 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Samples
 {
@@ -21,7 +19,7 @@ namespace Azure.ResourceManager.Billing.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_PaymentMethodsListByBillingAccount()
         {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/PaymentMethodAtBillingAccount_List.json
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentMethodsListByBillingAccount.json
             // this example is just showing the usage of "PaymentMethods_ListByBillingAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,13 +27,14 @@ namespace Azure.ResourceManager.Billing.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000032:00000000-0000-0000-0000-000000000099_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // get the collection of this BillingAccountPaymentMethodResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000032:00000000-0000-0000-0000-000000000099_2019-05-31";
-            BillingAccountPaymentMethodCollection collection = tenantResource.GetBillingAccountPaymentMethods(billingAccountName);
+            BillingAccountPaymentMethodCollection collection = billingAccount.GetBillingAccountPaymentMethods();
 
             // invoke the operation and iterate over the result
             await foreach (BillingAccountPaymentMethodResource item in collection.GetAllAsync())
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.Billing.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PaymentMethodGetAtBillingProfile()
         {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/PaymentMethodAtBillingAccount_Get.json
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentMethodsGetByBillingAccount.json
             // this example is just showing the usage of "PaymentMethods_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -63,13 +62,14 @@ namespace Azure.ResourceManager.Billing.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000032:00000000-0000-0000-0000-000000000099_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // get the collection of this BillingAccountPaymentMethodResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000032:00000000-0000-0000-0000-000000000099_2019-05-31";
-            BillingAccountPaymentMethodCollection collection = tenantResource.GetBillingAccountPaymentMethods(billingAccountName);
+            BillingAccountPaymentMethodCollection collection = billingAccount.GetBillingAccountPaymentMethods();
 
             // invoke the operation
             string paymentMethodName = "21dd9edc-af71-4d62-80ce-37151d475326";
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Billing.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_PaymentMethodGetAtBillingProfile()
         {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/PaymentMethodAtBillingAccount_Get.json
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentMethodsGetByBillingAccount.json
             // this example is just showing the usage of "PaymentMethods_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,19 +95,61 @@ namespace Azure.ResourceManager.Billing.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000032:00000000-0000-0000-0000-000000000099_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // get the collection of this BillingAccountPaymentMethodResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000032:00000000-0000-0000-0000-000000000099_2019-05-31";
-            BillingAccountPaymentMethodCollection collection = tenantResource.GetBillingAccountPaymentMethods(billingAccountName);
+            BillingAccountPaymentMethodCollection collection = billingAccount.GetBillingAccountPaymentMethods();
 
             // invoke the operation
             string paymentMethodName = "21dd9edc-af71-4d62-80ce-37151d475326";
             bool result = await collection.ExistsAsync(paymentMethodName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // PaymentMethodGetAtBillingProfile
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_PaymentMethodGetAtBillingProfile()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentMethodsGetByBillingAccount.json
+            // this example is just showing the usage of "PaymentMethods_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000032:00000000-0000-0000-0000-000000000099_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // get the collection of this BillingAccountPaymentMethodResource
+            BillingAccountPaymentMethodCollection collection = billingAccount.GetBillingAccountPaymentMethods();
+
+            // invoke the operation
+            string paymentMethodName = "21dd9edc-af71-4d62-80ce-37151d475326";
+            NullableResponse<BillingAccountPaymentMethodResource> response = await collection.GetIfExistsAsync(paymentMethodName);
+            BillingAccountPaymentMethodResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BillingPaymentMethodData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

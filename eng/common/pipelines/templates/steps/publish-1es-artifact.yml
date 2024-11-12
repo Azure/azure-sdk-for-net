@@ -1,0 +1,36 @@
+# This step is used to prevent duplication of artifact publishes when there is an issue that would prevent the overall success of the job.
+# Ensuring that we only publish when successful (and two a differently named artifact otherwise) will allow easy retry on a build pipeline
+# without running into the "cannot override artifact" failure when we finally do get a passing run.
+
+# ArtifactName - The name of the artifact in the "successful" case.
+# ArtifactPath - The path we will be publishing.
+# CustomCondition - Used if there is additional logic necessary to prevent attempt of publish.
+# SbomEnabled - Set whether to auto-inject 1es pipeline template sbom tasks
+
+parameters:
+  ArtifactName: ''
+  ArtifactPath: ''
+  CustomCondition: true
+  SbomEnabled: true
+
+steps:
+  - pwsh: |
+      if ($env:AGENT_JOBSTATUS -eq "Failed") {
+        Write-Host "Setting artifact name to ${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt) because there were failures." 
+        Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt)"
+      } else {
+        Write-Host "Setting artifact name to ${{ parameters.ArtifactName }}" 
+        Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}"
+      }
+    condition: and(succeededOrFailed(), ${{ parameters.CustomCondition }})
+    displayName: Set Artifact Name 
+
+  - task: 1ES.PublishPipelineArtifact@1
+    condition: and(succeededOrFailed(), ${{ parameters.CustomCondition }})
+    displayName: 'Publish ${{ parameters.ArtifactName }} Artifacts'
+    inputs:
+      artifactName: '$(PublishArtifactName)'
+      targetPath: '${{ parameters.ArtifactPath }}'
+      # Disable sbom generation by default for forked PR builds to avoid a bunch of warnings
+      ${{ if not(and(eq(variables['Build.Reason'],'PullRequest'), eq(variables['System.PullRequest.IsFork'], 'True'))) }}:
+        sbomEnabled: ${{ parameters.SbomEnabled }}

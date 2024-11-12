@@ -38,7 +38,8 @@ namespace Azure.Identity.Tests
             var vsOptions = new VisualStudioCredentialOptions
             {
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
-                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
             };
             return InstrumentClient(new VisualStudioCredential(config.TenantId, default, fileSystem, new TestProcessService(testProcess, true), vsOptions));
         }
@@ -52,7 +53,7 @@ namespace Azure.Identity.Tests
             var options = new VisualStudioCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint } };
             var credential = InstrumentClient(new VisualStudioCredential(TenantId, default, fileSystem, new TestProcessService(testProcess, true), options));
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
 
             var token = await credential.GetTokenAsync(context, default);
 
@@ -121,7 +122,7 @@ namespace Azure.Identity.Tests
             var options = new VisualStudioCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint } };
             var credential = InstrumentClient(new VisualStudioCredential(TenantId, default, fileSystem, new TestProcessService(testProcess, true), options));
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
 
             var token = await credential.GetTokenAsync(context, default);
 

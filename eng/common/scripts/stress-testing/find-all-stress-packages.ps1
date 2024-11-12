@@ -48,11 +48,21 @@ function FindStressPackages(
 
         VerifyAddonsVersion $chart $chartFile
 
+        # Default to "sparse" matrix selection type, unless a default is specified
+        # in Chart.yaml annotations, or an override is passed in from the command line
+        $selection = if ($MatrixSelection) {
+            $MatrixSelection
+        } elseif ($chart['annotations'] -and $chart['annotations']['matrixSelection']) {
+            $chart['annotations']['matrixSelection']
+        } else {
+            "sparse"
+        }
+
         $matrixFilePath = (Join-Path $chartFile.Directory.FullName $MatrixFileName)
         if (Test-Path $matrixFilePath) {
             GenerateScenarioMatrix `
                 -matrixFilePath $matrixFilePath `
-                -Selection $MatrixSelection `
+                -Selection $selection `
                 -DisplayNameFilter $MatrixDisplayNameFilter `
                 -Filters $MatrixFilters `
                 -Replace $MatrixReplace `
@@ -75,7 +85,7 @@ function ParseChart([string]$chartFile) {
 
 function MatchesAnnotations([hashtable]$chart, [hashtable]$filters) {
     foreach ($filter in $filters.GetEnumerator()) {
-        if (!$chart["annotations"] -or $chart["annotations"][$filter.Key] -ne $filter.Value) {
+        if (!$chart["annotations"] -or $chart["annotations"][$filter.Key] -notmatch $filter.Value) {
             return $false
         }
     }
@@ -87,8 +97,10 @@ function VerifyAddonsVersion([hashtable]$chart, [string]$chartFile) {
     foreach ($dependency in $chart.dependencies) {
         if ($dependency.name -eq "stress-test-addons" -and
             $dependency.version -like '0.1.*' -or
-            $dependency.version -like '^0.1.*') {
-            throw "The stress-test-addons version in use for '$chartFile' is $($dependency.version), please use versions >= 0.2.0"
+            $dependency.version -like '^0.1.*' -or
+            $dependency.version -like '0.2.*' -or
+            $dependency.version -like '^0.2.*') {
+            throw "The stress-test-addons version in use for '$chartFile' is $($dependency.version), use the version ~0.3.0 to avoid breaking changes"
         }
     }
 }

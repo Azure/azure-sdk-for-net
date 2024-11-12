@@ -8,11 +8,8 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory.Samples
@@ -76,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             // invoke the operation
             DataFactoryIntegrationRuntimePatch patch = new DataFactoryIntegrationRuntimePatch()
             {
-                AutoUpdate = IntegrationRuntimeAutoUpdate.Off,
+                AutoUpdate = IntegrationRuntimeAutoUpdateState.Off,
                 UpdateDelayOffset = XmlConvert.ToTimeSpan("\"PT3H\""),
             };
             DataFactoryIntegrationRuntimeResource result = await dataFactoryIntegrationRuntime.UpdateAsync(patch);
@@ -629,7 +626,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         public async Task GetIPAddressIntegrationRuntimeNode_IntegrationRuntimeNodesGetIpAddress()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimeNodes_GetIpAddress.json
-            // this example is just showing the usage of "IntegrationRuntimeNodes_GetIpAddress" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "IntegrationRuntimeNodes_GetIPAddress" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Test;
@@ -96,7 +97,7 @@ namespace Azure.Storage.Files.Shares.Tests
         protected override async Task ModifyAsync(ShareFileClient client, Stream data)
         {
             long position = (await client.GetPropertiesAsync()).Value.ContentLength;
-            await client.SetHttpHeadersAsync(newSize: position + data.Length);
+            await client.SetHttpHeadersAsync(new ShareFileSetHttpHeadersOptions() { NewSize = position + data.Length });
             await client.UploadRangeAsync(new HttpRange(offset: position, length: data.Length), data);
         }
 

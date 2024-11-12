@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class CreateAndMountFileShareConfiguration : IUtf8JsonSerializable
+    public partial class CreateAndMountFileShareConfiguration : IUtf8JsonSerializable, IJsonModel<CreateAndMountFileShareConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateAndMountFileShareConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CreateAndMountFileShareConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CreateAndMountFileShareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CreateAndMountFileShareConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
@@ -25,20 +45,33 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            writer.WritePropertyName("configurationType"u8);
-            writer.WriteStringValue(ConfigurationType.ToString());
-            writer.WriteEndObject();
         }
 
-        internal static CreateAndMountFileShareConfiguration DeserializeCreateAndMountFileShareConfiguration(JsonElement element)
+        CreateAndMountFileShareConfiguration IJsonModel<CreateAndMountFileShareConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CreateAndMountFileShareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CreateAndMountFileShareConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCreateAndMountFileShareConfiguration(document.RootElement, options);
+        }
+
+        internal static CreateAndMountFileShareConfiguration DeserializeCreateAndMountFileShareConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> resourceGroup = default;
-            Optional<string> storageAccountName = default;
+            string resourceGroup = default;
+            string storageAccountName = default;
             ConfigurationType configurationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceGroup"u8))
@@ -56,8 +89,44 @@ namespace Azure.ResourceManager.Workloads.Models
                     configurationType = new ConfigurationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CreateAndMountFileShareConfiguration(configurationType, resourceGroup.Value, storageAccountName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CreateAndMountFileShareConfiguration(configurationType, serializedAdditionalRawData, resourceGroup, storageAccountName);
         }
+
+        BinaryData IPersistableModel<CreateAndMountFileShareConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CreateAndMountFileShareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CreateAndMountFileShareConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CreateAndMountFileShareConfiguration IPersistableModel<CreateAndMountFileShareConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CreateAndMountFileShareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCreateAndMountFileShareConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CreateAndMountFileShareConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CreateAndMountFileShareConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

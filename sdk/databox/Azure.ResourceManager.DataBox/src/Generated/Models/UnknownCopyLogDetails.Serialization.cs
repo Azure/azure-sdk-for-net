@@ -5,20 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownCopyLogDetails
+    internal partial class UnknownCopyLogDetails : IUtf8JsonSerializable, IJsonModel<CopyLogDetails>
     {
-        internal static UnknownCopyLogDetails DeserializeUnknownCopyLogDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyLogDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CopyLogDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CopyLogDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        CopyLogDetails IJsonModel<CopyLogDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CopyLogDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCopyLogDetails(document.RootElement, options);
+        }
+
+        internal static UnknownCopyLogDetails DeserializeUnknownCopyLogDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataBoxOrderType copyLogDetailsType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("copyLogDetailsType"u8))
@@ -26,8 +67,44 @@ namespace Azure.ResourceManager.DataBox.Models
                     copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownCopyLogDetails(copyLogDetailsType);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CopyLogDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CopyLogDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CopyLogDetails IPersistableModel<CopyLogDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCopyLogDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CopyLogDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CopyLogDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

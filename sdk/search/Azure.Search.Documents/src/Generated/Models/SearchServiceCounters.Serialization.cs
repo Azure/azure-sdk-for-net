@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -75,7 +74,24 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchServiceCounters(aliasesCount, documentCount, indexesCount, indexersCount, dataSourcesCount, storageSize, synonymMaps, skillsetCount, vectorIndexSize);
+            return new SearchServiceCounters(
+                aliasesCount,
+                documentCount,
+                indexesCount,
+                indexersCount,
+                dataSourcesCount,
+                storageSize,
+                synonymMaps,
+                skillsetCount,
+                vectorIndexSize);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchServiceCounters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchServiceCounters(document.RootElement);
         }
     }
 }

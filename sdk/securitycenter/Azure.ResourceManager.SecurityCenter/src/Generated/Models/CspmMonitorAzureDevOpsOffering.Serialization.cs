@@ -5,29 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class CspmMonitorAzureDevOpsOffering : IUtf8JsonSerializable
+    public partial class CspmMonitorAzureDevOpsOffering : IUtf8JsonSerializable, IJsonModel<CspmMonitorAzureDevOpsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CspmMonitorAzureDevOpsOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CspmMonitorAzureDevOpsOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("offeringType"u8);
-            writer.WriteStringValue(OfferingType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static CspmMonitorAzureDevOpsOffering DeserializeCspmMonitorAzureDevOpsOffering(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorAzureDevOpsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CspmMonitorAzureDevOpsOffering)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        CspmMonitorAzureDevOpsOffering IJsonModel<CspmMonitorAzureDevOpsOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorAzureDevOpsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CspmMonitorAzureDevOpsOffering)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCspmMonitorAzureDevOpsOffering(document.RootElement, options);
+        }
+
+        internal static CspmMonitorAzureDevOpsOffering DeserializeCspmMonitorAzureDevOpsOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offeringType"u8))
@@ -40,8 +73,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CspmMonitorAzureDevOpsOffering(offeringType, description.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CspmMonitorAzureDevOpsOffering(offeringType, description, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CspmMonitorAzureDevOpsOffering>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorAzureDevOpsOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CspmMonitorAzureDevOpsOffering)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CspmMonitorAzureDevOpsOffering IPersistableModel<CspmMonitorAzureDevOpsOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorAzureDevOpsOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCspmMonitorAzureDevOpsOffering(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CspmMonitorAzureDevOpsOffering)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CspmMonitorAzureDevOpsOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

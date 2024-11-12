@@ -14,6 +14,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Azure.Security.Attestation.Tests
 {
+    [LiveOnly(Reason = "JWT cannot be stored in recordings.")]
     public class PolicyGetSetTests : RecordedTestBase<AttestationClientTestEnvironment>
     {
         public PolicyGetSetTests(bool isAsync) : base(isAsync)

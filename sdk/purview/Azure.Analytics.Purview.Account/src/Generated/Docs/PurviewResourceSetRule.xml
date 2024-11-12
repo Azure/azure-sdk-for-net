@@ -2,14 +2,25 @@
 <doc>
   <members>
     <member name="GetResourceSetRuleAsync(RequestContext)">
-<example>
-This sample shows how to call GetResourceSetRuleAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetResourceSetRuleAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-Response response = await client.GetResourceSetRuleAsync(new RequestContext());
+Response response = await client.GetResourceSetRuleAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetResourceSetRuleAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+
+Response response = await client.GetResourceSetRuleAsync(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -97,18 +108,28 @@ Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRul
 Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("qualifiedName").ToString());
 Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("storeType").ToString());
 Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("version").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetResourceSetRule(RequestContext)">
-<example>
-This sample shows how to call GetResourceSetRule with required parameters and parse the result.
+      <example>
+This sample shows how to call GetResourceSetRule and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-Response response = client.GetResourceSetRule(new RequestContext());
+Response response = client.GetResourceSetRule(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetResourceSetRule with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+
+Response response = client.GetResourceSetRule(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -196,38 +217,41 @@ Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRul
 Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("qualifiedName").ToString());
 Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("storeType").ToString());
 Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("version").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="CreateOrUpdateResourceSetRuleAsync(RequestContent,RequestContext)">
-<example>
+      <example>
 This sample shows how to call CreateOrUpdateResourceSetRuleAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-var data = new {};
-
-Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateOrUpdateResourceSetRuleAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateResourceSetRuleAsync with all request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateResourceSetRuleAsync with all request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-var data = new {
-    advancedResourceSet = new {
+using RequestContent content = RequestContent.Create(new
+{
+    advancedResourceSet = new
+    {
         modifiedAt = "2022-05-10T18:57:31.2311892Z",
         resourceSetProcessing = "Default",
     },
-    pathPatternConfig = new {
-        acceptedPatterns = new[] {
-            new {
+    pathPatternConfig = new
+    {
+        acceptedPatterns = new object[]
+        {
+            new
+            {
                 createdBy = "<createdBy>",
                 filterType = "Pattern",
                 lastUpdatedTimestamp = 1234L,
@@ -236,8 +260,10 @@ var data = new {
                 path = "<path>",
             }
         },
-        complexReplacers = new[] {
-            new {
+        complexReplacers = new object[]
+        {
+            new
+            {
                 createdBy = "<createdBy>",
                 description = "<description>",
                 disabled = true,
@@ -252,17 +278,21 @@ var data = new {
         enableDefaultPatterns = true,
         lastUpdatedTimestamp = 1234L,
         modifiedBy = "<modifiedBy>",
-        normalizationRules = new[] {
-            new {
+        normalizationRules = new object[]
+        {
+            new
+            {
                 description = "<description>",
                 disabled = true,
                 dynamicReplacement = true,
-                entityTypes = new[] {
-                    "<String>"
+                entityTypes = new object[]
+                {
+                    "<entityTypes>"
                 },
                 lastUpdatedTimestamp = 1234L,
                 name = "<name>",
-                regex = new {
+                regex = new
+                {
                     maxDigits = 1234,
                     maxLetters = 1234,
                     minDashes = 1234,
@@ -276,11 +306,13 @@ var data = new {
                     regexStr = "<regexStr>",
                 },
                 replaceWith = "<replaceWith>",
-                version = 123.45d,
+                version = 123.45,
             }
         },
-        regexReplacers = new[] {
-            new {
+        regexReplacers = new object[]
+        {
+            new
+            {
                 condition = "<condition>",
                 createdBy = "<createdBy>",
                 description = "<description>",
@@ -292,21 +324,19 @@ var data = new {
                 replaceWith = "<replaceWith>",
             }
         },
-        rejectedPatterns = new[] {
-            new {
-                createdBy = "<createdBy>",
-                filterType = "Pattern",
-                lastUpdatedTimestamp = 1234L,
-                modifiedBy = "<modifiedBy>",
-                name = "<name>",
-                path = "<path>",
-            }
+        rejectedPatterns = new object[]
+        {
+            null
         },
-        scopedRules = new[] {
-            new {
+        scopedRules = new object[]
+        {
+            new
+            {
                 bindingUrl = "<bindingUrl>",
-                rules = new[] {
-                    new {
+                rules = new object[]
+                {
+                    new
+                    {
                         displayName = "<displayName>",
                         isResourceSet = true,
                         lastUpdatedTimestamp = 1234L,
@@ -319,9 +349,8 @@ var data = new {
         },
         version = 1234,
     },
-};
-
-Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data));
+});
+Response response = await client.CreateOrUpdateResourceSetRuleAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -409,38 +438,41 @@ Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRul
 Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("qualifiedName").ToString());
 Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("storeType").ToString());
 Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("version").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="CreateOrUpdateResourceSetRule(RequestContent,RequestContext)">
-<example>
+      <example>
 This sample shows how to call CreateOrUpdateResourceSetRule and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-var data = new {};
-
-Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateOrUpdateResourceSetRule(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateResourceSetRule with all request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateResourceSetRule with all request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-var data = new {
-    advancedResourceSet = new {
+using RequestContent content = RequestContent.Create(new
+{
+    advancedResourceSet = new
+    {
         modifiedAt = "2022-05-10T18:57:31.2311892Z",
         resourceSetProcessing = "Default",
     },
-    pathPatternConfig = new {
-        acceptedPatterns = new[] {
-            new {
+    pathPatternConfig = new
+    {
+        acceptedPatterns = new object[]
+        {
+            new
+            {
                 createdBy = "<createdBy>",
                 filterType = "Pattern",
                 lastUpdatedTimestamp = 1234L,
@@ -449,8 +481,10 @@ var data = new {
                 path = "<path>",
             }
         },
-        complexReplacers = new[] {
-            new {
+        complexReplacers = new object[]
+        {
+            new
+            {
                 createdBy = "<createdBy>",
                 description = "<description>",
                 disabled = true,
@@ -465,17 +499,21 @@ var data = new {
         enableDefaultPatterns = true,
         lastUpdatedTimestamp = 1234L,
         modifiedBy = "<modifiedBy>",
-        normalizationRules = new[] {
-            new {
+        normalizationRules = new object[]
+        {
+            new
+            {
                 description = "<description>",
                 disabled = true,
                 dynamicReplacement = true,
-                entityTypes = new[] {
-                    "<String>"
+                entityTypes = new object[]
+                {
+                    "<entityTypes>"
                 },
                 lastUpdatedTimestamp = 1234L,
                 name = "<name>",
-                regex = new {
+                regex = new
+                {
                     maxDigits = 1234,
                     maxLetters = 1234,
                     minDashes = 1234,
@@ -489,11 +527,13 @@ var data = new {
                     regexStr = "<regexStr>",
                 },
                 replaceWith = "<replaceWith>",
-                version = 123.45d,
+                version = 123.45,
             }
         },
-        regexReplacers = new[] {
-            new {
+        regexReplacers = new object[]
+        {
+            new
+            {
                 condition = "<condition>",
                 createdBy = "<createdBy>",
                 description = "<description>",
@@ -505,21 +545,19 @@ var data = new {
                 replaceWith = "<replaceWith>",
             }
         },
-        rejectedPatterns = new[] {
-            new {
-                createdBy = "<createdBy>",
-                filterType = "Pattern",
-                lastUpdatedTimestamp = 1234L,
-                modifiedBy = "<modifiedBy>",
-                name = "<name>",
-                path = "<path>",
-            }
+        rejectedPatterns = new object[]
+        {
+            null
         },
-        scopedRules = new[] {
-            new {
+        scopedRules = new object[]
+        {
+            new
+            {
                 bindingUrl = "<bindingUrl>",
-                rules = new[] {
-                    new {
+                rules = new object[]
+                {
+                    new
+                    {
                         displayName = "<displayName>",
                         isResourceSet = true,
                         lastUpdatedTimestamp = 1234L,
@@ -532,9 +570,8 @@ var data = new {
         },
         version = 1234,
     },
-};
-
-Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data));
+});
+Response response = client.CreateOrUpdateResourceSetRule(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -622,34 +659,53 @@ Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRul
 Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("qualifiedName").ToString());
 Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("storeType").ToString());
 Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("version").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="DeleteResourceSetRuleAsync(RequestContext)">
-<example>
+      <example>
 This sample shows how to call DeleteResourceSetRuleAsync.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
 Response response = await client.DeleteResourceSetRuleAsync();
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call DeleteResourceSetRuleAsync with all request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+
+Response response = await client.DeleteResourceSetRuleAsync();
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
     <member name="DeleteResourceSetRule(RequestContext)">
-<example>
+      <example>
 This sample shows how to call DeleteResourceSetRule.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
 Response response = client.DeleteResourceSetRule();
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call DeleteResourceSetRule with all request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+
+Response response = client.DeleteResourceSetRule();
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
   </members>
 </doc>

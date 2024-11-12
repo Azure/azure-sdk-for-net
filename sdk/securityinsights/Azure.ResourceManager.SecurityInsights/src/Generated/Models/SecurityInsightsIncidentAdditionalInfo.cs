@@ -5,45 +5,95 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Incident additional data property bag. </summary>
     public partial class SecurityInsightsIncidentAdditionalInfo
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentAdditionalInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentAdditionalInfo"/>. </summary>
         internal SecurityInsightsIncidentAdditionalInfo()
         {
             AlertProductNames = new ChangeTrackingList<string>();
             Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
+            Techniques = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentAdditionalInfo"/>. </summary>
         /// <param name="alertsCount"> The number of alerts in the incident. </param>
         /// <param name="bookmarksCount"> The number of bookmarks in the incident. </param>
         /// <param name="commentsCount"> The number of comments in the incident. </param>
         /// <param name="alertProductNames"> List of product names of alerts in the incident. </param>
         /// <param name="tactics"> The tactics associated with incident. </param>
-        internal SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IReadOnlyList<string> alertProductNames, IReadOnlyList<SecurityInsightsAttackTactic> tactics)
+        /// <param name="techniques"> The techniques associated with incident's tactics. </param>
+        /// <param name="providerIncidentUri"> The provider incident url to the incident in Microsoft 365 Defender portal. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IReadOnlyList<string> alertProductNames, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IReadOnlyList<string> techniques, Uri providerIncidentUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertsCount = alertsCount;
             BookmarksCount = bookmarksCount;
             CommentsCount = commentsCount;
             AlertProductNames = alertProductNames;
             Tactics = tactics;
+            Techniques = techniques;
+            ProviderIncidentUri = providerIncidentUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of alerts in the incident. </summary>
+        [WirePath("alertsCount")]
         public int? AlertsCount { get; }
         /// <summary> The number of bookmarks in the incident. </summary>
+        [WirePath("bookmarksCount")]
         public int? BookmarksCount { get; }
         /// <summary> The number of comments in the incident. </summary>
+        [WirePath("commentsCount")]
         public int? CommentsCount { get; }
         /// <summary> List of product names of alerts in the incident. </summary>
+        [WirePath("alertProductNames")]
         public IReadOnlyList<string> AlertProductNames { get; }
         /// <summary> The tactics associated with incident. </summary>
+        [WirePath("tactics")]
         public IReadOnlyList<SecurityInsightsAttackTactic> Tactics { get; }
+        /// <summary> The techniques associated with incident's tactics. </summary>
+        [WirePath("techniques")]
+        public IReadOnlyList<string> Techniques { get; }
+        /// <summary> The provider incident url to the incident in Microsoft 365 Defender portal. </summary>
+        [WirePath("providerIncidentUrl")]
+        public Uri ProviderIncidentUri { get; }
     }
 }

@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterRole : IUtf8JsonSerializable
+    public partial class HDInsightClusterRole : IUtf8JsonSerializable, IJsonModel<HDInsightClusterRole>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterRole>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HDInsightClusterRole>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterRole>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightClusterRole)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -39,22 +57,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoscale"u8);
-                writer.WriteObjectValue(AutoScaleConfiguration);
+                writer.WriteObjectValue(AutoScaleConfiguration, options);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue(HardwareProfile, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
-                writer.WriteObjectValue(VirtualNetworkProfile);
+                writer.WriteObjectValue(VirtualNetworkProfile, options);
             }
             if (Optional.IsCollectionDefined(DataDisksGroups))
             {
@@ -62,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisksGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,26 +99,56 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("encryptDataDisks"u8);
                 writer.WriteBooleanValue(EncryptDataDisks.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static HDInsightClusterRole DeserializeHDInsightClusterRole(JsonElement element)
+        HDInsightClusterRole IJsonModel<HDInsightClusterRole>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterRole>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightClusterRole)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightClusterRole(document.RootElement, options);
+        }
+
+        internal static HDInsightClusterRole DeserializeHDInsightClusterRole(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> minInstanceCount = default;
-            Optional<int> targetInstanceCount = default;
-            Optional<string> vmGroupName = default;
-            Optional<HDInsightAutoScaleConfiguration> autoScale = default;
-            Optional<HardwareProfile> hardwareProfile = default;
-            Optional<OSProfile> osProfile = default;
-            Optional<HDInsightVirtualNetworkProfile> virtualNetworkProfile = default;
-            Optional<IList<HDInsightClusterDataDiskGroup>> dataDisksGroups = default;
-            Optional<IList<ScriptAction>> scriptActions = default;
-            Optional<bool> encryptDataDisks = default;
+            string name = default;
+            int? minInstanceCount = default;
+            int? targetInstanceCount = default;
+            string vmGroupName = default;
+            HDInsightAutoScaleConfiguration autoScale = default;
+            HardwareProfile hardwareProfile = default;
+            OSProfile osProfile = default;
+            HDInsightVirtualNetworkProfile virtualNetworkProfile = default;
+            IList<HDInsightClusterDataDiskGroup> dataDisksGroups = default;
+            IList<ScriptAction> scriptActions = default;
+            bool? encryptDataDisks = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -137,7 +185,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(property.Value);
+                    autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hardwareProfile"u8))
@@ -146,7 +194,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property.Value);
+                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
@@ -155,7 +203,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfile.DeserializeOSProfile(property.Value);
+                    osProfile = OSProfile.DeserializeOSProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkProfile"u8))
@@ -164,7 +212,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    virtualNetworkProfile = HDInsightVirtualNetworkProfile.DeserializeHDInsightVirtualNetworkProfile(property.Value);
+                    virtualNetworkProfile = HDInsightVirtualNetworkProfile.DeserializeHDInsightVirtualNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDisksGroups"u8))
@@ -176,7 +224,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightClusterDataDiskGroup> array = new List<HDInsightClusterDataDiskGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterDataDiskGroup.DeserializeHDInsightClusterDataDiskGroup(item));
+                        array.Add(HDInsightClusterDataDiskGroup.DeserializeHDInsightClusterDataDiskGroup(item, options));
                     }
                     dataDisksGroups = array;
                     continue;
@@ -190,7 +238,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<ScriptAction> array = new List<ScriptAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptAction.DeserializeScriptAction(item));
+                        array.Add(ScriptAction.DeserializeScriptAction(item, options));
                     }
                     scriptActions = array;
                     continue;
@@ -204,8 +252,56 @@ namespace Azure.ResourceManager.HDInsight.Models
                     encryptDataDisks = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HDInsightClusterRole(name.Value, Optional.ToNullable(minInstanceCount), Optional.ToNullable(targetInstanceCount), vmGroupName.Value, autoScale.Value, hardwareProfile.Value, osProfile.Value, virtualNetworkProfile.Value, Optional.ToList(dataDisksGroups), Optional.ToList(scriptActions), Optional.ToNullable(encryptDataDisks));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HDInsightClusterRole(
+                name,
+                minInstanceCount,
+                targetInstanceCount,
+                vmGroupName,
+                autoScale,
+                hardwareProfile,
+                osProfile,
+                virtualNetworkProfile,
+                dataDisksGroups ?? new ChangeTrackingList<HDInsightClusterDataDiskGroup>(),
+                scriptActions ?? new ChangeTrackingList<ScriptAction>(),
+                encryptDataDisks,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HDInsightClusterRole>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterRole>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightClusterRole)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HDInsightClusterRole IPersistableModel<HDInsightClusterRole>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterRole>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHDInsightClusterRole(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightClusterRole)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HDInsightClusterRole>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

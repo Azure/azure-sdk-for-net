@@ -18,9 +18,9 @@ namespace Azure.Communication.Email.Tests
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
             SanitizedHeaders.Add("Operation-Id");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx, "emails/operations/sanitizedId?api"));
-            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Location", "https://sanitized.communication.azure.com/emails/operations/sanitizedId?api-version=2023-03-31"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx) { Value = "emails/operations/sanitizedId?api" });
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Location") { Value = "https://sanitized.communication.azure.com/emails/operations/sanitizedId?api-version=2023-03-31" });
         }
 
         protected EmailClient CreateEmailClient()
@@ -46,11 +46,10 @@ namespace Azure.Communication.Email.Tests
             }
             else
             {
+                tokenCredential = new DefaultAzureCredential();
                 #region Snippet:Azure_Communication_Email_CreateEmailClientWithToken
                 //@@ string endpoint = "<endpoint_url>";
-                //@@ TokenCredential tokenCredential = new DefaultAzureCredential();
-                /*@@*/
-                tokenCredential = new DefaultAzureCredential();
+                //@@ var tokenCredential = new DefaultAzureCredential();
                 //@@ EmailClient emailClient = new EmailClient(new Uri(endpoint), tokenCredential);
                 #endregion Snippet:Azure_Communication_Email_CreateEmailClientWithToken
             }

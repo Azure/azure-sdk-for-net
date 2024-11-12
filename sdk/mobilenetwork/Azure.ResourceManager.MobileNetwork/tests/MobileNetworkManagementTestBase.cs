@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MobileNetwork.Tests
 
         protected async Task<MobileNetworkResource> CreateMobileNetworkResource(ResourceGroupResource resourceGroup, string mobileNetworkName)
         {
-            var mobileNetworkData = new MobileNetworkData(MobileNetworkManagementUtilities.DefaultResourceLocation, new PlmnId("001", "01"));
+            var mobileNetworkData = new MobileNetworkData(MobileNetworkManagementUtilities.DefaultResourceLocation, new MobileNetworkPlmnId("001", "01"));
             var lro = await resourceGroup.GetMobileNetworks().CreateOrUpdateAsync(WaitUntil.Completed, mobileNetworkName, mobileNetworkData);
             return lro.Value;
         }

@@ -47,24 +47,78 @@ namespace BatchClientIntegrationTests
                 string poolId = "TestPatchPool-" + TestUtilities.GetMyName();
                 const string metadataKey = "Foo";
                 const string metadataValue = "Bar";
+                const string displayName = "ChangedName";
                 const string startTaskCommandLine = "cmd /c dir";
+                Dictionary<string, string> resourceTags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value" } };
+                var nodeUserPassword = TestUtilities.GenerateRandomPassword();
+
 
                 try
                 {
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
                     CloudPool pool = batchCli.PoolOperations.CreatePool(
                         poolId,
                         PoolFixture.VMSize,
-                        new CloudServiceConfiguration(PoolFixture.OSFamily),
+                        virtualMachineConfiguration,
                         targetDedicatedComputeNodes: 0);
 
                     await pool.CommitAsync().ConfigureAwait(false);
                     await pool.RefreshAsync().ConfigureAwait(false);
+                    
+
+                    while (pool.AllocationState != AllocationState.Steady)
+                    {
+                        await Task.Delay(1000).ConfigureAwait(false);
+                        await pool.RefreshAsync().ConfigureAwait(false);
+                    }
 
                     pool.StartTask = new StartTask(startTaskCommandLine);
                     pool.Metadata = new List<MetadataItem>()
                             {
                                 new MetadataItem(metadataKey, metadataValue)
                             };
+                    pool.DisplayName = displayName;
+
+                    pool.ResourceTags = resourceTags;
+                    pool.VirtualMachineConfiguration.NodePlacementConfiguration = new NodePlacementConfiguration(NodePlacementPolicyType.Zonal);
+
+                    pool.UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
+                    {
+                        AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
+                        {
+                            DisableAutomaticRollback = true,
+                            EnableAutomaticOSUpgrade = true,
+                            UseRollingUpgradePolicy = true,
+                            OsRollingUpgradeDeferral = true
+                        },
+                        RollingUpgradePolicy = new RollingUpgradePolicy()
+                        {
+                            EnableCrossZoneUpgrade = true,
+                            MaxBatchInstancePercent = 20,
+                            MaxUnhealthyInstancePercent = 20,
+                            MaxUnhealthyUpgradedInstancePercent = 20,
+                            PauseTimeBetweenBatches = TimeSpan.FromSeconds(5),
+                            PrioritizeUnhealthyInstances = false,
+                            RollbackFailedInstancesOnPolicyBreach = false
+                        }
+                    };
+
+                    pool.TaskSchedulingPolicy =
+                        new TaskSchedulingPolicy(Microsoft.Azure.Batch.Common.ComputeNodeFillType.Pack);
+
+
+                    pool.UserAccounts = new List<UserAccount>()
+                        {
+                            new UserAccount("test1", nodeUserPassword),
+                            new UserAccount("test2", nodeUserPassword, ElevationLevel.NonAdmin),
+                            new UserAccount("test3", nodeUserPassword, ElevationLevel.Admin),
+                            new UserAccount("test4", nodeUserPassword, linuxUserConfiguration: new LinuxUserConfiguration(sshPrivateKey: "AAAA==")),
+                        };
 
                     await pool.CommitChangesAsync().ConfigureAwait(false);
 
@@ -73,6 +127,17 @@ namespace BatchClientIntegrationTests
                     Assert.Equal(startTaskCommandLine, pool.StartTask.CommandLine);
                     Assert.Equal(metadataKey, pool.Metadata.Single().Name);
                     Assert.Equal(metadataValue, pool.Metadata.Single().Value);
+                    Assert.Equal(displayName, pool.DisplayName);
+                    Assert.Equal(resourceTags.Count, pool.ResourceTags.Count);
+                    Assert.Equal(resourceTags["tag1"], pool.ResourceTags["tag1"]);
+                    Assert.Equal(20, pool.UpgradePolicy.RollingUpgradePolicy.MaxBatchInstancePercent);
+                    Assert.Equal(ComputeNodeFillType.Pack, pool.TaskSchedulingPolicy.ComputeNodeFillType);
+                    Assert.Equal(4, pool.UserAccounts.Count);
+
+
+
+
+
                 }
                 finally
                 {
@@ -95,7 +160,13 @@ namespace BatchClientIntegrationTests
                 string poolId = "Bug1505248SupportMultipleTasksPerComputeNode-pool-" + TestUtilities.GetMyName();
                 try
                 {
-                    CloudPool newPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                    CloudPool newPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, virtualMachineConfiguration, targetDedicatedComputeNodes: 0);
 
                     newPool.TaskSlotsPerNode = 3;
 
@@ -132,7 +203,13 @@ namespace BatchClientIntegrationTests
                         // required but unrelated to test
                         unboundPS.VirtualMachineSize = PoolFixture.VMSize;
 
-                        unboundPS.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily);
+                        var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                            ubuntuImageDetails.ImageReference,
+                            nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                        unboundPS.VirtualMachineConfiguration = virtualMachineConfiguration;
 
                         unboundAPS.PoolLifetimeOption = Microsoft.Azure.Batch.Common.PoolLifetimeOption.Job;
 
@@ -194,7 +271,13 @@ namespace BatchClientIntegrationTests
                 {
                     // create a pool with env-settings and ResFiles
                     {
-                        CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
+                        var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                            ubuntuImageDetails.ImageReference,
+                            nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                        CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, virtualMachineConfiguration, targetDedicatedComputeNodes: 0);
 
                         StartTask st = new StartTask("dir");
 
@@ -265,7 +348,13 @@ namespace BatchClientIntegrationTests
 
                     // check pool create with empty-but-non-null collections
                     {
-                        CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
+                        var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                            ubuntuImageDetails.ImageReference,
+                            nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                        CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, virtualMachineConfiguration, targetDedicatedComputeNodes: 0);
 
                         StartTask st = new StartTask("dir")
                         {
@@ -318,7 +407,13 @@ namespace BatchClientIntegrationTests
 
                     // create a pool with env-settings and ResFiles
                     {
-                        CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
+                        var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                            ubuntuImageDetails.ImageReference,
+                            nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                        CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, virtualMachineConfiguration, targetDedicatedComputeNodes: 0);
 
                         // set the reference value
                         myPool.ResizeTimeout = referenceRST;
@@ -386,7 +481,13 @@ namespace BatchClientIntegrationTests
                         ips.TargetDedicatedComputeNodes = 0;
                         ips.VirtualMachineSize = PoolFixture.VMSize;
 
-                        ips.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily);
+                        var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                            ubuntuImageDetails.ImageReference,
+                            nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                        ips.VirtualMachineConfiguration = virtualMachineConfiguration;
 
                         unboundJobSchedule.Commit();
                     }
@@ -432,7 +533,13 @@ namespace BatchClientIntegrationTests
                 {
                     // create a pool.. empty for now
                     {
-                        CloudPool unboundPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily));
+                        var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                            ubuntuImageDetails.ImageReference,
+                            nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                        CloudPool unboundPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, virtualMachineConfiguration);
 
                         unboundPool.AutoScaleEnabled = true;
                         unboundPool.AutoScaleFormula = poolASFormulaOrig;
@@ -496,7 +603,13 @@ namespace BatchClientIntegrationTests
                 string poolId = "Bug1432819-" + TestUtilities.GetMyName();
                 try
                 {
-                    CloudPool unboundPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                    CloudPool unboundPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, virtualMachineConfiguration, targetDedicatedComputeNodes: 0);
                     unboundPool.Commit();
 
                     CloudPool boundPool = batchCli.PoolOperations.GetPool(poolId);
@@ -595,7 +708,13 @@ namespace BatchClientIntegrationTests
                 try
                 {
                     //Create a pool
-                    CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: targetDedicated);
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, virtualMachineConfiguration, targetDedicatedComputeNodes: targetDedicated);
                     pool.Commit();
 
                     TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromSeconds(20)).Wait();
@@ -646,7 +765,13 @@ namespace BatchClientIntegrationTests
                 try
                 {
                     //Create a pool
-                    CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated);
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, virtualMachineConfiguration, targetDedicated);
                     pool.Commit();
 
                     TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromSeconds(20)).Wait();
@@ -738,10 +863,16 @@ namespace BatchClientIntegrationTests
                     TestCommon.Configuration.BatchAccountResourceGroup);
                 try
                 {
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
                     CloudPool pool = batchCli.PoolOperations.CreatePool(
                         poolId,
                         PoolFixture.VMSize,
-                        new CloudServiceConfiguration(PoolFixture.OSFamily),
+                        virtualMachineConfiguration,
                         targetDedicated);
 
                     pool.NetworkConfiguration = new NetworkConfiguration()
@@ -777,7 +908,13 @@ namespace BatchClientIntegrationTests
                 {
                     var nodeUserPassword = TestUtilities.GenerateRandomPassword();
                     //Create a pool
-                    CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated);
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, virtualMachineConfiguration, targetDedicated);
                     pool.UserAccounts = new List<UserAccount>()
                         {
                             new UserAccount("test1", nodeUserPassword),
@@ -938,6 +1075,288 @@ namespace BatchClientIntegrationTests
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
 
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestPoolCreatedTrustedLaunch()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                string poolId = TestUtilities.GenerateResourceId();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        "standard_d2s_v3",
+                         new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                         {
+                             SecurityProfile = new SecurityProfile()
+                             {
+                                 SecurityType = SecurityTypes.TrustedLaunch,
+                                 EncryptionAtHost = true,
+                                 UefiSettings = new UefiSettings()
+                                 {
+                                     SecureBootEnabled = true,
+                                     VTpmEnabled = true
+                                 }
+                             }
+                         }
+
+                         );
+
+
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.NotNull(pool.VirtualMachineConfiguration.SecurityProfile);
+                    Assert.Equal(SecurityTypes.TrustedLaunch, pool.VirtualMachineConfiguration.SecurityProfile.SecurityType);
+                    Assert.True(pool.VirtualMachineConfiguration.SecurityProfile.EncryptionAtHost);
+                    Assert.True(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled);
+                    Assert.True(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled);
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestPoolCreatedOsDiskSecurityProfile()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                string poolId = TestUtilities.GenerateResourceId();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        "standard_d2s_v3",
+                         new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                         {
+                             SecurityProfile = new SecurityProfile()
+                             {
+                                 SecurityType = SecurityTypes.ConfidentialVM,
+                                 EncryptionAtHost = true,
+                                 UefiSettings = new UefiSettings()
+                                 {
+                                     SecureBootEnabled = true,
+                                     VTpmEnabled = true
+                                 }
+                             },
+                             OSDisk = new OSDisk()
+                             {
+                                 Caching = CachingType.ReadOnly,
+                                 ManagedDisk = new ManagedDisk()
+                                 {
+                                     SecurityProfile = new VMDiskSecurityProfile()
+                                     {
+                                         SecurityEncryptionType = "VMGuestStateOnly",
+                                     }
+                                 },
+                             }
+                         }
+                         );
+
+
+
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.NotNull(pool.VirtualMachineConfiguration.OSDisk);
+                    Assert.Equal(CachingType.ReadOnly, pool.VirtualMachineConfiguration.OSDisk.Caching);
+                    Assert.Equal("VMGuestStateOnly", pool.VirtualMachineConfiguration.OSDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType);
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestPoolCreatedOsDisk()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                string poolId = TestUtilities.GenerateResourceId();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        "standard_d2s_v3",
+                         new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                         {
+                             OSDisk = new OSDisk()
+                             {
+                                 Caching = CachingType.ReadOnly,
+                                 ManagedDisk = new ManagedDisk()
+                                 {
+                                     StorageAccountType = StorageAccountType.PremiumLrs
+                                 },
+                                 DiskSizeGB = 10
+                             }
+                         }
+                         );
+
+
+
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.NotNull(pool.VirtualMachineConfiguration.OSDisk);
+                    Assert.Equal(CachingType.ReadOnly, pool.VirtualMachineConfiguration.OSDisk.Caching);
+                    Assert.Equal(10, pool.VirtualMachineConfiguration.OSDisk.DiskSizeGB);
+                    Assert.Equal(StorageAccountType.PremiumLrs, pool.VirtualMachineConfiguration.OSDisk.ManagedDisk.StorageAccountType);
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestPoolCreatedUpgradePolicy()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                string poolId = TestUtilities.GenerateResourceId();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        "standard_d2s_v3",
+                         new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                         {
+                             NodePlacementConfiguration = new NodePlacementConfiguration(NodePlacementPolicyType.Zonal)
+                         }
+                         );
+                   
+                    pool.UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
+                    {
+                        AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
+                        {
+                            DisableAutomaticRollback = true,
+                            EnableAutomaticOSUpgrade = true,
+                            UseRollingUpgradePolicy = true,
+                            OsRollingUpgradeDeferral = true
+                        },
+                        RollingUpgradePolicy = new RollingUpgradePolicy()
+                        {
+                            EnableCrossZoneUpgrade = true,
+                            MaxBatchInstancePercent = 20,
+                            MaxUnhealthyInstancePercent = 20,
+                            MaxUnhealthyUpgradedInstancePercent = 20,
+                            PauseTimeBetweenBatches = TimeSpan.FromSeconds(5),
+                            PrioritizeUnhealthyInstances = false,
+                            RollbackFailedInstancesOnPolicyBreach = false
+                        }
+                    };
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.NotNull(pool.UpgradePolicy);
+                    Assert.Equal(UpgradeMode.Automatic, pool.UpgradePolicy.Mode);
+                    Assert.NotNull(pool.UpgradePolicy.AutomaticOSUpgradePolicy);
+                    Assert.Equal(true, pool.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback);
+                    Assert.Equal(true, pool.UpgradePolicy.AutomaticOSUpgradePolicy.EnableAutomaticOSUpgrade);
+                    Assert.NotNull(pool.UpgradePolicy.RollingUpgradePolicy);
+                    Assert.Equal(true, pool.UpgradePolicy.RollingUpgradePolicy.EnableCrossZoneUpgrade);
+                    Assert.Equal(20, pool.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyUpgradedInstancePercent);
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestPoolCreateResourceTags()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientServicePrincipal().ConfigureAwait(false);
+
+                string poolId = TestUtilities.GenerateResourceId();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        "standard_d2s_v3",
+                         new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                         );
+                    pool.ResourceTags = new Dictionary<string, string>()
+                    {
+                        {"TagName1","TagValue1"},
+                        {"TagName2","TagValue2"},
+                    };
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.NotNull(pool.ResourceTags);
+                    Assert.Equal("TagValue1", pool.ResourceTags["TagName1"]);
+                    Assert.Equal("TagValue2", pool.ResourceTags["TagName2"]);
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
         [Theory]
         [LiveTest]
         [InlineData(1, 0)]
@@ -954,10 +1373,16 @@ namespace BatchClientIntegrationTests
 
                 try
                 {
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
                     CloudPool pool = batchCli.PoolOperations.CreatePool(
                         poolId,
                         PoolFixture.VMSize,
-                        new CloudServiceConfiguration(PoolFixture.OSFamily));
+                        virtualMachineConfiguration);
 
                     await pool.CommitAsync().ConfigureAwait(false);
                     await pool.RefreshAsync().ConfigureAwait(false);
@@ -992,6 +1417,7 @@ namespace BatchClientIntegrationTests
                 using BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
                 var nodeCounts = batchCli.PoolOperations.ListPoolNodeCounts();
 
+                
                 Assert.NotEmpty(nodeCounts);
                 var poolId = nodeCounts.First().PoolId;
 
@@ -1291,8 +1717,9 @@ namespace BatchClientIntegrationTests
                         var extensions = batchCli.PoolOperations.ListComputeNodeExtensions(poolId, node.Id);
                         testOutputHelper.WriteLine($"Extentions size is {extensions.Count()}...");
                         var keyvalutExtension = extensions.Single(extension => extension.VmExtension.Publisher.Contains("KeyVault"));
+                        
                         Assert.True(keyvalutExtension.VmExtension.EnableAutomaticUpgrade);
-                    }              
+                    }
                 }
                 finally
                 {
@@ -1318,10 +1745,10 @@ namespace BatchClientIntegrationTests
             private Task<AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListUsageMetricsHeaders>> NewFunc(CancellationToken token)
             {
                 var response = new AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListUsageMetricsHeaders>()
-                    {
+                {
 
-                        Body = new FakePage<Protocol.Models.PoolUsageMetrics>(_poolUsageMetricsList)
-                    };
+                    Body = new FakePage<Protocol.Models.PoolUsageMetrics>(_poolUsageMetricsList)
+                };
 
                 return Task.FromResult(response);
             }
@@ -1435,7 +1862,13 @@ namespace BatchClientIntegrationTests
                 try
                 {
                     //Create a pool with 2 compute nodes
-                    CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: targetDedicated);
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, virtualMachineConfiguration, targetDedicatedComputeNodes: targetDedicated);
                     pool.Commit();
 
                     testOutputHelper.WriteLine("Created pool {0}", poolId);
@@ -1537,7 +1970,13 @@ namespace BatchClientIntegrationTests
                 try
                 {
                     //Create a pool
-                    CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: targetDedicated);
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, virtualMachineConfiguration, targetDedicatedComputeNodes: targetDedicated);
 
                     pool.Commit();
 
@@ -1662,11 +2101,17 @@ namespace BatchClientIntegrationTests
                 const int targetLowPriority = 1;
                 try
                 {
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
                     //Create a pool
                     CloudPool pool = batchCli.PoolOperations.CreatePool(
                         poolId,
                         PoolFixture.VMSize,
-                        new CloudServiceConfiguration(PoolFixture.OSFamily),
+                        virtualMachineConfiguration,
                         targetLowPriorityComputeNodes: targetLowPriority);
 
                     await pool.CommitAsync().ConfigureAwait(false);

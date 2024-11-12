@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         public static IEnumerable<object[]> RetriableExceptionTestCases()
         {
             yield return new object[] { new TimeoutException() };
-            yield return new object[] { new SocketException(500) };
+            yield return new object[] { new SocketException((int)SocketError.ConnectionReset) };
             yield return new object[] { new IOException() };
             yield return new object[] { new UnauthorizedAccessException() };
 
@@ -61,6 +61,8 @@ namespace Azure.Messaging.ServiceBus.Tests
             yield return new object[] { new NullReferenceException() };
             yield return new object[] { new OutOfMemoryException() };
             yield return new object[] { new ObjectDisposedException("dummy") };
+            yield return new object[] { new SocketException((int)SocketError.HostNotFound) };
+            yield return new object[] { new SocketException((int)SocketError.HostUnreachable) };
 
             // Task/Operation Canceled should use the inner exception as the decision point.
 
@@ -95,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [TestCase(2)]
         [TestCase(10)]
         [TestCase(100)]
-        public void CalulateTryTimeoutRespectsOptions(int attemptCount)
+        public void CalculateTryTimeoutRespectsOptions(int attemptCount)
         {
             var timeout = TimeSpan.FromSeconds(5);
             var options = new ServiceBusRetryOptions { TryTimeout = timeout };
@@ -340,7 +342,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        public void CalculateRetryDelayDoesNotOverlowTimespanMaximum()
+        public void CalculateRetryDelayDoesNotOverflowTimespanMaximum()
         {
             // The fixed policy can't exceed the maximum due to limitations on
             // the configured Delay and MaximumRetries; the exponential policy

@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                             "}}" +
                                         "]," +
                                         "\"sourceDisplayName\": \"displayName\"," +
-                                        "\"sourceIdentity\":{{" +
+                                        "\"source\":{{" +
                                                   "\"rawId\":\"sourceId\"," +
                                                   "\"kind\":\"communicationUser\"," +
                                                   "\"communicationUser\":{{\"id\":\"sourceId\"}}" +
@@ -31,7 +31,31 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                         "\"callConnectionState\": \"connecting\"," +
                                         "\"subject\": \"dummySubject\"," +
                                         "\"callbackUri\": \"https://bot.contoso.com/callback\"," +
-                                        "\"mediaSubscriptionId\": {0}" +
+                                        "\"mediaSubscriptionId\": {0}," +
+                                        "\"dataSubscriptionId\": {1}" +
+                                        "}}";
+        protected const string DummyOPSPayload = "{{" +
+                                        "\"callConnectionId\": \"someCallConnectionId\"," +
+                                        "\"serverCallId\": \"someServerCallId\"," +
+                                        "\"targets\": [" +
+                                           "{{" +
+                                               "\"rawId\":\"targetId\"," +
+                                               "\"kind\":\"communicationUser\"," +
+                                               "\"communicationUser\":{{\"id\":\"targetId\"}}" +
+                                            "}}" +
+                                        "]," +
+                                        "\"sourceDisplayName\": \"displayName\"," +
+                                        "\"source\":{{" +
+                                                  "\"rawId\":\"sourceId\"," +
+                                                  "\"kind\":\"microsoftTeamsApp\"," +
+                                                  "\"microsoftTeamsApp\":{{\"appId\":\"sourceId\"," +
+                                                                            "\"cloud\": \"public\"}}" +
+                                                  "}}," +
+                                        "\"callConnectionState\": \"connecting\"," +
+                                        "\"subject\": \"dummySubject\"," +
+                                        "\"callbackUri\": \"https://bot.contoso.com/callback\"," +
+                                        "\"mediaSubscriptionId\": {0}," +
+                                        "\"dataSubscriptionId\": {1}" +
                                         "}}";
         protected const string SourceId = "sourceId";
         protected const string TargetId = "targetId";
@@ -43,10 +67,13 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         private const string NoneMediaSubscriptionId = "null";
         private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
-        protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaSubscriptionId);
-        protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload = string.Format(DummyPayload, MediaSubscriptionId);
+        private const string NoneDataSubscriptionId = "null";
+        private const string DataSubscriptionId = "\"dataSubscriptionId\"";
+        protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaSubscriptionId, NoneDataSubscriptionId);
+        protected string CreateOrAnswerCallOrGetCallConnectionPayloadForOPSCall = string.Format(DummyOPSPayload, NoneMediaSubscriptionId, NoneDataSubscriptionId);
+        protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload = string.Format(DummyPayload, MediaSubscriptionId, DataSubscriptionId);
 
-        internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
+        internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, bool isOPSCall = false)
         {
             var mockResponse = new MockResponse(responseCode);
 
@@ -70,9 +97,13 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 }
             }
 
-            var callAutomationClientOptions = new CallAutomationClientOptions()
+            var callAutomationClientOptions = isOPSCall ? new CallAutomationClientOptions()
             {
-                Source = new CommunicationUserIdentifier("12345"),
+                OPSSource = new MicrosoftTeamsAppIdentifier(SourceId),
+                Transport = new MockTransport(mockResponse)
+            } : new CallAutomationClientOptions()
+            {
+                Source = new CommunicationUserIdentifier(SourceId),
                 Transport = new MockTransport(mockResponse)
             };
 
@@ -93,8 +124,22 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             Assert.AreEqual(CallConnectionId, callConnectionProperties.CallConnectionId);
             Assert.AreEqual(ServerCallId, callConnectionProperties.ServerCallId);
-            var sourceUser = (CommunicationUserIdentifier)callConnectionProperties.SourceIdentity;
+            var sourceUser = (CommunicationUserIdentifier)callConnectionProperties.Source;
             Assert.AreEqual(SourceId, sourceUser.Id);
+            Assert.AreEqual(callConnectionProperties.Targets.Count, 1);
+            var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
+            Assert.AreEqual(TargetId, targetUser.Id);
+            Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
+            Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackUri.ToString());
+            Assert.AreEqual(DisplayName, callConnectionProperties.SourceDisplayName);
+        }
+
+        protected void verifyOPSCallConnectionProperties(CallConnectionProperties callConnectionProperties)
+        {
+            Assert.AreEqual(CallConnectionId, callConnectionProperties.CallConnectionId);
+            Assert.AreEqual(ServerCallId, callConnectionProperties.ServerCallId);
+            var opsSourceUser = (MicrosoftTeamsAppIdentifier)callConnectionProperties.Source;
+            Assert.AreEqual(SourceId, opsSourceUser.AppId);
             Assert.AreEqual(callConnectionProperties.Targets.Count, 1);
             var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
             Assert.AreEqual(TargetId, targetUser.Id);

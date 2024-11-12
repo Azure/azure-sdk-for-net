@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class DiskPoolIscsiTargetPortalGroupAcl : IUtf8JsonSerializable
+    public partial class DiskPoolIscsiTargetPortalGroupAcl : IUtf8JsonSerializable, IJsonModel<DiskPoolIscsiTargetPortalGroupAcl>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskPoolIscsiTargetPortalGroupAcl>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DiskPoolIscsiTargetPortalGroupAcl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetPortalGroupAcl>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPortalGroupAcl)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("initiatorIqn"u8);
             writer.WriteStringValue(InitiatorIqn);
             writer.WritePropertyName("mappedLuns"u8);
@@ -25,17 +43,47 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DiskPoolIscsiTargetPortalGroupAcl DeserializeDiskPoolIscsiTargetPortalGroupAcl(JsonElement element)
+        DiskPoolIscsiTargetPortalGroupAcl IJsonModel<DiskPoolIscsiTargetPortalGroupAcl>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetPortalGroupAcl>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPortalGroupAcl)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiskPoolIscsiTargetPortalGroupAcl(document.RootElement, options);
+        }
+
+        internal static DiskPoolIscsiTargetPortalGroupAcl DeserializeDiskPoolIscsiTargetPortalGroupAcl(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string initiatorIqn = default;
             IList<string> mappedLuns = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("initiatorIqn"u8))
@@ -53,8 +101,44 @@ namespace Azure.ResourceManager.StoragePool.Models
                     mappedLuns = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DiskPoolIscsiTargetPortalGroupAcl(initiatorIqn, mappedLuns);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DiskPoolIscsiTargetPortalGroupAcl(initiatorIqn, mappedLuns, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DiskPoolIscsiTargetPortalGroupAcl>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetPortalGroupAcl>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPortalGroupAcl)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DiskPoolIscsiTargetPortalGroupAcl IPersistableModel<DiskPoolIscsiTargetPortalGroupAcl>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetPortalGroupAcl>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDiskPoolIscsiTargetPortalGroupAcl(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPortalGroupAcl)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DiskPoolIscsiTargetPortalGroupAcl>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

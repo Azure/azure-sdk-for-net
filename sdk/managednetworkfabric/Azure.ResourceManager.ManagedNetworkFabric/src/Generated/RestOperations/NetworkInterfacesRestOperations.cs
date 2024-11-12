@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -33,11 +32,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-02-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkInterfaceData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkDeviceInterfaceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
+            uri.AppendPath(networkDeviceName, true);
+            uri.AppendPath("/networkInterfaces/", false);
+            uri.AppendPath(networkInterfaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkDeviceInterfaceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,22 +72,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Create a Network Interface resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
-        /// <param name="networkInterfaceName"> Name of the NetworkInterface. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkInterfaceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkDeviceInterfaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -93,15 +108,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Create a Network Interface resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
-        /// <param name="networkInterfaceName"> Name of the NetworkInterface. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkInterfaceData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkDeviceInterfaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -119,6 +134,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
+            uri.AppendPath(networkDeviceName, true);
+            uri.AppendPath("/networkInterfaces/", false);
+            uri.AppendPath(networkInterfaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName)
@@ -144,14 +175,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Get the Network Interface resource details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
-        /// <param name="networkInterfaceName"> Name of the NetworkInterfaceName. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkInterfaceData>> GetAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkDeviceInterfaceData>> GetAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -164,27 +195,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case 200:
                     {
-                        NetworkInterfaceData value = default;
+                        NetworkDeviceInterfaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetworkInterfaceData.DeserializeNetworkInterfaceData(document.RootElement);
+                        value = NetworkDeviceInterfaceData.DeserializeNetworkDeviceInterfaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NetworkInterfaceData)null, message.Response);
+                    return Response.FromValue((NetworkDeviceInterfaceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get the Network Interface resource details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
-        /// <param name="networkInterfaceName"> Name of the NetworkInterfaceName. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkInterfaceData> Get(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, CancellationToken cancellationToken = default)
+        public Response<NetworkDeviceInterfaceData> Get(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -197,19 +228,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case 200:
                     {
-                        NetworkInterfaceData value = default;
+                        NetworkDeviceInterfaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetworkInterfaceData.DeserializeNetworkInterfaceData(document.RootElement);
+                        value = NetworkDeviceInterfaceData.DeserializeNetworkDeviceInterfaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NetworkInterfaceData)null, message.Response);
+                    return Response.FromValue((NetworkDeviceInterfaceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkInterfacePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkDeviceInterfacePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
+            uri.AppendPath(networkDeviceName, true);
+            uri.AppendPath("/networkInterfaces/", false);
+            uri.AppendPath(networkInterfaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkDeviceInterfacePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -229,22 +276,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Update certain properties of the Network Interface resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
-        /// <param name="networkInterfaceName"> Name of the NetworkInterfaceName. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
         /// <param name="patch"> NetworkInterface properties to update. Only tags are supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkInterfacePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkDeviceInterfacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -265,15 +312,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Update certain properties of the Network Interface resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
-        /// <param name="networkInterfaceName"> Name of the NetworkInterfaceName. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
         /// <param name="patch"> NetworkInterface properties to update. Only tags are supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkInterfacePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkDeviceInterfacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -291,6 +338,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
+            uri.AppendPath(networkDeviceName, true);
+            uri.AppendPath("/networkInterfaces/", false);
+            uri.AppendPath(networkInterfaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName)
@@ -316,10 +379,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Delete the Network Interface resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
-        /// <param name="networkInterfaceName"> Name of the NetworkInterfaceName. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -334,7 +397,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -344,10 +406,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Delete the Network Interface resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
-        /// <param name="networkInterfaceName"> Name of the NetworkInterfaceName. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -362,7 +424,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -371,7 +432,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string networkDeviceName)
+        internal RequestUriBuilder CreateListByNetworkDeviceRequestUri(string subscriptionId, string resourceGroupName, string networkDeviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
+            uri.AppendPath(networkDeviceName, true);
+            uri.AppendPath("/networkInterfaces", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByNetworkDeviceRequest(string subscriptionId, string resourceGroupName, string networkDeviceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -393,27 +469,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> List all the Network Interface resources in a given resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkInterfacesList>> ListAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkDeviceInterfacesList>> ListByNetworkDeviceAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkDeviceName);
+            using var message = CreateListByNetworkDeviceRequest(subscriptionId, resourceGroupName, networkDeviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NetworkInterfacesList value = default;
+                        NetworkDeviceInterfacesList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetworkInterfacesList.DeserializeNetworkInterfacesList(document.RootElement);
+                        value = NetworkDeviceInterfacesList.DeserializeNetworkDeviceInterfacesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -422,27 +498,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> List all the Network Interface resources in a given resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkInterfacesList> List(string subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
+        public Response<NetworkDeviceInterfacesList> ListByNetworkDevice(string subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkDeviceName);
+            using var message = CreateListByNetworkDeviceRequest(subscriptionId, resourceGroupName, networkDeviceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NetworkInterfacesList value = default;
+                        NetworkDeviceInterfacesList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetworkInterfacesList.DeserializeNetworkInterfacesList(document.RootElement);
+                        value = NetworkDeviceInterfacesList.DeserializeNetworkDeviceInterfacesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -450,11 +526,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal HttpMessage CreateGetStatusRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName)
+        internal RequestUriBuilder CreateUpdateAdministrativeStateRequestUri(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeStateContent content)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -465,67 +538,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/networkInterfaces/", false);
             uri.AppendPath(networkInterfaceName, true);
-            uri.AppendPath("/getStatus", false);
+            uri.AppendPath("/updateAdministrativeState", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
+            return uri;
         }
 
-        /// <summary> Get the running status of the Network Interface. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
-        /// <param name="networkInterfaceName"> Name of the NetworkInterface. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetStatusAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-
-            using var message = CreateGetStatusRequest(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the running status of the Network Interface. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
-        /// <param name="networkInterfaceName"> Name of the NetworkInterface. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GetStatus(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-
-            using var message = CreateGetStatusRequest(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUpdateAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeState body)
+        internal HttpMessage CreateUpdateAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeStateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -545,34 +563,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Update the admin state of the Network Interface. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
-        /// <param name="networkInterfaceName"> Name of the NetworkInterface. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAdministrativeStateAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAdministrativeStateAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, body);
+            using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                     return message.Response;
                 default:
@@ -581,26 +600,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Update the admin state of the Network Interface. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
-        /// <param name="networkInterfaceName"> Name of the NetworkInterface. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateAdministrativeState(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public Response UpdateAdministrativeState(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, body);
+            using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                     return message.Response;
                 default:
@@ -608,7 +628,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string networkDeviceName)
+        internal RequestUriBuilder CreateListByNetworkDeviceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string networkDeviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByNetworkDeviceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string networkDeviceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -624,28 +652,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> List all the Network Interface resources in a given resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkInterfacesList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkDeviceInterfacesList>> ListByNetworkDeviceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkDeviceName);
+            using var message = CreateListByNetworkDeviceNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkDeviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NetworkInterfacesList value = default;
+                        NetworkDeviceInterfacesList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetworkInterfacesList.DeserializeNetworkInterfacesList(document.RootElement);
+                        value = NetworkDeviceInterfacesList.DeserializeNetworkDeviceInterfacesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -655,28 +683,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> List all the Network Interface resources in a given resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkDeviceName"> Name of the NetworkDevice. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkInterfacesList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
+        public Response<NetworkDeviceInterfacesList> ListByNetworkDeviceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkDeviceName);
+            using var message = CreateListByNetworkDeviceNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkDeviceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NetworkInterfacesList value = default;
+                        NetworkDeviceInterfacesList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetworkInterfacesList.DeserializeNetworkInterfacesList(document.RootElement);
+                        value = NetworkDeviceInterfacesList.DeserializeNetworkDeviceInterfacesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

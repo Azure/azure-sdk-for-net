@@ -10,21 +10,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.LifecyclePolicyCompleted event. </summary>
     public partial class StorageLifecyclePolicyCompletedEventData
     {
-        /// <summary> Initializes a new instance of StorageLifecyclePolicyCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyCompletedEventData"/>. </summary>
         internal StorageLifecyclePolicyCompletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageLifecyclePolicyCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyCompletedEventData"/>. </summary>
         /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
         /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <param name="tierToColdSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
-        internal StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary)
+        internal StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary)
         {
             ScheduleTime = scheduleTime;
             DeleteSummary = deleteSummary;
             TierToCoolSummary = tierToCoolSummary;
+            TierToColdSummary = tierToColdSummary;
             TierToArchiveSummary = tierToArchiveSummary;
         }
 
@@ -34,6 +36,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public StorageLifecyclePolicyActionSummaryDetail DeleteSummary { get; }
         /// <summary> Execution statistics of a specific policy action in a Blob Management cycle. </summary>
         public StorageLifecyclePolicyActionSummaryDetail TierToCoolSummary { get; }
+        /// <summary> Execution statistics of a specific policy action in a Blob Management cycle. </summary>
+        public StorageLifecyclePolicyActionSummaryDetail TierToColdSummary { get; }
         /// <summary> Execution statistics of a specific policy action in a Blob Management cycle. </summary>
         public StorageLifecyclePolicyActionSummaryDetail TierToArchiveSummary { get; }
     }

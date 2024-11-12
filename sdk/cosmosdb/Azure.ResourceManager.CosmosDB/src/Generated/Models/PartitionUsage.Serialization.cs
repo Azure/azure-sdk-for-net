@@ -6,26 +6,77 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PartitionUsage
+    public partial class PartitionUsage : IUtf8JsonSerializable, IJsonModel<PartitionUsage>
     {
-        internal static PartitionUsage DeserializePartitionUsage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartitionUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PartitionUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartitionUsage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PartitionUsage)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(PartitionId))
+            {
+                writer.WritePropertyName("partitionId"u8);
+                writer.WriteStringValue(PartitionId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PartitionKeyRangeId))
+            {
+                writer.WritePropertyName("partitionKeyRangeId"u8);
+                writer.WriteStringValue(PartitionKeyRangeId);
+            }
+        }
+
+        PartitionUsage IJsonModel<PartitionUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartitionUsage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PartitionUsage)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePartitionUsage(document.RootElement, options);
+        }
+
+        internal static PartitionUsage DeserializePartitionUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Guid> partitionId = default;
-            Optional<string> partitionKeyRangeId = default;
-            Optional<CosmosDBMetricUnitType> unit = default;
-            Optional<CosmosDBMetricName> name = default;
-            Optional<string> quotaPeriod = default;
-            Optional<long> limit = default;
-            Optional<long> currentValue = default;
+            Guid? partitionId = default;
+            string partitionKeyRangeId = default;
+            CosmosDBMetricUnitType? unit = default;
+            CosmosDBMetricName name = default;
+            string quotaPeriod = default;
+            long? limit = default;
+            long? currentValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionId"u8))
@@ -57,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value);
+                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("quotaPeriod"u8))
@@ -83,8 +134,190 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     currentValue = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PartitionUsage(Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue), Optional.ToNullable(partitionId), partitionKeyRangeId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PartitionUsage(
+                unit,
+                name,
+                quotaPeriod,
+                limit,
+                currentValue,
+                serializedAdditionalRawData,
+                partitionId,
+                partitionKeyRangeId);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  partitionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartitionId))
+                {
+                    builder.Append("  partitionId: ");
+                    builder.AppendLine($"'{PartitionId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionKeyRangeId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  partitionKeyRangeId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartitionKeyRangeId))
+                {
+                    builder.Append("  partitionKeyRangeId: ");
+                    if (PartitionKeyRangeId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PartitionKeyRangeId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PartitionKeyRangeId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  unit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Unit))
+                {
+                    builder.Append("  unit: ");
+                    builder.AppendLine($"'{Unit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Name, options, 2, false, "  name: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotaPeriod), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  quotaPeriod: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QuotaPeriod))
+                {
+                    builder.Append("  quotaPeriod: ");
+                    if (QuotaPeriod.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{QuotaPeriod}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{QuotaPeriod}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Limit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  limit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Limit))
+                {
+                    builder.Append("  limit: ");
+                    builder.AppendLine($"'{Limit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  currentValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurrentValue))
+                {
+                    builder.Append("  currentValue: ");
+                    builder.AppendLine($"'{CurrentValue.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PartitionUsage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartitionUsage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PartitionUsage)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PartitionUsage IPersistableModel<PartitionUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartitionUsage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePartitionUsage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PartitionUsage)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PartitionUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

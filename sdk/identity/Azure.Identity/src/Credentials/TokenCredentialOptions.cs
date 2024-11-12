@@ -1,8 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -23,7 +24,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// The host of the Azure Active Directory authority. The default is https://login.microsoftonline.com/. For well known authority hosts for Azure cloud instances see <see cref="AzureAuthorityHosts"/>.
+        /// The host of the Microsoft Entra authority. The default is https://login.microsoftonline.com/. For well known authority hosts for Azure cloud instances see <see cref="AzureAuthorityHosts"/>.
         /// </summary>
         public Uri AuthorityHost
         {
@@ -37,22 +38,24 @@ namespace Azure.Identity
         /// the <see cref="DiagnosticsOptions.IsLoggingContentEnabled"/> property must be set to <c>true</c>.
         /// Setting this property to `true` equates to passing 'true' for the enablePiiLogging parameter to the 'WithLogging' method on the MSAL client builder.
         /// </summary>
-        public bool IsSupportLoggingEnabled { get; set; }
+        public bool IsUnsafeSupportLoggingEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets whether this credential is part of a chained credential.
         /// </summary>
         internal bool IsChainedCredential { get; set; }
 
-        internal virtual T Clone<T>()
-            where T : TokenCredentialOptions, new()
+        internal TenantIdResolverBase TenantIdResolver { get; set; } = TenantIdResolverBase.Default;
+
+        internal virtual T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
+            where T : TokenCredentialOptions
         {
-            T clone = new T();
+            T clone = (T)Activator.CreateInstance(typeof(T), true);
 
             // copy TokenCredentialOptions Properties
             clone.AuthorityHost = AuthorityHost;
 
-            clone.IsSupportLoggingEnabled = IsSupportLoggingEnabled;
+            clone.IsUnsafeSupportLoggingEnabled = IsUnsafeSupportLoggingEnabled;
 
             // copy TokenCredentialDiagnosticsOptions specific options
             clone.Diagnostics.IsAccountIdentifierLoggingEnabled = Diagnostics.IsAccountIdentifierLoggingEnabled;
@@ -69,7 +72,7 @@ namespace Azure.Identity
             // copy base ClientOptions properties, this would be replaced by a similar method on the base class
 
             // only copy transport if the original has changed from the default so as not to set IsCustomTransportSet unintentionally
-            if (Transport != ClientOptions.Default.Transport)
+            if (Transport != Default.Transport)
             {
                 clone.Transport = Transport;
             }

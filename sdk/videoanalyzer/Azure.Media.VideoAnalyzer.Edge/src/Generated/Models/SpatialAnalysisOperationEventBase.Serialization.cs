@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> threshold = default;
-            Optional<SpatialAnalysisOperationFocus> focus = default;
+            string threshold = default;
+            SpatialAnalysisOperationFocus? focus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("threshold"u8))
@@ -53,7 +53,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisOperationEventBase(threshold.Value, Optional.ToNullable(focus));
+            return new SpatialAnalysisOperationEventBase(threshold, focus);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SpatialAnalysisOperationEventBase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpatialAnalysisOperationEventBase(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

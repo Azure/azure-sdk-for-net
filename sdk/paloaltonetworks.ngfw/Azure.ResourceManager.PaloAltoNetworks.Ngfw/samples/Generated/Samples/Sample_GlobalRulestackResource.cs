@@ -7,12 +7,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GlobalRulestackGetMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GlobalRulestackGetMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +79,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_GlobalRulestackUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,7 +143,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_GlobalRulestackUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_Update_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -176,7 +173,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_GlobalRulestackDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -201,7 +198,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_GlobalRulestackDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_Delete_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -226,8 +223,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Commit_GlobalRulestackCommitMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_commit_MaximumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_commit" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_commit_MaximumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_Commit" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -251,8 +248,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Commit_GlobalRulestackCommitMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_commit_MinimumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_commit" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_commit_MinimumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_Commit" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -276,8 +273,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetChangeLog_GlobalRulestackGetChangeLogMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_getChangeLog_MaximumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_getChangeLog" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_getChangeLog_MaximumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_GetChangeLog" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -301,8 +298,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetChangeLog_GlobalRulestackGetChangeLogMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_getChangeLog_MinimumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_getChangeLog" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_getChangeLog_MinimumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_GetChangeLog" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -326,8 +323,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAdvancedSecurityObjects_GlobalRulestackListAdvancedSecurityObjectsMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listAdvancedSecurityObjects_MaximumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_listAdvancedSecurityObjects" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_listAdvancedSecurityObjects_MaximumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_ListAdvancedSecurityObjects" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -354,8 +351,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAdvancedSecurityObjects_GlobalRulestackListAdvancedSecurityObjectsMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listAdvancedSecurityObjects_MinimumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_listAdvancedSecurityObjects" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_listAdvancedSecurityObjects_MinimumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_ListAdvancedSecurityObjects" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -380,8 +377,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAppIds_GlobalRulestackListAppIdsMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listAppIds_MaximumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_listAppIds" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_listAppIds_MaximumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_ListAppIds" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -412,8 +409,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAppIds_GlobalRulestackListAppIdsMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listAppIds_MinimumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_listAppIds" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_listAppIds_MinimumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_ListAppIds" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -440,8 +437,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCountries_GlobalRulestackListCountriesMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listCountries_MaximumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_listCountries" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_listCountries_MaximumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_ListCountries" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -470,8 +467,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCountries_GlobalRulestackListCountriesMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listCountries_MinimumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_listCountries" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_listCountries_MinimumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_ListCountries" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -498,8 +495,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetFirewalls_GlobalRulestackListFirewallsMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listFirewalls_MaximumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_listFirewalls" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_listFirewalls_MaximumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_ListFirewalls" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -526,8 +523,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetFirewalls_GlobalRulestackListFirewallsMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listFirewalls_MinimumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_listFirewalls" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_listFirewalls_MinimumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_ListFirewalls" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -554,8 +551,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPredefinedUrlCategories_GlobalRulestackListPredefinedUrlCategoriesMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listPredefinedUrlCategories_MaximumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_listPredefinedUrlCategories" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_listPredefinedUrlCategories_MaximumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_ListPredefinedUrlCategories" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -584,8 +581,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPredefinedUrlCategories_GlobalRulestackListPredefinedUrlCategoriesMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listPredefinedUrlCategories_MinimumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_listPredefinedUrlCategories" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_listPredefinedUrlCategories_MinimumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_ListPredefinedUrlCategories" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -612,8 +609,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSecurityServices_GlobalRulestackListSecurityServicesMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listSecurityServices_MaximumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_listSecurityServices" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_listSecurityServices_MaximumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_ListSecurityServices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -640,8 +637,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSecurityServices_GlobalRulestackListSecurityServicesMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listSecurityServices_MinimumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_listSecurityServices" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_listSecurityServices_MinimumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_ListSecurityServices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -666,8 +663,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Revert_GlobalRulestackRevertMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_revert_MaximumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_revert" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_revert_MaximumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_Revert" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -691,8 +688,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Revert_GlobalRulestackRevertMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_revert_MinimumSet_Gen.json
-            // this example is just showing the usage of "GlobalRulestack_revert" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/GlobalRulestack_revert_MinimumSet_Gen.json
+            // this example is just showing the usage of "GlobalRulestack_Revert" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

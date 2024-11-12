@@ -6,37 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Sweep Job limit class. </summary>
     public partial class MachineLearningSweepJobLimits : MachineLearningJobLimits
     {
-        /// <summary> Initializes a new instance of MachineLearningSweepJobLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJobLimits"/>. </summary>
         public MachineLearningSweepJobLimits()
         {
             JobLimitsType = JobLimitsType.Sweep;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSweepJobLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJobLimits"/>. </summary>
         /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
         /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
-        /// <param name="maxConcurrentTrials"> Sweep Job max concurrent trials. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxTotalTrials"> Sweep Job max total trials. </param>
+        /// <param name="maxConcurrentTrials"> Sweep Job max concurrent trials. </param>
         /// <param name="trialTimeout"> Sweep Job Trial timeout value. </param>
-        internal MachineLearningSweepJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout, int? maxConcurrentTrials, int? maxTotalTrials, TimeSpan? trialTimeout) : base(jobLimitsType, timeout)
+        internal MachineLearningSweepJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxTotalTrials, int? maxConcurrentTrials, TimeSpan? trialTimeout) : base(jobLimitsType, timeout, serializedAdditionalRawData)
         {
-            MaxConcurrentTrials = maxConcurrentTrials;
             MaxTotalTrials = maxTotalTrials;
+            MaxConcurrentTrials = maxConcurrentTrials;
             TrialTimeout = trialTimeout;
             JobLimitsType = jobLimitsType;
         }
 
-        /// <summary> Sweep Job max concurrent trials. </summary>
-        public int? MaxConcurrentTrials { get; set; }
         /// <summary> Sweep Job max total trials. </summary>
+        [WirePath("maxTotalTrials")]
         public int? MaxTotalTrials { get; set; }
+        /// <summary> Sweep Job max concurrent trials. </summary>
+        [WirePath("maxConcurrentTrials")]
+        public int? MaxConcurrentTrials { get; set; }
         /// <summary> Sweep Job Trial timeout value. </summary>
+        [WirePath("trialTimeout")]
         public TimeSpan? TrialTimeout { get; set; }
     }
 }

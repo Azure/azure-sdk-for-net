@@ -28,33 +28,20 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
 string projectName = "DomainOrchestrator";
 string deploymentName = "production";
-
-var data = new
-{
-    AnalysisInput = new
+AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
+    new ConversationAnalysisInput(
+        new TextConversationItem(
+            id: "1",
+            participantId: "participant1",
+            text: "How are you?")),
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
-        ConversationItem = new
-        {
-            Text = "How are you?",
-            Id = "1",
-            ParticipantId = "1",
-        }
-    },
-    Parameters = new
-    {
-        ProjectName = projectName,
-        DeploymentName = deploymentName,
+        StringIndexType = StringIndexType.Utf16CodeUnit,
+    });
 
-        // Use Utf16CodeUnit for strings in .NET.
-        StringIndexType = "Utf16CodeUnit",
-    },
-    Kind = "Conversation",
-};
-
-Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
-
-dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
+ConversationActionResult conversationResult = response.Value as ConversationActionResult;
+OrchestrationPrediction orchestrationPrediction = conversationResult.Result.Prediction as OrchestrationPrediction;
 ```
 
 ## Asynchronous
@@ -62,10 +49,7 @@ dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
-Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
-
-dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
+Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(data);
 ```
 
 ## Accessing project specific results
@@ -76,15 +60,15 @@ Depending on the project chosen by your orchestration model, you may get results
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
 string respondingProjectName = orchestrationPrediction.TopIntent;
-dynamic targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
+Console.WriteLine($"Top intent: {respondingProjectName}");
 
-if (targetIntentResult.TargetProjectKind == "QuestionAnswering")
+TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
+
+if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringTargetIntentResult)
 {
-    Console.WriteLine($"Top intent: {respondingProjectName}");
-
-    dynamic questionAnsweringResponse = targetIntentResult.Result;
+    AnswersResult questionAnsweringResponse = questionAnsweringTargetIntentResult.Result;
     Console.WriteLine($"Question Answering Response:");
-    foreach (dynamic answer in questionAnsweringResponse.Answers)
+    foreach (KnowledgeBaseAnswer answer in questionAnsweringResponse.Answers)
     {
         Console.WriteLine(answer.Answer?.ToString());
     }
@@ -95,17 +79,19 @@ if (targetIntentResult.TargetProjectKind == "QuestionAnswering")
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
 string respondingProjectName = orchestrationPrediction.TopIntent;
-dynamic targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
+TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetProjectKind == "QuestionAnswering")
+if (targetIntentResult is ConversationTargetIntentResult conversationTargetIntent)
 {
-    dynamic questionAnsweringResult = targetIntentResult.Result;
+    ConversationResult conversationResult = conversationTargetIntent.Result;
+    ConversationPrediction conversationPrediction = conversationResult.Prediction;
 
-    Console.WriteLine($"Answers:");
-    foreach (dynamic answer in questionAnsweringResult.Answers)
+    Console.WriteLine($"Top Intent: {conversationPrediction.TopIntent}");
+    Console.WriteLine($"Intents:");
+    foreach (ConversationIntent intent in conversationPrediction.Intents)
     {
-        Console.WriteLine($"{answer.Answer}");
-        Console.WriteLine($"Confidence: {answer.ConfidenceScore}");
+        Console.WriteLine($"Intent Category: {intent.Category}");
+        Console.WriteLine($"Confidence: {intent.Confidence}");
         Console.WriteLine();
     }
 }

@@ -5,54 +5,102 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ContainerNetworkInterface : IUtf8JsonSerializable
+    public partial class ContainerNetworkInterface : IUtf8JsonSerializable, IJsonModel<ContainerNetworkInterface>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerNetworkInterface>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContainerNetworkInterface>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                throw new FormatException($"The model {nameof(ContainerNetworkInterface)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ContainerNetworkInterfaceConfiguration))
+            {
+                writer.WritePropertyName("containerNetworkInterfaceConfiguration"u8);
+                writer.WriteObjectValue(ContainerNetworkInterfaceConfiguration, options);
+            }
             if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
                 JsonSerializer.Serialize(writer, Container);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
+            {
+                writer.WritePropertyName("ipConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPConfigurations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerNetworkInterface DeserializeContainerNetworkInterface(JsonElement element)
+        ContainerNetworkInterface IJsonModel<ContainerNetworkInterface>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerNetworkInterface)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerNetworkInterface(document.RootElement, options);
+        }
+
+        internal static ContainerNetworkInterface DeserializeContainerNetworkInterface(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfiguration = default;
-            Optional<WritableSubResource> container = default;
-            Optional<IReadOnlyList<ContainerNetworkInterfaceIPConfiguration>> ipConfigurations = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration = default;
+            WritableSubResource container = default;
+            IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations = default;
+            NetworkProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -102,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            containerNetworkInterfaceConfiguration = ContainerNetworkInterfaceConfiguration.DeserializeContainerNetworkInterfaceConfiguration(property0.Value);
+                            containerNetworkInterfaceConfiguration = ContainerNetworkInterfaceConfiguration.DeserializeContainerNetworkInterfaceConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("container"u8))
@@ -123,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ContainerNetworkInterfaceIPConfiguration> array = new List<ContainerNetworkInterfaceIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerNetworkInterfaceIPConfiguration.DeserializeContainerNetworkInterfaceIPConfiguration(item));
+                                array.Add(ContainerNetworkInterfaceIPConfiguration.DeserializeContainerNetworkInterfaceIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -140,8 +188,53 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerNetworkInterface(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), containerNetworkInterfaceConfiguration.Value, container, Optional.ToList(ipConfigurations), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerNetworkInterface(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                containerNetworkInterfaceConfiguration,
+                container,
+                ipConfigurations ?? new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>(),
+                provisioningState);
         }
+
+        BinaryData IPersistableModel<ContainerNetworkInterface>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerNetworkInterface)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerNetworkInterface IPersistableModel<ContainerNetworkInterface>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerNetworkInterface(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerNetworkInterface)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerNetworkInterface>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Verticals.AgriFood.Farming.Tests
             var endpoint = new Uri(TestEnvironment.Endpoint);
             options ??= new FarmBeatsClientOptions();
 
-            return InstrumentClient(new FarmBeatsClient(TestEnvironment.Credential, endpoint, InstrumentClientOptions(options)));
+            return InstrumentClient(new FarmBeatsClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
         }
     }
 }

@@ -22,6 +22,9 @@ namespace Azure
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool HasValue => true;
 
+        /// <inheritdoc />
+        public override T Value => Value;
+
         /// <summary>
         /// Returns the value of this <see cref="Response{T}"/> object.
         /// </summary>
@@ -35,7 +38,7 @@ namespace Azure
 #pragma warning restore CA1065
             }
 
-            return response.Value;
+            return response.Value!;
         }
 
         /// <inheritdoc />

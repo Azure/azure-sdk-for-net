@@ -3,181 +3,221 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
+
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/0b4a0a3f4bfc198df608f373784505e42e248c2c/specification/network/resource-manager/readme.md
-# tag: package-2023-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/738879cc6e1c5569b01130fd69a2587388fc34b3/specification/network/resource-manager/readme.md
+# tag: package-2024-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+    # Not support generate samples from customized operations
+    - VirtualMachineScaleSets_ListPublicIPAddresses
+    - VirtualMachineScaleSets_ListNetworkInterfaces
+    - VirtualMachineScaleSets_ListIPConfigurations
+    - VirtualMachineScaleSets_GetIPConfiguration
+    - VirtualMachineScaleSets_GetPublicIPAddress
+    - VirtualMachineScaleSetVMs_ListPublicIPAddresses
+    - VirtualMachineScaleSetVMs_ListNetworkInterfaces
+    - VirtualMachineScaleSets_GetNetworkInterface
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+use-write-core: true
 model-namespace: true
 public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
-  ConnectionMonitor: ConnectionMonitorInput
-  ConnectionMonitorResult: ConnectionMonitor
-  PacketCapture: PacketCaptureInput
-  PacketCaptureResult: PacketCapture
-  IPConfigurationBgpPeeringAddress.ipconfigurationId: IPConfigurationId
-  VirtualNetworkGatewayNatRule.properties.type: VpnNatRuleType   # VirtualNetworkGatewayNatRuleProperties is flatten in VirtualNetworkGatewayNatRule
-  SubResource: NetworkSubResource
-  ProvisioningState: NetworkProvisioningState
-  IpAllocation.properties.type: IPAllocationType
-  VirtualWAN.properties.type: VirtualWanType
-  VpnGatewayNatRule.properties.type: VpnNatRuleType
-  Topology: NetworkTopology
-  TopologyResource: TopologyResourceInfo
-  TrafficAnalyticsConfigurationProperties.trafficAnalyticsInterval: TrafficAnalyticsIntervalInMinutes
-  TroubleshootingParameters.properties.storagePath: storageUri
-  ProtocolConfiguration.HTTPConfiguration: HttpProtocolConfiguration
-  FlowLogFormatParameters: FlowLogProperties
-  TrafficAnalyticsProperties.networkWatcherFlowAnalyticsConfiguration: TrafficAnalyticsConfiguration
-  UsageName: NetworkUsageName
-  UsagesListResult: NetworkUsagesListResult
-  Delegation: ServiceDelegation
-  Subnet.properties.privateEndpointNetworkPolicies: PrivateEndpointNetworkPolicy
-  Subnet.properties.privateLinkServiceNetworkPolicies: PrivateLinkServiceNetworkPolicy
+  Access: NetworkAccess
+  Action: RouteMapAction
+  ActionType: RuleMatchActionType
+  ActiveConfigurationParameter.regions: -|azure-location
+  ActiveConfigurationParameter: ActiveConfigurationContent
+  ActiveConnectivityConfiguration.commitTime: CommittedOn
+  ActiveConnectivityConfiguration.region: -|azure-location
+  AdminRule: NetworkAdminRule
+  AdminRuleCollection: AdminRuleGroup
+  AdminRuleCollectionListResult: AdminRuleGroupListResult
+  AdminState: ExpressRouteGatewayAdminState
+  ApplicationGateway.zones: AvailabilityZones
+  ApplicationGatewayAvailableSslOptions: ApplicationGatewayAvailableSslOptionsInfo
+  ApplicationGatewayBackendHttpSettings.properties.requestTimeout: RequestTimeoutInSeconds
+  ApplicationGatewayBackendSettings.properties.timeout: TimeoutInSeconds
+  ApplicationGatewayConnectionDraining.drainTimeoutInSec: DrainTimeoutInSeconds
+  ApplicationGatewayPrivateEndpointConnection.properties.privateLinkServiceConnectionState: connectionState
+  ApplicationGatewayPrivateLinkIpConfiguration.properties.primary: IsPrimary
+  ApplicationGatewayProbe.properties.interval: IntervalInSeconds
+  ApplicationGatewayProbe.properties.timeout: TimeoutInSeconds
+  ApplicationGatewayTierTypes.WAF: Waf
+  ApplicationGatewayTierTypes.WAF_v2: WafV2
+  ApplicationGatewayWafDynamicManifestResult: ApplicationGatewayWafDynamicManifest
+  ApplicationGatewayWafDynamicManifestResultList: ApplicationGatewayWafDynamicManifestListResult
+  AuthenticationMethod: NetworkAuthenticationMethod
   AzureFirewallApplicationRuleCollection: AzureFirewallApplicationRuleCollectionData
   AzureFirewallNatRuleCollection: AzureFirewallNatRuleCollectionData
   AzureFirewallNetworkRuleCollection: AzureFirewallNetworkRuleCollectionData
-  FirewallPolicyRuleCollection: FirewallPolicyRuleCollectionInfo
-  FirewallPolicyNatRuleCollection: FirewallPolicyNatRuleCollectionInfo
-  FirewallPolicyFilterRuleCollection: FirewallPolicyFilterRuleCollectionInfo
-  ApplicationGateway.zones: AvailabilityZones
-  ApplicationGatewayPrivateEndpointConnection.properties.privateLinkServiceConnectionState: connectionState
-  ApplicationGatewayBackendHttpSettings.properties.requestTimeout: RequestTimeoutInSeconds
-  ApplicationGatewayConnectionDraining.drainTimeoutInSec: DrainTimeoutInSeconds
-  ApplicationGatewayProbe.properties.interval: IntervalInSeconds
-  ApplicationGatewayProbe.properties.timeout: TimeoutInSeconds
-  ApplicationGatewayPrivateLinkIpConfiguration.properties.primary: IsPrimary
-  PrivateLinkServiceConnection.properties.privateLinkServiceConnectionState: connectionState
-  DeleteOptions: IPAddressDeleteOption
-  TransportProtocol: LoadBalancingTransportProtocol
-  UsageUnit: NetworkUsageUnit
-  Direction: NetworkTrafficDirection
-  Origin: IssueOrigin
-  Severity: IssueSeverity
-  Protocol: NetworkWatcherProtocol
-  Access: NetworkAccess
-  Resource: NetworkTrackedResourceData
-  ConnectivityIssue.context: Contexts
-  VpnClientConnectionHealthDetail.vpnConnectionDuration: vpnConnectionDurationInSeconds
-  VpnClientConnectionHealthDetail.VpnConnectionTime: vpnConnectedOn
-  TunnelConnectionHealth.lastConnectionEstablishedUtcTime: lastConnectionEstablishedOn
-  ConnectivityIssue.type: ConnectivityIssueType
-  HttpHeader: NetworkWatcherHttpHeader
-  HttpMethod: NetworkWatcherHttpMethod
-  HttpConfiguration: NetworkHttpConfiguration
-  HttpConfigurationMethod: NetworkHttpConfigurationMethod
-  IPVersion: NetworkIPVersion
-  IPConfiguration: NetworkIPConfiguration
-  IPConfigurationProfile: NetworkIPConfigurationProfile
-  IPConfigurationBgpPeeringAddress: NetworkIPConfigurationBgpPeeringAddress
-  IPAllocationMethod: NetworkIPAllocationMethod
-  IpAllocationType: NetworkIPAllocationType
-  IpAllocationListResult: NetworkIPAllocationListResult
-  AuthenticationMethod: NetworkAuthenticationMethod
-  ConnectionStateSnapshot.connectionState: NetworkConnectionState
-  ConnectivityInformation.connectionStatus: NetworkConnectionStatus
-  DscpConfigurationPropertiesFormat.protocol: NetworkProtocolType
-  CustomDnsConfigPropertiesFormat: CustomDnsConfigProperties
-  ProtocolCustomSettingsFormat: ProtocolCustomSettings
-  ServiceEndpointPropertiesFormat: ServiceEndpointProperties
-  ConnectionStatus: NetworkConnectionStatus
-  IssueType: ConnectivityIssueType
-  PrivateLinkServiceConnection: NetworkPrivateLinkServiceConnection
-  ConnectivityHop: ConnectivityHopInfo
-  ConnectivityIssue: ConnectivityIssueInfo
-  PreferredIPVersion: TestEvalPreferredIPVersion
-  InboundNatPool: LoadBalancerInboundNatPool
-  TagsObject: NetworkTagsObject
-  EndpointType: ConnectionMonitorEndpointType
-  ConnectionState: NetworkConnectionState
-  ApplicationGatewayAvailableSslOptions: ApplicationGatewayAvailableSslOptionsInfo
-  EffectiveNetworkSecurityGroup.tagMap: tagToIPAddresses
-  Action: RouteMapAction
-  ActionType: RuleMatchActionType
-  ActiveConfigurationParameter: ActiveConfigurationContent
-  ActiveConfigurationParameter.regions: -|azure-location
-  ActiveConnectivityConfiguration.region: -|azure-location
-  ActiveConnectivityConfiguration.commitTime: CommittedOn
-  AdminRule: NetworkAdminRule
-  ApplicationGatewayBackendSettings.properties.timeout: TimeoutInSeconds
-  ApplicationGatewayTierTypes.WAF: Waf
-  ApplicationGatewayTierTypes.WAF_v2: WafV2
   ConfigurationGroup: NetworkConfigurationGroup
   ConfigurationType: NetworkConfigurationDeploymentType
+  ConnectionMonitor: ConnectionMonitorInput
+  ConnectionMonitorEndpoint.subscriptionId: -|uuid
+  ConnectionMonitorResult: ConnectionMonitor
+  ConnectionSharedKeyResult: VpnLinkConnectionSharedKey
+  ConnectionState: NetworkConnectionState
+  ConnectionStateSnapshot.connectionState: NetworkConnectionState
+  ConnectionStatus: NetworkConnectionStatus
+  ConnectivityHop: ConnectivityHopInfo
+  ConnectivityInformation.connectionStatus: NetworkConnectionStatus
+  ConnectivityIssue.context: Contexts
+  ConnectivityIssue.type: ConnectivityIssueType
+  ConnectivityIssue: ConnectivityIssueInfo
   Criterion: RouteCriterion
-  DefaultAdminRule: NetworkDefaultAdminRule
-  EffectiveBaseSecurityAdminRule.id: ResourceId|arm-id
-  ExplicitProxy: FirewallPolicyExplicitProxy
-  IdpsQueryObject: IdpsQueryContent
-  FilterItems: IdpsQueryFilterItems
-  OrderBy: IdpsQueryOrderBy
-  Geo: CidrAdvertisingGeoCode
-  Geo.NAM: Nam
-  Hub: ConnectivityHub
-  IsGlobal: GlobalMeshSupportFlag
-  IsWorkloadProtected: WorkloadProtectedFlag
-  NextStep: RouteMapNextStepBehavior
-  Parameter: RouteMapActionParameter
-  QosDefinition: DscpQosDefinition
-  QueryResults: IdpsSignatureListResult
-  SingleQueryResult: IdpsSignatureResult
-  QueryRequestOptions: NetworkManagementQueryContent
-  SignatureOverridesFilterValuesQuery: SignatureOverridesFilterValuesQueryContent
-  SignatureOverridesFilterValuesResponse: SignatureOverridesFilterValuesResult
-  SlotType: SwapSlotType
-  UseHubGateway: HubGatewayUsageFlag
-  VirtualNetworkEncryption.enabled: IsEnabled
-  VpnPolicyMemberAttributeType.AADGroupId: AadGroupId
-  CustomIpPrefix.properties.customIpPrefixParent: ParentCustomIpPrefix
+  CustomDnsConfigPropertiesFormat: CustomDnsConfigProperties
   CustomIpPrefix.properties.childCustomIpPrefixes: ChildCustomIpPrefixList
-  VpnAuthenticationType.AAD: Aad
-  ApplicationGatewayWafDynamicManifestResult: ApplicationGatewayWafDynamicManifest
-  ApplicationGatewayWafDynamicManifestResultList: ApplicationGatewayWafDynamicManifestListResult
-  SignaturesOverrides: PolicySignaturesOverridesForIdps
-  SignaturesOverrides.id: -|arm-id
-  SignaturesOverrides.type: -|resource-type
-  SignaturesOverridesList: PolicySignaturesOverridesForIdpsListResult
-  SignaturesOverridesProperties: PolicySignaturesOverridesForIdpsProperties
-  StaticMember: NetworkGroupStaticMember
-  StaticMemberListResult: NetworkGroupStaticMemberListResult
-  AdminRuleCollection: AdminRuleGroup
-  AdminRuleCollectionListResult: AdminRuleGroupListResult
-  NetworkManagerConnection.properties.networkManagerId: -|arm-id
-  SwapResource: CloudServiceSwap
-  SwapResourceProperties: CloudServiceSwapProperties
-  SwapResourceListResult: CloudServiceSwapListResult
-  Hub.resourceType: -|resource-type
+  CustomIpPrefix.properties.customIpPrefixParent: ParentCustomIpPrefix
+  DefaultAdminRule: NetworkDefaultAdminRule
+  Delegation: ServiceDelegation
   DelegationProperties: VirtualApplianceDelegationProperties
+  DeleteOptions: IPAddressDeleteOption
   DeploymentStatus: NetworkManagerDeploymentState
-  NetworkManagerDeploymentStatus.deploymentStatus: DeploymentState
-  NetworkManagerDeploymentStatusParameter: NetworkManagerDeploymentStatusContent
+  Direction: NetworkTrafficDirection
+  EffectiveBaseSecurityAdminRule.id: ResourceId|arm-id
+  EffectiveNetworkSecurityGroup.tagMap: tagToIPAddresses
+  EndpointType: ConnectionMonitorEndpointType
+  ExplicitProxy: FirewallPolicyExplicitProxy
+  ExpressRouteGateway.properties.expressRouteConnections: ExpressRouteConnectionList
+  FilterItems: IdpsQueryFilterItems
+  FirewallPacketCaptureParameters: FirewallPacketCaptureRequestParameters   # To workaround breaking change in FirewallPacketCaptureParameters, we have to keep the old codes and rename it
+  FirewallPolicyFilterRuleCollection: FirewallPolicyFilterRuleCollectionInfo
+  FirewallPolicyNatRuleCollection: FirewallPolicyNatRuleCollectionInfo
+  FirewallPolicyRuleCollection: FirewallPolicyRuleCollectionInfo
+  FlowLogFormatParameters: FlowLogProperties
+  Geo.NAM: Nam
+  Geo: CidrAdvertisingGeoCode
   GetInboundRoutesParameters: VirtualHubInboundRoutesContent
   GetOutboundRoutesParameters: VirtualHubOutboundRoutesContent
+  GroupMemberType: NetworkGroupMemberType
+  HttpConfiguration: NetworkHttpConfiguration
+  HttpConfigurationMethod: NetworkHttpConfigurationMethod
+  HttpHeader: NetworkWatcherHttpHeader
+  HttpMethod: NetworkWatcherHttpMethod
+  Hub.resourceType: -|resource-type
+  Hub: ConnectivityHub
+  IdpsQueryObject: IdpsQueryContent
+  InboundNatPool: LoadBalancerInboundNatPool
+  IpAllocation.properties.type: IPAllocationType
+  IpAllocationListResult: NetworkIPAllocationListResult
+  IPAllocationMethod: NetworkIPAllocationMethod
+  IpAllocationType: NetworkIPAllocationType
+  IPConfiguration: NetworkIPConfiguration
+  IPConfigurationBgpPeeringAddress.ipconfigurationId: IPConfigurationId
+  IPConfigurationBgpPeeringAddress: NetworkIPConfigurationBgpPeeringAddress
+  IPConfigurationProfile: NetworkIPConfigurationProfile
   IPPrefixesList: LearnedIPPrefixesListResult
+  IPRule: BastionHostIPRule
+  IPVersion: NetworkIPVersion
+  IsGlobal: GlobalMeshSupportFlag
+  IssueType: ConnectivityIssueType
+  IsWorkloadProtected: WorkloadProtectedFlag
+  MigratedPools: MigrateLoadBalancerToIPBasedResult
+  NetworkManagerConnection.properties.networkManagerId: -|arm-id
+  NetworkManagerDeploymentStatus.deploymentStatus: DeploymentState
+  NetworkManagerDeploymentStatusParameter: NetworkManagerDeploymentStatusContent
   NetworkManagerSecurityGroupItem.networkGroupId: -|arm-id
+  NetworkVirtualApplianceConnection.properties.routingConfiguration: ConnectionRoutingConfiguration
+  NextStep: RouteMapNextStepBehavior
+  OrderBy: IdpsQueryOrderBy
+  Origin: IssueOrigin
+  PacketCapture.properties.continuousCapture: IsContinuousCapture
+  PacketCapture: PacketCaptureInput
+  PacketCaptureResult.properties.continuousCapture: IsContinuousCapture
+  PacketCaptureResult: PacketCapture
+  Parameter: RouteMapActionParameter
+  PreferredIPVersion: TestEvalPreferredIPVersion
   PrivateEndpointIPConfiguration.properties.privateIPAddress: -|ip-address
-  PublicIpDdosProtectionStatusResult.publicIpAddressId: -|arm-id
-  PublicIpDdosProtectionStatusResult.publicIpAddress: -|ip-address
+  PrivateEndpointVNetPolicies: PrivateEndpointVnetPolicies
+  PrivateLinkServiceConnection.properties.privateLinkServiceConnectionState: connectionState
+  PrivateLinkServiceConnection: NetworkPrivateLinkServiceConnection
+  Protocol: NetworkWatcherProtocol
+  ProtocolConfiguration.HTTPConfiguration: HttpProtocolConfiguration
+  ProvisioningState: NetworkProvisioningState
   PublicIpDdosProtectionStatusResult.ddosProtectionPlanId: -|arm-id
+  PublicIpDdosProtectionStatusResult.publicIpAddress: -|ip-address
+  PublicIpDdosProtectionStatusResult.publicIpAddressId: -|arm-id
+  QosDefinition: DscpQosDefinition
+  QueryRequestOptions: NetworkManagementQueryContent
+  QueryResults: IdpsSignatureListResult
+  ResiliencyModel: ExpressRouteGatewayResiliencyModel
+  Resource: NetworkTrackedResourceData
+  RoutingRule: NetworkManagerRoutingRule
+  RoutingRuleCollection: NetworkManagerRoutingRules
+  SecurityUserConfiguration: NetworkManagerSecurityUserConfiguration
+  SecurityUserRule: NetworkManagerSecurityUserRule
+  SecurityUserRuleCollection: NetworkManagerSecurityUserRules
+  SensitivityType: ManagedRuleSensitivityType
+  ServiceEndpointPropertiesFormat: ServiceEndpointProperties
+  Severity: IssueSeverity
+  SharedKeyProperties: VpnLinkConnectionSharedKeyProperties
+  SignatureOverridesFilterValuesQuery: SignatureOverridesFilterValuesQueryContent
+  SignatureOverridesFilterValuesResponse: SignatureOverridesFilterValuesResult
+  SignaturesOverrides.id: -|arm-id
+  SignaturesOverrides.type: -|resource-type
+  SignaturesOverrides: PolicySignaturesOverridesForIdps
+  SignaturesOverridesList: PolicySignaturesOverridesForIdpsListResult
+  SignaturesOverridesProperties: PolicySignaturesOverridesForIdpsProperties
+  SingleQueryResult: IdpsSignatureResult
+  SlotType: SwapSlotType
+  StaticMember: NetworkGroupStaticMember
+  StaticMemberListResult: NetworkGroupStaticMemberListResult
+  Subnet.properties.privateEndpointNetworkPolicies: PrivateEndpointNetworkPolicy
+  Subnet.properties.privateLinkServiceNetworkPolicies: PrivateLinkServiceNetworkPolicy
+  SubResource: NetworkSubResource
+  SwapResource: CloudServiceSwap
+  SwapResourceListResult: CloudServiceSwapListResult
+  SwapResourceProperties: CloudServiceSwapProperties
+  SyncMode: BackendAddressSyncMode
+  TagsObject: NetworkTagsObject
+  Topology: NetworkTopology
+  TopologyResource: TopologyResourceInfo
+  TrafficAnalyticsConfigurationProperties.trafficAnalyticsInterval: TrafficAnalyticsIntervalInMinutes
+  TrafficAnalyticsProperties.networkWatcherFlowAnalyticsConfiguration: TrafficAnalyticsConfiguration
+  TransportProtocol: LoadBalancingTransportProtocol
+  TroubleshootingParameters.properties.storagePath: storageUri
+  TunnelConnectionHealth.lastConnectionEstablishedUtcTime: lastConnectionEstablishedOn
+  UsageName: NetworkUsageName
+  UsagesListResult: NetworkUsagesListResult
+  UsageUnit: NetworkUsageUnit
+  UseHubGateway: HubGatewayUsageFlag
+  VirtualApplianceIPConfigurationProperties.primary: IsPrimary
+  VirtualNetwork.properties.privateEndpointVNetPolicies: PrivateEndpointVnetPolicy
+  VirtualNetworkEncryption.enabled: IsEnabled
+  VirtualNetworkGatewayNatRule.properties.type: VpnNatRuleType
+  VirtualNetworkPeering.properties.peerCompleteVnets: AreCompleteVnetsPeered
+  VirtualWAN.properties.type: VirtualWanType
+  VpnAuthenticationType.AAD: Aad
+  VpnClientConnectionHealthDetail.vpnConnectionDuration: vpnConnectionDurationInSeconds
   VpnClientParameters: VpnClientContent
-  VpnPacketCaptureStopParameters: VpnPacketCaptureStopContent
+  VpnGatewayNatRule.properties.type: VpnNatRuleType
   VpnPacketCaptureStartParameters: VpnPacketCaptureStartContent
-  ExpressRouteGateway.properties.expressRouteConnections: ExpressRouteConnectionList
-  AdminState: ExpressRouteGatewayAdminState
+  VpnPacketCaptureStopParameters: VpnPacketCaptureStopContent
+  VpnPolicyMemberAttributeType.AADGroupId: AadGroupId
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
+- NetworkManagerRoutingRules
+- NetworkManagerSecurityUserRules
+
+models-to-treat-empty-string-as-null:
+  - HopLink
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -207,7 +247,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -253,6 +293,19 @@ request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
 - /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
 - /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIpAddressName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}
+# This part is for generate partial class in network
+# - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}
+# - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIpAddressName}
+
+# This part is for generate partial class in network
+partial-resources:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}: VirtualMachineScaleSet
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}: VirtualMachineScaleSetVm
+  # /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}: CloudService
+  # /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}: CloudServiceRoleInstance
 
 override-operation-name:
   ApplicationGateways_ListAvailableWafRuleSets: GetAppGatewayAvailableWafRuleSets
@@ -266,6 +319,16 @@ override-operation-name:
   VirtualHubs_GetEffectiveVirtualHubRoutes: GetVirtualHubEffectiveRoutes
   VirtualHubs_GetOutboundRoutes: GetVirtualHubOutboundRoutes
   VirtualHubs_GetInboundRoutes: GetVirtualHubInboundRoutes
+  VirtualMachineScaleSets_ListNetworkInterfaces: GetNetworkInterfaces
+  VirtualMachineScaleSets_ListPublicIPAddresses: GetPublicIPAddresses
+  VirtualMachineScaleSets_GetPublicIPAddress: GetPublicIPAddress
+  VirtualMachineScaleSets_GetNetworkInterface: GetNetworkInterface
+  VirtualMachineScaleSetVMs_ListNetworkInterfaces: GetNetworkInterfaces
+  VirtualMachineScaleSetVMs_ListPublicIPAddresses: GetPublicIPAddresses
+  Generatevirtualwanvpnserverconfigurationvpnprofile: GenerateVirtualWanVpnServerConfigurationVpnProfile
+
+suppress-abstract-base-class:
+- BaseAdminRuleData
 
 directive:
   - remove-operation: 'PutBastionShareableLink'
@@ -274,6 +337,50 @@ directive:
   - remove-operation: 'GetActiveSessions'
   - remove-operation: 'DisconnectActiveSessions'
   - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
+  # This part is for generate partial class in network
+  # these operations are renamed because their api-versions are different from others in the same operation group
+  # - rename-operation:
+  #     from: NetworkInterfaces_ListCloudServiceRoleInstanceNetworkInterfaces
+  #     to: CloudServiceRoleInstance_ListNetworkInterfaces
+  # - rename-operation:
+  #     from: NetworkInterfaces_ListCloudServiceNetworkInterfaces
+  #     to: CloudService_ListNetworkInterfaces
+  # - rename-operation:
+  #     from: NetworkInterfaces_GetCloudServiceNetworkInterface
+  #     to: CloudService_GetNetworkInterface
+  # - rename-operation:
+  #     from: PublicIPAddresses_ListCloudServicePublicIPAddresses
+  #     to: CloudService_ListIpConfigurations
+  # - rename-operation:
+  #     from: PublicIPAddresses_ListCloudServiceRoleInstancePublicIPAddresses
+  #     to: CloudServiceRoleInstance_ListIpConfigurations
+  # - rename-operation:
+  #     from: PublicIPAddresses_GetCloudServicePublicIPAddress
+  #     to: CloudService_GetPublicIPAddress
+  - rename-operation:
+      from: NetworkInterfaces_ListVirtualMachineScaleSetVMNetworkInterfaces
+      to: VirtualMachineScaleSetVMs_ListNetworkInterfaces
+  - rename-operation:
+      from: NetworkInterfaces_ListVirtualMachineScaleSetNetworkInterfaces
+      to: VirtualMachineScaleSets_ListNetworkInterfaces
+  - rename-operation:
+      from: NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface
+      to: VirtualMachineScaleSets_GetNetworkInterface
+  - rename-operation:
+      from: NetworkInterfaces_ListVirtualMachineScaleSetIpConfigurations
+      to: VirtualMachineScaleSets_ListIpConfigurations
+  - rename-operation:
+      from: NetworkInterfaces_GetVirtualMachineScaleSetIpConfiguration
+      to: VirtualMachineScaleSets_GetIpConfiguration
+  - rename-operation:
+      from: PublicIPAddresses_ListVirtualMachineScaleSetPublicIPAddresses
+      to: VirtualMachineScaleSets_ListPublicIPAddresses
+  - rename-operation:
+      from: PublicIPAddresses_ListVirtualMachineScaleSetVMPublicIPAddresses
+      to: VirtualMachineScaleSetVMs_ListPublicIPAddresses
+  - rename-operation:
+      from: PublicIPAddresses_GetVirtualMachineScaleSetPublicIPAddress
+      to: VirtualMachineScaleSets_GetPublicIPAddress
   - from: serviceEndpointPolicy.json
     where: $.definitions
     transform: >
@@ -471,6 +578,12 @@ directive:
   - from: networkInterface.json # a temporary fix for issue https://github.com/Azure/azure-sdk-for-net/issues/34094
     where: $.definitions.EffectiveNetworkSecurityGroup.properties.tagMap.type
     transform: return "object";
+  # To workaround breaking change
+  - from: routeTable.json
+    where: $.definitions
+    transform: >
+      delete $.RoutePropertiesFormat.properties.hasBgpOverride.readOnly;
+  # This part is for generate partial class in network
   # Remove all files that not belong to Network
   - from: cloudServiceNetworkInterface.json
     where: $.paths
@@ -486,32 +599,33 @@ directive:
       {
           delete $[path];
       }
-  - from: vmssPublicIpAddress.json
-    where: $.paths
-    transform: >
-      for (var path in $)
-      {
-          delete $[path];
-      }
-  - from: vmssNetworkInterface.json
-    where: $.paths
-    transform: >
-      for (var path in $)
-      {
-          delete $[path];
-      }
-  - from: vmssNetworkInterface.json
-    where: $.definitions
-    transform: >
-      for (var def in $)
-      {
-          delete $[def];
-      }
-  - from: vmssNetworkInterface.json
-    where: $.parameters
-    transform: >
-      for (var param in $)
-      {
-          delete $[param];
-      }
+  # - from: vmssPublicIpAddress.json
+  #   where: $.paths
+  #   transform: >
+  #     for (var path in $)
+  #     {
+  #         delete $[path];
+  #     }
+  # - from: vmssNetworkInterface.json
+  #   where: $.paths
+  #   transform: >
+  #     for (var path in $)
+  #     {
+  #         delete $[path];
+  #     }
+  # - from: vmssNetworkInterface.json
+  #   where: $.definitions
+  #   transform: >
+  #     for (var def in $)
+  #     {
+  #         delete $[def];
+  #     }
+  # - from: vmssNetworkInterface.json
+  #   where: $.parameters
+  #   transform: >
+  #     for (var param in $)
+  #     {
+  #         delete $[param];
+  #     }
+
 ```

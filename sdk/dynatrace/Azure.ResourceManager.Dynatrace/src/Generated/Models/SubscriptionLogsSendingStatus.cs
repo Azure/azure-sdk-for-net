@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator ==(SubscriptionLogsSendingStatus left, SubscriptionLogsSendingStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionLogsSendingStatus"/> values are not the same. </summary>
         public static bool operator !=(SubscriptionLogsSendingStatus left, SubscriptionLogsSendingStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SubscriptionLogsSendingStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionLogsSendingStatus"/>. </summary>
         public static implicit operator SubscriptionLogsSendingStatus(string value) => new SubscriptionLogsSendingStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

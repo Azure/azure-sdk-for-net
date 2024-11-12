@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Monitor.Query.Models;
 using Moq;
 using NUnit.Framework;
@@ -30,10 +31,21 @@ namespace Azure.Monitor.Query.Tests
             StringAssert.StartsWith("https://management.azure.com", mockTransport.SingleRequest.Uri.ToString());
         }
 
-        [TestCase(null, "https://management.azure.com//.default")]
-        [TestCase("https://management.azure.gov", "https://management.azure.gov//.default")]
-        [TestCase("https://management.azure.cn", "https://management.azure.cn//.default")]
-        public async Task UsesDefaultAuthScope(string host, string expectedScope)
+        /// <summary>
+        ///   Provides the invalid test cases for the constructor tests.
+        /// </summary>
+        ///
+        private static IEnumerable<object[]> GetAudience()
+        {
+            yield return new object[] { null, "https://management.azure.com//.default" };
+            yield return new object[] { MetricsQueryAudience.AzurePublicCloud, "https://management.azure.com//.default" };
+            yield return new object[] { MetricsQueryAudience.AzureGovernment, "https://management.usgovcloudapi.net//.default" };
+            yield return new object[] { MetricsQueryAudience.AzureChina, "https://management.chinacloudapi.cn//.default" };
+        }
+
+        [Test]
+        [TestCaseSource(nameof(GetAudience))]
+        public async Task UsesDefaultAuthScope(MetricsQueryAudience audience, string expectedScope)
         {
             var mockTransport = MockTransport.FromMessageCallback(_ => new MockResponse(200).SetContent("{}"));
 
@@ -46,14 +58,13 @@ namespace Azure.Monitor.Query.Tests
 
             var options = new MetricsQueryClientOptions()
             {
-                Transport = mockTransport
+                Transport = mockTransport,
+                Audience = audience
             };
 
-            var client = host == null ?
-                new MetricsQueryClient(mock.Object, options) :
-                new MetricsQueryClient(new Uri(host), mock.Object, options);
+            var client = new MetricsQueryClient(mock.Object, options);
 
-            await client.QueryResourceAsync("", new string[]{});
+            await client.QueryResourceAsync("", new string[] { });
             Assert.AreEqual(new[] { expectedScope }, scopes);
         }
 
@@ -109,6 +120,36 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("namespace", metricsQueryResult.Namespace);
             Assert.AreEqual("eastus", metricsQueryResult.ResourceRegion);
             Assert.IsNotNull(metricsQueryResult);
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsIsNull_UsesDefaultEndpoint()
+        {
+            // Arrange
+            var credential = new DefaultAzureCredential();
+
+            // Act
+            var client = new MetricsQueryClient(credential);
+
+            // Assert
+            Assert.AreEqual(MetricsQueryAudience.AzurePublicCloud.ToString(), client.Endpoint.OriginalString);
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsIsNotNull_UsesOptionsAudience()
+        {
+            // Arrange
+            var credential = new DefaultAzureCredential();
+            var options = new MetricsQueryClientOptions
+            {
+                Audience = "https://custom.audience"
+            };
+
+            // Act
+            var client = new MetricsQueryClient(credential, options);
+
+            // Assert
+            Assert.AreEqual("https://custom.audience", client.Endpoint.OriginalString);
         }
     }
 }

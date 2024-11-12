@@ -137,7 +137,7 @@ namespace Azure.Data.Tables.Tests
                 async () =>
                     await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
             Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            if (_endpointType == TableEndpointType.CosmosTable)
+            if (_endpointType == TableEndpointType.CosmosTable || _endpointType == TableEndpointType.CosmosTableAAD)
             {
                 Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
             }
@@ -171,7 +171,7 @@ namespace Azure.Data.Tables.Tests
                 async () =>
                     await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
             Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            if (_endpointType == TableEndpointType.CosmosTable)
+            if (_endpointType == TableEndpointType.CosmosTable || _endpointType == TableEndpointType.CosmosTableAAD)
             {
                 Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
             }
@@ -235,7 +235,7 @@ namespace Azure.Data.Tables.Tests
                 async () =>
                     await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
             Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            if (_endpointType == TableEndpointType.CosmosTable)
+            if (_endpointType == TableEndpointType.CosmosTable || _endpointType == TableEndpointType.CosmosTableAAD)
             {
                 Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
             }
@@ -1478,7 +1478,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(ex.Message.Contains(nameof(TableTransactionFailedException.FailedTransactionActionIndex)));
 
             // Cosmos allows batches larger than 100.
-            if (_endpointType != TableEndpointType.CosmosTable)
+            if (_endpointType != TableEndpointType.CosmosTable && _endpointType != TableEndpointType.CosmosTableAAD)
             {
                 // Try submitting a batch larger than 100 items
                 batch = new List<TableTransactionAction>(

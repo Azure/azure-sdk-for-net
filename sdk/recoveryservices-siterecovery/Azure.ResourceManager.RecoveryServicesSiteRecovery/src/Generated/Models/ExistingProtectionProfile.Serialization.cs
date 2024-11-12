@@ -5,31 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ExistingProtectionProfile : IUtf8JsonSerializable
+    public partial class ExistingProtectionProfile : IUtf8JsonSerializable, IJsonModel<ExistingProtectionProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExistingProtectionProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ExistingProtectionProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("protectionProfileId"u8);
-            writer.WriteStringValue(ProtectionProfileId);
-            writer.WritePropertyName("resourceType"u8);
-            writer.WriteStringValue(ResourceType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ExistingProtectionProfile DeserializeExistingProtectionProfile(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExistingProtectionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExistingProtectionProfile)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("protectionProfileId"u8);
+            writer.WriteStringValue(ProtectionProfileId);
+        }
+
+        ExistingProtectionProfile IJsonModel<ExistingProtectionProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExistingProtectionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExistingProtectionProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExistingProtectionProfile(document.RootElement, options);
+        }
+
+        internal static ExistingProtectionProfile DeserializeExistingProtectionProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string protectionProfileId = default;
             string resourceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectionProfileId"u8))
@@ -42,8 +75,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     resourceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExistingProtectionProfile(resourceType, protectionProfileId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExistingProtectionProfile(resourceType, serializedAdditionalRawData, protectionProfileId);
         }
+
+        BinaryData IPersistableModel<ExistingProtectionProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExistingProtectionProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExistingProtectionProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExistingProtectionProfile IPersistableModel<ExistingProtectionProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExistingProtectionProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExistingProtectionProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExistingProtectionProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExistingProtectionProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

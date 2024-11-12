@@ -16,10 +16,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CallMediaRecognizeSpeechOptions. </summary>
         public CallMediaRecognizeSpeechOptions(CommunicationIdentifier targetParticipant) : base(RecognizeInputType.Speech, targetParticipant)
         {
-            EndSilenceTimeoutInMs = _defaultEndSilenceTimeoutInMs;
+            EndSilenceTimeout = _defaultEndSilenceTimeoutInMs;
         }
 
         /// <summary> The length of end silence when user stops speaking and cogservice send response. </summary>
-        public TimeSpan EndSilenceTimeoutInMs { get; set; }
+        public TimeSpan EndSilenceTimeout { get; set; }
     }
 }

@@ -5,32 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ServiceFabricApplicationPatch : IUtf8JsonSerializable
+    public partial class ServiceFabricApplicationPatch : IUtf8JsonSerializable, IJsonModel<ServiceFabricApplicationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricApplicationPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ServiceFabricApplicationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TypeVersion))
@@ -52,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue(UpgradePolicy);
+                writer.WriteObjectValue(UpgradePolicy, options);
             }
             if (Optional.IsDefined(MinimumNodes))
             {
@@ -75,7 +85,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,35 +95,50 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagedIdentities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static ServiceFabricApplicationPatch DeserializeServiceFabricApplicationPatch(JsonElement element)
+        ServiceFabricApplicationPatch IJsonModel<ServiceFabricApplicationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceFabricApplicationPatch(document.RootElement, options);
+        }
+
+        internal static ServiceFabricApplicationPatch DeserializeServiceFabricApplicationPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> typeVersion = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<ApplicationUpgradePolicy> upgradePolicy = default;
-            Optional<long> minimumNodes = default;
-            Optional<long> maximumNodes = default;
-            Optional<bool> removeApplicationCapacity = default;
-            Optional<IList<ApplicationMetricDescription>> metrics = default;
-            Optional<IList<ApplicationUserAssignedIdentity>> managedIdentities = default;
+            SystemData systemData = default;
+            string typeVersion = default;
+            IDictionary<string, string> parameters = default;
+            ApplicationUpgradePolicy upgradePolicy = default;
+            long? minimumNodes = default;
+            long? maximumNodes = default;
+            bool? removeApplicationCapacity = default;
+            IList<ApplicationMetricDescription> metrics = default;
+            IList<ApplicationUserAssignedIdentity> managedIdentities = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -202,7 +227,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value);
+                            upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("minimumNodes"u8))
@@ -241,7 +266,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ApplicationMetricDescription> array = new List<ApplicationMetricDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationMetricDescription.DeserializeApplicationMetricDescription(item));
+                                array.Add(ApplicationMetricDescription.DeserializeApplicationMetricDescription(item, options));
                             }
                             metrics = array;
                             continue;
@@ -255,7 +280,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ApplicationUserAssignedIdentity> array = new List<ApplicationUserAssignedIdentity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationUserAssignedIdentity.DeserializeApplicationUserAssignedIdentity(item));
+                                array.Add(ApplicationUserAssignedIdentity.DeserializeApplicationUserAssignedIdentity(item, options));
                             }
                             managedIdentities = array;
                             continue;
@@ -263,8 +288,60 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceFabricApplicationPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, typeVersion.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToNullable(minimumNodes), Optional.ToNullable(maximumNodes), Optional.ToNullable(removeApplicationCapacity), Optional.ToList(metrics), Optional.ToList(managedIdentities), Optional.ToNullable(etag));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServiceFabricApplicationPatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                typeVersion,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                upgradePolicy,
+                minimumNodes,
+                maximumNodes,
+                removeApplicationCapacity,
+                metrics ?? new ChangeTrackingList<ApplicationMetricDescription>(),
+                managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentity>(),
+                etag,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceFabricApplicationPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServiceFabricApplicationPatch IPersistableModel<ServiceFabricApplicationPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceFabricApplicationPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceFabricApplicationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

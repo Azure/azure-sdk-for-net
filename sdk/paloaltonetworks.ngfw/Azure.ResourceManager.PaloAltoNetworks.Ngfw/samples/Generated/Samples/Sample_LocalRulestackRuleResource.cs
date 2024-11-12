@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
@@ -23,7 +20,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_LocalRulesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRules_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "LocalRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +52,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_LocalRulesGetMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRules_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "LocalRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +84,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_LocalRulesCreateOrUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRules_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "LocalRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -195,7 +192,7 @@ new RulestackTagInfo("keyName","value")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_LocalRulesCreateOrUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRules_CreateOrUpdate_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_CreateOrUpdate_MinimumSet_Gen.json
             // this example is just showing the usage of "LocalRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -229,7 +226,7 @@ new RulestackTagInfo("keyName","value")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_LocalRulesDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRules_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "LocalRules_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -257,7 +254,7 @@ new RulestackTagInfo("keyName","value")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_LocalRulesDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRules_Delete_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "LocalRules_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -285,8 +282,8 @@ new RulestackTagInfo("keyName","value")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCounters_LocalRulesGetCountersMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRules_getCounters_MaximumSet_Gen.json
-            // this example is just showing the usage of "LocalRules_getCounters" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_getCounters_MaximumSet_Gen.json
+            // this example is just showing the usage of "LocalRules_GetCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -314,8 +311,8 @@ new RulestackTagInfo("keyName","value")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCounters_LocalRulesGetCountersMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRules_getCounters_MinimumSet_Gen.json
-            // this example is just showing the usage of "LocalRules_getCounters" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_getCounters_MinimumSet_Gen.json
+            // this example is just showing the usage of "LocalRules_GetCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -342,8 +339,8 @@ new RulestackTagInfo("keyName","value")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RefreshCounters_LocalRulesRefreshCountersMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRules_refreshCounters_MaximumSet_Gen.json
-            // this example is just showing the usage of "LocalRules_refreshCounters" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_refreshCounters_MaximumSet_Gen.json
+            // this example is just showing the usage of "LocalRules_RefreshCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -371,8 +368,8 @@ new RulestackTagInfo("keyName","value")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RefreshCounters_LocalRulesRefreshCountersMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRules_refreshCounters_MinimumSet_Gen.json
-            // this example is just showing the usage of "LocalRules_refreshCounters" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_refreshCounters_MinimumSet_Gen.json
+            // this example is just showing the usage of "LocalRules_RefreshCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -399,8 +396,8 @@ new RulestackTagInfo("keyName","value")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ResetCounters_LocalRulesResetCountersMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRules_resetCounters_MaximumSet_Gen.json
-            // this example is just showing the usage of "LocalRules_resetCounters" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_resetCounters_MaximumSet_Gen.json
+            // this example is just showing the usage of "LocalRules_ResetCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -428,8 +425,8 @@ new RulestackTagInfo("keyName","value")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ResetCounters_LocalRulesResetCountersMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRules_resetCounters_MinimumSet_Gen.json
-            // this example is just showing the usage of "LocalRules_resetCounters" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_resetCounters_MinimumSet_Gen.json
+            // this example is just showing the usage of "LocalRules_ResetCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

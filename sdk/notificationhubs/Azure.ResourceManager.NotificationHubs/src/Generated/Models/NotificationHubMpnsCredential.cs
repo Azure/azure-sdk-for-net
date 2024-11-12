@@ -5,32 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a NotificationHub MpnsCredential. </summary>
     public partial class NotificationHubMpnsCredential
     {
-        /// <summary> Initializes a new instance of NotificationHubMpnsCredential. </summary>
-        public NotificationHubMpnsCredential()
-        {
-        }
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of NotificationHubMpnsCredential. </summary>
-        /// <param name="mpnsCertificate"> The MPNS certificate. </param>
-        /// <param name="certificateKey"> The certificate key for this credential. </param>
-        /// <param name="thumbprintString"> The MPNS certificate Thumbprint. </param>
-        internal NotificationHubMpnsCredential(string mpnsCertificate, string certificateKey, string thumbprintString)
+        /// <summary> Initializes a new instance of <see cref="NotificationHubMpnsCredential"/>. </summary>
+        /// <param name="mpnsCertificate"> Gets or sets the MPNS certificate. </param>
+        /// <param name="certificateKey"> Gets or sets the certificate key for this credential. </param>
+        /// <param name="thumbprintString"> Gets or sets the MPNS certificate Thumbprint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="mpnsCertificate"/>, <paramref name="certificateKey"/> or <paramref name="thumbprintString"/> is null. </exception>
+        public NotificationHubMpnsCredential(string mpnsCertificate, string certificateKey, string thumbprintString)
         {
+            Argument.AssertNotNull(mpnsCertificate, nameof(mpnsCertificate));
+            Argument.AssertNotNull(certificateKey, nameof(certificateKey));
+            Argument.AssertNotNull(thumbprintString, nameof(thumbprintString));
+
             MpnsCertificate = mpnsCertificate;
             CertificateKey = certificateKey;
             ThumbprintString = thumbprintString;
         }
 
-        /// <summary> The MPNS certificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubMpnsCredential"/>. </summary>
+        /// <param name="mpnsCertificate"> Gets or sets the MPNS certificate. </param>
+        /// <param name="certificateKey"> Gets or sets the certificate key for this credential. </param>
+        /// <param name="thumbprintString"> Gets or sets the MPNS certificate Thumbprint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHubMpnsCredential(string mpnsCertificate, string certificateKey, string thumbprintString, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MpnsCertificate = mpnsCertificate;
+            CertificateKey = certificateKey;
+            ThumbprintString = thumbprintString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Gets or sets the MPNS certificate. </summary>
         public string MpnsCertificate { get; set; }
-        /// <summary> The certificate key for this credential. </summary>
+        /// <summary> Gets or sets the certificate key for this credential. </summary>
         public string CertificateKey { get; set; }
-        /// <summary> The MPNS certificate Thumbprint. </summary>
+        /// <summary> Gets or sets the MPNS certificate Thumbprint. </summary>
         public string ThumbprintString { get; set; }
     }
 }

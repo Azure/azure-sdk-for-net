@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Core.TestFramework;
+using System;
 
 namespace Azure.Communication.Tests
 {
@@ -26,7 +26,7 @@ namespace Azure.Communication.Tests
 
         public string LiveTestStaticConnectionString => GetRecordedVariable(
                 LiveTestStaticConnectionStringEnvironmentVariableName,
-                options => options.HasSecretConnectionStringParameter("accessKey", SanitizedValue.Base64));
+                options => options.IsSecret("endpoint=https://sanitized.communication.azure.com/;accesskey=Kg=="));
 
         public Uri LiveTestStaticEndpoint => new(Core.ConnectionString.Parse(LiveTestStaticConnectionString).GetRequired("endpoint"));
 

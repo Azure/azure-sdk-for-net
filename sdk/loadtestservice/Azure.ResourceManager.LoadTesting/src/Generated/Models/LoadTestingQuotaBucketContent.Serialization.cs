@@ -5,17 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    public partial class LoadTestingQuotaBucketContent : IUtf8JsonSerializable
+    public partial class LoadTestingQuotaBucketContent : IUtf8JsonSerializable, IJsonModel<LoadTestingQuotaBucketContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestingQuotaBucketContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LoadTestingQuotaBucketContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadTestingQuotaBucketContent)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CurrentUsage))
@@ -36,14 +56,27 @@ namespace Azure.ResourceManager.LoadTesting.Models
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                writer.WriteObjectValue(Dimensions, options);
             }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static LoadTestingQuotaBucketContent DeserializeLoadTestingQuotaBucketContent(JsonElement element)
+        LoadTestingQuotaBucketContent IJsonModel<LoadTestingQuotaBucketContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadTestingQuotaBucketContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadTestingQuotaBucketContent(document.RootElement, options);
+        }
+
+        internal static LoadTestingQuotaBucketContent DeserializeLoadTestingQuotaBucketContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,11 +84,13 @@ namespace Azure.ResourceManager.LoadTesting.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> currentUsage = default;
-            Optional<int> currentQuota = default;
-            Optional<int> newQuota = default;
-            Optional<LoadTestingQuotaBucketDimensions> dimensions = default;
+            SystemData systemData = default;
+            int? currentUsage = default;
+            int? currentQuota = default;
+            int? newQuota = default;
+            LoadTestingQuotaBucketDimensions dimensions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -124,14 +159,59 @@ namespace Azure.ResourceManager.LoadTesting.Models
                             {
                                 continue;
                             }
-                            dimensions = LoadTestingQuotaBucketDimensions.DeserializeLoadTestingQuotaBucketDimensions(property0.Value);
+                            dimensions = LoadTestingQuotaBucketDimensions.DeserializeLoadTestingQuotaBucketDimensions(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoadTestingQuotaBucketContent(id, name, type, systemData.Value, Optional.ToNullable(currentUsage), Optional.ToNullable(currentQuota), Optional.ToNullable(newQuota), dimensions.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LoadTestingQuotaBucketContent(
+                id,
+                name,
+                type,
+                systemData,
+                currentUsage,
+                currentQuota,
+                newQuota,
+                dimensions,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LoadTestingQuotaBucketContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaBucketContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LoadTestingQuotaBucketContent IPersistableModel<LoadTestingQuotaBucketContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLoadTestingQuotaBucketContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaBucketContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LoadTestingQuotaBucketContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

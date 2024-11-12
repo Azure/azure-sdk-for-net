@@ -1,6 +1,6 @@
 # Release History
 
-## 5.2.0-beta.1 (Unreleased)
+## 5.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,44 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.3.3 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 5.3.2 (2024-09-19)
+
+### Other Changes
+- This release contains bug fixes to improve quality.
+- 
+## 5.3.1 (2024-07-17)
+
+### Bugs Fixed
+- Rely on PeekMessagesAsync when calculating message queue length
+- Fixing target base scale instance concurrency for queues
+- Bumped version of Azure.Storage.Blobs to resolve issue where Blob Path was being truncated at '#' character.
+
+## 5.3.0 (2024-04-18)
+- Includes all features from 5.3.0-beta.1.
+- Bumped Azure.Identity dependency to 1.11.1 to resolve security vulnerability.
+
+## 5.3.0-beta.1 (2024-04-15)
+- This release contains bug fixes to improve quality.
+
+## 5.2.2 (2023-12-12)
+- This release contains bug fixes to improve quality.
+
+## 5.2.1 (2023-09-25)
+- This release contains bug fixes to improve quality.
+
+## 5.2.0 (2023-08-29)
+
+### Bugs Fixed
+- Updating ParameterBindingData  "Connection" value to the full connection name instead of the connection section key
+
+### Features Added
+- Added support for `BlobsOptions.PoisonBlobThreshold`
 
 ## 5.1.3 (2023-06-26)
 - Loosen parameter binding data parsing and validation to allow binding BlobContainerClient without blob name. (#37124)

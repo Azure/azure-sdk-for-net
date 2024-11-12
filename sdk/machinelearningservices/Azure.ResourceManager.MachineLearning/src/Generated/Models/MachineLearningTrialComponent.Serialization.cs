@@ -5,17 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningTrialComponent : IUtf8JsonSerializable
+    public partial class MachineLearningTrialComponent : IUtf8JsonSerializable, IJsonModel<MachineLearningTrialComponent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningTrialComponent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningTrialComponent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrialComponent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningTrialComponent)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(CodeId))
             {
                 if (CodeId != null)
@@ -30,18 +50,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (Optional.IsDefined(Distribution))
-            {
-                if (Distribution != null)
-                {
-                    writer.WritePropertyName("distribution"u8);
-                    writer.WriteObjectValue(Distribution);
-                }
-                else
-                {
-                    writer.WriteNull("distribution");
-                }
-            }
             writer.WritePropertyName("environmentId"u8);
             writer.WriteStringValue(EnvironmentId);
             if (Optional.IsCollectionDefined(EnvironmentVariables))
@@ -62,26 +70,68 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentVariables");
                 }
             }
+            if (Optional.IsDefined(Distribution))
+            {
+                if (Distribution != null)
+                {
+                    writer.WritePropertyName("distribution"u8);
+                    writer.WriteObjectValue(Distribution, options);
+                }
+                else
+                {
+                    writer.WriteNull("distribution");
+                }
+            }
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources);
+                writer.WriteObjectValue(Resources, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MachineLearningTrialComponent DeserializeMachineLearningTrialComponent(JsonElement element)
+        MachineLearningTrialComponent IJsonModel<MachineLearningTrialComponent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrialComponent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningTrialComponent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningTrialComponent(document.RootElement, options);
+        }
+
+        internal static MachineLearningTrialComponent DeserializeMachineLearningTrialComponent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> codeId = default;
+            ResourceIdentifier codeId = default;
             string command = default;
-            Optional<MachineLearningDistributionConfiguration> distribution = default;
             ResourceIdentifier environmentId = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<MachineLearningJobResourceConfiguration> resources = default;
+            IDictionary<string, string> environmentVariables = default;
+            MachineLearningDistributionConfiguration distribution = default;
+            MachineLearningJobResourceConfiguration resources = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeId"u8))
@@ -97,16 +147,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("command"u8))
                 {
                     command = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("distribution"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        distribution = null;
-                        continue;
-                    }
-                    distribution = MachineLearningDistributionConfiguration.DeserializeMachineLearningDistributionConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentId"u8))
@@ -129,17 +169,207 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     environmentVariables = dictionary;
                     continue;
                 }
+                if (property.NameEquals("distribution"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        distribution = null;
+                        continue;
+                    }
+                    distribution = MachineLearningDistributionConfiguration.DeserializeMachineLearningDistributionConfiguration(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("resources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resources = MachineLearningJobResourceConfiguration.DeserializeMachineLearningJobResourceConfiguration(property.Value);
+                    resources = MachineLearningJobResourceConfiguration.DeserializeMachineLearningJobResourceConfiguration(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningTrialComponent(codeId.Value, command, distribution.Value, environmentId, Optional.ToDictionary(environmentVariables), resources.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningTrialComponent(
+                codeId,
+                command,
+                environmentId,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                distribution,
+                resources,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CodeId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  codeId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CodeId))
+                {
+                    builder.Append("  codeId: ");
+                    builder.AppendLine($"'{CodeId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Command), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  command: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Command))
+                {
+                    builder.Append("  command: ");
+                    if (Command.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Command}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Command}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnvironmentId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  environmentId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnvironmentId))
+                {
+                    builder.Append("  environmentId: ");
+                    builder.AppendLine($"'{EnvironmentId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnvironmentVariables), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  environmentVariables: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EnvironmentVariables))
+                {
+                    if (EnvironmentVariables.Any())
+                    {
+                        builder.Append("  environmentVariables: ");
+                        builder.AppendLine("{");
+                        foreach (var item in EnvironmentVariables)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Distribution), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  distribution: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Distribution))
+                {
+                    builder.Append("  distribution: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Distribution, options, 2, false, "  distribution: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Resources), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resources: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Resources))
+                {
+                    builder.Append("  resources: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Resources, options, 2, false, "  resources: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningTrialComponent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrialComponent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningTrialComponent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningTrialComponent IPersistableModel<MachineLearningTrialComponent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrialComponent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningTrialComponent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningTrialComponent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningTrialComponent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

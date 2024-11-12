@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -13,22 +14,56 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The settings that will be leveraged for AmazonRdsForOracle source partitioning. </summary>
     public partial class AmazonRdsForOraclePartitionSettings
     {
-        /// <summary> Initializes a new instance of AmazonRdsForOraclePartitionSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOraclePartitionSettings"/>. </summary>
         public AmazonRdsForOraclePartitionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AmazonRdsForOraclePartitionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOraclePartitionSettings"/>. </summary>
         /// <param name="partitionNames"> Names of the physical partitions of AmazonRdsForOracle table. </param>
         /// <param name="partitionColumnName"> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
-        internal AmazonRdsForOraclePartitionSettings(BinaryData partitionNames, DataFactoryElement<string> partitionColumnName, DataFactoryElement<string> partitionUpperBound, DataFactoryElement<string> partitionLowerBound)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmazonRdsForOraclePartitionSettings(BinaryData partitionNames, DataFactoryElement<string> partitionColumnName, DataFactoryElement<string> partitionUpperBound, DataFactoryElement<string> partitionLowerBound, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PartitionNames = partitionNames;
             PartitionColumnName = partitionColumnName;
             PartitionUpperBound = partitionUpperBound;
             PartitionLowerBound = partitionLowerBound;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
@@ -37,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

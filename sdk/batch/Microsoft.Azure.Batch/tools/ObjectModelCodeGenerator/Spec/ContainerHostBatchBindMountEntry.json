@@ -1,0 +1,31 @@
+{
+    "Name": "ContainerHostBatchBindMountEntry",
+    "ProtocolName": "Models.ContainerHostBatchBindMountEntry",
+    "SummaryComment": "The entry of path and mount mode you want to mount into task container.",
+    "IsUsedInCollections": true,
+    "Properties": [
+      {
+        "Key": {
+          "Type": "string",
+          "Name": "Source",
+          "SummaryComment": "Gets or sets the path which be mounted to container customer can select.",
+          "RemarksComment": "Possible values include: 'Shared', 'Startup', 'VfsMounts', 'Task', 'JobPrep', 'Applications'",
+          "BoundAccess": "read",
+          "UnboundAccess": "read,write"
+        },
+        "Value": null
+      },
+      {
+        "Key": {
+          "Type": "bool?",
+          "Name": "IsReadOnly",
+          "SummaryComment": "Gets or sets mount this source path as read-only mode or not. Default value is false (read/write mode).",
+          "RemarksComment": "For Linux, if you mount this path as a read/write mode, this does not mean that all users in container have the read/write access for the path, it depends on the access in host VM. If this path is mounted read-only, all users within the container will not be able to modify the path.",
+          "BoundAccess": "read",
+          "UnboundAccess": "read,write"
+        },
+        "Value": null
+      }
+    ]
+  }
+  

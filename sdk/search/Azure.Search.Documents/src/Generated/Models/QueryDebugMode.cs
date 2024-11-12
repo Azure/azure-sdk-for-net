@@ -27,13 +27,13 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> No query debugging information will be returned. </summary>
         public static QueryDebugMode Disabled { get; } = new QueryDebugMode(DisabledValue);
-        /// <summary> Allows the user to further explore their Semantic search results. </summary>
+        /// <summary> Allows the user to further explore their reranked results. </summary>
         public static QueryDebugMode Semantic { get; } = new QueryDebugMode(SemanticValue);
         /// <summary> Determines if two <see cref="QueryDebugMode"/> values are the same. </summary>
         public static bool operator ==(QueryDebugMode left, QueryDebugMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryDebugMode"/> values are not the same. </summary>
         public static bool operator !=(QueryDebugMode left, QueryDebugMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QueryDebugMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryDebugMode"/>. </summary>
         public static implicit operator QueryDebugMode(string value) => new QueryDebugMode(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

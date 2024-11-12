@@ -5,26 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AvailablePrivateEndpointType
+    public partial class AvailablePrivateEndpointType : IUtf8JsonSerializable, IJsonModel<AvailablePrivateEndpointType>
     {
-        internal static AvailablePrivateEndpointType DeserializeAvailablePrivateEndpointType(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailablePrivateEndpointType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AvailablePrivateEndpointType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailablePrivateEndpointType>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvailablePrivateEndpointType)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ResourceName))
+            {
+                writer.WritePropertyName("resourceName"u8);
+                writer.WriteStringValue(ResourceName);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+        }
+
+        AvailablePrivateEndpointType IJsonModel<AvailablePrivateEndpointType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailablePrivateEndpointType>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvailablePrivateEndpointType)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailablePrivateEndpointType(document.RootElement, options);
+        }
+
+        internal static AvailablePrivateEndpointType DeserializeAvailablePrivateEndpointType(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> resourceName = default;
-            Optional<string> displayName = default;
+            string resourceName = default;
+            string displayName = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceName"u8))
@@ -61,8 +112,51 @@ namespace Azure.ResourceManager.Network.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AvailablePrivateEndpointType(id, name, type, systemData.Value, resourceName.Value, displayName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AvailablePrivateEndpointType(
+                id,
+                name,
+                type,
+                systemData,
+                resourceName,
+                displayName,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AvailablePrivateEndpointType>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailablePrivateEndpointType>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AvailablePrivateEndpointType)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AvailablePrivateEndpointType IPersistableModel<AvailablePrivateEndpointType>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailablePrivateEndpointType>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAvailablePrivateEndpointType(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvailablePrivateEndpointType)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AvailablePrivateEndpointType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

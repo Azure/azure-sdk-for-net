@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
         {
             BatchPublicNetworkAccess.Enabled => "Enabled",
             BatchPublicNetworkAccess.Disabled => "Disabled",
+            BatchPublicNetworkAccess.SecuredByPerimeter => "SecuredByPerimeter",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchPublicNetworkAccess value.")
         };
 
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Batch.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return BatchPublicNetworkAccess.Enabled;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return BatchPublicNetworkAccess.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SecuredByPerimeter")) return BatchPublicNetworkAccess.SecuredByPerimeter;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchPublicNetworkAccess value.");
         }
     }

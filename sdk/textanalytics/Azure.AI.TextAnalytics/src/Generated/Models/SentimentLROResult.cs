@@ -6,15 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The SentimentLROResult. </summary>
     internal partial class SentimentLROResult : AnalyzeTextLROResult
     {
-        /// <summary> Initializes a new instance of SentimentLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="results"></param>
@@ -27,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Models
             Kind = AnalyzeTextLROResultsKind.SentimentAnalysisLROResults;
         }
 
-        /// <summary> Initializes a new instance of SentimentLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>

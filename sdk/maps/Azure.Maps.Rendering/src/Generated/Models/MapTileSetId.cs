@@ -112,13 +112,13 @@ namespace Azure.Maps.Rendering
         /// </summary>
         public static MapTileSetId MicrosoftImagery { get; } = new MapTileSetId(MicrosoftImageryValue);
         /// <summary>
-        /// Weather radar tiles. Latest weather radar images including areas of rain, snow, ice and mixed conditions. Please see [coverage information](https://aka.ms/AzureMapsWeatherCoverage) for Azure Maps Weather service.  To learn more about the Radar data, please see [Weather concepts](https://aka.ms/AzureMapsWeatherConcepts).&lt;br&gt;
+        /// Weather radar tiles. Latest weather radar images including areas of rain, snow, ice and mixed conditions. For more information on the Azure Maps Weather service coverage, see [Azure Maps weather services coverage](/azure/azure-maps/weather-coverage).  For more information on Radar data, see [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#radar-images).
         ///
         /// Supports zoom levels 0 through 15. Format: raster (png).
         /// </summary>
         public static MapTileSetId MicrosoftWeatherRadarMain { get; } = new MapTileSetId(MicrosoftWeatherRadarMainValue);
         /// <summary>
-        /// Weather infrared tiles. Latest Infrared Satellite images shows clouds by their temperature.  Please see [coverage information](https://aka.ms/AzureMapsWeatherCoverage) for Azure Maps Weather service. To learn more about the returned Satellite data, please see [Weather concepts](https://aka.ms/AzureMapsWeatherConcepts).&lt;br&gt;
+        /// Weather infrared tiles. Latest Infrared Satellite images shows clouds by their temperature.  For more information, see [Azure Maps weather services coverage](/azure/azure-maps/weather-coverage). For more information about the satellite data returned, see [Weather services in Azure Maps](/azure-maps/weather-services-concepts#satellite-images).
         ///
         /// Supports zoom levels 0 through 15. Format: raster (png).
         /// </summary>
@@ -145,7 +145,7 @@ namespace Azure.Maps.Rendering
         public static bool operator ==(MapTileSetId left, MapTileSetId right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapTileSetId"/> values are not the same. </summary>
         public static bool operator !=(MapTileSetId left, MapTileSetId right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MapTileSetId"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MapTileSetId"/>. </summary>
         public static implicit operator MapTileSetId(string value) => new MapTileSetId(value);
 
         /// <inheritdoc />
@@ -156,7 +156,7 @@ namespace Azure.Maps.Rendering
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

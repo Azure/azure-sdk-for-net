@@ -6,15 +6,59 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class ResourceCertificateAndAcsDetails
+    public partial class ResourceCertificateAndAcsDetails : IUtf8JsonSerializable, IJsonModel<ResourceCertificateAndAcsDetails>
     {
-        internal static ResourceCertificateAndAcsDetails DeserializeResourceCertificateAndAcsDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceCertificateAndAcsDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ResourceCertificateAndAcsDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAcsDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceCertificateAndAcsDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("globalAcsNamespace"u8);
+            writer.WriteStringValue(GlobalAcsNamespace);
+            writer.WritePropertyName("globalAcsHostName"u8);
+            writer.WriteStringValue(GlobalAcsHostName);
+            writer.WritePropertyName("globalAcsRPRealm"u8);
+            writer.WriteStringValue(GlobalAcsRPRealm);
+        }
+
+        ResourceCertificateAndAcsDetails IJsonModel<ResourceCertificateAndAcsDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAcsDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceCertificateAndAcsDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceCertificateAndAcsDetails(document.RootElement, options);
+        }
+
+        internal static ResourceCertificateAndAcsDetails DeserializeResourceCertificateAndAcsDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,14 +67,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             string globalAcsHostName = default;
             string globalAcsRPRealm = default;
             string authType = default;
-            Optional<byte[]> certificate = default;
-            Optional<string> friendlyName = default;
-            Optional<string> issuer = default;
-            Optional<long> resourceId = default;
-            Optional<string> subject = default;
-            Optional<BinaryData> thumbprint = default;
-            Optional<DateTimeOffset> validFrom = default;
-            Optional<DateTimeOffset> validTo = default;
+            byte[] certificate = default;
+            string friendlyName = default;
+            string issuer = default;
+            long? resourceId = default;
+            string subject = default;
+            BinaryData thumbprint = default;
+            DateTimeOffset? validFrom = default;
+            DateTimeOffset? validTo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("globalAcsNamespace"u8))
@@ -113,8 +159,57 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     validTo = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceCertificateAndAcsDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo), globalAcsNamespace, globalAcsHostName, globalAcsRPRealm);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourceCertificateAndAcsDetails(
+                authType,
+                certificate,
+                friendlyName,
+                issuer,
+                resourceId,
+                subject,
+                thumbprint,
+                validFrom,
+                validTo,
+                serializedAdditionalRawData,
+                globalAcsNamespace,
+                globalAcsHostName,
+                globalAcsRPRealm);
         }
+
+        BinaryData IPersistableModel<ResourceCertificateAndAcsDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAcsDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceCertificateAndAcsDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourceCertificateAndAcsDetails IPersistableModel<ResourceCertificateAndAcsDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAcsDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceCertificateAndAcsDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceCertificateAndAcsDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceCertificateAndAcsDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -19,8 +18,8 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeletedStorageAccountItem>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DeletedStorageAccountItem> value = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +42,15 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new DeletedStorageListResult(Optional.ToList(value), nextLink.Value);
+            return new DeletedStorageListResult(value ?? new ChangeTrackingList<DeletedStorageAccountItem>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeletedStorageListResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeletedStorageListResult(document.RootElement);
         }
     }
 }

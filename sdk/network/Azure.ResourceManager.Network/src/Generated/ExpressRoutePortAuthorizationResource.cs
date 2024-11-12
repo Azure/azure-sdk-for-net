@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ExpressRoutePortAuthorization along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRoutePortAuthorizationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRoutePortAuthorizationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ExpressRoutePortResource" /> using the GetExpressRoutePortAuthorization method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRoutePortAuthorizationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRoutePortAuthorizationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ExpressRoutePortResource"/> using the GetExpressRoutePortAuthorization method.
     /// </summary>
     public partial class ExpressRoutePortAuthorizationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRoutePortAuthorizationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="expressRoutePortName"> The expressRoutePortName. </param>
+        /// <param name="authorizationName"> The authorizationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string expressRoutePortName, string authorizationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Network
         private readonly ExpressRoutePortAuthorizationsRestOperations _expressRoutePortAuthorizationRestClient;
         private readonly ExpressRoutePortAuthorizationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRoutePorts/authorizations";
+
         /// <summary> Initializes a new instance of the <see cref="ExpressRoutePortAuthorizationResource"/> class for mocking. </summary>
         protected ExpressRoutePortAuthorizationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRoutePortAuthorizationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRoutePortAuthorizationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRoutePortAuthorizationResource(ArmClient client, ExpressRoutePortAuthorizationData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRoutePorts/authorizations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ExpressRoutePortAuthorizations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRoutePortAuthorizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRoutePortAuthorizations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRoutePortAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,6 +179,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ExpressRoutePortAuthorizations_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRoutePortAuthorizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -172,7 +198,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _expressRoutePortAuthorizationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_expressRoutePortAuthorizationClientDiagnostics, Pipeline, _expressRoutePortAuthorizationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_expressRoutePortAuthorizationClientDiagnostics, Pipeline, _expressRoutePortAuthorizationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -195,6 +221,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ExpressRoutePortAuthorizations_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRoutePortAuthorizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -206,7 +240,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRoutePortAuthorizationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_expressRoutePortAuthorizationClientDiagnostics, Pipeline, _expressRoutePortAuthorizationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_expressRoutePortAuthorizationClientDiagnostics, Pipeline, _expressRoutePortAuthorizationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -228,6 +262,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRoutePortAuthorizations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRoutePortAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +308,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRoutePortAuthorizations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRoutePortAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

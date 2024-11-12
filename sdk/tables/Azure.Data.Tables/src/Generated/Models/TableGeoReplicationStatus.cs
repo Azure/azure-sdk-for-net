@@ -36,7 +36,7 @@ namespace Azure.Data.Tables.Models
         public static bool operator ==(TableGeoReplicationStatus left, TableGeoReplicationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TableGeoReplicationStatus"/> values are not the same. </summary>
         public static bool operator !=(TableGeoReplicationStatus left, TableGeoReplicationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TableGeoReplicationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TableGeoReplicationStatus"/>. </summary>
         public static implicit operator TableGeoReplicationStatus(string value) => new TableGeoReplicationStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.Data.Tables.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

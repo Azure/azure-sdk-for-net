@@ -6,16 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountAssemblyProperties : IUtf8JsonSerializable
+    public partial class IntegrationAccountAssemblyProperties : IUtf8JsonSerializable, IJsonModel<IntegrationAccountAssemblyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountAssemblyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<IntegrationAccountAssemblyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountAssemblyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("assemblyName"u8);
             writer.WriteStringValue(AssemblyName);
             if (Optional.IsDefined(AssemblyVersion))
@@ -33,63 +52,40 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("assemblyPublicKeyToken"u8);
                 writer.WriteStringValue(AssemblyPublicKeyToken);
             }
-            if (Optional.IsDefined(Content))
-            {
-                writer.WritePropertyName("content"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Content);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Content.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(ContentType))
-            {
-                writer.WritePropertyName("contentType"u8);
-                writer.WriteStringValue(ContentType.Value.ToString());
-            }
-            if (Optional.IsDefined(ContentLink))
-            {
-                writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink);
-            }
-            if (Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("createdTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (Optional.IsDefined(ChangedOn))
-            {
-                writer.WritePropertyName("changedTime"u8);
-                writer.WriteStringValue(ChangedOn.Value, "O");
-            }
-            if (Optional.IsDefined(Metadata))
-            {
-                writer.WritePropertyName("metadata"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Metadata);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
-#endif
-            }
-            writer.WriteEndObject();
         }
 
-        internal static IntegrationAccountAssemblyProperties DeserializeIntegrationAccountAssemblyProperties(JsonElement element)
+        IntegrationAccountAssemblyProperties IJsonModel<IntegrationAccountAssemblyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountAssemblyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationAccountAssemblyProperties(document.RootElement, options);
+        }
+
+        internal static IntegrationAccountAssemblyProperties DeserializeIntegrationAccountAssemblyProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string assemblyName = default;
-            Optional<string> assemblyVersion = default;
-            Optional<string> assemblyCulture = default;
-            Optional<string> assemblyPublicKeyToken = default;
-            Optional<BinaryData> content = default;
-            Optional<ContentType> contentType = default;
-            Optional<LogicContentLink> contentLink = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<BinaryData> metadata = default;
+            string assemblyVersion = default;
+            string assemblyCulture = default;
+            string assemblyPublicKeyToken = default;
+            BinaryData content = default;
+            ContentType? contentType = default;
+            LogicContentLink contentLink = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            BinaryData metadata = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assemblyName"u8))
@@ -136,7 +132,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contentLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    contentLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdTime"u8))
@@ -166,8 +162,55 @@ namespace Azure.ResourceManager.Logic.Models
                     metadata = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IntegrationAccountAssemblyProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content.Value, Optional.ToNullable(contentType), contentLink.Value, assemblyName, assemblyVersion.Value, assemblyCulture.Value, assemblyPublicKeyToken.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IntegrationAccountAssemblyProperties(
+                createdTime,
+                changedTime,
+                metadata,
+                serializedAdditionalRawData,
+                content,
+                contentType,
+                contentLink,
+                assemblyName,
+                assemblyVersion,
+                assemblyCulture,
+                assemblyPublicKeyToken);
         }
+
+        BinaryData IPersistableModel<IntegrationAccountAssemblyProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountAssemblyProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IntegrationAccountAssemblyProperties IPersistableModel<IntegrationAccountAssemblyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountAssemblyProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIntegrationAccountAssemblyProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IntegrationAccountAssemblyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

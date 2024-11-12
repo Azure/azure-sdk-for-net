@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Protect LDAP communication using SSL certificate (LDAPS). </summary>
+    /// <summary> Whether SSL is enabled or disabled. </summary>
     public readonly partial struct SslCertificateStatus : IEquatable<SslCertificateStatus>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Avs.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> is enabled. </summary>
         public static SslCertificateStatus Enabled { get; } = new SslCertificateStatus(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> is disabled. </summary>
         public static SslCertificateStatus Disabled { get; } = new SslCertificateStatus(DisabledValue);
         /// <summary> Determines if two <see cref="SslCertificateStatus"/> values are the same. </summary>
         public static bool operator ==(SslCertificateStatus left, SslCertificateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SslCertificateStatus"/> values are not the same. </summary>
         public static bool operator !=(SslCertificateStatus left, SslCertificateStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SslCertificateStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SslCertificateStatus"/>. </summary>
         public static implicit operator SslCertificateStatus(string value) => new SslCertificateStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -6,17 +6,36 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerLogFile : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerLogFile : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerLogFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerLogFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MySqlFlexibleServerLogFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerLogFile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerLogFile)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SizeInKB))
@@ -45,11 +64,24 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static MySqlFlexibleServerLogFile DeserializeMySqlFlexibleServerLogFile(JsonElement element)
+        MySqlFlexibleServerLogFile IJsonModel<MySqlFlexibleServerLogFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerLogFile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerLogFile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerLogFile(document.RootElement, options);
+        }
+
+        internal static MySqlFlexibleServerLogFile DeserializeMySqlFlexibleServerLogFile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,12 +89,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> sizeInKB = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<string> type0 = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<Uri> url = default;
+            SystemData systemData = default;
+            long? sizeInKB = default;
+            DateTimeOffset? createdTime = default;
+            string type0 = default;
+            DateTimeOffset? lastModifiedTime = default;
+            Uri url = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -142,8 +176,54 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlFlexibleServerLogFile(id, name, type, systemData.Value, Optional.ToNullable(sizeInKB), Optional.ToNullable(createdTime), type0.Value, Optional.ToNullable(lastModifiedTime), url.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MySqlFlexibleServerLogFile(
+                id,
+                name,
+                type,
+                systemData,
+                sizeInKB,
+                createdTime,
+                type0,
+                lastModifiedTime,
+                url,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlFlexibleServerLogFile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerLogFile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerLogFile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MySqlFlexibleServerLogFile IPersistableModel<MySqlFlexibleServerLogFile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerLogFile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMySqlFlexibleServerLogFile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerLogFile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MySqlFlexibleServerLogFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

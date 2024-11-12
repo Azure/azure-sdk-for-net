@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,22 +14,85 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ServiceTagsListResult
+    public partial class ServiceTagsListResult : IUtf8JsonSerializable, IJsonModel<ServiceTagsListResult>
     {
-        internal static ServiceTagsListResult DeserializeServiceTagsListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceTagsListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ServiceTagsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceTagsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ChangeNumber))
+            {
+                writer.WritePropertyName("changeNumber"u8);
+                writer.WriteStringValue(ChangeNumber);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Cloud))
+            {
+                writer.WritePropertyName("cloud"u8);
+                writer.WriteStringValue(Cloud);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Values))
+            {
+                writer.WritePropertyName("values"u8);
+                writer.WriteStartArray();
+                foreach (var item in Values)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+        }
+
+        ServiceTagsListResult IJsonModel<ServiceTagsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceTagsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceTagsListResult(document.RootElement, options);
+        }
+
+        internal static ServiceTagsListResult DeserializeServiceTagsListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> changeNumber = default;
-            Optional<string> cloud = default;
-            Optional<IReadOnlyList<ServiceTagInformation>> values = default;
-            Optional<string> nextLink = default;
+            string changeNumber = default;
+            string cloud = default;
+            IReadOnlyList<ServiceTagInformation> values = default;
+            string nextLink = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changeNumber"u8))
@@ -49,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ServiceTagInformation> array = new List<ServiceTagInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceTagInformation.DeserializeServiceTagInformation(item));
+                        array.Add(ServiceTagInformation.DeserializeServiceTagInformation(item, options));
                     }
                     values = array;
                     continue;
@@ -83,8 +148,53 @@ namespace Azure.ResourceManager.Network.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceTagsListResult(id, name, type, systemData.Value, changeNumber.Value, cloud.Value, Optional.ToList(values), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServiceTagsListResult(
+                id,
+                name,
+                type,
+                systemData,
+                changeNumber,
+                cloud,
+                values ?? new ChangeTrackingList<ServiceTagInformation>(),
+                nextLink,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceTagsListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceTagsListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServiceTagsListResult IPersistableModel<ServiceTagsListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceTagsListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceTagsListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceTagsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

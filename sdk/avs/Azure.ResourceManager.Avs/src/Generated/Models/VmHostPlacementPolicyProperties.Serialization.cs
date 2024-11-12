@@ -5,17 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class VmHostPlacementPolicyProperties : IUtf8JsonSerializable
+    public partial class VmHostPlacementPolicyProperties : IUtf8JsonSerializable, IJsonModel<VmHostPlacementPolicyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmHostPlacementPolicyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VmHostPlacementPolicyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmHostPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmHostPlacementPolicyProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("vmMembers"u8);
             writer.WriteStartArray();
             foreach (var item in VmMembers)
@@ -47,23 +66,24 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("azureHybridBenefitType"u8);
                 writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(PolicyType.ToString());
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static VmHostPlacementPolicyProperties DeserializeVmHostPlacementPolicyProperties(JsonElement element)
+        VmHostPlacementPolicyProperties IJsonModel<VmHostPlacementPolicyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VmHostPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmHostPlacementPolicyProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmHostPlacementPolicyProperties(document.RootElement, options);
+        }
+
+        internal static VmHostPlacementPolicyProperties DeserializeVmHostPlacementPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -71,12 +91,14 @@ namespace Azure.ResourceManager.Avs.Models
             IList<ResourceIdentifier> vmMembers = default;
             IList<string> hostMembers = default;
             AvsPlacementPolicyAffinityType affinityType = default;
-            Optional<VmHostPlacementPolicyAffinityStrength> affinityStrength = default;
-            Optional<AzureHybridBenefitType> azureHybridBenefitType = default;
+            VmHostPlacementPolicyAffinityStrength? affinityStrength = default;
+            AzureHybridBenefitType? azureHybridBenefitType = default;
             PlacementPolicyType type = default;
-            Optional<PlacementPolicyState> state = default;
-            Optional<string> displayName = default;
-            Optional<PlacementPolicyProvisioningState> provisioningState = default;
+            PlacementPolicyState? state = default;
+            string displayName = default;
+            PlacementPolicyProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmMembers"u8))
@@ -157,8 +179,54 @@ namespace Azure.ResourceManager.Avs.Models
                     provisioningState = new PlacementPolicyProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VmHostPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), vmMembers, hostMembers, affinityType, Optional.ToNullable(affinityStrength), Optional.ToNullable(azureHybridBenefitType));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VmHostPlacementPolicyProperties(
+                type,
+                state,
+                displayName,
+                provisioningState,
+                serializedAdditionalRawData,
+                vmMembers,
+                hostMembers,
+                affinityType,
+                affinityStrength,
+                azureHybridBenefitType);
         }
+
+        BinaryData IPersistableModel<VmHostPlacementPolicyProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmHostPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VmHostPlacementPolicyProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VmHostPlacementPolicyProperties IPersistableModel<VmHostPlacementPolicyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmHostPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVmHostPlacementPolicyProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VmHostPlacementPolicyProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VmHostPlacementPolicyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

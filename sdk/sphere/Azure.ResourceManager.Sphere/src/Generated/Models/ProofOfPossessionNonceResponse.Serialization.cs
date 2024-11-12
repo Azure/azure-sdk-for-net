@@ -6,26 +6,66 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    public partial class ProofOfPossessionNonceResponse
+    public partial class ProofOfPossessionNonceResponse : IUtf8JsonSerializable, IJsonModel<ProofOfPossessionNonceResponse>
     {
-        internal static ProofOfPossessionNonceResponse DeserializeProofOfPossessionNonceResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProofOfPossessionNonceResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ProofOfPossessionNonceResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProofOfPossessionNonceResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        ProofOfPossessionNonceResponse IJsonModel<ProofOfPossessionNonceResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProofOfPossessionNonceResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProofOfPossessionNonceResponse(document.RootElement, options);
+        }
+
+        internal static ProofOfPossessionNonceResponse DeserializeProofOfPossessionNonceResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> certificate = default;
-            Optional<SphereCertificateStatus> status = default;
-            Optional<string> subject = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> expiryUtc = default;
-            Optional<DateTimeOffset> notBeforeUtc = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            string certificate = default;
+            SphereCertificateStatus? status = default;
+            string subject = default;
+            string thumbprint = default;
+            DateTimeOffset? expiryUtc = default;
+            DateTimeOffset? notBeforeUtc = default;
+            SphereProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificate"u8))
@@ -79,8 +119,52 @@ namespace Azure.ResourceManager.Sphere.Models
                     provisioningState = new SphereProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProofOfPossessionNonceResponse(certificate.Value, Optional.ToNullable(status), subject.Value, thumbprint.Value, Optional.ToNullable(expiryUtc), Optional.ToNullable(notBeforeUtc), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ProofOfPossessionNonceResponse(
+                certificate,
+                status,
+                subject,
+                thumbprint,
+                expiryUtc,
+                notBeforeUtc,
+                provisioningState,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProofOfPossessionNonceResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProofOfPossessionNonceResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ProofOfPossessionNonceResponse IPersistableModel<ProofOfPossessionNonceResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProofOfPossessionNonceResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProofOfPossessionNonceResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProofOfPossessionNonceResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

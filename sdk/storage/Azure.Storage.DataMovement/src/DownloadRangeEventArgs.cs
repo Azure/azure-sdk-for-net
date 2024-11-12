@@ -5,10 +5,11 @@ using System;
 using System.IO;
 using System.Threading;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class DownloadRangeEventArgs : StorageTransferEventArgs
+    internal class DownloadRangeEventArgs : DataTransferEventArgs
     {
         public bool Success { get; }
 

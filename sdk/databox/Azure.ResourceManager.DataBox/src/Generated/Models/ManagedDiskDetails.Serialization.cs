@@ -5,32 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class ManagedDiskDetails : IUtf8JsonSerializable
+    public partial class ManagedDiskDetails : IUtf8JsonSerializable, IJsonModel<ManagedDiskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManagedDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedDiskDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("resourceGroupId"u8);
             writer.WriteStringValue(ResourceGroupId);
             writer.WritePropertyName("stagingStorageAccountId"u8);
             writer.WriteStringValue(StagingStorageAccountId);
-            writer.WritePropertyName("dataAccountType"u8);
-            writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (Optional.IsDefined(SharePassword))
-            {
-                writer.WritePropertyName("sharePassword"u8);
-                writer.WriteStringValue(SharePassword);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static ManagedDiskDetails DeserializeManagedDiskDetails(JsonElement element)
+        ManagedDiskDetails IJsonModel<ManagedDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedDiskDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedDiskDetails(document.RootElement, options);
+        }
+
+        internal static ManagedDiskDetails DeserializeManagedDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,7 +64,9 @@ namespace Azure.ResourceManager.DataBox.Models
             ResourceIdentifier resourceGroupId = default;
             ResourceIdentifier stagingStorageAccountId = default;
             DataAccountType dataAccountType = default;
-            Optional<string> sharePassword = default;
+            string sharePassword = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceGroupId"u8))
@@ -61,8 +89,44 @@ namespace Azure.ResourceManager.DataBox.Models
                     sharePassword = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedDiskDetails(dataAccountType, sharePassword.Value, resourceGroupId, stagingStorageAccountId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedDiskDetails(dataAccountType, sharePassword, serializedAdditionalRawData, resourceGroupId, stagingStorageAccountId);
         }
+
+        BinaryData IPersistableModel<ManagedDiskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedDiskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedDiskDetails IPersistableModel<ManagedDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedDiskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedDiskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

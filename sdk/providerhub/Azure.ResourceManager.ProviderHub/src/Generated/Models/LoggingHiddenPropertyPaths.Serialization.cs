@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class LoggingHiddenPropertyPaths : IUtf8JsonSerializable
+    public partial class LoggingHiddenPropertyPaths : IUtf8JsonSerializable, IJsonModel<LoggingHiddenPropertyPaths>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoggingHiddenPropertyPaths>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LoggingHiddenPropertyPaths>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoggingHiddenPropertyPaths>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoggingHiddenPropertyPaths)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(HiddenPathsOnRequest))
             {
                 writer.WritePropertyName("hiddenPathsOnRequest"u8);
@@ -36,17 +54,47 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static LoggingHiddenPropertyPaths DeserializeLoggingHiddenPropertyPaths(JsonElement element)
+        LoggingHiddenPropertyPaths IJsonModel<LoggingHiddenPropertyPaths>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LoggingHiddenPropertyPaths>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoggingHiddenPropertyPaths)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoggingHiddenPropertyPaths(document.RootElement, options);
+        }
+
+        internal static LoggingHiddenPropertyPaths DeserializeLoggingHiddenPropertyPaths(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> hiddenPathsOnRequest = default;
-            Optional<IList<string>> hiddenPathsOnResponse = default;
+            IList<string> hiddenPathsOnRequest = default;
+            IList<string> hiddenPathsOnResponse = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hiddenPathsOnRequest"u8))
@@ -77,8 +125,44 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     hiddenPathsOnResponse = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoggingHiddenPropertyPaths(Optional.ToList(hiddenPathsOnRequest), Optional.ToList(hiddenPathsOnResponse));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LoggingHiddenPropertyPaths(hiddenPathsOnRequest ?? new ChangeTrackingList<string>(), hiddenPathsOnResponse ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LoggingHiddenPropertyPaths>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoggingHiddenPropertyPaths>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LoggingHiddenPropertyPaths)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LoggingHiddenPropertyPaths IPersistableModel<LoggingHiddenPropertyPaths>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoggingHiddenPropertyPaths>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLoggingHiddenPropertyPaths(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoggingHiddenPropertyPaths)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LoggingHiddenPropertyPaths>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

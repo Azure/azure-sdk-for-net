@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory.Samples
@@ -41,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryDataFlowResource dataFactoryDataFlow = client.GetDataFactoryDataFlowResource(dataFactoryDataFlowResourceId);
 
             // invoke the operation
-            DataFactoryDataFlowData data = new DataFactoryDataFlowData(new DataFactoryMappingDataFlowDefinition()
+            DataFactoryDataFlowData data = new DataFactoryDataFlowData(new DataFactoryMappingDataFlowProperties()
             {
                 Sources =
 {
@@ -102,7 +99,7 @@ Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,"CADOutput"
             DataFactoryDataFlowResource dataFactoryDataFlow = client.GetDataFactoryDataFlowResource(dataFactoryDataFlowResourceId);
 
             // invoke the operation
-            DataFactoryDataFlowData data = new DataFactoryDataFlowData(new DataFactoryMappingDataFlowDefinition()
+            DataFactoryDataFlowData data = new DataFactoryDataFlowData(new DataFactoryMappingDataFlowProperties()
             {
                 Sources =
 {

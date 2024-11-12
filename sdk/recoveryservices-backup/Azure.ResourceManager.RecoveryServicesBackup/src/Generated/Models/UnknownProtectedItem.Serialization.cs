@@ -6,126 +6,78 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class UnknownProtectedItem : IUtf8JsonSerializable
+    internal partial class UnknownProtectedItem : IUtf8JsonSerializable, IJsonModel<BackupGenericProtectedItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupGenericProtectedItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BackupGenericProtectedItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("protectedItemType"u8);
-            writer.WriteStringValue(ProtectedItemType);
-            if (Optional.IsDefined(ContainerName))
-            {
-                writer.WritePropertyName("containerName"u8);
-                writer.WriteStringValue(ContainerName);
-            }
-            if (Optional.IsDefined(SourceResourceId))
-            {
-                writer.WritePropertyName("sourceResourceId"u8);
-                writer.WriteStringValue(SourceResourceId);
-            }
-            if (Optional.IsDefined(PolicyId))
-            {
-                writer.WritePropertyName("policyId"u8);
-                writer.WriteStringValue(PolicyId);
-            }
-            if (Optional.IsDefined(LastRecoverOn))
-            {
-                writer.WritePropertyName("lastRecoveryPoint"u8);
-                writer.WriteStringValue(LastRecoverOn.Value, "O");
-            }
-            if (Optional.IsDefined(BackupSetName))
-            {
-                writer.WritePropertyName("backupSetName"u8);
-                writer.WriteStringValue(BackupSetName);
-            }
-            if (Optional.IsDefined(CreateMode))
-            {
-                writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
-            }
-            if (Optional.IsDefined(DeferredDeletedOn))
-            {
-                writer.WritePropertyName("deferredDeleteTimeInUTC"u8);
-                writer.WriteStringValue(DeferredDeletedOn.Value, "O");
-            }
-            if (Optional.IsDefined(IsScheduledForDeferredDelete))
-            {
-                writer.WritePropertyName("isScheduledForDeferredDelete"u8);
-                writer.WriteBooleanValue(IsScheduledForDeferredDelete.Value);
-            }
-            if (Optional.IsDefined(DeferredDeleteTimeRemaining))
-            {
-                writer.WritePropertyName("deferredDeleteTimeRemaining"u8);
-                writer.WriteStringValue(DeferredDeleteTimeRemaining);
-            }
-            if (Optional.IsDefined(IsDeferredDeleteScheduleUpcoming))
-            {
-                writer.WritePropertyName("isDeferredDeleteScheduleUpcoming"u8);
-                writer.WriteBooleanValue(IsDeferredDeleteScheduleUpcoming.Value);
-            }
-            if (Optional.IsDefined(IsRehydrate))
-            {
-                writer.WritePropertyName("isRehydrate"u8);
-                writer.WriteBooleanValue(IsRehydrate.Value);
-            }
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
-            {
-                writer.WritePropertyName("resourceGuardOperationRequests"u8);
-                writer.WriteStartArray();
-                foreach (var item in ResourceGuardOperationRequests)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsArchiveEnabled))
-            {
-                writer.WritePropertyName("isArchiveEnabled"u8);
-                writer.WriteBooleanValue(IsArchiveEnabled.Value);
-            }
-            if (Optional.IsDefined(PolicyName))
-            {
-                writer.WritePropertyName("policyName"u8);
-                writer.WriteStringValue(PolicyName);
-            }
-            if (Optional.IsDefined(SoftDeleteRetentionPeriod))
-            {
-                writer.WritePropertyName("softDeleteRetentionPeriod"u8);
-                writer.WriteNumberValue(SoftDeleteRetentionPeriod.Value);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static UnknownProtectedItem DeserializeUnknownProtectedItem(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        BackupGenericProtectedItem IJsonModel<BackupGenericProtectedItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupGenericProtectedItem(document.RootElement, options);
+        }
+
+        internal static UnknownProtectedItem DeserializeUnknownProtectedItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string protectedItemType = "Unknown";
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<BackupDataSourceType> workloadType = default;
-            Optional<string> containerName = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<DateTimeOffset> lastRecoveryPoint = default;
-            Optional<string> backupSetName = default;
-            Optional<BackupCreateMode> createMode = default;
-            Optional<DateTimeOffset> deferredDeleteTimeInUTC = default;
-            Optional<bool> isScheduledForDeferredDelete = default;
-            Optional<string> deferredDeleteTimeRemaining = default;
-            Optional<bool> isDeferredDeleteScheduleUpcoming = default;
-            Optional<bool> isRehydrate = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> policyName = default;
-            Optional<int> softDeleteRetentionPeriod = default;
+            BackupManagementType? backupManagementType = default;
+            BackupDataSourceType? workloadType = default;
+            string containerName = default;
+            ResourceIdentifier sourceResourceId = default;
+            ResourceIdentifier policyId = default;
+            DateTimeOffset? lastRecoveryPoint = default;
+            string backupSetName = default;
+            BackupCreateMode? createMode = default;
+            DateTimeOffset? deferredDeleteTimeInUTC = default;
+            bool? isScheduledForDeferredDelete = default;
+            string deferredDeleteTimeRemaining = default;
+            bool? isDeferredDeleteScheduleUpcoming = default;
+            bool? isRehydrate = default;
+            IList<string> resourceGuardOperationRequests = default;
+            bool? isArchiveEnabled = default;
+            string policyName = default;
+            int? softDeleteRetentionPeriodInDays = default;
+            string vaultId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectedItemType"u8))
@@ -266,17 +218,78 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("softDeleteRetentionPeriod"u8))
+                if (property.NameEquals("softDeleteRetentionPeriodInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    softDeleteRetentionPeriod = property.Value.GetInt32();
+                    softDeleteRetentionPeriodInDays = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("vaultId"u8))
+                {
+                    vaultId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriod));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownProtectedItem(
+                protectedItemType,
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoveryPoint,
+                backupSetName,
+                createMode,
+                deferredDeleteTimeInUTC,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupGenericProtectedItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BackupGenericProtectedItem IPersistableModel<BackupGenericProtectedItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBackupGenericProtectedItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupGenericProtectedItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,100 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadSqlRestoreWithRehydrateContent : IUtf8JsonSerializable
+    public partial class WorkloadSqlRestoreWithRehydrateContent : IUtf8JsonSerializable, IJsonModel<WorkloadSqlRestoreWithRehydrateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadSqlRestoreWithRehydrateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<WorkloadSqlRestoreWithRehydrateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointRehydrationInfo))
-            {
-                writer.WritePropertyName("recoveryPointRehydrationInfo"u8);
-                writer.WriteObjectValue(RecoveryPointRehydrationInfo);
-            }
-            if (Optional.IsDefined(ShouldUseAlternateTargetLocation))
-            {
-                writer.WritePropertyName("shouldUseAlternateTargetLocation"u8);
-                writer.WriteBooleanValue(ShouldUseAlternateTargetLocation.Value);
-            }
-            if (Optional.IsDefined(IsNonRecoverable))
-            {
-                writer.WritePropertyName("isNonRecoverable"u8);
-                writer.WriteBooleanValue(IsNonRecoverable.Value);
-            }
-            if (Optional.IsCollectionDefined(AlternateDirectoryPaths))
-            {
-                writer.WritePropertyName("alternateDirectoryPaths"u8);
-                writer.WriteStartArray();
-                foreach (var item in AlternateDirectoryPaths)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(RecoveryType))
-            {
-                writer.WritePropertyName("recoveryType"u8);
-                writer.WriteStringValue(RecoveryType.Value.ToString());
-            }
-            if (Optional.IsDefined(SourceResourceId))
-            {
-                writer.WritePropertyName("sourceResourceId"u8);
-                writer.WriteStringValue(SourceResourceId);
-            }
-            if (Optional.IsCollectionDefined(PropertyBag))
-            {
-                writer.WritePropertyName("propertyBag"u8);
-                writer.WriteStartObject();
-                foreach (var item in PropertyBag)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(TargetInfo))
-            {
-                writer.WritePropertyName("targetInfo"u8);
-                writer.WriteObjectValue(TargetInfo);
-            }
-            if (Optional.IsDefined(RecoveryMode))
-            {
-                writer.WritePropertyName("recoveryMode"u8);
-                writer.WriteStringValue(RecoveryMode.Value.ToString());
-            }
-            if (Optional.IsDefined(TargetVirtualMachineId))
-            {
-                writer.WritePropertyName("targetVirtualMachineId"u8);
-                writer.WriteStringValue(TargetVirtualMachineId);
-            }
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static WorkloadSqlRestoreWithRehydrateContent DeserializeWorkloadSqlRestoreWithRehydrateContent(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRestoreWithRehydrateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkloadSqlRestoreWithRehydrateContent)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(RecoveryPointRehydrationInfo))
+            {
+                writer.WritePropertyName("recoveryPointRehydrationInfo"u8);
+                writer.WriteObjectValue(RecoveryPointRehydrationInfo, options);
+            }
+        }
+
+        WorkloadSqlRestoreWithRehydrateContent IJsonModel<WorkloadSqlRestoreWithRehydrateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRestoreWithRehydrateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkloadSqlRestoreWithRehydrateContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadSqlRestoreWithRehydrateContent(document.RootElement, options);
+        }
+
+        internal static WorkloadSqlRestoreWithRehydrateContent DeserializeWorkloadSqlRestoreWithRehydrateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<RecoveryPointRehydrationInfo> recoveryPointRehydrationInfo = default;
-            Optional<bool> shouldUseAlternateTargetLocation = default;
-            Optional<bool> isNonRecoverable = default;
-            Optional<IList<SqlDataDirectoryMapping>> alternateDirectoryPaths = default;
-            Optional<FileShareRecoveryType> recoveryType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<IDictionary<string, string>> propertyBag = default;
-            Optional<TargetRestoreInfo> targetInfo = default;
-            Optional<RecoveryMode> recoveryMode = default;
-            Optional<ResourceIdentifier> targetVirtualMachineId = default;
+            RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default;
+            bool? shouldUseAlternateTargetLocation = default;
+            bool? isNonRecoverable = default;
+            IList<SqlDataDirectoryMapping> alternateDirectoryPaths = default;
+            FileShareRecoveryType? recoveryType = default;
+            ResourceIdentifier sourceResourceId = default;
+            IDictionary<string, string> propertyBag = default;
+            TargetRestoreInfo targetInfo = default;
+            RecoveryMode? recoveryMode = default;
+            string targetResourceGroupName = default;
+            UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default;
+            SnapshotRestoreContent snapshotRestoreParameters = default;
+            ResourceIdentifier targetVirtualMachineId = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointRehydrationInfo"u8))
@@ -107,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointRehydrationInfo = RecoveryPointRehydrationInfo.DeserializeRecoveryPointRehydrationInfo(property.Value);
+                    recoveryPointRehydrationInfo = RecoveryPointRehydrationInfo.DeserializeRecoveryPointRehydrationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("shouldUseAlternateTargetLocation"u8))
@@ -137,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<SqlDataDirectoryMapping> array = new List<SqlDataDirectoryMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlDataDirectoryMapping.DeserializeSqlDataDirectoryMapping(item));
+                        array.Add(SqlDataDirectoryMapping.DeserializeSqlDataDirectoryMapping(item, options));
                     }
                     alternateDirectoryPaths = array;
                     continue;
@@ -180,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    targetInfo = TargetRestoreInfo.DeserializeTargetRestoreInfo(property.Value);
+                    targetInfo = TargetRestoreInfo.DeserializeTargetRestoreInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryMode"u8))
@@ -190,6 +169,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     recoveryMode = new RecoveryMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetResourceGroupName"u8))
+                {
+                    targetResourceGroupName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("userAssignedManagedIdentityDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("snapshotRestoreParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshotRestoreParameters = SnapshotRestoreContent.DeserializeSnapshotRestoreContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetVirtualMachineId"u8))
@@ -206,8 +208,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkloadSqlRestoreWithRehydrateContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, Optional.ToNullable(shouldUseAlternateTargetLocation), Optional.ToNullable(isNonRecoverable), Optional.ToList(alternateDirectoryPaths), recoveryPointRehydrationInfo.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WorkloadSqlRestoreWithRehydrateContent(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryType,
+                sourceResourceId,
+                propertyBag ?? new ChangeTrackingDictionary<string, string>(),
+                targetInfo,
+                recoveryMode,
+                targetResourceGroupName,
+                userAssignedManagedIdentityDetails,
+                snapshotRestoreParameters,
+                targetVirtualMachineId,
+                shouldUseAlternateTargetLocation,
+                isNonRecoverable,
+                alternateDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectoryMapping>(),
+                recoveryPointRehydrationInfo);
         }
+
+        BinaryData IPersistableModel<WorkloadSqlRestoreWithRehydrateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRestoreWithRehydrateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadSqlRestoreWithRehydrateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WorkloadSqlRestoreWithRehydrateContent IPersistableModel<WorkloadSqlRestoreWithRehydrateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRestoreWithRehydrateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWorkloadSqlRestoreWithRehydrateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadSqlRestoreWithRehydrateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WorkloadSqlRestoreWithRehydrateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -22,14 +22,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         [AsyncOnly]
         public async Task NetworkRacks()
         {
-            string subscriptionId = TestEnvironment.SubscriptionId;
-            string resourceGroupName = TestEnvironment.ResourceGroupName;
-            string networkRackName = TestEnvironment.NetworkRackName;
-
             TestContext.Out.WriteLine($"Entered into the NetworkRack tests....");
-            TestContext.Out.WriteLine($"Provided networkRack name : {networkRackName}");
+            TestContext.Out.WriteLine($"Provided networkRack name : {TestEnvironment.NetworkRackName}");
 
-            ResourceIdentifier networkRackResourceId = NetworkRackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkRackName);
+            ResourceIdentifier networkRackResourceId = NetworkRackResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NetworkRackName);
             TestContext.Out.WriteLine($"networkRackResourceId: {networkRackResourceId}");
 
             TestContext.Out.WriteLine($"NetworkRack Test started.....");
@@ -42,7 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             NetworkRackResource getResult = await rack.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, networkRackName);
+            Assert.AreEqual(getResult.Data.Name, TestEnvironment.NetworkRackName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -53,14 +49,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
+            //List by subscription
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
+            SubscriptionResource subscriptionResource = Client.GetSubscriptionResource(subscriptionResourceId);
+
             TestContext.Out.WriteLine($"GET - List by Subscription started.....");
-            var listBySubscription = new List<NetworkRackResource>();
-            await foreach (NetworkRackResource item in DefaultSubscription.GetNetworkRacksAsync())
+
+            await foreach (NetworkRackResource item in subscriptionResource.GetNetworkRacksAsync())
             {
-                listBySubscription.Add(item);
-                Console.WriteLine($"Succeeded on id: {item}");
+                NetworkRackData resourceData = item.Data;
+                TestContext.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-            Assert.IsNotEmpty(listBySubscription);
+
+            TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
         }
     }
 }

@@ -90,19 +90,19 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<string> generationId = default;
-            Optional<string> etag = default;
-            Optional<DeviceConnectionState> connectionState = default;
-            Optional<DeviceStatus> status = default;
-            Optional<string> statusReason = default;
-            Optional<DateTimeOffset> connectionStateUpdatedTime = default;
-            Optional<DateTimeOffset> statusUpdatedTime = default;
-            Optional<DateTimeOffset> lastActivityTime = default;
-            Optional<int> cloudToDeviceMessageCount = default;
-            Optional<AuthenticationMechanism> authentication = default;
-            Optional<DeviceCapabilities> capabilities = default;
-            Optional<string> deviceScope = default;
+            string deviceId = default;
+            string generationId = default;
+            string etag = default;
+            DeviceConnectionState? connectionState = default;
+            DeviceStatus? status = default;
+            string statusReason = default;
+            DateTimeOffset? connectionStateUpdatedTime = default;
+            DateTimeOffset? statusUpdatedTime = default;
+            DateTimeOffset? lastActivityTime = default;
+            int? cloudToDeviceMessageCount = default;
+            AuthenticationMechanism authentication = default;
+            DeviceCapabilities capabilities = default;
+            string deviceScope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -203,7 +203,36 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceIdentity(deviceId.Value, generationId.Value, etag.Value, Optional.ToNullable(connectionState), Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(connectionStateUpdatedTime), Optional.ToNullable(statusUpdatedTime), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), authentication.Value, capabilities.Value, deviceScope.Value);
+            return new DeviceIdentity(
+                deviceId,
+                generationId,
+                etag,
+                connectionState,
+                status,
+                statusReason,
+                connectionStateUpdatedTime,
+                statusUpdatedTime,
+                lastActivityTime,
+                cloudToDeviceMessageCount,
+                authentication,
+                capabilities,
+                deviceScope);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceIdentity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceIdentity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

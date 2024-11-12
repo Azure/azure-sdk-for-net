@@ -60,6 +60,9 @@ namespace Azure.Search.Documents.Tests
                 (SearchFieldDataType, string)[] primitiveFieldTestData = new[]
                 {
                     (SearchFieldDataType.String, nameof(ReflectableModel.Text)),
+                    (SearchFieldDataType.SByte, nameof(ReflectableModel.SByte)),
+                    (SearchFieldDataType.Byte, nameof(ReflectableModel.Byte)),
+                    (SearchFieldDataType.Int16, nameof(ReflectableModel.Short)),
                     (SearchFieldDataType.Int32, nameof(ReflectableModel.Id)),
                     (SearchFieldDataType.Int64, nameof(ReflectableModel.BigNumber)),
                     (SearchFieldDataType.Double, nameof(ReflectableModel.Double)),
@@ -91,6 +94,21 @@ namespace Azure.Search.Documents.Tests
                     (SearchFieldDataType.String, nameof(ReflectableModel.StringIEnumerable)),
                     (SearchFieldDataType.String, nameof(ReflectableModel.StringList)),
                     (SearchFieldDataType.String, nameof(ReflectableModel.StringICollection)),
+                    (SearchFieldDataType.SByte, nameof(ReflectableModel.SByteArray)),
+                    (SearchFieldDataType.SByte, nameof(ReflectableModel.SByteIList)),
+                    (SearchFieldDataType.SByte, nameof(ReflectableModel.SByteIEnumerable)),
+                    (SearchFieldDataType.SByte, nameof(ReflectableModel.SByteList)),
+                    (SearchFieldDataType.SByte, nameof(ReflectableModel.SByteICollection)),
+                    (SearchFieldDataType.Byte, nameof(ReflectableModel.ByteArray)),
+                    (SearchFieldDataType.Byte, nameof(ReflectableModel.ByteIList)),
+                    (SearchFieldDataType.Byte, nameof(ReflectableModel.ByteIEnumerable)),
+                    (SearchFieldDataType.Byte, nameof(ReflectableModel.ByteList)),
+                    (SearchFieldDataType.Byte, nameof(ReflectableModel.ByteICollection)),
+                    (SearchFieldDataType.Int16, nameof(ReflectableModel.ShortArray)),
+                    (SearchFieldDataType.Int16, nameof(ReflectableModel.ShortIList)),
+                    (SearchFieldDataType.Int16, nameof(ReflectableModel.ShortIEnumerable)),
+                    (SearchFieldDataType.Int16, nameof(ReflectableModel.ShortList)),
+                    (SearchFieldDataType.Int16, nameof(ReflectableModel.ShortICollection)),
                     (SearchFieldDataType.Int32, nameof(ReflectableModel.IntArray)),
                     (SearchFieldDataType.Int32, nameof(ReflectableModel.IntIList)),
                     (SearchFieldDataType.Int32, nameof(ReflectableModel.IntIEnumerable)),
@@ -477,6 +495,34 @@ namespace Azure.Search.Documents.Tests
             }
         }
 
+        [Test]
+        public void SupportsVectorType()
+        {
+            IList<SearchField> fields = new FieldBuilder().Build(typeof(ModelWithVectorProperty));
+            foreach (SearchField field in fields)
+            {
+                switch (field.Name)
+                {
+                    case nameof(ModelWithVectorProperty.ID):
+                        Assert.AreEqual(SearchFieldDataType.String, field.Type);
+                        break;
+
+                    case nameof(ModelWithVectorProperty.TitleVector):
+                        Assert.AreEqual(SearchFieldDataType.Collection(SearchFieldDataType.Single), field.Type);
+                        Assert.AreEqual(1536, field.VectorSearchDimensions);
+                        Assert.AreEqual("test-config", field.VectorSearchProfileName);
+                        Assert.IsTrue(field.IsStored);
+                        Assert.AreEqual(VectorEncodingFormat.PackedBit, field.VectorEncodingFormat);
+                        Assert.IsFalse(field.IsHidden);
+                        break;
+
+                    default:
+                        Assert.AreEqual(SearchFieldDataType.Complex, field.Type, $"Unexpected type for field '{field.Name}'");
+                        break;
+                }
+            }
+        }
+
         private static IEnumerable<(Type ModelType, SearchFieldDataType DataType, string FieldName)> CombineTestData(
             IEnumerable<Type> modelTypes,
             IEnumerable<(SearchFieldDataType DataType, string FieldName)> testData) =>
@@ -572,7 +618,7 @@ namespace Azure.Search.Documents.Tests
             public string ID { get; set; }
 
             [SimpleField(IsFilterable = true)]
-            public IEnumerable<byte> Buffer { get; set; }
+            public IEnumerable<char> Buffer { get; set; }
         }
 
         private class ModelWithUnsupportedCollectionType
@@ -644,6 +690,15 @@ namespace Azure.Search.Documents.Tests
             public GeometryLineString GeometryLineString { get; set; }
 
             public GeometryPolygon GeometryPolygon { get; set; }
+        }
+
+        private class ModelWithVectorProperty
+        {
+            [SimpleField(IsKey = true)]
+            public string ID { get; set; }
+
+            [VectorSearchField(VectorSearchDimensions = 1536, VectorSearchProfileName = "test-config", IsStored = true, VectorEncodingFormat = VectorEncodingFormat.Values.PackedBit)]
+            public IReadOnlyList<float> TitleVector { get; set; }
         }
     }
 }

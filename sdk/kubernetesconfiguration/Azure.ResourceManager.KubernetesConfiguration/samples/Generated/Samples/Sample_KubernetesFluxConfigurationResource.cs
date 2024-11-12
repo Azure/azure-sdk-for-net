@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.KubernetesConfiguration;
 using Azure.ResourceManager.KubernetesConfiguration.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Samples
@@ -93,12 +90,12 @@ Path = "./test/alt-path",
 DependsOn =
 {
 },
-SyncIntervalInSeconds = 300,
+SyncIntervalInSeconds = 300L,
 },
 ["srs-kustomization3"] = new KustomizationUpdateContent()
 {
 Path = "./test/another-path",
-SyncIntervalInSeconds = 300,
+SyncIntervalInSeconds = 300L,
 },
 },
             };

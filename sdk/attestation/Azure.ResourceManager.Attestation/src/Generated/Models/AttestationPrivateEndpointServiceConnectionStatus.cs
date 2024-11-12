@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public static bool operator ==(AttestationPrivateEndpointServiceConnectionStatus left, AttestationPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AttestationPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(AttestationPrivateEndpointServiceConnectionStatus left, AttestationPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AttestationPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AttestationPrivateEndpointServiceConnectionStatus"/>. </summary>
         public static implicit operator AttestationPrivateEndpointServiceConnectionStatus(string value) => new AttestationPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppContainers;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Resources;
 
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetContainerAppJobs_ListContainerAppsJobsBySubscription()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Jobs_ListBySubscription.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Jobs_ListBySubscription.json
             // this example is just showing the usage of "Jobs_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Job_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Job_Get.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
-            string jobName = "testcontainerAppsJob0";
+            string jobName = "testcontainerappsjob0";
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
             ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
@@ -87,7 +84,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Job_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Job_Delete.json
             // this example is just showing the usage of "Jobs_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
-            string jobName = "testWorkerContainerAppsJob0";
+            string jobName = "testworkercontainerappsjob0";
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
             ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
@@ -114,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PatchContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Job_Patch.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Job_Patch.json
             // this example is just showing the usage of "Jobs_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
-            string jobName = "testcontainerAppsJob0";
+            string jobName = "testcontainerappsjob0";
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
             ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
@@ -150,7 +147,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 {
 new ContainerAppInitContainer()
 {
-Image = "repo/testcontainerAppsJob0:v4",
+Image = "repo/testcontainerappsjob0:v4",
 Name = "testinitcontainerAppsJob0",
 Command =
 {
@@ -162,8 +159,8 @@ Args =
 },
 Resources = new AppContainerResources()
 {
-Cpu = 0.2,
-Memory = "100Mi",
+Cpu = 0.5,
+Memory = "1Gi",
 },
 }
 },
@@ -188,8 +185,8 @@ PeriodSeconds = 3,
 ProbeType = ContainerAppProbeType.Liveness,
 }
 },
-Image = "repo/testcontainerAppsJob0:v1",
-Name = "testcontainerAppsJob0",
+Image = "repo/testcontainerappsjob0:v1",
+Name = "testcontainerappsjob0",
 }
 },
                     },
@@ -210,7 +207,7 @@ Name = "testcontainerAppsJob0",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Start_RunAContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Job_Start.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Job_Start.json
             // this example is just showing the usage of "Jobs_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -222,7 +219,7 @@ Name = "testcontainerAppsJob0",
             // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
-            string jobName = "testcontainerAppsJob0";
+            string jobName = "testcontainerappsjob0";
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
             ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
@@ -233,12 +230,12 @@ Name = "testcontainerAppsJob0",
 {
 new JobExecutionContainer()
 {
-Image = "repo/testcontainerAppsJob0:v4",
-Name = "testcontainerAppsJob0",
+Image = "repo/testcontainerappsjob0:v4",
+Name = "testcontainerappsjob0",
 Resources = new AppContainerResources()
 {
-Cpu = 0.2,
-Memory = "100Mi",
+Cpu = 0.5,
+Memory = "1Gi",
 },
 }
 },
@@ -246,7 +243,7 @@ Memory = "100Mi",
 {
 new JobExecutionContainer()
 {
-Image = "repo/testcontainerAppsJob0:v4",
+Image = "repo/testcontainerappsjob0:v4",
 Name = "testinitcontainerAppsJob0",
 Command =
 {
@@ -258,44 +255,16 @@ Args =
 },
 Resources = new AppContainerResources()
 {
-Cpu = 0.2,
-Memory = "100Mi",
+Cpu = 0.5,
+Memory = "1Gi",
 },
 }
 },
             };
-            ArmOperation<ContainerAppJobExecutionBase> lro = await containerAppJob.StartAsync(WaitUntil.Completed, template);
+            ArmOperation<ContainerAppJobExecutionBase> lro = await containerAppJob.StartAsync(WaitUntil.Completed, template: template);
             ContainerAppJobExecutionBase result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Terminate a Container Apps Job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task StopExecution_TerminateAContainerAppsJob()
-        {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Job_Stop_Execution.json
-            // this example is just showing the usage of "Jobs_StopExecution" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerAppJobResource created on azure
-            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "rg";
-            string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
-
-            // invoke the operation
-            string jobExecutionName = "jobExecution1";
-            await containerAppJob.StopExecutionAsync(WaitUntil.Completed, jobExecutionName);
-
-            Console.WriteLine($"Succeeded");
         }
 
         // Terminate Multiple Container Apps Job
@@ -303,7 +272,7 @@ Memory = "100Mi",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StopMultipleExecutions_TerminateMultipleContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Job_Stop_Multiple.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Job_Stop_Multiple.json
             // this example is just showing the usage of "Jobs_StopMultipleExecutions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -315,25 +284,12 @@ Memory = "100Mi",
             // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
-            string jobName = "testcontainerAppsJob0";
+            string jobName = "testcontainerappsjob0";
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
             ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // invoke the operation
-            JobExecutionNamesCollection jobExecutionName = new JobExecutionNamesCollection(new ContainerAppJobExecutionBase[]
-            {
-new ContainerAppJobExecutionBase()
-{
-Name = "jobExecution-27944453",
-},new ContainerAppJobExecutionBase()
-{
-Name = "jobExecution-27944452",
-},new ContainerAppJobExecutionBase()
-{
-Name = "jobExecution-27944451",
-}
-            });
-            ArmOperation<ContainerAppJobExecutions> lro = await containerAppJob.StopMultipleExecutionsAsync(WaitUntil.Completed, jobExecutionName);
+            ArmOperation<ContainerAppJobExecutions> lro = await containerAppJob.StopMultipleExecutionsAsync(WaitUntil.Completed);
             ContainerAppJobExecutions result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -344,7 +300,7 @@ Name = "jobExecution-27944451",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSecrets_ListContainerAppsJobSecrets()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Job_ListSecrets.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Job_ListSecrets.json
             // this example is just showing the usage of "Jobs_ListSecrets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -356,42 +312,12 @@ Name = "jobExecution-27944451",
             // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
-            string jobName = "testcontainerAppsJob0";
+            string jobName = "testcontainerappsjob0";
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
             ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // invoke the operation and iterate over the result
             await foreach (ContainerAppWritableSecret item in containerAppJob.GetSecretsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get a Container Apps Job Executions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetJobsExecutions_GetAContainerAppsJobExecutions()
-        {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Job_Executions_Get.json
-            // this example is just showing the usage of "JobsExecutions_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerAppJobResource created on azure
-            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "rg";
-            string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ContainerAppJobExecution item in containerAppJob.GetJobsExecutionsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

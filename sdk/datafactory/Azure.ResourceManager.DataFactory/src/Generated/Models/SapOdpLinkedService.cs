@@ -12,16 +12,17 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SAP ODP Linked Service. </summary>
-    public partial class SapOdpLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class SapOdpLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of SapOdpLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOdpLinkedService"/>. </summary>
         public SapOdpLinkedService()
         {
             LinkedServiceType = "SapOdp";
         }
 
-        /// <summary> Initializes a new instance of SapOdpLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOdpLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
         /// <param name="subscriberName"> The subscriber name. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SapOdpLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> language, DataFactoryElement<string> systemId, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, DataFactoryElement<string> messageServer, DataFactoryElement<string> messageServerService, DataFactoryElement<string> sncMode, DataFactoryElement<string> sncMyName, DataFactoryElement<string> sncPartnerName, DataFactoryElement<string> sncLibraryPath, DataFactoryElement<string> sncQop, DataFactoryElement<string> x509CertificatePath, DataFactoryElement<string> logonGroup, DataFactoryElement<string> subscriberName, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SapOdpLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> language, DataFactoryElement<string> systemId, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryElement<string> messageServer, DataFactoryElement<string> messageServerService, DataFactoryElement<string> sncMode, DataFactoryElement<string> sncMyName, DataFactoryElement<string> sncPartnerName, DataFactoryElement<string> sncLibraryPath, DataFactoryElement<string> sncQop, DataFactoryElement<string> x509CertificatePath, DataFactoryElement<string> logonGroup, DataFactoryElement<string> subscriberName, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             SystemNumber = systemNumber;
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password to access the SAP server where the table is located. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> MessageServer { get; set; }
         /// <summary> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </summary>
@@ -102,36 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> LogonGroup { get; set; }
         /// <summary> The subscriber name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> SubscriberName { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
     }
 }

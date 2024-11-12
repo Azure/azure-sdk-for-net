@@ -16,7 +16,39 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary> A class representing the MachineLearningOnlineEndpoint data model. </summary>
     public partial class MachineLearningOnlineEndpointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningOnlineEndpointData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
@@ -27,32 +59,43 @@ namespace Azure.ResourceManager.MachineLearning
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOnlineEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
-        internal MachineLearningOnlineEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningOnlineEndpointProperties properties, MachineLearningSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningOnlineEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineLearningOnlineEndpointProperties properties, string kind, ManagedServiceIdentity identity, MachineLearningSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
-            Kind = kind;
             Properties = properties;
+            Kind = kind;
+            Identity = identity;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
-        public string Kind { get; set; }
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineEndpointData"/> for deserialization. </summary>
+        internal MachineLearningOnlineEndpointData()
+        {
+        }
+
         /// <summary> [Required] Additional attributes of the entity. </summary>
+        [WirePath("properties")]
         public MachineLearningOnlineEndpointProperties Properties { get; set; }
+        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
+        [WirePath("sku")]
         public MachineLearningSku Sku { get; set; }
     }
 }

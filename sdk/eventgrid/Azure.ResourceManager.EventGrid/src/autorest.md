@@ -8,12 +8,30 @@ azure-arm: true
 csharp: true
 library-name: EventGrid
 namespace: Azure.ResourceManager.EventGrid
-require: https://github.com/Azure/azure-rest-api-specs/blob/4b7481587132ce0bde5f0a6d6ab590129f7b7179/specification/eventgrid/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/82f2cbc667318659fff331022f47b616c01cd2e2/specification/eventgrid/resource-manager/readme.md
+#tag: package-2024-06-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - Topics_ListEventTypes # because we use customized code to rewrite this operation
+  - EventSubscriptions_ListGlobalBySubscriptionForTopicType # because we use customized code to rewrite this operation
+  - EventSubscriptions_ListGlobalByResourceGroupForTopicType # because we use customized code to rewrite this operation
+  - EventSubscriptions_ListRegionalByResourceGroupForTopicType # because we use customized code to rewrite this operation
+  - EventSubscriptions_ListRegionalBySubscriptionForTopicType # because we use customized code to rewrite this operation
+  - EventSubscriptions_ListRegionalByResourceGroup # because we use customized code to rewrite this operation
+  - EventSubscriptions_ListRegionalBySubscription # because we use customized code to rewrite this operation
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+use-write-core: true
+enable-bicep-serialization: true
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}|Microsoft.EventGrid/topics/privateEndpointConnections: EventGridTopicPrivateEndpointConnection
@@ -39,7 +57,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -106,7 +124,6 @@ rename-mapping:
   ClientGroup: EventGridNamespaceClientGroup
   Namespace: EventGridNamespace
   PermissionBinding: EventGridNamespacePermissionBinding
-  ClientAuthentication: EventGridNamespaceClientAuthentication
   ClientProvisioningState: EventGridNamespaceClientProvisioningState
   ClientState: EventGridNamespaceClientState
   Filter: EventGridFilter
@@ -133,6 +150,8 @@ rename-mapping:
   WebHookEventSubscriptionDestination.properties.endpointUrl: Endpoint|Uri
   WebHookEventSubscriptionDestination.properties.endpointBaseUrl: BaseEndpoint|Uri
   EventSubscriptionFullUrl.endpointUrl: Endpoint|Uri
+  Subscription.properties.expirationTimeUtc: ExpireOn
+  SubscriptionUpdateParameters.properties.expirationTimeUtc: ExpireOn
 
 directive:
   - from: EventGrid.json

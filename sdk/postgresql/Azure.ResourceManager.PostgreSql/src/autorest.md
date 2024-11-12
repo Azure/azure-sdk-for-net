@@ -11,10 +11,13 @@ library-name: PostgreSql
 
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+use-write-core: true
 
 batch:
   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2023-03-01-preview
+  - tag: package-flexibleserver-2024-08-01
+enable-bicep-serialization: true
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'
@@ -22,6 +25,9 @@ batch:
 namespace: Azure.ResourceManager.PostgreSql
 require: https://github.com/Azure/azure-rest-api-specs/blob/eca38ee0caf445cb1e79c8e7bbaf9e1dca36479a/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSql/Generated
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -36,7 +42,7 @@ format-by-name-rules:
   'ResourceType': 'resource-type'
   '*IPAddress': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -90,6 +96,8 @@ prepend-rp-prefix:
   - PrivateEndpointProvisioningState
   - PrivateLinkServiceConnectionStateStatus
   - PublicNetworkAccessEnum
+  - Replica
+  - ReplicationState
   - StorageProfile
   - ServerPropertiesForCreate
   - ServerPropertiesForDefaultCreate
@@ -105,9 +113,16 @@ prepend-rp-prefix:
   - ServerPrivateLinkServiceConnectionStateProperty
   - ServerSecurityAlertPolicyListResult
   - ServerSecurityAlertPolicyState
+  - ServerSku
   - ServerState
+  - SourceType
   - SslEnforcementEnum
+  - SslMode
   - StorageAutogrow
+  - StorageType
+  - ValidationDetails
+  - ValidationMessage
+  - ValidationState
   - VirtualNetworkRuleListResult
   - VirtualNetworkRuleState
 rename-mapping:
@@ -142,11 +157,14 @@ directive:
       $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
 ```
 
-``` yaml $(tag) == 'package-flexibleserver-2023-03-01-preview'
+``` yaml $(tag) == 'package-flexibleserver-2024-08-01'
 
 namespace: Azure.ResourceManager.PostgreSql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/d75abbd85bfd17bc0855a3d1d2c2e2dedd85c4b0/specification/postgresql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/7e2cb423d45186cd1bff123f35e7d43bc4c0f268/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSqlFlexibleServers/Generated
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: false
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -159,7 +177,7 @@ format-by-name-rules:
   'ResourceType': 'resource-type'
   '*IPAddress': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

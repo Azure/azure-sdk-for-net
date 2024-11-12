@@ -8,11 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Samples
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateDeploymentAtAGivenScope()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/PutDeploymentAtScope.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2024-03-01/examples/PutDeploymentAtScope.json
             // this example is just showing the usage of "Deployments_CreateOrUpdateAtScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

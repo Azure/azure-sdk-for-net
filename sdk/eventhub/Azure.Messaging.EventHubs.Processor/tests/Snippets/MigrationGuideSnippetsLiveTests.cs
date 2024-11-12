@@ -9,6 +9,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -38,19 +40,23 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             #region Snippet:EventHubs_Migrate_Checkpoints
 
 #if SNIPPET
+            var credential = new DefaultAzureCredential();
+
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
-            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+            var storageAccountEndpoint = "<< Account Uri (likely similar to https://{your-account}.blob.core.windows.net) >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER  >>";
             var legacyBlobContainerName = "<< NAME OF THE BLOB CONTAINER THAT CONTAINS THE LEGACY DATA>>";
 #else
+            var credential = EventHubsTestEnvironment.Instance.Credential;
+
             var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
             var eventHubName = "fake-hub";
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
-            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = storageScope.ContainerName;
 #endif
 
@@ -63,9 +69,10 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
 #if SNIPPET
             var legacyCheckpoints = await ReadLegacyCheckpoints(
-                storageConnectionString,
+                storageAccountEndpoint,
                 legacyBlobContainerName,
                 consumerGroup,
+                credential,
                 cancellationSource.Token);
 #else
             var legacyCheckpoints = ReadFakeLegacyCheckpoints("fake");
@@ -90,7 +97,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             // assumes that the connection string grants the appropriate permissions to create a
             // container in the storage account.
 
-            var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
+            var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+            {
+                BlobContainerName = blobContainerName
+            };
+
+            var storageClient = new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                credential);
+
             await storageClient.CreateIfNotExistsAsync(cancellationToken: cancellationSource.Token);
 
             // Translate each of the legacy checkpoints, storing the offset and
@@ -160,12 +175,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         #region Snippet:EventHubs_Migrate_LegacyCheckpoints
 
         private async Task<List<MigrationCheckpoint>> ReadLegacyCheckpoints(
-            string connectionString,
+            string storageAccountEndpoint,
             string container,
             string consumerGroup,
+            TokenCredential credential,
             CancellationToken cancellationToken)
         {
-            var storageClient = new BlobContainerClient(connectionString, container);
+            var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+            {
+                BlobContainerName = container
+            };
+
+            var storageClient = new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                credential);
 
             // If there is no container, no action can be taken.
 

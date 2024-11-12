@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -19,11 +18,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> submittedAt = default;
-            Optional<DateTimeOffset?> scheduledAt = default;
-            Optional<DateTimeOffset?> endedAt = default;
-            Optional<DateTimeOffset?> cancellationRequestedAt = default;
-            Optional<SchedulerCurrentState> currentState = default;
+            DateTimeOffset? submittedAt = default;
+            DateTimeOffset? scheduledAt = default;
+            DateTimeOffset? endedAt = default;
+            DateTimeOffset? cancellationRequestedAt = default;
+            SchedulerCurrentState? currentState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("submittedAt"u8))
@@ -76,7 +75,15 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkScheduler(Optional.ToNullable(submittedAt), Optional.ToNullable(scheduledAt), Optional.ToNullable(endedAt), Optional.ToNullable(cancellationRequestedAt), Optional.ToNullable(currentState));
+            return new SparkScheduler(submittedAt, scheduledAt, endedAt, cancellationRequestedAt, currentState);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkScheduler FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkScheduler(document.RootElement);
         }
     }
 }

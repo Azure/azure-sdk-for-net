@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static bool operator ==(DeviceProvisioningServicesCertificatePurpose left, DeviceProvisioningServicesCertificatePurpose right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesCertificatePurpose"/> values are not the same. </summary>
         public static bool operator !=(DeviceProvisioningServicesCertificatePurpose left, DeviceProvisioningServicesCertificatePurpose right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesCertificatePurpose"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceProvisioningServicesCertificatePurpose"/>. </summary>
         public static implicit operator DeviceProvisioningServicesCertificatePurpose(string value) => new DeviceProvisioningServicesCertificatePurpose(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -20,33 +20,62 @@ namespace Azure.ResourceManager.ContainerInstance
     /// </summary>
     public partial class ContainerGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerGroupData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="containers"> The containers within the container group. </param>
-        /// <param name="osType"> The operating system type required by the containers in the container group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
-        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers, ContainerInstanceOperatingSystemType osType) : base(location)
+        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers) : base(location)
         {
             Argument.AssertNotNull(containers, nameof(containers));
 
-            Zones = new ChangeTrackingList<string>();
             Containers = containers.ToList();
             ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
-            OSType = osType;
             Volumes = new ChangeTrackingList<ContainerVolume>();
             SubnetIds = new ChangeTrackingList<ContainerGroupSubnetId>();
             InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
             Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
+            Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="zones"> The zones for the container group. </param>
         /// <param name="identity"> The identity of the container group, if configured. </param>
         /// <param name="provisioningState"> The provisioning state of the container group. This only appears in the response. </param>
         /// <param name="containers"> The containers within the container group. </param>
@@ -59,7 +88,7 @@ namespace Azure.ResourceManager.ContainerInstance
         ///
         /// </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
-        /// <param name="osType"> The operating system type required by the containers in the container group. </param>
+        /// <param name="containerGroupOSType"> The operating system type required by the containers in the container group. </param>
         /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
         /// <param name="instanceView"> The instance view of the container group. Only valid in response. </param>
         /// <param name="diagnostics"> The diagnostic information for a container group. </param>
@@ -71,16 +100,20 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="extensions"> extensions used by virtual kubelet. </param>
         /// <param name="confidentialComputeProperties"> The properties for confidential container group. </param>
         /// <param name="priority"> The priority of the container group. </param>
-        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ManagedServiceIdentity identity, string provisioningState, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType osType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="containerGroupProfile"> The reference container group profile properties. </param>
+        /// <param name="standbyPoolProfile"> The reference standby pool profile properties. </param>
+        /// <param name="isCreatedFromStandbyPool"> The flag indicating whether the container group is created by standby pool. </param>
+        /// <param name="zones"> The zones for the container group. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType? containerGroupOSType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, ContainerGroupProfileReferenceDefinition containerGroupProfile, StandbyPoolProfileDefinition standbyPoolProfile, bool? isCreatedFromStandbyPool, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Zones = zones;
             Identity = identity;
             ProvisioningState = provisioningState;
             Containers = containers;
             ImageRegistryCredentials = imageRegistryCredentials;
             RestartPolicy = restartPolicy;
             IPAddress = ipAddress;
-            OSType = osType;
+            ContainerGroupOSType = containerGroupOSType;
             Volumes = volumes;
             InstanceView = instanceView;
             Diagnostics = diagnostics;
@@ -92,10 +125,18 @@ namespace Azure.ResourceManager.ContainerInstance
             Extensions = extensions;
             ConfidentialComputeProperties = confidentialComputeProperties;
             Priority = priority;
+            ContainerGroupProfile = containerGroupProfile;
+            StandbyPoolProfile = standbyPoolProfile;
+            IsCreatedFromStandbyPool = isCreatedFromStandbyPool;
+            Zones = zones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The zones for the container group. </summary>
-        public IList<string> Zones { get; }
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/> for deserialization. </summary>
+        internal ContainerGroupData()
+        {
+        }
+
         /// <summary> The identity of the container group, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The provisioning state of the container group. This only appears in the response. </summary>
@@ -115,7 +156,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> The IP address type of the container group. </summary>
         public ContainerGroupIPAddress IPAddress { get; set; }
         /// <summary> The operating system type required by the containers in the container group. </summary>
-        public ContainerInstanceOperatingSystemType OSType { get; set; }
+        public ContainerInstanceOperatingSystemType? ContainerGroupOSType { get; set; }
         /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
         public IList<ContainerVolume> Volumes { get; }
         /// <summary> The instance view of the container group. Only valid in response. </summary>
@@ -162,5 +203,13 @@ namespace Azure.ResourceManager.ContainerInstance
 
         /// <summary> The priority of the container group. </summary>
         public ContainerGroupPriority? Priority { get; set; }
+        /// <summary> The reference container group profile properties. </summary>
+        public ContainerGroupProfileReferenceDefinition ContainerGroupProfile { get; set; }
+        /// <summary> The reference standby pool profile properties. </summary>
+        public StandbyPoolProfileDefinition StandbyPoolProfile { get; set; }
+        /// <summary> The flag indicating whether the container group is created by standby pool. </summary>
+        public bool? IsCreatedFromStandbyPool { get; }
+        /// <summary> The zones for the container group. </summary>
+        public IList<string> Zones { get; }
     }
 }

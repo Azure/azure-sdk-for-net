@@ -1,14 +1,51 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2024-02-20)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Upgraded api-version tag from 'package-2023-06' to 'package-2023-08'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/39608b2c1c7b7dc06cb99abb9d733665cfce9a75/specification/recoveryservicessiterecovery/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.37.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.10.1
+
+## 1.1.1 (2023-11-30)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.1.0 (2023-09-25)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-04' to 'package-2023-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/5dd1107d5f2be8d600325d795450e1d854fbe7e8/specification/recoveryservicessiterecovery/resource-manager/readme.md
+- Changes Related to Integration of In place OS upgrade [Upgrade Windows Guideline](https://learn.microsoft.com/azure/migrate/how-to-upgrade-windows).
+- Changes Releated to Implementing Monitoring Flow.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.33.0 to 1.35.0
+- Upgraded Azure.ResourceManager from 1.6.0 to 1.7.0
 
 ## 1.0.0 (2023-06-27)
 
@@ -79,4 +116,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-

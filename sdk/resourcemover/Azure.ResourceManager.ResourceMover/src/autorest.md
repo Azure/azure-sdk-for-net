@@ -8,13 +8,19 @@ azure-arm: true
 csharp: true
 library-name: ResourceMover
 namespace: Azure.ResourceManager.ResourceMover
-require: https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/resourcemover/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/bf2585e9f0696cc8d5f230481612a37eac542f39/specification/resourcemover/resource-manager/readme.md
+#tag: package-2023-08-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
+use-model-reader-writer: true
+use-write-core: true
 
 rename-mapping:
   AffectedMoveResource.id: -|arm-id
@@ -27,11 +33,11 @@ rename-mapping:
   CommitRequest.moveResources: MoverResources
   DiscardRequest.moveResourceInputType: MoverResourceInputType
   DiscardRequest.moveResources: MoverResources
-  LBFrontendIPConfigurationResourceSettings.privateIpAddress: -|ip-address
+  LBFrontendIPConfigurationResourceSettings.privateIpAddress: PrivateIPAddressStringValue
   ManualResolutionProperties.targetId: -|arm-id
   MoveErrorInfo.moveResources: InfoMoverResources
   MoveResourceDependency.id: -|arm-id
-  MoveResourceDependency.isOptional: -|boolean
+  MoveResourceDependency.isOptional: IsDependencyOptional
   MoveResourceDependencyOverride.id: -|arm-id
   MoveResourceDependencyOverride.targetId: -|arm-id
   MoveResourceProperties.targetId: -|arm-id
@@ -39,7 +45,7 @@ rename-mapping:
   MoveResourceInputType.MoveResourceId: MoverResourceId
   MoveResourceInputType.MoveResourceSourceId: MoverResourceSourceId
   NicIpConfigurationResourceSettings.primary: IsPrimary
-  NicIpConfigurationResourceSettings.privateIpAddress: -|ip-address
+  NicIpConfigurationResourceSettings.privateIpAddress: PrivateIPAddressStringValue
   OperationStatus.endTime: EndOn
   OperationStatus.id: -|arm-id
   OperationStatus.startTime: startOn
@@ -66,8 +72,9 @@ rename-mapping:
   LoadBalancerBackendAddressPoolReference: LoadBalancerBackendAddressPoolReferenceInfo
   LoadBalancerNatRuleReference: LoadBalancerNatRuleReferenceInfo
   MoveCollection: MoverResourceSet
-  MoveCollectionProperties.sourceRegion: -|azure-location
-  MoveCollectionProperties.targetRegion: -|azure-location
+  MoveCollectionProperties.sourceRegion: sourceLocation|azure-location
+  MoveCollectionProperties.targetRegion: targetLocation|azure-location
+  MoveCollectionProperties.moveRegion: moveLocation|azure-location
   MoveCollectionProperties: MoverResourceSetProperties
   MoveResource: MoverResource
   MoveResourceCollection: MoverResourceList
@@ -113,7 +120,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'sourceId': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -179,6 +186,4 @@ directive:
     where: $.paths..parameters[?(@.name === 'moveResourceName')]
     transform: >
       $['x-ms-client-name'] = 'moverResourceName';
-  - remove-operation: MoveCollections_Delete
-    reason: The azure-asyncoperation header will change when polling
 ```

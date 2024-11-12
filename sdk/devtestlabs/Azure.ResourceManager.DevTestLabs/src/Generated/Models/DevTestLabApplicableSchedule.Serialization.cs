@@ -5,62 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DevTestLabs;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabApplicableSchedule : IUtf8JsonSerializable
+    public partial class DevTestLabApplicableSchedule : IUtf8JsonSerializable, IJsonModel<DevTestLabApplicableSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabApplicableSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DevTestLabApplicableSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabApplicableSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(LabVmsShutdown))
             {
                 writer.WritePropertyName("labVmsShutdown"u8);
-                writer.WriteObjectValue(LabVmsShutdown);
+                writer.WriteObjectValue(LabVmsShutdown, options);
             }
             if (Optional.IsDefined(LabVmsStartup))
             {
                 writer.WritePropertyName("labVmsStartup"u8);
-                writer.WriteObjectValue(LabVmsStartup);
+                writer.WriteObjectValue(LabVmsStartup, options);
             }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabApplicableSchedule DeserializeDevTestLabApplicableSchedule(JsonElement element)
+        DevTestLabApplicableSchedule IJsonModel<DevTestLabApplicableSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabApplicableSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabApplicableSchedule(document.RootElement, options);
+        }
+
+        internal static DevTestLabApplicableSchedule DeserializeDevTestLabApplicableSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabScheduleData> labVmsShutdown = default;
-            Optional<DevTestLabScheduleData> labVmsStartup = default;
+            SystemData systemData = default;
+            DevTestLabScheduleData labVmsShutdown = default;
+            DevTestLabScheduleData labVmsStartup = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -121,7 +141,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            labVmsShutdown = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value);
+                            labVmsShutdown = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labVmsStartup"u8))
@@ -130,14 +150,59 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            labVmsStartup = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value);
+                            labVmsStartup = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabApplicableSchedule(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, labVmsShutdown.Value, labVmsStartup.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevTestLabApplicableSchedule(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                labVmsShutdown,
+                labVmsStartup,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevTestLabApplicableSchedule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabApplicableSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DevTestLabApplicableSchedule IPersistableModel<DevTestLabApplicableSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabApplicableSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevTestLabApplicableSchedule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevTestLabApplicableSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

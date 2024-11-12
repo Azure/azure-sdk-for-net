@@ -8,11 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Logic;
 using Azure.ResourceManager.Logic.Models;
 
 namespace Azure.ResourceManager.Logic.Samples
@@ -76,7 +73,7 @@ namespace Azure.ResourceManager.Logic.Samples
             // invoke the operation
             IntegrationAccountAssemblyDefinitionData data = new IntegrationAccountAssemblyDefinitionData(new AzureLocation("westus"), new IntegrationAccountAssemblyProperties("System.IdentityModel.Tokens.Jwt")
             {
-                Content = BinaryData.FromString("Base64 encoded Assembly Content"),
+                Content = BinaryData.FromString("\"Base64 encoded Assembly Content\""),
                 Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                 }),

@@ -10,20 +10,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.IncomingCall event. </summary>
     public partial class AcsIncomingCallEventData
     {
-        /// <summary> Initializes a new instance of AcsIncomingCallEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallEventData"/>. </summary>
         internal AcsIncomingCallEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsIncomingCallEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallEventData"/>. </summary>
         /// <param name="toCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="fromCommunicationIdentifier"> The communication identifier of the user who initiated the call. </param>
         /// <param name="serverCallId"> The Id of the server call. </param>
         /// <param name="callerDisplayName"> Display name of caller. </param>
         /// <param name="customContext"> Custom Context of Incoming Call. </param>
         /// <param name="incomingCallContext"> Signed incoming call context. </param>
+        /// <param name="onBehalfOfCallee"> The communication identifier of the user on behalf of whom the call is made. </param>
         /// <param name="correlationId"> CorrelationId (CallId). </param>
-        internal AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, string correlationId)
+        internal AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, string correlationId)
         {
             ToCommunicationIdentifier = toCommunicationIdentifier;
             FromCommunicationIdentifier = fromCommunicationIdentifier;
@@ -31,6 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             CallerDisplayName = callerDisplayName;
             CustomContext = customContext;
             IncomingCallContext = incomingCallContext;
+            OnBehalfOfCallee = onBehalfOfCallee;
             CorrelationId = correlationId;
         }
 
@@ -46,6 +48,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public AcsIncomingCallCustomContext CustomContext { get; }
         /// <summary> Signed incoming call context. </summary>
         public string IncomingCallContext { get; }
+        /// <summary> The communication identifier of the user on behalf of whom the call is made. </summary>
+        public CommunicationIdentifierModel OnBehalfOfCallee { get; }
         /// <summary> CorrelationId (CallId). </summary>
         public string CorrelationId { get; }
     }

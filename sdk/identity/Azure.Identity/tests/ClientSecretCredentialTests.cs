@@ -27,13 +27,21 @@ namespace Azure.Identity.Tests
 
             var options = new ClientSecretCredentialOptions
             {
-                Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
-                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
             };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
-            return InstrumentClient(new ClientSecretCredential(config.TenantId, ClientId, "secret", options, pipeline, null));
+            return InstrumentClient(new ClientSecretCredential(config.TenantId, ClientId, "secret", options, pipeline, config.MockConfidentialMsalClient));
         }
 
         [Test]
@@ -55,7 +63,7 @@ namespace Azure.Identity.Tests
         {
             TestSetup();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
             var options = new ClientSecretCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
             ClientSecretCredential client =
                 InstrumentClient(new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));

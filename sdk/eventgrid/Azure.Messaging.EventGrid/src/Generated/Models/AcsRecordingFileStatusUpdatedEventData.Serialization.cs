@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,13 +20,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<AcsRecordingStorageInfoProperties> recordingStorageInfo = default;
-            Optional<DateTimeOffset> recordingStartTime = default;
-            Optional<long> recordingDurationMs = default;
-            Optional<AcsRecordingContentType> recordingContentType = default;
-            Optional<AcsRecordingChannelType> recordingChannelType = default;
-            Optional<AcsRecordingFormatType> recordingFormatType = default;
-            Optional<string> sessionEndReason = default;
+            AcsRecordingStorageInfoProperties recordingStorageInfo = default;
+            DateTimeOffset? recordingStartTime = default;
+            long? recordingDurationMs = default;
+            AcsRecordingContentType? recordingContentType = default;
+            AcsRecordingChannelType? recordingChannelType = default;
+            AcsRecordingFormatType? recordingFormatType = default;
+            string sessionEndReason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingStorageInfo"u8))
@@ -90,7 +89,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo.Value, Optional.ToNullable(recordingStartTime), Optional.ToNullable(recordingDurationMs), Optional.ToNullable(recordingContentType), Optional.ToNullable(recordingChannelType), Optional.ToNullable(recordingFormatType), sessionEndReason.Value);
+            return new AcsRecordingFileStatusUpdatedEventData(
+                recordingStorageInfo,
+                recordingStartTime,
+                recordingDurationMs,
+                recordingContentType,
+                recordingChannelType,
+                recordingFormatType,
+                sessionEndReason);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsRecordingFileStatusUpdatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement);
         }
 
         internal partial class AcsRecordingFileStatusUpdatedEventDataConverter : JsonConverter<AcsRecordingFileStatusUpdatedEventData>
@@ -99,6 +113,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override AcsRecordingFileStatusUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

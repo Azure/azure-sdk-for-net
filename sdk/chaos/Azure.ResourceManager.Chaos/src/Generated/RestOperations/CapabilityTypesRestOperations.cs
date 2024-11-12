@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Chaos.Models;
@@ -33,8 +32,27 @@ namespace Azure.ResourceManager.Chaos
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01-preview";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string locationName, string targetTypeName, string continuationToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/targetTypes/", false);
+            uri.AppendPath(targetTypeName, true);
+            uri.AppendPath("/capabilityTypes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (continuationToken != null)
+            {
+                uri.AppendQuery("continuationToken", continuationToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string locationName, string targetTypeName, string continuationToken)
@@ -122,6 +140,22 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/targetTypes/", false);
+            uri.AppendPath(targetTypeName, true);
+            uri.AppendPath("/capabilityTypes/", false);
+            uri.AppendPath(capabilityTypeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName)
         {
             var message = _pipeline.CreateMessage();
@@ -152,7 +186,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/>, <paramref name="targetTypeName"/> or <paramref name="capabilityTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/>, <paramref name="targetTypeName"/> or <paramref name="capabilityTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilityTypeData>> GetAsync(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName, CancellationToken cancellationToken = default)
+        public async Task<Response<ChaosCapabilityTypeData>> GetAsync(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -165,13 +199,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        CapabilityTypeData value = default;
+                        ChaosCapabilityTypeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CapabilityTypeData.DeserializeCapabilityTypeData(document.RootElement);
+                        value = ChaosCapabilityTypeData.DeserializeChaosCapabilityTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CapabilityTypeData)null, message.Response);
+                    return Response.FromValue((ChaosCapabilityTypeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -185,7 +219,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/>, <paramref name="targetTypeName"/> or <paramref name="capabilityTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/>, <paramref name="targetTypeName"/> or <paramref name="capabilityTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilityTypeData> Get(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName, CancellationToken cancellationToken = default)
+        public Response<ChaosCapabilityTypeData> Get(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -198,16 +232,24 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        CapabilityTypeData value = default;
+                        ChaosCapabilityTypeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CapabilityTypeData.DeserializeCapabilityTypeData(document.RootElement);
+                        value = ChaosCapabilityTypeData.DeserializeChaosCapabilityTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CapabilityTypeData)null, message.Response);
+                    return Response.FromValue((ChaosCapabilityTypeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string locationName, string targetTypeName, string continuationToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string locationName, string targetTypeName, string continuationToken)

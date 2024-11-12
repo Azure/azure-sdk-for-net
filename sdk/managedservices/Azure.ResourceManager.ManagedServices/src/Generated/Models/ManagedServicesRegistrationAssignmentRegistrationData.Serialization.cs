@@ -5,26 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesRegistrationAssignmentRegistrationData
+    public partial class ManagedServicesRegistrationAssignmentRegistrationData : IUtf8JsonSerializable, IJsonModel<ManagedServicesRegistrationAssignmentRegistrationData>
     {
-        internal static ManagedServicesRegistrationAssignmentRegistrationData DeserializeManagedServicesRegistrationAssignmentRegistrationData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicesRegistrationAssignmentRegistrationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManagedServicesRegistrationAssignmentRegistrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentRegistrationData)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Plan))
+            {
+                writer.WritePropertyName("plan"u8);
+                writer.WriteObjectValue(Plan, options);
+            }
+        }
+
+        ManagedServicesRegistrationAssignmentRegistrationData IJsonModel<ManagedServicesRegistrationAssignmentRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentRegistrationData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServicesRegistrationAssignmentRegistrationData(document.RootElement, options);
+        }
+
+        internal static ManagedServicesRegistrationAssignmentRegistrationData DeserializeManagedServicesRegistrationAssignmentRegistrationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ManagedServicesRegistrationAssignmentRegistrationProperties> properties = default;
-            Optional<ManagedServicesPlan> plan = default;
+            ManagedServicesRegistrationAssignmentRegistrationProperties properties = default;
+            ManagedServicesPlan plan = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -33,7 +84,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     {
                         continue;
                     }
-                    properties = ManagedServicesRegistrationAssignmentRegistrationProperties.DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(property.Value);
+                    properties = ManagedServicesRegistrationAssignmentRegistrationProperties.DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -42,7 +93,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     {
                         continue;
                     }
-                    plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value);
+                    plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -69,8 +120,51 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedServicesRegistrationAssignmentRegistrationData(id, name, type, systemData.Value, properties.Value, plan.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedServicesRegistrationAssignmentRegistrationData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                plan,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentRegistrationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedServicesRegistrationAssignmentRegistrationData IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedServicesRegistrationAssignmentRegistrationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentRegistrationData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

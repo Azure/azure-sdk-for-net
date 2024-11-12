@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(ApplicationSourceResourceType left, ApplicationSourceResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationSourceResourceType"/> values are not the same. </summary>
         public static bool operator !=(ApplicationSourceResourceType left, ApplicationSourceResourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationSourceResourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationSourceResourceType"/>. </summary>
         public static implicit operator ApplicationSourceResourceType(string value) => new ApplicationSourceResourceType(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

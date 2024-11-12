@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class WorkloadNetworkSegmentSubnet : IUtf8JsonSerializable
+    public partial class WorkloadNetworkSegmentSubnet : IUtf8JsonSerializable, IJsonModel<WorkloadNetworkSegmentSubnet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadNetworkSegmentSubnet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<WorkloadNetworkSegmentSubnet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkSegmentSubnet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkloadNetworkSegmentSubnet)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(DhcpRanges))
             {
                 writer.WritePropertyName("dhcpRanges"u8);
@@ -31,17 +49,47 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("gatewayAddress"u8);
                 writer.WriteStringValue(GatewayAddress);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static WorkloadNetworkSegmentSubnet DeserializeWorkloadNetworkSegmentSubnet(JsonElement element)
+        WorkloadNetworkSegmentSubnet IJsonModel<WorkloadNetworkSegmentSubnet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkSegmentSubnet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkloadNetworkSegmentSubnet)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadNetworkSegmentSubnet(document.RootElement, options);
+        }
+
+        internal static WorkloadNetworkSegmentSubnet DeserializeWorkloadNetworkSegmentSubnet(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> dhcpRanges = default;
-            Optional<string> gatewayAddress = default;
+            IList<string> dhcpRanges = default;
+            string gatewayAddress = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dhcpRanges"u8))
@@ -63,8 +111,44 @@ namespace Azure.ResourceManager.Avs.Models
                     gatewayAddress = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkloadNetworkSegmentSubnet(Optional.ToList(dhcpRanges), gatewayAddress.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WorkloadNetworkSegmentSubnet(dhcpRanges ?? new ChangeTrackingList<string>(), gatewayAddress, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WorkloadNetworkSegmentSubnet>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkSegmentSubnet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadNetworkSegmentSubnet)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WorkloadNetworkSegmentSubnet IPersistableModel<WorkloadNetworkSegmentSubnet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkSegmentSubnet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWorkloadNetworkSegmentSubnet(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadNetworkSegmentSubnet)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WorkloadNetworkSegmentSubnet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

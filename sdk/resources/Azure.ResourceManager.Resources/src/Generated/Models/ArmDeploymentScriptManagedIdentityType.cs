@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(ArmDeploymentScriptManagedIdentityType left, ArmDeploymentScriptManagedIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArmDeploymentScriptManagedIdentityType"/> values are not the same. </summary>
         public static bool operator !=(ArmDeploymentScriptManagedIdentityType left, ArmDeploymentScriptManagedIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ArmDeploymentScriptManagedIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ArmDeploymentScriptManagedIdentityType"/>. </summary>
         public static implicit operator ArmDeploymentScriptManagedIdentityType(string value) => new ArmDeploymentScriptManagedIdentityType(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

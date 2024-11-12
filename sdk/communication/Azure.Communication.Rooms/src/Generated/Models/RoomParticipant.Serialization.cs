@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
@@ -34,6 +33,14 @@ namespace Azure.Communication.Rooms
                 }
             }
             return new RoomParticipant(rawId, role);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RoomParticipant FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRoomParticipant(document.RootElement);
         }
     }
 }

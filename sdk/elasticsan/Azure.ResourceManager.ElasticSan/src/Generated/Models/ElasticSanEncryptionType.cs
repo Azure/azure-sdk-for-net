@@ -23,14 +23,17 @@ namespace Azure.ResourceManager.ElasticSan.Models
         }
 
         private const string EncryptionAtRestWithPlatformKeyValue = "EncryptionAtRestWithPlatformKey";
+        private const string EncryptionAtRestWithCustomerManagedKeyValue = "EncryptionAtRestWithCustomerManagedKey";
 
         /// <summary> Volume is encrypted at rest with Platform managed key. It is the default encryption type. </summary>
         public static ElasticSanEncryptionType EncryptionAtRestWithPlatformKey { get; } = new ElasticSanEncryptionType(EncryptionAtRestWithPlatformKeyValue);
+        /// <summary> Volume is encrypted at rest with Customer managed key that can be changed and revoked by a customer. </summary>
+        public static ElasticSanEncryptionType EncryptionAtRestWithCustomerManagedKey { get; } = new ElasticSanEncryptionType(EncryptionAtRestWithCustomerManagedKeyValue);
         /// <summary> Determines if two <see cref="ElasticSanEncryptionType"/> values are the same. </summary>
         public static bool operator ==(ElasticSanEncryptionType left, ElasticSanEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticSanEncryptionType"/> values are not the same. </summary>
         public static bool operator !=(ElasticSanEncryptionType left, ElasticSanEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ElasticSanEncryptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticSanEncryptionType"/>. </summary>
         public static implicit operator ElasticSanEncryptionType(string value) => new ElasticSanEncryptionType(value);
 
         /// <inheritdoc />
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -5,22 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFailbackPolicyDetails
+    public partial class InMageRcmFailbackPolicyDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackPolicyDetails>
     {
-        internal static InMageRcmFailbackPolicyDetails DeserializeInMageRcmFailbackPolicyDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFailbackPolicyDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<InMageRcmFailbackPolicyDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackPolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmFailbackPolicyDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
+            {
+                writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
+                writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
+            }
+            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
+            {
+                writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
+                writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
+            }
+        }
+
+        InMageRcmFailbackPolicyDetails IJsonModel<InMageRcmFailbackPolicyDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackPolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmFailbackPolicyDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmFailbackPolicyDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmFailbackPolicyDetails DeserializeInMageRcmFailbackPolicyDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> appConsistentFrequencyInMinutes = default;
-            Optional<int> crashConsistentFrequencyInMinutes = default;
+            int? appConsistentFrequencyInMinutes = default;
+            int? crashConsistentFrequencyInMinutes = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appConsistentFrequencyInMinutes"u8))
@@ -46,8 +97,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmFailbackPolicyDetails(instanceType, Optional.ToNullable(appConsistentFrequencyInMinutes), Optional.ToNullable(crashConsistentFrequencyInMinutes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InMageRcmFailbackPolicyDetails(instanceType, serializedAdditionalRawData, appConsistentFrequencyInMinutes, crashConsistentFrequencyInMinutes);
         }
+
+        BinaryData IPersistableModel<InMageRcmFailbackPolicyDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackPolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackPolicyDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InMageRcmFailbackPolicyDetails IPersistableModel<InMageRcmFailbackPolicyDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackPolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInMageRcmFailbackPolicyDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackPolicyDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InMageRcmFailbackPolicyDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

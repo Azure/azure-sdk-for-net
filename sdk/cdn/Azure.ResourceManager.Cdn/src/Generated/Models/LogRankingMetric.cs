@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(LogRankingMetric left, LogRankingMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogRankingMetric"/> values are not the same. </summary>
         public static bool operator !=(LogRankingMetric left, LogRankingMetric right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogRankingMetric"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogRankingMetric"/>. </summary>
         public static implicit operator LogRankingMetric(string value) => new LogRankingMetric(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

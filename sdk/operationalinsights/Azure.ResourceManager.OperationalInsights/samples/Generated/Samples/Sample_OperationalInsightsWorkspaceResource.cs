@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.OperationalInsights;
 using Azure.ResourceManager.OperationalInsights.Models;
 using Azure.ResourceManager.Resources;
 
@@ -335,7 +332,7 @@ new OperationalInsightsWorkspacePurgeFilter()
 {
 Column = "TimeGenerated",
 Operator = ">",
-Value = BinaryData.FromString("2017-09-01T00:00:00"),
+Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 }
             });
             OperationalInsightsWorkspacePurgeResult result = await operationalInsightsWorkspace.PurgeAsync(content);
@@ -371,7 +368,7 @@ new OperationalInsightsWorkspacePurgeFilter()
 {
 Column = "_ResourceId",
 Operator = "==",
-Value = BinaryData.FromString("/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/SomeResourceGroup/providers/microsoft.insights/components/AppInsightResource"),
+Value = BinaryData.FromString("\"/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/SomeResourceGroup/providers/microsoft.insights/components/AppInsightResource\""),
 }
             });
             OperationalInsightsWorkspacePurgeResult result = await operationalInsightsWorkspace.PurgeAsync(content);

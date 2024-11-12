@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -15,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Execute Synapse notebook activity. </summary>
     public partial class SynapseNotebookActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of SynapseNotebookActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseNotebookActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="notebook"> Synapse notebook reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="notebook"/> is null. </exception>
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "SynapseNotebook";
         }
 
-        /// <summary> Initializes a new instance of SynapseNotebookActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseNotebookActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="configurationType"> The type of the spark config. </param>
         /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
-        internal SynapseNotebookActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseNotebookReference notebook, BigDataPoolParametrizationReference sparkPool, IDictionary<string, NotebookParameter> parameters, DataFactoryElement<string> executorSize, BinaryData conf, DataFactoryElement<string> driverSize, DataFactoryElement<int> numExecutors, ConfigurationType? configurationType, SparkConfigurationParametrizationReference targetSparkConfiguration, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal SynapseNotebookActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, SynapseNotebookReference notebook, BigDataPoolParametrizationReference sparkPool, IDictionary<string, NotebookParameter> parameters, DataFactoryElement<string> executorSize, BinaryData conf, DataFactoryElement<string> driverSize, DataFactoryElement<int> numExecutors, DataFactorySparkConfigurationType? configurationType, SparkConfigurationParametrizationReference targetSparkConfiguration, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Notebook = notebook;
             SparkPool = sparkPool;
@@ -64,6 +63,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TargetSparkConfiguration = targetSparkConfiguration;
             SparkConfig = sparkConfig;
             ActivityType = activityType ?? "SynapseNotebook";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseNotebookActivity"/> for deserialization. </summary>
+        internal SynapseNotebookActivity()
+        {
         }
 
         /// <summary> Synapse notebook reference. </summary>
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Number of executors to launch for this session, which will override the 'numExecutors' of the notebook you provide. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> NumExecutors { get; set; }
         /// <summary> The type of the spark config. </summary>
-        public ConfigurationType? ConfigurationType { get; set; }
+        public DataFactorySparkConfigurationType? ConfigurationType { get; set; }
         /// <summary> The spark configuration of the spark job. </summary>
         public SparkConfigurationParametrizationReference TargetSparkConfiguration { get; set; }
         /// <summary>
@@ -119,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

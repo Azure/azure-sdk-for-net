@@ -1,7 +1,0 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!--This file and it's contents are updated at build time moving or editing might result in build failure. Take due deligence while editing this file-->
-  <PropertyGroup>
-    <AzureApiTag>RecoveryServices_2016-12-01;RecoveryServices_2017-07-01;RecoveryServices_2016-08-10;RecoveryServices_2019-05-13;RecoveryServices_2019-06-15;RecoveryServices_2020-02-02;RecoveryServices_2018-12-20;RecoveryServices_2020-07-01;RecoveryServices_2020-10-01;RecoveryServices_2020-12-01;RecoveryServices_2021-01-01;RecoveryServices_2021-03-01;RecoveryServices_2021-04-01;RecoveryServices_2021-06-01;RecoveryServices_2021-08-01;RecoveryServices_2021-10-01;RecoveryServices_2021-12-01;RecoveryServices_2022-02-01;RecoveryServices_2022-09-01-preview;</AzureApiTag>
-    <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
-  </PropertyGroup>
-</Project>

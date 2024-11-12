@@ -5,17 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class MaintenanceConfigurationAssignmentData : IUtf8JsonSerializable
+    public partial class MaintenanceConfigurationAssignmentData : IUtf8JsonSerializable, IJsonModel<MaintenanceConfigurationAssignmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceConfigurationAssignmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MaintenanceConfigurationAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -33,23 +53,44 @@ namespace Azure.ResourceManager.Maintenance.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            writer.WriteEndObject();
+            if (Optional.IsDefined(Filter))
+            {
+                writer.WritePropertyName("filter"u8);
+                writer.WriteObjectValue(Filter, options);
+            }
             writer.WriteEndObject();
         }
 
-        internal static MaintenanceConfigurationAssignmentData DeserializeMaintenanceConfigurationAssignmentData(JsonElement element)
+        MaintenanceConfigurationAssignmentData IJsonModel<MaintenanceConfigurationAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMaintenanceConfigurationAssignmentData(document.RootElement, options);
+        }
+
+        internal static MaintenanceConfigurationAssignmentData DeserializeMaintenanceConfigurationAssignmentData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            SystemData systemData = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
+            ResourceIdentifier resourceId = default;
+            MaintenanceConfigurationAssignmentFilter filter = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -112,11 +153,65 @@ namespace Azure.ResourceManager.Maintenance.Models
                             resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("filter"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            filter = MaintenanceConfigurationAssignmentFilter.DeserializeMaintenanceConfigurationAssignmentFilter(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MaintenanceConfigurationAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), maintenanceConfigurationId.Value, resourceId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MaintenanceConfigurationAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                maintenanceConfigurationId,
+                resourceId,
+                filter,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MaintenanceConfigurationAssignmentData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MaintenanceConfigurationAssignmentData IPersistableModel<MaintenanceConfigurationAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMaintenanceConfigurationAssignmentData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MaintenanceConfigurationAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

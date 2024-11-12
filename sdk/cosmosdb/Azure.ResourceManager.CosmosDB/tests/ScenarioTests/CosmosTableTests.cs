@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             List<CosmosDBAccountCapability> capabilities = new List<CosmosDBAccountCapability>();
-            capabilities.Add(new CosmosDBAccountCapability("EnableCassandra"));
+            capabilities.Add(new CosmosDBAccountCapability("EnableCassandra", null));
             _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, capabilities)).Id;
             await StopSessionRecordingAsync();
         }
@@ -36,9 +36,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            if (_databaseAccountIdentifier != null)
+            if (Mode != RecordedTestMode.Playback)
             {
-                await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).DeleteAsync(WaitUntil.Completed);
+                if (_databaseAccountIdentifier != null)
+                {
+                    await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
@@ -51,12 +54,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await TableCollection.ExistsAsync(_databaseName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = TableCollection.Id;
-                id = CosmosDBTableResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
-                CosmosDBTableResource table = this.ArmClient.GetCosmosDBTableResource(id);
-                await table.DeleteAsync(WaitUntil.Completed);
+                if (await TableCollection.ExistsAsync(_databaseName))
+                {
+                    var id = TableCollection.Id;
+                    id = CosmosDBTableResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
+                    CosmosDBTableResource table = this.ArmClient.GetCosmosDBTableResource(id);
+                    await table.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
@@ -119,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
             CosmosTableThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
-                new ThroughputSettingsResourceInfo(TestThroughput2, null, null, null)))).Value;
+                new ThroughputSettingsResourceInfo(TestThroughput2, null, null, null, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }

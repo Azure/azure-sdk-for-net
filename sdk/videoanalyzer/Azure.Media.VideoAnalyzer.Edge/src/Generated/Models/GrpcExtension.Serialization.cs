@@ -53,10 +53,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             GrpcExtensionDataTransfer dataTransfer = default;
-            Optional<string> extensionConfiguration = default;
+            string extensionConfiguration = default;
             EndpointBase endpoint = default;
             ImageProperties image = default;
-            Optional<SamplingOptions> samplingOptions = default;
+            SamplingOptions samplingOptions = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -112,7 +112,31 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new GrpcExtension(type, name, inputs, endpoint, image, samplingOptions.Value, dataTransfer, extensionConfiguration.Value);
+            return new GrpcExtension(
+                type,
+                name,
+                inputs,
+                endpoint,
+                image,
+                samplingOptions,
+                dataTransfer,
+                extensionConfiguration);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GrpcExtension FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGrpcExtension(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

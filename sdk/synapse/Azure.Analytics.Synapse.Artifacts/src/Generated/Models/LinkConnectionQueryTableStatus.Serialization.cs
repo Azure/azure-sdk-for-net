@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -22,8 +21,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LinkTableStatus>> value = default;
-            Optional<object> continuationToken = default;
+            IReadOnlyList<LinkTableStatus> value = default;
+            object continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -50,7 +49,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionQueryTableStatus(Optional.ToList(value), continuationToken.Value);
+            return new LinkConnectionQueryTableStatus(value ?? new ChangeTrackingList<LinkTableStatus>(), continuationToken);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkConnectionQueryTableStatus FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkConnectionQueryTableStatus(document.RootElement);
         }
 
         internal partial class LinkConnectionQueryTableStatusConverter : JsonConverter<LinkConnectionQueryTableStatus>
@@ -59,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override LinkConnectionQueryTableStatus Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

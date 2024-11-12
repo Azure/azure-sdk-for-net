@@ -5,24 +5,105 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningWorkspaceGetKeysResult
+    public partial class MachineLearningWorkspaceGetKeysResult : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceGetKeysResult>
     {
-        internal static MachineLearningWorkspaceGetKeysResult DeserializeMachineLearningWorkspaceGetKeysResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceGetKeysResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningWorkspaceGetKeysResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceGetKeysResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetKeysResult)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(UserStorageKey))
+            {
+                writer.WritePropertyName("userStorageKey"u8);
+                writer.WriteStringValue(UserStorageKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UserStorageResourceId))
+            {
+                writer.WritePropertyName("userStorageResourceId"u8);
+                writer.WriteStringValue(UserStorageResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AppInsightsInstrumentationKey))
+            {
+                writer.WritePropertyName("appInsightsInstrumentationKey"u8);
+                writer.WriteStringValue(AppInsightsInstrumentationKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ContainerRegistryCredentials))
+            {
+                writer.WritePropertyName("containerRegistryCredentials"u8);
+                writer.WriteObjectValue(ContainerRegistryCredentials, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NotebookAccessKeys))
+            {
+                writer.WritePropertyName("notebookAccessKeys"u8);
+                writer.WriteObjectValue(NotebookAccessKeys, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MachineLearningWorkspaceGetKeysResult IJsonModel<MachineLearningWorkspaceGetKeysResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceGetKeysResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetKeysResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningWorkspaceGetKeysResult(document.RootElement, options);
+        }
+
+        internal static MachineLearningWorkspaceGetKeysResult DeserializeMachineLearningWorkspaceGetKeysResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> userStorageKey = default;
-            Optional<string> userStorageResourceId = default;
-            Optional<string> appInsightsInstrumentationKey = default;
-            Optional<MachineLearningContainerRegistryCredentials> containerRegistryCredentials = default;
-            Optional<MachineLearningWorkspaceGetNotebookKeysResult> notebookAccessKeys = default;
+            string userStorageKey = default;
+            string userStorageResourceId = default;
+            string appInsightsInstrumentationKey = default;
+            MachineLearningContainerRegistryCredentials containerRegistryCredentials = default;
+            MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userStorageKey"u8))
@@ -46,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    containerRegistryCredentials = MachineLearningContainerRegistryCredentials.DeserializeMachineLearningContainerRegistryCredentials(property.Value);
+                    containerRegistryCredentials = MachineLearningContainerRegistryCredentials.DeserializeMachineLearningContainerRegistryCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("notebookAccessKeys"u8))
@@ -55,11 +136,169 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    notebookAccessKeys = MachineLearningWorkspaceGetNotebookKeysResult.DeserializeMachineLearningWorkspaceGetNotebookKeysResult(property.Value);
+                    notebookAccessKeys = MachineLearningWorkspaceGetNotebookKeysResult.DeserializeMachineLearningWorkspaceGetNotebookKeysResult(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningWorkspaceGetKeysResult(userStorageKey.Value, userStorageResourceId.Value, appInsightsInstrumentationKey.Value, containerRegistryCredentials.Value, notebookAccessKeys.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningWorkspaceGetKeysResult(
+                userStorageKey,
+                userStorageResourceId,
+                appInsightsInstrumentationKey,
+                containerRegistryCredentials,
+                notebookAccessKeys,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserStorageKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userStorageKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserStorageKey))
+                {
+                    builder.Append("  userStorageKey: ");
+                    if (UserStorageKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserStorageKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserStorageKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserStorageResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userStorageResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserStorageResourceId))
+                {
+                    builder.Append("  userStorageResourceId: ");
+                    if (UserStorageResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserStorageResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserStorageResourceId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppInsightsInstrumentationKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  appInsightsInstrumentationKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppInsightsInstrumentationKey))
+                {
+                    builder.Append("  appInsightsInstrumentationKey: ");
+                    if (AppInsightsInstrumentationKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AppInsightsInstrumentationKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AppInsightsInstrumentationKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerRegistryCredentials), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  containerRegistryCredentials: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerRegistryCredentials))
+                {
+                    builder.Append("  containerRegistryCredentials: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ContainerRegistryCredentials, options, 2, false, "  containerRegistryCredentials: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotebookAccessKeys), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notebookAccessKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NotebookAccessKeys))
+                {
+                    builder.Append("  notebookAccessKeys: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NotebookAccessKeys, options, 2, false, "  notebookAccessKeys: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningWorkspaceGetKeysResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceGetKeysResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetKeysResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningWorkspaceGetKeysResult IPersistableModel<MachineLearningWorkspaceGetKeysResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceGetKeysResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningWorkspaceGetKeysResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetKeysResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningWorkspaceGetKeysResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

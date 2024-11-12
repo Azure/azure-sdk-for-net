@@ -6,17 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IntegrationRuntimeDataFlowProperties : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeDataFlowProperties : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeDataFlowProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeDataFlowProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<IntegrationRuntimeDataFlowProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeDataFlowProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
@@ -43,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,23 +70,39 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static IntegrationRuntimeDataFlowProperties DeserializeIntegrationRuntimeDataFlowProperties(JsonElement element)
+        IntegrationRuntimeDataFlowProperties IJsonModel<IntegrationRuntimeDataFlowProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeDataFlowProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationRuntimeDataFlowProperties(document.RootElement, options);
+        }
+
+        internal static IntegrationRuntimeDataFlowProperties DeserializeIntegrationRuntimeDataFlowProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFlowComputeType> computeType = default;
-            Optional<int> coreCount = default;
-            Optional<int> timeToLive = default;
-            Optional<bool> cleanup = default;
-            Optional<IList<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem>> customProperties = default;
+            DataFlowComputeType? computeType = default;
+            int? coreCount = default;
+            int? timeToLive = default;
+            bool? cleanup = default;
+            IList<IntegrationRuntimeDataFlowCustomItem> customProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,10 +149,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem> array = new List<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem>();
+                    List<IntegrationRuntimeDataFlowCustomItem> array = new List<IntegrationRuntimeDataFlowCustomItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem.DeserializeIntegrationRuntimeDataFlowPropertiesCustomPropertiesItem(item));
+                        array.Add(IntegrationRuntimeDataFlowCustomItem.DeserializeIntegrationRuntimeDataFlowCustomItem(item, options));
                     }
                     customProperties = array;
                     continue;
@@ -127,7 +160,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeDataFlowProperties(Optional.ToNullable(computeType), Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), Optional.ToNullable(cleanup), Optional.ToList(customProperties), additionalProperties);
+            return new IntegrationRuntimeDataFlowProperties(
+                computeType,
+                coreCount,
+                timeToLive,
+                cleanup,
+                customProperties ?? new ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem>(),
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<IntegrationRuntimeDataFlowProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeDataFlowProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IntegrationRuntimeDataFlowProperties IPersistableModel<IntegrationRuntimeDataFlowProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIntegrationRuntimeDataFlowProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeDataFlowProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IntegrationRuntimeDataFlowProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

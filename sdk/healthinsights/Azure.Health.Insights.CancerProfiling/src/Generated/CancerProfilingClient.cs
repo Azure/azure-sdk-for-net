@@ -6,9 +6,9 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -63,34 +63,36 @@ namespace Azure.Health.Insights.CancerProfiling
 
         /// <summary> Create Onco Phenotype job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="oncoPhenotypeData"> The body of the Onco Phenotype request. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="oncoPhenotypeData"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> Creates an Onco Phenotype job with the given request body. </remarks>
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfileAsync(WaitUntil,OncoPhenotypeData,CancellationToken)']/*" />
-        public virtual async Task<Operation<OncoPhenotypeResult>> InferCancerProfileAsync(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<OncoPhenotypeResults>> InferCancerProfileAsync(WaitUntil waitUntil, OncoPhenotypeData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await InferCancerProfileAsync(waitUntil, oncoPhenotypeData.ToRequestContent(), context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, OncoPhenotypeResult.FromResponse, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile");
+            Operation<BinaryData> response = await InferCancerProfileAsync(waitUntil, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, FetchOncoPhenotypeResultsFromOncoPhenotypeResult, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile");
         }
 
         /// <summary> Create Onco Phenotype job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="oncoPhenotypeData"> The body of the Onco Phenotype request. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="oncoPhenotypeData"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> Creates an Onco Phenotype job with the given request body. </remarks>
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfile(WaitUntil,OncoPhenotypeData,CancellationToken)']/*" />
-        public virtual Operation<OncoPhenotypeResult> InferCancerProfile(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, CancellationToken cancellationToken = default)
+        public virtual Operation<OncoPhenotypeResults> InferCancerProfile(WaitUntil waitUntil, OncoPhenotypeData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = InferCancerProfile(waitUntil, oncoPhenotypeData.ToRequestContent(), context);
-            return ProtocolOperationHelpers.Convert(response, OncoPhenotypeResult.FromResponse, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile");
+            Operation<BinaryData> response = InferCancerProfile(waitUntil, content, context);
+            return ProtocolOperationHelpers.Convert(response, FetchOncoPhenotypeResultsFromOncoPhenotypeResult, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile");
         }
 
         /// <summary>
@@ -124,7 +126,7 @@ namespace Azure.Health.Insights.CancerProfiling
             try
             {
                 using HttpMessage message = CreateInferCancerProfileRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -164,7 +166,7 @@ namespace Azure.Health.Insights.CancerProfiling
             try
             {
                 using HttpMessage message = CreateInferCancerProfileRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -205,5 +207,11 @@ namespace Azure.Health.Insights.CancerProfiling
 
         private static ResponseClassifier _responseClassifier200202;
         private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
+
+        private OncoPhenotypeResults FetchOncoPhenotypeResultsFromOncoPhenotypeResult(Response response)
+        {
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("results");
+            return OncoPhenotypeResults.DeserializeOncoPhenotypeResults(resultJsonElement);
+        }
     }
 }

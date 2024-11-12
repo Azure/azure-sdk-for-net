@@ -1,7 +1,7 @@
 # Azure.Search.Documents Samples - Indexing Documents
 
 If we want to build a search experience for a product catalog, we need to get
-all of that data into Azure Cognitive Search.  If your data lives in Azure
+all of that data into Azure AI Search.  If your data lives in Azure
 Cosmos DB, Azure SQL Database, or Azure Blob Storage you can setup an indexer
 to do that for you.  But if your data lives elsewhere, this sample will show you
 how to move it into a search index.
@@ -73,7 +73,7 @@ We'll use `FieldBuilder` to do the heavy lifting and create our search index:
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_CreateIndex_Create
 // Create the search index
-string indexName = "Products";
+string indexName = "products";
 await indexClient.CreateIndexAsync(
     new SearchIndex(indexName)
     {

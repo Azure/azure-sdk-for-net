@@ -3,7 +3,8 @@
 
 using System;
 using System.ComponentModel;
-using System.Security.Cryptography;
+using System.Xml.Schema;
+using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry
 {
@@ -15,25 +16,48 @@ namespace Azure.Data.SchemaRegistry
         private const string AvroValue = "Avro";
         private const string JsonValue = "JSON";
         private const string CustomValue = "Custom";
+        private const string ProtobufValue = "Protobuf";
 
-        private const string AvroContentType = "Avro";
-        private const string JsonContentType = "Json";
+        // Temporary until autorest bug is fixed
+        private const string AvroContentType = "application/json; serialization=Avro";
+        private const string JsonContentType = "application/json; serialization=Json";
+        private const string CustomContentType = "text/plain; charset=utf-8";
+        private const string ProtobufContentType = "text/vnd.ms.protobuf";
+
+        private const string AvroContentTypeValue = "Avro";
+        private const string JsonContentTypeValue = "Json";
+        private const string CustomContentTypeValue = "utf-8";
+        private const string ProtobufContentTypeValue = "vnd.ms.protobuf";
 
         /// <summary> Initializes a new instance of <see cref="SchemaFormat"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format.
+        /// </remarks>
         public SchemaFormat(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
+            ContentType = _value == CustomValue ? CustomContentType : $"application/json; serialization={value}";
+        }
+
+        private SchemaFormat(string value, string contentType)
+        {
+            _value = value;
+            ContentType = contentType;
         }
 
         /// <summary> Avro Serialization schema type. </summary>
-        public static SchemaFormat Avro { get; } = new SchemaFormat(AvroValue);
+        public static SchemaFormat Avro { get; } = new SchemaFormat(AvroValue, AvroContentType);
 
-        /// <summary> Avro Serialization schema type. </summary>
-        public static SchemaFormat Json { get; } = new SchemaFormat(JsonValue);
+        /// <summary> JSON Serialization schema type. </summary>
+        public static SchemaFormat Json { get; } = new SchemaFormat(JsonValue, JsonContentType);
 
-        /// <summary> Avro Serialization schema type. </summary>
-        public static SchemaFormat Custom { get; } = new SchemaFormat(CustomValue);
+        /// <summary> Custom Serialization schema type. </summary>
+        public static SchemaFormat Custom { get; } = new SchemaFormat(CustomValue, CustomContentType);
+
+        ///// <summary> Protobuf Serialization schema type. </summary>
+        //public static SchemaFormat Protobuf { get; } = new SchemaFormat(ProtobufValue);
 
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>
         public static bool operator ==(SchemaFormat left, SchemaFormat right) => left.Equals(right);
@@ -54,31 +78,26 @@ namespace Azure.Data.SchemaRegistry
         /// <inheritdoc />
         public override string ToString() => _value;
 
-        internal ContentType ToContentType()
-        {
-            switch (_value)
-            {
-                case AvroValue:
-                    return ContentType.Avro;
-                case JsonValue:
-                    return ContentType.Json;
-                default:
-                    return ContentType.Custom;
-            }
-        }
+        internal string ContentType { get; }
 
         internal static SchemaFormat FromContentType(string contentTypeValue)
         {
-            var contentEquals = contentTypeValue.Split('=');
-            switch (contentEquals[1])
+            var contentTypeParameterValue = contentTypeValue.Split('=');
+            if (contentTypeParameterValue.Length > 1)
             {
-                case AvroContentType:
-                    return SchemaFormat.Avro;
-                case JsonContentType:
-                    return SchemaFormat.Json;
-                default:
-                    return SchemaFormat.Custom;
+                switch (contentTypeParameterValue[1])
+                {
+                    case AvroContentTypeValue:
+                        return Avro;
+                    case JsonContentTypeValue:
+                        return Json;
+                    case CustomContentTypeValue:
+                        return Custom;
+                    default:
+                        break;
+                }
             }
+            return new SchemaFormat(contentTypeValue);
         }
     }
 }

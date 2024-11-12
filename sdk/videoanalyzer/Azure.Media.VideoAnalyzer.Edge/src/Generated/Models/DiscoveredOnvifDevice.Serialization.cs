@@ -55,10 +55,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> serviceIdentifier = default;
-            Optional<string> remoteIPAddress = default;
-            Optional<IList<string>> scopes = default;
-            Optional<IList<string>> endpoints = default;
+            string serviceIdentifier = default;
+            string remoteIPAddress = default;
+            IList<string> scopes = default;
+            IList<string> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceIdentifier"u8))
@@ -100,7 +100,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new DiscoveredOnvifDevice(serviceIdentifier.Value, remoteIPAddress.Value, Optional.ToList(scopes), Optional.ToList(endpoints));
+            return new DiscoveredOnvifDevice(serviceIdentifier, remoteIPAddress, scopes ?? new ChangeTrackingList<string>(), endpoints ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DiscoveredOnvifDevice FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDiscoveredOnvifDevice(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

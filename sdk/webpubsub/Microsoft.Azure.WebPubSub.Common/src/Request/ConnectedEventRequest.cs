@@ -6,7 +6,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// <summary>
     /// ServiceRequest for connected event.
     /// </summary>
-    public sealed class ConnectedEventRequest : WebPubSubEventRequest
+    public class ConnectedEventRequest : WebPubSubEventRequest
     {
         /// <summary>
         /// The connected event request

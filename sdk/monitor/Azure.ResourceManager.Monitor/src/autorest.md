@@ -7,14 +7,24 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
-require: https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/cf406046c304ec528a84ae1a151f3d1a647058a2/specification/monitor/resource-manager/readme.md
 tag: package-track2-stable
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - MetricDefinitions_List
+  - Metrics_List
+  - Baselines_List
+  - MetricNamespaces_List
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
+use-model-reader-writer: true
+use-write-core: true
 
 format-by-name-rules:
   "tenantId": "uuid"
@@ -24,7 +34,7 @@ format-by-name-rules:
   "*Uri": "Uri"
   "*Uris": "Uri"
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -53,6 +63,7 @@ rename-rules:
   HH: Hh
   DD: Dd
   SS: Ss
+  UDP: Udp
 
 irregular-plural-words:
   status: status
@@ -61,7 +72,7 @@ prepend-rp-prefix:
 - Action
 - Recurrence
 - Response
-- OdataType
+- Odatatype
 - Metric
 - Incident
 - Enabled
@@ -281,16 +292,16 @@ rename-mapping:
   StorageTableDestination: DataCollectionRuleStorageTableDestination
   ActionType: MonitorWorkspaceActionType
   Metrics: MonitorWorkspaceMetricProperties
-  AzureMonitorWorkspaceResource: MonitorWorkspaceResource
-  AzureMonitorWorkspaceResourceCollection: MonitorWorkspaceResourceCollection
-  AzureMonitorWorkspaceResourceData: MonitorWorkspaceResourceData
+  AzureMonitorWorkspace: MonitorWorkspaceResource
+  AzureMonitorWorkspaceCollection: MonitorWorkspaceResourceCollection
+  AzureMonitorWorkspaceData: MonitorWorkspaceResourceData
   IngestionSettings: MonitorWorkspaceIngestionSettings
   IngestionSettings.dataCollectionEndpointResourceId: -|arm-id
   IngestionSettings.dataCollectionRuleResourceId: -|arm-id
   AzureMonitorWorkspaceDefaultIngestionSettings: MonitorWorkspaceDefaultIngestionSettings
   AzureMonitorWorkspaceMetrics: MonitorWorkspaceMetrics
-  AzureMonitorWorkspaceResourcePatch: MonitorWorkspaceResourcePatch
-  AzureMonitorWorkspaceResourceListResult: MonitorWorkspaceResourceListResult
+  AzureMonitorWorkspacePatch: MonitorWorkspaceResourcePatch
+  AzureMonitorWorkspaceListResult: MonitorWorkspaceResourceListResult
   MetricDefinition: MonitorMetricDefinition
   AggregationType: MonitorAggregationType
   BaselineMetadata: MonitorBaselineMetadata
@@ -305,6 +316,32 @@ rename-mapping:
   SingleMetricBaseline: MonitorSingleMetricBaseline
   TimeSeriesBaseline: MonitorTimeSeriesBaseline
   Unit: MonitorMetricUnit
+  CacheConfiguration: MonitorWorkspaceLogsExporterCacheConfiguration
+  ConcurrencyConfiguration: MonitorWorkspaceLogsExporterConcurrencyConfiguration
+  SchemaMap: MonitorWorkspaceLogsSchemaMap
+  RecordMap: MonitorWorkspaceLogsRecordMap
+  ResourceMap: MonitorWorkspaceLogsResourceMap
+  ScopeMap: MonitorWorkspaceLogsScopeMap
+  Receiver: PipelineGroupReceiver
+  ReceiverType: PipelineGroupReceiverType
+  Processor: PipelineGroupProcessor
+  ProcessorType: PipelineGroupProcessorType
+  Exporter: PipelineGroupExporter
+  ExporterType: PipelineGroupExporterType
+  Service: PipelineGroupService
+  Pipeline: PipelineGroupServicePipeline
+  PipelineType: PipelineGroupServicePipelineType
+  PersistenceConfigurations: PipelineGroupServicePersistenceConfigurations
+  NetworkingConfiguration: PipelineGroupNetworkingConfiguration
+  NetworkingRoute: PipelineGroupNetworkingRoute
+  ExternalNetworkingMode: PipelineGroupExternalNetworkingMode
+  AzureResourceManagerCommonTypesExtendedLocation: Azure.ResourceManager.CommonTypes.ExtendedLocation
+  AzureMonitorWorkspaceLogsApiConfig: MonitorWorkspaceLogsApiConfig
+  AzureMonitorWorkspaceLogsExporter: MonitorWorkspaceLogsExporter
+
+suppress-abstract-base-class:
+- MetricAlertCriteria
+- MultiMetricCriteria
 
 directive:
   # remove operations because they are covered in resourcemanager we no longer need to generate them here, and they are causing duplicate schemas
@@ -370,6 +407,9 @@ directive:
   - from: v3/types.json
     where: $.definitions.ErrorResponse
     transform: $["x-ms-client-name"] = "CommonErrorResponseV3"
+  - from: v4/types.json
+    where: $.definitions.ErrorResponse
+    transform: $["x-ms-client-name"] = "CommonErrorResponseV4"
   - from: v2/types.json
     where: $.definitions.ErrorDetail
     transform: $["x-ms-client-name"] = "CommonErrorDetail"
@@ -431,6 +471,33 @@ directive:
                   "modelAsString": true
                 }
             };
+  - from: azuremonitor.json
+    where: $.definitions.AzureMonitorWorkspace.properties
+    transform: >
+      $.defaultIngestionSettings = {
+          "description": "The Data Collection Rule and Endpoint used for ingestion by default.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/IngestionSettings"
+            }
+          ],
+          "readOnly": true,
+          "x-ms-mutability": [
+            "read"
+          ]
+        };
+      $.metrics = {
+          "description": "Properties related to the metrics container in the Azure Monitor Workspace",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Metrics"
+            }
+          ],
+          "readOnly": true,
+          "x-ms-mutability": [
+            "read"
+          ]
+        };
 ```
 
 ## Tag: package-track2-stable
@@ -464,6 +531,6 @@ input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/dataCollectionEndpoints_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/dataCollectionRuleAssociations_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/dataCollectionRules_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/monitoringAccounts_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/cf406046c304ec528a84ae1a151f3d1a647058a2/specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/azuremonitor.json
 # - https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/operations_API.json # we do not need to support this
 ```

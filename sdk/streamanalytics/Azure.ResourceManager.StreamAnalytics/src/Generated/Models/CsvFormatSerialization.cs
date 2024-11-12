@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes how data from an input is serialized or how data is serialized when written to an output in CSV format. </summary>
     public partial class CsvFormatSerialization : StreamAnalyticsDataSerialization
     {
-        /// <summary> Initializes a new instance of CsvFormatSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsvFormatSerialization"/>. </summary>
         public CsvFormatSerialization()
         {
             EventSerializationType = EventSerializationType.Csv;
         }
 
-        /// <summary> Initializes a new instance of CsvFormatSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsvFormatSerialization"/>. </summary>
         /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fieldDelimiter"> Specifies the delimiter that will be used to separate comma-separated value (CSV) records. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a list of supported values. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="encoding"> Specifies the encoding of the incoming data in the case of input and the encoding of outgoing data in the case of output. Required on PUT (CreateOrReplace) requests. </param>
-        internal CsvFormatSerialization(EventSerializationType eventSerializationType, string fieldDelimiter, StreamAnalyticsDataSerializationEncoding? encoding) : base(eventSerializationType)
+        internal CsvFormatSerialization(EventSerializationType eventSerializationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string fieldDelimiter, StreamAnalyticsDataSerializationEncoding? encoding) : base(eventSerializationType, serializedAdditionalRawData)
         {
             FieldDelimiter = fieldDelimiter;
             Encoding = encoding;

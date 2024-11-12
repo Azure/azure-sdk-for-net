@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Virtual machine type. </summary>
+    /// <summary> VM type. </summary>
     public readonly partial struct WorkloadNetworkVmType : IEquatable<WorkloadNetworkVmType>
     {
         private readonly string _value;
@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Avs.Models
         private const string EdgeValue = "EDGE";
         private const string ServiceValue = "SERVICE";
 
-        /// <summary> REGULAR. </summary>
+        /// <summary> is regular. </summary>
         public static WorkloadNetworkVmType Regular { get; } = new WorkloadNetworkVmType(RegularValue);
-        /// <summary> EDGE. </summary>
+        /// <summary> is edge. </summary>
         public static WorkloadNetworkVmType Edge { get; } = new WorkloadNetworkVmType(EdgeValue);
-        /// <summary> SERVICE. </summary>
+        /// <summary> is service. </summary>
         public static WorkloadNetworkVmType Service { get; } = new WorkloadNetworkVmType(ServiceValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmType"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkVmType left, WorkloadNetworkVmType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmType"/> values are not the same. </summary>
         public static bool operator !=(WorkloadNetworkVmType left, WorkloadNetworkVmType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkloadNetworkVmType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadNetworkVmType"/>. </summary>
         public static implicit operator WorkloadNetworkVmType(string value) => new WorkloadNetworkVmType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

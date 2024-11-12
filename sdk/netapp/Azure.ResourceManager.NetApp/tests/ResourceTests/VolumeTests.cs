@@ -140,6 +140,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             var keyValue = new KeyValuePair<string, string>("Tag2", "value2");
             parameters.Tags.InitializeFrom(DefaultTags);
             parameters.Tags.Add(keyValue);
+            parameters.IsSnapshotDirectoryVisible = false;
             volumeResource1 = (await volumeResource1.UpdateAsync(WaitUntil.Completed, parameters)).Value;
             volumeResource1.Data.Tags.Should().Contain(keyValue);
 
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumeResource3.Data.Tags.Should().Contain(keyValue);
             KeyValuePair<string, string> keyValuePair = new("key1", DefaultTags["key1"]);
             volumeResource3.Data.Tags.Should().Contain(keyValuePair);
-
+            Assert.IsFalse(volumeResource3.Data.IsSnapshotDirectoryVisible);
             //usageThreshold should not change
             Assert.AreEqual(volumeResource3.Data.UsageThreshold, volumeResource3.Data.UsageThreshold);
         }
@@ -437,7 +438,13 @@ namespace Azure.ResourceManager.NetApp.Tests
             remoteCapactiyPoolData.Tags.InitializeFrom(DefaultTags);
             CapacityPoolResource remoteCapacityPool = (await remoteCapacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, remoteCapactiyPoolData)).Value;
             //Create the remote volume with dataProtection
-            NetAppReplicationObject replication = new(null, NetAppEndpointType.Destination, NetAppReplicationSchedule.TenMinutely, volumeResource1.Id, RemoteLocation);
+            NetAppReplicationObject replication = new()
+            {
+                EndpointType = NetAppEndpointType.Destination,
+                RemoteVolumeResourceId = volumeResource1.Id,
+                ReplicationSchedule = NetAppReplicationSchedule.TenMinutely,
+                RemoteVolumeRegion = RemoteLocation
+            };
             NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection() { Replication = replication };
             NetAppVolumeCollection remoteVolumeCollection = remoteCapacityPool.GetNetAppVolumes();
             NetAppVolumeResource remoteVolume = await CreateVolume(RemoteLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeCollection: remoteVolumeCollection, dataProtection: dataProtectionProperties, volumeName: volumeName2);
@@ -470,6 +477,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             replicationList.Should().NotBeNullOrEmpty();
             replicationList.Should().HaveCount(1);
 
+            await LiveDelay(5000);
             //Break Replication
             ArmOperation breakReplicationOperation = (await remoteVolume.BreakReplicationAsync(WaitUntil.Completed, new()));
             Assert.IsTrue(breakReplicationOperation.HasCompleted);
@@ -551,6 +559,49 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [RecordedTest]
+        public async Task CreateExternalMigrationVolumeNoPeering()
+        {
+            //Tests the negative case, we should get errors here
+
+            //create volume
+            string volumeName = Recording.GenerateAssetName("volumeName-");
+            await CreateVirtualNetwork();
+            //Update the remote volume with dataProtection for Migration (external replication)
+            NetAppReplicationObject replication = new()
+            {
+                RemotePath = new RemotePath() { ExternalHostName = "hostname1", ServerName = "server1", VolumeName = "volume1" }
+            };
+            NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection() { Replication = replication };
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName, volumeType: "Migration", dataProtection: dataProtectionProperties);
+            VerifyVolumeProperties(volumeResource1, true);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            //validate if created successfully
+            NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
+            VerifyVolumeProperties(volumeResource2, true);
+
+            PeerClusterForVolumeMigrationContent peerClusterRequest = new PeerClusterForVolumeMigrationContent(new string[]
+            {
+                "0.0.0.1","0.0.0.2","0.0.0.3","0.0.0.4","0.0.0.5","0.0.0.6"
+            });
+
+            //ArmOperation<ClusterPeerCommandResult> lro = await volumeResource2.PeerExternalClusterAsync(WaitUntil.Completed, peerClusterRequest);
+            //ClusterPeerCommandResult result = lro.Value;
+            //Assert.NotNull(result);
+
+            InvalidOperationException peerException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await volumeResource2.PeerExternalClusterAsync(WaitUntil.Completed, peerClusterRequest); });
+            //Assert.AreEqual(409, peerException.Status);
+
+            InvalidOperationException authorizeException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await volumeResource2.AuthorizeExternalReplicationAsync(WaitUntil.Completed); });
+            //Assert.AreEqual(400, authorizeException.Status);
+
+            RequestFailedException performException = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource2.PerformReplicationTransferAsync(WaitUntil.Completed); });
+            //Assert.AreEqual(400, performException.Status);
+
+            RequestFailedException finalizeException = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource2.FinalizeExternalReplicationAsync(WaitUntil.Completed); });
+            //Assert.AreEqual(409, finalizeException.Status);
+        }
+
+        [RecordedTest]
         public async Task BreakFileLocksVolumeNoFiles()
         {
             //create volume
@@ -571,6 +622,25 @@ namespace Azure.ResourceManager.NetApp.Tests
             };
 
             await volumeResource1.BreakFileLocksAsync(WaitUntil.Completed, parameters);
+        }
+
+        [RecordedTest]
+        public async Task GetGetGroupIdListForLdapUserNonLDAPVolumeShouldReturnError()
+        {
+            //create volume
+            string volumeName = Recording.GenerateAssetName("volumeName-");
+            await CreateVirtualNetwork();
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
+            VerifyVolumeProperties(volumeResource1, true);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            //validate if created successfully
+            NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
+            VerifyVolumeProperties(volumeResource2, true);
+
+            //Call break file locks
+            GetGroupIdListForLdapUserContent parameters = new("fakeUser");
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource1.GetGetGroupIdListForLdapUserAsync(WaitUntil.Completed, parameters); });
+            Assert.AreEqual(400, exception.Status);
         }
 
         private async Task WaitForReplicationStatus(NetAppVolumeResource volumeResource, NetAppMirrorState mirrorState)

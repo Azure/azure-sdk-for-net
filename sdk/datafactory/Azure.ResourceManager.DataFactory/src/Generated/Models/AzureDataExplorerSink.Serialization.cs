@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,11 +14,28 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureDataExplorerSink : IUtf8JsonSerializable
+    public partial class AzureDataExplorerSink : IUtf8JsonSerializable, IJsonModel<AzureDataExplorerSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDataExplorerSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzureDataExplorerSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDataExplorerSink)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(IngestionMappingName))
             {
                 writer.WritePropertyName("ingestionMappingName"u8);
@@ -33,66 +51,50 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("flushImmediately"u8);
                 JsonSerializer.Serialize(writer, FlushImmediately);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
-            {
-                writer.WritePropertyName("writeBatchSize"u8);
-                JsonSerializer.Serialize(writer, WriteBatchSize);
-            }
-            if (Optional.IsDefined(WriteBatchTimeout))
-            {
-                writer.WritePropertyName("writeBatchTimeout"u8);
-                JsonSerializer.Serialize(writer, WriteBatchTimeout);
-            }
-            if (Optional.IsDefined(SinkRetryCount))
-            {
-                writer.WritePropertyName("sinkRetryCount"u8);
-                JsonSerializer.Serialize(writer, SinkRetryCount);
-            }
-            if (Optional.IsDefined(SinkRetryWait))
-            {
-                writer.WritePropertyName("sinkRetryWait"u8);
-                JsonSerializer.Serialize(writer, SinkRetryWait);
-            }
-            if (Optional.IsDefined(MaxConcurrentConnections))
-            {
-                writer.WritePropertyName("maxConcurrentConnections"u8);
-                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
-            }
-            if (Optional.IsDefined(DisableMetricsCollection))
-            {
-                writer.WritePropertyName("disableMetricsCollection"u8);
-                JsonSerializer.Serialize(writer, DisableMetricsCollection);
-            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static AzureDataExplorerSink DeserializeAzureDataExplorerSink(JsonElement element)
+        AzureDataExplorerSink IJsonModel<AzureDataExplorerSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDataExplorerSink)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataExplorerSink(document.RootElement, options);
+        }
+
+        internal static AzureDataExplorerSink DeserializeAzureDataExplorerSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> ingestionMappingName = default;
-            Optional<DataFactoryElement<string>> ingestionMappingAsJson = default;
-            Optional<DataFactoryElement<bool>> flushImmediately = default;
+            DataFactoryElement<string> ingestionMappingName = default;
+            DataFactoryElement<string> ingestionMappingAsJson = default;
+            DataFactoryElement<bool> flushImmediately = default;
             string type = default;
-            Optional<DataFactoryElement<int>> writeBatchSize = default;
-            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
-            Optional<DataFactoryElement<int>> sinkRetryCount = default;
-            Optional<DataFactoryElement<string>> sinkRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> writeBatchSize = default;
+            DataFactoryElement<string> writeBatchTimeout = default;
+            DataFactoryElement<int> sinkRetryCount = default;
+            DataFactoryElement<string> sinkRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +188,49 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataExplorerSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, ingestionMappingName.Value, ingestionMappingAsJson.Value, flushImmediately.Value);
+            return new AzureDataExplorerSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                ingestionMappingName,
+                ingestionMappingAsJson,
+                flushImmediately);
         }
+
+        BinaryData IPersistableModel<AzureDataExplorerSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureDataExplorerSink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureDataExplorerSink IPersistableModel<AzureDataExplorerSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureDataExplorerSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureDataExplorerSink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureDataExplorerSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

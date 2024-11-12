@@ -5,21 +5,114 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmApplyRecoveryPointContent : IUtf8JsonSerializable
+    public partial class InMageRcmApplyRecoveryPointContent : IUtf8JsonSerializable, IJsonModel<InMageRcmApplyRecoveryPointContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmApplyRecoveryPointContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<InMageRcmApplyRecoveryPointContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("recoveryPointId"u8);
-            writer.WriteStringValue(RecoveryPointId);
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmApplyRecoveryPointContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmApplyRecoveryPointContent)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("recoveryPointId"u8);
+            writer.WriteStringValue(RecoveryPointId);
+        }
+
+        InMageRcmApplyRecoveryPointContent IJsonModel<InMageRcmApplyRecoveryPointContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmApplyRecoveryPointContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmApplyRecoveryPointContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmApplyRecoveryPointContent(document.RootElement, options);
+        }
+
+        internal static InMageRcmApplyRecoveryPointContent DeserializeInMageRcmApplyRecoveryPointContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier recoveryPointId = default;
+            string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("recoveryPointId"u8))
+                {
+                    recoveryPointId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InMageRcmApplyRecoveryPointContent(instanceType, serializedAdditionalRawData, recoveryPointId);
+        }
+
+        BinaryData IPersistableModel<InMageRcmApplyRecoveryPointContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmApplyRecoveryPointContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmApplyRecoveryPointContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InMageRcmApplyRecoveryPointContent IPersistableModel<InMageRcmApplyRecoveryPointContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmApplyRecoveryPointContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInMageRcmApplyRecoveryPointContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmApplyRecoveryPointContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InMageRcmApplyRecoveryPointContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

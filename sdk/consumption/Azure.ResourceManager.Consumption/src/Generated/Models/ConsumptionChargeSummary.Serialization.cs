@@ -5,18 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionChargeSummary : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownChargeSummary))]
+    public partial class ConsumptionChargeSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionChargeSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionChargeSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConsumptionChargeSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(ETag))
@@ -24,11 +42,24 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WriteEndObject();
         }
 
-        internal static ConsumptionChargeSummary DeserializeConsumptionChargeSummary(JsonElement element)
+        ConsumptionChargeSummary IJsonModel<ConsumptionChargeSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionChargeSummary(document.RootElement, options);
+        }
+
+        internal static ConsumptionChargeSummary DeserializeConsumptionChargeSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,58 +68,42 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "legacy": return ConsumptionLegacyChargeSummary.DeserializeConsumptionLegacyChargeSummary(element);
-                    case "modern": return ConsumptionModernChargeSummary.DeserializeConsumptionModernChargeSummary(element);
+                    case "legacy": return ConsumptionLegacyChargeSummary.DeserializeConsumptionLegacyChargeSummary(element, options);
+                    case "modern": return ConsumptionModernChargeSummary.DeserializeConsumptionModernChargeSummary(element, options);
                 }
             }
-            ChargeSummaryKind kind = default;
-            Optional<ETag> eTag = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new ChargeSummaryKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("eTag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
-                    continue;
-                }
-            }
-            return new ConsumptionChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag));
+            return UnknownChargeSummary.DeserializeUnknownChargeSummary(element, options);
         }
+
+        BinaryData IPersistableModel<ConsumptionChargeSummary>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionChargeSummary IPersistableModel<ConsumptionChargeSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionChargeSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionChargeSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

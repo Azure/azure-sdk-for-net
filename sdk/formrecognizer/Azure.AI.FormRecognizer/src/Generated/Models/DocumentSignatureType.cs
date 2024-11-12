@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static bool operator ==(DocumentSignatureType left, DocumentSignatureType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentSignatureType"/> values are not the same. </summary>
         public static bool operator !=(DocumentSignatureType left, DocumentSignatureType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DocumentSignatureType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentSignatureType"/>. </summary>
         public static implicit operator DocumentSignatureType(string value) => new DocumentSignatureType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

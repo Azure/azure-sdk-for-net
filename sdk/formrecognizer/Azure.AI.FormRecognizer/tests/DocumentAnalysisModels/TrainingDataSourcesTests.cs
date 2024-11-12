@@ -15,14 +15,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         public void ClassifierDocumentTypeDetailsConstructorValidatesArguments()
         {
-            Assert.Throws<ArgumentNullException>(() => new ClassifierDocumentTypeDetails(azureBlobSource: null));
-            Assert.Throws<ArgumentNullException>(() => new ClassifierDocumentTypeDetails(azureBlobFileListSource: null));
+            Assert.Throws<ArgumentNullException>(() => new ClassifierDocumentTypeDetails(trainingDataSource: null));
         }
 
         [Test]
         public void AzureBlobContentSourceConstructorValidatesArguments()
         {
-            Assert.Throws<ArgumentNullException>(() => new AzureBlobContentSource(containerUri: null));
+            Assert.Throws<ArgumentNullException>(() => new BlobContentSource(containerUri: null));
         }
 
         [Test]
@@ -30,8 +29,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var containerUri = new Uri("http://notreal.azure.com/");
 
-            Assert.Throws<ArgumentNullException>(() => new AzureBlobFileListSource(containerUri: null, "fileList"));
-            Assert.Throws<ArgumentNullException>(() => new AzureBlobFileListSource(containerUri, fileList: null));
+            Assert.Throws<ArgumentNullException>(() => new BlobFileListContentSource(containerUri: null, "fileList"));
+            Assert.Throws<ArgumentNullException>(() => new BlobFileListContentSource(containerUri, fileList: null));
         }
     }
 }

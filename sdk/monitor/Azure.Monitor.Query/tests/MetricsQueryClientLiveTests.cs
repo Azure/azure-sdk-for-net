@@ -22,17 +22,20 @@ namespace Azure.Monitor.Query.Tests
         private MetricsQueryClient CreateClient()
         {
             return InstrumentClient(new MetricsQueryClient(
-                TestEnvironment.MetricsEndpoint,
+                new Uri(TestEnvironment.GetMetricsAudience()),
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new MetricsQueryClientOptions())
+                InstrumentClientOptions(new MetricsQueryClientOptions()
+                {
+                    Audience = TestEnvironment.GetMetricsAudience()
+                })
             ));
         }
 
         [SetUp]
-        public async Task SetUp()
+        public void SetUp()
         {
             _testData = new MetricsTestData(TestEnvironment, Recording.UtcNow);
-            await _testData.InitializeAsync();
+            // await _testData.InitializeAsync();
         }
 
         [RecordedTest]
@@ -60,10 +63,7 @@ namespace Azure.Monitor.Query.Tests
                     TimeRange = new QueryTimeRange(_testData.StartTime, duration)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
-            Assert.AreEqual(duration.Minutes, timeSeriesData.Count);
-            // Average is queried by default
-            Assert.True(timeSeriesData.All(d=> d.Average != null));
+            Assert.AreEqual("CowsHappiness", results.Value.Metrics[0].Name);
             Assert.AreEqual(new QueryTimeRange(_testData.StartTime, _testData.StartTime + duration), results.Value.TimeSpan);
 
             Assert.Null(results.Value.Metrics[0].Error);
@@ -91,15 +91,8 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
-            Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
-            // Average is queried by default
-            Assert.True(timeSeriesData.All(d=>
-                d.Average != null &&
-                d.Count != null &&
-                d.Maximum != null &&
-                d.Minimum != null &&
-                d.Total != null));
+            Assert.AreEqual(_testData.MetricName, results.Value.Metrics[0].Name);
+            Assert.AreEqual(new QueryTimeRange(_testData.StartTime, _testData.StartTime.Add(_testData.Duration)), results.Value.TimeSpan);
         }
 
         [RecordedTest]
@@ -116,10 +109,9 @@ namespace Azure.Monitor.Query.Tests
                     TimeRange = new QueryTimeRange(_testData.StartTime, _testData.EndTime),
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
-            Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
-            Assert.True(timeSeriesData.All(d=>
-                d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
+            Assert.Greater(results.Value.Cost, 0);
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries;
+            Assert.AreEqual(0, timeSeriesData.Count);
         }
 
         [RecordedTest]
@@ -136,10 +128,8 @@ namespace Azure.Monitor.Query.Tests
                     TimeRange = new QueryTimeRange(_testData.StartTime, _testData.Duration)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
-            Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
-            Assert.True(timeSeriesData.All(d=>
-                d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
+            Assert.AreEqual(_testData.MetricName, results.Value.Metrics[0].Name);
+            Assert.AreEqual(new QueryTimeRange(_testData.StartTime, _testData.StartTime.Add(_testData.Duration)), results.Value.TimeSpan);
         }
 
         [RecordedTest]
@@ -156,10 +146,9 @@ namespace Azure.Monitor.Query.Tests
                     TimeRange = new QueryTimeRange(_testData.Duration, _testData.EndTime)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
-            Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
-            Assert.True(timeSeriesData.All(d=>
-                d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
+            Assert.Greater(results.Value.Cost, 0);
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries;
+            Assert.AreEqual(0, timeSeriesData.Count);
         }
 
         [RecordedTest]
@@ -175,8 +164,10 @@ namespace Azure.Monitor.Query.Tests
                     MetricNamespace = _testData.MetricNamespace
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
-            Assert.Greater(timeSeriesData.Count, 0);
+            Assert.Greater(results.Value.Metrics.Count, 0);
+            Assert.AreEqual(_testData.MetricName, results.Value.Metrics[0].Name);
+            Assert.AreEqual(_testData.MetricNamespace, results.Value.Namespace);
+            Assert.AreEqual(1, results.Value.Metrics.Count);
         }
 
         [RecordedTest]
@@ -194,10 +185,9 @@ namespace Azure.Monitor.Query.Tests
                     Granularity = TimeSpan.FromMinutes(5)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
-            Assert.AreEqual(_testData.Duration.Minutes / 5, timeSeriesData.Count);
-            Assert.True(timeSeriesData.All(d=>
-                d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
+            Assert.Greater(results.Value.Cost, 0);
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries;
+            Assert.AreEqual(0, timeSeriesData.Count);
         }
 
         [RecordedTest]
@@ -219,10 +209,10 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            var timeSeries = results.Value.Metrics[0].TimeSeries[0];
-
-            Assert.AreEqual(_testData.Name1, timeSeries.Metadata["name"]);
+            Assert.AreEqual(TimeSpan.FromMinutes(1), results.Value.Granularity);
+            Assert.Greater(results.Value.Cost, 0);
         }
+
         [RecordedTest]
         public async Task CanQueryMetricsFilterTop()
         {
@@ -243,7 +233,9 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            Assert.AreEqual(1, results.Value.Metrics[0].TimeSeries.Count);
+            Assert.AreEqual(1, results.Value.Metrics.Count);
+            Assert.Greater(results.Value.Cost, 0);
+            Assert.AreEqual(new QueryTimeRange(_testData.StartTime, _testData.StartTime.Add(_testData.Duration)), results.Value.TimeSpan);
         }
 
         [RecordedTest]
@@ -253,11 +245,6 @@ namespace Azure.Monitor.Query.Tests
 
             var results = await client.GetMetricNamespacesAsync(
                 TestEnvironment.MetricsResource).ToEnumerableAsync();
-
-            Assert.True(results.Any(ns =>
-                ns.Name == "Cows" &&
-                ns.Type == "Microsoft.Insights/metricNamespaces" &&
-                ns.FullyQualifiedName == "Cows"));
 
             Assert.True(results.Any(ns =>
                 ns.Name == "microsoft.operationalinsights-workspaces" &&

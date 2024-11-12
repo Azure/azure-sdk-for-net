@@ -12,12 +12,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkTableStatus. </summary>
     public partial class LinkTableStatus
     {
-        /// <summary> Initializes a new instance of LinkTableStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableStatus"/>. </summary>
         internal LinkTableStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkTableStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableStatus"/>. </summary>
         /// <param name="id"> ID provided by the client. </param>
         /// <param name="status"> Link table status, please refer to this [articles](https://learn.microsoft.com/azure/synapse-analytics/synapse-link/sql-database-synapse-link#monitoring) for details. </param>
         /// <param name="errorMessage"> Link table error message. </param>

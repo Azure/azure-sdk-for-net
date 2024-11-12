@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf"u8);
-                writer.WriteObjectValue(Conf);
+                writer.WriteObjectValue<object>(Conf);
             }
             if (Optional.IsCollectionDefined(Args))
             {
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -100,14 +100,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             string file = default;
-            Optional<string> className = default;
-            Optional<object> conf = default;
-            Optional<IList<string>> args = default;
-            Optional<IList<string>> jars = default;
-            Optional<IList<string>> files = default;
-            Optional<IList<string>> archives = default;
+            string className = default;
+            object conf = default;
+            IList<string> args = default;
+            IList<string> jars = default;
+            IList<string> files = default;
+            IList<string> archives = default;
             string driverMemory = default;
             int driverCores = default;
             string executorMemory = default;
@@ -225,7 +225,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkJobProperties(name.Value, file, className.Value, conf.Value, Optional.ToList(args), Optional.ToList(jars), Optional.ToList(files), Optional.ToList(archives), driverMemory, driverCores, executorMemory, executorCores, numExecutors, additionalProperties);
+            return new SparkJobProperties(
+                name,
+                file,
+                className,
+                conf,
+                args ?? new ChangeTrackingList<string>(),
+                jars ?? new ChangeTrackingList<string>(),
+                files ?? new ChangeTrackingList<string>(),
+                archives ?? new ChangeTrackingList<string>(),
+                driverMemory,
+                driverCores,
+                executorMemory,
+                executorCores,
+                numExecutors,
+                additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkJobProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkJobProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class SparkJobPropertiesConverter : JsonConverter<SparkJobProperties>
@@ -234,6 +264,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SparkJobProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

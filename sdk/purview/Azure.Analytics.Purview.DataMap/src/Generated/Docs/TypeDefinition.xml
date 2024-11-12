@@ -1,0 +1,2017 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetBusinessMetadataByIdAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetBusinessMetadataByIdAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByIdAsync("d8757510-c866-61ba-486f-1afca09f43b8");
+]]></code></example>
+    </member>
+    <member name="GetBusinessMetadataById(string,CancellationToken)">
+      <example>
+This sample shows how to call GetBusinessMetadataById.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataById("d8757510-c866-61ba-486f-1afca09f43b8");
+]]></code></example>
+    </member>
+    <member name="GetBusinessMetadataByIdAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetBusinessMetadataByIdAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetBusinessMetadataByIdAsync("d8757510-c866-61ba-486f-1afca09f43b8", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetBusinessMetadataById(string,RequestContext)">
+      <example>
+This sample shows how to call GetBusinessMetadataById and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetBusinessMetadataById("d8757510-c866-61ba-486f-1afca09f43b8", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetBusinessMetadataByNameAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetBusinessMetadataByNameAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByNameAsync("Business_Metadata_Type_Name");
+]]></code></example>
+    </member>
+    <member name="GetBusinessMetadataByName(string,CancellationToken)">
+      <example>
+This sample shows how to call GetBusinessMetadataByName.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataByName("Business_Metadata_Type_Name");
+]]></code></example>
+    </member>
+    <member name="GetBusinessMetadataByNameAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetBusinessMetadataByNameAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetBusinessMetadataByNameAsync("Business_Metadata_Type_Name", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetBusinessMetadataByName(string,RequestContext)">
+      <example>
+This sample shows how to call GetBusinessMetadataByName and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetBusinessMetadataByName("Business_Metadata_Type_Name", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetClassificationByIdAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetClassificationByIdAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasClassificationDef> response = await client.GetClassificationByIdAsync("e79878fa-adba-4ee5-adc5-328d8841cd49");
+]]></code></example>
+    </member>
+    <member name="GetClassificationById(string,CancellationToken)">
+      <example>
+This sample shows how to call GetClassificationById.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasClassificationDef> response = client.GetClassificationById("e79878fa-adba-4ee5-adc5-328d8841cd49");
+]]></code></example>
+    </member>
+    <member name="GetClassificationByIdAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetClassificationByIdAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetClassificationByIdAsync("e79878fa-adba-4ee5-adc5-328d8841cd49", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetClassificationById(string,RequestContext)">
+      <example>
+This sample shows how to call GetClassificationById and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetClassificationById("e79878fa-adba-4ee5-adc5-328d8841cd49", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetClassificationByNameAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetClassificationByNameAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasClassificationDef> response = await client.GetClassificationByNameAsync("MICROSOFT.GOVERNMENT.CANADA.SOCIAL_INSURANCE_NUMBER");
+]]></code></example>
+    </member>
+    <member name="GetClassificationByName(string,CancellationToken)">
+      <example>
+This sample shows how to call GetClassificationByName.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasClassificationDef> response = client.GetClassificationByName("MICROSOFT.GOVERNMENT.CANADA.SOCIAL_INSURANCE_NUMBER");
+]]></code></example>
+    </member>
+    <member name="GetClassificationByNameAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetClassificationByNameAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetClassificationByNameAsync("MICROSOFT.GOVERNMENT.CANADA.SOCIAL_INSURANCE_NUMBER", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetClassificationByName(string,RequestContext)">
+      <example>
+This sample shows how to call GetClassificationByName and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetClassificationByName("MICROSOFT.GOVERNMENT.CANADA.SOCIAL_INSURANCE_NUMBER", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetEntityByIdAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEntityByIdAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasEntityDef> response = await client.GetEntityByIdAsync("4bc54c37-98a8-4de8-9ee8-182610859d43");
+]]></code></example>
+    </member>
+    <member name="GetEntityById(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEntityById.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasEntityDef> response = client.GetEntityById("4bc54c37-98a8-4de8-9ee8-182610859d43");
+]]></code></example>
+    </member>
+    <member name="GetEntityByIdAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetEntityByIdAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetEntityByIdAsync("4bc54c37-98a8-4de8-9ee8-182610859d43", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetEntityById(string,RequestContext)">
+      <example>
+This sample shows how to call GetEntityById and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetEntityById("4bc54c37-98a8-4de8-9ee8-182610859d43", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetEntityByNameAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEntityByNameAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasEntityDef> response = await client.GetEntityByNameAsync("DataSet");
+]]></code></example>
+    </member>
+    <member name="GetEntityByName(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEntityByName.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasEntityDef> response = client.GetEntityByName("DataSet");
+]]></code></example>
+    </member>
+    <member name="GetEntityByNameAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetEntityByNameAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetEntityByNameAsync("DataSet", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetEntityByName(string,RequestContext)">
+      <example>
+This sample shows how to call GetEntityByName and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetEntityByName("DataSet", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetEnumByIdAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEnumByIdAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasEnumDef> response = await client.GetEnumByIdAsync("644ab9c7-893a-4a4d-8e0a-591a6556d1a0");
+]]></code></example>
+    </member>
+    <member name="GetEnumById(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEnumById.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasEnumDef> response = client.GetEnumById("644ab9c7-893a-4a4d-8e0a-591a6556d1a0");
+]]></code></example>
+    </member>
+    <member name="GetEnumByIdAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetEnumByIdAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetEnumByIdAsync("644ab9c7-893a-4a4d-8e0a-591a6556d1a0", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetEnumById(string,RequestContext)">
+      <example>
+This sample shows how to call GetEnumById and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetEnumById("644ab9c7-893a-4a4d-8e0a-591a6556d1a0", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetEnumByNameAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEnumByNameAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasEnumDef> response = await client.GetEnumByNameAsync("hive_principal_type");
+]]></code></example>
+    </member>
+    <member name="GetEnumByName(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEnumByName.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasEnumDef> response = client.GetEnumByName("hive_principal_type");
+]]></code></example>
+    </member>
+    <member name="GetEnumByNameAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetEnumByNameAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetEnumByNameAsync("hive_principal_type", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetEnumByName(string,RequestContext)">
+      <example>
+This sample shows how to call GetEnumByName and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetEnumByName("hive_principal_type", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetRelationshipByIdAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetRelationshipByIdAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasRelationshipDef> response = await client.GetRelationshipByIdAsync("695edde1-2782-4a3c-841b-0b3aba25fe45");
+]]></code></example>
+    </member>
+    <member name="GetRelationshipById(string,CancellationToken)">
+      <example>
+This sample shows how to call GetRelationshipById.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasRelationshipDef> response = client.GetRelationshipById("695edde1-2782-4a3c-841b-0b3aba25fe45");
+]]></code></example>
+    </member>
+    <member name="GetRelationshipByIdAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetRelationshipByIdAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetRelationshipByIdAsync("695edde1-2782-4a3c-841b-0b3aba25fe45", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetRelationshipById(string,RequestContext)">
+      <example>
+This sample shows how to call GetRelationshipById and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetRelationshipById("695edde1-2782-4a3c-841b-0b3aba25fe45", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetRelationshipByNameAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetRelationshipByNameAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasRelationshipDef> response = await client.GetRelationshipByNameAsync("storm_topology_nodes");
+]]></code></example>
+    </member>
+    <member name="GetRelationshipByName(string,CancellationToken)">
+      <example>
+This sample shows how to call GetRelationshipByName.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasRelationshipDef> response = client.GetRelationshipByName("storm_topology_nodes");
+]]></code></example>
+    </member>
+    <member name="GetRelationshipByNameAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetRelationshipByNameAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetRelationshipByNameAsync("storm_topology_nodes", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetRelationshipByName(string,RequestContext)">
+      <example>
+This sample shows how to call GetRelationshipByName and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetRelationshipByName("storm_topology_nodes", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetStructByIdAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetStructByIdAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasStructDef> response = await client.GetStructByIdAsync("f1571b6e-ad08-4040-a9a7-c30ed935d437");
+]]></code></example>
+    </member>
+    <member name="GetStructById(string,CancellationToken)">
+      <example>
+This sample shows how to call GetStructById.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasStructDef> response = client.GetStructById("f1571b6e-ad08-4040-a9a7-c30ed935d437");
+]]></code></example>
+    </member>
+    <member name="GetStructByIdAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetStructByIdAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetStructByIdAsync("f1571b6e-ad08-4040-a9a7-c30ed935d437", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetStructById(string,RequestContext)">
+      <example>
+This sample shows how to call GetStructById and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetStructById("f1571b6e-ad08-4040-a9a7-c30ed935d437", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetStructByNameAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetStructByNameAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasStructDef> response = await client.GetStructByNameAsync("hive_order");
+]]></code></example>
+    </member>
+    <member name="GetStructByName(string,CancellationToken)">
+      <example>
+This sample shows how to call GetStructByName.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasStructDef> response = client.GetStructByName("hive_order");
+]]></code></example>
+    </member>
+    <member name="GetStructByNameAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetStructByNameAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetStructByNameAsync("hive_order", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetStructByName(string,RequestContext)">
+      <example>
+This sample shows how to call GetStructByName and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetStructByName("hive_order", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetByIdAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetByIdAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasTypeDef> response = await client.GetByIdAsync("0ddc2fcf-ad17-4d06-984a-ffb2ffb2a941");
+]]></code></example>
+    </member>
+    <member name="GetById(string,CancellationToken)">
+      <example>
+This sample shows how to call GetById.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasTypeDef> response = client.GetById("0ddc2fcf-ad17-4d06-984a-ffb2ffb2a941");
+]]></code></example>
+    </member>
+    <member name="GetByIdAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetByIdAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetByIdAsync("0ddc2fcf-ad17-4d06-984a-ffb2ffb2a941", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetById(string,RequestContext)">
+      <example>
+This sample shows how to call GetById and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetById("0ddc2fcf-ad17-4d06-984a-ffb2ffb2a941", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetByNameAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetByNameAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasTypeDef> response = await client.GetByNameAsync("glossary_term_status_value");
+]]></code></example>
+    </member>
+    <member name="GetByName(string,CancellationToken)">
+      <example>
+This sample shows how to call GetByName.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<AtlasTypeDef> response = client.GetByName("glossary_term_status_value");
+]]></code></example>
+    </member>
+    <member name="GetByNameAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetByNameAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetByNameAsync("glossary_term_status_value", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetByName(string,RequestContext)">
+      <example>
+This sample shows how to call GetByName and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetByName("glossary_term_status_value", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.DeleteAsync("hive_order");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Delete(string,RequestContext)">
+      <example>
+This sample shows how to call Delete.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.Delete("hive_order");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetTypeDefinitionAsync(bool?,TypeCategory?,CancellationToken)">
+      <example>
+This sample shows how to call GetTypeDefinitionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response<AtlasTypesDef> response = await client.GetTypeDefinitionAsync();
+]]></code>
+This sample shows how to call GetTypeDefinitionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response<AtlasTypesDef> response = await client.GetTypeDefinitionAsync();
+]]></code>
+This sample shows how to call GetTypeDefinitionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response<AtlasTypesDef> response = await client.GetTypeDefinitionAsync();
+]]></code></example>
+    </member>
+    <member name="GetTypeDefinition(bool?,TypeCategory?,CancellationToken)">
+      <example>
+This sample shows how to call GetTypeDefinition.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response<AtlasTypesDef> response = client.GetTypeDefinition();
+]]></code>
+This sample shows how to call GetTypeDefinition.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response<AtlasTypesDef> response = client.GetTypeDefinition();
+]]></code>
+This sample shows how to call GetTypeDefinition.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response<AtlasTypesDef> response = client.GetTypeDefinition();
+]]></code></example>
+    </member>
+    <member name="GetTypeDefinitionAsync(bool?,string,RequestContext)">
+      <example>
+This sample shows how to call GetTypeDefinitionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response response = await client.GetTypeDefinitionAsync(true, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetTypeDefinitionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response response = await client.GetTypeDefinitionAsync(null, "ENUM", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetTypeDefinitionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response response = await client.GetTypeDefinitionAsync(null, "TERM_TEMPLATE", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetTypeDefinition(bool?,string,RequestContext)">
+      <example>
+This sample shows how to call GetTypeDefinition and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response response = client.GetTypeDefinition(true, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetTypeDefinition and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response response = client.GetTypeDefinition(null, "ENUM", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetTypeDefinition and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response response = client.GetTypeDefinition(null, "TERM_TEMPLATE", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="BatchCreateAsync(AtlasTypesDef,CancellationToken)">
+      <example>
+This sample shows how to call BatchCreateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+AtlasTypesDef body = new AtlasTypesDef
+{
+    ClassificationDefs = { },
+    EntityDefs = {new AtlasEntityDef
+    {
+        Name = "azure_sql_server_example",
+        TypeVersion = "1.0",
+        AttributeDefs = {new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Set,
+            IsIndexable = false,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "databases",
+            TypeName = "array<azure_sql_db>",
+        }},
+        SuperTypes = {"azure_resource"},
+    }},
+    EnumDefs = { },
+    RelationshipDefs = { },
+    StructDefs = { },
+};
+Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
+]]></code>
+This sample shows how to call BatchCreateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+AtlasTypesDef body = new AtlasTypesDef
+{
+    BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+    {
+        Description = "",
+        Name = "myBizMetadata1",
+        AttributeDefs = {new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Single,
+            IsIndexable = true,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "bizAttr1",
+            Options =
+            {
+                ["maxStrLength"] = "50",
+                ["applicableEntityTypes"] = "[\"Path\"]"
+            },
+            TypeName = "string",
+        }},
+    }},
+    ClassificationDefs = { },
+    EntityDefs = { },
+    EnumDefs = { },
+    RelationshipDefs = { },
+    StructDefs = { },
+};
+Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
+]]></code></example>
+    </member>
+    <member name="BatchCreate(AtlasTypesDef,CancellationToken)">
+      <example>
+This sample shows how to call BatchCreate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+AtlasTypesDef body = new AtlasTypesDef
+{
+    ClassificationDefs = { },
+    EntityDefs = {new AtlasEntityDef
+    {
+        Name = "azure_sql_server_example",
+        TypeVersion = "1.0",
+        AttributeDefs = {new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Set,
+            IsIndexable = false,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "databases",
+            TypeName = "array<azure_sql_db>",
+        }},
+        SuperTypes = {"azure_resource"},
+    }},
+    EnumDefs = { },
+    RelationshipDefs = { },
+    StructDefs = { },
+};
+Response<AtlasTypesDef> response = client.BatchCreate(body);
+]]></code>
+This sample shows how to call BatchCreate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+AtlasTypesDef body = new AtlasTypesDef
+{
+    BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+    {
+        Description = "",
+        Name = "myBizMetadata1",
+        AttributeDefs = {new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Single,
+            IsIndexable = true,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "bizAttr1",
+            Options =
+            {
+                ["maxStrLength"] = "50",
+                ["applicableEntityTypes"] = "[\"Path\"]"
+            },
+            TypeName = "string",
+        }},
+    }},
+    ClassificationDefs = { },
+    EntityDefs = { },
+    EnumDefs = { },
+    RelationshipDefs = { },
+    StructDefs = { },
+};
+Response<AtlasTypesDef> response = client.BatchCreate(body);
+]]></code></example>
+    </member>
+    <member name="BatchCreateAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call BatchCreateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    enumDefs = Array.Empty<object>(),
+    structDefs = Array.Empty<object>(),
+    classificationDefs = Array.Empty<object>(),
+    entityDefs = new object[]
+    {
+        new
+        {
+            name = "azure_sql_server_example",
+            superTypes = new object[]
+            {
+                "azure_resource"
+            },
+            typeVersion = "1.0",
+            attributeDefs = new object[]
+            {
+                new
+                {
+                    name = "databases",
+                    typeName = "array<azure_sql_db>",
+                    cardinality = "SET",
+                    isIndexable = false,
+                    isOptional = true,
+                    isUnique = false,
+                }
+            },
+        }
+    },
+    relationshipDefs = Array.Empty<object>(),
+});
+Response response = await client.BatchCreateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call BatchCreateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    enumDefs = Array.Empty<object>(),
+    structDefs = Array.Empty<object>(),
+    classificationDefs = Array.Empty<object>(),
+    entityDefs = Array.Empty<object>(),
+    relationshipDefs = Array.Empty<object>(),
+    businessMetadataDefs = new object[]
+    {
+        new
+        {
+            name = "myBizMetadata1",
+            description = "",
+            attributeDefs = new object[]
+            {
+                new
+                {
+                    name = "bizAttr1",
+                    typeName = "string",
+                    isOptional = true,
+                    cardinality = "SINGLE",
+                    isUnique = false,
+                    isIndexable = true,
+                    options = new
+                    {
+                        maxStrLength = "50",
+                        applicableEntityTypes = "[\"Path\"]",
+                    },
+                }
+            },
+        }
+    },
+});
+Response response = await client.BatchCreateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="BatchCreate(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call BatchCreate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    enumDefs = Array.Empty<object>(),
+    structDefs = Array.Empty<object>(),
+    classificationDefs = Array.Empty<object>(),
+    entityDefs = new object[]
+    {
+        new
+        {
+            name = "azure_sql_server_example",
+            superTypes = new object[]
+            {
+                "azure_resource"
+            },
+            typeVersion = "1.0",
+            attributeDefs = new object[]
+            {
+                new
+                {
+                    name = "databases",
+                    typeName = "array<azure_sql_db>",
+                    cardinality = "SET",
+                    isIndexable = false,
+                    isOptional = true,
+                    isUnique = false,
+                }
+            },
+        }
+    },
+    relationshipDefs = Array.Empty<object>(),
+});
+Response response = client.BatchCreate(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call BatchCreate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    enumDefs = Array.Empty<object>(),
+    structDefs = Array.Empty<object>(),
+    classificationDefs = Array.Empty<object>(),
+    entityDefs = Array.Empty<object>(),
+    relationshipDefs = Array.Empty<object>(),
+    businessMetadataDefs = new object[]
+    {
+        new
+        {
+            name = "myBizMetadata1",
+            description = "",
+            attributeDefs = new object[]
+            {
+                new
+                {
+                    name = "bizAttr1",
+                    typeName = "string",
+                    isOptional = true,
+                    cardinality = "SINGLE",
+                    isUnique = false,
+                    isIndexable = true,
+                    options = new
+                    {
+                        maxStrLength = "50",
+                        applicableEntityTypes = "[\"Path\"]",
+                    },
+                }
+            },
+        }
+    },
+});
+Response response = client.BatchCreate(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="BatchUpdateAsync(AtlasTypesDef,CancellationToken)">
+      <example>
+This sample shows how to call BatchUpdateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+AtlasTypesDef body = new AtlasTypesDef
+{
+    ClassificationDefs = { },
+    EntityDefs = {new AtlasEntityDef
+    {
+        Name = "azure_sql_server",
+        TypeVersion = "1.0",
+        AttributeDefs = {new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Set,
+            IsIndexable = false,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "databases",
+            TypeName = "array<azure_sql_db>",
+        }},
+        SuperTypes = {"azure_resource"},
+    }, new AtlasEntityDef
+    {
+        Name = "azure_sql_db",
+        TypeVersion = "1.0",
+        AttributeDefs = {new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Single,
+            Constraints = {new AtlasConstraintDef
+            {
+                Params =
+                {
+                    ["attribute"] = BinaryData.FromObjectAsJson("databases")
+                },
+                Type = "inverseRef",
+            }},
+            IsIndexable = false,
+            IsOptional = false,
+            IsUnique = false,
+            Name = "server",
+            TypeName = "azure_sql_server",
+        }, new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Set,
+            IsIndexable = false,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "schemas",
+            TypeName = "array<azure_sql_schema>",
+        }, new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Single,
+            IsIndexable = false,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "collation",
+            TypeName = "string",
+        }, new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Single,
+            IsIndexable = false,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "compatibilityLevel",
+            TypeName = "int",
+        }},
+        SuperTypes = {"azure_resource"},
+    }},
+    EnumDefs = { },
+    RelationshipDefs = {new AtlasRelationshipDef
+    {
+        Name = "azure_sql_server_databases",
+        TypeVersion = "1.0",
+        EndDef1 = new AtlasRelationshipEndDef
+        {
+            Cardinality = CardinalityValue.Set,
+            IsContainer = true,
+            IsLegacyAttribute = true,
+            Name = "databases",
+            Type = "azure_sql_server",
+        },
+        EndDef2 = new AtlasRelationshipEndDef
+        {
+            Cardinality = CardinalityValue.Single,
+            IsContainer = false,
+            IsLegacyAttribute = true,
+            Name = "server",
+            Type = "azure_sql_db",
+        },
+        RelationshipCategory = RelationshipCategory.Composition,
+    }, new AtlasRelationshipDef
+    {
+        Name = "azure_sql_db_schemas",
+        TypeVersion = "1.0",
+        EndDef1 = new AtlasRelationshipEndDef
+        {
+            Cardinality = CardinalityValue.Set,
+            IsContainer = true,
+            IsLegacyAttribute = true,
+            Name = "schemas",
+            Type = "azure_sql_db",
+        },
+        EndDef2 = new AtlasRelationshipEndDef
+        {
+            Cardinality = CardinalityValue.Single,
+            IsContainer = false,
+            IsLegacyAttribute = true,
+            Name = "db",
+            Type = "azure_sql_schema",
+        },
+        RelationshipCategory = RelationshipCategory.Composition,
+    }},
+    StructDefs = { },
+};
+Response<AtlasTypesDef> response = await client.BatchUpdateAsync(body);
+]]></code></example>
+    </member>
+    <member name="BatchUpdate(AtlasTypesDef,CancellationToken)">
+      <example>
+This sample shows how to call BatchUpdate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+AtlasTypesDef body = new AtlasTypesDef
+{
+    ClassificationDefs = { },
+    EntityDefs = {new AtlasEntityDef
+    {
+        Name = "azure_sql_server",
+        TypeVersion = "1.0",
+        AttributeDefs = {new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Set,
+            IsIndexable = false,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "databases",
+            TypeName = "array<azure_sql_db>",
+        }},
+        SuperTypes = {"azure_resource"},
+    }, new AtlasEntityDef
+    {
+        Name = "azure_sql_db",
+        TypeVersion = "1.0",
+        AttributeDefs = {new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Single,
+            Constraints = {new AtlasConstraintDef
+            {
+                Params =
+                {
+                    ["attribute"] = BinaryData.FromObjectAsJson("databases")
+                },
+                Type = "inverseRef",
+            }},
+            IsIndexable = false,
+            IsOptional = false,
+            IsUnique = false,
+            Name = "server",
+            TypeName = "azure_sql_server",
+        }, new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Set,
+            IsIndexable = false,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "schemas",
+            TypeName = "array<azure_sql_schema>",
+        }, new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Single,
+            IsIndexable = false,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "collation",
+            TypeName = "string",
+        }, new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Single,
+            IsIndexable = false,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "compatibilityLevel",
+            TypeName = "int",
+        }},
+        SuperTypes = {"azure_resource"},
+    }},
+    EnumDefs = { },
+    RelationshipDefs = {new AtlasRelationshipDef
+    {
+        Name = "azure_sql_server_databases",
+        TypeVersion = "1.0",
+        EndDef1 = new AtlasRelationshipEndDef
+        {
+            Cardinality = CardinalityValue.Set,
+            IsContainer = true,
+            IsLegacyAttribute = true,
+            Name = "databases",
+            Type = "azure_sql_server",
+        },
+        EndDef2 = new AtlasRelationshipEndDef
+        {
+            Cardinality = CardinalityValue.Single,
+            IsContainer = false,
+            IsLegacyAttribute = true,
+            Name = "server",
+            Type = "azure_sql_db",
+        },
+        RelationshipCategory = RelationshipCategory.Composition,
+    }, new AtlasRelationshipDef
+    {
+        Name = "azure_sql_db_schemas",
+        TypeVersion = "1.0",
+        EndDef1 = new AtlasRelationshipEndDef
+        {
+            Cardinality = CardinalityValue.Set,
+            IsContainer = true,
+            IsLegacyAttribute = true,
+            Name = "schemas",
+            Type = "azure_sql_db",
+        },
+        EndDef2 = new AtlasRelationshipEndDef
+        {
+            Cardinality = CardinalityValue.Single,
+            IsContainer = false,
+            IsLegacyAttribute = true,
+            Name = "db",
+            Type = "azure_sql_schema",
+        },
+        RelationshipCategory = RelationshipCategory.Composition,
+    }},
+    StructDefs = { },
+};
+Response<AtlasTypesDef> response = client.BatchUpdate(body);
+]]></code></example>
+    </member>
+    <member name="BatchUpdateAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call BatchUpdateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    enumDefs = Array.Empty<object>(),
+    structDefs = Array.Empty<object>(),
+    classificationDefs = Array.Empty<object>(),
+    entityDefs = new object[]
+    {
+        new
+        {
+            name = "azure_sql_server",
+            superTypes = new object[]
+            {
+                "azure_resource"
+            },
+            typeVersion = "1.0",
+            attributeDefs = new object[]
+            {
+                new
+                {
+                    name = "databases",
+                    typeName = "array<azure_sql_db>",
+                    cardinality = "SET",
+                    isIndexable = false,
+                    isOptional = true,
+                    isUnique = false,
+                }
+            },
+        },
+        new
+        {
+            name = "azure_sql_db",
+            superTypes = new object[]
+            {
+                "azure_resource"
+            },
+            typeVersion = "1.0",
+            attributeDefs = new object[]
+            {
+                new
+                {
+                    name = "server",
+                    typeName = "azure_sql_server",
+                    cardinality = "SINGLE",
+                    constraints = new object[]
+                    {
+                        new Dictionary<string, object>
+                        {
+                            ["type"] = "inverseRef",
+                            ["params"] = new
+                            {
+                                attribute = "databases",
+                            }
+                        }
+                    },
+                    isIndexable = false,
+                    isOptional = false,
+                    isUnique = false,
+                },
+                new
+                {
+                    name = "schemas",
+                    typeName = "array<azure_sql_schema>",
+                    cardinality = "SET",
+                    isIndexable = false,
+                    isOptional = true,
+                    isUnique = false,
+                },
+                new
+                {
+                    name = "collation",
+                    typeName = "string",
+                    cardinality = "SINGLE",
+                    isIndexable = false,
+                    isOptional = true,
+                    isUnique = false,
+                },
+                new
+                {
+                    name = "compatibilityLevel",
+                    typeName = "int",
+                    cardinality = "SINGLE",
+                    isIndexable = false,
+                    isOptional = true,
+                    isUnique = false,
+                }
+            },
+        }
+    },
+    relationshipDefs = new object[]
+    {
+        new
+        {
+            name = "azure_sql_server_databases",
+            typeVersion = "1.0",
+            relationshipCategory = "COMPOSITION",
+            endDef1 = new
+            {
+                type = "azure_sql_server",
+                name = "databases",
+                isContainer = true,
+                cardinality = "SET",
+                isLegacyAttribute = true,
+            },
+            endDef2 = new
+            {
+                type = "azure_sql_db",
+                name = "server",
+                isContainer = false,
+                cardinality = "SINGLE",
+                isLegacyAttribute = true,
+            },
+        },
+        new
+        {
+            name = "azure_sql_db_schemas",
+            typeVersion = "1.0",
+            relationshipCategory = "COMPOSITION",
+            endDef1 = new
+            {
+                type = "azure_sql_db",
+                name = "schemas",
+                isContainer = true,
+                cardinality = "SET",
+                isLegacyAttribute = true,
+            },
+            endDef2 = new
+            {
+                type = "azure_sql_schema",
+                name = "db",
+                isContainer = false,
+                cardinality = "SINGLE",
+                isLegacyAttribute = true,
+            },
+        }
+    },
+});
+Response response = await client.BatchUpdateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="BatchUpdate(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call BatchUpdate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    enumDefs = Array.Empty<object>(),
+    structDefs = Array.Empty<object>(),
+    classificationDefs = Array.Empty<object>(),
+    entityDefs = new object[]
+    {
+        new
+        {
+            name = "azure_sql_server",
+            superTypes = new object[]
+            {
+                "azure_resource"
+            },
+            typeVersion = "1.0",
+            attributeDefs = new object[]
+            {
+                new
+                {
+                    name = "databases",
+                    typeName = "array<azure_sql_db>",
+                    cardinality = "SET",
+                    isIndexable = false,
+                    isOptional = true,
+                    isUnique = false,
+                }
+            },
+        },
+        new
+        {
+            name = "azure_sql_db",
+            superTypes = new object[]
+            {
+                "azure_resource"
+            },
+            typeVersion = "1.0",
+            attributeDefs = new object[]
+            {
+                new
+                {
+                    name = "server",
+                    typeName = "azure_sql_server",
+                    cardinality = "SINGLE",
+                    constraints = new object[]
+                    {
+                        new Dictionary<string, object>
+                        {
+                            ["type"] = "inverseRef",
+                            ["params"] = new
+                            {
+                                attribute = "databases",
+                            }
+                        }
+                    },
+                    isIndexable = false,
+                    isOptional = false,
+                    isUnique = false,
+                },
+                new
+                {
+                    name = "schemas",
+                    typeName = "array<azure_sql_schema>",
+                    cardinality = "SET",
+                    isIndexable = false,
+                    isOptional = true,
+                    isUnique = false,
+                },
+                new
+                {
+                    name = "collation",
+                    typeName = "string",
+                    cardinality = "SINGLE",
+                    isIndexable = false,
+                    isOptional = true,
+                    isUnique = false,
+                },
+                new
+                {
+                    name = "compatibilityLevel",
+                    typeName = "int",
+                    cardinality = "SINGLE",
+                    isIndexable = false,
+                    isOptional = true,
+                    isUnique = false,
+                }
+            },
+        }
+    },
+    relationshipDefs = new object[]
+    {
+        new
+        {
+            name = "azure_sql_server_databases",
+            typeVersion = "1.0",
+            relationshipCategory = "COMPOSITION",
+            endDef1 = new
+            {
+                type = "azure_sql_server",
+                name = "databases",
+                isContainer = true,
+                cardinality = "SET",
+                isLegacyAttribute = true,
+            },
+            endDef2 = new
+            {
+                type = "azure_sql_db",
+                name = "server",
+                isContainer = false,
+                cardinality = "SINGLE",
+                isLegacyAttribute = true,
+            },
+        },
+        new
+        {
+            name = "azure_sql_db_schemas",
+            typeVersion = "1.0",
+            relationshipCategory = "COMPOSITION",
+            endDef1 = new
+            {
+                type = "azure_sql_db",
+                name = "schemas",
+                isContainer = true,
+                cardinality = "SET",
+                isLegacyAttribute = true,
+            },
+            endDef2 = new
+            {
+                type = "azure_sql_schema",
+                name = "db",
+                isContainer = false,
+                cardinality = "SINGLE",
+                isLegacyAttribute = true,
+            },
+        }
+    },
+});
+Response response = client.BatchUpdate(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="BatchDeleteAsync(AtlasTypesDef,CancellationToken)">
+      <example>
+This sample shows how to call BatchDeleteAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+AtlasTypesDef body = new AtlasTypesDef
+{
+    ClassificationDefs = { },
+    EntityDefs = {new AtlasEntityDef
+    {
+        Name = "azure_sql_server_example",
+        TypeVersion = "1.0",
+        AttributeDefs = {new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Set,
+            IsIndexable = false,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "databases",
+            TypeName = "array<azure_sql_db>",
+        }},
+        SuperTypes = {"azure_resource"},
+    }},
+    EnumDefs = { },
+    RelationshipDefs = { },
+    StructDefs = { },
+};
+Response response = await client.BatchDeleteAsync(body);
+]]></code></example>
+    </member>
+    <member name="BatchDelete(AtlasTypesDef,CancellationToken)">
+      <example>
+This sample shows how to call BatchDelete.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+AtlasTypesDef body = new AtlasTypesDef
+{
+    ClassificationDefs = { },
+    EntityDefs = {new AtlasEntityDef
+    {
+        Name = "azure_sql_server_example",
+        TypeVersion = "1.0",
+        AttributeDefs = {new AtlasAttributeDef
+        {
+            Cardinality = CardinalityValue.Set,
+            IsIndexable = false,
+            IsOptional = true,
+            IsUnique = false,
+            Name = "databases",
+            TypeName = "array<azure_sql_db>",
+        }},
+        SuperTypes = {"azure_resource"},
+    }},
+    EnumDefs = { },
+    RelationshipDefs = { },
+    StructDefs = { },
+};
+Response response = client.BatchDelete(body);
+]]></code></example>
+    </member>
+    <member name="BatchDeleteAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call BatchDeleteAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    enumDefs = Array.Empty<object>(),
+    structDefs = Array.Empty<object>(),
+    classificationDefs = Array.Empty<object>(),
+    entityDefs = new object[]
+    {
+        new
+        {
+            name = "azure_sql_server_example",
+            superTypes = new object[]
+            {
+                "azure_resource"
+            },
+            typeVersion = "1.0",
+            attributeDefs = new object[]
+            {
+                new
+                {
+                    name = "databases",
+                    typeName = "array<azure_sql_db>",
+                    cardinality = "SET",
+                    isIndexable = false,
+                    isOptional = true,
+                    isUnique = false,
+                }
+            },
+        }
+    },
+    relationshipDefs = Array.Empty<object>(),
+});
+Response response = await client.BatchDeleteAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="BatchDelete(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call BatchDelete.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    enumDefs = Array.Empty<object>(),
+    structDefs = Array.Empty<object>(),
+    classificationDefs = Array.Empty<object>(),
+    entityDefs = new object[]
+    {
+        new
+        {
+            name = "azure_sql_server_example",
+            superTypes = new object[]
+            {
+                "azure_resource"
+            },
+            typeVersion = "1.0",
+            attributeDefs = new object[]
+            {
+                new
+                {
+                    name = "databases",
+                    typeName = "array<azure_sql_db>",
+                    cardinality = "SET",
+                    isIndexable = false,
+                    isOptional = true,
+                    isUnique = false,
+                }
+            },
+        }
+    },
+    relationshipDefs = Array.Empty<object>(),
+});
+Response response = client.BatchDelete(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetHeadersAsync(bool?,TypeCategory?,CancellationToken)">
+      <example>
+This sample shows how to call GetHeadersAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<IReadOnlyList<AtlasTypeDefHeader>> response = await client.GetHeadersAsync();
+]]></code></example>
+    </member>
+    <member name="GetHeaders(bool?,TypeCategory?,CancellationToken)">
+      <example>
+This sample shows how to call GetHeaders.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response<IReadOnlyList<AtlasTypeDefHeader>> response = client.GetHeaders();
+]]></code></example>
+    </member>
+    <member name="GetHeadersAsync(bool?,string,RequestContext)">
+      <example>
+This sample shows how to call GetHeadersAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetHeadersAsync(true, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetHeaders(bool?,string,RequestContext)">
+      <example>
+This sample shows how to call GetHeaders and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetHeaders(true, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetTermTemplateByIdAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetTermTemplateByIdAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response<TermTemplateDef> response = await client.GetTermTemplateByIdAsync("d776af9c-985c-4168-abb2-477523dbfc70");
+]]></code></example>
+    </member>
+    <member name="GetTermTemplateById(string,CancellationToken)">
+      <example>
+This sample shows how to call GetTermTemplateById.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response<TermTemplateDef> response = client.GetTermTemplateById("d776af9c-985c-4168-abb2-477523dbfc70");
+]]></code></example>
+    </member>
+    <member name="GetTermTemplateByIdAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetTermTemplateByIdAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response response = await client.GetTermTemplateByIdAsync("d776af9c-985c-4168-abb2-477523dbfc70", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetTermTemplateById(string,RequestContext)">
+      <example>
+This sample shows how to call GetTermTemplateById and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response response = client.GetTermTemplateById("d776af9c-985c-4168-abb2-477523dbfc70", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetTermTemplateByNameAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetTermTemplateByNameAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response<TermTemplateDef> response = await client.GetTermTemplateByNameAsync("MS KPI");
+]]></code></example>
+    </member>
+    <member name="GetTermTemplateByName(string,CancellationToken)">
+      <example>
+This sample shows how to call GetTermTemplateByName.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response<TermTemplateDef> response = client.GetTermTemplateByName("MS KPI");
+]]></code></example>
+    </member>
+    <member name="GetTermTemplateByNameAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetTermTemplateByNameAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response response = await client.GetTermTemplateByNameAsync("MS KPI", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetTermTemplateByName(string,RequestContext)">
+      <example>
+This sample shows how to call GetTermTemplateByName and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+Response response = client.GetTermTemplateByName("MS KPI", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

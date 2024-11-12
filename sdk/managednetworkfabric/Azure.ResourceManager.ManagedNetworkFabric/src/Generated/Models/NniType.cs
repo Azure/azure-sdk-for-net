@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         private const string CEValue = "CE";
-        private const string NPBValue = "NPB";
+        private const string NpbValue = "NPB";
 
         /// <summary> CE. </summary>
         public static NniType CE { get; } = new NniType(CEValue);
         /// <summary> NPB. </summary>
-        public static NniType NPB { get; } = new NniType(NPBValue);
+        public static NniType Npb { get; } = new NniType(NpbValue);
         /// <summary> Determines if two <see cref="NniType"/> values are the same. </summary>
         public static bool operator ==(NniType left, NniType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NniType"/> values are not the same. </summary>
         public static bool operator !=(NniType left, NniType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NniType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NniType"/>. </summary>
         public static implicit operator NniType(string value) => new NniType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

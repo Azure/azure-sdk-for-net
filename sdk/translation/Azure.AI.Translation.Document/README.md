@@ -54,6 +54,9 @@ az cognitiveservices account create \
 ```
 For more information about creating the resource or how to get the location information see [here][cognitive_resource_cli].
 
+#### Setup Azure Blob Storage Account
+For more information about creating an Azure Blob Storage account see [here][azure_blob_storage_account]. For creating containers for your source and target files see [here][container]. Make sure to authorize your Translation resource storage access, more info [here][storage_container_authorization]. 
+
 ### Authenticate the client
 In order to interact with the Document Translation service, you'll need to create an instance of the [DocumentTranslationClient][documenttranslation_client_class] class. You will need an **endpoint**, and either an **API key** or `TokenCredential` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
@@ -152,6 +155,8 @@ var inputs = new List<DocumentTranslationInput>
 ```
 
 Note that documents written to a target container must have unique names. So you can't translate a source container into a target container twice or have sources with the same documents translated into the same target container.
+
+If "Allow Storage Account Key Access" is disabled on the storage account , Managed Identity is enabled on the Translator resource and it is assigned the role "Storage Blob Data Contributor" on the storage account, then you can use the container URLs directly and no SAS URIs will be needed.
 
 ### Long-Running Operations
 
@@ -370,6 +375,42 @@ foreach (DocumentStatusResult document in operation.GetValues())
     }
 }
 ```
+#### Create SingleDocumentTranslationClient with API Key Credential
+Once you have the value for the API key, create an `AzureKeyCredential`. This will allow you to
+update the API key without creating a new client.
+
+With the value of the endpoint and an `AzureKeyCredential`, you can create the [SingleDocumentTranslationClient][documenttranslation_client_class]:
+
+```C# Snippet:CreateSingleDocumentTranslationClient
+string endpoint = "<Document Translator Resource Endpoint>";
+string apiKey = "<Document Translator Resource API Key>";
+SingleDocumentTranslationClient client = new SingleDocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+```
+
+### Single Document Translation
+Start a single document translation.
+
+```C# Snippet:StartSingleDocumentTranslation
+try
+{
+    string filePath = Path.Combine("TestData", "test-input.txt");
+    using Stream fileStream = File.OpenRead(filePath);
+    var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), fileStream, "text/html");
+    DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument);
+    var response = await client.TranslateAsync("hi", content).ConfigureAwait(false);
+
+    var requestString = File.ReadAllText(filePath);
+    var responseString = Encoding.UTF8.GetString(response.Value.ToArray());
+
+    Console.WriteLine($"Request string for translation: {requestString}");
+    Console.WriteLine($"Response string after translation: {responseString}");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
 
 ## Troubleshooting
 
@@ -433,6 +474,7 @@ Samples showing how to use the Cognitive Services Document Translation library a
 - [Operations History][operations_history_sample]
 
 ### Advanced samples
+- [Start Translation with SourceInput][start_translation_with_sourceInput_sample]
 - [Multiple Inputs][multiple_Inputs_sample]
 - [Create Storage Containers and start translation][using_storage_sample]
 
@@ -455,21 +497,24 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [documenttranslation_nuget_package]: https://www.nuget.org/packages/Azure.AI.Translation.Document
 [documenttranslation_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Document/samples/README.md
 [documenttranslation_rest_api]: https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/TranslatorText/stable/v1.0/TranslatorBatch.json
-[custom_domain_endpoint]: https://learn.microsoft.com/azure/ai-services/translator/document-translation/how-to-guides/use-rest-api-programmatically?tabs=csharp#retrieve-your-key-and-custom-domain-endpoint
+[custom_domain_endpoint]: https://learn.microsoft.com/azure/ai-services/translator/document-translation/quickstarts/document-translation-rest-api?pivots=programming-language-csharp#what-is-the-custom-domain-endpoint
 [single_service]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account?tabs=singleservice%2Cwindows
 [azure_portal_create_DT_resource]: https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesTextTranslation
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [dotnet_lro]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt
-[source_containers]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/get-started-with-document-translation?tabs=csharp#create-your-azure-blob-storage-containers
+[source_containers]: https://learn.microsoft.com/azure/ai-services/translator/document-translation/quickstarts/document-translation-rest-api?pivots=programming-language-csharp#create-azure-blob-storage-containers
 [custom_model]: https://docs.microsoft.com/azure/cognitive-services/translator/custom-translator/quickstart-build-deploy-custom-model
 [glossary]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview#supported-glossary-formats
 [sas_token]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/create-sas-tokens?tabs=Containers#create-your-sas-tokens-with-azure-storage-explorer
 [sas_token_permissions]: https://aka.ms/azsdk/documenttranslation/sas-permissions
+[azure_blob_storage_account]: https://ms.portal.azure.com/#create/Microsoft.StorageAccount
+[container]: https://learn.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-portal#create-a-container
+[storage_container_authorization]: https://learn.microsoft.com/azure/ai-services/translator/document-translation/quickstarts/client-library-sdks?tabs=dotnet&pivots=programming-language-csharp#storage-container-authorization
 
 [documenttranslation_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Document/src/DocumentTranslationClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
-[register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[register_aad_app]: https://learn.microsoft.com/azure/app-service/configure-authentication-provider-aad?tabs=workforce-tenant#--option-1-create-a-new-app-registration-automatically
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
@@ -481,6 +526,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [operations_history_sample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/samples/Sample3_OperationsHistory.md
 [multiple_inputs_sample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/samples/Sample4_MultipleInputs.md
 [using_storage_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_StartTranslationWithAzureBlob.cs
+[start_translation_with_sourceInput_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_StartTranslationWithSourceInput.cs
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/

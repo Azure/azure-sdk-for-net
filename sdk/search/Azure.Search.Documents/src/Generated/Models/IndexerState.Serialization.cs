@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,13 +18,13 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IndexingMode> mode = default;
-            Optional<string> allDocsInitialChangeTrackingState = default;
-            Optional<string> allDocsFinalChangeTrackingState = default;
-            Optional<string> resetDocsInitialChangeTrackingState = default;
-            Optional<string> resetDocsFinalChangeTrackingState = default;
-            Optional<IReadOnlyList<string>> resetDocumentKeys = default;
-            Optional<IReadOnlyList<string>> resetDatasourceDocumentIds = default;
+            IndexingMode? mode = default;
+            string allDocsInitialChangeTrackingState = default;
+            string allDocsFinalChangeTrackingState = default;
+            string resetDocsInitialChangeTrackingState = default;
+            string resetDocsFinalChangeTrackingState = default;
+            IReadOnlyList<string> resetDocumentKeys = default;
+            IReadOnlyList<string> resetDatasourceDocumentIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -86,7 +85,22 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexerState(Optional.ToNullable(mode), allDocsInitialChangeTrackingState.Value, allDocsFinalChangeTrackingState.Value, resetDocsInitialChangeTrackingState.Value, resetDocsFinalChangeTrackingState.Value, Optional.ToList(resetDocumentKeys), Optional.ToList(resetDatasourceDocumentIds));
+            return new IndexerState(
+                mode,
+                allDocsInitialChangeTrackingState,
+                allDocsFinalChangeTrackingState,
+                resetDocsInitialChangeTrackingState,
+                resetDocsFinalChangeTrackingState,
+                resetDocumentKeys ?? new ChangeTrackingList<string>(),
+                resetDatasourceDocumentIds ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IndexerState FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIndexerState(document.RootElement);
         }
     }
 }

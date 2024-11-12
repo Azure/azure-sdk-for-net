@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -33,8 +32,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-29";
+            _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest()
@@ -90,6 +98,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string globalRulestackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string globalRulestackName)
@@ -162,6 +180,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string globalRulestackName, GlobalRulestackData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string globalRulestackName, GlobalRulestackData data)
         {
             var message = _pipeline.CreateMessage();
@@ -176,7 +204,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -228,6 +256,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string globalRulestackName, GlobalRulestackPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string globalRulestackName, GlobalRulestackPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -242,7 +280,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -300,6 +338,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string globalRulestackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string globalRulestackName)
@@ -362,6 +410,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateCommitRequestUri(string globalRulestackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/commit", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCommitRequest(string globalRulestackName)
         {
             var message = _pipeline.CreateMessage();
@@ -417,6 +476,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetChangeLogRequestUri(string globalRulestackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/getChangeLog", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetChangeLogRequest(string globalRulestackName)
@@ -486,6 +556,26 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateListAdvancedSecurityObjectsRequestUri(string globalRulestackName, AdvancedSecurityObjectType type, string skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/listAdvancedSecurityObjects", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            uri.AppendQuery("type", type.ToString(), true);
+            return uri;
+        }
+
         internal HttpMessage CreateListAdvancedSecurityObjectsRequest(string globalRulestackName, AdvancedSecurityObjectType type, string skip, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -514,9 +604,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> Get the list of advanced security objects. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="type"> The AdvancedSecurityObjectType to use. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="type"> The <see cref="AdvancedSecurityObjectType"/> to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -542,9 +632,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> Get the list of advanced security objects. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="type"> The AdvancedSecurityObjectType to use. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="type"> The <see cref="AdvancedSecurityObjectType"/> to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -566,6 +656,33 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAppIdsRequestUri(string globalRulestackName, string appIdVersion, string appPrefix, string skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/listAppIds", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (appIdVersion != null)
+            {
+                uri.AppendQuery("appIdVersion", appIdVersion, true);
+            }
+            if (appPrefix != null)
+            {
+                uri.AppendQuery("appPrefix", appPrefix, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListAppIdsRequest(string globalRulestackName, string appIdVersion, string appPrefix, string skip, int? top)
@@ -603,10 +720,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List of AppIds for GlobalRulestack ApiVersion. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="appIdVersion"> The String to use. </param>
-        /// <param name="appPrefix"> The String to use. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="appIdVersion"> The <see cref="string"/> to use. </param>
+        /// <param name="appPrefix"> The <see cref="string"/> to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -632,10 +749,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List of AppIds for GlobalRulestack ApiVersion. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="appIdVersion"> The String to use. </param>
-        /// <param name="appPrefix"> The String to use. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="appIdVersion"> The <see cref="string"/> to use. </param>
+        /// <param name="appPrefix"> The <see cref="string"/> to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -657,6 +774,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListCountriesRequestUri(string globalRulestackName, string skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/listCountries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListCountriesRequest(string globalRulestackName, string skip, int? top)
@@ -686,8 +822,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List of countries for Rulestack. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -713,8 +849,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List of countries for Rulestack. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -736,6 +872,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListFirewallsRequestUri(string globalRulestackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/listFirewalls", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListFirewallsRequest(string globalRulestackName)
@@ -805,6 +952,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateListPredefinedUrlCategoriesRequestUri(string globalRulestackName, string skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/listPredefinedUrlCategories", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListPredefinedUrlCategoriesRequest(string globalRulestackName, string skip, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -832,8 +998,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List predefined URL categories for rulestack. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -859,8 +1025,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List predefined URL categories for rulestack. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -882,6 +1048,26 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSecurityServicesRequestUri(string globalRulestackName, RulestackSecurityServiceType type, string skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/listSecurityServices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            uri.AppendQuery("type", type.ToString(), true);
+            return uri;
         }
 
         internal HttpMessage CreateListSecurityServicesRequest(string globalRulestackName, RulestackSecurityServiceType type, string skip, int? top)
@@ -912,9 +1098,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List the security services for rulestack. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="type"> The RulestackSecurityServiceType to use. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="type"> The <see cref="RulestackSecurityServiceType"/> to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -940,9 +1126,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List the security services for rulestack. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="type"> The RulestackSecurityServiceType to use. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="type"> The <see cref="RulestackSecurityServiceType"/> to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -964,6 +1150,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRevertRequestUri(string globalRulestackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/revert", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRevertRequest(string globalRulestackName)
@@ -1021,6 +1218,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink)

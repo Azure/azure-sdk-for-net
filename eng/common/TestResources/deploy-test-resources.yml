@@ -3,8 +3,12 @@ parameters:
   ArmTemplateParameters: '@{}'
   DeleteAfterHours: 8
   Location: ''
-  SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+  EnvVars: {}
+  SubscriptionConfiguration: '{}'
+  ServiceConnection: not-specified
   ResourceType: test
+  UseFederatedAuth: true
+  PersistOidcToken: false
 
 # SubscriptionConfiguration will be splatted into the parameters of the test
 # resources script. It should be JSON in the form:
@@ -32,32 +36,98 @@ parameters:
 #   }
 # }
 
-
 steps:
   - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
 
   - template: /eng/common/TestResources/setup-environments.yml
 
-  - pwsh: |
-      eng/common/scripts/Import-AzModules.ps1
+  - ${{ if eq(parameters.PersistOidcToken, true) }}:
+    - task: AzureCLI@2
+      displayName: Set OIDC token
+      env:
+        ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
+      inputs:
+        azureSubscription: ${{ parameters.ServiceConnection }}
+        addSpnToEnvironment: true
+        scriptLocation: inlineScript
+        scriptType: pscore
+        inlineScript: |
+          Write-Host "##vso[task.setvariable variable=ARM_OIDC_TOKEN;issecret=true]$($env:idToken)"
 
-      $subscriptionConfiguration = @'
-        ${{ parameters.SubscriptionConfiguration }}
-      '@ | ConvertFrom-Json -AsHashtable;
+  - ${{ if eq('true', parameters.UseFederatedAuth) }}:
+    - task: AzurePowerShell@5
+      displayName: 🚀 Deploy test resources
+      env:
+        TEMP: $(Agent.TempDirectory)
+        PoolSubnet: $(PoolSubnet)
+        ${{ if eq(parameters.PersistOidcToken, true) }}:
+          ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
+        ${{ insert }}: ${{ parameters.EnvVars }}
+      inputs:
+        azureSubscription: ${{ parameters.ServiceConnection }}
+        azurePowerShellVersion: LatestVersion
+        pwsh: true
+        ScriptType: InlineScript
+        Inline: |
+          eng/common/scripts/Import-AzModules.ps1
+          $subscriptionConfiguration = @'
+            ${{ parameters.SubscriptionConfiguration }}
+          '@ | ConvertFrom-Json -AsHashtable;
 
-      # The subscriptionConfiguration may have ArmTemplateParameters defined, so
-      # pass those in via the ArmTemplateParameters flag, and handle any
-      # additional parameters from the pipelines via AdditionalParameters
-      eng/common/TestResources/New-TestResources.ps1 `
-        -ResourceType '${{ parameters.ResourceType }}' `
-        -ServiceDirectory '${{ parameters.ServiceDirectory }}' `
-        -Location '${{ parameters.Location }}' `
-        -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
-        @subscriptionConfiguration `
-        -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
-        -CI `
-        -Force `
-        -Verbose | Out-Null
-    displayName: Deploy test resources
-    env:
-      TEMP: $(Agent.TempDirectory)
+          $context = Get-AzContext
+          $subscriptionConfiguration["Environment"] = $context.Environment.Name
+          $subscriptionConfiguration["SubscriptionId"] = $context.Subscription.Id
+          $subscriptionConfiguration["TenantId"] = $context.Subscription.TenantId
+          $subscriptionConfiguration["TestApplicationId"] = $context.Account.Id
+          $subscriptionConfiguration["ProvisionerApplicationId"] = $context.Account.Id
+
+          $principal = Get-AzADServicePrincipal -ApplicationId $context.Account.Id
+          $subscriptionConfiguration["TestApplicationOid"] = $principal.Id
+          $subscriptionConfiguration["ProvisionerApplicationOid"] = $principal.Id
+
+          Write-Host ($subscriptionConfiguration | ConvertTo-Json)
+          # Write the new SubscriptionConfiguration to be used by the remove test resources
+          Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$($subscriptionConfiguration | ConvertTo-Json -Compress)"
+
+          # The subscriptionConfiguration may have ArmTemplateParameters defined, so
+          # pass those in via the ArmTemplateParameters flag, and handle any
+          # additional parameters from the pipelines via AdditionalParameters
+          eng/common/TestResources/New-TestResources.ps1 `
+            -ResourceType '${{ parameters.ResourceType }}' `
+            -ServiceDirectory '${{ parameters.ServiceDirectory }}' `
+            -Location '${{ parameters.Location }}' `
+            -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
+            @subscriptionConfiguration `
+            -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
+            -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
+            -CI `
+            -Force `
+            -Verbose | Out-Null
+
+  - ${{ else }}:
+    - pwsh: |
+        eng/common/scripts/Import-AzModules.ps1
+        $subscriptionConfiguration = @'
+          ${{ parameters.SubscriptionConfiguration }}
+        '@ | ConvertFrom-Json -AsHashtable;
+
+        # The subscriptionConfiguration may have ArmTemplateParameters defined, so
+        # pass those in via the ArmTemplateParameters flag, and handle any
+        # additional parameters from the pipelines via AdditionalParameters
+        eng/common/TestResources/New-TestResources.ps1 `
+          -ResourceType '${{ parameters.ResourceType }}' `
+          -ServiceDirectory '${{ parameters.ServiceDirectory }}' `
+          -Location '${{ parameters.Location }}' `
+          -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
+          @subscriptionConfiguration `
+          -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
+          -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
+          -CI `
+          -ServicePrincipalAuth `
+          -Force `
+          -Verbose | Out-Null
+      displayName: 🚀 Deploy test resources
+      env:
+        TEMP: $(Agent.TempDirectory)
+        PoolSubnet: $(PoolSubnet)
+        ${{ insert }}: ${{ parameters.EnvVars }}

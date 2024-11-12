@@ -132,7 +132,7 @@ namespace Azure.AI.TextAnalytics
         public static bool operator ==(HealthcareEntityRelationType left, HealthcareEntityRelationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthcareEntityRelationType"/> values are not the same. </summary>
         public static bool operator !=(HealthcareEntityRelationType left, HealthcareEntityRelationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HealthcareEntityRelationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HealthcareEntityRelationType"/>. </summary>
         public static implicit operator HealthcareEntityRelationType(string value) => new HealthcareEntityRelationType(value);
 
         /// <inheritdoc />
@@ -143,7 +143,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

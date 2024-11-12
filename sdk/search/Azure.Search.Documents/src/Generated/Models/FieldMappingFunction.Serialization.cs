@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                             writer.WriteNullValue();
                             continue;
                         }
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<object>(item.Value);
                     }
                     writer.WriteEndObject();
                 }
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<IDictionary<string, object>> parameters = default;
+            IDictionary<string, object> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -82,7 +82,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new FieldMappingFunction(name, Optional.ToDictionary(parameters));
+            return new FieldMappingFunction(name, parameters ?? new ChangeTrackingDictionary<string, object>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static FieldMappingFunction FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFieldMappingFunction(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

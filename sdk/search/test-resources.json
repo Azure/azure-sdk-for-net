@@ -22,12 +22,6 @@
                 "description": "The application client ID used to run tests."
             }
         },
-        "testApplicationSecret": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client secret used to run tests."
-            }
-        },
         "testApplicationOid": {
             "type": "string",
             "metadata": {
@@ -79,7 +73,7 @@
             "usgovarizona"
         ],
         "storageAccountName": "[concat(parameters('baseName'), 'stg')]",
-        "storageApiVersion": "2019-06-01",
+        "storageApiVersion": "2022-05-01",
         "cognitiveServicesAccountName": "[concat(parameters('baseName'), 'cog')]",
         "cognitiveServicesApiVersion": "2017-04-18",
         "keyVaultName": "[concat(parameters('baseName'), 'kv')]",
@@ -111,7 +105,8 @@
             "location": "[parameters('location')]",
             "properties": {
                 "accessTier": "Hot",
-                "supportsHttpsTrafficOnly": true
+                "supportsHttpsTrafficOnly": true,
+                "minimumTlsVersion": "TLS1_2"
             },
             "sku": {
                 "name": "Standard_LRS"

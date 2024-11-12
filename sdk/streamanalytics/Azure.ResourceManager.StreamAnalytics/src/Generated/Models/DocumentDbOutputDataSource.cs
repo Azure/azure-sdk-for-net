@@ -5,19 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes a DocumentDB output data source. </summary>
     public partial class DocumentDbOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of DocumentDbOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentDbOutputDataSource"/>. </summary>
         public DocumentDbOutputDataSource()
         {
             OutputDataSourceType = "Microsoft.Storage/DocumentDB";
         }
 
-        /// <summary> Initializes a new instance of DocumentDbOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentDbOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="accountId"> The DocumentDB account name or ID. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="accountKey"> The account key for the DocumentDB account. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="database"> The name of the DocumentDB database. Required on PUT (CreateOrReplace) requests. </param>
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="partitionKey"> The name of the field in output events used to specify the key for partitioning output across collections. If 'collectionNamePattern' contains the {partition} token, this property is required to be specified. </param>
         /// <param name="documentId"> The name of the field in output events used to specify the primary key which insert or update operations are based on. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal DocumentDbOutputDataSource(string outputDataSourceType, string accountId, string accountKey, string database, string collectionNamePattern, string partitionKey, string documentId, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        internal DocumentDbOutputDataSource(string outputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string accountId, string accountKey, string database, string collectionNamePattern, string partitionKey, string documentId, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType, serializedAdditionalRawData)
         {
             AccountId = accountId;
             AccountKey = accountKey;

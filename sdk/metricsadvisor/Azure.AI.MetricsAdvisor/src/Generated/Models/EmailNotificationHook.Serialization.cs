@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("hookParameter"u8);
-            writer.WriteObjectValue(HookParameter);
+            writer.WriteObjectValue<EmailHookParameter>(HookParameter);
             writer.WritePropertyName("hookType"u8);
             writer.WriteStringValue(HookKind.ToString());
             writer.WritePropertyName("hookName"u8);
@@ -54,11 +54,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
             EmailHookParameter hookParameter = default;
             NotificationHookKind hookType = default;
-            Optional<string> hookId = default;
+            string hookId = default;
             string hookName = default;
-            Optional<string> description = default;
-            Optional<string> externalLink = default;
-            Optional<IList<string>> admins = default;
+            string description = default;
+            string externalLink = default;
+            IList<string> admins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hookParameter"u8))
@@ -106,7 +106,30 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new EmailNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter);
+            return new EmailNotificationHook(
+                hookType,
+                hookId,
+                hookName,
+                description,
+                externalLink,
+                admins ?? new ChangeTrackingList<string>(),
+                hookParameter);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new EmailNotificationHook FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEmailNotificationHook(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

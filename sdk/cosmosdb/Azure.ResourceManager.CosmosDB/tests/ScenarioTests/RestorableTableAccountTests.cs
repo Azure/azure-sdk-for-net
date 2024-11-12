@@ -39,14 +39,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (_restorableDatabaseAccount != null)
+            if (Mode != RecordedTestMode.Playback)
             {
-                await _restorableDatabaseAccount.DeleteAsync(WaitUntil.Completed);
-            }
+                if (_restorableDatabaseAccount != null)
+                {
+                    await _restorableDatabaseAccount.DeleteAsync(WaitUntil.Completed);
+                }
 
-            if (_restoredDatabaseAccount != null)
-            {
-                await _restoredDatabaseAccount.DeleteAsync(WaitUntil.Completed);
+                if (_restoredDatabaseAccount != null)
+                {
+                    await _restoredDatabaseAccount.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
@@ -157,14 +160,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var locations = new List<CosmosDBAccountLocation>()
             {
-                new CosmosDBAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
+                new CosmosDBAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false, null)
             };
 
             var createOptions = new CosmosDBAccountCreateOrUpdateContent(AzureLocation.WestUS, locations)
             {
                 Kind = kind,
-                ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
-                IPRules = { new CosmosDBIPAddressOrRange("23.43.231.120") },
+                ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds, null),
+                IPRules = { new CosmosDBIPAddressOrRange("23.43.231.120", null) },
                 IsVirtualNetworkFilterEnabled = true,
                 EnableAutomaticFailover = false,
                 ConnectorOffer = ConnectorOffer.Small,
@@ -194,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var locations = new List<CosmosDBAccountLocation>()
             {
-                new CosmosDBAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
+                new CosmosDBAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false, null)
             };
 
             var restoredAccountName = Recording.GenerateAssetName("restoredaccount-");
@@ -207,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
             databaseAccountCreateUpdateParameters.Tags.Add("key1", "value1");
             databaseAccountCreateUpdateParameters.Tags.Add("key2", "value2");
-            databaseAccountCreateUpdateParameters.Capabilities.Add(new CosmosDBAccountCapability("EnableTable"));
+            databaseAccountCreateUpdateParameters.Capabilities.Add(new CosmosDBAccountCapability("EnableTable", null));
 
             var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, restoredAccountName, databaseAccountCreateUpdateParameters);
             CosmosDBAccountResource restoredDatabaseAccount = accountLro.Value;
@@ -270,7 +273,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             CosmosDBAccountResource account = await CreateRestorableDatabaseAccount(
                 name: accountName,
                 kind: CosmosDBAccountKind.GlobalDocumentDB,
-                capabilities: new List<CosmosDBAccountCapability> { new CosmosDBAccountCapability("EnableTable") }
+                capabilities: new List<CosmosDBAccountCapability> { new CosmosDBAccountCapability("EnableTable", null) }
                 );
 
             return account;

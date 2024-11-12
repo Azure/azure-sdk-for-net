@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(InformationProtectionPolicyName left, InformationProtectionPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InformationProtectionPolicyName"/> values are not the same. </summary>
         public static bool operator !=(InformationProtectionPolicyName left, InformationProtectionPolicyName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InformationProtectionPolicyName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InformationProtectionPolicyName"/>. </summary>
         public static implicit operator InformationProtectionPolicyName(string value) => new InformationProtectionPolicyName(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

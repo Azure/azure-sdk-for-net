@@ -8,15 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The request payload for unmuting participant from the call. </summary>
     internal partial class UnmuteParticipantsRequestInternal
     {
-        /// <summary> Initializes a new instance of UnmuteParticipantsRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnmuteParticipantsRequestInternal"/>. </summary>
         /// <param name="targetParticipants">
         /// Participants to be unmuted from the call.
         /// Only ACS Users are supported.
@@ -27,6 +25,18 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(targetParticipants, nameof(targetParticipants));
 
             TargetParticipants = targetParticipants.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnmuteParticipantsRequestInternal"/>. </summary>
+        /// <param name="targetParticipants">
+        /// Participants to be unmuted from the call.
+        /// Only ACS Users are supported.
+        /// </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        internal UnmuteParticipantsRequestInternal(IList<CommunicationIdentifierModel> targetParticipants, string operationContext)
+        {
+            TargetParticipants = targetParticipants;
+            OperationContext = operationContext;
         }
 
         /// <summary>

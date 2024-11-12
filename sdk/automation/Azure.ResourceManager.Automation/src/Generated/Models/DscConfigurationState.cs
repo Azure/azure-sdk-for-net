@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator ==(DscConfigurationState left, DscConfigurationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DscConfigurationState"/> values are not the same. </summary>
         public static bool operator !=(DscConfigurationState left, DscConfigurationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DscConfigurationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DscConfigurationState"/>. </summary>
         public static implicit operator DscConfigurationState(string value) => new DscConfigurationState(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

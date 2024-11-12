@@ -231,17 +231,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
         private ParameterBindingData ConvertBlobInputToParameterBindingData(BlobBaseClient input)
         {
-            return CreateParameterBindingData(null, input.Name, input.BlobContainerName);
+            return CreateParameterBindingData(string.Empty, input.Name, input.BlobContainerName);
         }
 
         private ParameterBindingData CreateParameterBindingData(string connection, string blobName, string containerName)
         {
-            string connectionName = !string.IsNullOrEmpty(connection) ? _nameResolver.ResolveWholeString(connection) : string.Empty;
-            var connectionSection = _blobServiceClientProvider.GetWebJobsConnectionStringSection(connectionName);
+            string connectionName = _nameResolver.ResolveWholeString(connection);
+
+            if (string.IsNullOrWhiteSpace(connectionName))
+            {
+                connectionName = Constants.AzureWebJobsStorage; // default
+            }
 
             var blobDetails = new BlobParameterBindingDataContent()
             {
-                Connection = connectionSection.Key,
+                Connection = connectionName,
                 BlobName = blobName,
                 ContainerName = containerName
             };

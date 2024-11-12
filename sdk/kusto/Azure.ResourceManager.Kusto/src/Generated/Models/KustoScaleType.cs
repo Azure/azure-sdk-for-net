@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator ==(KustoScaleType left, KustoScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoScaleType"/> values are not the same. </summary>
         public static bool operator !=(KustoScaleType left, KustoScaleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KustoScaleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoScaleType"/>. </summary>
         public static implicit operator KustoScaleType(string value) => new KustoScaleType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

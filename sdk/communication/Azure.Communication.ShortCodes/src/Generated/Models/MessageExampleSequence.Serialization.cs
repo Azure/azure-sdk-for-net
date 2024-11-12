@@ -35,7 +35,7 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<IList<MessageExample>> messages = default;
+            IList<MessageExample> messages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messages"u8))
@@ -53,7 +53,23 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new MessageExampleSequence(Optional.ToList(messages));
+            return new MessageExampleSequence(messages ?? new ChangeTrackingList<MessageExample>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MessageExampleSequence FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMessageExampleSequence(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

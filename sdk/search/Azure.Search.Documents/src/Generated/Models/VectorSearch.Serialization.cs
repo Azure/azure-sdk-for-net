@@ -16,11 +16,41 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AlgorithmConfigurations))
+            if (Optional.IsCollectionDefined(Profiles))
             {
-                writer.WritePropertyName("algorithmConfigurations"u8);
+                writer.WritePropertyName("profiles"u8);
                 writer.WriteStartArray();
-                foreach (var item in AlgorithmConfigurations)
+                foreach (var item in Profiles)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Algorithms))
+            {
+                writer.WritePropertyName("algorithms"u8);
+                writer.WriteStartArray();
+                foreach (var item in Algorithms)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Vectorizers))
+            {
+                writer.WritePropertyName("vectorizers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Vectorizers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Compressions))
+            {
+                writer.WritePropertyName("compressions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Compressions)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -35,10 +65,27 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<VectorSearchAlgorithmConfiguration>> algorithmConfigurations = default;
+            IList<VectorSearchProfile> profiles = default;
+            IList<VectorSearchAlgorithmConfiguration> algorithms = default;
+            IList<VectorSearchVectorizer> vectorizers = default;
+            IList<VectorSearchCompression> compressions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("algorithmConfigurations"u8))
+                if (property.NameEquals("profiles"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VectorSearchProfile> array = new List<VectorSearchProfile>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VectorSearchProfile.DeserializeVectorSearchProfile(item));
+                    }
+                    profiles = array;
+                    continue;
+                }
+                if (property.NameEquals("algorithms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,11 +96,55 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         array.Add(VectorSearchAlgorithmConfiguration.DeserializeVectorSearchAlgorithmConfiguration(item));
                     }
-                    algorithmConfigurations = array;
+                    algorithms = array;
+                    continue;
+                }
+                if (property.NameEquals("vectorizers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VectorSearchVectorizer> array = new List<VectorSearchVectorizer>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VectorSearchVectorizer.DeserializeVectorSearchVectorizer(item));
+                    }
+                    vectorizers = array;
+                    continue;
+                }
+                if (property.NameEquals("compressions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VectorSearchCompression> array = new List<VectorSearchCompression>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VectorSearchCompression.DeserializeVectorSearchCompression(item));
+                    }
+                    compressions = array;
                     continue;
                 }
             }
-            return new VectorSearch(Optional.ToList(algorithmConfigurations));
+            return new VectorSearch(profiles ?? new ChangeTrackingList<VectorSearchProfile>(), algorithms ?? new ChangeTrackingList<VectorSearchAlgorithmConfiguration>(), vectorizers ?? new ChangeTrackingList<VectorSearchVectorizer>(), compressions ?? new ChangeTrackingList<VectorSearchCompression>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VectorSearch FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVectorSearch(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

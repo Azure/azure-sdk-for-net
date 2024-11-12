@@ -51,7 +51,7 @@ namespace Azure.Health.Insights.CancerProfiling
         public static bool operator ==(OncoPhenotypeInferenceType left, OncoPhenotypeInferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OncoPhenotypeInferenceType"/> values are not the same. </summary>
         public static bool operator !=(OncoPhenotypeInferenceType left, OncoPhenotypeInferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OncoPhenotypeInferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OncoPhenotypeInferenceType"/>. </summary>
         public static implicit operator OncoPhenotypeInferenceType(string value) => new OncoPhenotypeInferenceType(value);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.Health.Insights.CancerProfiling
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

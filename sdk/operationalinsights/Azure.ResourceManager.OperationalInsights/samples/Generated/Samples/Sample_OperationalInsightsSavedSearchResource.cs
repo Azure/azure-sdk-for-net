@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.OperationalInsights;
 using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights.Samples
@@ -73,7 +70,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             {
                 FunctionAlias = "heartbeat_func",
                 FunctionParameters = "a:int=1",
-                Version = 2,
+                Version = 2L,
                 Tags =
 {
 new OperationalInsightsTag("Group","Computer")

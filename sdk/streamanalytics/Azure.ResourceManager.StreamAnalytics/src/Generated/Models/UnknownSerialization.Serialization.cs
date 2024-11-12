@@ -5,28 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    internal partial class UnknownSerialization : IUtf8JsonSerializable
+    internal partial class UnknownSerialization : IUtf8JsonSerializable, IJsonModel<StreamAnalyticsDataSerialization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsDataSerialization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StreamAnalyticsDataSerialization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(EventSerializationType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static UnknownSerialization DeserializeUnknownSerialization(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsDataSerialization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        StreamAnalyticsDataSerialization IJsonModel<StreamAnalyticsDataSerialization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsDataSerialization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsDataSerialization(document.RootElement, options);
+        }
+
+        internal static UnknownSerialization DeserializeUnknownSerialization(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             EventSerializationType type = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -34,8 +67,44 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     type = new EventSerializationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownSerialization(type);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownSerialization(type, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StreamAnalyticsDataSerialization>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsDataSerialization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StreamAnalyticsDataSerialization IPersistableModel<StreamAnalyticsDataSerialization>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsDataSerialization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStreamAnalyticsDataSerialization(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StreamAnalyticsDataSerialization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

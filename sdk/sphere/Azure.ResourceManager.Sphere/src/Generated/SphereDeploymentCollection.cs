@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SphereDeploymentResource" /> and their operations.
-    /// Each <see cref="SphereDeploymentResource" /> in the collection will belong to the same instance of <see cref="SphereDeviceGroupResource" />.
-    /// To get a <see cref="SphereDeploymentCollection" /> instance call the GetSphereDeployments method from an instance of <see cref="SphereDeviceGroupResource" />.
+    /// A class representing a collection of <see cref="SphereDeploymentResource"/> and their operations.
+    /// Each <see cref="SphereDeploymentResource"/> in the collection will belong to the same instance of <see cref="SphereDeviceGroupResource"/>.
+    /// To get a <see cref="SphereDeploymentCollection"/> instance call the GetSphereDeployments method from an instance of <see cref="SphereDeviceGroupResource"/>.
     /// </summary>
     public partial class SphereDeploymentCollection : ArmCollection, IEnumerable<SphereDeploymentResource>, IAsyncEnumerable<SphereDeploymentResource>
     {
@@ -62,6 +61,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -104,6 +111,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Deployments_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -145,6 +160,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> Deployment name. Use .default for deployment creation and to get the current deployment for the associated device group. </param>
@@ -181,6 +204,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +250,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Deployments_ListByDeviceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter the result list using the given expression. </param>
@@ -226,12 +265,12 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SphereDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SphereDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereDeploymentResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereDeploymentDeploymentsRestClient.CreateListByDeviceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereDeploymentDeploymentsRestClient.CreateListByDeviceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeploymentResource(Client, SphereDeploymentData.DeserializeSphereDeploymentData(e)), _sphereDeploymentDeploymentsClientDiagnostics, Pipeline, "SphereDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeploymentResource(Client, SphereDeploymentData.DeserializeSphereDeploymentData(e)), _sphereDeploymentDeploymentsClientDiagnostics, Pipeline, "SphereDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,6 +284,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Deployments_ListByDeviceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter the result list using the given expression. </param>
@@ -252,12 +299,12 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SphereDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SphereDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereDeploymentResource> GetAll(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereDeploymentDeploymentsRestClient.CreateListByDeviceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereDeploymentDeploymentsRestClient.CreateListByDeviceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeploymentResource(Client, SphereDeploymentData.DeserializeSphereDeploymentData(e)), _sphereDeploymentDeploymentsClientDiagnostics, Pipeline, "SphereDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeploymentResource(Client, SphereDeploymentData.DeserializeSphereDeploymentData(e)), _sphereDeploymentDeploymentsClientDiagnostics, Pipeline, "SphereDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -270,6 +317,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,6 +361,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> Deployment name. Use .default for deployment creation and to get the current deployment for the associated device group. </param>
@@ -322,6 +385,96 @@ namespace Azure.ResourceManager.Sphere
             {
                 var response = _sphereDeploymentDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereDeploymentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentName"> Deployment name. Use .default for deployment creation and to get the current deployment for the associated device group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SphereDeploymentResource>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sphereDeploymentDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SphereDeploymentResource>(response.GetRawResponse());
+                return Response.FromValue(new SphereDeploymentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereDeploymentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentName"> Deployment name. Use .default for deployment creation and to get the current deployment for the associated device group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        public virtual NullableResponse<SphereDeploymentResource> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sphereDeploymentDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SphereDeploymentResource>(response.GetRawResponse());
+                return Response.FromValue(new SphereDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

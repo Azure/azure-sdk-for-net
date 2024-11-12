@@ -5,26 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayProbe : IUtf8JsonSerializable
+    public partial class ApplicationGatewayProbe : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayProbe>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApplicationGatewayProbe>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayProbe>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -76,7 +90,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Match))
             {
                 writer.WritePropertyName("match"u8);
-                writer.WriteObjectValue(Match);
+                writer.WriteObjectValue(Match, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(Port))
             {
@@ -84,31 +103,46 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteNumberValue(Port.Value);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayProbe DeserializeApplicationGatewayProbe(JsonElement element)
+        ApplicationGatewayProbe IJsonModel<ApplicationGatewayProbe>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayProbe>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayProbe(document.RootElement, options);
+        }
+
+        internal static ApplicationGatewayProbe DeserializeApplicationGatewayProbe(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ApplicationGatewayProtocol> protocol = default;
-            Optional<string> host = default;
-            Optional<string> path = default;
-            Optional<int> interval = default;
-            Optional<int> timeout = default;
-            Optional<int> unhealthyThreshold = default;
-            Optional<bool> pickHostNameFromBackendHttpSettings = default;
-            Optional<bool> pickHostNameFromBackendSettings = default;
-            Optional<int> minServers = default;
-            Optional<ApplicationGatewayProbeHealthResponseMatch> match = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<int> port = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ApplicationGatewayProtocol? protocol = default;
+            string host = default;
+            string path = default;
+            int? interval = default;
+            int? timeout = default;
+            int? unhealthyThreshold = default;
+            bool? pickHostNameFromBackendHttpSettings = default;
+            bool? pickHostNameFromBackendSettings = default;
+            int? minServers = default;
+            ApplicationGatewayProbeHealthResponseMatch match = default;
+            NetworkProvisioningState? provisioningState = default;
+            int? port = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -231,7 +265,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            match = ApplicationGatewayProbeHealthResponseMatch.DeserializeApplicationGatewayProbeHealthResponseMatch(property0.Value);
+                            match = ApplicationGatewayProbeHealthResponseMatch.DeserializeApplicationGatewayProbeHealthResponseMatch(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -255,8 +289,61 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationGatewayProbe(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(protocol), host.Value, path.Value, Optional.ToNullable(interval), Optional.ToNullable(timeout), Optional.ToNullable(unhealthyThreshold), Optional.ToNullable(pickHostNameFromBackendHttpSettings), Optional.ToNullable(pickHostNameFromBackendSettings), Optional.ToNullable(minServers), match.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(port));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewayProbe(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                protocol,
+                host,
+                path,
+                interval,
+                timeout,
+                unhealthyThreshold,
+                pickHostNameFromBackendHttpSettings,
+                pickHostNameFromBackendSettings,
+                minServers,
+                match,
+                provisioningState,
+                port);
         }
+
+        BinaryData IPersistableModel<ApplicationGatewayProbe>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayProbe>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApplicationGatewayProbe IPersistableModel<ApplicationGatewayProbe>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayProbe>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationGatewayProbe(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationGatewayProbe>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

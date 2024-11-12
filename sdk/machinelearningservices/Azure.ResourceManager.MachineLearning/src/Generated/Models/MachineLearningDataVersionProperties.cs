@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class MachineLearningDataVersionProperties : MachineLearningAssetBase
     {
-        /// <summary> Initializes a new instance of MachineLearningDataVersionProperties. </summary>
-        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType. </param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionProperties"/>. </summary>
+        /// <param name="dataUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public MachineLearningDataVersionProperties(Uri dataUri)
         {
@@ -28,23 +27,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataUri = dataUri;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDataVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="dataType"> [Required] Specifies the type of data. </param>
-        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType. </param>
-        internal MachineLearningDataVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, MachineLearningDataType dataType, Uri dataUri) : base(description, properties, tags, isAnonymous, isArchived)
+        /// <param name="dataUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
+        internal MachineLearningDataVersionProperties(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isArchived, bool? isAnonymous, MachineLearningDataType dataType, Uri dataUri) : base(description, tags, properties, serializedAdditionalRawData, isArchived, isAnonymous)
         {
             DataType = dataType;
             DataUri = dataUri;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionProperties"/> for deserialization. </summary>
+        internal MachineLearningDataVersionProperties()
+        {
+        }
+
         /// <summary> [Required] Specifies the type of data. </summary>
         internal MachineLearningDataType DataType { get; set; }
-        /// <summary> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType. </summary>
+        /// <summary> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </summary>
+        [WirePath("dataUri")]
         public Uri DataUri { get; set; }
     }
 }

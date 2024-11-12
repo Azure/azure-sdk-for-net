@@ -23,14 +23,17 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         private const string SapHanaValue = "SAP-HANA";
+        private const string OracleValue = "ORACLE";
 
         /// <summary> SAP-HANA. </summary>
         public static NetAppApplicationType SapHana { get; } = new NetAppApplicationType(SapHanaValue);
+        /// <summary> ORACLE. </summary>
+        public static NetAppApplicationType Oracle { get; } = new NetAppApplicationType(OracleValue);
         /// <summary> Determines if two <see cref="NetAppApplicationType"/> values are the same. </summary>
         public static bool operator ==(NetAppApplicationType left, NetAppApplicationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppApplicationType"/> values are not the same. </summary>
         public static bool operator !=(NetAppApplicationType left, NetAppApplicationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppApplicationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppApplicationType"/>. </summary>
         public static implicit operator NetAppApplicationType(string value) => new NetAppApplicationType(value);
 
         /// <inheritdoc />
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

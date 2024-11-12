@@ -11,24 +11,22 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BillingSubscriptionResource" /> and their operations.
-    /// Each <see cref="BillingSubscriptionResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="BillingSubscriptionCollection" /> instance call the GetBillingSubscriptions method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="BillingSubscriptionResource"/> and their operations.
+    /// Each <see cref="BillingSubscriptionResource"/> in the collection will belong to the same instance of <see cref="BillingAccountResource"/>.
+    /// To get a <see cref="BillingSubscriptionCollection"/> instance call the GetBillingSubscriptions method from an instance of <see cref="BillingAccountResource"/>.
     /// </summary>
     public partial class BillingSubscriptionCollection : ArmCollection, IEnumerable<BillingSubscriptionResource>, IAsyncEnumerable<BillingSubscriptionResource>
     {
         private readonly ClientDiagnostics _billingSubscriptionClientDiagnostics;
         private readonly BillingSubscriptionsRestOperations _billingSubscriptionRestClient;
-        private readonly string _billingAccountName;
 
         /// <summary> Initializes a new instance of the <see cref="BillingSubscriptionCollection"/> class for mocking. </summary>
         protected BillingSubscriptionCollection()
@@ -38,12 +36,8 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Initializes a new instance of the <see cref="BillingSubscriptionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal BillingSubscriptionCollection(ArmClient client, ResourceIdentifier id, string billingAccountName) : base(client, id)
+        internal BillingSubscriptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingAccountName = billingAccountName;
             _billingSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingSubscriptionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(BillingSubscriptionResource.ResourceType, out string billingSubscriptionApiVersion);
             _billingSubscriptionRestClient = new BillingSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingSubscriptionApiVersion);
@@ -54,12 +48,12 @@ namespace Azure.ResourceManager.Billing
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != TenantResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            if (id.ResourceType != BillingAccountResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
         }
 
         /// <summary>
-        /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
+        /// Gets a subscription by its ID. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement,  Microsoft Partner Agreement, and Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -69,13 +63,22 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="expand"> Can be used to expand `Reseller`, `ConsumptionCostCenter`, `LastMonthCharges` and `MonthToDateCharges`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
-        public virtual async Task<Response<BillingSubscriptionResource>> GetAsync(string billingSubscriptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingSubscriptionResource>> GetAsync(string billingSubscriptionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
 
@@ -83,7 +86,7 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionRestClient.GetAsync(_billingAccountName, billingSubscriptionName, cancellationToken).ConfigureAwait(false);
+                var response = await _billingSubscriptionRestClient.GetAsync(Id.Name, billingSubscriptionName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BillingSubscriptionResource(Client, response.Value), response.GetRawResponse());
@@ -96,7 +99,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
+        /// Gets a subscription by its ID. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement,  Microsoft Partner Agreement, and Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -106,13 +109,22 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="expand"> Can be used to expand `Reseller`, `ConsumptionCostCenter`, `LastMonthCharges` and `MonthToDateCharges`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
-        public virtual Response<BillingSubscriptionResource> Get(string billingSubscriptionName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingSubscriptionResource> Get(string billingSubscriptionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
 
@@ -120,7 +132,7 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = _billingSubscriptionRestClient.Get(_billingAccountName, billingSubscriptionName, cancellationToken);
+                var response = _billingSubscriptionRestClient.Get(Id.Name, billingSubscriptionName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BillingSubscriptionResource(Client, response.Value), response.GetRawResponse());
@@ -133,7 +145,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Lists the subscriptions for a billing account. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
+        /// Lists the subscriptions for a billing account.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -143,19 +155,30 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptions_ListByBillingAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingSubscriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BillingSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingSubscriptionResource> GetAllAsync(BillingSubscriptionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionRestClient.CreateListByBillingAccountRequest(_billingAccountName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionResource(Client, BillingSubscriptionData.DeserializeBillingSubscriptionData(e)), _billingSubscriptionClientDiagnostics, Pipeline, "BillingSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            options ??= new BillingSubscriptionCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionRestClient.CreateListByBillingAccountRequest(Id.Name, options.IncludeDeleted, options.IncludeTenantSubscriptions, options.IncludeFailed, options.Expand, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, options.IncludeDeleted, options.IncludeTenantSubscriptions, options.IncludeFailed, options.Expand, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionResource(Client, BillingSubscriptionData.DeserializeBillingSubscriptionData(e)), _billingSubscriptionClientDiagnostics, Pipeline, "BillingSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists the subscriptions for a billing account. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
+        /// Lists the subscriptions for a billing account.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,15 +188,26 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptions_ListByBillingAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingSubscriptionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingSubscriptionResource> GetAll(BillingSubscriptionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionRestClient.CreateListByBillingAccountRequest(_billingAccountName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionResource(Client, BillingSubscriptionData.DeserializeBillingSubscriptionData(e)), _billingSubscriptionClientDiagnostics, Pipeline, "BillingSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            options ??= new BillingSubscriptionCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionRestClient.CreateListByBillingAccountRequest(Id.Name, options.IncludeDeleted, options.IncludeTenantSubscriptions, options.IncludeFailed, options.Expand, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, options.IncludeDeleted, options.IncludeTenantSubscriptions, options.IncludeFailed, options.Expand, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionResource(Client, BillingSubscriptionData.DeserializeBillingSubscriptionData(e)), _billingSubscriptionClientDiagnostics, Pipeline, "BillingSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -187,13 +221,22 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="expand"> Can be used to expand `Reseller`, `ConsumptionCostCenter`, `LastMonthCharges` and `MonthToDateCharges`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string billingSubscriptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string billingSubscriptionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
 
@@ -201,7 +244,7 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionRestClient.GetAsync(_billingAccountName, billingSubscriptionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _billingSubscriptionRestClient.GetAsync(Id.Name, billingSubscriptionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -222,13 +265,22 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="expand"> Can be used to expand `Reseller`, `ConsumptionCostCenter`, `LastMonthCharges` and `MonthToDateCharges`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string billingSubscriptionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string billingSubscriptionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
 
@@ -236,8 +288,100 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = _billingSubscriptionRestClient.Get(_billingAccountName, billingSubscriptionName, cancellationToken: cancellationToken);
+                var response = _billingSubscriptionRestClient.Get(Id.Name, billingSubscriptionName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingSubscriptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="expand"> Can be used to expand `Reseller`, `ConsumptionCostCenter`, `LastMonthCharges` and `MonthToDateCharges`. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BillingSubscriptionResource>> GetIfExistsAsync(string billingSubscriptionName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
+
+            using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _billingSubscriptionRestClient.GetAsync(Id.Name, billingSubscriptionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BillingSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new BillingSubscriptionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingSubscriptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="expand"> Can be used to expand `Reseller`, `ConsumptionCostCenter`, `LastMonthCharges` and `MonthToDateCharges`. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
+        public virtual NullableResponse<BillingSubscriptionResource> GetIfExists(string billingSubscriptionName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
+
+            using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _billingSubscriptionRestClient.Get(Id.Name, billingSubscriptionName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BillingSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new BillingSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -248,17 +392,17 @@ namespace Azure.ResourceManager.Billing
 
         IEnumerator<BillingSubscriptionResource> IEnumerable<BillingSubscriptionResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<BillingSubscriptionResource> IAsyncEnumerable<BillingSubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

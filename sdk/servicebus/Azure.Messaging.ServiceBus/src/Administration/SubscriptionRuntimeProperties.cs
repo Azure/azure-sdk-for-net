@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public long TransferDeadLetterMessageCount { get; internal set; }
 
         /// <summary>
-        /// The <see cref="DateTimeOffset"/> when the entity was last accessed.
+        /// The <see cref="DateTimeOffset"/> of the last time there was a receive request to this subscription.
         /// </summary>
         public DateTimeOffset AccessedAt { get; internal set; }
 

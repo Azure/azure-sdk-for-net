@@ -5,34 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsPropertyArrayChangedConditionProperties : IUtf8JsonSerializable
+    public partial class SecurityInsightsPropertyArrayChangedConditionProperties : IUtf8JsonSerializable, IJsonModel<SecurityInsightsPropertyArrayChangedConditionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsPropertyArrayChangedConditionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SecurityInsightsPropertyArrayChangedConditionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConditionProperties))
-            {
-                writer.WritePropertyName("conditionProperties"u8);
-                writer.WriteObjectValue(ConditionProperties);
-            }
-            writer.WritePropertyName("conditionType"u8);
-            writer.WriteStringValue(ConditionType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsPropertyArrayChangedConditionProperties DeserializeSecurityInsightsPropertyArrayChangedConditionProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsPropertyArrayChangedConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsPropertyArrayChangedConditionProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ConditionProperties))
+            {
+                writer.WritePropertyName("conditionProperties"u8);
+                writer.WriteObjectValue(ConditionProperties, options);
+            }
+        }
+
+        SecurityInsightsPropertyArrayChangedConditionProperties IJsonModel<SecurityInsightsPropertyArrayChangedConditionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsPropertyArrayChangedConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsPropertyArrayChangedConditionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsPropertyArrayChangedConditionProperties(document.RootElement, options);
+        }
+
+        internal static SecurityInsightsPropertyArrayChangedConditionProperties DeserializeSecurityInsightsPropertyArrayChangedConditionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AutomationRulePropertyArrayChangedValuesCondition> conditionProperties = default;
+            AutomationRulePropertyArrayChangedValuesCondition conditionProperties = default;
             ConditionType conditionType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionProperties"u8))
@@ -41,7 +75,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    conditionProperties = AutomationRulePropertyArrayChangedValuesCondition.DeserializeAutomationRulePropertyArrayChangedValuesCondition(property.Value);
+                    conditionProperties = AutomationRulePropertyArrayChangedValuesCondition.DeserializeAutomationRulePropertyArrayChangedValuesCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("conditionType"u8))
@@ -49,8 +83,88 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     conditionType = new ConditionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityInsightsPropertyArrayChangedConditionProperties(conditionType, conditionProperties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityInsightsPropertyArrayChangedConditionProperties(conditionType, serializedAdditionalRawData, conditionProperties);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConditionProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  conditionProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConditionProperties))
+                {
+                    builder.Append("  conditionProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ConditionProperties, options, 2, false, "  conditionProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConditionType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  conditionType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  conditionType: ");
+                builder.AppendLine($"'{ConditionType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SecurityInsightsPropertyArrayChangedConditionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsPropertyArrayChangedConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsPropertyArrayChangedConditionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityInsightsPropertyArrayChangedConditionProperties IPersistableModel<SecurityInsightsPropertyArrayChangedConditionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsPropertyArrayChangedConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityInsightsPropertyArrayChangedConditionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsPropertyArrayChangedConditionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityInsightsPropertyArrayChangedConditionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

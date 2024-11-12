@@ -5,32 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class RoutePolicyStatementProperties : IUtf8JsonSerializable
+    public partial class RoutePolicyStatementProperties : IUtf8JsonSerializable, IJsonModel<RoutePolicyStatementProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutePolicyStatementProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RoutePolicyStatementProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sequenceNumber"u8);
-            writer.WriteNumberValue(SequenceNumber);
-            writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition);
-            writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action);
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static RoutePolicyStatementProperties DeserializeRoutePolicyStatementProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutePolicyStatementProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutePolicyStatementProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("sequenceNumber"u8);
+            writer.WriteNumberValue(SequenceNumber);
+            writer.WritePropertyName("condition"u8);
+            writer.WriteObjectValue(Condition, options);
+            writer.WritePropertyName("action"u8);
+            writer.WriteObjectValue(Action, options);
+        }
+
+        RoutePolicyStatementProperties IJsonModel<RoutePolicyStatementProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutePolicyStatementProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutePolicyStatementProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoutePolicyStatementProperties(document.RootElement, options);
+        }
+
+        internal static RoutePolicyStatementProperties DeserializeRoutePolicyStatementProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,7 +66,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             long sequenceNumber = default;
             StatementConditionProperties condition = default;
             StatementActionProperties action = default;
-            Optional<string> annotation = default;
+            string annotation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sequenceNumber"u8))
@@ -48,12 +78,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (property.NameEquals("condition"u8))
                 {
-                    condition = StatementConditionProperties.DeserializeStatementConditionProperties(property.Value);
+                    condition = StatementConditionProperties.DeserializeStatementConditionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("action"u8))
                 {
-                    action = StatementActionProperties.DeserializeStatementActionProperties(property.Value);
+                    action = StatementActionProperties.DeserializeStatementActionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("annotation"u8))
@@ -61,8 +91,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoutePolicyStatementProperties(annotation.Value, sequenceNumber, condition, action);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RoutePolicyStatementProperties(annotation, serializedAdditionalRawData, sequenceNumber, condition, action);
         }
+
+        BinaryData IPersistableModel<RoutePolicyStatementProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutePolicyStatementProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RoutePolicyStatementProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RoutePolicyStatementProperties IPersistableModel<RoutePolicyStatementProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutePolicyStatementProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoutePolicyStatementProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoutePolicyStatementProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoutePolicyStatementProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

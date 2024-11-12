@@ -1,8 +1,10 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
@@ -10,11 +12,33 @@
 
 ### Other Changes
 
+## 1.0.0 (2024-08-15)
+
+### Features Added
+
+- Upgraded api-version tag 'package-2024-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f28f14c35918513bd3c3cf9f30d31ee192602525/specification/appcomplianceautomation/resource-manager/readme.md.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.42.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
+
+## 1.0.0-beta.4 (2023-11-27)
+
+### Features Added
+
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
 ## 1.0.0-beta.3 (2023-05-25)
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 

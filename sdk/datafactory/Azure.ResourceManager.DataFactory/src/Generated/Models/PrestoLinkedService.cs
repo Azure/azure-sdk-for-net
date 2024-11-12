@@ -7,15 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Presto server linked service. </summary>
-    public partial class PrestoLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class PrestoLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of PrestoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/>. </summary>
         /// <param name="host"> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </param>
         /// <param name="serverVersion"> The version of the Presto server. (i.e. 0.148-t). </param>
         /// <param name="catalog"> The catalog context for all request against the server. </param>
@@ -34,8 +33,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Presto";
         }
 
-        /// <summary> Initializes a new instance of PrestoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
         /// <param name="timeZoneId"> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value is the system time zone. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal PrestoLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<string> serverVersion, DataFactoryElement<string> catalog, DataFactoryElement<int> port, PrestoAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, DataFactoryElement<bool> enableSsl, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, DataFactoryElement<string> timeZoneId, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal PrestoLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<string> serverVersion, DataFactoryElement<string> catalog, DataFactoryElement<int> port, PrestoAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<bool> enableSsl, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, DataFactoryElement<string> timeZoneId, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             ServerVersion = serverVersion;
@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Presto";
         }
 
+        /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/> for deserialization. </summary>
+        internal PrestoLinkedService()
+        {
+        }
+
         /// <summary> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </summary>
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The version of the Presto server. (i.e. 0.148-t). </summary>
@@ -87,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The user name used to connect to the Presto server. </summary>
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> The password corresponding to the user name. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
         public DataFactoryElement<bool> EnableSsl { get; set; }
         /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </summary>
@@ -100,36 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<bool> AllowSelfSignedServerCert { get; set; }
         /// <summary> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value is the system time zone. </summary>
         public DataFactoryElement<string> TimeZoneId { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
     }
 }

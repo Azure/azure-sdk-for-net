@@ -3,7 +3,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 
 namespace Azure.ResourceManager.Storage
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EncryptionScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<EncryptionScopeResource> GetAllAsync(CancellationToken cancellationToken) =>
             GetAllAsync(null, null, null, cancellationToken);
 
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EncryptionScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<EncryptionScopeResource> GetAll(CancellationToken cancellationToken) =>
             GetAll(null, null, null, cancellationToken);
     }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -1733,7 +1732,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteBusinessMetadataAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteBusinessMetadataAsync(string guid, RequestContent content, RequestContext context)
+        public virtual async Task<Response> DeleteBusinessMetadataAsync(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -1769,7 +1768,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteBusinessMetadata(string,RequestContent,RequestContext)']/*" />
-        public virtual Response DeleteBusinessMetadata(string guid, RequestContent content, RequestContext context)
+        public virtual Response DeleteBusinessMetadata(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -1806,7 +1805,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAsync(string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> AddOrUpdateBusinessMetadataAsync(string guid, RequestContent content, bool? isOverwrite, RequestContext context)
+        public virtual async Task<Response> AddOrUpdateBusinessMetadataAsync(string guid, RequestContent content, bool? isOverwrite = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -1843,7 +1842,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadata(string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual Response AddOrUpdateBusinessMetadata(string guid, RequestContent content, bool? isOverwrite, RequestContext context)
+        public virtual Response AddOrUpdateBusinessMetadata(string guid, RequestContent content, bool? isOverwrite = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -1880,7 +1879,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteBusinessMetadataAttributesAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteBusinessMetadataAttributesAsync(string guid, string bmName, RequestContent content, RequestContext context)
+        public virtual async Task<Response> DeleteBusinessMetadataAttributesAsync(string guid, string bmName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNullOrEmpty(bmName, nameof(bmName));
@@ -1918,7 +1917,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteBusinessMetadataAttributes(string,string,RequestContent,RequestContext)']/*" />
-        public virtual Response DeleteBusinessMetadataAttributes(string guid, string bmName, RequestContent content, RequestContext context)
+        public virtual Response DeleteBusinessMetadataAttributes(string guid, string bmName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNullOrEmpty(bmName, nameof(bmName));
@@ -1956,7 +1955,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAttributesAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string bmName, RequestContent content, RequestContext context)
+        public virtual async Task<Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string bmName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNullOrEmpty(bmName, nameof(bmName));
@@ -1994,7 +1993,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAttributes(string,string,RequestContent,RequestContext)']/*" />
-        public virtual Response AddOrUpdateBusinessMetadataAttributes(string guid, string bmName, RequestContent content, RequestContext context)
+        public virtual Response AddOrUpdateBusinessMetadataAttributes(string guid, string bmName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNullOrEmpty(bmName, nameof(bmName));
@@ -2084,17 +2083,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "multipart/form-data". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> ImportBusinessMetadataAsync(RequestContent content, RequestContext context)
+        /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> ImportBusinessMetadataAsync(RequestContent content, string contentType, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewEntities.ImportBusinessMetadata");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportBusinessMetadataRequest(content, context);
+                using HttpMessage message = CreateImportBusinessMetadataRequest(content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2115,17 +2115,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "multipart/form-data". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='ImportBusinessMetadata(RequestContent,RequestContext)']/*" />
-        public virtual Response ImportBusinessMetadata(RequestContent content, RequestContext context)
+        /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='ImportBusinessMetadata(RequestContent,string,RequestContext)']/*" />
+        public virtual Response ImportBusinessMetadata(RequestContent content, string contentType, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewEntities.ImportBusinessMetadata");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportBusinessMetadataRequest(content, context);
+                using HttpMessage message = CreateImportBusinessMetadataRequest(content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2153,7 +2154,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteLabelsAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteLabelsAsync(string guid, RequestContent content, RequestContext context)
+        public virtual async Task<Response> DeleteLabelsAsync(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -2189,7 +2190,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteLabels(string,RequestContent,RequestContext)']/*" />
-        public virtual Response DeleteLabels(string guid, RequestContent content, RequestContext context)
+        public virtual Response DeleteLabels(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -2225,7 +2226,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='SetLabelsAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> SetLabelsAsync(string guid, RequestContent content, RequestContext context)
+        public virtual async Task<Response> SetLabelsAsync(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -2261,7 +2262,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='SetLabels(string,RequestContent,RequestContext)']/*" />
-        public virtual Response SetLabels(string guid, RequestContent content, RequestContext context)
+        public virtual Response SetLabels(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -2297,7 +2298,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='AddLabelAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> AddLabelAsync(string guid, RequestContent content, RequestContext context)
+        public virtual async Task<Response> AddLabelAsync(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -2333,7 +2334,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='AddLabel(string,RequestContent,RequestContext)']/*" />
-        public virtual Response AddLabel(string guid, RequestContent content, RequestContext context)
+        public virtual Response AddLabel(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -2370,7 +2371,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        public virtual async Task<Response> DeleteLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
@@ -2407,7 +2408,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)']/*" />
-        public virtual Response DeleteLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        public virtual Response DeleteLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
@@ -2444,7 +2445,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='SetLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
-        public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
@@ -2481,7 +2482,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='SetLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)']/*" />
-        public virtual Response SetLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        public virtual Response SetLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
@@ -2518,7 +2519,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='AddLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
-        public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
@@ -2555,7 +2556,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='AddLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)']/*" />
-        public virtual Response AddLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        public virtual Response AddLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
@@ -2598,7 +2599,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(_endpoint);
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
-            if (guids != null && Optional.IsCollectionDefined(guids))
+            if (guids != null && !(guids is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in guids)
                 {
@@ -2613,7 +2614,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("ignoreRelationships", ignoreRelationships.Value, true);
             }
-            if (excludeRelationshipTypes != null && Optional.IsCollectionDefined(excludeRelationshipTypes))
+            if (excludeRelationshipTypes != null && !(excludeRelationshipTypes is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in excludeRelationshipTypes)
                 {
@@ -2650,7 +2651,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(_endpoint);
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
-            if (guids != null && Optional.IsCollectionDefined(guids))
+            if (guids != null && !(guids is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in guids)
                 {
@@ -3099,7 +3100,7 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateImportBusinessMetadataRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateImportBusinessMetadataRequest(RequestContent content, string contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3110,7 +3111,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/entity/businessmetadata/import", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "multipart/form-data");
+            request.Headers.Add("Content-Type", contentType);
             request.Content = content;
             return message;
         }

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -75,12 +74,12 @@ namespace Azure.AI.Translation.Text
         /// If the resource has not been modified, the service will return status code 304 and an empty response body.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetLanguagesAsync(string,string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetLanguagesResult>> GetLanguagesAsync(string clientTraceId = null, string scope = null, string acceptLanguage = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(string,string,string,ETag?,CancellationToken)']/*" />
+        public virtual async Task<Response<GetSupportedLanguagesResult>> GetSupportedLanguagesAsync(string clientTraceId = null, string scope = null, string acceptLanguage = null, ETag? ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetLanguagesAsync(clientTraceId, scope, acceptLanguage, ifNoneMatch, context).ConfigureAwait(false);
-            return Response.FromValue(GetLanguagesResult.FromResponse(response), response);
+            Response response = await GetSupportedLanguagesAsync(clientTraceId, scope, acceptLanguage, ifNoneMatch, context).ConfigureAwait(false);
+            return Response.FromValue(GetSupportedLanguagesResult.FromResponse(response), response);
         }
 
         /// <summary> Gets the set of languages currently supported by other operations of the Translator. </summary>
@@ -105,15 +104,125 @@ namespace Azure.AI.Translation.Text
         /// If the resource has not been modified, the service will return status code 304 and an empty response body.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetLanguages(string,string,string,string,CancellationToken)']/*" />
-        public virtual Response<GetLanguagesResult> GetLanguages(string clientTraceId = null, string scope = null, string acceptLanguage = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetSupportedLanguages(string,string,string,ETag?,CancellationToken)']/*" />
+        public virtual Response<GetSupportedLanguagesResult> GetSupportedLanguages(string clientTraceId = null, string scope = null, string acceptLanguage = null, ETag? ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetLanguages(clientTraceId, scope, acceptLanguage, ifNoneMatch, context);
-            return Response.FromValue(GetLanguagesResult.FromResponse(response), response);
+            Response response = GetSupportedLanguages(clientTraceId, scope, acceptLanguage, ifNoneMatch, context);
+            return Response.FromValue(GetSupportedLanguagesResult.FromResponse(response), response);
         }
 
-        internal HttpMessage CreateGetLanguagesRequest(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Gets the set of languages currently supported by other operations of the Translator.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSupportedLanguagesAsync(string,string,string,ETag?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="scope">
+        /// A comma-separated list of names defining the group of languages to return.
+        /// Allowed group names are: `translation`, `transliteration` and `dictionary`.
+        /// If no scope is given, then all groups are returned, which is equivalent to passing
+        /// `scope=translation,transliteration,dictionary`. To decide which set of supported languages
+        /// is appropriate for your scenario, see the description of the [response object](#response-body).
+        /// </param>
+        /// <param name="acceptLanguage">
+        /// The language to use for user interface strings. Some of the fields in the response are names of languages or
+        /// names of regions. Use this parameter to define the language in which these names are returned.
+        /// The language is specified by providing a well-formed BCP 47 language tag. For instance, use the value `fr`
+        /// to request names in French or use the value `zh-Hant` to request names in Chinese Traditional.
+        /// Names are provided in the English language when a target language is not specified or when localization
+        /// is not available.
+        /// </param>
+        /// <param name="ifNoneMatch">
+        /// Passing the value of the ETag response header in an If-None-Match field will allow the service to optimize the response.
+        /// If the resource has not been modified, the service will return status code 304 and an empty response body.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(string,string,string,ETag?,RequestContext)']/*" />
+        public virtual async Task<Response> GetSupportedLanguagesAsync(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
+        {
+            using var scope0 = ClientDiagnostics.CreateScope("TextTranslationClient.GetSupportedLanguages");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSupportedLanguagesRequest(clientTraceId, scope, acceptLanguage, ifNoneMatch, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the set of languages currently supported by other operations of the Translator.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSupportedLanguages(string,string,string,ETag?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="scope">
+        /// A comma-separated list of names defining the group of languages to return.
+        /// Allowed group names are: `translation`, `transliteration` and `dictionary`.
+        /// If no scope is given, then all groups are returned, which is equivalent to passing
+        /// `scope=translation,transliteration,dictionary`. To decide which set of supported languages
+        /// is appropriate for your scenario, see the description of the [response object](#response-body).
+        /// </param>
+        /// <param name="acceptLanguage">
+        /// The language to use for user interface strings. Some of the fields in the response are names of languages or
+        /// names of regions. Use this parameter to define the language in which these names are returned.
+        /// The language is specified by providing a well-formed BCP 47 language tag. For instance, use the value `fr`
+        /// to request names in French or use the value `zh-Hant` to request names in Chinese Traditional.
+        /// Names are provided in the English language when a target language is not specified or when localization
+        /// is not available.
+        /// </param>
+        /// <param name="ifNoneMatch">
+        /// Passing the value of the ETag response header in an If-None-Match field will allow the service to optimize the response.
+        /// If the resource has not been modified, the service will return status code 304 and an empty response body.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetSupportedLanguages(string,string,string,ETag?,RequestContext)']/*" />
+        public virtual Response GetSupportedLanguages(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
+        {
+            using var scope0 = ClientDiagnostics.CreateScope("TextTranslationClient.GetSupportedLanguages");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSupportedLanguagesRequest(clientTraceId, scope, acceptLanguage, ifNoneMatch, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateGetSupportedLanguagesRequest(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -143,7 +252,7 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
-        internal HttpMessage CreateTranslateRequest(IEnumerable<string> to, RequestContent content, string clientTraceId, string @from, string textType, string category, string profanityAction, string profanityMarker, bool? includeAlignment, bool? includeSentenceLength, string suggestedFrom, string fromScript, string toScript, bool? allowFallback, RequestContext context)
+        internal HttpMessage CreateTranslateRequest(IEnumerable<string> targetLanguages, RequestContent content, string clientTraceId, string sourceLanguage, string textType, string category, string profanityAction, string profanityMarker, bool? includeAlignment, bool? includeSentenceLength, string suggestedSourceLanguage, string sourceLanguageScript, string targetLanguageScript, bool? allowFallback, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -151,16 +260,16 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/translate", false);
-            if (to != null && Optional.IsCollectionDefined(to))
+            if (targetLanguages != null && !(targetLanguages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                foreach (var param in to)
+                foreach (var param in targetLanguages)
                 {
                     uri.AppendQuery("to", param, true);
                 }
             }
-            if (@from != null)
+            if (sourceLanguage != null)
             {
-                uri.AppendQuery("from", @from, true);
+                uri.AppendQuery("from", sourceLanguage, true);
             }
             if (textType != null)
             {
@@ -186,17 +295,17 @@ namespace Azure.AI.Translation.Text
             {
                 uri.AppendQuery("includeSentenceLength", includeSentenceLength.Value, true);
             }
-            if (suggestedFrom != null)
+            if (suggestedSourceLanguage != null)
             {
-                uri.AppendQuery("suggestedFrom", suggestedFrom, true);
+                uri.AppendQuery("suggestedFrom", suggestedSourceLanguage, true);
             }
-            if (fromScript != null)
+            if (sourceLanguageScript != null)
             {
-                uri.AppendQuery("fromScript", fromScript, true);
+                uri.AppendQuery("fromScript", sourceLanguageScript, true);
             }
-            if (toScript != null)
+            if (targetLanguageScript != null)
             {
-                uri.AppendQuery("toScript", toScript, true);
+                uri.AppendQuery("toScript", targetLanguageScript, true);
             }
             if (allowFallback != null)
             {
@@ -214,7 +323,7 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
-        internal HttpMessage CreateTransliterateRequest(string language, string fromScript, string toScript, RequestContent content, string clientTraceId, RequestContext context)
+        internal HttpMessage CreateTransliterateRequest(string language, string sourceLanguageScript, string targetLanguageScript, RequestContent content, string clientTraceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -223,8 +332,8 @@ namespace Azure.AI.Translation.Text
             uri.Reset(_endpoint);
             uri.AppendPath("/transliterate", false);
             uri.AppendQuery("language", language, true);
-            uri.AppendQuery("fromScript", fromScript, true);
-            uri.AppendQuery("toScript", toScript, true);
+            uri.AppendQuery("fromScript", sourceLanguageScript, true);
+            uri.AppendQuery("toScript", targetLanguageScript, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -265,7 +374,7 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
-        internal HttpMessage CreateLookupDictionaryEntriesRequest(string @from, string to, RequestContent content, string clientTraceId, RequestContext context)
+        internal HttpMessage CreateLookupDictionaryEntriesRequest(string sourceLanguage, string targetLanguage, RequestContent content, string clientTraceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -273,8 +382,8 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/dictionary/lookup", false);
-            uri.AppendQuery("from", @from, true);
-            uri.AppendQuery("to", to, true);
+            uri.AppendQuery("from", sourceLanguage, true);
+            uri.AppendQuery("to", targetLanguage, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -287,7 +396,7 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
-        internal HttpMessage CreateLookupDictionaryExamplesRequest(string @from, string to, RequestContent content, string clientTraceId, RequestContext context)
+        internal HttpMessage CreateLookupDictionaryExamplesRequest(string sourceLanguage, string targetLanguage, RequestContent content, string clientTraceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -295,8 +404,8 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/dictionary/examples", false);
-            uri.AppendQuery("from", @from, true);
-            uri.AppendQuery("to", to, true);
+            uri.AppendQuery("from", sourceLanguage, true);
+            uri.AppendQuery("to", targetLanguage, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

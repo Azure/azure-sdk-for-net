@@ -1,66 +1,49 @@
-# Azure sdk package ship requirements
+# Enhance a generated SDK
 
-Before the library package can be released, you will need to add several requirements manually, including tests, samples, README, and CHANGELOG.
+`Azure.<group>.<service>` is the Azure SDK package name and `<client-name>` is a client name. C# generator will generate a client which you can find in `Azure.<group>.<service>/Generated` directory.
+
+Before the generated library can be released, you will need to add several requirements manually, including tests, samples, README, and CHANGELOG.
 You can refer to following guideline to add those requirements:
-
-- Tests: <https://azure.github.io/azure-sdk/general_implementation.html#testing>
-- README/Samples: <https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-repository>
-- Changelog: <https://azure.github.io/azure-sdk/policies_releases.html#change-logs>
-- Other release concerns: <https://azure.github.io/azure-sdk/policies_releases.html>
-- Pipeline requirements: <https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/55/Pipelines>
-
-## Pipeline
-
-Every PR should include a pipeline named `net - [serviceDirectory] - ci`.  If this is not present then you will need to [initialize the pipeline from scratch](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/55/Pipelines?anchor=creating-pipelines-for-new-services) by running `prepare-pipelines` or investigate the configuration of your triggers in your ci.yml file.  Once `prepare-pipelines` finishes you should be able to manually kick off the pipeline with `/azp run net - [serviceDirectory] - ci`.  All subsequent PRs should automatically have this pipeline run as long as the ci.yml triggers are set up correctly.
-
-For an example of ci.yml trigger configuration go [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/ci.yml).
 
 ## Tests
 
-In this section, we will talk about adding unit tests and live tests and how to run them. You will notice that there is a test project under `Azure.<group>.<service>\tests`.
+When the SDK was generated, a test project was created and saved under `Azure.<group>.<service>\tests`. You need to add tests to your SDK.
 
-Here is the step by step process to add tests:
+Steps:
 
 - Add other client parameters in `<client-name>ClientTestEnvironment.cs`
-- Update `<client-name>ClientTest.cs`.
-  - Please refer to [Using the TestFramework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md) to add tests.
+- Update `<client-name>ClientTest.cs` with your tests. Refer to [Using the TestFramework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md) to add tests.
 
 **Note**:
 
 - Before running live tests you will need to create live test resources, please refer to [Live Test Resource Management](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md) to learn more about how to manage resources and update test environment.
-- `Azure.<group>.<service>` is the Azure SDK package name and `<client-name>` is a client name, C# generator will generate a client which you can find in `Azure.<group>.<service>/Generated` directory.
 
 **Learn more:** see the [docs](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#to-test-1) to learn more about tests.
 
 ## Samples
 
-In this section, we will talk about how to add samples. As you can see, we already have a `Samples` folder under `Azure.<group>.<service>/tests` directory. We run the samples as a part of tests. First, enter `Sample<number>_<scenario>.cs` and remove the existing commented sample tests. You will add the basic sample tests for your SDK in this file. Create more test files and add tests as per your scenarios.
+When the SDK was generated, a samples folder was created and saved under `Azure.<group>.<service>/tests`. The samples run as a part of the tests. 
 
-**Learn more:** For general information about samples, see the [Samples Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-samples).
+Steps:
 
-You will update all the `Sample<sample_number>_<scenario>.md` and README.md files under `Azure.<group>.<service>\samples` directory to the your service according to the examples in those files. Based on that [here](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template/Azure.Template/samples) is an example.
+1. Add sample tests per hero scenario of your service. Use `Sample<number>_<scenario>.cs`.
+2. Add created samples to the documentation. Modify  `Sample<sample_number>_<scenario>.md`.
 
-**Learn more:** Please refer to [Create Sample Guidance](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/Create_Samples_Guidance.md) to add samples.
-
-## Snippets
-
-Snippets are the great way to reuse the sample code. Snippets allow us to verify that the code in our samples and READMEs is always up to date, and passes unit tests. We have added the snippet [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1_HelloWorld.cs#L21) in a sample and used it in the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/README.md#get-secret). Please refer to [Updating Sample Snippets](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) to add snippets in your samples.
+**Learn more:** More information: [Create sample guidance](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/Create_Samples_Guidance.md).
 
 ## README
 
-README.md file instructions are listed in `Azure.<group>.<service>/README.md` file. Please add/update the README.md file as per your library.
-
-**Learn more:** to understand more about README, see the [README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/README.md). Based on that [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) is an example.
+Add/update the README.md file (`Azure.<group>.<service>/README.md`) of your library. You can use the [README.md template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/README.md).
 
 ## Changelog
 
-Update the CHANGELOG.md file which exists in `Azure.<group>.<service>/CHANGELOG.md`. For general information about the changelog, see the [Changelog Guidelines](https://azure.github.io/azure-sdk/policies_releases.html#change-logs).
+Add/update the CHANGELOG.md file (`Azure.<group>.<service>/CHANGELOG.md`). For general information about the changelog, see the [Changelog Guidelines](https://azure.github.io/azure-sdk/policies_releases.html#change-logs).
 
-## Add Convenience APIs
+## Convenience APIs (optional)
 
 Adding convenience APIs is not required for Azure SDK data plane generated libraries, but doing so can provide customers with a better experience when they develop code using your library.  You should consider adding convenience APIs to the generated client to make it easier to use for the most common customer scenarios, or based on customer feedback.  Any convenience APIs you add should be approved with the Azure SDK architecture board.
 
-You can add convienice APIs by adding a customization layer on top of the generated code.  Please see the [autorest.csharp README#customizing-the-generated-code](https://github.com/Azure/autorest.csharp/blob/feature/v3/readme.md#customizing-the-generated-code) for the details of adding the customization layer.  This is the preferred method for adding convenience APIs to your generated client.
+You can add convienice APIs by adding a customization layer on top of the generated code.  Please see the [autorest.csharp README#customizing-the-generated-code](https://github.com/Azure/autorest.csharp/blob/main/readme.md#customizing-the-generated-code) for the details of adding the customization layer.  This is the preferred method for adding convenience APIs to your generated client.
 
 
 If you generate SDK from Open API specification (swagger), and other modifications are needed to the generated API, you can consider making them directly to the Open API specification, which will have the benefit of making the changes to the library in all languages you generate the library in.  As a last resort, you can add modifications with swagger transforms in the `autorest.md` file.  Details for various transforms can be found in [Customizing the generated code](https://github.com/Azure/autorest.csharp#customizing-the-generated-code).
@@ -72,3 +55,10 @@ e.g. Running the script for a project in `sdk\deviceupdate` would look like this
 ```powershell
 eng\scripts\Export-API.ps1 deviceupdate
 ```
+
+## Test pipelines
+
+When a PR is created, our CI/CD runs the test to validate the changes done to the sdk. These pipelines follow the name convention: `net - [serviceDirectory] - ci`.
+If this is not present in your PR, you need to [create the pipeline](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/55/Pipelines?anchor=creating-pipelines-for-new-services) by running `prepare-pipelines` or investigate the configuration of your triggers in your ci.yml file.  Once `prepare-pipelines` finishes you should be able to manually kick off the pipeline with `/azp run net - [serviceDirectory] - ci`.  All subsequent PRs should automatically have this pipeline run as long as the ci.yml triggers are set up correctly.
+
+Example: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/ci.yml.

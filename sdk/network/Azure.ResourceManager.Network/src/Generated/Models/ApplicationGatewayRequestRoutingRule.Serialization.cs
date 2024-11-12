@@ -5,27 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayRequestRoutingRule : IUtf8JsonSerializable
+    public partial class ApplicationGatewayRequestRoutingRule : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayRequestRoutingRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayRequestRoutingRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApplicationGatewayRequestRoutingRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRequestRoutingRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                throw new FormatException($"The model {nameof(ApplicationGatewayRequestRoutingRule)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -74,30 +88,50 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("loadDistributionPolicy"u8);
                 JsonSerializer.Serialize(writer, LoadDistributionPolicy);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayRequestRoutingRule DeserializeApplicationGatewayRequestRoutingRule(JsonElement element)
+        ApplicationGatewayRequestRoutingRule IJsonModel<ApplicationGatewayRequestRoutingRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRequestRoutingRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayRequestRoutingRule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayRequestRoutingRule(document.RootElement, options);
+        }
+
+        internal static ApplicationGatewayRequestRoutingRule DeserializeApplicationGatewayRequestRoutingRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ApplicationGatewayRequestRoutingRuleType> ruleType = default;
-            Optional<int> priority = default;
-            Optional<WritableSubResource> backendAddressPool = default;
-            Optional<WritableSubResource> backendHttpSettings = default;
-            Optional<WritableSubResource> httpListener = default;
-            Optional<WritableSubResource> urlPathMap = default;
-            Optional<WritableSubResource> rewriteRuleSet = default;
-            Optional<WritableSubResource> redirectConfiguration = default;
-            Optional<WritableSubResource> loadDistributionPolicy = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ApplicationGatewayRequestRoutingRuleType? ruleType = default;
+            int? priority = default;
+            WritableSubResource backendAddressPool = default;
+            WritableSubResource backendHttpSettings = default;
+            WritableSubResource httpListener = default;
+            WritableSubResource urlPathMap = default;
+            WritableSubResource rewriteRuleSet = default;
+            WritableSubResource redirectConfiguration = default;
+            WritableSubResource loadDistributionPolicy = default;
+            NetworkProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -234,8 +268,59 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationGatewayRequestRoutingRule(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(ruleType), Optional.ToNullable(priority), backendAddressPool, backendHttpSettings, httpListener, urlPathMap, rewriteRuleSet, redirectConfiguration, loadDistributionPolicy, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewayRequestRoutingRule(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                ruleType,
+                priority,
+                backendAddressPool,
+                backendHttpSettings,
+                httpListener,
+                urlPathMap,
+                rewriteRuleSet,
+                redirectConfiguration,
+                loadDistributionPolicy,
+                provisioningState);
         }
+
+        BinaryData IPersistableModel<ApplicationGatewayRequestRoutingRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRequestRoutingRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayRequestRoutingRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApplicationGatewayRequestRoutingRule IPersistableModel<ApplicationGatewayRequestRoutingRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRequestRoutingRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationGatewayRequestRoutingRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayRequestRoutingRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationGatewayRequestRoutingRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

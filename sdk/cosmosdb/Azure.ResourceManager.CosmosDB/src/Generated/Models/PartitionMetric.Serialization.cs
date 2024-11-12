@@ -6,28 +6,79 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PartitionMetric
+    public partial class PartitionMetric : IUtf8JsonSerializable, IJsonModel<PartitionMetric>
     {
-        internal static PartitionMetric DeserializePartitionMetric(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartitionMetric>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PartitionMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartitionMetric>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PartitionMetric)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(PartitionId))
+            {
+                writer.WritePropertyName("partitionId"u8);
+                writer.WriteStringValue(PartitionId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PartitionKeyRangeId))
+            {
+                writer.WritePropertyName("partitionKeyRangeId"u8);
+                writer.WriteStringValue(PartitionKeyRangeId);
+            }
+        }
+
+        PartitionMetric IJsonModel<PartitionMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartitionMetric>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PartitionMetric)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePartitionMetric(document.RootElement, options);
+        }
+
+        internal static PartitionMetric DeserializePartitionMetric(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Guid> partitionId = default;
-            Optional<string> partitionKeyRangeId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeGrain = default;
-            Optional<CosmosDBMetricUnitType> unit = default;
-            Optional<CosmosDBMetricName> name = default;
-            Optional<IReadOnlyList<CosmosDBMetricValue>> metricValues = default;
+            Guid? partitionId = default;
+            string partitionKeyRangeId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string timeGrain = default;
+            CosmosDBMetricUnitType? unit = default;
+            CosmosDBMetricName name = default;
+            IReadOnlyList<CosmosDBMetricValue> metricValues = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionId"u8))
@@ -82,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value);
+                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricValues"u8))
@@ -94,13 +145,221 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBMetricValue> array = new List<CosmosDBMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBMetricValue.DeserializeCosmosDBMetricValue(item));
+                        array.Add(CosmosDBMetricValue.DeserializeCosmosDBMetricValue(item, options));
                     }
                     metricValues = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PartitionMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues), Optional.ToNullable(partitionId), partitionKeyRangeId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PartitionMetric(
+                startTime,
+                endTime,
+                timeGrain,
+                unit,
+                name,
+                metricValues ?? new ChangeTrackingList<CosmosDBMetricValue>(),
+                serializedAdditionalRawData,
+                partitionId,
+                partitionKeyRangeId);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  partitionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartitionId))
+                {
+                    builder.Append("  partitionId: ");
+                    builder.AppendLine($"'{PartitionId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionKeyRangeId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  partitionKeyRangeId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartitionKeyRangeId))
+                {
+                    builder.Append("  partitionKeyRangeId: ");
+                    if (PartitionKeyRangeId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PartitionKeyRangeId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PartitionKeyRangeId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    builder.Append("  startTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    builder.Append("  endTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeGrain), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeGrain: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeGrain))
+                {
+                    builder.Append("  timeGrain: ");
+                    if (TimeGrain.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TimeGrain}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TimeGrain}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  unit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Unit))
+                {
+                    builder.Append("  unit: ");
+                    builder.AppendLine($"'{Unit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Name, options, 2, false, "  name: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricValues), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  metricValues: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MetricValues))
+                {
+                    if (MetricValues.Any())
+                    {
+                        builder.Append("  metricValues: ");
+                        builder.AppendLine("[");
+                        foreach (var item in MetricValues)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  metricValues: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PartitionMetric>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartitionMetric>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PartitionMetric)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PartitionMetric IPersistableModel<PartitionMetric>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartitionMetric>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePartitionMetric(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PartitionMetric)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PartitionMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

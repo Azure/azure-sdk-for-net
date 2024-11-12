@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class RecurrentSchedule : IUtf8JsonSerializable
+    public partial class RecurrentSchedule : IUtf8JsonSerializable, IJsonModel<RecurrentSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecurrentSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RecurrentSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecurrentSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecurrentSchedule)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("timeZone"u8);
             writer.WriteStringValue(TimeZone);
             writer.WritePropertyName("days"u8);
@@ -39,11 +57,39 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static RecurrentSchedule DeserializeRecurrentSchedule(JsonElement element)
+        RecurrentSchedule IJsonModel<RecurrentSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RecurrentSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecurrentSchedule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecurrentSchedule(document.RootElement, options);
+        }
+
+        internal static RecurrentSchedule DeserializeRecurrentSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +98,8 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<MonitorDayOfWeek> days = default;
             IList<int> hours = default;
             IList<int> minutes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeZone"u8))
@@ -89,8 +137,44 @@ namespace Azure.ResourceManager.Monitor.Models
                     minutes = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecurrentSchedule(timeZone, days, hours, minutes);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RecurrentSchedule(timeZone, days, hours, minutes, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RecurrentSchedule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecurrentSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RecurrentSchedule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RecurrentSchedule IPersistableModel<RecurrentSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecurrentSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRecurrentSchedule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecurrentSchedule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RecurrentSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

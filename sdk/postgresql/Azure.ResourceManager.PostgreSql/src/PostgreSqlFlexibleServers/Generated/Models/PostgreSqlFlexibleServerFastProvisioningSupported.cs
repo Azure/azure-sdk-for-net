@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerFastProvisioningSupported left, PostgreSqlFlexibleServerFastProvisioningSupported right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFastProvisioningSupported"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerFastProvisioningSupported left, PostgreSqlFlexibleServerFastProvisioningSupported right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerFastProvisioningSupported"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerFastProvisioningSupported"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerFastProvisioningSupported(string value) => new PostgreSqlFlexibleServerFastProvisioningSupported(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

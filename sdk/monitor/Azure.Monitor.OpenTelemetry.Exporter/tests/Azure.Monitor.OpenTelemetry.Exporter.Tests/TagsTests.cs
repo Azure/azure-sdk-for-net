@@ -4,7 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
+using System.Globalization;
+using System.Threading;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 using Xunit;
@@ -81,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var activityTagsProcessor = new ActivityTagsProcessor();
 
-            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?> { ["somekey"] = "value" }; ;
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?> { ["somekey"] = "value" };
             using var activity = CreateTestActivity(tagObjects);
             activityTagsProcessor.CategorizeTags(activity);
 
@@ -97,23 +98,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
             {
-                [SemanticConventions.AttributeNetHostIp] = "127.0.0.1",
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeHttpMethod] = "GET",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
                 [SemanticConventions.AttributeHttpHostPort] = "8888",
-                [SemanticConventions.AttributeRpcSystem] = "test"
             };
 
             using var activity = CreateTestActivity(tagObjects);
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Http, activityTagsProcessor.activityType);
-            Assert.Equal(6, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(4, activityTagsProcessor.MappedTags.Length);
             Assert.Equal("https", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpScheme));
+            Assert.Equal("GET", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpMethod));
             Assert.Equal("localhost", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpHost));
             Assert.Equal("8888", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpHostPort));
-            Assert.Equal("127.0.0.1", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeNetHostIp));
         }
 
         [Fact]
@@ -342,6 +341,70 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal("TestUser", activityTagsProcessor.EndUserId);
+        }
+
+        [Theory]
+        [InlineData("fr-FR")] // French culture
+        [InlineData("de-DE")] // German culture
+        public void TagObjects_TestCulture(string cultureName)
+        {
+            var activityTagsProcessor = new ActivityTagsProcessor();
+            var originalCulture = Thread.CurrentThread.CurrentCulture;
+            var cultureInfo = new CultureInfo(cultureName);
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            IDictionary<string, string> properties = new Dictionary<string, string>();
+
+            var doubleArray = new double[] { 1.1, 2.2, 3.3 };
+            var doubleValue = 123.45;
+
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
+            {
+                ["doubleArray"] = doubleArray,
+                ["double"] = doubleValue,
+            };
+
+            using var activity = CreateTestActivity(tagObjects);
+            activityTagsProcessor.CategorizeTags(activity);
+            TraceHelper.AddPropertiesToTelemetry(properties, ref activityTagsProcessor.UnMappedTags);
+
+            // Asserting Culture Behavior
+            Assert.NotEqual("1.1,2.2,3.3", doubleArray.ToCommaDelimitedString(cultureInfo));
+            Assert.NotEqual("123.45", doubleValue.ToString(cultureInfo));
+
+            // Asserting CultureInvariant Behavior
+            Assert.Equal("1.1,2.2,3.3", properties["doubleArray"]);
+            Assert.Equal("123.45", properties["double"]);
+
+            // Cleanup: Revert to the original culture
+            Thread.CurrentThread.CurrentCulture = originalCulture;
+        }
+
+        [Fact]
+        public void TagObjects_RpcTagsAreNotMapped()
+        {
+            /// As of today (2024-08-01), The RPC Semantic Convention is still Experimental.
+            /// https://github.com/open-telemetry/semantic-conventions/blob/main/docs/rpc/rpc-spans.md
+            /// We shouldn't have any special handling of these attributes until they are promoted to stable.
+            /// Unmapped Tags should pass through to a telemetry item's custom properties.
+            /// This test can be removed when the RPC Semantic Convention is promoted to stable.
+
+            var activityTagsProcessor = new ActivityTagsProcessor();
+
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
+            {
+                ["rpc.system"] = "test",
+                ["rpc.grpc.status_code"] = "test",
+                ["rpc.service"] = "test",
+                ["rpc.method"] = "test",
+            };
+
+            using var activity = CreateTestActivity(tagObjects);
+            activityTagsProcessor.CategorizeTags(activity);
+
+            Assert.Equal(OperationType.Unknown, activityTagsProcessor.activityType);
+
+            Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(4, activityTagsProcessor.UnMappedTags.Length);
         }
 
         private static Activity CreateTestActivity(IEnumerable<KeyValuePair<string, object?>>? additionalAttributes = null, ActivityKind activityKind = ActivityKind.Server)

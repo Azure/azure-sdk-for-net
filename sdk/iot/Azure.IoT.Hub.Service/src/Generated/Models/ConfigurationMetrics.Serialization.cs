@@ -47,8 +47,8 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, long>> results = default;
-            Optional<IDictionary<string, string>> queries = default;
+            IDictionary<string, long> results = default;
+            IDictionary<string, string> queries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -80,7 +80,23 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new ConfigurationMetrics(Optional.ToDictionary(results), Optional.ToDictionary(queries));
+            return new ConfigurationMetrics(results ?? new ChangeTrackingDictionary<string, long>(), queries ?? new ChangeTrackingDictionary<string, string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ConfigurationMetrics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeConfigurationMetrics(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

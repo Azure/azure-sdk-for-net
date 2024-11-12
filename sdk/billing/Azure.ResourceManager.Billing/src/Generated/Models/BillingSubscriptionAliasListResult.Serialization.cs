@@ -5,25 +5,100 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    internal partial class BillingSubscriptionAliasListResult
+    internal partial class BillingSubscriptionAliasListResult : IUtf8JsonSerializable, IJsonModel<BillingSubscriptionAliasListResult>
     {
-        internal static BillingSubscriptionAliasListResult DeserializeBillingSubscriptionAliasListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionAliasListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BillingSubscriptionAliasListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionAliasListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BillingSubscriptionAliasListResult)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        BillingSubscriptionAliasListResult IJsonModel<BillingSubscriptionAliasListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionAliasListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BillingSubscriptionAliasListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBillingSubscriptionAliasListResult(document.RootElement, options);
+        }
+
+        internal static BillingSubscriptionAliasListResult DeserializeBillingSubscriptionAliasListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<BillingSubscriptionAliasData>> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
+            IReadOnlyList<BillingSubscriptionAliasData> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -33,18 +108,112 @@ namespace Azure.ResourceManager.Billing.Models
                     List<BillingSubscriptionAliasData> array = new List<BillingSubscriptionAliasData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(item));
+                        array.Add(BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(item, options));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"u8))
+                if (options.Format != "W")
                 {
-                    nextLink = property.Value.GetString();
-                    continue;
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new BillingSubscriptionAliasListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BillingSubscriptionAliasListResult(nextLink, value ?? new ChangeTrackingList<BillingSubscriptionAliasData>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nextLink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextLink))
+                {
+                    builder.Append("  nextLink: ");
+                    if (NextLink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NextLink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NextLink}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Value))
+                {
+                    if (Value.Any())
+                    {
+                        builder.Append("  value: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Value)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  value: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<BillingSubscriptionAliasListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionAliasListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(BillingSubscriptionAliasListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BillingSubscriptionAliasListResult IPersistableModel<BillingSubscriptionAliasListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionAliasListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBillingSubscriptionAliasListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BillingSubscriptionAliasListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BillingSubscriptionAliasListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,12 +7,19 @@ azure-arm: true
 csharp: true
 library-name: AppConfiguration
 namespace: Azure.ResourceManager.AppConfiguration
-require: https://github.com/Azure/azure-rest-api-specs/blob/d7b7399fb1e1a328b49cd6a998714c6efb877bf2/specification/appconfiguration/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/e8c4e082948a49ef5dc8acf6c5b9d581b603370e/specification/appconfiguration/resource-manager/readme.md
+tag: package-2023-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+use-write-core: true
+enable-bicep-serialization: true
 deserialize-null-collection-as-null-value: true
 
 no-property-type-replacement: RegenerateKeyContent
@@ -36,6 +43,8 @@ rename-mapping:
   EncryptionProperties: AppConfigurationStoreEncryptionProperties
   NameAvailabilityStatus: AppConfigurationNameAvailabilityResult
   PrivateEndpointConnectionReference: AppConfigurationPrivateEndpointConnectionReference
+  Replica: AppConfigurationReplica
+  ReplicaProvisioningState: AppConfigurationReplicaProvisioningState
 
 prepend-rp-prefix:
   - ActionsRequired
@@ -55,7 +64,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -76,6 +85,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
 
 request-path-to-parent:
   /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
@@ -91,4 +101,7 @@ directive:
   - rename-operation:
       from: Operations_CheckNameAvailability
       to: CheckAppConfigurationNameAvailability
+
+list-exception:
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}
 ````

@@ -6,26 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The IoT hub cloud-to-device messaging properties. </summary>
     public partial class CloudToDeviceProperties
     {
-        /// <summary> Initializes a new instance of CloudToDeviceProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudToDeviceProperties"/>. </summary>
         public CloudToDeviceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudToDeviceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudToDeviceProperties"/>. </summary>
         /// <param name="maxDeliveryCount"> The max delivery count for cloud-to-device messages in the device queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </param>
         /// <param name="defaultTtlAsIso8601"> The default time to live for cloud-to-device messages in the device queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </param>
         /// <param name="feedback"> The properties of the feedback queue for cloud-to-device messages. </param>
-        internal CloudToDeviceProperties(int? maxDeliveryCount, TimeSpan? defaultTtlAsIso8601, CloudToDeviceFeedbackQueueProperties feedback)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudToDeviceProperties(int? maxDeliveryCount, TimeSpan? defaultTtlAsIso8601, CloudToDeviceFeedbackQueueProperties feedback, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxDeliveryCount = maxDeliveryCount;
             DefaultTtlAsIso8601 = defaultTtlAsIso8601;
             Feedback = feedback;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The max delivery count for cloud-to-device messages in the device queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </summary>

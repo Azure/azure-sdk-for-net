@@ -5,27 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ServiceAssociationLink : IUtf8JsonSerializable
+    public partial class ServiceAssociationLink : IUtf8JsonSerializable, IJsonModel<ServiceAssociationLink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAssociationLink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ServiceAssociationLink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAssociationLink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                throw new FormatException($"The model {nameof(ServiceAssociationLink)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -38,6 +51,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("link"u8);
                 writer.WriteStringValue(Link);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(AllowDelete))
             {
@@ -55,24 +73,39 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static ServiceAssociationLink DeserializeServiceAssociationLink(JsonElement element)
+        ServiceAssociationLink IJsonModel<ServiceAssociationLink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAssociationLink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceAssociationLink)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAssociationLink(document.RootElement, options);
+        }
+
+        internal static ServiceAssociationLink DeserializeServiceAssociationLink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ResourceType> linkedResourceType = default;
-            Optional<ResourceIdentifier> link = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> allowDelete = default;
-            Optional<IList<AzureLocation>> locations = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ResourceType? linkedResourceType = default;
+            ResourceIdentifier link = default;
+            NetworkProvisioningState? provisioningState = default;
+            bool? allowDelete = default;
+            IList<AzureLocation> locations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -169,8 +202,54 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceAssociationLink(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(linkedResourceType), link.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(allowDelete), Optional.ToList(locations));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServiceAssociationLink(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                linkedResourceType,
+                link,
+                provisioningState,
+                allowDelete,
+                locations ?? new ChangeTrackingList<AzureLocation>());
         }
+
+        BinaryData IPersistableModel<ServiceAssociationLink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAssociationLink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAssociationLink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServiceAssociationLink IPersistableModel<ServiceAssociationLink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAssociationLink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceAssociationLink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAssociationLink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceAssociationLink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

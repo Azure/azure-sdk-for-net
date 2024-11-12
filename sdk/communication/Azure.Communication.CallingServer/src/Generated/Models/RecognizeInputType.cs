@@ -30,7 +30,7 @@ namespace Azure.Communication.CallingServer
         public static bool operator ==(RecognizeInputType left, RecognizeInputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecognizeInputType"/> values are not the same. </summary>
         public static bool operator !=(RecognizeInputType left, RecognizeInputType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecognizeInputType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecognizeInputType"/>. </summary>
         public static implicit operator RecognizeInputType(string value) => new RecognizeInputType(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.Communication.CallingServer
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

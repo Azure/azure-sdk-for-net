@@ -4,7 +4,6 @@ $LanguageDisplayName = ".NET"
 $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/main/_data/releases/latest/dotnet-packages.csv"
-$BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
 $GithubUri = "https://github.com/Azure/azure-sdk-for-net"
 $PackageRepositoryUri = "https://www.nuget.org/packages"
 
@@ -16,16 +15,22 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   # $addDevVersion is a global variable set by a parameter in
   # Save-Package-Properties.ps1
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
+  $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
+  Write-Host "Get-AllPackageInfoFromRepo::Executing msbuild"
+  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo $ServiceProj /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion"
   $msbuildOutput = dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
-    $EngDir/service.proj `
+    $ServiceProj `
     /p:ServiceDirectory=$serviceDirectory `
     /p:AddDevVersion=$shouldAddDevVersion
 
   foreach ($projectOutput in $msbuildOutput)
   {
-    if (!$projectOutput) { continue }
+    if (!$projectOutput) {
+      Write-Host "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
+      continue
+    }
 
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
     if(!(Test-Path $pkgPath)) {
@@ -33,24 +38,10 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
-    # Add a step to extract namespaces
-    $namespaces = @()
-    # The namespaces currently only use for docs.ms toc, which is necessary for internal release.
-    if (Test-Path "$dllFolder/Release/netstandard2.0/") {
-      $defaultDll = Get-ChildItem "$dllFolder/Release/netstandard2.0/*" -Filter "$pkgName.dll" -Recurse
-      if ($defaultDll -and (Test-Path $defaultDll)) {
-        Write-Verbose "Here is the dll file path: $($defaultDll.FullName)"
-        $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
-      }
-    }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
     $pkgProp.ArtifactName = $pkgName
-    if ($namespaces) {
-      $pkgProp = $pkgProp | Add-Member -MemberType NoteProperty -Name Namespaces -Value $namespaces -PassThru
-      Write-Verbose "Here are the namespaces: $($pkgProp.Namespaces)"
-    }
 
     $allPackageProps += $pkgProp
   }
@@ -187,7 +178,13 @@ function Get-dotnet-GithubIoDocIndex()
   # Fetch out all package metadata from csv file.
   $metadata = Get-CSVMetadata -MetadataUri $MetadataUri
   # Get the artifacts name from blob storage
-  $artifacts =  Get-BlobStorage-Artifacts -blobStorageUrl $BlobStorageUrl -blobDirectoryRegex "^dotnet/(.*)/$" -blobArtifactsReplacement '$1'
+  $artifacts =  Get-BlobStorage-Artifacts `
+    -blobDirectoryRegex "^dotnet/(.*)/$" `
+    -blobArtifactsReplacement '$1' `
+    -storageAccountName 'azuresdkdocs' `
+    -storageContainerName '$web' `
+    -storagePrefix 'dotnet/'
+
   # Build up the artifact to service name mapping for GithubIo toc.
   $tocContent = Get-TocMapping -metadata $metadata -artifacts $artifacts
   # Generate yml/md toc files and build site.
@@ -298,6 +295,7 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
     DocsMsReadMeName = $readmeName
     LatestReadMeLocation = 'api/overview/azure/latest'
     PreviewReadMeLocation = 'api/overview/azure/preview'
+    LegacyReadMeLocation = 'api/overview/azure/legacy'
     Suffix = ''
   }
 }
@@ -370,28 +368,6 @@ function Get-DocsCiConfig($configPath) {
   return $output
 }
 
-function Get-DocsCiLine ($item) {
-  $line = ''
-  if ($item.Properties.Count) {
-    $propertyPairs = @()
-    foreach ($key in $item.Properties.Keys) {
-      $propertyPairs += "$key=$($item.Properties[$key])"
-    }
-    $packageProperties = $propertyPairs -join ';'
-
-    $line = "$($item.Id),[$packageProperties]$($item.Name)"
-  } else {
-    $line = "$($item.Id),$($item.Name)"
-  }
-
-  if ($item.Versions) {
-    $joinedVersions = $item.Versions -join ','
-    $line += ",$joinedVersions"
-  }
-
-  return $line
-}
-
 function EnsureCustomSource($package) {
   # $PackageSourceOverride is a global variable provided in
   # Update-DocsMsPackages.ps1. Its value can set a "customSource" property.
@@ -418,7 +394,7 @@ function EnsureCustomSource($package) {
       -AllVersions `
       -AllowPrereleaseVersions
 
-      if (!$? -or !$existingVersions) { 
+      if (!$? -or !$existingVersions) {
         Write-Host "Failed to find package $($package.Name) in custom source $customPackageSource"
         return $package
       }
@@ -440,129 +416,83 @@ function EnsureCustomSource($package) {
   return $package
 }
 
-$PackageExclusions = @{
-}
-
-function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
-
-  Write-Host "Excluded packages:"
-  foreach ($excludedPackage in $PackageExclusions.Keys) {
-    Write-Host "  $excludedPackage - $($PackageExclusions[$excludedPackage])"
-  }
-
-  $FilteredMetadata = $DocsMetadata.Where({ !($PackageExclusions.ContainsKey($_.Package)) })
-
-  UpdateDocsMsPackages `
-    (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
-    'preview' `
-    $FilteredMetadata
-
-  UpdateDocsMsPackages `
-    (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet.csv') `
-    'latest' `
-    $FilteredMetadata
-}
-
-function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
-  Write-Host "Updating configuration: $DocConfigFile with mode: $Mode"
-  $packageConfig = Get-DocsCiConfig $DocConfigFile
-
-  $outputPackages = @()
-  foreach ($package in $packageConfig) {
-    # Do not filter by GA/Preview status because we want differentiate between
-    # tracked and non-tracked packages
-    $matchingPublishedPackageArray = $DocsMetadata.Where({ $_.Package -eq $package.Name })
-
-    # If this package does not match any published packages keep it in the list.
-    # This handles packages which are not tracked in metadata but still need to
-    # be built in Docs CI.
-    if ($matchingPublishedPackageArray.Count -eq 0) {
-      Write-Host "Keep non-tracked preview package: $($package.Name)"
-      $outputPackages += $package
-      continue
-    }
-
-    if ($matchingPublishedPackageArray.Count -gt 1) {
-      LogWarning "Found more than one matching published package in metadata for $($package.Name); only updating first entry"
-    }
-    $matchingPublishedPackage = $matchingPublishedPackageArray[0]
-
-    if ($Mode -eq 'preview' -and !$matchingPublishedPackage.VersionPreview.Trim()) {
-      # If we are in preview mode and the package does not have a superseding
-      # preview version, remove the package from the list.
-      Write-Host "Remove superseded preview package: $($package.Name)"
-      continue
-    }
-
-    $updatedVersion = $matchingPublishedPackage.VersionGA.Trim()
-    if ($Mode -eq 'preview') {
-      $updatedVersion = $matchingPublishedPackage.VersionPreview.Trim()
-    }
-
-    if ($updatedVersion -ne $package.Versions[0]) {
-      Write-Host "Update tracked package: $($package.Name) to version $updatedVersion"
-      $package.Versions = @($updatedVersion)
-      $package = EnsureCustomSource $package
-    } else {
-      Write-Host "Keep tracked package: $($package.Name)"
-    }
-
-    $outputPackages += $package
-  }
-
-  $outputPackagesHash = @{}
-  foreach ($package in $outputPackages) {
-    $outputPackagesHash[$package.Name] = $true
-  }
-
-  $remainingPackages = @()
-  if ($Mode -eq 'preview') {
-    $remainingPackages = $DocsMetadata.Where({
-      $_.VersionPreview.Trim() -and !$outputPackagesHash.ContainsKey($_.Package)
-    })
-  } else {
-    $remainingPackages = $DocsMetadata.Where({
-      $_.VersionGA.Trim() -and !$outputPackagesHash.ContainsKey($_.Package)
-    })
-  }
-
-  # Add packages that exist in the metadata but are not onboarded in docs config
-  # TODO: tfm='netstandard2.0' is a temporary workaround for
-  # https://github.com/Azure/azure-sdk-for-net/issues/22494
-  $newPackageProperties = [ordered]@{ tfm = 'netstandard2.0' }
-  if ($Mode -eq 'preview') {
-    $newPackageProperties['isPrerelease'] = 'true'
-  }
-
-  foreach ($package in $remainingPackages) {
-    Write-Host "Add new package from metadata: $($package.Package)"
-    $versions = @($package.VersionGA.Trim())
-    if ($Mode -eq 'preview') {
-      $versions = @($package.VersionPreview.Trim())
-    }
-
-    $newPackage = [PSCustomObject]@{
-      Id = $package.Package.Replace('.', '').ToLower();
-      Name = $package.Package;
-      Properties = $newPackageProperties;
-      Versions = $versions
-    }
-    $newPackage = EnsureCustomSource $newPackage
-
-    $outputPackages += $newPackage
-  }
-
-  $outputLines = @()
-  foreach ($package in $outputPackages) {
-    $outputLines += Get-DocsCiLine $package
-  }
-  Set-Content -Path $DocConfigFile -Value $outputLines
-}
-
 function Get-dotnet-EmitterName() {
   return "@azure-tools/typespec-csharp"
 }
 
 function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
   return "--option @azure-tools/typespec-csharp.emitter-output-dir=$projectDirectory/src"
+}
+
+function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
+  Push-Location $RepoRoot
+  try {
+    Write-Host "`n`n======================================================================"
+    Write-Host "Generating projects" -ForegroundColor Yellow
+    Write-Host "======================================================================`n"
+
+    $packageDirectories = Get-Content $PackageDirectoriesFile | ConvertFrom-Json
+
+    # Build the project list override file
+
+    $lines = @('<Project>', '  <ItemGroup>')
+
+    foreach ($directory in $packageDirectories) {
+      $projects = Get-ChildItem -Path "$RepoRoot/sdk/$directory" -Filter "*.csproj" -Recurse
+      foreach ($project in $projects) {
+        $lines += "    <ProjectReference Include=`"$($project.FullName)`" />"
+      }
+    }
+
+    $lines += '  </ItemGroup>', '</Project>'
+    $artifactsPath = Join-Path $RepoRoot "artifacts"
+    $projectListOverrideFile = Join-Path $artifactsPath "GeneratedSdks.proj"
+
+    Write-Host "Creating project list override file $projectListOverrideFile`:"
+    $lines | ForEach-Object { "  $_" } | Out-Host
+
+    New-Item $artifactsPath -ItemType Directory -Force | Out-Null
+    $lines | Out-File $projectListOverrideFile -Encoding UTF8
+    Write-Host "`n"
+
+    # Install autorest locally
+    Invoke-LoggedCommand "npm ci --prefix $RepoRoot"
+
+    Write-Host "Running npm ci over emitter-package.json in a temp folder to prime the npm cache"
+
+    $tempFolder = New-TemporaryFile
+    $tempFolder | Remove-Item -Force
+    New-Item $tempFolder -ItemType Directory -Force | Out-Null
+
+    Push-Location $tempFolder
+    try {
+        Copy-Item "$RepoRoot/eng/emitter-package.json" "package.json"
+        if(Test-Path "$RepoRoot/eng/emitter-package-lock.json") {
+            Copy-Item "$RepoRoot/eng/emitter-package-lock.json" "package-lock.json"
+            Invoke-LoggedCommand "npm ci"
+        } else {
+          Invoke-LoggedCommand "npm install"
+        }
+    }
+    finally {
+      Pop-Location
+      $tempFolder | Remove-Item -Force -Recurse
+    }
+
+    # Generate projects
+    $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
+    $summaryArgs = $showSummary ? "/v:n /ds" : ""
+
+    Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:ProjectListOverrideFile=$(Resolve-Path $projectListOverrideFile -Relative) $summaryArgs eng\service.proj"
+  }
+  finally {
+    Pop-Location
+  }
+}
+
+function Get-dotnet-ApiviewStatusCheckRequirement($packageInfo) {
+  if ($packageInfo.IsNewSdk -and ($packageInfo.SdkType -eq "client" -or $packageInfo.SdkType -eq "mgmt")) {
+    return $true
+  }
+  return $false
 }

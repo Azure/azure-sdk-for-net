@@ -518,3 +518,56 @@ await client.PublishComponentTelemetryAsync(
     JsonSerializer.Serialize(telemetryPayload));
 Console.WriteLine($"Published component telemetry message to twin '{twinId}'.");
 ```
+
+## Create, list, cancel and delete import jobs of digital twins
+
+### Create import jobs
+
+To create an import job, provide an Id of an import job such as "sampleImportJob" and import job data containing the blob file endpoint and optional output blob file endpoint like the example shown below.
+
+```C# Snippet:DigitalTwinsSampleCreateImportJob
+await client.ImportGraphAsync(sampleImportJobId, sampleImportJob);
+Console.WriteLine($"Created jobs '{sampleImportJobId}' and '{sampleImportJob}'.");
+```
+
+### List import jobs
+
+List a specific import job given import job Id `GetImportJobAsync`.
+
+```C# Snippet:DigitalTwinsSampleGetImportJob
+Response<ImportJob> sampleImportJobResponse = await client.GetImportJobAsync(sampleImportJobId);
+Console.WriteLine($"Retrieved job '{sampleImportJobResponse.Value.Id}'.");
+```
+
+### Cancel import job
+
+Cancel an import job given import job Id.
+
+```C# Snippet:DigitalTwinsSampleCancelImportJob
+try
+{
+    await client.CancelImportJobAsync(sampleImportJobId);
+    Console.WriteLine($"Cancelled job '{sampleImportJobId}'.");
+}
+catch (RequestFailedException ex)
+{
+    FatalError($"Failed to cancel import job '{sampleImportJobId}' due to:\n{ex}");
+}
+```
+
+
+### Delete import jobs
+
+Delete an import job given import job Id.
+
+```C# Snippet:DigitalTwinsSampleDeleteImportJob
+try
+{
+    await client.DeleteImportJobAsync(sampleImportJobId);
+    Console.WriteLine($"Deleted job '{sampleImportJobId}'.");
+}
+catch (RequestFailedException ex)
+{
+    FatalError($"Failed to delete import job '{sampleImportJobId}' due to:\n{ex}");
+}
+```

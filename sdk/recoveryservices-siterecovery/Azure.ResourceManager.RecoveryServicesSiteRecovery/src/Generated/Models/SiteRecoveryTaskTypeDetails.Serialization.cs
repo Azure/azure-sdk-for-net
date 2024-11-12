@@ -5,14 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryTaskTypeDetails
+    [PersistableModelProxy(typeof(UnknownTaskTypeDetails))]
+    public partial class SiteRecoveryTaskTypeDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryTaskTypeDetails>
     {
-        internal static SiteRecoveryTaskTypeDetails DeserializeSiteRecoveryTaskTypeDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryTaskTypeDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SiteRecoveryTaskTypeDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryTaskTypeDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        SiteRecoveryTaskTypeDetails IJsonModel<SiteRecoveryTaskTypeDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryTaskTypeDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryTaskTypeDetails(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryTaskTypeDetails DeserializeSiteRecoveryTaskTypeDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,17 +77,48 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AutomationRunbookTaskDetails": return AutomationRunbookTaskDetails.DeserializeAutomationRunbookTaskDetails(element);
-                    case "ConsistencyCheckTaskDetails": return ConsistencyCheckTaskDetails.DeserializeConsistencyCheckTaskDetails(element);
-                    case "FabricReplicationGroupTaskDetails": return FabricReplicationGroupTaskDetails.DeserializeFabricReplicationGroupTaskDetails(element);
-                    case "JobTaskDetails": return SiteRecoveryJobTaskDetails.DeserializeSiteRecoveryJobTaskDetails(element);
-                    case "ManualActionTaskDetails": return ManualActionTaskDetails.DeserializeManualActionTaskDetails(element);
-                    case "ScriptActionTaskDetails": return ScriptActionTaskDetails.DeserializeScriptActionTaskDetails(element);
-                    case "VirtualMachineTaskDetails": return SiteRecoveryVmTaskDetails.DeserializeSiteRecoveryVmTaskDetails(element);
-                    case "VmNicUpdatesTaskDetails": return VmNicUpdatesTaskDetails.DeserializeVmNicUpdatesTaskDetails(element);
+                    case "AutomationRunbookTaskDetails": return AutomationRunbookTaskDetails.DeserializeAutomationRunbookTaskDetails(element, options);
+                    case "ConsistencyCheckTaskDetails": return ConsistencyCheckTaskDetails.DeserializeConsistencyCheckTaskDetails(element, options);
+                    case "FabricReplicationGroupTaskDetails": return FabricReplicationGroupTaskDetails.DeserializeFabricReplicationGroupTaskDetails(element, options);
+                    case "JobTaskDetails": return SiteRecoveryJobTaskDetails.DeserializeSiteRecoveryJobTaskDetails(element, options);
+                    case "ManualActionTaskDetails": return ManualActionTaskDetails.DeserializeManualActionTaskDetails(element, options);
+                    case "ScriptActionTaskDetails": return ScriptActionTaskDetails.DeserializeScriptActionTaskDetails(element, options);
+                    case "VirtualMachineTaskDetails": return SiteRecoveryVmTaskDetails.DeserializeSiteRecoveryVmTaskDetails(element, options);
+                    case "VmNicUpdatesTaskDetails": return VmNicUpdatesTaskDetails.DeserializeVmNicUpdatesTaskDetails(element, options);
                 }
             }
-            return UnknownTaskTypeDetails.DeserializeUnknownTaskTypeDetails(element);
+            return UnknownTaskTypeDetails.DeserializeUnknownTaskTypeDetails(element, options);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryTaskTypeDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryTaskTypeDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoveryTaskTypeDetails IPersistableModel<SiteRecoveryTaskTypeDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryTaskTypeDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoveryTaskTypeDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoveryTaskTypeDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

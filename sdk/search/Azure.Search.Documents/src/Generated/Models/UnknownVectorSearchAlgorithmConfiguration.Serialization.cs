@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.Search.Documents.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
@@ -29,7 +30,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             string name = default;
-            string kind = "Unknown";
+            VectorSearchAlgorithmKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -39,11 +40,27 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new VectorSearchAlgorithmKind(property.Value.GetString());
                     continue;
                 }
             }
             return new UnknownVectorSearchAlgorithmConfiguration(name, kind);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownVectorSearchAlgorithmConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownVectorSearchAlgorithmConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<VectorSearchAlgorithmConfiguration>(this);
+            return content;
         }
     }
 }

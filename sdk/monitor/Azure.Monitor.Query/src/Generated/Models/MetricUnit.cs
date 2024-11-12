@@ -36,37 +36,37 @@ namespace Azure.Monitor.Query.Models
         private const string NanoCoresValue = "NanoCores";
         private const string BitsPerSecondValue = "BitsPerSecond";
 
-        /// <summary> Count. </summary>
+        /// <summary> Unit of raw quantity. </summary>
         public static MetricUnit Count { get; } = new MetricUnit(CountValue);
-        /// <summary> Bytes. </summary>
+        /// <summary> Unit of memory in bytes. </summary>
         public static MetricUnit Bytes { get; } = new MetricUnit(BytesValue);
-        /// <summary> Seconds. </summary>
+        /// <summary> Unit of time in seconds. </summary>
         public static MetricUnit Seconds { get; } = new MetricUnit(SecondsValue);
-        /// <summary> CountPerSecond. </summary>
+        /// <summary> Rate unit of raw quantity per second. </summary>
         public static MetricUnit CountPerSecond { get; } = new MetricUnit(CountPerSecondValue);
-        /// <summary> BytesPerSecond. </summary>
+        /// <summary> Rate unit of memory in bytes per second. </summary>
         public static MetricUnit BytesPerSecond { get; } = new MetricUnit(BytesPerSecondValue);
-        /// <summary> Percent. </summary>
+        /// <summary> Percentage unit. </summary>
         public static MetricUnit Percent { get; } = new MetricUnit(PercentValue);
-        /// <summary> MilliSeconds. </summary>
+        /// <summary> Unit of time in 1/1000th of a second. </summary>
         public static MetricUnit MilliSeconds { get; } = new MetricUnit(MilliSecondsValue);
-        /// <summary> ByteSeconds. </summary>
+        /// <summary> Unit of data transfer or storage. It is the size of the data in bytes multiplied by the time it takes to transfer or store the data in seconds. </summary>
         public static MetricUnit ByteSeconds { get; } = new MetricUnit(ByteSecondsValue);
-        /// <summary> Unspecified. </summary>
+        /// <summary> No specified unit. </summary>
         public static MetricUnit Unspecified { get; } = new MetricUnit(UnspecifiedValue);
-        /// <summary> Cores. </summary>
+        /// <summary> Unit of processing power. </summary>
         public static MetricUnit Cores { get; } = new MetricUnit(CoresValue);
-        /// <summary> MilliCores. </summary>
+        /// <summary> Unit of processing power in 1/1000th of a CPU core. </summary>
         public static MetricUnit MilliCores { get; } = new MetricUnit(MilliCoresValue);
-        /// <summary> NanoCores. </summary>
+        /// <summary> Unit of processing power in one billionth of a CPU core. </summary>
         public static MetricUnit NanoCores { get; } = new MetricUnit(NanoCoresValue);
-        /// <summary> BitsPerSecond. </summary>
+        /// <summary> Rate unit of binary digits per second. </summary>
         public static MetricUnit BitsPerSecond { get; } = new MetricUnit(BitsPerSecondValue);
         /// <summary> Determines if two <see cref="MetricUnit"/> values are the same. </summary>
         public static bool operator ==(MetricUnit left, MetricUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricUnit"/> values are not the same. </summary>
         public static bool operator !=(MetricUnit left, MetricUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MetricUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MetricUnit"/>. </summary>
         public static implicit operator MetricUnit(string value) => new MetricUnit(value);
 
         /// <inheritdoc />
@@ -77,7 +77,7 @@ namespace Azure.Monitor.Query.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

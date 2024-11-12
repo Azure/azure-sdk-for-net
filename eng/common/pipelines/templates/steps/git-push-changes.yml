@@ -10,25 +10,14 @@ parameters:
   SkipCheckingForChanges: false
 
 steps:
-- pwsh: |
-    echo "git add -A"
-    git add -A
-
-    echo "git diff --name-status --cached --exit-code"
-    git diff --name-status --cached --exit-code
-
-    if ($LastExitCode -ne 0) {
-      echo "##vso[task.setvariable variable=HasChanges]$true"
-      echo "Changes detected so setting HasChanges=true"
-    }
-    else {
-      echo "##vso[task.setvariable variable=HasChanges]$false"
-      echo "No changes so skipping code push"
-    }
+- task: PowerShell@2
   displayName: Check for changes
   condition: and(succeeded(), eq(${{ parameters.SkipCheckingForChanges }}, false))
-  workingDirectory: ${{ parameters.WorkingDirectory }}
-  ignoreLASTEXITCODE: true
+  inputs:
+    pwsh: true
+    workingDirectory: ${{ parameters.WorkingDirectory }}
+    filePath: ${{ parameters.ScriptDirectory }}/check-for-git-changes.ps1
+    ignoreLASTEXITCODE: true
 
 - pwsh: |
     # Remove the repo owner from the front of the repo name if it exists there
@@ -38,6 +27,11 @@ steps:
   displayName: Remove Repo Owner from Repo Name
   condition: succeeded()
   workingDirectory: ${{ parameters.WorkingDirectory }}
+
+- template: /eng/common/pipelines/templates/steps/emit-rate-limit-metrics.yml
+  parameters:
+    GitHubUser: azure-sdk
+    GitHubToken: $(azuresdk-github-pat)
 
 - task: PowerShell@2
   displayName: Push changes

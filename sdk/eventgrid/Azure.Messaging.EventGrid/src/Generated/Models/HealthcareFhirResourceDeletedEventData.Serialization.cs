@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,10 +20,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<HealthcareFhirResourceType> resourceType = default;
-            Optional<string> resourceFhirAccount = default;
-            Optional<string> resourceFhirId = default;
-            Optional<long> resourceVersionId = default;
+            HealthcareFhirResourceType? resourceType = default;
+            string resourceFhirAccount = default;
+            string resourceFhirId = default;
+            long? resourceVersionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -56,7 +55,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new HealthcareFhirResourceDeletedEventData(Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Optional.ToNullable(resourceVersionId));
+            return new HealthcareFhirResourceDeletedEventData(resourceType, resourceFhirAccount, resourceFhirId, resourceVersionId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareFhirResourceDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareFhirResourceDeletedEventData(document.RootElement);
         }
 
         internal partial class HealthcareFhirResourceDeletedEventDataConverter : JsonConverter<HealthcareFhirResourceDeletedEventData>
@@ -65,6 +72,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override HealthcareFhirResourceDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

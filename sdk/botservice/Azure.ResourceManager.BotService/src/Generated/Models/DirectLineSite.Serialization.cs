@@ -6,127 +6,78 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class DirectLineSite : IUtf8JsonSerializable
+    public partial class DirectLineSite : IUtf8JsonSerializable, IJsonModel<DirectLineSite>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectLineSite>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DirectLineSite>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
-            {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
-            }
-            writer.WritePropertyName("siteName"u8);
-            writer.WriteStringValue(SiteName);
-            writer.WritePropertyName("isEnabled"u8);
-            writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsDefined(IsEndpointParametersEnabled))
-            {
-                writer.WritePropertyName("isEndpointParametersEnabled"u8);
-                writer.WriteBooleanValue(IsEndpointParametersEnabled.Value);
-            }
-            if (Optional.IsDefined(IsDetailedLoggingEnabled))
-            {
-                writer.WritePropertyName("isDetailedLoggingEnabled"u8);
-                writer.WriteBooleanValue(IsDetailedLoggingEnabled.Value);
-            }
-            if (Optional.IsDefined(IsBlockUserUploadEnabled))
-            {
-                if (IsBlockUserUploadEnabled != null)
-                {
-                    writer.WritePropertyName("isBlockUserUploadEnabled"u8);
-                    writer.WriteBooleanValue(IsBlockUserUploadEnabled.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isBlockUserUploadEnabled");
-                }
-            }
-            if (Optional.IsDefined(IsNoStorageEnabled))
-            {
-                writer.WritePropertyName("isNoStorageEnabled"u8);
-                writer.WriteBooleanValue(IsNoStorageEnabled.Value);
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsDefined(AppId))
-            {
-                writer.WritePropertyName("appId"u8);
-                writer.WriteStringValue(AppId);
-            }
-            if (Optional.IsDefined(IsV1Enabled))
-            {
-                writer.WritePropertyName("isV1Enabled"u8);
-                writer.WriteBooleanValue(IsV1Enabled.Value);
-            }
-            if (Optional.IsDefined(IsV3Enabled))
-            {
-                writer.WritePropertyName("isV3Enabled"u8);
-                writer.WriteBooleanValue(IsV3Enabled.Value);
-            }
-            if (Optional.IsDefined(IsSecureSiteEnabled))
-            {
-                writer.WritePropertyName("isSecureSiteEnabled"u8);
-                writer.WriteBooleanValue(IsSecureSiteEnabled.Value);
-            }
-            if (Optional.IsCollectionDefined(TrustedOrigins))
-            {
-                writer.WritePropertyName("trustedOrigins"u8);
-                writer.WriteStartArray();
-                foreach (var item in TrustedOrigins)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsWebChatSpeechEnabled))
-            {
-                writer.WritePropertyName("isWebChatSpeechEnabled"u8);
-                writer.WriteBooleanValue(IsWebChatSpeechEnabled.Value);
-            }
-            if (Optional.IsDefined(IsWebchatPreviewEnabled))
-            {
-                writer.WritePropertyName("isWebchatPreviewEnabled"u8);
-                writer.WriteBooleanValue(IsWebchatPreviewEnabled.Value);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DirectLineSite DeserializeDirectLineSite(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DirectLineSite>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DirectLineSite)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        DirectLineSite IJsonModel<DirectLineSite>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DirectLineSite>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DirectLineSite)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDirectLineSite(document.RootElement, options);
+        }
+
+        internal static DirectLineSite DeserializeDirectLineSite(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> siteId = default;
+            Guid? tenantId = default;
+            string siteId = default;
             string siteName = default;
-            Optional<string> key = default;
-            Optional<string> key2 = default;
+            string key = default;
+            string key2 = default;
             bool isEnabled = default;
-            Optional<bool> isTokenEnabled = default;
-            Optional<bool> isEndpointParametersEnabled = default;
-            Optional<bool> isDetailedLoggingEnabled = default;
-            Optional<bool?> isBlockUserUploadEnabled = default;
-            Optional<bool> isNoStorageEnabled = default;
-            Optional<ETag> eTag = default;
-            Optional<string> appId = default;
-            Optional<bool> isV1Enabled = default;
-            Optional<bool> isV3Enabled = default;
-            Optional<bool> isSecureSiteEnabled = default;
-            Optional<IList<string>> trustedOrigins = default;
-            Optional<bool> isWebChatSpeechEnabled = default;
-            Optional<bool> isWebchatPreviewEnabled = default;
+            bool? isTokenEnabled = default;
+            bool? isEndpointParametersEnabled = default;
+            bool? isDetailedLoggingEnabled = default;
+            bool? isBlockUserUploadEnabled = default;
+            bool? isNoStorageEnabled = default;
+            ETag? etag = default;
+            string appId = default;
+            bool? isV1Enabled = default;
+            bool? isV3Enabled = default;
+            bool? isSecureSiteEnabled = default;
+            IList<string> trustedOrigins = default;
+            bool? isWebChatSpeechEnabled = default;
+            bool? isWebchatPreviewEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -215,7 +166,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("appId"u8))
@@ -282,8 +233,64 @@ namespace Azure.ResourceManager.BotService.Models
                     isWebchatPreviewEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DirectLineSite(Optional.ToNullable(tenantId), siteId.Value, siteName, key.Value, key2.Value, isEnabled, Optional.ToNullable(isTokenEnabled), Optional.ToNullable(isEndpointParametersEnabled), Optional.ToNullable(isDetailedLoggingEnabled), Optional.ToNullable(isBlockUserUploadEnabled), Optional.ToNullable(isNoStorageEnabled), Optional.ToNullable(eTag), appId.Value, Optional.ToNullable(isV1Enabled), Optional.ToNullable(isV3Enabled), Optional.ToNullable(isSecureSiteEnabled), Optional.ToList(trustedOrigins), Optional.ToNullable(isWebChatSpeechEnabled), Optional.ToNullable(isWebchatPreviewEnabled));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DirectLineSite(
+                tenantId,
+                siteId,
+                siteName,
+                key,
+                key2,
+                isEnabled,
+                isTokenEnabled,
+                isEndpointParametersEnabled,
+                isDetailedLoggingEnabled,
+                isBlockUserUploadEnabled,
+                isNoStorageEnabled,
+                etag,
+                appId,
+                isV1Enabled,
+                isV3Enabled,
+                isSecureSiteEnabled,
+                trustedOrigins ?? new ChangeTrackingList<string>(),
+                isWebChatSpeechEnabled,
+                isWebchatPreviewEnabled,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DirectLineSite>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DirectLineSite>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DirectLineSite)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DirectLineSite IPersistableModel<DirectLineSite>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DirectLineSite>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDirectLineSite(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DirectLineSite)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DirectLineSite>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

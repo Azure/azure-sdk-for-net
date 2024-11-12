@@ -5,25 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
-    public partial class DetectedChangeData
+    public partial class DetectedChangeData : IUtf8JsonSerializable, IJsonModel<DetectedChangeData>
     {
-        internal static DetectedChangeData DeserializeDetectedChangeData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetectedChangeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DetectedChangeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DetectedChangeData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DetectedChangeData)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+        }
+
+        DetectedChangeData IJsonModel<DetectedChangeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DetectedChangeData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DetectedChangeData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDetectedChangeData(document.RootElement, options);
+        }
+
+        internal static DetectedChangeData DeserializeDetectedChangeData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ChangeProperties> properties = default;
+            ChangeProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -32,7 +78,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     {
                         continue;
                     }
-                    properties = ChangeProperties.DeserializeChangeProperties(property.Value);
+                    properties = ChangeProperties.DeserializeChangeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -59,8 +105,50 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DetectedChangeData(id, name, type, systemData.Value, properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DetectedChangeData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DetectedChangeData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DetectedChangeData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DetectedChangeData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DetectedChangeData IPersistableModel<DetectedChangeData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DetectedChangeData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDetectedChangeData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DetectedChangeData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DetectedChangeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

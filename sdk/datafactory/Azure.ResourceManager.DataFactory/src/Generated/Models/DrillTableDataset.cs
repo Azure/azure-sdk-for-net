@@ -7,15 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Drill server dataset. </summary>
-    public partial class DrillTableDataset : DataFactoryDatasetDefinition
+    public partial class DrillTableDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of DrillTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="DrillTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public DrillTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "DrillTable";
         }
 
-        /// <summary> Initializes a new instance of DrillTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="DrillTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -46,13 +45,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "DrillTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DrillTableDataset"/> for deserialization. </summary>
+        internal DrillTableDataset()
+        {
+        }
+
         /// <summary>
         /// This property will be retired. Please consider using schema + table properties instead.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

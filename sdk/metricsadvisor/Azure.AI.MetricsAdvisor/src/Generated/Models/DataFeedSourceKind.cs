@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator ==(DataFeedSourceKind left, DataFeedSourceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedSourceKind"/> values are not the same. </summary>
         public static bool operator !=(DataFeedSourceKind left, DataFeedSourceKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFeedSourceKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFeedSourceKind"/>. </summary>
         public static implicit operator DataFeedSourceKind(string value) => new DataFeedSourceKind(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

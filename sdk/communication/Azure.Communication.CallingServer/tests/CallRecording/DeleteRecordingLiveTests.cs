@@ -13,6 +13,7 @@ namespace Azure.Communication.CallingServer
         { }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task DeleteRecording()
         {
             if (SkipCallingServerInteractionLiveTests)
@@ -30,6 +31,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task DeleteRecording404()
         {
             if (SkipCallingServerInteractionLiveTests)

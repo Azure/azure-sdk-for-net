@@ -6,28 +6,128 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeInstanceDataMount
+    public partial class MachineLearningComputeInstanceDataMount : IUtf8JsonSerializable, IJsonModel<MachineLearningComputeInstanceDataMount>
     {
-        internal static MachineLearningComputeInstanceDataMount DeserializeMachineLearningComputeInstanceDataMount(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeInstanceDataMount>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningComputeInstanceDataMount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceDataMount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceDataMount)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source);
+            }
+            if (Optional.IsDefined(SourceType))
+            {
+                writer.WritePropertyName("sourceType"u8);
+                writer.WriteStringValue(SourceType.Value.ToString());
+            }
+            if (Optional.IsDefined(MountName))
+            {
+                writer.WritePropertyName("mountName"u8);
+                writer.WriteStringValue(MountName);
+            }
+            if (Optional.IsDefined(MountAction))
+            {
+                writer.WritePropertyName("mountAction"u8);
+                writer.WriteStringValue(MountAction.Value.ToString());
+            }
+            if (Optional.IsDefined(CreatedBy))
+            {
+                writer.WritePropertyName("createdBy"u8);
+                writer.WriteStringValue(CreatedBy);
+            }
+            if (Optional.IsDefined(MountPath))
+            {
+                writer.WritePropertyName("mountPath"u8);
+                writer.WriteStringValue(MountPath);
+            }
+            if (Optional.IsDefined(MountState))
+            {
+                writer.WritePropertyName("mountState"u8);
+                writer.WriteStringValue(MountState.Value.ToString());
+            }
+            if (Optional.IsDefined(MountedOn))
+            {
+                writer.WritePropertyName("mountedOn"u8);
+                writer.WriteStringValue(MountedOn.Value, "O");
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteStringValue(Error);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MachineLearningComputeInstanceDataMount IJsonModel<MachineLearningComputeInstanceDataMount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceDataMount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceDataMount)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningComputeInstanceDataMount(document.RootElement, options);
+        }
+
+        internal static MachineLearningComputeInstanceDataMount DeserializeMachineLearningComputeInstanceDataMount(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> source = default;
-            Optional<MachineLearningSourceType> sourceType = default;
-            Optional<string> mountName = default;
-            Optional<MachineLearningMountAction> mountAction = default;
-            Optional<string> createdBy = default;
-            Optional<string> mountPath = default;
-            Optional<MachineLearningMountState> mountState = default;
-            Optional<DateTimeOffset> mountedOn = default;
-            Optional<string> error = default;
+            string source = default;
+            MachineLearningSourceType? sourceType = default;
+            string mountName = default;
+            MachineLearningMountAction? mountAction = default;
+            string createdBy = default;
+            string mountPath = default;
+            MachineLearningMountState? mountState = default;
+            DateTimeOffset? mountedOn = default;
+            string error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -91,8 +191,247 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     error = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningComputeInstanceDataMount(source.Value, Optional.ToNullable(sourceType), mountName.Value, Optional.ToNullable(mountAction), createdBy.Value, mountPath.Value, Optional.ToNullable(mountState), Optional.ToNullable(mountedOn), error.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningComputeInstanceDataMount(
+                source,
+                sourceType,
+                mountName,
+                mountAction,
+                createdBy,
+                mountPath,
+                mountState,
+                mountedOn,
+                error,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  source: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Source))
+                {
+                    builder.Append("  source: ");
+                    if (Source.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Source}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Source}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sourceType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceType))
+                {
+                    builder.Append("  sourceType: ");
+                    builder.AppendLine($"'{SourceType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MountName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mountName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MountName))
+                {
+                    builder.Append("  mountName: ");
+                    if (MountName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MountName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MountName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MountAction), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mountAction: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MountAction))
+                {
+                    builder.Append("  mountAction: ");
+                    builder.AppendLine($"'{MountAction.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedBy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  createdBy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedBy))
+                {
+                    builder.Append("  createdBy: ");
+                    if (CreatedBy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CreatedBy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CreatedBy}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MountPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mountPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MountPath))
+                {
+                    builder.Append("  mountPath: ");
+                    if (MountPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MountPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MountPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MountState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mountState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MountState))
+                {
+                    builder.Append("  mountState: ");
+                    builder.AppendLine($"'{MountState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MountedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mountedOn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MountedOn))
+                {
+                    builder.Append("  mountedOn: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(MountedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Error), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  error: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Error))
+                {
+                    builder.Append("  error: ");
+                    if (Error.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Error}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Error}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningComputeInstanceDataMount>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceDataMount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceDataMount)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningComputeInstanceDataMount IPersistableModel<MachineLearningComputeInstanceDataMount>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceDataMount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningComputeInstanceDataMount(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceDataMount)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningComputeInstanceDataMount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

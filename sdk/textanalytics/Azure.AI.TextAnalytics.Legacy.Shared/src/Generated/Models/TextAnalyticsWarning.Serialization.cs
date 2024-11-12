@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -21,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             WarningCodeValue code = default;
             string message = default;
-            Optional<string> targetRef = default;
+            string targetRef = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -40,7 +39,15 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new TextAnalyticsWarning(code, message, targetRef.Value);
+            return new TextAnalyticsWarning(code, message, targetRef);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TextAnalyticsWarning FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTextAnalyticsWarning(document.RootElement);
         }
     }
 }

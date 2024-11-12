@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class AgentPoolNetworkPortRange : IUtf8JsonSerializable
+    public partial class AgentPoolNetworkPortRange : IUtf8JsonSerializable, IJsonModel<AgentPoolNetworkPortRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolNetworkPortRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AgentPoolNetworkPortRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkPortRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentPoolNetworkPortRange)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(PortStart))
             {
                 writer.WritePropertyName("portStart"u8);
@@ -30,18 +50,48 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AgentPoolNetworkPortRange DeserializeAgentPoolNetworkPortRange(JsonElement element)
+        AgentPoolNetworkPortRange IJsonModel<AgentPoolNetworkPortRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkPortRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentPoolNetworkPortRange)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentPoolNetworkPortRange(document.RootElement, options);
+        }
+
+        internal static AgentPoolNetworkPortRange DeserializeAgentPoolNetworkPortRange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> portStart = default;
-            Optional<int> portEnd = default;
-            Optional<AgentPoolNetworkPortProtocol> protocol = default;
+            int? portStart = default;
+            int? portEnd = default;
+            AgentPoolNetworkPortProtocol? protocol = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("portStart"u8))
@@ -71,8 +121,106 @@ namespace Azure.ResourceManager.ContainerService.Models
                     protocol = new AgentPoolNetworkPortProtocol(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AgentPoolNetworkPortRange(Optional.ToNullable(portStart), Optional.ToNullable(portEnd), Optional.ToNullable(protocol));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AgentPoolNetworkPortRange(portStart, portEnd, protocol, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PortStart), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  portStart: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PortStart))
+                {
+                    builder.Append("  portStart: ");
+                    builder.AppendLine($"{PortStart.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PortEnd), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  portEnd: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PortEnd))
+                {
+                    builder.Append("  portEnd: ");
+                    builder.AppendLine($"{PortEnd.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  protocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Protocol))
+                {
+                    builder.Append("  protocol: ");
+                    builder.AppendLine($"'{Protocol.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AgentPoolNetworkPortRange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkPortRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AgentPoolNetworkPortRange)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AgentPoolNetworkPortRange IPersistableModel<AgentPoolNetworkPortRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkPortRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAgentPoolNetworkPortRange(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AgentPoolNetworkPortRange)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AgentPoolNetworkPortRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

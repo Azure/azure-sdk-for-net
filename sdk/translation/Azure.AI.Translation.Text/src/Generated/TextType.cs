@@ -25,15 +25,15 @@ namespace Azure.AI.Translation.Text
         private const string PlainValue = "Plain";
         private const string HtmlValue = "Html";
 
-        /// <summary> Plain. </summary>
+        /// <summary> Plain text. </summary>
         public static TextType Plain { get; } = new TextType(PlainValue);
-        /// <summary> Html. </summary>
+        /// <summary> HTML-encoded text. </summary>
         public static TextType Html { get; } = new TextType(HtmlValue);
         /// <summary> Determines if two <see cref="TextType"/> values are the same. </summary>
         public static bool operator ==(TextType left, TextType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TextType"/> values are not the same. </summary>
         public static bool operator !=(TextType left, TextType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TextType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TextType"/>. </summary>
         public static implicit operator TextType(string value) => new TextType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.AI.Translation.Text
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

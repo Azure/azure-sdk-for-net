@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Functions.Worker
         public UserEventResponse(System.BinaryData data, Microsoft.Azure.Functions.Worker.WebPubSubDataType dataType) { }
         public UserEventResponse(string data, Microsoft.Azure.Functions.Worker.WebPubSubDataType dataType = Microsoft.Azure.Functions.Worker.WebPubSubDataType.Text) { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("states")]
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ConnectionStates { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ConnectionStates { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("data")]
         public System.BinaryData Data { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("dataType")]

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Search.Models;
@@ -33,8 +32,24 @@ namespace Azure.ResourceManager.Search
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01";
+            _apiVersion = apiVersion ?? "2024-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string searchServiceName, string name, SearchManagementRequestOptions searchManagementRequestOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Search/searchServices/", false);
+            uri.AppendPath(searchServiceName, true);
+            uri.AppendPath("/createQueryKey/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string searchServiceName, string name, SearchManagementRequestOptions searchManagementRequestOptions)
@@ -62,7 +77,7 @@ namespace Azure.ResourceManager.Search
         /// <summary> Generates a new query key for the specified search service. You can create up to 50 query keys per service. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="name"> The name of the new query API key. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -94,7 +109,7 @@ namespace Azure.ResourceManager.Search
         /// <summary> Generates a new query key for the specified search service. You can create up to 50 query keys per service. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="name"> The name of the new query API key. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -123,6 +138,21 @@ namespace Azure.ResourceManager.Search
             }
         }
 
+        internal RequestUriBuilder CreateListBySearchServiceRequestUri(string subscriptionId, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Search/searchServices/", false);
+            uri.AppendPath(searchServiceName, true);
+            uri.AppendPath("/listQueryKeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySearchServiceRequest(string subscriptionId, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -144,10 +174,10 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Returns the list of query API keys for the given Azure Cognitive Search service. </summary>
+        /// <summary> Returns the list of query API keys for the given Azure AI Search service. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is null. </exception>
@@ -174,10 +204,10 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Returns the list of query API keys for the given Azure Cognitive Search service. </summary>
+        /// <summary> Returns the list of query API keys for the given Azure AI Search service. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is null. </exception>
@@ -202,6 +232,22 @@ namespace Azure.ResourceManager.Search
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string searchServiceName, string key, SearchManagementRequestOptions searchManagementRequestOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Search/searchServices/", false);
+            uri.AppendPath(searchServiceName, true);
+            uri.AppendPath("/deleteQueryKey/", false);
+            uri.AppendPath(key, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string searchServiceName, string key, SearchManagementRequestOptions searchManagementRequestOptions)
@@ -229,7 +275,7 @@ namespace Azure.ResourceManager.Search
         /// <summary> Deletes the specified query key. Unlike admin keys, query keys are not regenerated. The process for regenerating a query key is to delete and then recreate it. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="key"> The query key to be deleted. Query keys are identified by value, not by name. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -258,7 +304,7 @@ namespace Azure.ResourceManager.Search
         /// <summary> Deletes the specified query key. Unlike admin keys, query keys are not regenerated. The process for regenerating a query key is to delete and then recreate it. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="key"> The query key to be deleted. Query keys are identified by value, not by name. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -284,6 +330,14 @@ namespace Azure.ResourceManager.Search
             }
         }
 
+        internal RequestUriBuilder CreateListBySearchServiceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySearchServiceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -298,11 +352,11 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Returns the list of query API keys for the given Azure Cognitive Search service. </summary>
+        /// <summary> Returns the list of query API keys for the given Azure AI Search service. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is null. </exception>
@@ -330,11 +384,11 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Returns the list of query API keys for the given Azure Cognitive Search service. </summary>
+        /// <summary> Returns the list of query API keys for the given Azure AI Search service. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is null. </exception>

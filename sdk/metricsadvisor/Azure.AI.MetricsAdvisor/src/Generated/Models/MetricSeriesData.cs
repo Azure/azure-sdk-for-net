@@ -8,30 +8,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MetricDataItem. </summary>
     public partial class MetricSeriesData
     {
-        /// <summary> Initializes a new instance of MetricSeriesData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesData"/>. </summary>
         /// <param name="definition"></param>
         /// <param name="timestamps"> timestamps of the data related to this time series. </param>
         /// <param name="metricValues"> values of the data related to this time series. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="definition"/>, <paramref name="timestamps"/> or <paramref name="metricValues"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="definition"/> is null. </exception>
         internal MetricSeriesData(MetricSeriesDefinition definition, IEnumerable<DateTimeOffset> timestamps, IEnumerable<double> metricValues)
         {
             Argument.AssertNotNull(definition, nameof(definition));
-            Argument.AssertNotNull(timestamps, nameof(timestamps));
-            Argument.AssertNotNull(metricValues, nameof(metricValues));
 
             Definition = definition;
             Timestamps = timestamps.ToList();
             MetricValues = metricValues.ToList();
         }
 
-        /// <summary> Initializes a new instance of MetricSeriesData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesData"/>. </summary>
         /// <param name="definition"></param>
         /// <param name="timestamps"> timestamps of the data related to this time series. </param>
         /// <param name="metricValues"> values of the data related to this time series. </param>

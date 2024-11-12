@@ -2,14 +2,23 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using NUnit.Framework;
 
-namespace Azure.Data.AppConfiguration
+namespace Azure.Data.AppConfiguration.Tests
 {
     public class SecretReferenceConfigurationSettingTests
     {
         private const string ReferenceValue = "{\"uri\":\"http://example.com/secret\"}";
         private const string ReferenceValueWithFormatting = "{\"uri\"          :         \"http://example.com/secret\"}";
+
+        private const string UnknownAttributeReferenceValue = @"{
+            ""uri"":""http://example.com/secret"",
+            ""custom_stuff"": { ""id"":""dummy"", ""description"":""dummy"", ""enabled"":false },
+            ""more_custom"" : [1, 2, 3, 4]
+            }";
+
+        private readonly JsonElementEqualityComparer _jsonComparer = new();
 
         [Test]
         public void CreatingSetsContentType()
@@ -27,54 +36,119 @@ namespace Azure.Data.AppConfiguration
         [TestCase(null)]
         public void CanRountripValue(string value)
         {
-            var featureFlag = new SecretReferenceConfigurationSetting();
-            featureFlag.Value = value;
+            var secretSetting = new SecretReferenceConfigurationSetting();
+            secretSetting.Value = value;
 
-            Assert.AreEqual(value, featureFlag.Value);
+            try
+            {
+                using var expected = JsonDocument.Parse(value ?? "");
+                using var actual = JsonDocument.Parse(secretSetting.Value);
+
+                Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
+            }
+            catch (JsonException)
+            {
+                // For the cases that are not legal JSON, this exception will occur
+                // and we just want to make sure that the string value is set correctly.
+                Assert.AreEqual(value, secretSetting.Value);
+            }
         }
 
         [Test]
         public void CanFormatValue()
         {
-            var featureFlag = new SecretReferenceConfigurationSetting();
-            featureFlag.Value = ReferenceValueWithFormatting;
+            var secretSetting = new SecretReferenceConfigurationSetting();
+            secretSetting.Value = ReferenceValueWithFormatting;
 
-            Assert.AreEqual(ReferenceValue, featureFlag.Value);
-        }
+            using var expected = JsonDocument.Parse(ReferenceValueWithFormatting);
+            using var actual = JsonDocument.Parse(secretSetting.Value);
+
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));        }
 
         [Test]
         public void NewFeatureReferenceSerialized()
         {
-            var reference = new SecretReferenceConfigurationSetting("key", new Uri("http://example.com/secret"));
-            Assert.AreEqual(ReferenceValue, reference.Value);
+            var secretSetting = new SecretReferenceConfigurationSetting("key", new Uri("http://example.com/secret"));
+
+            using var expected = JsonDocument.Parse(ReferenceValueWithFormatting);
+            using var actual = JsonDocument.Parse(secretSetting.Value);
+
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
 
         [Test]
         public void ReferenceParsedOnAssignment()
         {
-            var reference = new SecretReferenceConfigurationSetting("key", new Uri("http://example.org"));
-            reference.Value = ReferenceValueWithFormatting;
-            Assert.AreEqual("http://example.com/secret", reference.SecretId.AbsoluteUri);
+            var secretSetting = new SecretReferenceConfigurationSetting("key", new Uri("http://example.org"));
+            secretSetting.Value = ReferenceValueWithFormatting;
+
+            using var expected = JsonDocument.Parse(ReferenceValueWithFormatting);
+            using var actual = JsonDocument.Parse(secretSetting.Value);
+
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
 
         [Test]
         public void ReadingPropertiedDoesNotChangeValue()
         {
-            var feature = new SecretReferenceConfigurationSetting();
-            feature.Value = ReferenceValueWithFormatting;
-            _ = feature.SecretId;
+            var secretSetting = new SecretReferenceConfigurationSetting("key", new Uri("http://example.com/secret"));
+            secretSetting.Value = ReferenceValueWithFormatting;
+            _ = secretSetting.SecretId;
 
-            Assert.AreEqual(ReferenceValue, feature.Value);
+            using var expected = JsonDocument.Parse(ReferenceValueWithFormatting);
+            using var actual = JsonDocument.Parse(secretSetting.Value);
+
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
 
         [Test]
         public void SettingSecretUriChangesValue()
         {
-            var feature = new SecretReferenceConfigurationSetting();
-            feature.Value = ReferenceValueWithFormatting;
-            feature.SecretId = new Uri("http://example.org");
+            var secretSetting = new SecretReferenceConfigurationSetting("key", new Uri("http://example.com/secret"));
+            secretSetting.Value = ReferenceValueWithFormatting;
+            secretSetting.SecretId = new Uri("http://example.org");
 
-            Assert.AreEqual("{\"uri\":\"http://example.org/\"}", feature.Value);
+            using var expected = JsonDocument.Parse("{\"uri\":\"http://example.org/\"}");
+            using var actual = JsonDocument.Parse(secretSetting.Value);
+
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
+        }
+
+        [Test]
+        public void UnknownAttributesArePreservedWhenReadingValue()
+        {
+            var secretSetting = new SecretReferenceConfigurationSetting();
+            secretSetting.Value = UnknownAttributeReferenceValue;
+
+            using var expected = JsonDocument.Parse(UnknownAttributeReferenceValue);
+
+            // Since the value is generated on each read, read and compare multiple times to ensure
+            // that the result is consistent.
+            for (var index = 0; index < 3; ++index)
+            {
+                using var actual = JsonDocument.Parse(secretSetting.Value);
+                Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
+            }
+        }
+
+        [Test]
+        public void UnknownAttributesArePreservedChangingProperties()
+        {
+            var originalSecretSetting = new SecretReferenceConfigurationSetting();
+            originalSecretSetting.Value = UnknownAttributeReferenceValue;
+
+            var secretSetting = new SecretReferenceConfigurationSetting();
+            secretSetting.Value = UnknownAttributeReferenceValue;
+
+            secretSetting.SecretId = new Uri("https://www.i-was-changed.org");
+
+            var expectedJson = originalSecretSetting.Value
+                .Replace(originalSecretSetting.SecretId.AbsoluteUri, secretSetting.SecretId.AbsoluteUri);
+
+            using var expected = JsonDocument.Parse(expectedJson);
+            using var actual = JsonDocument.Parse(secretSetting.Value);
+
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
     }
 }

@@ -5,26 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class DataCollectionEndpointLogsIngestion : IUtf8JsonSerializable
+    internal partial class DataCollectionEndpointLogsIngestion : IUtf8JsonSerializable, IJsonModel<DataCollectionEndpointLogsIngestion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionEndpointLogsIngestion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataCollectionEndpointLogsIngestion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DataCollectionEndpointLogsIngestion DeserializeDataCollectionEndpointLogsIngestion(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointLogsIngestion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataCollectionEndpointLogsIngestion)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        DataCollectionEndpointLogsIngestion IJsonModel<DataCollectionEndpointLogsIngestion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointLogsIngestion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataCollectionEndpointLogsIngestion)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataCollectionEndpointLogsIngestion(document.RootElement, options);
+        }
+
+        internal static DataCollectionEndpointLogsIngestion DeserializeDataCollectionEndpointLogsIngestion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> endpoint = default;
+            string endpoint = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoint"u8))
@@ -32,8 +67,44 @@ namespace Azure.ResourceManager.Monitor.Models
                     endpoint = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataCollectionEndpointLogsIngestion(endpoint.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataCollectionEndpointLogsIngestion(endpoint, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataCollectionEndpointLogsIngestion>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointLogsIngestion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionEndpointLogsIngestion)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataCollectionEndpointLogsIngestion IPersistableModel<DataCollectionEndpointLogsIngestion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointLogsIngestion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataCollectionEndpointLogsIngestion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionEndpointLogsIngestion)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataCollectionEndpointLogsIngestion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string PXEValue = "PXE";
+        private const string PxeValue = "PXE";
 
         /// <summary> PXE. </summary>
-        public static BootstrapProtocol PXE { get; } = new BootstrapProtocol(PXEValue);
+        public static BootstrapProtocol Pxe { get; } = new BootstrapProtocol(PxeValue);
         /// <summary> Determines if two <see cref="BootstrapProtocol"/> values are the same. </summary>
         public static bool operator ==(BootstrapProtocol left, BootstrapProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BootstrapProtocol"/> values are not the same. </summary>
         public static bool operator !=(BootstrapProtocol left, BootstrapProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BootstrapProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BootstrapProtocol"/>. </summary>
         public static implicit operator BootstrapProtocol(string value) => new BootstrapProtocol(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

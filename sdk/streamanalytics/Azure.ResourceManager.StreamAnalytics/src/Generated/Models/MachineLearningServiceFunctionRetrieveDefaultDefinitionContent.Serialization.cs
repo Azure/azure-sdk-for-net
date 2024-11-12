@@ -5,18 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class MachineLearningServiceFunctionRetrieveDefaultDefinitionContent : IUtf8JsonSerializable
+    public partial class MachineLearningServiceFunctionRetrieveDefaultDefinitionContent : IUtf8JsonSerializable, IJsonModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("bindingType"u8);
-            writer.WriteStringValue(BindingType);
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionRetrieveDefaultDefinitionContent)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("bindingRetrievalProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ExecuteEndpoint))
@@ -30,7 +48,104 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStringValue(UdfType.Value.ToString());
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
+
+        MachineLearningServiceFunctionRetrieveDefaultDefinitionContent IJsonModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionRetrieveDefaultDefinitionContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningServiceFunctionRetrieveDefaultDefinitionContent(document.RootElement, options);
+        }
+
+        internal static MachineLearningServiceFunctionRetrieveDefaultDefinitionContent DeserializeMachineLearningServiceFunctionRetrieveDefaultDefinitionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string bindingType = default;
+            string executeEndpoint = default;
+            StreamingJobFunctionUdfType? udfType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("bindingType"u8))
+                {
+                    bindingType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("bindingRetrievalProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("executeEndpoint"u8))
+                        {
+                            executeEndpoint = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("udfType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            udfType = new StreamingJobFunctionUdfType(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningServiceFunctionRetrieveDefaultDefinitionContent(bindingType, serializedAdditionalRawData, executeEndpoint, udfType);
+        }
+
+        BinaryData IPersistableModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionRetrieveDefaultDefinitionContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningServiceFunctionRetrieveDefaultDefinitionContent IPersistableModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningServiceFunctionRetrieveDefaultDefinitionContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionRetrieveDefaultDefinitionContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

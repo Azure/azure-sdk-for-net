@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class SupportedVersionProperties : IUtf8JsonSerializable
+    public partial class SupportedVersionProperties : IUtf8JsonSerializable, IJsonModel<SupportedVersionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportedVersionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SupportedVersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SupportedVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SupportedVersionProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -30,30 +49,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("vendorFirmwareVersion"u8);
                 writer.WriteStringValue(VendorFirmwareVersion);
             }
-            if (Optional.IsDefined(IsCurrent))
+            if (Optional.IsDefined(IsDefault))
             {
-                writer.WritePropertyName("isCurrent"u8);
-                writer.WriteStringValue(IsCurrent.Value.ToString());
+                writer.WritePropertyName("isDefault"u8);
+                writer.WriteStringValue(IsDefault.Value.ToString());
             }
-            if (Optional.IsDefined(IsTest))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("isTest"u8);
-                writer.WriteStringValue(IsTest.Value.ToString());
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
-            writer.WriteEndObject();
         }
 
-        internal static SupportedVersionProperties DeserializeSupportedVersionProperties(JsonElement element)
+        SupportedVersionProperties IJsonModel<SupportedVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SupportedVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SupportedVersionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSupportedVersionProperties(document.RootElement, options);
+        }
+
+        internal static SupportedVersionProperties DeserializeSupportedVersionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<string> vendorOSVersion = default;
-            Optional<string> vendorFirmwareVersion = default;
-            Optional<IsCurrentVersion> isCurrent = default;
-            Optional<IsTestVersion> isTest = default;
+            string version = default;
+            string vendorOSVersion = default;
+            string vendorFirmwareVersion = default;
+            NetworkFabricBooleanValue? isDefault = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -71,26 +114,53 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     vendorFirmwareVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isCurrent"u8))
+                if (property.NameEquals("isDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isCurrent = new IsCurrentVersion(property.Value.GetString());
+                    isDefault = new NetworkFabricBooleanValue(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isTest"u8))
+                if (options.Format != "W")
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isTest = new IsTestVersion(property.Value.GetString());
-                    continue;
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new SupportedVersionProperties(version.Value, vendorOSVersion.Value, vendorFirmwareVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isTest));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SupportedVersionProperties(version, vendorOSVersion, vendorFirmwareVersion, isDefault, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SupportedVersionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SupportedVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SupportedVersionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SupportedVersionProperties IPersistableModel<SupportedVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SupportedVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSupportedVersionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SupportedVersionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SupportedVersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

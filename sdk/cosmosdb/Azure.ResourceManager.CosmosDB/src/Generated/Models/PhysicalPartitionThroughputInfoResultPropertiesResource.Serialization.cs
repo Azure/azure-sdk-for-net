@@ -5,37 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class PhysicalPartitionThroughputInfoResultPropertiesResource : IUtf8JsonSerializable
+    internal partial class PhysicalPartitionThroughputInfoResultPropertiesResource : IUtf8JsonSerializable, IJsonModel<PhysicalPartitionThroughputInfoResultPropertiesResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhysicalPartitionThroughputInfoResultPropertiesResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PhysicalPartitionThroughputInfoResultPropertiesResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PhysicalPartitionThroughputInfo))
-            {
-                writer.WritePropertyName("physicalPartitionThroughputInfo"u8);
-                writer.WriteStartArray();
-                foreach (var item in PhysicalPartitionThroughputInfo)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static PhysicalPartitionThroughputInfoResultPropertiesResource DeserializePhysicalPartitionThroughputInfoResultPropertiesResource(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PhysicalPartitionThroughputInfoResultPropertiesResource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PhysicalPartitionThroughputInfoResultPropertiesResource)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        PhysicalPartitionThroughputInfoResultPropertiesResource IJsonModel<PhysicalPartitionThroughputInfoResultPropertiesResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PhysicalPartitionThroughputInfoResultPropertiesResource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PhysicalPartitionThroughputInfoResultPropertiesResource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePhysicalPartitionThroughputInfoResultPropertiesResource(document.RootElement, options);
+        }
+
+        internal static PhysicalPartitionThroughputInfoResultPropertiesResource DeserializePhysicalPartitionThroughputInfoResultPropertiesResource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<PhysicalPartitionThroughputInfoResource>> physicalPartitionThroughputInfo = default;
+            IList<PhysicalPartitionThroughputInfoResource> physicalPartitionThroughputInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("physicalPartitionThroughputInfo"u8))
@@ -47,13 +73,89 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<PhysicalPartitionThroughputInfoResource> array = new List<PhysicalPartitionThroughputInfoResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PhysicalPartitionThroughputInfoResource.DeserializePhysicalPartitionThroughputInfoResource(item));
+                        array.Add(PhysicalPartitionThroughputInfoResource.DeserializePhysicalPartitionThroughputInfoResource(item, options));
                     }
                     physicalPartitionThroughputInfo = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PhysicalPartitionThroughputInfoResultPropertiesResource(Optional.ToList(physicalPartitionThroughputInfo));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PhysicalPartitionThroughputInfoResultPropertiesResource(physicalPartitionThroughputInfo ?? new ChangeTrackingList<PhysicalPartitionThroughputInfoResource>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalPartitionThroughputInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  physicalPartitionThroughputInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PhysicalPartitionThroughputInfo))
+                {
+                    if (PhysicalPartitionThroughputInfo.Any())
+                    {
+                        builder.Append("  physicalPartitionThroughputInfo: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PhysicalPartitionThroughputInfo)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  physicalPartitionThroughputInfo: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PhysicalPartitionThroughputInfoResultPropertiesResource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PhysicalPartitionThroughputInfoResultPropertiesResource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PhysicalPartitionThroughputInfoResultPropertiesResource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PhysicalPartitionThroughputInfoResultPropertiesResource IPersistableModel<PhysicalPartitionThroughputInfoResultPropertiesResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PhysicalPartitionThroughputInfoResultPropertiesResource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePhysicalPartitionThroughputInfoResultPropertiesResource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PhysicalPartitionThroughputInfoResultPropertiesResource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PhysicalPartitionThroughputInfoResultPropertiesResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

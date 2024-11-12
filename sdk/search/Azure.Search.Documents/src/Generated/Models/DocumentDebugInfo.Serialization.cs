@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -18,7 +17,8 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<SemanticDebugInfo> semantic = default;
+            SemanticDebugInfo semantic = default;
+            VectorsDebugInfo vectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("semantic"u8))
@@ -30,8 +30,25 @@ namespace Azure.Search.Documents.Models
                     semantic = SemanticDebugInfo.DeserializeSemanticDebugInfo(property.Value);
                     continue;
                 }
+                if (property.NameEquals("vectors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vectors = VectorsDebugInfo.DeserializeVectorsDebugInfo(property.Value);
+                    continue;
+                }
             }
-            return new DocumentDebugInfo(semantic.Value);
+            return new DocumentDebugInfo(semantic, vectors);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentDebugInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentDebugInfo(document.RootElement);
         }
     }
 }

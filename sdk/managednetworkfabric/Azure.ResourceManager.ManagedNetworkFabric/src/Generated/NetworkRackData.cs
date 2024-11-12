@@ -15,26 +15,55 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A class representing the NetworkRack data model.
-    /// The NetworkRack resource definition.
+    /// The Network Rack resource definition.
     /// </summary>
     public partial class NetworkRackData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkRackData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkRackData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="networkRackSku"> Network Rack SKU name. </param>
-        /// <param name="networkFabricId"> Network Fabric ARM resource id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkRackSku"/> or <paramref name="networkFabricId"/> is null. </exception>
-        public NetworkRackData(AzureLocation location, string networkRackSku, string networkFabricId) : base(location)
+        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
+        public NetworkRackData(AzureLocation location, ResourceIdentifier networkFabricId) : base(location)
         {
-            Argument.AssertNotNull(networkRackSku, nameof(networkRackSku));
             Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
 
-            NetworkRackSku = networkRackSku;
             NetworkFabricId = networkFabricId;
-            NetworkDevices = new ChangeTrackingList<string>();
+            NetworkDevices = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of NetworkRackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,28 +71,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkRackSku"> Network Rack SKU name. </param>
-        /// <param name="networkFabricId"> Network Fabric ARM resource id. </param>
-        /// <param name="networkDevices"> List of network device ARM resource ids. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string networkRackSku, string networkFabricId, IReadOnlyList<string> networkDevices, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="networkRackType"> Network Rack SKU name. </param>
+        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
+        /// <param name="networkDevices"> List of network device ARM resource IDs. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkRackType? networkRackType, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDevices, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
-            NetworkRackSku = networkRackSku;
+            NetworkRackType = networkRackType;
             NetworkFabricId = networkFabricId;
             NetworkDevices = networkDevices;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkRackData"/> for deserialization. </summary>
+        internal NetworkRackData()
+        {
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Network Rack SKU name. </summary>
-        public string NetworkRackSku { get; set; }
-        /// <summary> Network Fabric ARM resource id. </summary>
-        public string NetworkFabricId { get; set; }
-        /// <summary> List of network device ARM resource ids. </summary>
-        public IReadOnlyList<string> NetworkDevices { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkRackType? NetworkRackType { get; set; }
+        /// <summary> ARM resource ID of the Network Fabric. </summary>
+        public ResourceIdentifier NetworkFabricId { get; set; }
+        /// <summary> List of network device ARM resource IDs. </summary>
+        public IReadOnlyList<ResourceIdentifier> NetworkDevices { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake
@@ -44,5 +43,7 @@ namespace Azure.Storage.Files.DataLake
         public string XMsContinuation => _response.Headers.TryGetValue("x-ms-continuation", out string value) ? value : null;
         /// <summary> The version of the REST protocol used to process the request. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
+        /// <summary> Indicates the structured message body was accepted and mirrors back the message schema version and properties. </summary>
+        public string StructuredBodyType => _response.Headers.TryGetValue("x-ms-structured-body", out string value) ? value : null;
     }
 }

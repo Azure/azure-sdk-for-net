@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// The dead-letter subqueue contains messages that have been dead-lettered.
-        /// <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues#moving-messages-to-the-dlq"/>
+        /// <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-dead-letter-queues#moving-messages-to-the-dlq"/>
         /// </summary>
         DeadLetter = 1,
 
@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus
         /// <description>The destination queue or topic exceeds the maximum entity size.</description>
         /// </item>
         /// </list>
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues#dead-lettering-in-forwardto-or-sendvia-scenarios"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-dead-letter-queues#dead-lettering-in-forwardto-or-sendvia-scenarios"/>
         /// </summary>
         TransferDeadLetter = 2
     }

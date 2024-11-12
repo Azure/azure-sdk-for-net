@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing an EncryptionScope along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EncryptionScopeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEncryptionScopeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource" /> using the GetEncryptionScope method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EncryptionScopeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEncryptionScopeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetEncryptionScope method.
     /// </summary>
     public partial class EncryptionScopeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EncryptionScopeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="encryptionScopeName"> The encryptionScopeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Storage
         private readonly EncryptionScopesRestOperations _encryptionScopeRestClient;
         private readonly EncryptionScopeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/encryptionScopes";
+
         /// <summary> Initializes a new instance of the <see cref="EncryptionScopeResource"/> class for mocking. </summary>
         protected EncryptionScopeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EncryptionScopeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EncryptionScopeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EncryptionScopeResource(ArmClient client, EncryptionScopeData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/encryptionScopes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>EncryptionScopes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +139,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>EncryptionScopes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +178,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EncryptionScopes_Patch</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,6 +220,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EncryptionScopes_Patch</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

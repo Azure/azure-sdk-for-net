@@ -22,49 +22,49 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                writer.WriteObjectValue(Query);
+                writer.WriteObjectValue<object>(Query);
             }
             if (Optional.IsDefined(PageSize))
             {
                 writer.WritePropertyName("pageSize"u8);
-                writer.WriteObjectValue(PageSize);
+                writer.WriteObjectValue<object>(PageSize);
             }
             if (Optional.IsDefined(PreferredRegions))
             {
                 writer.WritePropertyName("preferredRegions"u8);
-                writer.WriteObjectValue(PreferredRegions);
+                writer.WriteObjectValue<object>(PreferredRegions);
             }
             if (Optional.IsDefined(DetectDatetime))
             {
                 writer.WritePropertyName("detectDatetime"u8);
-                writer.WriteObjectValue(DetectDatetime);
+                writer.WriteObjectValue<object>(DetectDatetime);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
-                writer.WriteObjectValue(AdditionalColumns);
+                writer.WriteObjectValue<object>(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-                writer.WriteObjectValue(SourceRetryCount);
+                writer.WriteObjectValue<object>(SourceRetryCount);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-                writer.WriteObjectValue(SourceRetryWait);
+                writer.WriteObjectValue<object>(SourceRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -75,15 +75,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> query = default;
-            Optional<object> pageSize = default;
-            Optional<object> preferredRegions = default;
-            Optional<object> detectDatetime = default;
-            Optional<object> additionalColumns = default;
+            object query = default;
+            object pageSize = default;
+            object preferredRegions = default;
+            object detectDatetime = default;
+            object additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CosmosDbSqlApiSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, pageSize.Value, preferredRegions.Value, detectDatetime.Value, additionalColumns.Value);
+            return new CosmosDbSqlApiSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                query,
+                pageSize,
+                preferredRegions,
+                detectDatetime,
+                additionalColumns);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CosmosDbSqlApiSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCosmosDbSqlApiSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class CosmosDbSqlApiSourceConverter : JsonConverter<CosmosDbSqlApiSource>
@@ -177,6 +203,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override CosmosDbSqlApiSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

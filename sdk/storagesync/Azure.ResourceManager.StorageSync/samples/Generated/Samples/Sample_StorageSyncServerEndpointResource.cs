@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StorageSync;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync.Samples
@@ -128,7 +125,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         public async Task RecallAction_ServerEndpointsRecallAction()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/ServerEndpoints_Recall.json
-            // this example is just showing the usage of "ServerEndpoints_recallAction" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ServerEndpoints_RecallAction" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

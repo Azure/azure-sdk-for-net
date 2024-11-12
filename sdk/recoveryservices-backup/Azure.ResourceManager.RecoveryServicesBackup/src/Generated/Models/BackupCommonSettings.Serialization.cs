@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupCommonSettings : IUtf8JsonSerializable
+    public partial class BackupCommonSettings : IUtf8JsonSerializable, IJsonModel<BackupCommonSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupCommonSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BackupCommonSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupCommonSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupCommonSettings)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
@@ -30,18 +49,48 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("isCompression"u8);
                 writer.WriteBooleanValue(IsCompression.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static BackupCommonSettings DeserializeBackupCommonSettings(JsonElement element)
+        BackupCommonSettings IJsonModel<BackupCommonSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupCommonSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupCommonSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupCommonSettings(document.RootElement, options);
+        }
+
+        internal static BackupCommonSettings DeserializeBackupCommonSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> timeZone = default;
-            Optional<bool> isSqlCompression = default;
-            Optional<bool> isCompression = default;
+            string timeZone = default;
+            bool? isSqlCompression = default;
+            bool? isCompression = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeZone"u8))
@@ -67,8 +116,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isCompression = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackupCommonSettings(timeZone.Value, Optional.ToNullable(isSqlCompression), Optional.ToNullable(isCompression));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BackupCommonSettings(timeZone, isSqlCompression, isCompression, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupCommonSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupCommonSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BackupCommonSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BackupCommonSettings IPersistableModel<BackupCommonSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupCommonSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBackupCommonSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupCommonSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupCommonSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

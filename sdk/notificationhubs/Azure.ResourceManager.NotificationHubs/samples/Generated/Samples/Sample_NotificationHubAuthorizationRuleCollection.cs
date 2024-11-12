@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NotificationHubs;
 using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Samples
 {
     public partial class Sample_NotificationHubAuthorizationRuleCollection
     {
-        // NotificationHubAuthorizationRuleCreate
+        // NotificationHubs_CreateOrUpdateAuthorizationRule
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_NotificationHubAuthorizationRuleCreate()
+        public async Task CreateOrUpdate_NotificationHubsCreateOrUpdateAuthorizationRule()
         {
-            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/stable/2017-04-01/examples/NotificationHubs/NotificationHubAuthorizationRuleCreate.json
+            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/AuthorizationRuleCreateOrUpdate.json
             // this example is just showing the usage of "NotificationHubs_CreateOrUpdateAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -44,15 +41,15 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             NotificationHubAuthorizationRuleCollection collection = notificationHub.GetNotificationHubAuthorizationRules();
 
             // invoke the operation
-            string authorizationRuleName = "DefaultListenSharedAccessSignature";
-            SharedAccessAuthorizationRuleCreateOrUpdateContent content = new SharedAccessAuthorizationRuleCreateOrUpdateContent(new SharedAccessAuthorizationRuleProperties()
+            string authorizationRuleName = "MyManageSharedAccessKey";
+            NotificationHubAuthorizationRuleData data = new NotificationHubAuthorizationRuleData(new AzureLocation("placeholder"))
             {
-                Rights =
+                AccessRights =
 {
-AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
+AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
 },
-            });
-            ArmOperation<NotificationHubAuthorizationRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, authorizationRuleName, content);
+            };
+            ArmOperation<NotificationHubAuthorizationRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, authorizationRuleName, data);
             NotificationHubAuthorizationRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -62,12 +59,12 @@ AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NotificationHubAuthorizationRuleGet
+        // NotificationHubs_GetAuthorizationRule
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_NotificationHubAuthorizationRuleGet()
+        public async Task Get_NotificationHubsGetAuthorizationRule()
         {
-            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/stable/2017-04-01/examples/NotificationHubs/NotificationHubAuthorizationRuleGet.json
+            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/AuthorizationRuleGet.json
             // this example is just showing the usage of "NotificationHubs_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,12 +95,12 @@ AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NotificationHubAuthorizationRuleGet
+        // NotificationHubs_GetAuthorizationRule
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_NotificationHubAuthorizationRuleGet()
+        public async Task Exists_NotificationHubsGetAuthorizationRule()
         {
-            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/stable/2017-04-01/examples/NotificationHubs/NotificationHubAuthorizationRuleGet.json
+            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/AuthorizationRuleGet.json
             // this example is just showing the usage of "NotificationHubs_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,12 +127,56 @@ AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NotificationHubAuthorizationRuleListAll
+        // NotificationHubs_GetAuthorizationRule
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_NotificationHubAuthorizationRuleListAll()
+        public async Task GetIfExists_NotificationHubsGetAuthorizationRule()
         {
-            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/stable/2017-04-01/examples/NotificationHubs/NotificationHubAuthorizationRuleListAll.json
+            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/AuthorizationRuleGet.json
+            // this example is just showing the usage of "NotificationHubs_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NotificationHubResource created on azure
+            // for more information of creating NotificationHubResource, please refer to the document of NotificationHubResource
+            string subscriptionId = "29cfa613-cbbc-4512-b1d6-1b3a92c7fa40";
+            string resourceGroupName = "5ktrial";
+            string namespaceName = "nh-sdk-ns";
+            string notificationHubName = "nh-sdk-hub";
+            ResourceIdentifier notificationHubResourceId = NotificationHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, notificationHubName);
+            NotificationHubResource notificationHub = client.GetNotificationHubResource(notificationHubResourceId);
+
+            // get the collection of this NotificationHubAuthorizationRuleResource
+            NotificationHubAuthorizationRuleCollection collection = notificationHub.GetNotificationHubAuthorizationRules();
+
+            // invoke the operation
+            string authorizationRuleName = "DefaultListenSharedAccessSignature";
+            NullableResponse<NotificationHubAuthorizationRuleResource> response = await collection.GetIfExistsAsync(authorizationRuleName);
+            NotificationHubAuthorizationRuleResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                NotificationHubAuthorizationRuleData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // NotificationHubs_ListAuthorizationRules
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetAll_NotificationHubsListAuthorizationRules()
+        {
+            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/AuthorizationRuleList.json
             // this example is just showing the usage of "NotificationHubs_ListAuthorizationRules" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

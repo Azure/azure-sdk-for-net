@@ -1,10 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using OpenTelemetry.Resources;
 using Xunit;
 
@@ -14,35 +17,53 @@ public class ResourceExtensionsTests
 {
     private const string InstrumentationKey = "00000000-0000-0000-0000-000000000000";
 
+    private static MockPlatform GetMockPlatform(string? enableResourceMetric = null)
+    {
+        var mockPlatform = new MockPlatform();
+        mockPlatform.SetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC, enableResourceMetric);
+        return mockPlatform;
+    }
+
     [Theory]
     [InlineData(null)]
     [InlineData(InstrumentationKey)]
     public void NullResource(string? instrumentationKey)
     {
         Resource? resource = null;
-        var azMonResource = resource!.CreateAzureMonitorResource(instrumentationKey);
+        var azMonResource = resource!.CreateAzureMonitorResource(platform: GetMockPlatform(), instrumentationKey: instrumentationKey);
 
         Assert.Null(azMonResource);
     }
 
     [Theory]
-    [InlineData(null)]
-    [InlineData(InstrumentationKey)]
-    public void DefaultResource(string? instrumentationKey)
+    [InlineData(null, "true")]
+    [InlineData(null, "false")]
+    [InlineData(null, null)]
+    [InlineData(InstrumentationKey, "false")]
+    [InlineData(InstrumentationKey, "true")]
+    [InlineData(InstrumentationKey, null)]
+    public void DefaultResource(string? instrumentationKey, string envVarValue)
     {
         var resource = CreateTestResource();
-        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey);
+        var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform(enableResourceMetric: envVarValue), instrumentationKey: instrumentationKey);
 
         Assert.StartsWith("unknown_service", azMonResource?.RoleName);
         Assert.Equal(Dns.GetHostName(), azMonResource?.RoleInstance);
-        Assert.Equal(instrumentationKey != null, azMonResource?.MetricTelemetry != null);
+        if (envVarValue == "true")
+        {
+            Assert.Equal(instrumentationKey != null, azMonResource?.MonitorBaseData != null);
+        }
+        else
+        {
+            Assert.Null(azMonResource?.MonitorBaseData);
+        }
     }
 
     [Fact]
     public void ServiceNameFromResource()
     {
         var resource = CreateTestResource(serviceName: "my-service");
-        var azMonResource = resource.CreateAzureMonitorResource();
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.Equal("my-service", azMonResource?.RoleName);
         Assert.Equal(Dns.GetHostName(), azMonResource?.RoleInstance);
@@ -52,7 +73,7 @@ public class ResourceExtensionsTests
     public void ServiceInstanceFromResource()
     {
         var resource = CreateTestResource(serviceInstance: "my-instance");
-        var azMonResource = resource.CreateAzureMonitorResource();
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.StartsWith("unknown_service", azMonResource?.RoleName);
         Assert.Equal("my-instance", azMonResource?.RoleInstance);
@@ -62,7 +83,7 @@ public class ResourceExtensionsTests
     public void ServiceNamespaceFromResource()
     {
         var resource = CreateTestResource(serviceNamespace: "my-namespace");
-        var azMonResource = resource.CreateAzureMonitorResource();
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.StartsWith("[my-namespace]/unknown_service", azMonResource?.RoleName);
         Assert.Equal(Dns.GetHostName(), azMonResource?.RoleInstance);
@@ -72,7 +93,7 @@ public class ResourceExtensionsTests
     public void ServiceNameAndInstanceFromResource()
     {
         var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
-        var azMonResource = resource.CreateAzureMonitorResource();
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.Equal("my-service", azMonResource?.RoleName);
         Assert.Equal("my-instance", azMonResource?.RoleInstance);
@@ -82,7 +103,7 @@ public class ResourceExtensionsTests
     public void ServiceNameAndInstanceAndNamespaceFromResource()
     {
         var resource = CreateTestResource(serviceName: "my-service", serviceNamespace: "my-namespace", serviceInstance: "my-instance");
-        var azMonResource = resource.CreateAzureMonitorResource();
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.Equal("[my-namespace]/my-service", azMonResource?.RoleName);
         Assert.Equal("my-instance", azMonResource?.RoleInstance);
@@ -99,9 +120,47 @@ public class ResourceExtensionsTests
         };
 
         var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
-        _ = resource.CreateAzureMonitorResource();
+        _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.StartsWith("pre_", SdkVersionUtils.s_sdkVersion);
+
+        // Clean up
+        SdkVersionUtils.s_sdkVersion = sdkVersion;
+    }
+
+    [Fact]
+    public void SetsSdkDistroSuffixFromResource()
+    {
+        // SDK version is static, preserve to clean up later.
+        var sdkVersion = SdkVersionUtils.s_sdkVersion;
+        var testAttributes = new Dictionary<string, object>
+        {
+            { "telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore" }
+        };
+
+        var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+        _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
+
+        Assert.EndsWith("-d", SdkVersionUtils.s_sdkVersion);
+
+        // Clean up
+        SdkVersionUtils.s_sdkVersion = sdkVersion;
+    }
+
+    [Fact]
+    public void DoesNotSetSdkDistroSuffixForWrongValueFromResource()
+    {
+        // SDK version is static, preserve to clean up later.
+        var sdkVersion = SdkVersionUtils.s_sdkVersion;
+        var testAttributes = new Dictionary<string, object>
+        {
+            { "telemetry.distro.name", "" }
+        };
+
+        var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+        _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
+
+        Assert.DoesNotContain("-d", SdkVersionUtils.s_sdkVersion);
 
         // Clean up
         SdkVersionUtils.s_sdkVersion = sdkVersion;
@@ -114,7 +173,7 @@ public class ResourceExtensionsTests
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
 
         var resource = ResourceBuilder.CreateDefault().Build();
-        _ = resource.CreateAzureMonitorResource();
+        _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.NotNull(SdkVersionUtils.s_sdkVersion);
         Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);
@@ -135,7 +194,7 @@ public class ResourceExtensionsTests
         };
 
         var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
-        _ = resource.CreateAzureMonitorResource();
+        _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.NotNull(SdkVersionUtils.s_sdkVersion);
         Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);
@@ -150,18 +209,16 @@ public class ResourceExtensionsTests
         // SDK version is static, preserve to clean up later.
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
         var testAttributes = new Dictionary<string, object>
-        {
-            {"foo", "bar" },
-            { "ai.sdk.prefix", "pre_" }
-        };
+            {
+                {"foo", "bar" },
+                { "ai.sdk.prefix", "pre_" }
+            };
 
         var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
-        var azMonResource = resource.CreateAzureMonitorResource(InstrumentationKey);
+        var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform(enableResourceMetric: "true"), instrumentationKey: InstrumentationKey);
 
-        Assert.Equal("Metric", azMonResource!.MetricTelemetry!.Name);
-
-        var monitorBase = azMonResource.MetricTelemetry.Data;
-        var metricsData = monitorBase.BaseData as MetricsData;
+        var monitorBase = azMonResource?.MonitorBaseData;
+        var metricsData = monitorBase?.BaseData as MetricsData;
 
         var metricDataPoint = metricsData?.Metrics[0];
         Assert.Equal("bar", metricsData?.Properties["foo"]);
@@ -174,30 +231,28 @@ public class ResourceExtensionsTests
     [Theory]
     [InlineData(null)]
     [InlineData(InstrumentationKey)]
-    public void MetricTelemetryHasAllResourceAttributes(string? instrumentationKey)
+    public void MonitorBaseDataHasAllResourceAttributes(string? instrumentationKey)
     {
         var testAttributes = new Dictionary<string, object>
-        {
-            {SemanticConventions.AttributeServiceName, "my-service" },
-            {SemanticConventions.AttributeServiceNamespace, "my-namespace" },
-            {SemanticConventions.AttributeServiceInstance, "my-instance" },
-            {SemanticConventions.AttributeK8sDeployment, "my-deployment" },
-            {SemanticConventions.AttributeK8sPod, "my-pod" },
-            { "foo", "bar" }
-        };
+            {
+                {SemanticConventions.AttributeServiceName, "my-service" },
+                {SemanticConventions.AttributeServiceNamespace, "my-namespace" },
+                {SemanticConventions.AttributeServiceInstance, "my-instance" },
+                {SemanticConventions.AttributeK8sDeployment, "my-deployment" },
+                {SemanticConventions.AttributeK8sPod, "my-pod" },
+                { "foo", "bar" }
+            };
 
         var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
-        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey);
+        var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform(enableResourceMetric: "true"), instrumentationKey: instrumentationKey);
 
-        Assert.Equal(instrumentationKey != null, azMonResource?.MetricTelemetry != null);
+        Assert.Equal(instrumentationKey != null, azMonResource?.MonitorBaseData != null);
 
         if (instrumentationKey != null)
         {
-            Assert.Equal("Metric", azMonResource!.MetricTelemetry!.Name);
-            Assert.Equal(3, azMonResource.MetricTelemetry.Tags.Count);
-            Assert.NotNull(azMonResource.MetricTelemetry.Data);
+            Assert.NotNull(azMonResource?.MonitorBaseData);
 
-            var monitorBase = azMonResource.MetricTelemetry.Data;
+            var monitorBase = azMonResource.MonitorBaseData;
             var metricsData = monitorBase.BaseData as MetricsData;
 
             Assert.NotNull(metricsData?.Metrics);
@@ -228,7 +283,7 @@ public class ResourceExtensionsTests
         };
 
         var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
-        var azMonResource = resource.CreateAzureMonitorResource();
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         // Assert
         Assert.Equal("my-deployment", azMonResource?.RoleName);
@@ -249,7 +304,7 @@ public class ResourceExtensionsTests
         };
 
         var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
-        var azMonResource = resource.CreateAzureMonitorResource();
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         // Assert
         Assert.Equal("my-service", azMonResource?.RoleName);
@@ -267,11 +322,30 @@ public class ResourceExtensionsTests
         };
 
         var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
-        var azMonResource = resource.CreateAzureMonitorResource();
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         // Assert
         Assert.Null(azMonResource?.RoleName);
         Assert.Equal(Dns.GetHostName(), azMonResource?.RoleInstance);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("true")]
+    [InlineData("false")]
+    public void MetricTelemetryIsAddedToResourceBasedOnEnvVar(string envVarValue)
+    {
+        var resource = ResourceBuilder.CreateDefault().Build();
+        var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform(enableResourceMetric: envVarValue), instrumentationKey: InstrumentationKey);
+
+        if (envVarValue == "true")
+        {
+            Assert.NotNull(azMonResource?.MonitorBaseData);
+        }
+        else
+        {
+            Assert.Null(azMonResource?.MonitorBaseData);
+        }
     }
 
     /// <summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,12 +14,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> API base contract details. </summary>
     public partial class ApiEntityBaseContract
     {
-        /// <summary> Initializes a new instance of ApiEntityBaseContract. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiEntityBaseContract"/>. </summary>
         internal ApiEntityBaseContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiEntityBaseContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiEntityBaseContract"/>. </summary>
         /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
         /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
         /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
@@ -31,10 +64,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersionDescription"> Description of the API Version. </param>
         /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
         /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
-        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -48,40 +82,56 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
             IsSubscriptionRequired = isSubscriptionRequired;
-            TermsOfServiceUri = termsOfServiceUri;
+            TermsOfServiceLink = termsOfServiceLink;
             Contact = contact;
             License = license;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Description of the API. May include HTML formatting tags. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> Collection of authentication settings included into this API. </summary>
+        [WirePath("authenticationSettings")]
         public AuthenticationSettingsContract AuthenticationSettings { get; }
         /// <summary> Protocols over which API is made available. </summary>
+        [WirePath("subscriptionKeyParameterNames")]
         public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get; }
         /// <summary> Type of API. </summary>
+        [WirePath("type")]
         public ApiType? ApiType { get; }
         /// <summary> Describes the revision of the API. If no value is provided, default revision 1 is created. </summary>
+        [WirePath("apiRevision")]
         public string ApiRevision { get; }
         /// <summary> Indicates the version identifier of the API if the API is versioned. </summary>
+        [WirePath("apiVersion")]
         public string ApiVersion { get; }
         /// <summary> Indicates if API revision is current api revision. </summary>
+        [WirePath("isCurrent")]
         public bool? IsCurrent { get; }
         /// <summary> Indicates if API revision is accessible via the gateway. </summary>
+        [WirePath("isOnline")]
         public bool? IsOnline { get; }
         /// <summary> Description of the API Revision. </summary>
+        [WirePath("apiRevisionDescription")]
         public string ApiRevisionDescription { get; }
         /// <summary> Description of the API Version. </summary>
+        [WirePath("apiVersionDescription")]
         public string ApiVersionDescription { get; }
         /// <summary> A resource identifier for the related ApiVersionSet. </summary>
+        [WirePath("apiVersionSetId")]
         public ResourceIdentifier ApiVersionSetId { get; }
         /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
+        [WirePath("subscriptionRequired")]
         public bool? IsSubscriptionRequired { get; }
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
-        public Uri TermsOfServiceUri { get; }
+        [WirePath("termsOfServiceUrl")]
+        public string TermsOfServiceLink { get; }
         /// <summary> Contact information for the API. </summary>
+        [WirePath("contact")]
         public ApiContactInformation Contact { get; }
         /// <summary> License information for the API. </summary>
+        [WirePath("license")]
         public ApiLicenseInformation License { get; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(RehydrationPriority left, RehydrationPriority right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RehydrationPriority"/> values are not the same. </summary>
         public static bool operator !=(RehydrationPriority left, RehydrationPriority right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RehydrationPriority"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RehydrationPriority"/>. </summary>
         public static implicit operator RehydrationPriority(string value) => new RehydrationPriority(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

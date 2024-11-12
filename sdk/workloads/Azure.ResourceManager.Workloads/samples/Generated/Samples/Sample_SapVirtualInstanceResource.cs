@@ -7,13 +7,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Workloads;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads.Samples
@@ -163,7 +160,7 @@ namespace Azure.ResourceManager.Workloads.Samples
             // invoke the operation
             SapStopContent content = new SapStopContent()
             {
-                SoftStopTimeoutSeconds = 0,
+                SoftStopTimeoutSeconds = 0L,
             };
             ArmOperation<OperationStatusResult> lro = await sapVirtualInstance.StopAsync(WaitUntil.Completed, content: content);
             OperationStatusResult result = lro.Value;
