@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SqlVirtualMachine.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Samples
 {
     public partial class Sample_SqlVmResource
     {
-        // Gets all SQL virtual machines in a subscription.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSqlVms_GetsAllSQLVirtualMachinesInASubscription()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/ListSubscriptionSqlVirtualMachine.json
@@ -45,12 +45,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets a SQL virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsASQLVirtualMachine()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachine.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes a SQL virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesASQLVirtualMachine()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/DeleteSqlVirtualMachine.json
@@ -103,12 +101,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             // invoke the operation
             await sqlVm.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Updates a SQL virtual machine tags.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesASQLVirtualMachineTags()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/UpdateSqlVirtualMachine.json
@@ -145,9 +142,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Uninstalls and reinstalls the SQL Iaas Extension.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Redeploy_UninstallsAndReinstallsTheSQLIaasExtension()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/RedeploySqlVirtualMachine.json
@@ -169,12 +165,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             // invoke the operation
             await sqlVm.RedeployAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Starts Assessment on SQL virtual machine
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StartAssessment_StartsAssessmentOnSQLVirtualMachine()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/StartAssessmentOnSqlVirtualMachine.json
@@ -196,7 +191,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             // invoke the operation
             await sqlVm.StartAssessmentAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

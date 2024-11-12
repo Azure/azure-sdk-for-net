@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.WebPubSub.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.WebPubSub.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // Usages_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUsages_UsagesList()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/Usages_List.json
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

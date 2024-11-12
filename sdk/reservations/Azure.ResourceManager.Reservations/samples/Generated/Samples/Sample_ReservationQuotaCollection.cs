@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Reservations.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Reservations.Samples
 {
     public partial class Sample_ReservationQuotaCollection
     {
-        // Quotas_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_QuotasRequestForCompute()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getComputeOneSkuUsages.json
@@ -51,9 +51,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Quotas_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_QuotasRequestForCompute()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getComputeOneSkuUsages.json
@@ -82,9 +81,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Quotas_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_QuotasRequestForCompute()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getComputeOneSkuUsages.json
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.Reservations.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -125,9 +123,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             }
         }
 
-        // Quotas_Request_PutForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_QuotasRequestPutForCompute()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/putComputeOneSkuQuotaRequest.json
@@ -173,9 +170,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Quotas_Request_PutForMachineLearningServices_DedicatedResource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_QuotasRequestPutForMachineLearningServicesDedicatedResource()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/putMachineLearningServicesQuotaRequestDedicated.json
@@ -222,9 +218,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Quotas_Request_PutForMachineLearningServices_LowPriorityResource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_QuotasRequestPutForMachineLearningServicesLowPriorityResource()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/putMachineLearningServicesQuotaRequestLowPriority.json
@@ -271,9 +266,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Quotas_listUsagesForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_QuotasListUsagesForCompute()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getComputeUsages.json
@@ -305,12 +299,11 @@ namespace Azure.ResourceManager.Reservations.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Quotas_listUsagesMachineLearningServices
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_QuotasListUsagesMachineLearningServices()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getMachineLearningServicesUsages.json
@@ -342,7 +335,7 @@ namespace Azure.ResourceManager.Reservations.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

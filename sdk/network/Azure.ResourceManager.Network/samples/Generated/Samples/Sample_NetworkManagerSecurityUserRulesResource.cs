@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_NetworkManagerSecurityUserRulesResource
     {
-        // Gets security user rule collection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsSecurityUserRuleCollection()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerSecurityUserRuleCollectionGet.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or Update a Security User Rule Collection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateASecurityUserRuleCollection()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerSecurityUserRuleCollectionPut.json
@@ -90,9 +89,8 @@ new SecurityUserGroupItem("/subscriptions/subId/resourceGroups/rg1/providers/Mic
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes a Security User Rule collection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesASecurityUserRuleCollection()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerSecurityUserRuleCollectionDelete.json
@@ -117,7 +115,7 @@ new SecurityUserGroupItem("/subscriptions/subId/resourceGroups/rg1/providers/Mic
             bool? force = false;
             await networkManagerSecurityUserRules.DeleteAsync(WaitUntil.Completed, force: force);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
