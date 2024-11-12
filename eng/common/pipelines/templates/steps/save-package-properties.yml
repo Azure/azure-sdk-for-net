@@ -40,7 +40,7 @@ steps:
 
           if ($changedServices) {
             Write-Host "Attaching changed service names to the build for additional tag generation."
-            $changedServices | ConvertTo-Json | Out-File -FilePath $(System.DefaultWorkingDirectory)/tags.json -Encoding utf8
+            $changedServices | ConvertTo-Json -AsArray | Out-File -FilePath $(System.DefaultWorkingDirectory)/tags.json -Encoding utf8
             Write-Host '##vso[task.addattachment type=AdditionalTags;name=AdditionalTags;]$(System.DefaultWorkingDirectory)/tags.json'
           }
         displayName: Upload tags.json with changed services
