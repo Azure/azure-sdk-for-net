@@ -36,11 +36,6 @@ public class ServiceEnvironmentVariable
     /// The environment variable for the Playwright service run ID.
     /// </summary>
     public static readonly string PlaywrightServiceRunId = "PLAYWRIGHT_SERVICE_RUN_ID";
-
-    /// <summary>
-    /// The environment variable for the Playwright service run Name.
-    /// </summary>
-    public static readonly string PlaywrightServiceRunName = "PLAYWRIGHT_SERVICE_RUN_NAME";
 };
 
 /// <summary>
