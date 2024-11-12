@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.SecurityDevOps.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityDevOps.Samples
 {
     public partial class Sample_AzureDevOpsProjectCollection
     {
-        // AzureDevOpsProject_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AzureDevOpsProjectList()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsProjectList.json
@@ -50,12 +50,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AzureDevOpsProject_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AzureDevOpsProjectGet()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsProjectGet.json
@@ -89,9 +88,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AzureDevOpsProject_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_AzureDevOpsProjectGet()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsProjectGet.json
@@ -121,9 +119,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AzureDevOpsProject_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AzureDevOpsProjectGet()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsProjectGet.json
@@ -153,7 +150,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -165,9 +162,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             }
         }
 
-        // AzureDevOpsProject_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AzureDevOpsProjectCreateOrUpdate()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsProjectCreateOrUpdate.json

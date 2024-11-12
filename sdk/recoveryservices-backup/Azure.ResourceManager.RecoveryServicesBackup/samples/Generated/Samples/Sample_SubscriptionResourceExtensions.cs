@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // Get Azure Virtual Machine Backup Status
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBackupStatus_GetAzureVirtualMachineBackupStatus()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/GetBackupStatus.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Check Azure Vm Backup Feature Support
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateFeatureSupport_CheckAzureVmBackupFeatureSupport()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/BackupFeature_Validate.json

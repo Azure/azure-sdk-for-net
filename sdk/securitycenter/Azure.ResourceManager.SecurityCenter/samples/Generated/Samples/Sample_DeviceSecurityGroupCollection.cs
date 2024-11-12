@@ -11,14 +11,14 @@ using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.SecurityCenter.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_DeviceSecurityGroupCollection
     {
-        // List all device security groups for the specified IoT Hub resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllDeviceSecurityGroupsForTheSpecifiedIoTHubResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2019-08-01/examples/DeviceSecurityGroups/ListDeviceSecurityGroups_example.json
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a device security group for the specified IoT Hub resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADeviceSecurityGroupForTheSpecifiedIoTHubResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2019-08-01/examples/DeviceSecurityGroups/GetDeviceSecurityGroups_example.json
@@ -82,9 +81,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a device security group for the specified IoT Hub resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetADeviceSecurityGroupForTheSpecifiedIoTHubResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2019-08-01/examples/DeviceSecurityGroups/GetDeviceSecurityGroups_example.json
@@ -110,9 +108,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a device security group for the specified IoT Hub resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetADeviceSecurityGroupForTheSpecifiedIoTHubResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2019-08-01/examples/DeviceSecurityGroups/GetDeviceSecurityGroups_example.json
@@ -138,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -150,9 +147,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             }
         }
 
-        // Create or update a device security group for the specified IoT hub resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateADeviceSecurityGroupForTheSpecifiedIoTHubResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2019-08-01/examples/DeviceSecurityGroups/PutDeviceSecurityGroups_example.json

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceFabric.Samples
 {
     public partial class Sample_ServiceFabricVmSizeResourceCollection
     {
-        // List unsupported vm sizes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListUnsupportedVmSizes()
         {
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/UnsupportedVMSizesList_example.json
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get unsupported vm sizes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetUnsupportedVmSizes()
         {
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/UnsupportedVMSizesGet_example.json
@@ -85,9 +84,8 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get unsupported vm sizes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetUnsupportedVmSizes()
         {
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/UnsupportedVMSizesGet_example.json
@@ -115,9 +113,8 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get unsupported vm sizes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetUnsupportedVmSizes()
         {
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/UnsupportedVMSizesGet_example.json
@@ -145,7 +142,7 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
