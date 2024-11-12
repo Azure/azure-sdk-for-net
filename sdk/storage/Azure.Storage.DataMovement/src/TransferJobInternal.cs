@@ -504,6 +504,7 @@ namespace Azure.Storage.DataMovement
                         .ConfigureAwait(false);
                 }
             }
+            _dataTransfer.TransferStatus.SetFailedItem();
 
             try
             {
