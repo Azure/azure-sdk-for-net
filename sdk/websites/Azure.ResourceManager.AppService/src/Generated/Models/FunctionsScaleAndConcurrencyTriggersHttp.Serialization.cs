@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
                 throw new FormatException($"The model {nameof(FunctionsScaleAndConcurrencyTriggersHttp)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(PerInstanceConcurrency))
+            if (Optional.IsDefined(ConcurrentHttpPerInstanceConcurrency))
             {
                 writer.WritePropertyName("perInstanceConcurrency"u8);
-                writer.WriteNumberValue(PerInstanceConcurrency.Value);
+                writer.WriteNumberValue(ConcurrentHttpPerInstanceConcurrency.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PerInstanceConcurrency), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConcurrentHttpPerInstanceConcurrency), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  perInstanceConcurrency: ");
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(PerInstanceConcurrency))
+                if (Optional.IsDefined(ConcurrentHttpPerInstanceConcurrency))
                 {
                     builder.Append("  perInstanceConcurrency: ");
-                    builder.AppendLine($"{PerInstanceConcurrency.Value}");
+                    builder.AppendLine($"{ConcurrentHttpPerInstanceConcurrency.Value}");
                 }
             }
 

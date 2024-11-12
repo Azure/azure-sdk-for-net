@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(InstanceCount))
+            if (Optional.IsDefined(AlwaysReadyInstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
-                writer.WriteNumberValue(InstanceCount.Value);
+                writer.WriteNumberValue(AlwaysReadyInstanceCount.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceCount), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlwaysReadyInstanceCount), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  instanceCount: ");
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(InstanceCount))
+                if (Optional.IsDefined(AlwaysReadyInstanceCount))
                 {
                     builder.Append("  instanceCount: ");
-                    builder.AppendLine($"{InstanceCount.Value}");
+                    builder.AppendLine($"{AlwaysReadyInstanceCount.Value}");
                 }
             }
 

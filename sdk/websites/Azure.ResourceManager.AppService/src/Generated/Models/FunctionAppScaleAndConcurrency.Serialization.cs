@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaximumInstanceCount))
+            if (Optional.IsDefined(FunctionAppMaximumInstanceCount))
             {
                 writer.WritePropertyName("maximumInstanceCount"u8);
-                writer.WriteNumberValue(MaximumInstanceCount.Value);
+                writer.WriteNumberValue(FunctionAppMaximumInstanceCount.Value);
             }
-            if (Optional.IsDefined(InstanceMemoryMB))
+            if (Optional.IsDefined(FunctionAppInstanceMemoryMB))
             {
                 writer.WritePropertyName("instanceMemoryMB"u8);
-                writer.WriteNumberValue(InstanceMemoryMB.Value);
+                writer.WriteNumberValue(FunctionAppInstanceMemoryMB.Value);
             }
             if (Optional.IsDefined(Triggers))
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumInstanceCount), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionAppMaximumInstanceCount), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  maximumInstanceCount: ");
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(MaximumInstanceCount))
+                if (Optional.IsDefined(FunctionAppMaximumInstanceCount))
                 {
                     builder.Append("  maximumInstanceCount: ");
-                    builder.AppendLine($"{MaximumInstanceCount.Value}");
+                    builder.AppendLine($"{FunctionAppMaximumInstanceCount.Value}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceMemoryMB), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionAppInstanceMemoryMB), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  instanceMemoryMB: ");
@@ -213,14 +213,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(InstanceMemoryMB))
+                if (Optional.IsDefined(FunctionAppInstanceMemoryMB))
                 {
                     builder.Append("  instanceMemoryMB: ");
-                    builder.AppendLine($"{InstanceMemoryMB.Value}");
+                    builder.AppendLine($"{FunctionAppInstanceMemoryMB.Value}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("HttpPerInstanceConcurrency", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ConcurrentHttpPerInstanceConcurrency", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  triggers: ");
