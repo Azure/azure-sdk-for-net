@@ -8,6 +8,7 @@ namespace Azure.Health.Deidentification.Tests
     public class DeidentificationTestEnvironment : TestEnvironment
     {
         public string Endpoint => GetRecordedVariable("DEID_SERVICE_ENDPOINT");
+        public string SasUri => GetRecordedVariable("SAS_URI");
 
         public static string FakeNextLink => "https://deidservicetest.api.deid.azure.com/jobs?api-version=2000-01-01-preview&continuationToken=1234";
         public static string FakeStorageLocation => "https://fakeblobstorage.blob.core.windows.net/container";
@@ -15,6 +16,10 @@ namespace Azure.Health.Deidentification.Tests
 
         public string GetStorageAccountLocation()
         {
+            if (!string.IsNullOrEmpty(SasUri))
+            {
+                return SasUri;
+            }
             return $"https://{GetRecordedVariable("STORAGE_ACCOUNT_NAME")}.blob.core.windows.net/{GetRecordedVariable("STORAGE_CONTAINER_NAME")}";
         }
     }
