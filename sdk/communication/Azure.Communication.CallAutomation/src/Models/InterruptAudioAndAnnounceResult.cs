@@ -8,13 +8,13 @@ using System.Threading;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>The result from playing audio.</summary>
-    public class PlayResult
+    public class InterruptAudioAndAnnounceResult
     {
         private CallAutomationEventProcessor _evHandler;
         private string _callConnectionId;
         private string _operationContext;
 
-        internal PlayResult()
+        internal InterruptAudioAndAnnounceResult()
         {
         }
 
@@ -42,7 +42,6 @@ namespace Azure.Communication.CallAutomation
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(PlayCompleted)
                 || filter.GetType() == typeof(PlayStarted)
-                || filter.GetType() == typeof(PlayPaused)
                 || filter.GetType() == typeof(PlayFailed)),
                 cancellationToken);
 
@@ -64,9 +63,8 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = await _evHandler.WaitForEventProcessorAsync(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(PlayStarted)
-                || filter.GetType() == typeof(PlayPaused)
-                || filter.GetType() == typeof(PlayCompleted)
+                && (filter.GetType() == typeof(PlayCompleted)
+                || filter.GetType() == typeof(PlayStarted)
                 || filter.GetType() == typeof(PlayFailed)),
                 cancellationToken).ConfigureAwait(false);
 
@@ -78,17 +76,14 @@ namespace Azure.Communication.CallAutomation
             PlayEventResult result = default;
             switch (returnedEvent)
             {
-                case PlayStarted:
-                    result = new PlayEventResult(true, (PlayStarted)returnedEvent, null);
-                    break;
-                case PlayPaused:
-                    result = new PlayEventResult(true, (PlayPaused)returnedEvent, null);
-                    break;
                 case PlayCompleted:
                     result = new PlayEventResult(true, (PlayCompleted)returnedEvent, null);
                     break;
                 case PlayFailed:
                     result = new PlayEventResult(false, null, (PlayFailed)returnedEvent);
+                    break;
+                case PlayStarted:
+                    result = new PlayEventResult(true, (PlayStarted)returnedEvent, null);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

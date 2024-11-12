@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected const string Subject = "dummySubject";
         protected const string CallBackUri = "https://bot.contoso.com/callback";
         protected const string OperationContext = "someOperationContext";
-        protected const string CorelationId = "someCorelationId";
+        protected const string CorrelationId = "someCorelationId";
         protected const string SourceUser = "SOURCE_USER_ID";
         protected const string TargetUser = "TARGET_USER_ID";
         protected const string TransfereeUser = "TRANSFEREE_USER_ID";
@@ -35,6 +35,9 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected const string TransferCallOrRemoveParticipantsPayload = "{\"operationContext\": \"someOperationContext\"}";
 
         protected const string AddParticipantsPayload = "{\"participant\":{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},\"operationContext\":\"someOperationContext\"}";
+
+        protected const string PlayAudioPayload = "{\"participant\":{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},\"operationContext\":\"someOperationContext\"}";
+        protected const string InterruptAudioPayload = "{\"participant\":{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},\"operationContext\":\"interruptOperationContext\"}";
 
         protected const string GetParticipantPayload = "{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false}";
 
@@ -82,6 +85,16 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             return new CallAutomationClient(ConnectionString, options);
         }
 
+        internal CallAutomationClient CreateMockCallAutomationClient(params MockResponse[] mockResponses)
+        {
+            var callAutomationClientOptions = new CallAutomationClientOptions
+            {
+                Transport = new MockTransport(mockResponses)
+            };
+
+            return new CallAutomationClient(ConnectionString, callAutomationClientOptions);
+        }
+
         protected CallConnection CreateMoakCallConnection(string? callConnectionId = default)
         {
             CallConnection callconn = new CallConnection(callConnectionId == default ? CallConnectionId : callConnectionId, null, null, null, null, null);
@@ -104,6 +117,10 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected CallConnection CreateMockCallConnection(int responseCode, string? responseContent = default, string? callConnectionId = default)
         {
             return CreateMockCallAutomationClient(responseCode, responseContent).GetCallConnection(callConnectionId == default ? CallConnectionId : callConnectionId);
+        }
+        protected CallConnection CreateMockCallConnection(MockResponse[] mockResponses, string? callConnectionId = default)
+        {
+            return CreateMockCallAutomationClient(mockResponses).GetCallConnection(callConnectionId == default ? CallConnectionId : callConnectionId);
         }
 
         protected void SendAndProcessEvent(
