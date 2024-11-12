@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {
     public partial class Sample_PartnerConfigurationResource
     {
-        // PartnerConfigurations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PartnerConfigurationsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerConfigurations_Get.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PartnerConfigurations_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PartnerConfigurationsCreateOrUpdate()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerConfigurations_CreateOrUpdate.json
@@ -98,9 +97,8 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PartnerConfigurations_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PartnerConfigurationsDelete()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerConfigurations_Delete.json
@@ -121,12 +119,11 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
             // invoke the operation
             await partnerConfiguration.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PartnerConfigurations_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PartnerConfigurationsUpdate()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerConfigurations_Update.json
@@ -164,9 +161,8 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PartnerConfigurations_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPartnerConfigurations_PartnerConfigurationsListBySubscription()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerConfigurations_ListBySubscription.json
@@ -193,12 +189,11 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PartnerConfigurations_AuthorizePartner
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AuthorizePartner_PartnerConfigurationsAuthorizePartner()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerConfigurations_AuthorizePartner.json
@@ -232,9 +227,8 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PartnerConfigurations_UnauthorizePartner
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UnauthorizePartner_PartnerConfigurationsUnauthorizePartner()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerConfigurations_UnauthorizePartner.json

@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.HealthBot.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HealthBot.Samples
 {
     public partial class Sample_HealthBotCollection
     {
-        // BotCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_BotCreate()
         {
             // Generated from example definition: specification/healthbot/resource-manager/Microsoft.HealthBot/stable/2021-08-24/examples/ResourceCreationPut.json
@@ -63,9 +63,8 @@ namespace Azure.ResourceManager.HealthBot.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ResourceInfoGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ResourceInfoGet()
         {
             // Generated from example definition: specification/healthbot/resource-manager/Microsoft.HealthBot/stable/2021-08-24/examples/ResourceInfoGet.json
@@ -97,9 +96,8 @@ namespace Azure.ResourceManager.HealthBot.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ResourceInfoGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ResourceInfoGet()
         {
             // Generated from example definition: specification/healthbot/resource-manager/Microsoft.HealthBot/stable/2021-08-24/examples/ResourceInfoGet.json
@@ -127,9 +125,8 @@ namespace Azure.ResourceManager.HealthBot.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ResourceInfoGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ResourceInfoGet()
         {
             // Generated from example definition: specification/healthbot/resource-manager/Microsoft.HealthBot/stable/2021-08-24/examples/ResourceInfoGet.json
@@ -157,7 +154,7 @@ namespace Azure.ResourceManager.HealthBot.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -169,9 +166,8 @@ namespace Azure.ResourceManager.HealthBot.Samples
             }
         }
 
-        // List Bots by Resource Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListBotsByResourceGroup()
         {
             // Generated from example definition: specification/healthbot/resource-manager/Microsoft.HealthBot/stable/2021-08-24/examples/ListBotsByResourceGroup.json
@@ -202,7 +198,7 @@ namespace Azure.ResourceManager.HealthBot.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

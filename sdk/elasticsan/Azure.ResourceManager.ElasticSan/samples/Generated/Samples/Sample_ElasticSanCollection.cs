@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ElasticSan.Samples
 {
     public partial class Sample_ElasticSanCollection
     {
-        // ElasticSans_ListByResourceGroup_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ElasticSansListByResourceGroupMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/ElasticSans_ListByResourceGroup_MaximumSet_Gen.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ElasticSans_ListByResourceGroup_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ElasticSansListByResourceGroupMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/ElasticSans_ListByResourceGroup_MinimumSet_Gen.json
@@ -85,12 +84,11 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ElasticSans_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ElasticSansCreateMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/ElasticSans_Create_MaximumSet_Gen.json
@@ -145,9 +143,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ElasticSans_Create_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ElasticSansCreateMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/ElasticSans_Create_MinimumSet_Gen.json
@@ -181,9 +178,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ElasticSans_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ElasticSansGetMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/ElasticSans_Get_MaximumSet_Gen.json
@@ -215,9 +211,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ElasticSans_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ElasticSansGetMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/ElasticSans_Get_MaximumSet_Gen.json
@@ -245,9 +240,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ElasticSans_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ElasticSansGetMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/ElasticSans_Get_MaximumSet_Gen.json
@@ -275,7 +269,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -287,9 +281,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             }
         }
 
-        // ElasticSans_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ElasticSansGetMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/ElasticSans_Get_MinimumSet_Gen.json
@@ -321,9 +314,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ElasticSans_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ElasticSansGetMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/ElasticSans_Get_MinimumSet_Gen.json
@@ -351,9 +343,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ElasticSans_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ElasticSansGetMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/ElasticSans_Get_MinimumSet_Gen.json
@@ -381,7 +372,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

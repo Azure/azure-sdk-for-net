@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DeviceRegistry.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DeviceRegistry.Samples
 {
     public partial class Sample_DeviceRegistryAssetCollection
     {
-        // List Assets in a Resource Group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAssetsInAResourceGroup()
         {
             // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/List_Assets_ResourceGroup.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get an Asset
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAsset()
         {
             // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_Asset.json
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Asset
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAsset()
         {
             // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_Asset.json
@@ -116,9 +114,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an Asset
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAsset()
         {
             // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_Asset.json
@@ -146,7 +143,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -158,9 +155,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             }
         }
 
-        // Get an Asset with Sync Status.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAssetWithSyncStatus()
         {
             // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_Asset_With_SyncStatus.json
@@ -192,9 +188,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Asset with Sync Status.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAssetWithSyncStatus()
         {
             // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_Asset_With_SyncStatus.json
@@ -222,9 +217,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an Asset with Sync Status.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAssetWithSyncStatus()
         {
             // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_Asset_With_SyncStatus.json
@@ -252,7 +246,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -264,9 +258,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             }
         }
 
-        // Create an Asset With External Asset Id.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnAssetWithExternalAssetId()
         {
             // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Create_Asset_With_ExternalAssetId.json
@@ -350,9 +343,8 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create an Asset Without Display Name.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnAssetWithoutDisplayName()
         {
             // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Create_Asset_Without_DisplayName.json
@@ -435,9 +427,8 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create an Asset Without External Asset Id.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnAssetWithoutExternalAssetId()
         {
             // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Create_Asset_Without_ExternalAssetId.json
