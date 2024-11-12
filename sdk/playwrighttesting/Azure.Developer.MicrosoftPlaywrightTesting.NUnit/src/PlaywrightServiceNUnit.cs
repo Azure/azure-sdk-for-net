@@ -67,11 +67,11 @@ public class PlaywrightServiceNUnit : PlaywrightService
         {
             return null;
         }
-        else if (os!.Equals("Windows", System.StringComparison.OrdinalIgnoreCase))
+        else if (os!.Equals("Windows", StringComparison.OrdinalIgnoreCase))
         {
             return OSPlatform.Windows;
         }
-        else if (os.Equals("Linux", System.StringComparison.OrdinalIgnoreCase))
+        else if (os.Equals("Linux", StringComparison.OrdinalIgnoreCase))
         {
             return OSPlatform.Linux;
         }

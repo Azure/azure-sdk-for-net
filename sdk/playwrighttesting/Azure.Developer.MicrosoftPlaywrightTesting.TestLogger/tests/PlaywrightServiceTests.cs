@@ -65,28 +65,34 @@ public class PlaywrightServiceTests
             Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId), Is.Not.Null);
             Assert.That(playwrightService.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
             Assert.That(playwrightService.UseCloudHostedBrowsers, Is.True);
+            Assert.IsNull(playwrightService.Os);
+            Assert.IsNull(playwrightService.ExposeNetwork);
+            Assert.IsNull(playwrightService.RunId);
         });
     }
 
     [Test]
     public void Constructor_PassServiceOS_SetsServiceOS()
     {
-        _ = new PlaywrightService(os: OSPlatform.Windows, entraLifecycle: null);
+        var playwrightService = new PlaywrightService(os: OSPlatform.Windows, entraLifecycle: null);
         Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs), Is.EqualTo(ServiceOs.Windows));
+        Assert.That(playwrightService.Os, Is.EqualTo(ServiceOs.Windows));
     }
 
     [Test]
     public void Constructor_PassExposeNetwork_SetsExposeNetwork()
     {
-        _ = new PlaywrightService(exposeNetwork: "new-expose", entraLifecycle: null);
+        var playwrightService = new PlaywrightService(exposeNetwork: "new-expose", entraLifecycle: null);
         Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork), Is.EqualTo("new-expose"));
+        Assert.That(playwrightService.ExposeNetwork, Is.EqualTo("new-expose"));
     }
 
     [Test]
     public void Constructor_PassRunId_SetsRunId()
     {
-        _ = new PlaywrightService(runId: "new-run-id", entraLifecycle: null);
+        var playwrightService = new PlaywrightService(runId: "new-run-id", entraLifecycle: null);
         Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId), Is.EqualTo("new-run-id"));
+        Assert.That(playwrightService.RunId, Is.EqualTo("new-run-id"));
     }
 
     [Test]
@@ -116,6 +122,22 @@ public class PlaywrightServiceTests
             Assert.That(playwrightService.UseCloudHostedBrowsers, Is.True);
             Assert.That(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable), Is.Null);
         });
+    }
+
+    [Test]
+    public void Constructor_PlaywrightServiceOSEnvironmentVariableIsSet_DoesNotUpdateTheEnvironmentVariableWithDefault()
+    {
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, ServiceOs.Windows);
+        _ = new PlaywrightService(entraLifecycle: null);
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs), Is.EqualTo(ServiceOs.Windows));
+    }
+
+    [Test]
+    public void Constructor_PlaywrightServiceExposeNetworkEnvironmentVariableIsSet_DoesNotUpdateTheEnvironmentVariableWithDefault()
+    {
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, "new-expose");
+        _ = new PlaywrightService(entraLifecycle: null);
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork), Is.EqualTo("new-expose"));
     }
 
     [Test]
@@ -503,6 +525,81 @@ public class PlaywrightServiceTests
         {
             Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={Constants.s_default_os}&runId={runId}&api-version={Constants.s_api_version}"));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo(Constants.s_default_expose_network));
+        });
+    }
+
+    [Test]
+    public async Task GetConnectOptionsAsync_WhenParametersAreSetInTheObject_UsesObjectParameters()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "valid_token");
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        entraLifecycleMock.Object
+            ._entraIdAccessToken = "valid_token";
+        entraLifecycleMock.Object
+            ._entraIdAccessTokenExpiry = (int)DateTimeOffset.UtcNow.AddMinutes(22).ToUnixTimeSeconds();
+        var runId = "run-id";
+
+        var service = new PlaywrightService(os: OSPlatform.Windows, runId: runId, exposeNetwork: "expose-network", entraLifecycle: entraLifecycleMock.Object);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, ServiceOs.Linux);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, "expose");
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, "invalid-run-id");
+        ConnectOptions<BrowserConnectOptions> connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={ServiceOs.Windows}&runId={runId}&api-version={Constants.s_api_version}"));
+            Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("expose-network"));
+        });
+    }
+
+    [Test]
+    public async Task GetConnectOptionsAsync_WhenParametersAreSetInTheObjectButAlsoPassedInMethod_UsesMethodParameters()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "valid_token");
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        entraLifecycleMock.Object
+            ._entraIdAccessToken = "valid_token";
+        entraLifecycleMock.Object
+            ._entraIdAccessTokenExpiry = (int)DateTimeOffset.UtcNow.AddMinutes(22).ToUnixTimeSeconds();
+        var runId = "run-id";
+
+        var service = new PlaywrightService(os: OSPlatform.Linux, runId: "invalid-runid", exposeNetwork: "expose", entraLifecycle: entraLifecycleMock.Object);
+        ConnectOptions<BrowserConnectOptions> connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>(os: OSPlatform.Windows, runId: runId, exposeNetwork: "expose-network");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={ServiceOs.Windows}&runId={runId}&api-version={Constants.s_api_version}"));
+            Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("expose-network"));
+        });
+    }
+
+    [Test]
+    public async Task GetConnectOptionsAsync_WhenParametersAreSetViaEnvironmentButAlsoPassedInMethod_UsesMethodParameters()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "valid_token");
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        entraLifecycleMock.Object
+            ._entraIdAccessToken = "valid_token";
+        entraLifecycleMock.Object
+            ._entraIdAccessTokenExpiry = (int)DateTimeOffset.UtcNow.AddMinutes(22).ToUnixTimeSeconds();
+        var runId = "run-id";
+
+        var service = new PlaywrightService(entraLifecycle: entraLifecycleMock.Object);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, ServiceOs.Linux);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, "expose");
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, "invalid-run-id");
+        ConnectOptions<BrowserConnectOptions> connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>(os: OSPlatform.Windows, runId: runId, exposeNetwork: "expose-network");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={ServiceOs.Windows}&runId={runId}&api-version={Constants.s_api_version}"));
+            Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("expose-network"));
         });
     }
 

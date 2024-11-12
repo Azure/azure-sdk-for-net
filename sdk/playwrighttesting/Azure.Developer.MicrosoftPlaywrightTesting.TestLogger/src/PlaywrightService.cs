@@ -37,6 +37,10 @@ public class PlaywrightService
     /// </summary>
     public static string? ServiceEndpoint => Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri);
 
+    internal string? Os { get; set; }
+    internal string? RunId { get; set; }
+    internal string? ExposeNetwork { get; set; }
+
     private readonly EntraLifecycle? _entraLifecycle;
     private readonly JsonWebTokenHandler? _jsonWebTokenHandler;
 
@@ -99,9 +103,9 @@ public class PlaywrightService
             throw new Exception(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message);
         if (string.IsNullOrEmpty(ServiceEndpoint))
             throw new Exception(Constants.s_no_service_endpoint_error_message);
-        string _serviceOs = Uri.EscapeDataString(getServiceCompatibleOs(os) ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs) ?? Constants.s_default_os);
-        string _runId = Uri.EscapeDataString(runId ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId) ?? GetDefaultRunId());
-        string _exposeNetwork = exposeNetwork ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork) ?? Constants.s_default_expose_network;
+        string _serviceOs = Uri.EscapeDataString(getServiceCompatibleOs(os) ?? Os ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs) ?? Constants.s_default_os);
+        string _runId = Uri.EscapeDataString(runId ?? RunId ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId) ?? GetDefaultRunId());
+        string _exposeNetwork = exposeNetwork ?? ExposeNetwork ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork) ?? Constants.s_default_expose_network;
 
         string wsEndpoint = $"{ServiceEndpoint}?os={_serviceOs}&runId={_runId}&api-version={Constants.s_api_version}";
 
@@ -153,9 +157,9 @@ public class PlaywrightService
             ValidateMptPAT();
             return;
         }
-            await _entraLifecycle!.FetchEntraIdAccessTokenAsync(cancellationToken).ConfigureAwait(false);
-            RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
-        }
+        await _entraLifecycle!.FetchEntraIdAccessTokenAsync(cancellationToken).ConfigureAwait(false);
+        RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
+    }
 
     /// <summary>
     /// Cleans up the resources used to setup entra id authentication.
@@ -187,15 +191,23 @@ public class PlaywrightService
         }
         if (!string.IsNullOrEmpty(os))
         {
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, os);
+            Os = os;
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs)))
+            {
+                Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, os);
+            }
         }
-        else
+        else if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs)))
         {
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, Constants.s_default_os);
         }
         if (!string.IsNullOrEmpty(runId))
         {
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId);
+            RunId = runId;
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId)))
+            {
+                Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId);
+            }
         }
         else
         {
@@ -203,9 +215,13 @@ public class PlaywrightService
         }
         if (!string.IsNullOrEmpty(exposeNetwork))
         {
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, exposeNetwork);
+            ExposeNetwork = exposeNetwork;
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork)))
+            {
+                Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, exposeNetwork);
+            }
         }
-        else
+        else if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork)))
         {
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, Constants.s_default_expose_network);
         }
@@ -244,20 +260,20 @@ public class PlaywrightService
 
     private void ValidateMptPAT()
     {
-            string authToken = GetAuthToken()!;
-            if (string.IsNullOrEmpty(authToken))
-                throw new Exception(Constants.s_no_auth_error);
-            JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(authToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
-            var tokenWorkspaceId = jsonWebToken.Claims.FirstOrDefault(c => c.Type == "aid")?.Value;
-            Match match = Regex.Match(ServiceEndpoint, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
-            if (!match.Success)
-                throw new Exception(Constants.s_invalid_service_endpoint_error_message);
-            var serviceEndpointWorkspaceId = match.Groups["workspaceId"].Value;
-            if (tokenWorkspaceId != serviceEndpointWorkspaceId)
-                throw new Exception(Constants.s_workspace_mismatch_error);
-            var expiry = (long)(jsonWebToken.ValidTo - new DateTime(1970, 1, 1)).TotalSeconds;
-            if (expiry <= DateTimeOffset.UtcNow.ToUnixTimeSeconds())
-                throw new Exception(Constants.s_expired_mpt_pat_error);
+        string authToken = GetAuthToken()!;
+        if (string.IsNullOrEmpty(authToken))
+            throw new Exception(Constants.s_no_auth_error);
+        JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(authToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
+        var tokenWorkspaceId = jsonWebToken.Claims.FirstOrDefault(c => c.Type == "aid")?.Value;
+        Match match = Regex.Match(ServiceEndpoint, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
+        if (!match.Success)
+            throw new Exception(Constants.s_invalid_service_endpoint_error_message);
+        var serviceEndpointWorkspaceId = match.Groups["workspaceId"].Value;
+        if (tokenWorkspaceId != serviceEndpointWorkspaceId)
+            throw new Exception(Constants.s_workspace_mismatch_error);
+        var expiry = (long)(jsonWebToken.ValidTo - new DateTime(1970, 1, 1)).TotalSeconds;
+        if (expiry <= DateTimeOffset.UtcNow.ToUnixTimeSeconds())
+            throw new Exception(Constants.s_expired_mpt_pat_error);
     }
 
     private string? getServiceCompatibleOs(OSPlatform? oSPlatform)
