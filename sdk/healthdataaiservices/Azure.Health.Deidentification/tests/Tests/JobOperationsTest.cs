@@ -73,7 +73,6 @@ namespace Azure.Health.Deidentification.Tests
 
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Started, jobName, job)).Value;
 
-            // Test list jobs with maxpagesize = 2 to ensure pagination works.
             var jobs = client.GetJobsAsync(2).GetAsyncEnumerator();
 
             bool jobFound = false;
@@ -125,15 +124,17 @@ namespace Azure.Health.Deidentification.Tests
             Assert.AreEqual(JobStatus.Succeeded, job.Status);
             Assert.IsNotNull(job.StartedAt);
             Assert.IsNotNull(job.Summary);
-            Assert.AreEqual(2, job.Summary.Total);
-            Assert.AreEqual(2, job.Summary.Successful);
+            Assert.AreEqual(3, job.Summary.Total);
+            Assert.AreEqual(3, job.Summary.Successful);
 
-            // Check file reports.
-            var reports = client.GetJobDocumentsAsync(jobName).GetAsyncEnumerator();
+            // Check file reports, using maxpagesize of 2 to test paging.
+            var reports = client.GetJobDocumentsAsync(jobName, 2).GetAsyncEnumerator();
             int reportCount = 0;
+            var reportIds = [];
             while (await reports.MoveNextAsync())
             {
                 reportCount++;
+                reportIds.Add(reports.Current.Id);
                 Assert.IsTrue(reports.Current.Input.Location.ToString().StartsWith(inputPrefix));
                 Assert.IsNotNull(reports.Current.Input.Etag);
                 Assert.AreEqual(OperationState.Succeeded, reports.Current.Status);
@@ -141,7 +142,8 @@ namespace Azure.Health.Deidentification.Tests
                 Assert.IsNotNull(reports.Current.Output.Etag);
                 Assert.IsTrue(reports.Current.Id.Length == 36); // Is Guid.
             }
-            Assert.AreEqual(2, reportCount);
+            Assert.AreEqual(3, reportIds.CountUnique());
+            Assert.AreEqual(3, reportCount);
         }
 
         [Test]
