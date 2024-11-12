@@ -78,7 +78,15 @@ namespace Azure.Communication.CallAutomation
 
         private static AnswerCallEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
         {
-            return new AnswerCallEventResult(true, (CallConnected)returnedEvent, (AnswerFailed)returnedEvent);
+            switch (returnedEvent)
+            {
+                case CallConnected:
+                    return new AnswerCallEventResult(true, (CallConnected)returnedEvent, null);
+                case AnswerFailed:
+                    return new AnswerCallEventResult(false, null, (AnswerFailed)returnedEvent);
+                default:
+                    throw new NotSupportedException(returnedEvent.GetType().Name);
+            }
         }
     }
 }
