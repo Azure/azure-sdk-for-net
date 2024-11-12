@@ -2,7 +2,7 @@
 
 ## Background
 
-In a DPG library, protocol methods will be generated for a swagger input, and both of protocol methods and convenience methods will be generated for a TypeSpec input. We expect to make convenience method an overload of protocol method, so that users could be very clear they are representing the same operation. For example,
+In a DPG library, protocol methods will be generated for a swagger input, and both protocol methods and convenience methods will be generated for a TypeSpec input. We expect to make the convenience method an overload of its protocol method, so that users could be very clear they are representing the same operation. For example,
 
 ```C#
 public virtual async Task<Response<Model>> OperationAsync(string requiredId, string optionalId = null, CancellationToken cancellationToken = default) // Convenience method
@@ -15,17 +15,19 @@ public virtual async Task<Response> OperationAsync(string requiredId, string opt
     ...
 }
 ```
-However, this leads to compilation error
+However, this might lead to the compilation error
 ```
-Error	CS0121	The call is ambiguous between the following methods or properties: 'SomeClass.OperationAsync(string, CancellationToken)' and 'SomeClass.OperationAsync(string, RequestContext)'
+Error   CS0121  The call is ambiguous between the following methods or properties: 'SomeClass.OperationAsync(string, CancellationToken)' and 'SomeClass.OperationAsync(string, RequestContext)'
 ```
 when calling `OperationAsync("<some string>")`.
 
-## Solution
+This article is to explain how we handle this ambiguity issue and how our solution impacts the generated API.
+
+## Solutions
 
 There are two ways to handle this error:
 
-1. Make all the parameters in **protocol methods** to required.
+1. Make all the parameters in **protocol methods** required.
 ```C#
 public virtual async Task<Response<Model>> OperationAsync(string requiredId, string optionalId = null, CancellationToken cancellationToken = default) // Convenience method
 {
@@ -37,7 +39,7 @@ public virtual async Task<Response> OperationAsync(string requiredId, string opt
     ...
 }
 ```
-2. Append `Value` to name of **convenience methods**.
+2. Append `Value` to the name of the **convenience method**.
 ```C#
 public virtual async Task<Response<Model>> OperationValueAsync(string requiredId, string optionalId = null, CancellationToken cancellationToken = default) // Convenience method
 {
@@ -50,9 +52,9 @@ public virtual async Task<Response> OperationAsync(string requiredId, string opt
 }
 ```
 
-The first solution is our preference, so when codegen detects the existing of ambiguity, it chooses the first strategy to resolve the problem.
-
-Only when protocol method already GAed so that we cannot change it, the codegen will choose the second strategy.
+Our strategy is:
+- If the protocol method hasn’t been GAed, the first solution is taken if there exists an ambiguous call.
+- If the protocol method is already GAed, the second solution is taken because we cannot change protocol method anymore.
 
 ## Scope of ambiguity we handle
 
@@ -70,7 +72,7 @@ public virtual async Task<Response> OperationAsync(RequestContent content, Reque
     ...
 }
 ```
-Not all the ambiguities could be handled. For example, even we handle the example in Background section like
+Not all the ambiguities could be resolved by the first solution. For example, even we handle the example in **Background** section as follows
 ```C#
 public virtual async Task<Response<Model>> OperationAsync(string requiredId, string optionalId = null, CancellationToken cancellationToken = default) // Convenience method
 {
@@ -82,13 +84,13 @@ public virtual async Task<Response> OperationAsync(string requiredId, string opt
     ...
 }
 ```
-`OperationAsync("required", "optional", default)` and `OperationAsync("required", "optional", new())` are two examples that lead to compilation error of ambiguity.
+`OperationAsync("required", "optional", default)` and `OperationAsync("required", "optional", new())` are two examples that still lead to compilation error of ambiguity.
 
-Considering all of these, we only gaurantee that we will not generated code which leads to ambiguous call when:
-1. The call doesn't have any actual parameters of `null`, `default`, `new()`. For example, we don't care whether `OperationAsync("required", "optional", default)` will lead to ambiguity. Details [here](#special-values-not-taken-into-ambiguity-consideration).
-2. The call only have set required parameters. For example, we only make sure `OperationAsync("required")` is not an ambiguous call.
+Considering all of these, we only guarantee that we will not generate code which leads to ambiguous call when:
+1. The call doesn't have any actual parameter of `null`, `default`, `new()`. For example, we don't care whether `OperationAsync("required", "optional", default)` will lead to ambiguity. Details [here](#special-values-not-taken-into-ambiguity-consideration).
+2. The call only has its required parameters passed in. For example, we can only ensure `OperationAsync("required")` is not an ambiguous call.
 
-See below section of more specific examples and corresponding explanation.
+See below section for more specific examples and corresponding explanation.
 
 ## Examples
 
@@ -110,11 +112,11 @@ public virtual async Task<Response> OperationAsync(string requiredId, string opt
     ...
 }
 ```
-It only has one required parameter `requiredId`, so what we gaurantee will not have ambiguity is
+It only has one required parameter `requiredId`, so the call that we guarantee will not have ambiguity is
 ```C#
 OperationAsync("requiredId");
 ```
-Then we find that this call has ambiguity error, so we change our signature by [one of these solutions](#solution).
+Then we find that this call has ambiguity error, so we have to change our signature by choosing from [one of these solutions](#solution).
 
 ### Operation with input
 Spec:
@@ -133,12 +135,12 @@ public virtual async Task<Response> OperationAsync(RequestContent content, Reque
     ...
 }
 ```
-No matter the input model is required or optional in spec, it is a required parameter in the signature. So we care about:
+No matter if the input model is required or optional in spec, it is a required parameter in the signature. So, what we care about are:
 ```C#
 OperationAsync(new Model());
 OperationAsync(new RequestContent());
 ```
-Then we find these calls are fine, so just keep these signatures.
+Then we find out these calls are fine, so just keep these signatures.
 
 ### Operation without both input and output
 Spec:
@@ -173,7 +175,7 @@ public virtual async Task<Response> OperationAsync(RequestContent content, Reque
     ...
 }
 ```
-The convenience method has a required paramter `requiredId` and protocol method has a required method `content`, so what we gaurantee will not have ambiguity is
+The convenience method has a required parameter `requiredId` and protocol method has a required method `content`, so what we guarantee will not have ambiguity are
 ```C#
 OperationAsync("requiredId");
 OperationAsync(new RequestContent());
@@ -196,7 +198,7 @@ public virtual async Task<Response> OperationAsync(string requiredId, string opt
     ...
 }
 ```
-The convenience method is just a wapper and doesn't have any value. So we just skip generating it.
+The convenience method is just a wrapper and doesn't have any value. So, we just skip generating it.
 
 ### Special values not taken into ambiguity consideration
 Think about these totally valid overloads that you've seen many times in your daily development.
@@ -220,4 +222,4 @@ double Add(DoubleModel a, DoubleModel b)
     return a.Value + b.Value;
 }
 ```
-When calling `Add(null, null)` or `Add(default, default)` or `Add(new(), new())`, ambiguity error still exists. Therefore we don't care about `null`, or `deafult `, or `new()`.
+When calling `Add(null, null)` or `Add(default, default)` or `Add(new(), new())`, ambiguity error still exists. Therefore we don't care about `null`, or `default`, or `new()`.
