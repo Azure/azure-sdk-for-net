@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAppServiceEnvironments_GetAllAppServiceEnvironmentsForASubscription()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_List.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_List.json
             // this example is just showing the usage of "AppServiceEnvironments_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetThePropertiesOfAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_Get.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_Get.json
             // this example is just showing the usage of "AppServiceEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_Delete.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_Delete.json
             // this example is just showing the usage of "AppServiceEnvironments_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_Update.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_Update.json
             // this example is just showing the usage of "AppServiceEnvironments_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCapacities_GetTheUsedAvailableAndTotalWorkerCapacityAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_ListCapacities.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListCapacities.json
             // this example is just showing the usage of "AppServiceEnvironments_ListCapacities" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVipInfo_GetIPAddressesAssignedToAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_GetVipInfo.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_GetVipInfo.json
             // this example is just showing the usage of "AppServiceEnvironments_GetVipInfo" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetDiagnostics_GetDiagnosticInformationForAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_ListDiagnostics.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListDiagnostics.json
             // this example is just showing the usage of "AppServiceEnvironments_ListDiagnostics" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetDiagnosticsItem_GetADiagnosticsItemForAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_GetDiagnosticsItem.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_GetDiagnosticsItem.json
             // this example is just showing the usage of "AppServiceEnvironments_GetDiagnosticsItem" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetInboundNetworkDependenciesEndpoints_GetTheNetworkEndpointsOfAllInboundDependenciesOfAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetInboundNetworkDependenciesEndpoints.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetInboundNetworkDependenciesEndpoints.json
             // this example is just showing the usage of "AppServiceEnvironments_GetInboundNetworkDependenciesEndpoints" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task TestUpgradeAvailableNotification_SendATestNotificationThatAnUpgradeIsAvailableForThisAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_TestUpgradeAvailableNotification.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_TestUpgradeAvailableNotification.json
             // this example is just showing the usage of "AppServiceEnvironments_TestUpgradeAvailableNotification" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Upgrade_InitiateAnUpgradeOnAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_Upgrade.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_Upgrade.json
             // this example is just showing the usage of "AppServiceEnvironments_Upgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetOperations_ListAllCurrentlyRunningOperationsOnTheAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_ListOperations.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListOperations.json
             // this example is just showing the usage of "AppServiceEnvironments_ListOperations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetOutboundNetworkDependenciesEndpoints_GetTheNetworkEndpointsOfAllOutboundDependenciesOfAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetOutboundNetworkDependenciesEndpoints.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetOutboundNetworkDependenciesEndpoints.json
             // this example is just showing the usage of "AppServiceEnvironments_GetOutboundNetworkDependenciesEndpoints" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPrivateLinkResources_GetsThePrivateLinkResources()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_GetPrivateLinkResources.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_GetPrivateLinkResources.json
             // this example is just showing the usage of "AppServiceEnvironments_GetPrivateLinkResources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Reboot_RebootAllMachinesInAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_Reboot.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_Reboot.json
             // this example is just showing the usage of "AppServiceEnvironments_Reboot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAppServicePlans_GetAllAppServicePlansInAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_ListAppServicePlans.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListAppServicePlans.json
             // this example is just showing the usage of "AppServiceEnvironments_ListAppServicePlans" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAllWebAppData_GetAllAppsInAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_ListWebApps.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListWebApps.json
             // this example is just showing the usage of "AppServiceEnvironments_ListWebApps" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetUsages_GetGlobalUsageMetricsOfAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AppServiceEnvironments_ListUsages.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListUsages.json
             // this example is just showing the usage of "AppServiceEnvironments_ListUsages" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

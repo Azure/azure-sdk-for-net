@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCustomDomainForAStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetStaticSiteCustomDomain.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetStaticSiteCustomDomain.json
             // this example is just showing the usage of "StaticSites_GetStaticSiteCustomDomain" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateACustomDomainForAStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/CreateOrUpdateStaticSiteCustomDomain.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/CreateOrUpdateStaticSiteCustomDomain.json
             // this example is just showing the usage of "StaticSites_CreateOrUpdateStaticSiteCustomDomain" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteACustomDomainForAStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/DeleteStaticSiteCustomDomain.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/DeleteStaticSiteCustomDomain.json
             // this example is just showing the usage of "StaticSites_DeleteStaticSiteCustomDomain" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ValidateCustomDomainCanBeAddedToStaticSite_ValidateACustomDomainForAStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ValidateStaticSiteCustomDomain.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ValidateStaticSiteCustomDomain.json
             // this example is just showing the usage of "StaticSites_ValidateCustomDomainCanBeAddedToStaticSite" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

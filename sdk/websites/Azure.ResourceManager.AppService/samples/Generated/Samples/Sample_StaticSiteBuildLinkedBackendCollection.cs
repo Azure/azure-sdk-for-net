@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_GetDetailsOfTheLinkedBackendsRegisteredWithAStaticSiteBuild()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetLinkedBackendsForStaticSiteBuild.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetLinkedBackendsForStaticSiteBuild.json
             // this example is just showing the usage of "StaticSites_GetLinkedBackendsForBuild" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetDetailsOfTheLinkedBackendRegisteredWithAStaticSiteBuildByName()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetLinkedBackendForStaticSiteBuild.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetLinkedBackendForStaticSiteBuild.json
             // this example is just showing the usage of "StaticSites_GetLinkedBackendForBuild" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetDetailsOfTheLinkedBackendRegisteredWithAStaticSiteBuildByName()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetLinkedBackendForStaticSiteBuild.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetLinkedBackendForStaticSiteBuild.json
             // this example is just showing the usage of "StaticSites_GetLinkedBackendForBuild" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetDetailsOfTheLinkedBackendRegisteredWithAStaticSiteBuildByName()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetLinkedBackendForStaticSiteBuild.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetLinkedBackendForStaticSiteBuild.json
             // this example is just showing the usage of "StaticSites_GetLinkedBackendForBuild" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_LinkABackendToAStaticSiteBuild()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/LinkBackendToStaticSiteBuild.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/LinkBackendToStaticSiteBuild.json
             // this example is just showing the usage of "StaticSites_LinkBackendToBuild" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

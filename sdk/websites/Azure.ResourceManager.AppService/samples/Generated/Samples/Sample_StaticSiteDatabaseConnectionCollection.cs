@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListOverviewsOfDatabaseConnectionsForTheStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetStaticSiteDatabaseConnections.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetStaticSiteDatabaseConnections.json
             // this example is just showing the usage of "StaticSites_GetDatabaseConnections" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetOverviewOfDatabaseConnectionsForTheStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetStaticSiteDatabaseConnection.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetStaticSiteDatabaseConnection.json
             // this example is just showing the usage of "StaticSites_GetDatabaseConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetOverviewOfDatabaseConnectionsForTheStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetStaticSiteDatabaseConnection.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetStaticSiteDatabaseConnection.json
             // this example is just showing the usage of "StaticSites_GetDatabaseConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetOverviewOfDatabaseConnectionsForTheStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetStaticSiteDatabaseConnection.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetStaticSiteDatabaseConnection.json
             // this example is just showing the usage of "StaticSites_GetDatabaseConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateADatabaseConnectionForAStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/CreateOrUpdateStaticSiteDatabaseConnection.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/CreateOrUpdateStaticSiteDatabaseConnection.json
             // this example is just showing the usage of "StaticSites_CreateOrUpdateDatabaseConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

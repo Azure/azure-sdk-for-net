@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListWebAppsByResourceGroup()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListWebAppsByResourceGroup.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListWebAppsByResourceGroup.json
             // this example is just showing the usage of "WebApps_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetWebApp.json
             // this example is just showing the usage of "WebApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetWebApp.json
             // this example is just showing the usage of "WebApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetWebApp.json
             // this example is just showing the usage of "WebApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CloneWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/CloneWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/CloneWebApp.json
             // this example is just showing the usage of "WebApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateFlexConsumptionFunctionApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/CreateOrUpdateFunctionAppFlexConsumption.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/CreateOrUpdateFunctionAppFlexConsumption.json
             // this example is just showing the usage of "WebApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -293,7 +293,7 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateFlexConsumptionFunctionAppWithDetails()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/CreateOrUpdateFunctionAppFlexConsumptionWithDetails.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/CreateOrUpdateFunctionAppFlexConsumptionWithDetails.json
             // this example is just showing the usage of "WebApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -379,7 +379,7 @@ InstanceCount = 2,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/CreateOrUpdateWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/CreateOrUpdateWebApp.json
             // this example is just showing the usage of "WebApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

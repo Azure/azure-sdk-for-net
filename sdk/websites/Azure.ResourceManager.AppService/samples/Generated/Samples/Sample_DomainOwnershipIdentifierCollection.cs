@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListDomainOwnershipIdentifiers()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/ListDomainOwnershipIdentifiers.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/ListDomainOwnershipIdentifiers.json
             // this example is just showing the usage of "Domains_ListOwnershipIdentifiers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetDomainOwnershipIdentifier()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/GetDomainOwnershipIdentifier.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/GetDomainOwnershipIdentifier.json
             // this example is just showing the usage of "Domains_GetOwnershipIdentifier" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetDomainOwnershipIdentifier()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/GetDomainOwnershipIdentifier.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/GetDomainOwnershipIdentifier.json
             // this example is just showing the usage of "Domains_GetOwnershipIdentifier" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetDomainOwnershipIdentifier()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/GetDomainOwnershipIdentifier.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/GetDomainOwnershipIdentifier.json
             // this example is just showing the usage of "Domains_GetOwnershipIdentifier" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateAppServiceDomainOwnershipIdentifier()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/CreateAppServiceDomainOwnershipIdentifier.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/CreateAppServiceDomainOwnershipIdentifier.json
             // this example is just showing the usage of "Domains_CreateOrUpdateOwnershipIdentifier" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
