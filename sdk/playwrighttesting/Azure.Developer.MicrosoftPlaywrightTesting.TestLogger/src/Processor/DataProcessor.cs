@@ -29,7 +29,23 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         {
             var startTime = _cloudRunMetadata.TestRunStartTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
             var gitBasedRunName = ReporterUtils.GetRunName(CiInfoProvider.GetCIInfo())?.Trim();
-            string runName = !string.IsNullOrEmpty(_cloudRunMetadata.RunName) ? _cloudRunMetadata.RunName! : string.IsNullOrEmpty(gitBasedRunName) ? _cloudRunMetadata.RunId! : gitBasedRunName!;
+            string runName;
+            if (string.IsNullOrEmpty(_cloudRunMetadata.RunName))
+            {
+                if (string.IsNullOrEmpty(gitBasedRunName))
+                {
+                    runName = _cloudRunMetadata.RunId!;
+                }
+                else
+                {
+                    runName = gitBasedRunName!;
+                }
+            }
+            else
+            {
+                runName = _cloudRunMetadata.RunName!;
+            }
+
             var run = new TestRunDto
             {
                 TestRunId = _cloudRunMetadata.RunId!,

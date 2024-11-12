@@ -187,7 +187,7 @@ public class RunSettingKey
     public static readonly string EnableResultPublish = "EnableResultPublish";
 
     /// <summary>
-    /// The run nam setting key.
+    /// The run name setting key.
     /// </summary>
     public static readonly string RunName = "RunName";
 }
