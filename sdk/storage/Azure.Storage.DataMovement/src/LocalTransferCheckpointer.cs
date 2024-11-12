@@ -151,8 +151,8 @@ namespace Azure.Storage.DataMovement
             int length,
             CancellationToken cancellationToken = default)
         {
-            int maxArraySize = length > 0 ? length : DataMovementConstants.DefaultArrayPoolArraySize;
-            Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, maxArraySize);
+            int bufferSize = length > 0 ? length : DataMovementConstants.DefaultStreamCopyBufferSize;
+            Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, bufferSize);
 
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
@@ -163,7 +163,7 @@ namespace Azure.Storage.DataMovement
                     using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPlanFile.FilePath))
                     using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, length, MemoryMappedFileAccess.Read))
                     {
-                        await mmfStream.CopyToAsync(copiedStream).ConfigureAwait(false);
+                        await mmfStream.CopyToAsync(copiedStream, bufferSize, cancellationToken).ConfigureAwait(false);
                     }
 
                     copiedStream.Position = 0;
@@ -192,8 +192,8 @@ namespace Azure.Storage.DataMovement
             {
                 if (jobPlanFile.JobParts.TryGetValue(partNumber, out JobPartPlanFile jobPartPlanFile))
                 {
-                    int maxArraySize = length > 0 ? length : DataMovementConstants.DefaultArrayPoolArraySize;
-                    Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, maxArraySize);
+                    int bufferSize = length > 0 ? length : DataMovementConstants.DefaultStreamCopyBufferSize;
+                    Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, bufferSize);
 
                     await jobPartPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
                     try
@@ -201,7 +201,7 @@ namespace Azure.Storage.DataMovement
                         using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPartPlanFile.FilePath))
                         using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, length, MemoryMappedFileAccess.Read))
                         {
-                            await mmfStream.CopyToAsync(copiedStream).ConfigureAwait(false);
+                            await mmfStream.CopyToAsync(copiedStream, bufferSize, cancellationToken).ConfigureAwait(false);
                         }
 
                         copiedStream.Position = 0;

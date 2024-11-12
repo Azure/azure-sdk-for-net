@@ -1,16 +1,13 @@
 # Release History
 
-## 12.23.0-beta.3 (Unreleased)
+## 12.23.0 (2024-11-12)
 
 ### Features Added
-
-### Breaking Changes
+- Includes all features from 12.23.0-beta.1 and 12.23.0-beta.2
 
 ### Bugs Fixed
 - Fixed bug where network download streams were not properly disposed.
 - Fixed bug where DownloadToAsync() did not dispose all its network streams on error in some cases.
-
-### Other Changes
 
 ## 12.22.2 (2024-10-10)
 
