@@ -185,9 +185,9 @@ public class PlaywrightServiceTests
         Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri), Is.Not.Null);
 
         service.InitializeAsync().Wait();
-        defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
+        defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Never);
 
-        service.RotationTimer!.Dispose();
+        Assert.That(service.RotationTimer, Is.Null);
 
         Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri), Is.Null);
     }

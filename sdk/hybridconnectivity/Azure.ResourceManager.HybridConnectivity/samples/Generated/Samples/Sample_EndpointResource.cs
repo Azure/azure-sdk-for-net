@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HybridConnectivity.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridConnectivity.Samples
 {
     public partial class Sample_EndpointResource
     {
-        // HybridConnectivityEndpointsGetCustom
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_HybridConnectivityEndpointsGetCustom()
         {
             // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/preview/2021-10-06-preview/examples/EndpointsGetCustom.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HybridConnectivityEndpointsGetDefault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_HybridConnectivityEndpointsGetDefault()
         {
             // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/preview/2021-10-06-preview/examples/EndpointsGetDefault.json
@@ -75,9 +74,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HybridConnectivityEndpointsPatchDefault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_HybridConnectivityEndpointsPatchDefault()
         {
             // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/preview/2021-10-06-preview/examples/EndpointsPatchDefault.json
@@ -109,9 +107,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HybridConnectivityEndpointsDeleteDefault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_HybridConnectivityEndpointsDeleteDefault()
         {
             // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/preview/2021-10-06-preview/examples/EndpointsDeleteDefault.json
@@ -132,12 +129,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             // invoke the operation
             await endpointResource.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // HybridConnectivityEndpointsPostListCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCredentials_HybridConnectivityEndpointsPostListCredentials()
         {
             // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/preview/2021-10-06-preview/examples/EndpointsPostListCredentials.json

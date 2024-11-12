@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Quantum.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Quantum.Samples
 {
     public partial class Sample_QuantumWorkspaceResource
     {
-        // QuantumWorkspacesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_QuantumWorkspacesGet()
         {
             // Generated from example definition: specification/quantum/resource-manager/Microsoft.Quantum/preview/2023-11-13-preview/examples/quantumWorkspacesGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Quantum.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QuantumWorkspacesPatchTags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_QuantumWorkspacesPatchTags()
         {
             // Generated from example definition: specification/quantum/resource-manager/Microsoft.Quantum/preview/2023-11-13-preview/examples/quantumWorkspacesPatch.json
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.Quantum.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QuantumWorkspacesDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_QuantumWorkspacesDelete()
         {
             // Generated from example definition: specification/quantum/resource-manager/Microsoft.Quantum/preview/2023-11-13-preview/examples/quantumWorkspacesDelete.json
@@ -110,12 +108,11 @@ namespace Azure.ResourceManager.Quantum.Samples
             // invoke the operation
             await quantumWorkspace.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // QuantumWorkspacesListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetQuantumWorkspaces_QuantumWorkspacesListBySubscription()
         {
             // Generated from example definition: specification/quantum/resource-manager/Microsoft.Quantum/preview/2023-11-13-preview/examples/quantumWorkspacesListSubscription.json
@@ -142,12 +139,11 @@ namespace Azure.ResourceManager.Quantum.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ListKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeysWorkspace_ListKeys()
         {
             // Generated from example definition: specification/quantum/resource-manager/Microsoft.Quantum/preview/2023-11-13-preview/examples/listKeys.json
@@ -172,9 +168,8 @@ namespace Azure.ResourceManager.Quantum.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RegenerateKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKeysWorkspace_RegenerateKey()
         {
             // Generated from example definition: specification/quantum/resource-manager/Microsoft.Quantum/preview/2023-11-13-preview/examples/regenerateKey.json
@@ -203,7 +198,7 @@ WorkspaceKeyType.Primary,WorkspaceKeyType.Secondary
             };
             await quantumWorkspace.RegenerateKeysWorkspaceAsync(keySpecification);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

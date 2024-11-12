@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.IotFirmwareDefense.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 {
     public partial class Sample_FirmwareAnalysisWorkspaceResource
     {
-        // Workspaces_ListBySubscription_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFirmwareAnalysisWorkspaces_WorkspacesListBySubscriptionMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_ListBySubscription_MaximumSet_Gen.json
@@ -45,12 +45,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Workspaces_ListBySubscription_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFirmwareAnalysisWorkspaces_WorkspacesListBySubscriptionMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_ListBySubscription_MinimumSet_Gen.json
@@ -77,12 +76,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Workspaces_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_WorkspacesUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_Update_MaximumSet_Gen.json
@@ -112,9 +110,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Workspaces_Update_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_WorkspacesUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_Update_MinimumSet_Gen.json
@@ -144,9 +141,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Workspaces_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_WorkspacesDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_Delete_MaximumSet_Gen.json
@@ -168,12 +164,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // invoke the operation
             await firmwareAnalysisWorkspace.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Workspaces_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_WorkspacesDeleteMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_Delete_MinimumSet_Gen.json
@@ -195,12 +190,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // invoke the operation
             await firmwareAnalysisWorkspace.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Workspaces_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkspacesGetMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_Get_MaximumSet_Gen.json
@@ -229,9 +223,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Workspaces_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkspacesGetMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_Get_MinimumSet_Gen.json
@@ -260,9 +253,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Workspaces_GenerateUploadUrl_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateUploadUri_WorkspacesGenerateUploadUrlMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_GenerateUploadUrl_MaximumSet_Gen.json
@@ -291,9 +283,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Workspaces_GenerateUploadUrl_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateUploadUri_WorkspacesGenerateUploadUrlMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_GenerateUploadUrl_MinimumSet_Gen.json

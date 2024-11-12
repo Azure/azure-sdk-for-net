@@ -49,7 +49,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 },
                 TestRunConfig = new ClientConfig // TODO fetch some of these dynamically
                 {
-                    Workers = 1,
+                    Workers = _cloudRunMetadata.NumberOfTestWorkers,
                     PwVersion = "1.40",
                     Timeout = 60000,
                     TestType = "WebTest",
@@ -74,7 +74,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                     Status = "RUNNING",
                     StartTime = startTime,
                 },
-                Workers = 1
+                Workers = _cloudRunMetadata.NumberOfTestWorkers
             };
             return shard;
         }
@@ -143,13 +143,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         {
             if (testResultSource == null)
                 return new RawTestResult();
-            List <MPTError> errors = new();//[testResultSource.ErrorMessage];
+            List <MPTError> errors = new();
             if (testResultSource.ErrorMessage != null)
                 errors.Add(new MPTError() { message = testResultSource.ErrorMessage });
+            if (testResultSource.ErrorStackTrace != null)
+                errors.Add(new MPTError() { message = testResultSource.ErrorStackTrace });
             var rawTestResult = new RawTestResult
             {
-                errors = JsonSerializer.Serialize(errors),
-                stdErr = testResultSource?.ErrorStackTrace ?? string.Empty
+                errors = JsonSerializer.Serialize(errors)
             };
             return rawTestResult;
         }
