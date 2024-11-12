@@ -29,6 +29,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger
         public static readonly string EnableResultPublish;
         public static readonly string ExposeNetwork;
         public static readonly string ManagedIdentityClientId;
+        public static readonly string NumberOfTestWorkers;
         public static readonly string Os;
         public static readonly string RunId;
         public static readonly string ServiceAuthType;
