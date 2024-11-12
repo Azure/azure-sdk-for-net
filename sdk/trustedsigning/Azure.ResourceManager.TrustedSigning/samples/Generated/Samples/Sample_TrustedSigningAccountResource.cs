@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TrustedSigning.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.TrustedSigning.Samples
 {
     public partial class Sample_TrustedSigningAccountResource
     {
-        // Checks that the trusted signing account name is available.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckTrustedSigningAccountNameAvailability_ChecksThatTheTrustedSigningAccountNameIsAvailable()
         {
             // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_CheckNameAvailability.json
@@ -42,9 +42,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Lists trusted signing accounts within a subscription.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTrustedSigningAccounts_ListsTrustedSigningAccountsWithinASubscription()
         {
             // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_ListBySubscription.json
@@ -71,12 +70,11 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a Trusted Signing Account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetATrustedSigningAccount()
         {
             // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_Get.json
@@ -105,9 +103,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a trusted signing account.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateATrustedSigningAccount()
         {
             // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_Update.json
@@ -144,9 +141,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a trusted signing account.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteATrustedSigningAccount()
         {
             // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_Delete.json
@@ -168,7 +164,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // invoke the operation
             await trustedSigningAccount.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageActions.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageActions.Samples
 {
     public partial class Sample_StorageTaskCollection
     {
-        // PutStorageTask
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutStorageTask()
         {
             // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/PutStorageTask.json
@@ -74,9 +74,8 @@ OnFailure = OnFailureAction.Break,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetStorageTask
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetStorageTask()
         {
             // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/GetStorageTask.json
@@ -108,9 +107,8 @@ OnFailure = OnFailureAction.Break,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetStorageTask
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetStorageTask()
         {
             // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/GetStorageTask.json
@@ -138,9 +136,8 @@ OnFailure = OnFailureAction.Break,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetStorageTask
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetStorageTask()
         {
             // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/GetStorageTask.json
@@ -168,7 +165,7 @@ OnFailure = OnFailureAction.Break,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -180,9 +177,8 @@ OnFailure = OnFailureAction.Break,
             }
         }
 
-        // ListStorageTasksByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListStorageTasksByResourceGroup()
         {
             // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksList/ListStorageTasksByResourceGroup.json
@@ -213,7 +209,7 @@ OnFailure = OnFailureAction.Break,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

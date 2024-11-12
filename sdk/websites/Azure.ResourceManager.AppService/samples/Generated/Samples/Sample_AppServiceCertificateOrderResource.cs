@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_AppServiceCertificateOrderResource
     {
-        // List App Service Certificate orders by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAppServiceCertificateOrders_ListAppServiceCertificateOrdersBySubscription()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/ListAppServiceCertificateOrdersBySubscription.json
@@ -45,12 +45,11 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get App Service Certificate Order
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAppServiceCertificateOrder()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/GetAppServiceCertificateOrder.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete App Service Certificate Order
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAppServiceCertificateOrder()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/DeleteAppServiceCertificateOrder.json
@@ -103,12 +101,11 @@ namespace Azure.ResourceManager.AppService.Samples
             // invoke the operation
             await appServiceCertificateOrder.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update Certificate order
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateCertificateOrder()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/UpdateAppServiceCertificateOrder.json
@@ -158,9 +155,8 @@ KeyVaultSecretName = "SampleSecretName2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Reissue App Service Certificate Order
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Reissue_ReissueAppServiceCertificateOrder()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/ReissueAppServiceCertificateOrder.json
@@ -189,12 +185,11 @@ KeyVaultSecretName = "SampleSecretName2",
             };
             await appServiceCertificateOrder.ReissueAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Renew App Service Certificate Order
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Renew_RenewAppServiceCertificateOrder()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/RenewAppServiceCertificateOrder.json
@@ -222,12 +217,11 @@ KeyVaultSecretName = "SampleSecretName2",
             };
             await appServiceCertificateOrder.RenewAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Resend App Service Certificate Order email
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResendEmail_ResendAppServiceCertificateOrderEmail()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/ResendAppServiceCertificateOrderEmail.json
@@ -249,12 +243,11 @@ KeyVaultSecretName = "SampleSecretName2",
             // invoke the operation
             await appServiceCertificateOrder.ResendEmailAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Resend Domain Ownership verification email
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResendRequestEmails_ResendDomainOwnershipVerificationEmail()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/ResendDomainOwnershipVerificationEmail.json
@@ -280,12 +273,11 @@ KeyVaultSecretName = "SampleSecretName2",
             };
             await appServiceCertificateOrder.ResendRequestEmailsAsync(nameIdentifier);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Retrieve Site Seal
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RetrieveSiteSeal_RetrieveSiteSeal()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/RetrieveSiteSeal.json
@@ -315,9 +307,8 @@ KeyVaultSecretName = "SampleSecretName2",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Verify Domain Ownership
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task VerifyDomainOwnership_VerifyDomainOwnership()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/VerifyDomainOwnership.json
@@ -339,12 +330,11 @@ KeyVaultSecretName = "SampleSecretName2",
             // invoke the operation
             await appServiceCertificateOrder.VerifyDomainOwnershipAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Retrieve Certificate Order Actions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RetrieveCertificateActions_RetrieveCertificateOrderActions()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/RetrieveCertificateOrderActions.json
@@ -369,12 +359,11 @@ KeyVaultSecretName = "SampleSecretName2",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Retrieve Certificate Email History
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RetrieveCertificateEmailHistory_RetrieveCertificateEmailHistory()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/RetrieveCertificateEmailHistory.json
@@ -399,7 +388,7 @@ KeyVaultSecretName = "SampleSecretName2",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

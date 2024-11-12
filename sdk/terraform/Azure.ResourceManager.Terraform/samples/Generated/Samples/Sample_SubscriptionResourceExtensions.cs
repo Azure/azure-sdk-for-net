@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Terraform.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Terraform.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // ExportTerraform
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExportTerraform_ExportTerraform()
         {
             // Generated from example definition: 2023-07-01-preview/ExportTerraform.json
