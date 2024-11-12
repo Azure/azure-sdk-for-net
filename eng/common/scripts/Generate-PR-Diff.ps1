@@ -30,7 +30,7 @@ function Get-ChangedServices
 
   [string[]] $changedServices = $ChangedFiles | Foreach-Object { if ($_ -match "sdk/([^/]+)") { $matches[1] } } | Sort-Object -Unique
 
-  return $changedServices
+  return , $changedServices
 }
 
 if (!(Test-Path $ArtifactPath))
