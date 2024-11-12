@@ -370,7 +370,14 @@ public class TransferManagerTests
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
+
+        List<string> capturedTransferIds = new();
+        List<DataTransferStatus> capturedTransferStatuses = new();
         Mock<ITransferCheckpointer> checkpointer = new(MockBehavior.Loose);
+        checkpointer.Setup(c => c.AddNewJobAsync(Capture.In(capturedTransferIds),
+            It.IsAny<StorageResource>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()));
+        checkpointer.Setup(c => c.SetJobStatusAsync(It.IsAny<string>(), CaptureTransferStatus(capturedTransferStatuses),
+            It.IsAny<CancellationToken>()));
 
         (StorageResource srcResource, StorageResource dstResource, Func<IDisposable> srcThrowScope, Func<IDisposable> dstThrowScope)
             = GetBasicSetupResources(isContainer, srcUri, dstUri);
@@ -382,11 +389,6 @@ public class TransferManagerTests
             jobBuilder,
             checkpointer.Object,
             default);
-
-        //Exception expectedException = new();
-        //checkpointer.Setup(c => c.AddNewJobPartAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Stream>(),
-        //    It.IsAny<CancellationToken>())
-        //).Throws(expectedException);
 
         // need to listen to events to get exception that takes place in processing
         List<TransferItemFailedEventArgs> failures = new();
@@ -403,8 +405,16 @@ public class TransferManagerTests
         Assert.That(partsProcessor.ItemsInQueue, Is.Zero); // because of failure
         Assert.That(transfer.TransferStatus.HasFailedItems);
         Assert.That(failures, Is.Not.Empty);
-        // TODO determine checkpointer status of job parts
-        //      need checkpointer API refactor for this
+
+        string transferId = capturedTransferIds.First();
+        checkpointer.Verify(c => c.AddNewJobAsync(transferId, It.IsAny<StorageResource>(), It.IsAny<StorageResource>(),
+            It.IsAny<CancellationToken>()));
+        checkpointer.Verify(c => c.SetJobStatusAsync(transferId, It.IsAny<DataTransferStatus>(),
+            It.IsAny<CancellationToken>()), Times.Exactly(3));
+        Assert.That(capturedTransferStatuses[0].State, Is.EqualTo(DataTransferState.InProgress));
+        Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(DataTransferState.Stopping));
+        Assert.That(capturedTransferStatuses[2].IsCompletedWithFailedItems);
+        checkpointer.VerifyNoOtherCalls();
     }
 
     [Test]
@@ -485,6 +495,17 @@ public class TransferManagerTests
         });
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error during initial Job queueing.");
     }
+
+    /// <summary>
+    /// DataTransferStatus is stateful across transfer. This makes it difficult to verify mocks, as verifications
+    /// are lazily performed. This captures deep copies of statuses for custom assertion.
+    /// </summary>
+    private static DataTransferStatus CaptureTransferStatus(ICollection<DataTransferStatus> statuses)
+        => Match.Create<DataTransferStatus>(status =>
+        {
+            statuses.Add(status.DeepCopy());
+            return true;
+        });
 }
 
 internal static partial class MockExtensions
