@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,28 +17,28 @@ namespace BasicTypeSpec
     {
         public static async ValueTask<Response> ProcessMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
-            await pipeline.SendAsync(message, default).ConfigureAwait(false);
+            (CancellationToken userCancellationToken, ErrorOptions statusOption) = context.Parse();
+            await pipeline.SendAsync(message, userCancellationToken).ConfigureAwait(false);
 
             if (message.Response.IsError && (context?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
             {
                 throw new RequestFailedException(message.Response);
             }
 
-            Response response = message.BufferResponse ? message.Response : ExtractResponseContent(message);
-            return response;
+            return message.Response;
         }
 
         public static Response ProcessMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
-            pipeline.Send(message, default);
+            (CancellationToken userCancellationToken, ErrorOptions statusOption) = context.Parse();
+            pipeline.Send(message, userCancellationToken);
 
             if (message.Response.IsError && (context?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
             {
                 throw new RequestFailedException(message.Response);
             }
 
-            Response response = message.BufferResponse ? message.Response : ExtractResponseContent(message);
-            return response;
+            return message.Response;
         }
 
         public static async ValueTask<Response<bool>> ProcessHeadAsBoolMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
@@ -66,12 +67,6 @@ namespace BasicTypeSpec
                 default:
                     return new ErrorResult<bool>(response, new RequestFailedException(response));
             }
-        }
-
-        private static Response ExtractResponseContent(HttpMessage message)
-        {
-            message.ExtractResponseContent();
-            return message.Response;
         }
     }
 }

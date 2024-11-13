@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-02-28-preview";
+            _apiVersion = apiVersion ?? "2024-09-20";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

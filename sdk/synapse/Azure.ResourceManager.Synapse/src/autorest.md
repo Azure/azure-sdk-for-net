@@ -26,7 +26,6 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true   # Mitigate the duplication schema 'ErrorResponse' issue
 use-model-reader-writer: true
-use-write-core: true
 
 # mgmt-debug:
 #   show-serialized-names: true

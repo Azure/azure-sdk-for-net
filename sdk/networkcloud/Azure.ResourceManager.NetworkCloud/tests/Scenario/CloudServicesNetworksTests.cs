@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             var data = new NetworkCloudCloudServicesNetworkData(new AzureLocation(TestEnvironment.Location), new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation")) {
                 AdditionalEgressEndpoints = {
                     new EgressEndpoint("azure-resource-management", new EndpointDependency[]{
-                        new EndpointDependency("https://storageaccountex.blob.core.windows.net")
+                        new EndpointDependency("storageaccountex.blob.core.windows.net")
                         {
                             Port = 443
                         }

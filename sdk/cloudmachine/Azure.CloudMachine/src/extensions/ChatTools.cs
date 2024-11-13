@@ -8,7 +8,6 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using Azure.Messaging.EventGrid.SystemEvents;
 using OpenAI.Chat;
 
 namespace Azure.CloudMachine.OpenAI;

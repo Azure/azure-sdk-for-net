@@ -891,7 +891,18 @@ function GeneratePackage()
         $ciFilePath = "sdk/$service/ci.mgmt.yml"
     }
 
+    # get the sdk version
+    $version = ""
+    $projectFile = Join-Path $srcPath "$packageName.csproj"
+    $csproj = new-object xml
+    $csproj.PreserveWhitespace = $true
+    $csproj.Load($projectFile)
+    $versionNode = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node
+    if ($versionNode) {
+        $version = $versionNode.InnerText
+    }
     $packageDetails = @{
+        version=$version;
         packageName="$packageName";
         result=$result;
         path=@("$path", "$ciFilePath");
@@ -899,7 +910,7 @@ function GeneratePackage()
         artifacts=$artifacts;
         apiViewArtifact=$apiViewArtifact;
         language=".Net";
-        changelog=$changelog
+        changelog=$changelog;
     }
     
     if ($null -ne $installInstructions) {
