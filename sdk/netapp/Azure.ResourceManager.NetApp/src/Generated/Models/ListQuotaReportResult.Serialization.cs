@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class ListQuotaReportResponse : IUtf8JsonSerializable, IJsonModel<ListQuotaReportResponse>
+    public partial class ListQuotaReportResult : IUtf8JsonSerializable, IJsonModel<ListQuotaReportResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListQuotaReportResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListQuotaReportResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ListQuotaReportResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ListQuotaReportResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ListQuotaReportResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListQuotaReportResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListQuotaReportResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ListQuotaReportResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Value))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        ListQuotaReportResponse IJsonModel<ListQuotaReportResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ListQuotaReportResult IJsonModel<ListQuotaReportResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ListQuotaReportResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListQuotaReportResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListQuotaReportResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ListQuotaReportResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeListQuotaReportResponse(document.RootElement, options);
+            return DeserializeListQuotaReportResult(document.RootElement, options);
         }
 
-        internal static ListQuotaReportResponse DeserializeListQuotaReportResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ListQuotaReportResult DeserializeListQuotaReportResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -117,38 +117,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ListQuotaReportResponse(value ?? new ChangeTrackingList<QuotaReport>(), nextLink, serializedAdditionalRawData);
+            return new ListQuotaReportResult(value ?? new ChangeTrackingList<QuotaReport>(), nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ListQuotaReportResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ListQuotaReportResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ListQuotaReportResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListQuotaReportResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ListQuotaReportResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListQuotaReportResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ListQuotaReportResponse IPersistableModel<ListQuotaReportResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ListQuotaReportResult IPersistableModel<ListQuotaReportResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ListQuotaReportResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListQuotaReportResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeListQuotaReportResponse(document.RootElement, options);
+                        return DeserializeListQuotaReportResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListQuotaReportResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListQuotaReportResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ListQuotaReportResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ListQuotaReportResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

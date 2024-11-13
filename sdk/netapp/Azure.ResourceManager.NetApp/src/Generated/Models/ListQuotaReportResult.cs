@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Quota Report for volume. </summary>
-    public partial class ListQuotaReportResponse
+    public partial class ListQuotaReportResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ListQuotaReportResponse"/>. </summary>
-        internal ListQuotaReportResponse()
+        /// <summary> Initializes a new instance of <see cref="ListQuotaReportResult"/>. </summary>
+        internal ListQuotaReportResult()
         {
             Value = new ChangeTrackingList<QuotaReport>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListQuotaReportResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListQuotaReportResult"/>. </summary>
         /// <param name="value"> List of volume quota report records. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListQuotaReportResponse(IReadOnlyList<QuotaReport> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListQuotaReportResult(IReadOnlyList<QuotaReport> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;

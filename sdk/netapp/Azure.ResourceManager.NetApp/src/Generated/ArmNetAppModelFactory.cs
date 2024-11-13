@@ -652,15 +652,15 @@ namespace Azure.ResourceManager.NetApp.Models
             return new GetGroupIdListForLdapUserResult(groupIdsForLdapUser?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ListQuotaReportResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ListQuotaReportResult"/>. </summary>
         /// <param name="value"> List of volume quota report records. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Models.ListQuotaReportResponse"/> instance for mocking. </returns>
-        public static ListQuotaReportResponse ListQuotaReportResponse(IEnumerable<QuotaReport> value = null, string nextLink = null)
+        /// <returns> A new <see cref="Models.ListQuotaReportResult"/> instance for mocking. </returns>
+        public static ListQuotaReportResult ListQuotaReportResult(IEnumerable<QuotaReport> value = null, string nextLink = null)
         {
             value ??= new List<QuotaReport>();
 
-            return new ListQuotaReportResponse(value?.ToList(), nextLink, serializedAdditionalRawData: null);
+            return new ListQuotaReportResult(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuotaReport"/>. </summary>
