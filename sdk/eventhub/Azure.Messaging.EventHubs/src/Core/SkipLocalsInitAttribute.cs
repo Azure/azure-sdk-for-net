@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !NET6_0_OR_GREATER
+
 namespace System.Runtime.CompilerServices
 {
-#if !NET6_0_OR_GREATER
     /// <summary>
     ///   Used to indicate to the compiler that the <c>.locals init</c> flag should not be set in method headers.
     /// </summary>
@@ -23,5 +24,6 @@ namespace System.Runtime.CompilerServices
     internal sealed class SkipLocalsInitAttribute : Attribute
     {
     }
-#endif
 }
+
+#endif

@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Condition="'$(TargetFramework)' == 'net6.0' OR '$(TargetFramework)' == 'net8.0'" Include="Grpc\Proto\settlement.proto" GrpcServices="service" Access="internal" />
+    <Protobuf Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))" Include="Grpc\Proto\settlement.proto" GrpcServices="service" Access="internal" />
   </ItemGroup>
 
   <ItemGroup>
