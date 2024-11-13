@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_PrivateEndpointConnectionsList()
+        public async Task CreateOrUpdate_PrivateEndpointConnectionCreateOrUpdate()
         {
-            // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSListPrivateEndpointConnections.json
-            // this example is just showing the usage of "IotDpsResource_ListPrivateEndpointConnections" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSCreateOrUpdatePrivateEndpointConnection.json
+            // this example is just showing the usage of "IotDpsResource_CreateOrUpdatePrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             // get the collection of this DeviceProvisioningServicesPrivateEndpointConnectionResource
             DeviceProvisioningServicesPrivateEndpointConnectionCollection collection = deviceProvisioningService.GetDeviceProvisioningServicesPrivateEndpointConnections();
 
-            // invoke the operation and iterate over the result
-            await foreach (DeviceProvisioningServicesPrivateEndpointConnectionResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DeviceProvisioningServicesPrivateEndpointConnectionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+            // invoke the operation
+            string privateEndpointConnectionName = "myPrivateEndpointConnection";
+            DeviceProvisioningServicesPrivateEndpointConnectionData data = new DeviceProvisioningServicesPrivateEndpointConnectionData(new DeviceProvisioningServicesPrivateEndpointConnectionProperties(new DeviceProvisioningServicesPrivateLinkServiceConnectionState(DeviceProvisioningServicesPrivateLinkServiceConnectionStatus.Approved, "Approved by johndoe@contoso.com")));
+            ArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
+            DeviceProvisioningServicesPrivateEndpointConnectionResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DeviceProvisioningServicesPrivateEndpointConnectionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -84,6 +84,42 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             DeviceProvisioningServicesPrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_PrivateEndpointConnectionsList()
+        {
+            // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSListPrivateEndpointConnections.json
+            // this example is just showing the usage of "IotDpsResource_ListPrivateEndpointConnections" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DeviceProvisioningServiceResource created on azure
+            // for more information of creating DeviceProvisioningServiceResource, please refer to the document of DeviceProvisioningServiceResource
+            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string resourceGroupName = "myResourceGroup";
+            string resourceName = "myFirstProvisioningService";
+            ResourceIdentifier deviceProvisioningServiceResourceId = DeviceProvisioningServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            DeviceProvisioningServiceResource deviceProvisioningService = client.GetDeviceProvisioningServiceResource(deviceProvisioningServiceResourceId);
+
+            // get the collection of this DeviceProvisioningServicesPrivateEndpointConnectionResource
+            DeviceProvisioningServicesPrivateEndpointConnectionCollection collection = deviceProvisioningService.GetDeviceProvisioningServicesPrivateEndpointConnections();
+
+            // invoke the operation and iterate over the result
+            await foreach (DeviceProvisioningServicesPrivateEndpointConnectionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DeviceProvisioningServicesPrivateEndpointConnectionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -156,42 +192,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_PrivateEndpointConnectionCreateOrUpdate()
-        {
-            // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSCreateOrUpdatePrivateEndpointConnection.json
-            // this example is just showing the usage of "IotDpsResource_CreateOrUpdatePrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DeviceProvisioningServiceResource created on azure
-            // for more information of creating DeviceProvisioningServiceResource, please refer to the document of DeviceProvisioningServiceResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
-            string resourceGroupName = "myResourceGroup";
-            string resourceName = "myFirstProvisioningService";
-            ResourceIdentifier deviceProvisioningServiceResourceId = DeviceProvisioningServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            DeviceProvisioningServiceResource deviceProvisioningService = client.GetDeviceProvisioningServiceResource(deviceProvisioningServiceResourceId);
-
-            // get the collection of this DeviceProvisioningServicesPrivateEndpointConnectionResource
-            DeviceProvisioningServicesPrivateEndpointConnectionCollection collection = deviceProvisioningService.GetDeviceProvisioningServicesPrivateEndpointConnections();
-
-            // invoke the operation
-            string privateEndpointConnectionName = "myPrivateEndpointConnection";
-            DeviceProvisioningServicesPrivateEndpointConnectionData data = new DeviceProvisioningServicesPrivateEndpointConnectionData(new DeviceProvisioningServicesPrivateEndpointConnectionProperties(new DeviceProvisioningServicesPrivateLinkServiceConnectionState(DeviceProvisioningServicesPrivateLinkServiceConnectionStatus.Approved, "Approved by johndoe@contoso.com")));
-            ArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
-            DeviceProvisioningServicesPrivateEndpointConnectionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DeviceProvisioningServicesPrivateEndpointConnectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }
