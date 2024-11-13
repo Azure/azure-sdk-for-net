@@ -10,7 +10,10 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger
     {
         public PlaywrightService(Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.PlaywrightServiceOptions playwrightServiceOptions, Azure.Core.TokenCredential? credential = null) { }
         public PlaywrightService(System.Runtime.InteropServices.OSPlatform? os = default(System.Runtime.InteropServices.OSPlatform?), string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = default(bool?), Azure.Core.TokenCredential? credential = null) { }
+        public string? ExposeNetwork { get { throw null; } set { } }
+        public System.Runtime.InteropServices.OSPlatform? Os { get { throw null; } set { } }
         public System.Threading.Timer? RotationTimer { get { throw null; } set { } }
+        public string? RunId { get { throw null; } set { } }
         public string ServiceAuth { get { throw null; } set { } }
         public static string? ServiceEndpoint { get { throw null; } }
         public bool UseCloudHostedBrowsers { get { throw null; } set { } }
