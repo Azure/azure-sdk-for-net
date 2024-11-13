@@ -19,6 +19,11 @@ namespace Azure.Health.Deidentification.Tests
         {
             if (!string.IsNullOrEmpty(SasUri))
             {
+                // In playback mode, the SAS URI is sanitized to avoid sharing secrets.
+                if (string.Equals(SasUri, "Sanitized", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    return FakeStorageLocation;
+                }
                 return SasUri;
             }
             return $"https://{GetRecordedVariable("STORAGE_ACCOUNT_NAME")}.blob.core.windows.net/{GetRecordedVariable("STORAGE_CONTAINER_NAME")}";
