@@ -79,6 +79,9 @@ extends:
       - job: Build
         steps:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+            parameters:
+              Paths:
+              - /sdk/core/Azure.Core/src/Shared
 
         - ${{ parameters.InitializationSteps }}
 
@@ -318,9 +321,6 @@ extends:
             emitterVersion: $[stageDependencies.Build.Build.outputs['ci_build.emitterVersion']]
           steps:
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-            parameters:
-              Paths:
-              - /sdk/core/Azure.Core/src/Shared
 
           - pwsh: |
               $generateJobResult = '$(generateJobResult)'
