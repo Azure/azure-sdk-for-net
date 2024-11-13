@@ -24,24 +24,7 @@ namespace Microsoft.AspNetCore.Builder
         public static IEndpointConventionBuilder MapWebPubSubHub<THub>(
             this IEndpointRouteBuilder endpoints,
             string path) where THub: WebPubSubHub
-        {
-            if (endpoints == null)
-            {
-                throw new ArgumentNullException(nameof(endpoints));
-            }
-
-            var marker = endpoints.ServiceProvider.GetService<WebPubSubMarkerService>() ?? throw new InvalidOperationException(
-                    "Unable to find the required services. Please add all the required services by calling " +
-                    "'IServiceCollection.AddWebPubSub' inside the call to 'ConfigureServices(...)' in the application startup code.");
-
-            var adaptor = endpoints.ServiceProvider.GetService<ServiceRequestHandlerAdapter>();
-            adaptor.RegisterHub<THub>();
-
-            var app = endpoints.CreateApplicationBuilder();
-            app.UseMiddleware<WebPubSubMiddleware>();
-
-            return endpoints.Map(path, app.Build());
-        }
+            => MapWebPubSubHub<THub>(endpoints, path, typeof(THub).Name);
 
         /// <summary>
         /// Maps the <see cref="WebPubSubHub"/> to the path "/client" with the specified hub name.
