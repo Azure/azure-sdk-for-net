@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void OctalPermissionsRoundTrip(string s)
         {
             // Act
-            PosixFileMode fileMode = PosixFileMode.ParseOctalFileMode(s);
+            NfsFileMode fileMode = NfsFileMode.ParseOctalFileMode(s);
             string output = fileMode.ToOctalFileMode();
 
             // Assert
@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void SymbolicPermissionsRoundTrip(string s)
         {
             // Act
-            PosixFileMode fileMode = PosixFileMode.ParseSymbolicFileMode(s);
+            NfsFileMode fileMode = NfsFileMode.ParseSymbolicFileMode(s);
             string output = fileMode.ToSymbolicFileMode();
 
             // Assert

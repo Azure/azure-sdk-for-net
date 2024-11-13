@@ -500,7 +500,7 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class FilePosixProperties
     {
         public FilePosixProperties() { }
-        public Azure.Storage.Files.Shares.Models.PosixFileMode FileMode { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.NfsFileMode FileMode { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.NfsFileType? FileType { get { throw null; } }
         public string Group { get { throw null; } set { } }
         public long? LinkCount { get { throw null; } }
@@ -523,7 +523,7 @@ namespace Azure.Storage.Files.Shares.Models
     }
     public static partial class FilesModelFactory
     {
-        public static Azure.Storage.Files.Shares.Models.FilePosixProperties FileNfsProperties(Azure.Storage.Files.Shares.Models.PosixFileMode fileMode, string owner, string group, Azure.Storage.Files.Shares.Models.NfsFileType fileType, long? linkCount) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.FilePosixProperties FileNfsProperties(Azure.Storage.Files.Shares.Models.NfsFileMode fileMode, string owner, string group, Azure.Storage.Files.Shares.Models.NfsFileType fileType, long? linkCount) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileItem ShareFileItem(bool isDirectory = false, string name = null, long? fileSize = default(long?), string id = null, Azure.Storage.Files.Shares.Models.ShareFileItemProperties properties = null, Azure.Storage.Files.Shares.Models.NtfsFileAttributes? fileAttributes = default(Azure.Storage.Files.Shares.Models.NtfsFileAttributes?), string permissionKey = null) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareDirectoryProperties StorageDirectoryProperties(System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset lastModified = default(System.DateTimeOffset), bool isServerEncrypted = false, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, Azure.Storage.Files.Shares.Models.FilePosixProperties nfsProperties = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -534,7 +534,7 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareFileDownloadDetails StorageFileDownloadProperties(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentType, string contentRange, Azure.ETag eTag, System.Collections.Generic.IEnumerable<string> contentEncoding, string cacheControl, string contentDisposition, System.Collections.Generic.IEnumerable<string> contentLanguage, string acceptRanges, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus, byte[] fileContentHash, bool isServiceEncrypted) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.ShareFileInfo StorageFileInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, bool isServerEncrypted, string filePermissionKey, string fileAttributes, System.DateTimeOffset fileCreationTime, System.DateTimeOffset fileLastWriteTime, System.DateTimeOffset fileChangeTime, string fileId, string fileParentId) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareFileInfo StorageFileInfo(Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset lastModified = default(System.DateTimeOffset), bool isServerEncrypted = false, string filePermissionKey = null, string fileAttributes = null, System.DateTimeOffset fileCreationTime = default(System.DateTimeOffset), System.DateTimeOffset fileLastWriteTime = default(System.DateTimeOffset), System.DateTimeOffset fileChangeTime = default(System.DateTimeOffset), string fileId = null, string fileParentId = null, Azure.Storage.Files.Shares.Models.PosixFileMode nfsFileMode = null, string owner = null, string group = null, Azure.Storage.Files.Shares.Models.NfsFileType nfsFileType = default(Azure.Storage.Files.Shares.Models.NfsFileType)) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareFileInfo StorageFileInfo(Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset lastModified = default(System.DateTimeOffset), bool isServerEncrypted = false, string filePermissionKey = null, string fileAttributes = null, System.DateTimeOffset fileCreationTime = default(System.DateTimeOffset), System.DateTimeOffset fileLastWriteTime = default(System.DateTimeOffset), System.DateTimeOffset fileChangeTime = default(System.DateTimeOffset), string fileId = null, string fileParentId = null, Azure.Storage.Files.Shares.Models.NfsFileMode nfsFileMode = null, string owner = null, string group = null, Azure.Storage.Files.Shares.Models.NfsFileType nfsFileType = default(Azure.Storage.Files.Shares.Models.NfsFileType)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.ShareFileItem StorageFileItem(bool isDirectory, string name, long? fileSize) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileProperties StorageFileProperties(System.DateTimeOffset lastModified = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, string> metadata = null, long contentLength = (long)0, string contentType = null, Azure.ETag eTag = default(Azure.ETag), byte[] contentHash = null, System.Collections.Generic.IEnumerable<string> contentEncoding = null, string cacheControl = null, string contentDisposition = null, System.Collections.Generic.IEnumerable<string> contentLanguage = null, System.DateTimeOffset copyCompletedOn = default(System.DateTimeOffset), string copyStatusDescription = null, string copyId = null, string copyProgress = null, string copySource = null, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus = Azure.Storage.Files.Shares.Models.CopyStatus.Pending, bool isServerEncrypted = false, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, Azure.Storage.Files.Shares.Models.FilePosixProperties nfsProperties = null) { throw null; }
@@ -542,6 +542,20 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareFileProperties StorageFileProperties(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, System.Collections.Generic.IEnumerable<string> contentEncoding, string cacheControl, string contentDisposition, System.Collections.Generic.IEnumerable<string> contentLanguage, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, string copySource, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus, bool isServerEncrypted, Azure.Storage.Files.Shares.Models.NtfsFileAttributes fileAttributes, System.DateTimeOffset fileCreationTime, System.DateTimeOffset fileLastWriteTime, System.DateTimeOffset fileChangeTime, string filePermissionKey, string fileId, string fileParentId) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.ShareFileProperties StorageFileProperties(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, System.Collections.Generic.IEnumerable<string> contentEncoding, string cacheControl, string contentDisposition, System.Collections.Generic.IEnumerable<string> contentLanguage, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, string copySource, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus, bool isServerEncrypted, string fileAttributes, System.DateTimeOffset fileCreationTime, System.DateTimeOffset fileLastWriteTime, System.DateTimeOffset fileChangeTime, string filePermissionKey, string fileId, string fileParentId) { throw null; }
+    }
+    public partial class NfsFileMode
+    {
+        public NfsFileMode() { }
+        public bool EffectiveGroupIdentity { get { throw null; } set { } }
+        public bool EffectiveUserIdentity { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.RolePermissions Group { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.RolePermissions Other { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.RolePermissions Owner { get { throw null; } set { } }
+        public bool StickyBit { get { throw null; } set { } }
+        public static Azure.Storage.Files.Shares.Models.NfsFileMode ParseOctalFileMode(string modeString) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.NfsFileMode ParseSymbolicFileMode(string modeString) { throw null; }
+        public string ToOctalFileMode() { throw null; }
+        public string ToSymbolicFileMode() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NfsFileType : System.IEquatable<Azure.Storage.Files.Shares.Models.NfsFileType>
@@ -585,20 +599,6 @@ namespace Azure.Storage.Files.Shares.Models
     {
         internal PermissionInfo() { }
         public string FilePermissionKey { get { throw null; } }
-    }
-    public partial class PosixFileMode
-    {
-        public PosixFileMode() { }
-        public bool EffectiveGroupIdentity { get { throw null; } set { } }
-        public bool EffectiveUserIdentity { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.RolePermissions Group { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.RolePermissions Other { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.RolePermissions Owner { get { throw null; } set { } }
-        public bool StickyBit { get { throw null; } set { } }
-        public static Azure.Storage.Files.Shares.Models.PosixFileMode ParseOctalFileMode(string modeString) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.PosixFileMode ParseSymbolicFileMode(string modeString) { throw null; }
-        public string ToOctalFileMode() { throw null; }
-        public string ToSymbolicFileMode() { throw null; }
     }
     [System.FlagsAttribute]
     public enum RolePermissions

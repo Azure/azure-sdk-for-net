@@ -748,7 +748,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 {
                     Owner = owner,
                     Group = group,
-                    FileMode = PosixFileMode.ParseOctalFileMode(fileMode)
+                    FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
                 }
             };
 
@@ -1791,7 +1791,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 {
                     Owner = owner,
                     Group = group,
-                    FileMode = PosixFileMode.ParseOctalFileMode(fileMode)
+                    FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
                 }
             };
 
@@ -2562,7 +2562,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             string owner;
             string group;
-            PosixFileMode fileMode;
+            NfsFileMode fileMode;
 
             ShareFileCopyOptions options = new ShareFileCopyOptions
             {
@@ -2573,7 +2573,7 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 owner = "54321";
                 group = "12345";
-                fileMode = PosixFileMode.ParseOctalFileMode("7777");
+                fileMode = NfsFileMode.ParseOctalFileMode("7777");
                 options.NfsProperties.Owner = owner;
                 options.NfsProperties.Group = group;
                 options.NfsProperties.FileMode = fileMode;
