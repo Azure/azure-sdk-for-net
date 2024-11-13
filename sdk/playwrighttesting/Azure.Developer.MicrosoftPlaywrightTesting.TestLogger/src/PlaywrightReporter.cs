@@ -6,14 +6,12 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
 using System;
 using System.Collections.Generic;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor;
 using Microsoft.IdentityModel.JsonWebTokens;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
@@ -100,6 +98,8 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         runParameters.TryGetValue(RunSettingKey.ManagedIdentityClientId, out var managedIdentityClientId);
         runParameters.TryGetValue(RunSettingKey.EnableGitHubSummary, out var enableGithubSummary);
         runParameters.TryGetValue(RunSettingKey.EnableResultPublish, out var enableResultPublish);
+        runParameters.TryGetValue(RunSettingKey.Os, out var osType);
+        runParameters.TryGetValue(RunSettingKey.ExposeNetwork, out var exposeNetwork);
         nunitParameters.TryGetValue(RunSettingKey.NumberOfTestWorkers, out var numberOfTestWorkers);
         string? enableGithubSummaryString = enableGithubSummary?.ToString();
         string? enableResultPublishString = enableResultPublish?.ToString();
@@ -110,7 +110,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         PlaywrightServiceOptions? playwrightServiceSettings;
         try
         {
-            playwrightServiceSettings = new(runId: runId?.ToString(), serviceAuth: serviceAuth?.ToString(), azureTokenCredentialType: azureTokenCredential?.ToString(), managedIdentityClientId: managedIdentityClientId?.ToString());
+            playwrightServiceSettings = new(runId: runId?.ToString(), serviceAuth: serviceAuth?.ToString(), azureTokenCredentialType: azureTokenCredential?.ToString(), managedIdentityClientId: managedIdentityClientId?.ToString(), os: PlaywrightService.GetOSPlatform(osType?.ToString()), exposeNetwork: exposeNetwork?.ToString());
         }
         catch (Exception ex)
         {
