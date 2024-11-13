@@ -272,8 +272,8 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
                     },
                     ScaleAndConcurrency = new FunctionAppScaleAndConcurrency()
                     {
-                        MaximumInstanceCount = 100,
-                        InstanceMemoryMB = 2048,
+                        FunctionAppMaximumInstanceCount = 100,
+                        FunctionAppInstanceMemoryMB = 2048,
                     },
                 },
                 Kind = "functionapp,linux",
@@ -354,12 +354,12 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
 new FunctionAppAlwaysReadyConfig()
 {
 Name = "http",
-InstanceCount = 2,
+AlwaysReadyInstanceCount = 2,
 }
 },
-                        MaximumInstanceCount = 100,
-                        InstanceMemoryMB = 2048,
-                        HttpPerInstanceConcurrency = 16,
+                        FunctionAppMaximumInstanceCount = 100,
+                        FunctionAppInstanceMemoryMB = 2048,
+                        ConcurrentHttpPerInstanceConcurrency = 16,
                     },
                 },
                 Kind = "functionapp,linux",

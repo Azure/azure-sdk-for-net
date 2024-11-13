@@ -689,6 +689,11 @@ rename-mapping:
   SiteAuthSettings.properties.clientSecretCertificateThumbprint: ClientSecretCertificateThumbprintString
   VnetInfoResource.properties.certThumbprint: CertThumbprintString
   VnetInfo.certThumbprint: CertThumbprintString
+  # Rename due to the breaking change from Azure/azure-rest-api-specs/pull/29907, need to apply the apicompat check. 
+  FunctionsScaleAndConcurrency.maximumInstanceCount: FunctionAppMaximumInstanceCount
+  FunctionsScaleAndConcurrency.instanceMemoryMB: FunctionAppInstanceMemoryMB
+  FunctionsScaleAndConcurrencyTriggersHttp.perInstanceConcurrency: ConcurrentHttpPerInstanceConcurrency
+  FunctionsAlwaysReadyConfig.instanceCount: AlwaysReadyInstanceCount
 
 prepend-rp-prefix:
   - ApiDefinitionInfo
