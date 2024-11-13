@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // Decompile an ARM json template into a Bicep file
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task BicepDecompile_DecompileAnARMJsonTemplateIntoABicepFile()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2023-11-01/examples/DecompileBicep.json

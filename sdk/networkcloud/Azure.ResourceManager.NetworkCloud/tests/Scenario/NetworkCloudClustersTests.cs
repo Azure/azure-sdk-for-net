@@ -12,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
-    public class ClustersTests : NetworkCloudManagementTestBase
+    public class NetworkCloudClustersTests : NetworkCloudManagementTestBase
     {
-        public ClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public ClustersTests(bool isAsync) : base(isAsync) {}
+        public NetworkCloudClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
+        public NetworkCloudClustersTests(bool isAsync) : base(isAsync) {}
 
         [Test]
         [RecordedTest]
-        public async Task Clusters()
+        public async Task NetworkCloudClusters()
         {
             var clusterName = Recording.GenerateAssetName("cluster");
             NetworkCloudClusterCollection clusterCollection = ResourceGroupResource.GetNetworkCloudClusters();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 ComputeDeploymentThreshold = new ValidationThreshold(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 90),
                 ComputeRackDefinitions =
                 {
-                 new NetworkCloudRackDefinition(new ResourceIdentifier(TestEnvironment.SubnetId), "b37m15r1", new ResourceIdentifier("/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/rackSkus/VLab1_4_Compute_DellR750_3C2M_sim"))
+                 new NetworkCloudRackDefinition(new ResourceIdentifier(TestEnvironment.SubnetId), "b37m15r1", new ResourceIdentifier("/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/rackSkus/VLab1_4_Compute_DellR750_2C2M_sim"))
                     {
                         BareMetalMachineConfigurationData =
                         {
@@ -61,17 +61,12 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                                 MachineDetails = "extraDetails",
                                 MachineName = "compute2",
                             },
-                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:F0","00:BB:CC:DD:EE:F0",3,"BM1219XX0")
-                            {
-                                MachineDetails = "extraDetails",
-                                MachineName = "compute3",
-                            },
-                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:01","00:BB:CC:DD:EE:01",4,"BM1219YY1")
+                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:01","00:BB:CC:DD:EE:01",3,"BM1219YY1")
                             {
                                 MachineDetails = "extraDetails",
                                 MachineName = "control1",
                             },
-                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:F1","00:BB:CC:DD:EE:F1",5,"BM1219XX1")
+                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:F1","00:BB:CC:DD:EE:F1",4,"BM1219XX1")
                             {
                                 MachineDetails = "extraDetails",
                                 MachineName = "control2",
@@ -92,7 +87,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(clusterName, getResult.Value.Data.Name);
             NetworkCloudClusterResource clusterResource = Client.GetNetworkCloudClusterResource(getResult.Value.Data.Id);
 
-            // Update
+            // Update cluster location
             NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch()
             {
                 ClusterLocation = "Foo floor",
@@ -121,6 +116,38 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 listBySubscription.Add(item);
             }
             Assert.IsNotEmpty(listBySubscription);
+
+            // Patch Upgrade Strategy
+             NetworkCloudClusterPatch patch2 = new NetworkCloudClusterPatch()
+            {
+                Tags =
+                {
+                    ["key1"] = "myvalue1",
+                    ["key2"] = "myvalue2",
+                },
+                UpdateStrategy = new ClusterUpdateStrategy(ClusterUpdateStrategyType.PauseAfterRack, ValidationThresholdType.PercentSuccess, 100)
+                {
+                    MaxUnavailable = 2,
+                    WaitTimeMinutes = 0,
+                },
+            };
+            var strategyResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch2);
+            Assert.IsNotNull(strategyResult.Value);
+
+            // Cluster Update Version
+            try
+            {
+                ClusterUpdateVersionContent update = new ClusterUpdateVersionContent("3.15.0");
+                var updatedClusterResult = await clusterResource.UpdateVersionAsync(WaitUntil.Completed, update);
+            }
+            catch (Exception ex)
+            {
+                // special case: if the cluster was never deployed, version update (CUVA) is not allowed
+                // once the API bug is resolved this can be used. Until then, will compare 2 strings instead
+                // StringAssert.Contains($"cluster conditions do not pass validation for cluster {clusterName}: ClusterDeployedCondition is not True", ex.Message);
+                StringAssert.Contains("cluster conditions do not pass validation for cluster", ex.Message);
+                StringAssert.Contains("ClusterDeployedCondition is not True", ex.Message);
+            }
 
             // Delete
             var deleteResult = await clusterResource.DeleteAsync(WaitUntil.Completed);
