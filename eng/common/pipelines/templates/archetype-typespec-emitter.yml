@@ -414,7 +414,10 @@ extends:
             buildArtifactsPath: $(Pipeline.Workspace)/build_artifacts
           steps:
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-            
+            parameters:
+            Paths:
+            - /sdk/core/Azure.Core/src/Shared
+
           - download: current
             artifact: build_artifacts
             displayName: Download build artifacts
