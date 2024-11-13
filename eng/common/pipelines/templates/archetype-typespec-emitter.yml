@@ -79,9 +79,9 @@ extends:
       - job: Build
         steps:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-            parameters:
-              Paths:
-              - /sdk/core/Azure.Core/src/Shared
+          parameters:
+            Paths:
+            - /sdk/core/Azure.Core/src/Shared
 
         - ${{ parameters.InitializationSteps }}
 
