@@ -115,7 +115,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.NotNull(validator);
             Assert.NotNull(adaptor);
             Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
-            Assert.NotNull(adaptor.GetHub(nameof(TestHub)), "Custom hub should be registered");
+            Assert.NotNull(adaptor.GetHub(nameof(TestHub)), "Hub with the name that matches the class name should be registered");
         }
 
         private sealed class TestHub : WebPubSubHub
