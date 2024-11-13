@@ -20,13 +20,7 @@ namespace Azure.Generator.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Internal", $"{Name}.cs");
 
-        protected override MethodProvider[] BuildMethods()
-        {
-            return
-            [
-                BuildParse()
-            ];
-        }
+        protected override MethodProvider[] BuildMethods() => [BuildParse()];
 
         private MethodProvider BuildParse()
         {
