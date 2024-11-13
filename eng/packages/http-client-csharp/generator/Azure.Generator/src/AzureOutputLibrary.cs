@@ -11,10 +11,6 @@ namespace Azure.Generator
     public class AzureOutputLibrary : ScmOutputLibrary
     {
         /// <inheritdoc/>
-        protected override TypeProvider[] BuildTypeProviders()
-            => [
-                ..base.BuildTypeProviders(),
-                new RequestContextExtensionsDefinition(),
-            ];
+        protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
     }
 }

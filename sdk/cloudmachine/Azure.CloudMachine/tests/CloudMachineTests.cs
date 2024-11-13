@@ -5,9 +5,6 @@
 
 using System;
 using System.Threading;
-using Azure.Provisioning.CloudMachine;
-using Azure.Provisioning.CloudMachine.KeyVault;
-using Azure.Provisioning.CloudMachine.OpenAI;
 using Azure.Security.KeyVault.Secrets;
 using Azure.CloudMachine.OpenAI;
 using Azure.CloudMachine.KeyVault;

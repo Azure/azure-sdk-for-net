@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_RoutingIntentResource
     {
-        // RouteTablePut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RouteTablePut()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RoutingIntentPut.json
@@ -61,9 +61,8 @@ new RoutingPolicy("InternetTraffic",new string[]
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RouteTableGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RouteTableGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RoutingIntentGet.json
@@ -93,9 +92,8 @@ new RoutingPolicy("InternetTraffic",new string[]
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RouteTableDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RouteTableDelete()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RoutingIntentDelete.json
@@ -118,7 +116,7 @@ new RoutingPolicy("InternetTraffic",new string[]
             // invoke the operation
             await routingIntent.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

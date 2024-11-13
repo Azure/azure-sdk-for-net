@@ -44,39 +44,29 @@ namespace Azure.Generator.Providers.Abstraction
         public override ClientPipelineApi ToExpression() => this;
 
         public override MethodBodyStatement[] ProcessMessage(HttpMessageApi message, HttpRequestOptionsApi options)
-        {
-            var userCacellationToken = new ParameterProvider("userCancellationToken", $"", new CSharpType(typeof(CancellationToken)));
-            var statusOption = new ParameterProvider("statusOption", $"", new CSharpType(typeof(ErrorOptions)));
-            return new MethodBodyStatement[]
-            {
-                new VariableTupleExpression(false, userCacellationToken, statusOption).Assign(options.Invoke("Parse")).Terminate(),
-                Original.Invoke(nameof(HttpPipeline.Send), [message, userCacellationToken]).Terminate(),
-                MethodBodyStatement.EmptyLine,
-                new IfStatement(message.Response().IsError().And(new BinaryOperatorExpression("&", options.NullConditional().Property("ErrorOptions"), options.NoThrow()).NotEqual(options.NoThrow())))
-                {
-                    Throw(New.Instance(AzureClientPlugin.Instance.TypeFactory.ClientResponseApi.ClientResponseExceptionType, message.Response()))
-                },
-                MethodBodyStatement.EmptyLine,
-                Return(message.Response())
-            };
-        }
+            => BuildProcessMessage(message, options, false);
 
         public override MethodBodyStatement[] ProcessMessageAsync(HttpMessageApi message, HttpRequestOptionsApi options)
+            => BuildProcessMessage(message, options, true);
+
+        private MethodBodyStatement[] BuildProcessMessage(HttpMessageApi message, HttpRequestOptionsApi options, bool isAsync)
         {
-            var userCacellationToken = new ParameterProvider("userCancellationToken", $"", new CSharpType(typeof(CancellationToken)));
+            var userCancellationToken = new ParameterProvider("userCancellationToken", $"", new CSharpType(typeof(CancellationToken)));
             var statusOption = new ParameterProvider("statusOption", $"", new CSharpType(typeof(ErrorOptions)));
-            return new MethodBodyStatement[]
-            {
-                new VariableTupleExpression(false, userCacellationToken, statusOption).Assign(options.Invoke("Parse")).Terminate(),
-                Original.Invoke(nameof(HttpPipeline.SendAsync), [message, userCacellationToken], true).Terminate(),
+            return
+            [
+                new VariableTupleExpression(false, userCancellationToken, statusOption).Assign(options.Invoke("Parse")).Terminate(),
+                Original.Invoke(isAsync ? nameof(HttpPipeline.SendAsync) : nameof(HttpPipeline.Send), [message, userCancellationToken], isAsync).Terminate(),
                 MethodBodyStatement.EmptyLine,
                 new IfStatement(message.Response().IsError().And(new BinaryOperatorExpression("&", options.NullConditional().Property("ErrorOptions"), options.NoThrow()).NotEqual(options.NoThrow())))
                 {
-                    Throw(AzureClientPlugin.Instance.TypeFactory.ClientResponseApi.ToExpression().CreateAsync(message.Response()))
+                    isAsync
+                    ? Throw(AzureClientPlugin.Instance.TypeFactory.ClientResponseApi.ToExpression().CreateAsync(message.Response()))
+                    : Throw(New.Instance(AzureClientPlugin.Instance.TypeFactory.ClientResponseApi.ClientResponseExceptionType, message.Response()))
                 },
                 MethodBodyStatement.EmptyLine,
                 Return(message.Response())
-            };
+            ];
         }
     }
 }

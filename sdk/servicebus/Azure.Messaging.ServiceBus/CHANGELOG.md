@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Added annotations to make the package compatible with trimming and native AOT compilation.
+
 ## 7.18.2 (2024-10-08)
 
 ### Other Changes

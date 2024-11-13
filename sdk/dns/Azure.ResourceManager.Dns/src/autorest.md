@@ -18,7 +18,6 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
 use-model-reader-writer: true
-use-write-core: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
