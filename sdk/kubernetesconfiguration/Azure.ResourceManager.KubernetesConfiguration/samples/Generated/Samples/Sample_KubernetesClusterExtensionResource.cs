@@ -135,18 +135,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Samples
             KubernetesClusterExtensionResource kubernetesClusterExtension = client.GetKubernetesClusterExtensionResource(kubernetesClusterExtensionResourceId);
 
             // invoke the operation
-            KubernetesClusterExtensionPatch patch = new KubernetesClusterExtensionPatch()
+            KubernetesClusterExtensionPatch patch = new KubernetesClusterExtensionPatch
             {
                 AutoUpgradeMinorVersion = true,
                 ReleaseTrain = "Preview",
                 ConfigurationSettings =
 {
 ["omsagent.env.clusterName"] = "clusterName1",
-["omsagent.secret.wsid"] = "a38cef99-5a89-52ed-b6db-22095c23664b",
+["omsagent.secret.wsid"] = "a38cef99-5a89-52ed-b6db-22095c23664b"
 },
                 ConfigurationProtectedSettings =
 {
-["omsagent.secret.key"] = "secretKeyValue01",
+["omsagent.secret.key"] = "secretKeyValue01"
 },
             };
             ArmOperation<KubernetesClusterExtensionResource> lro = await kubernetesClusterExtension.UpdateAsync(WaitUntil.Completed, patch);

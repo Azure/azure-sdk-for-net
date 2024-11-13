@@ -66,19 +66,13 @@ namespace Azure.ResourceManager.Marketplace.Samples
             MarketplaceAdminApprovalRequestResource marketplaceAdminApprovalRequest = client.GetMarketplaceAdminApprovalRequestResource(marketplaceAdminApprovalRequestResourceId);
 
             // invoke the operation
-            MarketplaceAdminApprovalRequestData data = new MarketplaceAdminApprovalRequestData()
+            MarketplaceAdminApprovalRequestData data = new MarketplaceAdminApprovalRequestData
             {
                 PublisherId = "marketplacetestthirdparty",
                 AdminAction = MarketplaceAdminAction.Approved,
-                ApprovedPlans =
-{
-"testPlan"
-},
+                ApprovedPlans = { "testPlan" },
                 Comment = "I'm ok with that",
-                CollectionIds =
-{
-Guid.Parse("f8ee227e-85d7-477d-abbf-854d6decaf70"),Guid.Parse("39246ad6-c521-4fed-8de7-77dede2e873f")
-},
+                CollectionIds = { Guid.Parse("f8ee227e-85d7-477d-abbf-854d6decaf70"), Guid.Parse("39246ad6-c521-4fed-8de7-77dede2e873f") },
             };
             ArmOperation<MarketplaceAdminApprovalRequestResource> lro = await marketplaceAdminApprovalRequest.UpdateAsync(WaitUntil.Completed, data);
             MarketplaceAdminApprovalRequestResource result = lro.Value;
