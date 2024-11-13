@@ -18,7 +18,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Optional. Version TBD and newer. The mode permissions to be set on the file or directory.
         /// </summary>
-        public NfsFileMode FileMode { get; set; }
+        public PosixFileMode FileMode { get; set; }
 
         /// <summary>
         /// Optional. The owner user identifier (UID) to be set on the file or directory. The default value is 0 (root).
@@ -50,7 +50,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new StorageFileDownloadProperties instance for mocking.
         /// </summary>
         public static FilePosixProperties FileNfsProperties(
-            NfsFileMode fileMode,
+            PosixFileMode fileMode,
             string owner,
             string group,
             NfsFileType fileType,

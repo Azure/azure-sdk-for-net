@@ -8,10 +8,9 @@ using System.Text;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// Only applicable to NFS files and directories.
     /// The mode permissions of the file or directory.
     /// </summary>
-    public class NfsFileMode
+    public class PosixFileMode
     {
         /// <summary>
         /// Permissions the owner has over the file or directory.
@@ -45,7 +44,7 @@ namespace Azure.Storage.Files.Shares.Models
         public bool StickyBit { get; set; }
 
         /// <summary>
-        /// Returns the octal represenation of this <see cref="NfsFileMode"/> as a string.
+        /// Returns the octal represenation of this <see cref="PosixFileMode"/> as a string.
         /// </summary>
         public string ToOctalFileMode()
         {
@@ -77,12 +76,12 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary>
-        /// Returns a <see cref="NfsFileMode"/> from the octal string representation.
+        /// Returns a <see cref="PosixFileMode"/> from the octal string representation.
         /// </summary>
         /// <param name="modeString">
         /// A 4-digit octal string representation of a File Mode.
         /// </param>
-        public static NfsFileMode ParseOctalFileMode(string modeString)
+        public static PosixFileMode ParseOctalFileMode(string modeString)
         {
             // https://en.wikipedia.org/wiki/File-system_permissions#Numeric_notation
             if (modeString == null)
@@ -95,7 +94,7 @@ namespace Azure.Storage.Files.Shares.Models
                 throw Errors.InvalidFormat(nameof(modeString));
             }
 
-            NfsFileMode nfsFileMode = new NfsFileMode
+            PosixFileMode nfsFileMode = new PosixFileMode
             {
                 Owner = RolePermissionExtensions.ParseOctalRolePermissions(modeString[1]),
                 Group = RolePermissionExtensions.ParseOctalRolePermissions(modeString[2]),
@@ -123,7 +122,7 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary>
-        /// Returns this <see cref="NfsFileMode"/> as a string in symbolic notation.
+        /// Returns this <see cref="PosixFileMode"/> as a string in symbolic notation.
         /// </summary>
         public string ToSymbolicFileMode()
         {
@@ -171,12 +170,12 @@ namespace Azure.Storage.Files.Shares.Models
             return stringBuilder.ToString();
         }
         /// <summary>
-        /// Returns a <see cref="NfsFileMode"/> from the symbolic string representation.
+        /// Returns a <see cref="PosixFileMode"/> from the symbolic string representation.
         /// </summary>
         /// <param name="modeString">
         /// A 9-character symbolic string representation of a File Mode.
         /// </param>
-        public static NfsFileMode ParseSymbolicFileMode(string modeString)
+        public static PosixFileMode ParseSymbolicFileMode(string modeString)
         {
             // https://en.wikipedia.org/wiki/File-system_permissions#Symbolic_notation
             if (modeString == null)
@@ -189,7 +188,7 @@ namespace Azure.Storage.Files.Shares.Models
                 throw Errors.InvalidFormat(nameof(modeString));
             }
 
-            NfsFileMode nfsFileMode = new NfsFileMode();
+            PosixFileMode nfsFileMode = new PosixFileMode();
 
             nfsFileMode.Owner = RolePermissionExtensions.ParseSymbolicRolePermissions(modeString.Substring(0, 3), out bool effectiveUserIdentity);
             nfsFileMode.EffectiveUserIdentity = effectiveUserIdentity;

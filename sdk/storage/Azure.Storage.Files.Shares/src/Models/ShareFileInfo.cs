@@ -67,7 +67,7 @@ namespace Azure.Storage.Files.Shares.Models
             DateTimeOffset fileChangeTime = default,
             string fileId = default,
             string fileParentId = default,
-            NfsFileMode nfsFileMode = default,
+            PosixFileMode nfsFileMode = default,
             string owner = default,
             string group = default,
             NfsFileType nfsFileType = default)

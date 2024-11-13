@@ -606,7 +606,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 {
                     Owner = owner,
                     Group = group,
-                    FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
+                    FileMode = PosixFileMode.ParseOctalFileMode(fileMode)
                 }
             };
 
@@ -1297,7 +1297,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 {
                     Owner = owner,
                     Group = group,
-                    FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
+                    FileMode = PosixFileMode.ParseOctalFileMode(fileMode)
                 }
             };
 
