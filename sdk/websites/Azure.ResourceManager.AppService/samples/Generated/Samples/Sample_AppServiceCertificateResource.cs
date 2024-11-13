@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Samples
             AppServiceCertificateResource appServiceCertificate = client.GetAppServiceCertificateResource(appServiceCertificateResourceId);
 
             // invoke the operation
-            AppServiceCertificatePatch patch = new AppServiceCertificatePatch()
+            AppServiceCertificatePatch patch = new AppServiceCertificatePatch
             {
                 KeyVaultId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/microsoft.keyvault/vaults/SamplevaultName"),
                 KeyVaultSecretName = "SampleSecretName1",

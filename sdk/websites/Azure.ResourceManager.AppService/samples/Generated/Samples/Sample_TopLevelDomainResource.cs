@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Samples
             TopLevelDomainResource topLevelDomain = client.GetTopLevelDomainResource(topLevelDomainResourceId);
 
             // invoke the operation and iterate over the result
-            TopLevelDomainAgreementOption agreementOption = new TopLevelDomainAgreementOption()
+            TopLevelDomainAgreementOption agreementOption = new TopLevelDomainAgreementOption
             {
                 IncludePrivacy = true,
                 IsForTransfer = false,

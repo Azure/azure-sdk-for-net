@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Synapse.Models;
 using NUnit.Framework;
 
@@ -17,59 +16,6 @@ namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseKustoPoolResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetSkusKustoPools_KustoPoolsListSkus()
-        {
-            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoPoolsListSkus.json
-            // this example is just showing the usage of "KustoPools_ListSkus" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (KustoPoolSkuDescription item in subscriptionResource.GetSkusKustoPoolsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckKustoPoolNameAvailability_KustoPoolsCheckNameAvailability()
-        {
-            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoPoolsCheckNameAvailability.json
-            // this example is just showing the usage of "KustoPools_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            AzureLocation location = new AzureLocation("westus");
-            KustoPoolNameAvailabilityContent content = new KustoPoolNameAvailabilityContent("kustoclusterrptest4");
-            KustoPoolNameAvailabilityResult result = await subscriptionResource.CheckKustoPoolNameAvailabilityAsync(location, content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_KustoPoolsGet()
@@ -103,48 +49,6 @@ namespace Azure.ResourceManager.Synapse.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_KustoPoolsUpdate()
-        {
-            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoPoolsUpdate.json
-            // this example is just showing the usage of "KustoPools_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SynapseKustoPoolResource created on azure
-            // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
-            string resourceGroupName = "kustorptest";
-            string workspaceName = "synapseWorkspaceName";
-            string kustoPoolName = "kustoclusterrptest4";
-            ResourceIdentifier synapseKustoPoolResourceId = SynapseKustoPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, kustoPoolName);
-            SynapseKustoPoolResource synapseKustoPool = client.GetSynapseKustoPoolResource(synapseKustoPoolResourceId);
-
-            // invoke the operation
-            SynapseKustoPoolPatch patch = new SynapseKustoPoolPatch()
-            {
-                Sku = new SynapseDataSourceSku(SynapseSkuName.StorageOptimized, KustoPoolSkuSize.Medium)
-                {
-                    Capacity = 2,
-                },
-                EnableStreamingIngest = true,
-                EnablePurge = true,
-                WorkspaceUid = Guid.Parse("11111111-2222-3333-444444444444"),
-            };
-            ArmOperation<SynapseKustoPoolResource> lro = await synapseKustoPool.UpdateAsync(WaitUntil.Completed, patch);
-            SynapseKustoPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SynapseKustoPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_KustoPoolsDelete()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoPoolsDelete.json
@@ -168,6 +72,48 @@ namespace Azure.ResourceManager.Synapse.Samples
             await synapseKustoPool.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_KustoPoolsUpdate()
+        {
+            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoPoolsUpdate.json
+            // this example is just showing the usage of "KustoPools_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SynapseKustoPoolResource created on azure
+            // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
+            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string resourceGroupName = "kustorptest";
+            string workspaceName = "synapseWorkspaceName";
+            string kustoPoolName = "kustoclusterrptest4";
+            ResourceIdentifier synapseKustoPoolResourceId = SynapseKustoPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, kustoPoolName);
+            SynapseKustoPoolResource synapseKustoPool = client.GetSynapseKustoPoolResource(synapseKustoPoolResourceId);
+
+            // invoke the operation
+            SynapseKustoPoolPatch patch = new SynapseKustoPoolPatch
+            {
+                Sku = new SynapseDataSourceSku(SynapseSkuName.StorageOptimized, KustoPoolSkuSize.Medium)
+                {
+                    Capacity = 2,
+                },
+                EnableStreamingIngest = true,
+                EnablePurge = true,
+                WorkspaceUid = Guid.Parse("11111111-2222-3333-444444444444"),
+            };
+            ArmOperation<SynapseKustoPoolResource> lro = await synapseKustoPool.UpdateAsync(WaitUntil.Completed, patch);
+            SynapseKustoPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SynapseKustoPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -306,18 +252,15 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseKustoPoolResource synapseKustoPool = client.GetSynapseKustoPoolResource(synapseKustoPoolResourceId);
 
             // invoke the operation
-            SynapseLanguageExtensionsList languageExtensionsToAdd = new SynapseLanguageExtensionsList()
+            SynapseLanguageExtensionsList languageExtensionsToAdd = new SynapseLanguageExtensionsList
             {
-                Value =
-{
-new SynapseLanguageExtension()
+                Value = {new SynapseLanguageExtension
 {
 LanguageExtensionName = SynapseLanguageExtensionName.Python,
-},new SynapseLanguageExtension()
+}, new SynapseLanguageExtension
 {
 LanguageExtensionName = SynapseLanguageExtensionName.R,
-}
-},
+}},
             };
             await synapseKustoPool.AddLanguageExtensionsAsync(WaitUntil.Completed, languageExtensionsToAdd);
 
@@ -346,18 +289,15 @@ LanguageExtensionName = SynapseLanguageExtensionName.R,
             SynapseKustoPoolResource synapseKustoPool = client.GetSynapseKustoPoolResource(synapseKustoPoolResourceId);
 
             // invoke the operation
-            SynapseLanguageExtensionsList languageExtensionsToRemove = new SynapseLanguageExtensionsList()
+            SynapseLanguageExtensionsList languageExtensionsToRemove = new SynapseLanguageExtensionsList
             {
-                Value =
-{
-new SynapseLanguageExtension()
+                Value = {new SynapseLanguageExtension
 {
 LanguageExtensionName = SynapseLanguageExtensionName.Python,
-},new SynapseLanguageExtension()
+}, new SynapseLanguageExtension
 {
 LanguageExtensionName = SynapseLanguageExtensionName.R,
-}
-},
+}},
             };
             await synapseKustoPool.RemoveLanguageExtensionsAsync(WaitUntil.Completed, languageExtensionsToRemove);
 

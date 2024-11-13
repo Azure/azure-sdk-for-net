@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Samples
             ScmSiteBasicPublishingCredentialsPolicyResource scmSiteBasicPublishingCredentialsPolicy = client.GetScmSiteBasicPublishingCredentialsPolicyResource(scmSiteBasicPublishingCredentialsPolicyResourceId);
 
             // invoke the operation
-            CsmPublishingCredentialsPoliciesEntityData data = new CsmPublishingCredentialsPoliciesEntityData()
+            CsmPublishingCredentialsPoliciesEntityData data = new CsmPublishingCredentialsPoliciesEntityData
             {
                 Allow = true,
             };
