@@ -104,14 +104,13 @@ namespace Azure.Storage.DataMovement
         public override async Task AddNewJobPartAsync(
             string transferId,
             int partNumber,
-            Stream headerStream,
+            JobPartPlanHeader header,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
             Argument.AssertNotNull(partNumber, nameof(partNumber));
-            Argument.AssertNotNull(headerStream, nameof(headerStream));
+            Argument.AssertNotNull(header, nameof(header));
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            headerStream.Position = 0;
 
             if (!_transferStates.ContainsKey(transferId))
             {
@@ -124,7 +123,7 @@ namespace Azure.Storage.DataMovement
                 _pathToCheckpointer,
                 transferId,
                 partNumber,
-                headerStream,
+                header,
                 cancellationToken).ConfigureAwait(false);
 
             // Add the job part into the current state
