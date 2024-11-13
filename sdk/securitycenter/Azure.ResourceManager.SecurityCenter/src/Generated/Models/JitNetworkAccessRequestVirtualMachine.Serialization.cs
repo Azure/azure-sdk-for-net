@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         void IJsonModel<JitNetworkAccessRequestVirtualMachine>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JitNetworkAccessRequestVirtualMachine)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("ports"u8);
@@ -50,7 +58,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         JitNetworkAccessRequestVirtualMachine IJsonModel<JitNetworkAccessRequestVirtualMachine>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

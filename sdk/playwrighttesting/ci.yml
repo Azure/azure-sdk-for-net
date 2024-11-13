@@ -35,7 +35,7 @@ extends:
     - name: Azure.Developer.MicrosoftPlaywrightTesting.NUnit
       safeName: AzureDeveloperMicrosoftPlaywrightTestingNUnit
     - name: Azure.Developer.MicrosoftPlaywrightTesting.TestLogger
-      safeName: AzureDeveloperMicrosoftPlaywrightTesting.TestLogger
+      safeName: AzureDeveloperMicrosoftPlaywrightTestingTestLogger
 
 
 

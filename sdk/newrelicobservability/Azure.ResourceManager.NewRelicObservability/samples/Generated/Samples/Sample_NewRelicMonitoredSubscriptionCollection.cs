@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NewRelicObservability.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NewRelicObservability.Samples
 {
     public partial class Sample_NewRelicMonitoredSubscriptionCollection
     {
-        // Monitors_GetMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_MonitorsGetMonitoredSubscriptions()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/MonitoredSubscriptions_List.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_GetMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MonitorsGetMonitoredSubscriptions()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/MonitoredSubscriptions_Get.json
@@ -87,9 +86,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_GetMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_MonitorsGetMonitoredSubscriptions()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/MonitoredSubscriptions_Get.json
@@ -118,9 +116,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_GetMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_MonitorsGetMonitoredSubscriptions()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/MonitoredSubscriptions_Get.json
@@ -149,7 +146,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -161,9 +158,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             }
         }
 
-        // Monitors_AddMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_MonitorsAddMonitoredSubscriptions()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/MonitoredSubscriptions_CreateOrUpdate.json

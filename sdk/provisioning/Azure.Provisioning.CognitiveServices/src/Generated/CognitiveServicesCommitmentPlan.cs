@@ -17,85 +17,126 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// CognitiveServicesCommitmentPlan.
 /// </summary>
-public partial class CognitiveServicesCommitmentPlan : Resource
+public partial class CognitiveServicesCommitmentPlan : ProvisionableResource
 {
     /// <summary>
     /// The name of the commitmentPlan associated with the Cognitive Services
     /// Account.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The Kind of the resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Properties of Cognitive Services account commitment plan.
     /// </summary>
-    public BicepValue<CommitmentPlanProperties> Properties { get => _properties; set => _properties.Assign(value); }
-    private readonly BicepValue<CommitmentPlanProperties> _properties;
+    public CommitmentPlanProperties Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); AssignOrReplace(ref _properties, value); }
+    }
+    private CommitmentPlanProperties? _properties;
 
     /// <summary>
     /// The resource model definition representing SKU.
     /// </summary>
-    public BicepValue<CognitiveServicesSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<CognitiveServicesSku> _sku;
+    public CognitiveServicesSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private CognitiveServicesSku? _sku;
 
     /// <summary>
     /// Resource tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Resource Etag.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new CognitiveServicesCommitmentPlan.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CognitiveServicesCommitmentPlan
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CognitiveServicesCommitmentPlan.</param>
-    public CognitiveServicesCommitmentPlan(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.CognitiveServices/commitmentPlans", resourceVersion ?? "2024-10-01")
+    public CognitiveServicesCommitmentPlan(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.CognitiveServices/commitmentPlans", resourceVersion ?? "2024-10-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"]);
-        _properties = BicepValue<CommitmentPlanProperties>.DefineProperty(this, "Properties", ["properties"]);
-        _sku = BicepValue<CognitiveServicesSku>.DefineProperty(this, "Sku", ["sku"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["etag"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// CognitiveServicesCommitmentPlan.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _location = DefineProperty<AzureLocation>("Location", ["location"]);
+        _properties = DefineModelProperty<CommitmentPlanProperties>("Properties", ["properties"]);
+        _sku = DefineModelProperty<CognitiveServicesSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -122,7 +163,7 @@ public partial class CognitiveServicesCommitmentPlan : Resource
     /// <summary>
     /// Creates a reference to an existing CognitiveServicesCommitmentPlan.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CognitiveServicesCommitmentPlan
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -130,6 +171,6 @@ public partial class CognitiveServicesCommitmentPlan : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CognitiveServicesCommitmentPlan.</param>
     /// <returns>The existing CognitiveServicesCommitmentPlan resource.</returns>
-    public static CognitiveServicesCommitmentPlan FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CognitiveServicesCommitmentPlan FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

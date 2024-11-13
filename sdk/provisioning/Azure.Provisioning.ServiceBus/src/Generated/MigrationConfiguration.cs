@@ -15,65 +15,95 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// MigrationConfiguration.
 /// </summary>
-public partial class MigrationConfiguration : Resource
+public partial class MigrationConfiguration : ProvisionableResource
 {
-    private readonly BicepValue<string> _name;
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Name to access Standard Namespace after migration.
     /// </summary>
-    public BicepValue<string> PostMigrationName { get => _postMigrationName; set => _postMigrationName.Assign(value); }
-    private readonly BicepValue<string> _postMigrationName;
+    public BicepValue<string> PostMigrationName 
+    {
+        get { Initialize(); return _postMigrationName!; }
+        set { Initialize(); _postMigrationName!.Assign(value); }
+    }
+    private BicepValue<string>? _postMigrationName;
 
     /// <summary>
     /// Existing premium Namespace ARM Id name which has no entities, will be
     /// used for migration.
     /// </summary>
-    public BicepValue<ResourceIdentifier> TargetServiceBusNamespace { get => _targetServiceBusNamespace; set => _targetServiceBusNamespace.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _targetServiceBusNamespace;
+    public BicepValue<ResourceIdentifier> TargetServiceBusNamespace 
+    {
+        get { Initialize(); return _targetServiceBusNamespace!; }
+        set { Initialize(); _targetServiceBusNamespace!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _targetServiceBusNamespace;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// State in which Standard to Premium Migration is, possible values :
     /// Unknown, Reverting, Completing, Initiating, Syncing, Active.
     /// </summary>
-    public BicepValue<string> MigrationState { get => _migrationState; }
-    private readonly BicepValue<string> _migrationState;
+    public BicepValue<string> MigrationState 
+    {
+        get { Initialize(); return _migrationState!; }
+    }
+    private BicepValue<string>? _migrationState;
 
     /// <summary>
     /// Number of entities pending to be replicated.
     /// </summary>
-    public BicepValue<long> PendingReplicationOperationsCount { get => _pendingReplicationOperationsCount; }
-    private readonly BicepValue<long> _pendingReplicationOperationsCount;
+    public BicepValue<long> PendingReplicationOperationsCount 
+    {
+        get { Initialize(); return _pendingReplicationOperationsCount!; }
+    }
+    private BicepValue<long>? _pendingReplicationOperationsCount;
 
     /// <summary>
     /// Provisioning state of Migration Configuration.
     /// </summary>
-    public BicepValue<string> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<string> _provisioningState;
+    public BicepValue<string> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<string>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ServiceBusNamespace.
     /// </summary>
-    public ServiceBusNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ServiceBusNamespace> _parent;
+    public ServiceBusNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ServiceBusNamespace>? _parent;
 
     /// <summary>
     /// Get the default value for the Name property.
@@ -83,26 +113,33 @@ public partial class MigrationConfiguration : Resource
     /// <summary>
     /// Creates a new MigrationConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the MigrationConfiguration resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the MigrationConfiguration.</param>
-    public MigrationConfiguration(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.ServiceBus/namespaces/migrationConfigurations", resourceVersion ?? "2024-01-01")
+    public MigrationConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/migrationConfigurations", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
-        _postMigrationName = BicepValue<string>.DefineProperty(this, "PostMigrationName", ["properties", "postMigrationName"]);
-        _targetServiceBusNamespace = BicepValue<ResourceIdentifier>.DefineProperty(this, "TargetServiceBusNamespace", ["properties", "targetNamespace"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _migrationState = BicepValue<string>.DefineProperty(this, "MigrationState", ["properties", "migrationState"], isOutput: true);
-        _pendingReplicationOperationsCount = BicepValue<long>.DefineProperty(this, "PendingReplicationOperationsCount", ["properties", "pendingReplicationOperationsCount"], isOutput: true);
-        _provisioningState = BicepValue<string>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ServiceBusNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of MigrationConfiguration.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
+        _postMigrationName = DefineProperty<string>("PostMigrationName", ["properties", "postMigrationName"]);
+        _targetServiceBusNamespace = DefineProperty<ResourceIdentifier>("TargetServiceBusNamespace", ["properties", "targetNamespace"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _migrationState = DefineProperty<string>("MigrationState", ["properties", "migrationState"], isOutput: true);
+        _pendingReplicationOperationsCount = DefineProperty<long>("PendingReplicationOperationsCount", ["properties", "pendingReplicationOperationsCount"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ServiceBusNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -129,7 +166,7 @@ public partial class MigrationConfiguration : Resource
     /// <summary>
     /// Creates a reference to an existing MigrationConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the MigrationConfiguration resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -137,6 +174,6 @@ public partial class MigrationConfiguration : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the MigrationConfiguration.</param>
     /// <returns>The existing MigrationConfiguration resource.</returns>
-    public static MigrationConfiguration FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static MigrationConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

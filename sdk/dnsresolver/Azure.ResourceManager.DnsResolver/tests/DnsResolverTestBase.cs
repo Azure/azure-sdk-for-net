@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public ResourceIdentifier DefaultVnetID;
         public ResourceIdentifier DefaultSubnetID;
         protected AzureLocation DefaultLocation => AzureLocation.AustraliaEast;
+        protected int DefaultDnsSecurityRulePriority => 100;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
         public DnsResolverTestBase(bool isAsync) : base(isAsync)

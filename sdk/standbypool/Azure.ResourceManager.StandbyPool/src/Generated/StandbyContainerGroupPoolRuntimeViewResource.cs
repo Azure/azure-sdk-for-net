@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolRuntimeViews_Get</description>
+        /// <description>StandbyContainerGroupPoolRuntimeViewResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolRuntimeViews_Get</description>
+        /// <description>StandbyContainerGroupPoolRuntimeViewResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

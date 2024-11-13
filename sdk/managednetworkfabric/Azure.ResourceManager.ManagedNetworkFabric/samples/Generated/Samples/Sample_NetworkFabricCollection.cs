@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkFabricCollection
     {
-        // NetworkFabrics_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NetworkFabricsCreateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_Create_MaximumSet_Gen.json
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string networkFabricName = "example-fabric";
-            NetworkFabricData data = new NetworkFabricData(new AzureLocation("eastuseuap"), "M4-A400-A100-C16-aa", new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/example-fabricController"), 8, "10.18.0.0/19", 29249, new TerminalServerConfiguration()
+            NetworkFabricData data = new NetworkFabricData(new AzureLocation("eastuseuap"), "M4-A400-A100-C16-aa", new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/example-fabricController"), 8, "10.18.0.0/19", 29249L, new TerminalServerConfiguration()
             {
                 PrimaryIPv4Prefix = "10.0.0.12/30",
                 PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                     SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                     Mtu = 1501,
                     VlanId = 3001,
-                    PeerAsn = 1235,
+                    PeerAsn = 1235L,
                     BfdConfiguration = new BfdConfiguration()
                     {
                         IntervalInMilliSeconds = 300,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                     SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/126",
                     Mtu = 1500,
                     VlanId = 3000,
-                    PeerAsn = 61234,
+                    PeerAsn = 61234L,
                     BfdConfiguration = new BfdConfiguration()
                     {
                         IntervalInMilliSeconds = 300,
@@ -166,9 +166,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkFabrics_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkFabricsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_Get_MaximumSet_Gen.json
@@ -200,9 +199,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkFabrics_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_NetworkFabricsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_Get_MaximumSet_Gen.json
@@ -230,9 +228,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkFabrics_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NetworkFabricsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_Get_MaximumSet_Gen.json
@@ -260,7 +257,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -272,9 +269,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             }
         }
 
-        // NetworkFabrics_ListByResourceGroup_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_NetworkFabricsListByResourceGroupMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_ListByResourceGroup_MaximumSet_Gen.json
@@ -305,7 +301,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

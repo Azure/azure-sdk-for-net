@@ -16,79 +16,117 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsLinkedService.
 /// </summary>
-public partial class OperationalInsightsLinkedService : Resource
+public partial class OperationalInsightsLinkedService : ProvisionableResource
 {
     /// <summary>
     /// Name of the linkedServices resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The provisioning state of the linked service.
     /// </summary>
-    public BicepValue<OperationalInsightsLinkedServiceEntityStatus> ProvisioningState { get => _provisioningState; set => _provisioningState.Assign(value); }
-    private readonly BicepValue<OperationalInsightsLinkedServiceEntityStatus> _provisioningState;
+    public BicepValue<OperationalInsightsLinkedServiceEntityStatus> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+        set { Initialize(); _provisioningState!.Assign(value); }
+    }
+    private BicepValue<OperationalInsightsLinkedServiceEntityStatus>? _provisioningState;
 
     /// <summary>
     /// The resource id of the resource that will be linked to the workspace.
     /// This should be used for linking resources which require read access.
     /// </summary>
-    public BicepValue<ResourceIdentifier> ResourceId { get => _resourceId; set => _resourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _resourceId;
+    public BicepValue<ResourceIdentifier> ResourceId 
+    {
+        get { Initialize(); return _resourceId!; }
+        set { Initialize(); _resourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _resourceId;
 
     /// <summary>
     /// Resource tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The resource id of the resource that will be linked to the workspace.
     /// This should be used for linking resources which require write access.
     /// </summary>
-    public BicepValue<ResourceIdentifier> WriteAccessResourceId { get => _writeAccessResourceId; set => _writeAccessResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _writeAccessResourceId;
+    public BicepValue<ResourceIdentifier> WriteAccessResourceId 
+    {
+        get { Initialize(); return _writeAccessResourceId!; }
+        set { Initialize(); _writeAccessResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _writeAccessResourceId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent OperationalInsightsWorkspace.
     /// </summary>
-    public OperationalInsightsWorkspace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<OperationalInsightsWorkspace> _parent;
+    public OperationalInsightsWorkspace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<OperationalInsightsWorkspace>? _parent;
 
     /// <summary>
     /// Creates a new OperationalInsightsLinkedService.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsLinkedService
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsLinkedService.</param>
-    public OperationalInsightsLinkedService(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.OperationalInsights/workspaces/linkedServices", resourceVersion ?? "2023-09-01")
+    public OperationalInsightsLinkedService(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces/linkedServices", resourceVersion ?? "2023-09-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _provisioningState = BicepValue<OperationalInsightsLinkedServiceEntityStatus>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"]);
-        _resourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "ResourceId", ["properties", "resourceId"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _writeAccessResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "WriteAccessResourceId", ["properties", "writeAccessResourceId"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<OperationalInsightsWorkspace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// OperationalInsightsLinkedService.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _provisioningState = DefineProperty<OperationalInsightsLinkedServiceEntityStatus>("ProvisioningState", ["properties", "provisioningState"]);
+        _resourceId = DefineProperty<ResourceIdentifier>("ResourceId", ["properties", "resourceId"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _writeAccessResourceId = DefineProperty<ResourceIdentifier>("WriteAccessResourceId", ["properties", "writeAccessResourceId"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<OperationalInsightsWorkspace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -110,7 +148,7 @@ public partial class OperationalInsightsLinkedService : Resource
     /// <summary>
     /// Creates a reference to an existing OperationalInsightsLinkedService.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsLinkedService
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -118,6 +156,6 @@ public partial class OperationalInsightsLinkedService : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsLinkedService.</param>
     /// <returns>The existing OperationalInsightsLinkedService resource.</returns>
-    public static OperationalInsightsLinkedService FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static OperationalInsightsLinkedService FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

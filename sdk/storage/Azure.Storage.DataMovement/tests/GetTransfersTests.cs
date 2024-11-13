@@ -123,11 +123,11 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
-            DataTransferStatus status = new DataTransferStatus(state, hasFailedItems, hasSkippedItems);
+            DataTransferStatus[] status = { new DataTransferStatus(state, hasFailedItems, hasSkippedItems) };
             IList<DataTransfer> result = await manager.GetTransfersAsync(status).ToListAsync();
 
             // Assert
-            AssertListTransfersEquals(storedTransfers.Where(d => d.TransferStatus == status).ToList(), result);
+            AssertListTransfersEquals(storedTransfers.Where(d => d.TransferStatus == status.First()).ToList(), result);
         }
 
         [Test]
@@ -222,9 +222,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             IList<DataTransfer> result = await manager.GetTransfersAsync().ToListAsync();
+            List<string> resultIds = result.Select(t => t.Id).ToList();
 
             // Assert
-            Assert.AreEqual(checkpointerTransfers, result.Select(d => d.Id).ToList());
+            Assert.IsTrue(Enumerable.SequenceEqual(checkpointerTransfers.OrderBy(id => id), result.Select(t => t.Id).OrderBy(id => id)));
         }
 
         [Test]

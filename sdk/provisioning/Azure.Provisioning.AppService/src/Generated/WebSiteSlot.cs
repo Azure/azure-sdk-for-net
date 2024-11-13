@@ -17,32 +17,47 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlot.
 /// </summary>
-public partial class WebSiteSlot : Resource
+public partial class WebSiteSlot : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Resource ID of the associated App Service plan, formatted as:
     /// &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;.
     /// </summary>
-    public BicepValue<ResourceIdentifier> AppServicePlanId { get => _appServicePlanId; set => _appServicePlanId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _appServicePlanId;
+    public BicepValue<ResourceIdentifier> AppServicePlanId 
+    {
+        get { Initialize(); return _appServicePlanId!; }
+        set { Initialize(); _appServicePlanId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _appServicePlanId;
 
     /// <summary>
     /// client certificate authentication comma-separated exclusion paths.
     /// </summary>
-    public BicepValue<string> ClientCertExclusionPaths { get => _clientCertExclusionPaths; set => _clientCertExclusionPaths.Assign(value); }
-    private readonly BicepValue<string> _clientCertExclusionPaths;
+    public BicepValue<string> ClientCertExclusionPaths 
+    {
+        get { Initialize(); return _clientCertExclusionPaths!; }
+        set { Initialize(); _clientCertExclusionPaths!.Assign(value); }
+    }
+    private BicepValue<string>? _clientCertExclusionPaths;
 
     /// <summary>
     /// This composes with ClientCertEnabled setting.             -
@@ -51,77 +66,125 @@ public partial class WebSiteSlot : Resource
     /// is required.             - ClientCertEnabled: true and ClientCertMode:
     /// Optional means ClientCert is optional or accepted.
     /// </summary>
-    public BicepValue<ClientCertMode> ClientCertMode { get => _clientCertMode; set => _clientCertMode.Assign(value); }
-    private readonly BicepValue<ClientCertMode> _clientCertMode;
+    public BicepValue<ClientCertMode> ClientCertMode 
+    {
+        get { Initialize(); return _clientCertMode!; }
+        set { Initialize(); _clientCertMode!.Assign(value); }
+    }
+    private BicepValue<ClientCertMode>? _clientCertMode;
 
     /// <summary>
     /// If specified during app creation, the app is cloned from a source app.
     /// </summary>
-    public BicepValue<CloningInfo> CloningInfo { get => _cloningInfo; set => _cloningInfo.Assign(value); }
-    private readonly BicepValue<CloningInfo> _cloningInfo;
+    public CloningInfo CloningInfo 
+    {
+        get { Initialize(); return _cloningInfo!; }
+        set { Initialize(); AssignOrReplace(ref _cloningInfo, value); }
+    }
+    private CloningInfo? _cloningInfo;
 
     /// <summary>
     /// Size of the function container.
     /// </summary>
-    public BicepValue<int> ContainerSize { get => _containerSize; set => _containerSize.Assign(value); }
-    private readonly BicepValue<int> _containerSize;
+    public BicepValue<int> ContainerSize 
+    {
+        get { Initialize(); return _containerSize!; }
+        set { Initialize(); _containerSize!.Assign(value); }
+    }
+    private BicepValue<int>? _containerSize;
 
     /// <summary>
     /// Unique identifier that verifies the custom domains assigned to the app.
     /// Customer will add this id to a txt record for verification.
     /// </summary>
-    public BicepValue<string> CustomDomainVerificationId { get => _customDomainVerificationId; set => _customDomainVerificationId.Assign(value); }
-    private readonly BicepValue<string> _customDomainVerificationId;
+    public BicepValue<string> CustomDomainVerificationId 
+    {
+        get { Initialize(); return _customDomainVerificationId!; }
+        set { Initialize(); _customDomainVerificationId!.Assign(value); }
+    }
+    private BicepValue<string>? _customDomainVerificationId;
 
     /// <summary>
     /// Maximum allowed daily memory-time quota (applicable on dynamic apps
     /// only).
     /// </summary>
-    public BicepValue<int> DailyMemoryTimeQuota { get => _dailyMemoryTimeQuota; set => _dailyMemoryTimeQuota.Assign(value); }
-    private readonly BicepValue<int> _dailyMemoryTimeQuota;
+    public BicepValue<int> DailyMemoryTimeQuota 
+    {
+        get { Initialize(); return _dailyMemoryTimeQuota!; }
+        set { Initialize(); _dailyMemoryTimeQuota!.Assign(value); }
+    }
+    private BicepValue<int>? _dailyMemoryTimeQuota;
 
     /// <summary>
     /// Dapr configuration of the app.
     /// </summary>
-    public BicepValue<AppDaprConfig> DaprConfig { get => _daprConfig; set => _daprConfig.Assign(value); }
-    private readonly BicepValue<AppDaprConfig> _daprConfig;
+    public AppDaprConfig DaprConfig 
+    {
+        get { Initialize(); return _daprConfig!; }
+        set { Initialize(); AssignOrReplace(ref _daprConfig, value); }
+    }
+    private AppDaprConfig? _daprConfig;
 
     /// <summary>
     /// Property to configure various DNS related settings for a site.
     /// </summary>
-    public BicepValue<SiteDnsConfig> DnsConfiguration { get => _dnsConfiguration; set => _dnsConfiguration.Assign(value); }
-    private readonly BicepValue<SiteDnsConfig> _dnsConfiguration;
+    public SiteDnsConfig DnsConfiguration 
+    {
+        get { Initialize(); return _dnsConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _dnsConfiguration, value); }
+    }
+    private SiteDnsConfig? _dnsConfiguration;
 
     /// <summary>
     /// Extended Location.
     /// </summary>
-    public BicepValue<ExtendedAzureLocation> ExtendedLocation { get => _extendedLocation; set => _extendedLocation.Assign(value); }
-    private readonly BicepValue<ExtendedAzureLocation> _extendedLocation;
+    public ExtendedAzureLocation ExtendedLocation 
+    {
+        get { Initialize(); return _extendedLocation!; }
+        set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
+    }
+    private ExtendedAzureLocation? _extendedLocation;
 
     /// <summary>
     /// Configuration specific of the Azure Function app.
     /// </summary>
-    public BicepValue<FunctionAppConfig> FunctionAppConfig { get => _functionAppConfig; set => _functionAppConfig.Assign(value); }
-    private readonly BicepValue<FunctionAppConfig> _functionAppConfig;
+    public FunctionAppConfig FunctionAppConfig 
+    {
+        get { Initialize(); return _functionAppConfig!; }
+        set { Initialize(); AssignOrReplace(ref _functionAppConfig, value); }
+    }
+    private FunctionAppConfig? _functionAppConfig;
 
     /// <summary>
     /// App Service Environment to use for the app.
     /// </summary>
-    public BicepValue<HostingEnvironmentProfile> HostingEnvironmentProfile { get => _hostingEnvironmentProfile; set => _hostingEnvironmentProfile.Assign(value); }
-    private readonly BicepValue<HostingEnvironmentProfile> _hostingEnvironmentProfile;
+    public HostingEnvironmentProfile HostingEnvironmentProfile 
+    {
+        get { Initialize(); return _hostingEnvironmentProfile!; }
+        set { Initialize(); AssignOrReplace(ref _hostingEnvironmentProfile, value); }
+    }
+    private HostingEnvironmentProfile? _hostingEnvironmentProfile;
 
     /// <summary>
     /// Hostname SSL states are used to manage the SSL bindings for app&apos;s
     /// hostnames.
     /// </summary>
-    public BicepList<HostNameSslState> HostNameSslStates { get => _hostNameSslStates; set => _hostNameSslStates.Assign(value); }
-    private readonly BicepList<HostNameSslState> _hostNameSslStates;
+    public BicepList<HostNameSslState> HostNameSslStates 
+    {
+        get { Initialize(); return _hostNameSslStates!; }
+        set { Initialize(); _hostNameSslStates!.Assign(value); }
+    }
+    private BicepList<HostNameSslState>? _hostNameSslStates;
 
     /// <summary>
     /// Managed service identity.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; to enable client affinity;
@@ -129,8 +192,12 @@ public partial class WebSiteSlot : Resource
     /// cookies, which route client requests in the same session to the same
     /// instance. Default is &lt;code&gt;true&lt;/code&gt;.
     /// </summary>
-    public BicepValue<bool> IsClientAffinityEnabled { get => _isClientAffinityEnabled; set => _isClientAffinityEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isClientAffinityEnabled;
+    public BicepValue<bool> IsClientAffinityEnabled 
+    {
+        get { Initialize(); return _isClientAffinityEnabled!; }
+        set { Initialize(); _isClientAffinityEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isClientAffinityEnabled;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; to enable client certificate
@@ -138,16 +205,24 @@ public partial class WebSiteSlot : Resource
     /// &lt;code&gt;false&lt;/code&gt;. Default is
     /// &lt;code&gt;false&lt;/code&gt;.
     /// </summary>
-    public BicepValue<bool> IsClientCertEnabled { get => _isClientCertEnabled; set => _isClientCertEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isClientCertEnabled;
+    public BicepValue<bool> IsClientCertEnabled 
+    {
+        get { Initialize(); return _isClientCertEnabled!; }
+        set { Initialize(); _isClientCertEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isClientCertEnabled;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise,
     /// &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables
     /// the app (takes the app offline).
     /// </summary>
-    public BicepValue<bool> IsEnabled { get => _isEnabled; set => _isEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isEnabled;
+    public BicepValue<bool> IsEnabled 
+    {
+        get { Initialize(); return _isEnabled!; }
+        set { Initialize(); _isEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isEnabled;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the
@@ -155,124 +230,200 @@ public partial class WebSiteSlot : Resource
     /// &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API
     /// management process.
     /// </summary>
-    public BicepValue<bool> IsHostNameDisabled { get => _isHostNameDisabled; set => _isHostNameDisabled.Assign(value); }
-    private readonly BicepValue<bool> _isHostNameDisabled;
+    public BicepValue<bool> IsHostNameDisabled 
+    {
+        get { Initialize(); return _isHostNameDisabled!; }
+        set { Initialize(); _isHostNameDisabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isHostNameDisabled;
 
     /// <summary>
     /// HttpsOnly: configures a web site to accept only https requests. Issues
     /// redirect for             http requests
     /// </summary>
-    public BicepValue<bool> IsHttpsOnly { get => _isHttpsOnly; set => _isHttpsOnly.Assign(value); }
-    private readonly BicepValue<bool> _isHttpsOnly;
+    public BicepValue<bool> IsHttpsOnly 
+    {
+        get { Initialize(); return _isHttpsOnly!; }
+        set { Initialize(); _isHttpsOnly!.Assign(value); }
+    }
+    private BicepValue<bool>? _isHttpsOnly;
 
     /// <summary>
     /// Hyper-V sandbox.
     /// </summary>
-    public BicepValue<bool> IsHyperV { get => _isHyperV; set => _isHyperV.Assign(value); }
-    private readonly BicepValue<bool> _isHyperV;
+    public BicepValue<bool> IsHyperV 
+    {
+        get { Initialize(); return _isHyperV!; }
+        set { Initialize(); _isHyperV!.Assign(value); }
+    }
+    private BicepValue<bool>? _isHyperV;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; if reserved; otherwise,
     /// &lt;code&gt;false&lt;/code&gt;.
     /// </summary>
-    public BicepValue<bool> IsReserved { get => _isReserved; set => _isReserved.Assign(value); }
-    private readonly BicepValue<bool> _isReserved;
+    public BicepValue<bool> IsReserved 
+    {
+        get { Initialize(); return _isReserved!; }
+        set { Initialize(); _isReserved!.Assign(value); }
+    }
+    private BicepValue<bool>? _isReserved;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is
     /// stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is
     /// &lt;code&gt;false&lt;/code&gt;.
     /// </summary>
-    public BicepValue<bool> IsScmSiteAlsoStopped { get => _isScmSiteAlsoStopped; set => _isScmSiteAlsoStopped.Assign(value); }
-    private readonly BicepValue<bool> _isScmSiteAlsoStopped;
+    public BicepValue<bool> IsScmSiteAlsoStopped 
+    {
+        get { Initialize(); return _isScmSiteAlsoStopped!; }
+        set { Initialize(); _isScmSiteAlsoStopped!.Assign(value); }
+    }
+    private BicepValue<bool>? _isScmSiteAlsoStopped;
 
     /// <summary>
     /// Checks if Customer provided storage account is required.
     /// </summary>
-    public BicepValue<bool> IsStorageAccountRequired { get => _isStorageAccountRequired; set => _isStorageAccountRequired.Assign(value); }
-    private readonly BicepValue<bool> _isStorageAccountRequired;
+    public BicepValue<bool> IsStorageAccountRequired 
+    {
+        get { Initialize(); return _isStorageAccountRequired!; }
+        set { Initialize(); _isStorageAccountRequired!.Assign(value); }
+    }
+    private BicepValue<bool>? _isStorageAccountRequired;
 
     /// <summary>
     /// To enable Backup and Restore operations over virtual network.
     /// </summary>
-    public BicepValue<bool> IsVnetBackupRestoreEnabled { get => _isVnetBackupRestoreEnabled; set => _isVnetBackupRestoreEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isVnetBackupRestoreEnabled;
+    public BicepValue<bool> IsVnetBackupRestoreEnabled 
+    {
+        get { Initialize(); return _isVnetBackupRestoreEnabled!; }
+        set { Initialize(); _isVnetBackupRestoreEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isVnetBackupRestoreEnabled;
 
     /// <summary>
     /// To enable accessing content over virtual network.
     /// </summary>
-    public BicepValue<bool> IsVnetContentShareEnabled { get => _isVnetContentShareEnabled; set => _isVnetContentShareEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isVnetContentShareEnabled;
+    public BicepValue<bool> IsVnetContentShareEnabled 
+    {
+        get { Initialize(); return _isVnetContentShareEnabled!; }
+        set { Initialize(); _isVnetContentShareEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isVnetContentShareEnabled;
 
     /// <summary>
     /// To enable pulling image over Virtual Network.
     /// </summary>
-    public BicepValue<bool> IsVnetImagePullEnabled { get => _isVnetImagePullEnabled; set => _isVnetImagePullEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isVnetImagePullEnabled;
+    public BicepValue<bool> IsVnetImagePullEnabled 
+    {
+        get { Initialize(); return _isVnetImagePullEnabled!; }
+        set { Initialize(); _isVnetImagePullEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isVnetImagePullEnabled;
 
     /// <summary>
     /// Virtual Network Route All enabled. This causes all outbound traffic to
     /// have Virtual Network Security Groups and User Defined Routes applied.
     /// </summary>
-    public BicepValue<bool> IsVnetRouteAllEnabled { get => _isVnetRouteAllEnabled; set => _isVnetRouteAllEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isVnetRouteAllEnabled;
+    public BicepValue<bool> IsVnetRouteAllEnabled 
+    {
+        get { Initialize(); return _isVnetRouteAllEnabled!; }
+        set { Initialize(); _isVnetRouteAllEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isVnetRouteAllEnabled;
 
     /// <summary>
     /// Obsolete: Hyper-V sandbox.
     /// </summary>
-    public BicepValue<bool> IsXenon { get => _isXenon; set => _isXenon.Assign(value); }
-    private readonly BicepValue<bool> _isXenon;
+    public BicepValue<bool> IsXenon 
+    {
+        get { Initialize(); return _isXenon!; }
+        set { Initialize(); _isXenon!.Assign(value); }
+    }
+    private BicepValue<bool>? _isXenon;
 
     /// <summary>
     /// Identity to use for Key Vault Reference authentication.
     /// </summary>
-    public BicepValue<string> KeyVaultReferenceIdentity { get => _keyVaultReferenceIdentity; set => _keyVaultReferenceIdentity.Assign(value); }
-    private readonly BicepValue<string> _keyVaultReferenceIdentity;
+    public BicepValue<string> KeyVaultReferenceIdentity 
+    {
+        get { Initialize(); return _keyVaultReferenceIdentity!; }
+        set { Initialize(); _keyVaultReferenceIdentity!.Assign(value); }
+    }
+    private BicepValue<string>? _keyVaultReferenceIdentity;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Azure Resource Manager ID of the customer&apos;s selected Managed
     /// Environment on which to host this app. This must be of the form
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}.
     /// </summary>
-    public BicepValue<string> ManagedEnvironmentId { get => _managedEnvironmentId; set => _managedEnvironmentId.Assign(value); }
-    private readonly BicepValue<string> _managedEnvironmentId;
+    public BicepValue<string> ManagedEnvironmentId 
+    {
+        get { Initialize(); return _managedEnvironmentId!; }
+        set { Initialize(); _managedEnvironmentId!.Assign(value); }
+    }
+    private BicepValue<string>? _managedEnvironmentId;
 
     /// <summary>
     /// Property to allow or block all public traffic. Allowed Values:
     /// &apos;Enabled&apos;, &apos;Disabled&apos; or an empty string.
     /// </summary>
-    public BicepValue<string> PublicNetworkAccess { get => _publicNetworkAccess; set => _publicNetworkAccess.Assign(value); }
-    private readonly BicepValue<string> _publicNetworkAccess;
+    public BicepValue<string> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<string>? _publicNetworkAccess;
 
     /// <summary>
     /// Site redundancy mode.
     /// </summary>
-    public BicepValue<RedundancyMode> RedundancyMode { get => _redundancyMode; set => _redundancyMode.Assign(value); }
-    private readonly BicepValue<RedundancyMode> _redundancyMode;
+    public BicepValue<RedundancyMode> RedundancyMode 
+    {
+        get { Initialize(); return _redundancyMode!; }
+        set { Initialize(); _redundancyMode!.Assign(value); }
+    }
+    private BicepValue<RedundancyMode>? _redundancyMode;
 
     /// <summary>
     /// Function app resource requirements.
     /// </summary>
-    public BicepValue<FunctionAppResourceConfig> ResourceConfig { get => _resourceConfig; set => _resourceConfig.Assign(value); }
-    private readonly BicepValue<FunctionAppResourceConfig> _resourceConfig;
+    public FunctionAppResourceConfig ResourceConfig 
+    {
+        get { Initialize(); return _resourceConfig!; }
+        set { Initialize(); AssignOrReplace(ref _resourceConfig, value); }
+    }
+    private FunctionAppResourceConfig? _resourceConfig;
 
     /// <summary>
     /// Configuration of the app.
     /// </summary>
-    public BicepValue<SiteConfigProperties> SiteConfig { get => _siteConfig; set => _siteConfig.Assign(value); }
-    private readonly BicepValue<SiteConfigProperties> _siteConfig;
+    public SiteConfigProperties SiteConfig 
+    {
+        get { Initialize(); return _siteConfig!; }
+        set { Initialize(); AssignOrReplace(ref _siteConfig, value); }
+    }
+    private SiteConfigProperties? _siteConfig;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Azure Resource Manager ID of the Virtual network and subnet to be
@@ -280,224 +431,303 @@ public partial class WebSiteSlot : Resource
     /// form
     /// /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
     /// </summary>
-    public BicepValue<ResourceIdentifier> VirtualNetworkSubnetId { get => _virtualNetworkSubnetId; set => _virtualNetworkSubnetId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _virtualNetworkSubnetId;
+    public BicepValue<ResourceIdentifier> VirtualNetworkSubnetId 
+    {
+        get { Initialize(); return _virtualNetworkSubnetId!; }
+        set { Initialize(); _virtualNetworkSubnetId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _virtualNetworkSubnetId;
 
     /// <summary>
     /// Workload profile name for function app to execute on.
     /// </summary>
-    public BicepValue<string> WorkloadProfileName { get => _workloadProfileName; set => _workloadProfileName.Assign(value); }
-    private readonly BicepValue<string> _workloadProfileName;
+    public BicepValue<string> WorkloadProfileName 
+    {
+        get { Initialize(); return _workloadProfileName!; }
+        set { Initialize(); _workloadProfileName!.Assign(value); }
+    }
+    private BicepValue<string>? _workloadProfileName;
 
     /// <summary>
     /// Management information availability state for the app.
     /// </summary>
-    public BicepValue<WebSiteAvailabilityState> AvailabilityState { get => _availabilityState; }
-    private readonly BicepValue<WebSiteAvailabilityState> _availabilityState;
+    public BicepValue<WebSiteAvailabilityState> AvailabilityState 
+    {
+        get { Initialize(); return _availabilityState!; }
+    }
+    private BicepValue<WebSiteAvailabilityState>? _availabilityState;
 
     /// <summary>
     /// Default hostname of the app. Read-only.
     /// </summary>
-    public BicepValue<string> DefaultHostName { get => _defaultHostName; }
-    private readonly BicepValue<string> _defaultHostName;
+    public BicepValue<string> DefaultHostName 
+    {
+        get { Initialize(); return _defaultHostName!; }
+    }
+    private BicepValue<string>? _defaultHostName;
 
     /// <summary>
     /// Enabled hostnames for the app.Hostnames need to be assigned (see
     /// HostNames) AND enabled. Otherwise,             the app is not served
     /// on those hostnames.
     /// </summary>
-    public BicepList<string> EnabledHostNames { get => _enabledHostNames; }
-    private readonly BicepList<string> _enabledHostNames;
+    public BicepList<string> EnabledHostNames 
+    {
+        get { Initialize(); return _enabledHostNames!; }
+    }
+    private BicepList<string>? _enabledHostNames;
 
     /// <summary>
     /// Hostnames associated with the app.
     /// </summary>
-    public BicepList<string> HostNames { get => _hostNames; }
-    private readonly BicepList<string> _hostNames;
+    public BicepList<string> HostNames 
+    {
+        get { Initialize(); return _hostNames!; }
+    }
+    private BicepList<string>? _hostNames;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Specifies an operation id if this site has a pending operation.
     /// </summary>
-    public BicepValue<Guid> InProgressOperationId { get => _inProgressOperationId; }
-    private readonly BicepValue<Guid> _inProgressOperationId;
+    public BicepValue<Guid> InProgressOperationId 
+    {
+        get { Initialize(); return _inProgressOperationId!; }
+    }
+    private BicepValue<Guid>? _inProgressOperationId;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; if the app is a default container;
     /// otherwise, &lt;code&gt;false&lt;/code&gt;.
     /// </summary>
-    public BicepValue<bool> IsDefaultContainer { get => _isDefaultContainer; }
-    private readonly BicepValue<bool> _isDefaultContainer;
+    public BicepValue<bool> IsDefaultContainer 
+    {
+        get { Initialize(); return _isDefaultContainer!; }
+    }
+    private BicepValue<bool>? _isDefaultContainer;
 
     /// <summary>
     /// Last time the app was modified, in UTC. Read-only.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastModifiedTimeUtc { get => _lastModifiedTimeUtc; }
-    private readonly BicepValue<DateTimeOffset> _lastModifiedTimeUtc;
+    public BicepValue<DateTimeOffset> LastModifiedTimeUtc 
+    {
+        get { Initialize(); return _lastModifiedTimeUtc!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastModifiedTimeUtc;
 
     /// <summary>
     /// Maximum number of workers.             This only applies to Functions
     /// container.
     /// </summary>
-    public BicepValue<int> MaxNumberOfWorkers { get => _maxNumberOfWorkers; }
-    private readonly BicepValue<int> _maxNumberOfWorkers;
+    public BicepValue<int> MaxNumberOfWorkers 
+    {
+        get { Initialize(); return _maxNumberOfWorkers!; }
+    }
+    private BicepValue<int>? _maxNumberOfWorkers;
 
     /// <summary>
     /// List of IP addresses that the app uses for outbound connections (e.g.
     /// database access). Includes VIPs from tenants that site can be hosted
     /// with current settings. Read-only.
     /// </summary>
-    public BicepValue<string> OutboundIPAddresses { get => _outboundIPAddresses; }
-    private readonly BicepValue<string> _outboundIPAddresses;
+    public BicepValue<string> OutboundIPAddresses 
+    {
+        get { Initialize(); return _outboundIPAddresses!; }
+    }
+    private BicepValue<string>? _outboundIPAddresses;
 
     /// <summary>
     /// List of IP addresses that the app uses for outbound connections (e.g.
     /// database access). Includes VIPs from all tenants except dataComponent.
     /// Read-only.
     /// </summary>
-    public BicepValue<string> PossibleOutboundIPAddresses { get => _possibleOutboundIPAddresses; }
-    private readonly BicepValue<string> _possibleOutboundIPAddresses;
+    public BicepValue<string> PossibleOutboundIPAddresses 
+    {
+        get { Initialize(); return _possibleOutboundIPAddresses!; }
+    }
+    private BicepValue<string>? _possibleOutboundIPAddresses;
 
     /// <summary>
     /// Name of the repository site.
     /// </summary>
-    public BicepValue<string> RepositorySiteName { get => _repositorySiteName; }
-    private readonly BicepValue<string> _repositorySiteName;
+    public BicepValue<string> RepositorySiteName 
+    {
+        get { Initialize(); return _repositorySiteName!; }
+    }
+    private BicepValue<string>? _repositorySiteName;
 
     /// <summary>
     /// Name of the resource group the app belongs to. Read-only.
     /// </summary>
-    public BicepValue<string> ResourceGroup { get => _resourceGroup; }
-    private readonly BicepValue<string> _resourceGroup;
+    public BicepValue<string> ResourceGroup 
+    {
+        get { Initialize(); return _resourceGroup!; }
+    }
+    private BicepValue<string>? _resourceGroup;
 
     /// <summary>
     /// Status of the last deployment slot swap operation.
     /// </summary>
-    public BicepValue<SlotSwapStatus> SlotSwapStatus { get => _slotSwapStatus; }
-    private readonly BicepValue<SlotSwapStatus> _slotSwapStatus;
+    public SlotSwapStatus SlotSwapStatus 
+    {
+        get { Initialize(); return _slotSwapStatus!; }
+    }
+    private SlotSwapStatus? _slotSwapStatus;
 
     /// <summary>
     /// Current state of the app.
     /// </summary>
-    public BicepValue<string> State { get => _state; }
-    private readonly BicepValue<string> _state;
+    public BicepValue<string> State 
+    {
+        get { Initialize(); return _state!; }
+    }
+    private BicepValue<string>? _state;
 
     /// <summary>
     /// App suspended till in case memory-time quota is exceeded.
     /// </summary>
-    public BicepValue<DateTimeOffset> SuspendOn { get => _suspendOn; }
-    private readonly BicepValue<DateTimeOffset> _suspendOn;
+    public BicepValue<DateTimeOffset> SuspendOn 
+    {
+        get { Initialize(); return _suspendOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _suspendOn;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Specifies which deployment slot this app will swap into. Read-only.
     /// </summary>
-    public BicepValue<string> TargetSwapSlot { get => _targetSwapSlot; }
-    private readonly BicepValue<string> _targetSwapSlot;
+    public BicepValue<string> TargetSwapSlot 
+    {
+        get { Initialize(); return _targetSwapSlot!; }
+    }
+    private BicepValue<string>? _targetSwapSlot;
 
     /// <summary>
     /// Azure Traffic Manager hostnames associated with the app. Read-only.
     /// </summary>
-    public BicepList<string> TrafficManagerHostNames { get => _trafficManagerHostNames; }
-    private readonly BicepList<string> _trafficManagerHostNames;
+    public BicepList<string> TrafficManagerHostNames 
+    {
+        get { Initialize(); return _trafficManagerHostNames!; }
+    }
+    private BicepList<string>? _trafficManagerHostNames;
 
     /// <summary>
     /// State indicating whether the app has exceeded its quota usage.
     /// Read-only.
     /// </summary>
-    public BicepValue<AppServiceUsageState> UsageState { get => _usageState; }
-    private readonly BicepValue<AppServiceUsageState> _usageState;
+    public BicepValue<AppServiceUsageState> UsageState 
+    {
+        get { Initialize(); return _usageState!; }
+    }
+    private BicepValue<AppServiceUsageState>? _usageState;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSite.
     /// </summary>
-    public WebSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSite> _parent;
+    public WebSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSite>? _parent;
 
     /// <summary>
     /// Creates a new WebSiteSlot.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WebSiteSlot resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlot.</param>
-    public WebSiteSlot(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/slots", resourceVersion ?? "2024-04-01")
+    public WebSiteSlot(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _appServicePlanId = BicepValue<ResourceIdentifier>.DefineProperty(this, "AppServicePlanId", ["properties", "serverFarmId"]);
-        _clientCertExclusionPaths = BicepValue<string>.DefineProperty(this, "ClientCertExclusionPaths", ["properties", "clientCertExclusionPaths"]);
-        _clientCertMode = BicepValue<ClientCertMode>.DefineProperty(this, "ClientCertMode", ["properties", "clientCertMode"]);
-        _cloningInfo = BicepValue<CloningInfo>.DefineProperty(this, "CloningInfo", ["properties", "cloningInfo"]);
-        _containerSize = BicepValue<int>.DefineProperty(this, "ContainerSize", ["properties", "containerSize"]);
-        _customDomainVerificationId = BicepValue<string>.DefineProperty(this, "CustomDomainVerificationId", ["properties", "customDomainVerificationId"]);
-        _dailyMemoryTimeQuota = BicepValue<int>.DefineProperty(this, "DailyMemoryTimeQuota", ["properties", "dailyMemoryTimeQuota"]);
-        _daprConfig = BicepValue<AppDaprConfig>.DefineProperty(this, "DaprConfig", ["properties", "daprConfig"]);
-        _dnsConfiguration = BicepValue<SiteDnsConfig>.DefineProperty(this, "DnsConfiguration", ["properties", "dnsConfiguration"]);
-        _extendedLocation = BicepValue<ExtendedAzureLocation>.DefineProperty(this, "ExtendedLocation", ["extendedLocation"]);
-        _functionAppConfig = BicepValue<FunctionAppConfig>.DefineProperty(this, "FunctionAppConfig", ["properties", "functionAppConfig"]);
-        _hostingEnvironmentProfile = BicepValue<HostingEnvironmentProfile>.DefineProperty(this, "HostingEnvironmentProfile", ["properties", "hostingEnvironmentProfile"]);
-        _hostNameSslStates = BicepList<HostNameSslState>.DefineProperty(this, "HostNameSslStates", ["properties", "hostNameSslStates"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _isClientAffinityEnabled = BicepValue<bool>.DefineProperty(this, "IsClientAffinityEnabled", ["properties", "clientAffinityEnabled"]);
-        _isClientCertEnabled = BicepValue<bool>.DefineProperty(this, "IsClientCertEnabled", ["properties", "clientCertEnabled"]);
-        _isEnabled = BicepValue<bool>.DefineProperty(this, "IsEnabled", ["properties", "enabled"]);
-        _isHostNameDisabled = BicepValue<bool>.DefineProperty(this, "IsHostNameDisabled", ["properties", "hostNamesDisabled"]);
-        _isHttpsOnly = BicepValue<bool>.DefineProperty(this, "IsHttpsOnly", ["properties", "httpsOnly"]);
-        _isHyperV = BicepValue<bool>.DefineProperty(this, "IsHyperV", ["properties", "hyperV"]);
-        _isReserved = BicepValue<bool>.DefineProperty(this, "IsReserved", ["properties", "reserved"]);
-        _isScmSiteAlsoStopped = BicepValue<bool>.DefineProperty(this, "IsScmSiteAlsoStopped", ["properties", "scmSiteAlsoStopped"]);
-        _isStorageAccountRequired = BicepValue<bool>.DefineProperty(this, "IsStorageAccountRequired", ["properties", "storageAccountRequired"]);
-        _isVnetBackupRestoreEnabled = BicepValue<bool>.DefineProperty(this, "IsVnetBackupRestoreEnabled", ["properties", "vnetBackupRestoreEnabled"]);
-        _isVnetContentShareEnabled = BicepValue<bool>.DefineProperty(this, "IsVnetContentShareEnabled", ["properties", "vnetContentShareEnabled"]);
-        _isVnetImagePullEnabled = BicepValue<bool>.DefineProperty(this, "IsVnetImagePullEnabled", ["properties", "vnetImagePullEnabled"]);
-        _isVnetRouteAllEnabled = BicepValue<bool>.DefineProperty(this, "IsVnetRouteAllEnabled", ["properties", "vnetRouteAllEnabled"]);
-        _isXenon = BicepValue<bool>.DefineProperty(this, "IsXenon", ["properties", "isXenon"]);
-        _keyVaultReferenceIdentity = BicepValue<string>.DefineProperty(this, "KeyVaultReferenceIdentity", ["properties", "keyVaultReferenceIdentity"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _managedEnvironmentId = BicepValue<string>.DefineProperty(this, "ManagedEnvironmentId", ["properties", "managedEnvironmentId"]);
-        _publicNetworkAccess = BicepValue<string>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
-        _redundancyMode = BicepValue<RedundancyMode>.DefineProperty(this, "RedundancyMode", ["properties", "redundancyMode"]);
-        _resourceConfig = BicepValue<FunctionAppResourceConfig>.DefineProperty(this, "ResourceConfig", ["properties", "resourceConfig"]);
-        _siteConfig = BicepValue<SiteConfigProperties>.DefineProperty(this, "SiteConfig", ["properties", "siteConfig"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _virtualNetworkSubnetId = BicepValue<ResourceIdentifier>.DefineProperty(this, "VirtualNetworkSubnetId", ["properties", "virtualNetworkSubnetId"]);
-        _workloadProfileName = BicepValue<string>.DefineProperty(this, "WorkloadProfileName", ["properties", "workloadProfileName"]);
-        _availabilityState = BicepValue<WebSiteAvailabilityState>.DefineProperty(this, "AvailabilityState", ["properties", "availabilityState"], isOutput: true);
-        _defaultHostName = BicepValue<string>.DefineProperty(this, "DefaultHostName", ["properties", "defaultHostName"], isOutput: true);
-        _enabledHostNames = BicepList<string>.DefineProperty(this, "EnabledHostNames", ["properties", "enabledHostNames"], isOutput: true);
-        _hostNames = BicepList<string>.DefineProperty(this, "HostNames", ["properties", "hostNames"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _inProgressOperationId = BicepValue<Guid>.DefineProperty(this, "InProgressOperationId", ["properties", "inProgressOperationId"], isOutput: true);
-        _isDefaultContainer = BicepValue<bool>.DefineProperty(this, "IsDefaultContainer", ["properties", "isDefaultContainer"], isOutput: true);
-        _lastModifiedTimeUtc = BicepValue<DateTimeOffset>.DefineProperty(this, "LastModifiedTimeUtc", ["properties", "lastModifiedTimeUtc"], isOutput: true);
-        _maxNumberOfWorkers = BicepValue<int>.DefineProperty(this, "MaxNumberOfWorkers", ["properties", "maxNumberOfWorkers"], isOutput: true);
-        _outboundIPAddresses = BicepValue<string>.DefineProperty(this, "OutboundIPAddresses", ["properties", "outboundIpAddresses"], isOutput: true);
-        _possibleOutboundIPAddresses = BicepValue<string>.DefineProperty(this, "PossibleOutboundIPAddresses", ["properties", "possibleOutboundIpAddresses"], isOutput: true);
-        _repositorySiteName = BicepValue<string>.DefineProperty(this, "RepositorySiteName", ["properties", "repositorySiteName"], isOutput: true);
-        _resourceGroup = BicepValue<string>.DefineProperty(this, "ResourceGroup", ["properties", "resourceGroup"], isOutput: true);
-        _slotSwapStatus = BicepValue<SlotSwapStatus>.DefineProperty(this, "SlotSwapStatus", ["properties", "slotSwapStatus"], isOutput: true);
-        _state = BicepValue<string>.DefineProperty(this, "State", ["properties", "state"], isOutput: true);
-        _suspendOn = BicepValue<DateTimeOffset>.DefineProperty(this, "SuspendOn", ["properties", "suspendedTill"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _targetSwapSlot = BicepValue<string>.DefineProperty(this, "TargetSwapSlot", ["properties", "targetSwapSlot"], isOutput: true);
-        _trafficManagerHostNames = BicepList<string>.DefineProperty(this, "TrafficManagerHostNames", ["properties", "trafficManagerHostNames"], isOutput: true);
-        _usageState = BicepValue<AppServiceUsageState>.DefineProperty(this, "UsageState", ["properties", "usageState"], isOutput: true);
-        _parent = ResourceReference<WebSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of WebSiteSlot.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _appServicePlanId = DefineProperty<ResourceIdentifier>("AppServicePlanId", ["properties", "serverFarmId"]);
+        _clientCertExclusionPaths = DefineProperty<string>("ClientCertExclusionPaths", ["properties", "clientCertExclusionPaths"]);
+        _clientCertMode = DefineProperty<ClientCertMode>("ClientCertMode", ["properties", "clientCertMode"]);
+        _cloningInfo = DefineModelProperty<CloningInfo>("CloningInfo", ["properties", "cloningInfo"]);
+        _containerSize = DefineProperty<int>("ContainerSize", ["properties", "containerSize"]);
+        _customDomainVerificationId = DefineProperty<string>("CustomDomainVerificationId", ["properties", "customDomainVerificationId"]);
+        _dailyMemoryTimeQuota = DefineProperty<int>("DailyMemoryTimeQuota", ["properties", "dailyMemoryTimeQuota"]);
+        _daprConfig = DefineModelProperty<AppDaprConfig>("DaprConfig", ["properties", "daprConfig"]);
+        _dnsConfiguration = DefineModelProperty<SiteDnsConfig>("DnsConfiguration", ["properties", "dnsConfiguration"]);
+        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
+        _functionAppConfig = DefineModelProperty<FunctionAppConfig>("FunctionAppConfig", ["properties", "functionAppConfig"]);
+        _hostingEnvironmentProfile = DefineModelProperty<HostingEnvironmentProfile>("HostingEnvironmentProfile", ["properties", "hostingEnvironmentProfile"]);
+        _hostNameSslStates = DefineListProperty<HostNameSslState>("HostNameSslStates", ["properties", "hostNameSslStates"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _isClientAffinityEnabled = DefineProperty<bool>("IsClientAffinityEnabled", ["properties", "clientAffinityEnabled"]);
+        _isClientCertEnabled = DefineProperty<bool>("IsClientCertEnabled", ["properties", "clientCertEnabled"]);
+        _isEnabled = DefineProperty<bool>("IsEnabled", ["properties", "enabled"]);
+        _isHostNameDisabled = DefineProperty<bool>("IsHostNameDisabled", ["properties", "hostNamesDisabled"]);
+        _isHttpsOnly = DefineProperty<bool>("IsHttpsOnly", ["properties", "httpsOnly"]);
+        _isHyperV = DefineProperty<bool>("IsHyperV", ["properties", "hyperV"]);
+        _isReserved = DefineProperty<bool>("IsReserved", ["properties", "reserved"]);
+        _isScmSiteAlsoStopped = DefineProperty<bool>("IsScmSiteAlsoStopped", ["properties", "scmSiteAlsoStopped"]);
+        _isStorageAccountRequired = DefineProperty<bool>("IsStorageAccountRequired", ["properties", "storageAccountRequired"]);
+        _isVnetBackupRestoreEnabled = DefineProperty<bool>("IsVnetBackupRestoreEnabled", ["properties", "vnetBackupRestoreEnabled"]);
+        _isVnetContentShareEnabled = DefineProperty<bool>("IsVnetContentShareEnabled", ["properties", "vnetContentShareEnabled"]);
+        _isVnetImagePullEnabled = DefineProperty<bool>("IsVnetImagePullEnabled", ["properties", "vnetImagePullEnabled"]);
+        _isVnetRouteAllEnabled = DefineProperty<bool>("IsVnetRouteAllEnabled", ["properties", "vnetRouteAllEnabled"]);
+        _isXenon = DefineProperty<bool>("IsXenon", ["properties", "isXenon"]);
+        _keyVaultReferenceIdentity = DefineProperty<string>("KeyVaultReferenceIdentity", ["properties", "keyVaultReferenceIdentity"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _managedEnvironmentId = DefineProperty<string>("ManagedEnvironmentId", ["properties", "managedEnvironmentId"]);
+        _publicNetworkAccess = DefineProperty<string>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _redundancyMode = DefineProperty<RedundancyMode>("RedundancyMode", ["properties", "redundancyMode"]);
+        _resourceConfig = DefineModelProperty<FunctionAppResourceConfig>("ResourceConfig", ["properties", "resourceConfig"]);
+        _siteConfig = DefineModelProperty<SiteConfigProperties>("SiteConfig", ["properties", "siteConfig"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _virtualNetworkSubnetId = DefineProperty<ResourceIdentifier>("VirtualNetworkSubnetId", ["properties", "virtualNetworkSubnetId"]);
+        _workloadProfileName = DefineProperty<string>("WorkloadProfileName", ["properties", "workloadProfileName"]);
+        _availabilityState = DefineProperty<WebSiteAvailabilityState>("AvailabilityState", ["properties", "availabilityState"], isOutput: true);
+        _defaultHostName = DefineProperty<string>("DefaultHostName", ["properties", "defaultHostName"], isOutput: true);
+        _enabledHostNames = DefineListProperty<string>("EnabledHostNames", ["properties", "enabledHostNames"], isOutput: true);
+        _hostNames = DefineListProperty<string>("HostNames", ["properties", "hostNames"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _inProgressOperationId = DefineProperty<Guid>("InProgressOperationId", ["properties", "inProgressOperationId"], isOutput: true);
+        _isDefaultContainer = DefineProperty<bool>("IsDefaultContainer", ["properties", "isDefaultContainer"], isOutput: true);
+        _lastModifiedTimeUtc = DefineProperty<DateTimeOffset>("LastModifiedTimeUtc", ["properties", "lastModifiedTimeUtc"], isOutput: true);
+        _maxNumberOfWorkers = DefineProperty<int>("MaxNumberOfWorkers", ["properties", "maxNumberOfWorkers"], isOutput: true);
+        _outboundIPAddresses = DefineProperty<string>("OutboundIPAddresses", ["properties", "outboundIpAddresses"], isOutput: true);
+        _possibleOutboundIPAddresses = DefineProperty<string>("PossibleOutboundIPAddresses", ["properties", "possibleOutboundIpAddresses"], isOutput: true);
+        _repositorySiteName = DefineProperty<string>("RepositorySiteName", ["properties", "repositorySiteName"], isOutput: true);
+        _resourceGroup = DefineProperty<string>("ResourceGroup", ["properties", "resourceGroup"], isOutput: true);
+        _slotSwapStatus = DefineModelProperty<SlotSwapStatus>("SlotSwapStatus", ["properties", "slotSwapStatus"], isOutput: true);
+        _state = DefineProperty<string>("State", ["properties", "state"], isOutput: true);
+        _suspendOn = DefineProperty<DateTimeOffset>("SuspendOn", ["properties", "suspendedTill"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _targetSwapSlot = DefineProperty<string>("TargetSwapSlot", ["properties", "targetSwapSlot"], isOutput: true);
+        _trafficManagerHostNames = DefineListProperty<string>("TrafficManagerHostNames", ["properties", "trafficManagerHostNames"], isOutput: true);
+        _usageState = DefineProperty<AppServiceUsageState>("UsageState", ["properties", "usageState"], isOutput: true);
+        _parent = DefineResource<WebSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -664,7 +894,7 @@ public partial class WebSiteSlot : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteSlot.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WebSiteSlot resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -672,8 +902,8 @@ public partial class WebSiteSlot : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlot.</param>
     /// <returns>The existing WebSiteSlot resource.</returns>
-    public static WebSiteSlot FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteSlot FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this WebSiteSlot resource.

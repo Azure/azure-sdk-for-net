@@ -70,12 +70,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [WirePath("error")]
         public string Error { get; }
         /// <summary> Current Migration sub state details. </summary>
-        internal PostgreSqlMigrationSubStateDetails CurrentSubStateDetails { get; }
-        /// <summary> Migration sub state. </summary>
-        [WirePath("currentSubStateDetails.currentSubState")]
-        public PostgreSqlMigrationSubState? CurrentSubState
-        {
-            get => CurrentSubStateDetails?.CurrentSubState;
-        }
+        [WirePath("currentSubStateDetails")]
+        public PostgreSqlMigrationSubStateDetails CurrentSubStateDetails { get; }
     }
 }

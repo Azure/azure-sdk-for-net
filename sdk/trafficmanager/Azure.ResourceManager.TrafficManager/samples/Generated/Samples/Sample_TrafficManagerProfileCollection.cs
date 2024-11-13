@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TrafficManager.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.TrafficManager.Samples
 {
     public partial class Sample_TrafficManagerProfileCollection
     {
-        // ListProfilesByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListProfilesByResourceGroup()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-ByResourceGroup.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.TrafficManager.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Profile-GET-WithEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ProfileGETWithEndpoints()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithEndpoints.json
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Profile-GET-WithEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ProfileGETWithEndpoints()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithEndpoints.json
@@ -116,9 +114,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Profile-GET-WithEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ProfileGETWithEndpoints()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithEndpoints.json
@@ -146,7 +143,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -158,9 +155,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             }
         }
 
-        // Profile-GET-WithTrafficViewDisabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ProfileGETWithTrafficViewDisabled()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewDisabled.json
@@ -192,9 +188,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Profile-GET-WithTrafficViewDisabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ProfileGETWithTrafficViewDisabled()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewDisabled.json
@@ -222,9 +217,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Profile-GET-WithTrafficViewDisabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ProfileGETWithTrafficViewDisabled()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewDisabled.json
@@ -252,7 +246,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -264,9 +258,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             }
         }
 
-        // Profile-GET-WithTrafficViewEnabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ProfileGETWithTrafficViewEnabled()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewEnabled.json
@@ -298,9 +291,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Profile-GET-WithTrafficViewEnabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ProfileGETWithTrafficViewEnabled()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewEnabled.json
@@ -328,9 +320,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Profile-GET-WithTrafficViewEnabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ProfileGETWithTrafficViewEnabled()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewEnabled.json
@@ -358,7 +349,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -370,9 +361,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             }
         }
 
-        // Profile-PUT-MultiValue
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ProfilePUTMultiValue()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PUT-MultiValue.json
@@ -402,16 +392,16 @@ namespace Azure.ResourceManager.TrafficManager.Samples
                 DnsConfig = new TrafficManagerDnsConfig()
                 {
                     RelativeName = "azsmnet6386",
-                    Ttl = 35,
+                    Ttl = 35L,
                 },
                 MonitorConfig = new TrafficManagerMonitorConfig()
                 {
                     Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
+                    Port = 80L,
                     Path = "/testpath.aspx",
                 },
                 TrafficViewEnrollmentStatus = TrafficViewEnrollmentStatus.Disabled,
-                MaxReturn = 2,
+                MaxReturn = 2L,
                 Location = new AzureLocation("global"),
             };
             ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
@@ -424,9 +414,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Profile-PUT-NoEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ProfilePUTNoEndpoints()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PUT-NoEndpoints.json
@@ -456,12 +445,12 @@ namespace Azure.ResourceManager.TrafficManager.Samples
                 DnsConfig = new TrafficManagerDnsConfig()
                 {
                     RelativeName = "azsmnet6386",
-                    Ttl = 35,
+                    Ttl = 35L,
                 },
                 MonitorConfig = new TrafficManagerMonitorConfig()
                 {
                     Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
+                    Port = 80L,
                     Path = "/testpath.aspx",
                 },
                 Location = new AzureLocation("global"),
@@ -476,9 +465,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Profile-PUT-WithAliasing
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ProfilePUTWithAliasing()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PUT-WithAliasing.json
@@ -508,16 +496,16 @@ namespace Azure.ResourceManager.TrafficManager.Samples
                 DnsConfig = new TrafficManagerDnsConfig()
                 {
                     RelativeName = "azuresdkfornetautoresttrafficmanager6192",
-                    Ttl = 35,
+                    Ttl = 35L,
                 },
                 MonitorConfig = new TrafficManagerMonitorConfig()
                 {
                     Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
+                    Port = 80L,
                     Path = "/testpath.aspx",
-                    IntervalInSeconds = 10,
-                    TimeoutInSeconds = 5,
-                    ToleratedNumberOfFailures = 2,
+                    IntervalInSeconds = 10L,
+                    TimeoutInSeconds = 5L,
+                    ToleratedNumberOfFailures = 2L,
                 },
                 Endpoints =
 {
@@ -546,9 +534,8 @@ AllowedEndpointRecordType.DomainName
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Profile-PUT-WithCustomHeaders
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ProfilePUTWithCustomHeaders()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PUT-WithCustomHeaders.json
@@ -578,16 +565,16 @@ AllowedEndpointRecordType.DomainName
                 DnsConfig = new TrafficManagerDnsConfig()
                 {
                     RelativeName = "azuresdkfornetautoresttrafficmanager6192",
-                    Ttl = 35,
+                    Ttl = 35L,
                 },
                 MonitorConfig = new TrafficManagerMonitorConfig()
                 {
                     Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
+                    Port = 80L,
                     Path = "/testpath.aspx",
-                    IntervalInSeconds = 10,
-                    TimeoutInSeconds = 5,
-                    ToleratedNumberOfFailures = 2,
+                    IntervalInSeconds = 10L,
+                    TimeoutInSeconds = 5L,
+                    ToleratedNumberOfFailures = 2L,
                     CustomHeaders =
 {
 new TrafficManagerMonitorConfigCustomHeaderInfo()
@@ -645,9 +632,8 @@ ResourceType = new ResourceType("Microsoft.network/TrafficManagerProfiles/Extern
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Profile-PUT-WithEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ProfilePUTWithEndpoints()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PUT-WithEndpoints.json
@@ -677,16 +663,16 @@ ResourceType = new ResourceType("Microsoft.network/TrafficManagerProfiles/Extern
                 DnsConfig = new TrafficManagerDnsConfig()
                 {
                     RelativeName = "azuresdkfornetautoresttrafficmanager6192",
-                    Ttl = 35,
+                    Ttl = 35L,
                 },
                 MonitorConfig = new TrafficManagerMonitorConfig()
                 {
                     Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
+                    Port = 80L,
                     Path = "/testpath.aspx",
-                    IntervalInSeconds = 10,
-                    TimeoutInSeconds = 5,
-                    ToleratedNumberOfFailures = 2,
+                    IntervalInSeconds = 10L,
+                    TimeoutInSeconds = 5L,
+                    ToleratedNumberOfFailures = 2L,
                 },
                 Endpoints =
 {
@@ -711,9 +697,8 @@ ResourceType = new ResourceType("Microsoft.network/TrafficManagerProfiles/Extern
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Profile-PUT-WithNestedEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ProfilePUTWithNestedEndpoints()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PUT-WithNestedEndpoints.json
@@ -743,16 +728,16 @@ ResourceType = new ResourceType("Microsoft.network/TrafficManagerProfiles/Extern
                 DnsConfig = new TrafficManagerDnsConfig()
                 {
                     RelativeName = "parentprofile",
-                    Ttl = 35,
+                    Ttl = 35L,
                 },
                 MonitorConfig = new TrafficManagerMonitorConfig()
                 {
                     Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
+                    Port = 80L,
                     Path = "/testpath.aspx",
-                    IntervalInSeconds = 10,
-                    TimeoutInSeconds = 5,
-                    ToleratedNumberOfFailures = 2,
+                    IntervalInSeconds = 10L,
+                    TimeoutInSeconds = 5L,
+                    ToleratedNumberOfFailures = 2L,
                 },
                 Endpoints =
 {
@@ -760,22 +745,22 @@ new TrafficManagerEndpointData()
 {
 Target = "firstnestedprofile.tmpreview.watmtest.azure-test.net",
 EndpointStatus = TrafficManagerEndpointStatus.Enabled,
-Weight = 1,
-Priority = 1,
-MinChildEndpoints = 2,
-MinChildEndpointsIPv4 = 1,
-MinChildEndpointsIPv6 = 2,
+Weight = 1L,
+Priority = 1L,
+MinChildEndpoints = 2L,
+MinChildEndpointsIPv4 = 1L,
+MinChildEndpointsIPv6 = 2L,
 Name = "MyFirstNestedEndpoint",
 ResourceType = new ResourceType("Microsoft.Network/trafficManagerProfiles/nestedEndpoints"),
 },new TrafficManagerEndpointData()
 {
 Target = "secondnestedprofile.tmpreview.watmtest.azure-test.net",
 EndpointStatus = TrafficManagerEndpointStatus.Enabled,
-Weight = 1,
-Priority = 2,
-MinChildEndpoints = 2,
-MinChildEndpointsIPv4 = 2,
-MinChildEndpointsIPv6 = 1,
+Weight = 1L,
+Priority = 2L,
+MinChildEndpoints = 2L,
+MinChildEndpointsIPv4 = 2L,
+MinChildEndpointsIPv6 = 1L,
 Name = "MySecondNestedEndpoint",
 ResourceType = new ResourceType("Microsoft.Network/trafficManagerProfiles/nestedEndpoints"),
 }

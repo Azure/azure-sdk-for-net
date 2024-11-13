@@ -20,32 +20,48 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServer.
 /// </summary>
-public partial class SqlServer : Resource
+public partial class SqlServer : ProvisionableResource
 {
     /// <summary>
     /// The name of the server.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Administrator username for the server. Once created it cannot be
     /// changed.
     /// </summary>
-    public BicepValue<string> AdministratorLogin { get => _administratorLogin; set => _administratorLogin.Assign(value); }
-    private readonly BicepValue<string> _administratorLogin;
+    public BicepValue<string> AdministratorLogin 
+    {
+        get { Initialize(); return _administratorLogin!; }
+        set { Initialize(); _administratorLogin!.Assign(value); }
+    }
+    private BicepValue<string>? _administratorLogin;
 
     /// <summary>
     /// The administrator login password (required for server creation).
     /// </summary>
-    public BicepValue<string> AdministratorLoginPassword { get => _administratorLoginPassword; set => _administratorLoginPassword.Assign(value); }
-    private readonly BicepValue<string> _administratorLoginPassword;
+    public BicepValue<string> AdministratorLoginPassword 
+    {
+        get { Initialize(); return _administratorLoginPassword!; }
+        set { Initialize(); _administratorLoginPassword!.Assign(value); }
+    }
+    private BicepValue<string>? _administratorLoginPassword;
 
     /// <summary>
     /// The Azure Active Directory administrator of the server. This can only
@@ -53,162 +69,237 @@ public partial class SqlServer : Resource
     /// ignored or it will result in an error. For updates individual APIs
     /// will need to be used.
     /// </summary>
-    public BicepValue<ServerExternalAdministrator> Administrators { get => _administrators; set => _administrators.Assign(value); }
-    private readonly BicepValue<ServerExternalAdministrator> _administrators;
+    public ServerExternalAdministrator Administrators 
+    {
+        get { Initialize(); return _administrators!; }
+        set { Initialize(); AssignOrReplace(ref _administrators, value); }
+    }
+    private ServerExternalAdministrator? _administrators;
 
     /// <summary>
     /// The Client id used for cross tenant CMK scenario.
     /// </summary>
-    public BicepValue<Guid> FederatedClientId { get => _federatedClientId; set => _federatedClientId.Assign(value); }
-    private readonly BicepValue<Guid> _federatedClientId;
+    public BicepValue<Guid> FederatedClientId 
+    {
+        get { Initialize(); return _federatedClientId!; }
+        set { Initialize(); _federatedClientId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _federatedClientId;
 
     /// <summary>
     /// The Azure Active Directory identity of the server.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// Whether or not to enable IPv6 support for this server.  Value is
     /// optional but if passed in, must be &apos;Enabled&apos; or
     /// &apos;Disabled&apos;.
     /// </summary>
-    public BicepValue<ServerNetworkAccessFlag> IsIPv6Enabled { get => _isIPv6Enabled; set => _isIPv6Enabled.Assign(value); }
-    private readonly BicepValue<ServerNetworkAccessFlag> _isIPv6Enabled;
+    public BicepValue<ServerNetworkAccessFlag> IsIPv6Enabled 
+    {
+        get { Initialize(); return _isIPv6Enabled!; }
+        set { Initialize(); _isIPv6Enabled!.Assign(value); }
+    }
+    private BicepValue<ServerNetworkAccessFlag>? _isIPv6Enabled;
 
     /// <summary>
     /// A CMK URI of the key to use for encryption.
     /// </summary>
-    public BicepValue<Uri> KeyId { get => _keyId; set => _keyId.Assign(value); }
-    private readonly BicepValue<Uri> _keyId;
+    public BicepValue<Uri> KeyId 
+    {
+        get { Initialize(); return _keyId!; }
+        set { Initialize(); _keyId!.Assign(value); }
+    }
+    private BicepValue<Uri>? _keyId;
 
     /// <summary>
     /// Minimal TLS version. Allowed values: &apos;None&apos;, 1.0&apos;,
     /// &apos;1.1&apos;, &apos;1.2&apos;, &apos;1.3&apos;.
     /// </summary>
-    public BicepValue<SqlMinimalTlsVersion> MinTlsVersion { get => _minTlsVersion; set => _minTlsVersion.Assign(value); }
-    private readonly BicepValue<SqlMinimalTlsVersion> _minTlsVersion;
+    public BicepValue<SqlMinimalTlsVersion> MinTlsVersion 
+    {
+        get { Initialize(); return _minTlsVersion!; }
+        set { Initialize(); _minTlsVersion!.Assign(value); }
+    }
+    private BicepValue<SqlMinimalTlsVersion>? _minTlsVersion;
 
     /// <summary>
     /// The resource id of a user assigned identity to be used by default.
     /// </summary>
-    public BicepValue<ResourceIdentifier> PrimaryUserAssignedIdentityId { get => _primaryUserAssignedIdentityId; set => _primaryUserAssignedIdentityId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _primaryUserAssignedIdentityId;
+    public BicepValue<ResourceIdentifier> PrimaryUserAssignedIdentityId 
+    {
+        get { Initialize(); return _primaryUserAssignedIdentityId!; }
+        set { Initialize(); _primaryUserAssignedIdentityId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _primaryUserAssignedIdentityId;
 
     /// <summary>
     /// Whether or not public endpoint access is allowed for this server.
     /// Value is optional but if passed in, must be &apos;Enabled&apos; or
     /// &apos;Disabled&apos; or &apos;SecuredByPerimeter&apos;.
     /// </summary>
-    public BicepValue<ServerNetworkAccessFlag> PublicNetworkAccess { get => _publicNetworkAccess; set => _publicNetworkAccess.Assign(value); }
-    private readonly BicepValue<ServerNetworkAccessFlag> _publicNetworkAccess;
+    public BicepValue<ServerNetworkAccessFlag> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<ServerNetworkAccessFlag>? _publicNetworkAccess;
 
     /// <summary>
     /// Whether or not to restrict outbound network access for this server.
     /// Value is optional but if passed in, must be &apos;Enabled&apos; or
     /// &apos;Disabled&apos;.
     /// </summary>
-    public BicepValue<ServerNetworkAccessFlag> RestrictOutboundNetworkAccess { get => _restrictOutboundNetworkAccess; set => _restrictOutboundNetworkAccess.Assign(value); }
-    private readonly BicepValue<ServerNetworkAccessFlag> _restrictOutboundNetworkAccess;
+    public BicepValue<ServerNetworkAccessFlag> RestrictOutboundNetworkAccess 
+    {
+        get { Initialize(); return _restrictOutboundNetworkAccess!; }
+        set { Initialize(); _restrictOutboundNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<ServerNetworkAccessFlag>? _restrictOutboundNetworkAccess;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The version of the server.
     /// </summary>
-    public BicepValue<string> Version { get => _version; set => _version.Assign(value); }
-    private readonly BicepValue<string> _version;
+    public BicepValue<string> Version 
+    {
+        get { Initialize(); return _version!; }
+        set { Initialize(); _version!.Assign(value); }
+    }
+    private BicepValue<string>? _version;
 
     /// <summary>
     /// Status of external governance.
     /// </summary>
-    public BicepValue<ExternalGovernanceStatus> ExternalGovernanceStatus { get => _externalGovernanceStatus; }
-    private readonly BicepValue<ExternalGovernanceStatus> _externalGovernanceStatus;
+    public BicepValue<ExternalGovernanceStatus> ExternalGovernanceStatus 
+    {
+        get { Initialize(); return _externalGovernanceStatus!; }
+    }
+    private BicepValue<ExternalGovernanceStatus>? _externalGovernanceStatus;
 
     /// <summary>
     /// The fully qualified domain name of the server.
     /// </summary>
-    public BicepValue<string> FullyQualifiedDomainName { get => _fullyQualifiedDomainName; }
-    private readonly BicepValue<string> _fullyQualifiedDomainName;
+    public BicepValue<string> FullyQualifiedDomainName 
+    {
+        get { Initialize(); return _fullyQualifiedDomainName!; }
+    }
+    private BicepValue<string>? _fullyQualifiedDomainName;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Kind of sql server. This is metadata used for the Azure portal
     /// experience.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// List of private endpoint connections on a server.
     /// </summary>
-    public BicepList<SqlServerPrivateEndpointConnection> PrivateEndpointConnections { get => _privateEndpointConnections; }
-    private readonly BicepList<SqlServerPrivateEndpointConnection> _privateEndpointConnections;
+    public BicepList<SqlServerPrivateEndpointConnection> PrivateEndpointConnections 
+    {
+        get { Initialize(); return _privateEndpointConnections!; }
+    }
+    private BicepList<SqlServerPrivateEndpointConnection>? _privateEndpointConnections;
 
     /// <summary>
     /// The state of the server.
     /// </summary>
-    public BicepValue<string> State { get => _state; }
-    private readonly BicepValue<string> _state;
+    public BicepValue<string> State 
+    {
+        get { Initialize(); return _state!; }
+    }
+    private BicepValue<string>? _state;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Whether or not existing server has a workspace created and if it allows
     /// connection from workspace.
     /// </summary>
-    public BicepValue<ServerWorkspaceFeature> WorkspaceFeature { get => _workspaceFeature; }
-    private readonly BicepValue<ServerWorkspaceFeature> _workspaceFeature;
+    public BicepValue<ServerWorkspaceFeature> WorkspaceFeature 
+    {
+        get { Initialize(); return _workspaceFeature!; }
+    }
+    private BicepValue<ServerWorkspaceFeature>? _workspaceFeature;
 
     /// <summary>
     /// Creates a new SqlServer.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServer resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServer.</param>
-    public SqlServer(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers", resourceVersion ?? "2021-11-01")
+    public SqlServer(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _administratorLogin = BicepValue<string>.DefineProperty(this, "AdministratorLogin", ["properties", "administratorLogin"]);
-        _administratorLoginPassword = BicepValue<string>.DefineProperty(this, "AdministratorLoginPassword", ["properties", "administratorLoginPassword"]);
-        _administrators = BicepValue<ServerExternalAdministrator>.DefineProperty(this, "Administrators", ["properties", "administrators"]);
-        _federatedClientId = BicepValue<Guid>.DefineProperty(this, "FederatedClientId", ["properties", "federatedClientId"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _isIPv6Enabled = BicepValue<ServerNetworkAccessFlag>.DefineProperty(this, "IsIPv6Enabled", ["properties", "isIPv6Enabled"]);
-        _keyId = BicepValue<Uri>.DefineProperty(this, "KeyId", ["properties", "keyId"]);
-        _minTlsVersion = BicepValue<SqlMinimalTlsVersion>.DefineProperty(this, "MinTlsVersion", ["properties", "minimalTlsVersion"]);
-        _primaryUserAssignedIdentityId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PrimaryUserAssignedIdentityId", ["properties", "primaryUserAssignedIdentityId"]);
-        _publicNetworkAccess = BicepValue<ServerNetworkAccessFlag>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
-        _restrictOutboundNetworkAccess = BicepValue<ServerNetworkAccessFlag>.DefineProperty(this, "RestrictOutboundNetworkAccess", ["properties", "restrictOutboundNetworkAccess"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _version = BicepValue<string>.DefineProperty(this, "Version", ["properties", "version"]);
-        _externalGovernanceStatus = BicepValue<ExternalGovernanceStatus>.DefineProperty(this, "ExternalGovernanceStatus", ["properties", "externalGovernanceStatus"], isOutput: true);
-        _fullyQualifiedDomainName = BicepValue<string>.DefineProperty(this, "FullyQualifiedDomainName", ["properties", "fullyQualifiedDomainName"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isOutput: true);
-        _privateEndpointConnections = BicepList<SqlServerPrivateEndpointConnection>.DefineProperty(this, "PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
-        _state = BicepValue<string>.DefineProperty(this, "State", ["properties", "state"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _workspaceFeature = BicepValue<ServerWorkspaceFeature>.DefineProperty(this, "WorkspaceFeature", ["properties", "workspaceFeature"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SqlServer.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _administratorLogin = DefineProperty<string>("AdministratorLogin", ["properties", "administratorLogin"]);
+        _administratorLoginPassword = DefineProperty<string>("AdministratorLoginPassword", ["properties", "administratorLoginPassword"]);
+        _administrators = DefineModelProperty<ServerExternalAdministrator>("Administrators", ["properties", "administrators"]);
+        _federatedClientId = DefineProperty<Guid>("FederatedClientId", ["properties", "federatedClientId"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _isIPv6Enabled = DefineProperty<ServerNetworkAccessFlag>("IsIPv6Enabled", ["properties", "isIPv6Enabled"]);
+        _keyId = DefineProperty<Uri>("KeyId", ["properties", "keyId"]);
+        _minTlsVersion = DefineProperty<SqlMinimalTlsVersion>("MinTlsVersion", ["properties", "minimalTlsVersion"]);
+        _primaryUserAssignedIdentityId = DefineProperty<ResourceIdentifier>("PrimaryUserAssignedIdentityId", ["properties", "primaryUserAssignedIdentityId"]);
+        _publicNetworkAccess = DefineProperty<ServerNetworkAccessFlag>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _restrictOutboundNetworkAccess = DefineProperty<ServerNetworkAccessFlag>("RestrictOutboundNetworkAccess", ["properties", "restrictOutboundNetworkAccess"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _version = DefineProperty<string>("Version", ["properties", "version"]);
+        _externalGovernanceStatus = DefineProperty<ExternalGovernanceStatus>("ExternalGovernanceStatus", ["properties", "externalGovernanceStatus"], isOutput: true);
+        _fullyQualifiedDomainName = DefineProperty<string>("FullyQualifiedDomainName", ["properties", "fullyQualifiedDomainName"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
+        _privateEndpointConnections = DefineListProperty<SqlServerPrivateEndpointConnection>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _state = DefineProperty<string>("State", ["properties", "state"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _workspaceFeature = DefineProperty<ServerWorkspaceFeature>("WorkspaceFeature", ["properties", "workspaceFeature"], isOutput: true);
     }
 
     /// <summary>
@@ -216,11 +307,6 @@ public partial class SqlServer : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -240,7 +326,7 @@ public partial class SqlServer : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServer.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServer resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -248,8 +334,8 @@ public partial class SqlServer : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServer.</param>
     /// <returns>The existing SqlServer resource.</returns>
-    public static SqlServer FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SqlServer FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SqlServer resource.
@@ -267,10 +353,10 @@ public partial class SqlServer : Resource
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
     public RoleAssignment CreateRoleAssignment(SqlBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{IdentifierName}_{identity.IdentifierName}_{SqlBuiltInRole.GetBuiltInRoleName(role)}")
+        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{SqlBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(IdentifierName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
@@ -283,13 +369,13 @@ public partial class SqlServer : Resource
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
-    /// <param name="identifierNameSuffix">Optional role assignment identifier name suffix.</param>
+    /// <param name="bicepIdentifierSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment CreateRoleAssignment(SqlBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>
-        new($"{IdentifierName}_{SqlBuiltInRole.GetBuiltInRoleName(role)}{(identifierNameSuffix is null ? "" : "_")}{identifierNameSuffix}")
+    public RoleAssignment CreateRoleAssignment(SqlBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
+        new($"{BicepIdentifier}_{SqlBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(IdentifierName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 {
     public partial class Sample_ServiceFabricManagedApplicationCollection
     {
-        // Get an application
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnApplication()
         {
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/ApplicationGetOperation_example.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an application
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnApplication()
         {
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/ApplicationGetOperation_example.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an application
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnApplication()
         {
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/ApplicationGetOperation_example.json
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -124,9 +122,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             }
         }
 
-        // Put an application with maximum parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAnApplicationWithMaximumParameters()
         {
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/ApplicationPutOperation_example_max.json
@@ -169,9 +166,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
                     },
                     ForceRestart = false,
                     RollingUpgradeMonitoringPolicy = new RollingUpgradeMonitoringPolicy(PolicyViolationCompensationAction.Rollback, TimeSpan.Parse("00:02:00"), TimeSpan.Parse("00:05:00"), TimeSpan.Parse("00:10:00"), TimeSpan.Parse("01:00:00"), TimeSpan.Parse("00:15:00")),
-                    InstanceCloseDelayDurationInSeconds = 600,
+                    InstanceCloseDelayDurationInSeconds = 600L,
                     UpgradeMode = RollingUpgradeMode.UnmonitoredAuto,
-                    UpgradeReplicaSetCheckTimeout = 3600,
+                    UpgradeReplicaSetCheckTimeout = 3600L,
                     RecreateApplication = false,
                 },
                 Tags =
@@ -189,9 +186,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Put an application with minimum parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAnApplicationWithMinimumParameters()
         {
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/ApplicationPutOperation_example_min.json
@@ -229,9 +225,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a list of application resources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAListOfApplicationResources()
         {
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/ApplicationListOperation_example.json
@@ -263,7 +258,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

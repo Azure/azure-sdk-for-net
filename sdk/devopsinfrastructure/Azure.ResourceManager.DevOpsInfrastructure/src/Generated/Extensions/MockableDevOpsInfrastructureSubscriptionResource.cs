@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// </list>
         /// </summary>

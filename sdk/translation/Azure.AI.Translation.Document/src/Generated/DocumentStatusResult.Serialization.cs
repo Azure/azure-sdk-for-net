@@ -19,13 +19,21 @@ namespace Azure.AI.Translation.Document
 
         void IJsonModel<DocumentStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentStatusResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(TranslatedDocumentUri))
             {
                 writer.WritePropertyName("path"u8);
@@ -67,7 +75,6 @@ namespace Azure.AI.Translation.Document
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DocumentStatusResult IJsonModel<DocumentStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> public network access is enabled or not. </summary>
         [WirePath("publicNetworkAccess")]
-        public PostgreSqlFlexibleServerPublicNetworkAccessState? PublicNetworkAccess { get; }
+        public PostgreSqlFlexibleServerPublicNetworkAccessState? PublicNetworkAccess { get; set; }
         /// <summary> Delegated subnet arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </summary>
         [WirePath("delegatedSubnetResourceId")]
         public ResourceIdentifier DelegatedSubnetResourceId { get; set; }

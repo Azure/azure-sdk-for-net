@@ -514,5 +514,119 @@ namespace Azure.AI.Vision.Face.Samples
 
             Response<IReadOnlyList<LivenessSessionAuditEntry>> response = await client.GetLivenessWithVerifySessionAuditEntriesAsync("b12e033e-bda7-4b83-a211-e721c661f30e");
         }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceSessionClient_DetectFromSessionImage_DetectFromSessionImageId()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                sessionImageId = "aa93ce80-9a9b-48bd-ae1a-1c7543841e92",
+            });
+            Response response = client.DetectFromSessionImage(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("top").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("left").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("width").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("height").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceSessionClient_DetectFromSessionImage_DetectFromSessionImageId_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                sessionImageId = "aa93ce80-9a9b-48bd-ae1a-1c7543841e92",
+            });
+            Response response = await client.DetectFromSessionImageAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("top").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("left").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("width").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("height").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceSessionClient_DetectFromSessionImage_DetectFromSessionImageId_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceDetectionResult>> response = client.DetectFromSessionImage("aa93ce80-9a9b-48bd-ae1a-1c7543841e92");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceSessionClient_DetectFromSessionImage_DetectFromSessionImageId_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceDetectionResult>> response = await client.DetectFromSessionImageAsync("aa93ce80-9a9b-48bd-ae1a-1c7543841e92");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceSessionClient_GetSessionImage_GetSessionImage()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response response = client.GetSessionImage("3d035d35-2e01-4ed4-8935-577afde9caaa", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceSessionClient_GetSessionImage_GetSessionImage_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response response = await client.GetSessionImageAsync("3d035d35-2e01-4ed4-8935-577afde9caaa", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceSessionClient_GetSessionImage_GetSessionImage_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response<BinaryData> response = client.GetSessionImage("3d035d35-2e01-4ed4-8935-577afde9caaa");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceSessionClient_GetSessionImage_GetSessionImage_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response<BinaryData> response = await client.GetSessionImageAsync("3d035d35-2e01-4ed4-8935-577afde9caaa");
+        }
     }
 }

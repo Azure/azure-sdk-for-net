@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Purview.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Purview.Samples
 {
     public partial class Sample_PurviewKafkaConfigurationCollection
     {
-        // KafkaConfigurations_ListByAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_KafkaConfigurationsListByAccount()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/KafkaConfigurations_ListByAccount.json
@@ -50,12 +50,11 @@ namespace Azure.ResourceManager.Purview.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // KafkaConfigurations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_KafkaConfigurationsGet()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/KafkaConfigurations_Get.json
@@ -88,9 +87,8 @@ namespace Azure.ResourceManager.Purview.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // KafkaConfigurations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_KafkaConfigurationsGet()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/KafkaConfigurations_Get.json
@@ -119,9 +117,8 @@ namespace Azure.ResourceManager.Purview.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // KafkaConfigurations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_KafkaConfigurationsGet()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/KafkaConfigurations_Get.json
@@ -150,7 +147,7 @@ namespace Azure.ResourceManager.Purview.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -162,9 +159,8 @@ namespace Azure.ResourceManager.Purview.Samples
             }
         }
 
-        // KafkaConfigurations_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_KafkaConfigurationsCreateOrUpdate()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/KafkaConfigurations_CreateOrUpdate.json

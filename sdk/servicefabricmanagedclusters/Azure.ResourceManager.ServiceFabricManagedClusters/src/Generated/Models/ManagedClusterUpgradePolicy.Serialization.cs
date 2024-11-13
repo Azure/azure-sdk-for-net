@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         void IJsonModel<ManagedClusterUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterUpgradePolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ForceRestart))
             {
                 writer.WritePropertyName("forceRestart"u8);
@@ -66,7 +74,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagedClusterUpgradePolicy IJsonModel<ManagedClusterUpgradePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

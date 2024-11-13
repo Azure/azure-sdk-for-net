@@ -15,79 +15,115 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppSourceControl.
 /// </summary>
-public partial class ContainerAppSourceControl : Resource
+public partial class ContainerAppSourceControl : ProvisionableResource
 {
     /// <summary>
     /// Name of the Container App SourceControl.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The branch which will trigger the auto deployment.
     /// </summary>
-    public BicepValue<string> Branch { get => _branch; set => _branch.Assign(value); }
-    private readonly BicepValue<string> _branch;
+    public BicepValue<string> Branch 
+    {
+        get { Initialize(); return _branch!; }
+        set { Initialize(); _branch!.Assign(value); }
+    }
+    private BicepValue<string>? _branch;
 
     /// <summary>
     /// Container App Revision Template with all possible settings and the
     /// defaults if user did not provide them. The defaults are
     /// populated             as they were at the creation time
     /// </summary>
-    public BicepValue<ContainerAppGitHubActionConfiguration> GitHubActionConfiguration { get => _gitHubActionConfiguration; set => _gitHubActionConfiguration.Assign(value); }
-    private readonly BicepValue<ContainerAppGitHubActionConfiguration> _gitHubActionConfiguration;
+    public ContainerAppGitHubActionConfiguration GitHubActionConfiguration 
+    {
+        get { Initialize(); return _gitHubActionConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _gitHubActionConfiguration, value); }
+    }
+    private ContainerAppGitHubActionConfiguration? _gitHubActionConfiguration;
 
     /// <summary>
     /// The repo url which will be integrated to ContainerApp.
     /// </summary>
-    public BicepValue<Uri> RepoUri { get => _repoUri; set => _repoUri.Assign(value); }
-    private readonly BicepValue<Uri> _repoUri;
+    public BicepValue<Uri> RepoUri 
+    {
+        get { Initialize(); return _repoUri!; }
+        set { Initialize(); _repoUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _repoUri;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Current provisioning State of the operation.
     /// </summary>
-    public BicepValue<ContainerAppSourceControlOperationState> OperationState { get => _operationState; }
-    private readonly BicepValue<ContainerAppSourceControlOperationState> _operationState;
+    public BicepValue<ContainerAppSourceControlOperationState> OperationState 
+    {
+        get { Initialize(); return _operationState!; }
+    }
+    private BicepValue<ContainerAppSourceControlOperationState>? _operationState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerApp.
     /// </summary>
-    public ContainerApp? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerApp> _parent;
+    public ContainerApp? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerApp>? _parent;
 
     /// <summary>
     /// Creates a new ContainerAppSourceControl.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerAppSourceControl
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppSourceControl.</param>
-    public ContainerAppSourceControl(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.App/containerApps/sourcecontrols", resourceVersion ?? "2024-03-01")
+    public ContainerAppSourceControl(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/containerApps/sourcecontrols", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _branch = BicepValue<string>.DefineProperty(this, "Branch", ["properties", "branch"]);
-        _gitHubActionConfiguration = BicepValue<ContainerAppGitHubActionConfiguration>.DefineProperty(this, "GitHubActionConfiguration", ["properties", "githubActionConfiguration"]);
-        _repoUri = BicepValue<Uri>.DefineProperty(this, "RepoUri", ["properties", "repoUrl"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _operationState = BicepValue<ContainerAppSourceControlOperationState>.DefineProperty(this, "OperationState", ["properties", "operationState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerApp>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ContainerAppSourceControl.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _branch = DefineProperty<string>("Branch", ["properties", "branch"]);
+        _gitHubActionConfiguration = DefineModelProperty<ContainerAppGitHubActionConfiguration>("GitHubActionConfiguration", ["properties", "githubActionConfiguration"]);
+        _repoUri = DefineProperty<Uri>("RepoUri", ["properties", "repoUrl"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _operationState = DefineProperty<ContainerAppSourceControlOperationState>("OperationState", ["properties", "operationState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerApp>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -95,11 +131,6 @@ public partial class ContainerAppSourceControl : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -124,7 +155,7 @@ public partial class ContainerAppSourceControl : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerAppSourceControl.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerAppSourceControl
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -132,6 +163,6 @@ public partial class ContainerAppSourceControl : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppSourceControl.</param>
     /// <returns>The existing ContainerAppSourceControl resource.</returns>
-    public static ContainerAppSourceControl FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppSourceControl FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Orbital
         public float? LongitudeDegrees { get { throw null; } }
         public string ProviderName { get { throw null; } }
         public Azure.ResourceManager.Orbital.Models.GroundStationReleaseMode? ReleaseMode { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.AvailableGroundStationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.AvailableGroundStationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.Orbital
         public Azure.ResourceManager.Orbital.Models.OrbitalContactStatus? Status { get { throw null; } }
         public System.DateTimeOffset? TxEndOn { get { throw null; } }
         public System.DateTimeOffset? TxStartOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.OrbitalContactData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalContactData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalContactData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.OrbitalContactData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalContactData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -115,6 +117,7 @@ namespace Azure.ResourceManager.Orbital
         public System.TimeSpan? MinimumViableContactDuration { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState? ProvisioningState { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.OrbitalContactProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalContactProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalContactProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.OrbitalContactProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalContactProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -212,6 +215,7 @@ namespace Azure.ResourceManager.Orbital
         public string TitleLine { get { throw null; } set { } }
         public string TleLine1 { get { throw null; } set { } }
         public string TleLine2 { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.OrbitalSpacecraftData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalSpacecraftData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalSpacecraftData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.OrbitalSpacecraftData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalSpacecraftData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -300,6 +304,7 @@ namespace Azure.ResourceManager.Orbital.Models
         internal AuthorizedGroundStation() { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public string GroundStationName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.AuthorizedGroundStation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.AuthorizedGroundStation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.AuthorizedGroundStation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.AuthorizedGroundStation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.Models.AuthorizedGroundStation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -362,6 +367,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public float? StartElevationDegrees { get { throw null; } }
         public System.DateTimeOffset? TxEndOn { get { throw null; } }
         public System.DateTimeOffset? TxStartOn { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalAvailableContact System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContact>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContact>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalAvailableContact System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -375,6 +381,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public System.DateTimeOffset EndOn { get { throw null; } }
         public string GroundStationName { get { throw null; } }
         public System.DateTimeOffset StartOn { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -385,6 +392,7 @@ namespace Azure.ResourceManager.Orbital.Models
     {
         internal OrbitalAvailableContactsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContact> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -396,6 +404,7 @@ namespace Azure.ResourceManager.Orbital.Models
         internal OrbitalContactAntennaConfiguration() { }
         public System.Net.IPAddress DestinationIP { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> SourceIPs { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalContactAntennaConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalContactAntennaConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalContactAntennaConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalContactAntennaConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.Models.OrbitalContactAntennaConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -409,6 +418,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public System.Net.IPAddress IPAddress { get { throw null; } set { } }
         public string Port { get { throw null; } set { } }
         public Azure.ResourceManager.Orbital.Models.OrbitalContactProtocol Protocol { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalContactEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalContactEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalContactEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalContactEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.Models.OrbitalContactEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -424,6 +434,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public float? GainOverTemperature { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Orbital.Models.OrbitalLinkPolarization Polarization { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -441,6 +452,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public Azure.ResourceManager.Orbital.Models.OrbitalContactEndpoint EndPoint { get { throw null; } set { } }
         public string ModulationConfiguration { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLinkChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLinkChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLinkChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLinkChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLinkChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -555,6 +567,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public Azure.ResourceManager.Orbital.Models.OrbitalLinkDirection Direction { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Orbital.Models.OrbitalLinkPolarization Polarization { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftLink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftLink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftLink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -565,6 +578,7 @@ namespace Azure.ResourceManager.Orbital.Models
     {
         public OrbitalSpacecraftTags() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftTags System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftTags>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftTags>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftTags System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftTags>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

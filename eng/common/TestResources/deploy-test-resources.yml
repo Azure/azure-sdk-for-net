@@ -4,10 +4,10 @@ parameters:
   DeleteAfterHours: 8
   Location: ''
   EnvVars: {}
-  SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+  SubscriptionConfiguration: '{}'
   ServiceConnection: not-specified
   ResourceType: test
-  UseFederatedAuth: false
+  UseFederatedAuth: true
   PersistOidcToken: false
 
 # SubscriptionConfiguration will be splatted into the parameters of the test
@@ -35,7 +35,6 @@ parameters:
 #       "keyVaultEndpointSuffix": "<keyVaultEndpointSuffix>"
 #   }
 # }
-
 
 steps:
   - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml

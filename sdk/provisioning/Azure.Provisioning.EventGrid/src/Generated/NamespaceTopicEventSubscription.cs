@@ -16,103 +16,133 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// NamespaceTopicEventSubscription.
 /// </summary>
-public partial class NamespaceTopicEventSubscription : Resource
+public partial class NamespaceTopicEventSubscription : ProvisionableResource
 {
     /// <summary>
     /// Name of the event subscription to be created. Event subscription names
     /// must be between 3 and 50 characters in length and use alphanumeric
     /// letters only.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Information about the delivery configuration of the event subscription.
     /// </summary>
-    public BicepValue<DeliveryConfiguration> DeliveryConfiguration { get => _deliveryConfiguration; set => _deliveryConfiguration.Assign(value); }
-    private readonly BicepValue<DeliveryConfiguration> _deliveryConfiguration;
+    public DeliveryConfiguration DeliveryConfiguration 
+    {
+        get { Initialize(); return _deliveryConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _deliveryConfiguration, value); }
+    }
+    private DeliveryConfiguration? _deliveryConfiguration;
 
     /// <summary>
     /// The event delivery schema for the event subscription.
     /// </summary>
-    public BicepValue<DeliverySchema> EventDeliverySchema { get => _eventDeliverySchema; set => _eventDeliverySchema.Assign(value); }
-    private readonly BicepValue<DeliverySchema> _eventDeliverySchema;
+    public BicepValue<DeliverySchema> EventDeliverySchema 
+    {
+        get { Initialize(); return _eventDeliverySchema!; }
+        set { Initialize(); _eventDeliverySchema!.Assign(value); }
+    }
+    private BicepValue<DeliverySchema>? _eventDeliverySchema;
 
     /// <summary>
     /// Expiration time of the event subscription.
     /// </summary>
-    public BicepValue<DateTimeOffset> ExpireOn { get => _expireOn; set => _expireOn.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _expireOn;
+    public BicepValue<DateTimeOffset> ExpireOn 
+    {
+        get { Initialize(); return _expireOn!; }
+        set { Initialize(); _expireOn!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _expireOn;
 
     /// <summary>
     /// Information about the filter for the event subscription.
     /// </summary>
-    public BicepValue<FiltersConfiguration> FiltersConfiguration { get => _filtersConfiguration; set => _filtersConfiguration.Assign(value); }
-    private readonly BicepValue<FiltersConfiguration> _filtersConfiguration;
+    public FiltersConfiguration FiltersConfiguration 
+    {
+        get { Initialize(); return _filtersConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _filtersConfiguration, value); }
+    }
+    private FiltersConfiguration? _filtersConfiguration;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the event subscription.
     /// </summary>
-    public BicepValue<SubscriptionProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<SubscriptionProvisioningState> _provisioningState;
+    public BicepValue<SubscriptionProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<SubscriptionProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent NamespaceTopic.
     /// </summary>
-    public NamespaceTopic? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<NamespaceTopic> _parent;
+    public NamespaceTopic? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<NamespaceTopic>? _parent;
 
     /// <summary>
     /// Creates a new NamespaceTopicEventSubscription.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the NamespaceTopicEventSubscription
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the NamespaceTopicEventSubscription.</param>
-    public NamespaceTopicEventSubscription(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/namespaces/topics/eventSubscriptions", resourceVersion ?? "2024-06-01-preview")
+    public NamespaceTopicEventSubscription(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/topics/eventSubscriptions", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _deliveryConfiguration = BicepValue<DeliveryConfiguration>.DefineProperty(this, "DeliveryConfiguration", ["properties", "deliveryConfiguration"]);
-        _eventDeliverySchema = BicepValue<DeliverySchema>.DefineProperty(this, "EventDeliverySchema", ["properties", "eventDeliverySchema"]);
-        _expireOn = BicepValue<DateTimeOffset>.DefineProperty(this, "ExpireOn", ["properties", "expirationTimeUtc"]);
-        _filtersConfiguration = BicepValue<FiltersConfiguration>.DefineProperty(this, "FiltersConfiguration", ["properties", "filtersConfiguration"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<SubscriptionProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<NamespaceTopic>.DefineResource(this, "Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported NamespaceTopicEventSubscription resource versions.
+    /// Define all the provisionable properties of
+    /// NamespaceTopicEventSubscription.
     /// </summary>
-    public static class ResourceVersions
+    protected override void DefineProvisionableProperties()
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _deliveryConfiguration = DefineModelProperty<DeliveryConfiguration>("DeliveryConfiguration", ["properties", "deliveryConfiguration"]);
+        _eventDeliverySchema = DefineProperty<DeliverySchema>("EventDeliverySchema", ["properties", "eventDeliverySchema"]);
+        _expireOn = DefineProperty<DateTimeOffset>("ExpireOn", ["properties", "expirationTimeUtc"]);
+        _filtersConfiguration = DefineModelProperty<FiltersConfiguration>("FiltersConfiguration", ["properties", "filtersConfiguration"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<SubscriptionProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<NamespaceTopic>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
     /// Creates a reference to an existing NamespaceTopicEventSubscription.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the NamespaceTopicEventSubscription
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -120,6 +150,6 @@ public partial class NamespaceTopicEventSubscription : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the NamespaceTopicEventSubscription.</param>
     /// <returns>The existing NamespaceTopicEventSubscription resource.</returns>
-    public static NamespaceTopicEventSubscription FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static NamespaceTopicEventSubscription FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

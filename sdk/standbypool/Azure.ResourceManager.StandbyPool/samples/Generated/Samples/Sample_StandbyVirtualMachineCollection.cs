@@ -9,18 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StandbyPool.Samples
 {
     public partial class Sample_StandbyVirtualMachineCollection
     {
-        // StandbyVirtualMachines_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StandbyVirtualMachinesGet()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachines_Get.json
-            // this example is just showing the usage of "StandbyVirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachineResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -49,13 +49,12 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StandbyVirtualMachines_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_StandbyVirtualMachinesGet()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachines_Get.json
-            // this example is just showing the usage of "StandbyVirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachineResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -80,13 +79,12 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StandbyVirtualMachines_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StandbyVirtualMachinesGet()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachines_Get.json
-            // this example is just showing the usage of "StandbyVirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachineResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -123,9 +121,8 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             }
         }
 
-        // StandbyVirtualMachines_ListByStandbyVirtualMachinePoolResource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_StandbyVirtualMachinesListByStandbyVirtualMachinePoolResource()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachines_ListByStandbyVirtualMachinePoolResource.json
@@ -157,7 +154,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

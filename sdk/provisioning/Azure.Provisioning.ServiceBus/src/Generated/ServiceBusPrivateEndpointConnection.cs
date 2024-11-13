@@ -15,77 +15,114 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusPrivateEndpointConnection.
 /// </summary>
-public partial class ServiceBusPrivateEndpointConnection : Resource
+public partial class ServiceBusPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The PrivateEndpointConnection name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Details about the state of the connection.
     /// </summary>
-    public BicepValue<ServiceBusPrivateLinkServiceConnectionState> ConnectionState { get => _connectionState; set => _connectionState.Assign(value); }
-    private readonly BicepValue<ServiceBusPrivateLinkServiceConnectionState> _connectionState;
+    public ServiceBusPrivateLinkServiceConnectionState ConnectionState 
+    {
+        get { Initialize(); return _connectionState!; }
+        set { Initialize(); AssignOrReplace(ref _connectionState, value); }
+    }
+    private ServiceBusPrivateLinkServiceConnectionState? _connectionState;
 
     /// <summary>
     /// Gets or sets Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> PrivateEndpointId { get => _privateEndpointId; set => _privateEndpointId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _privateEndpointId;
+    public BicepValue<ResourceIdentifier> PrivateEndpointId 
+    {
+        get { Initialize(); return _privateEndpointId!; }
+        set { Initialize(); _privateEndpointId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _privateEndpointId;
 
     /// <summary>
     /// Provisioning state of the Private Endpoint Connection.
     /// </summary>
-    public BicepValue<ServiceBusPrivateEndpointConnectionProvisioningState> ProvisioningState { get => _provisioningState; set => _provisioningState.Assign(value); }
-    private readonly BicepValue<ServiceBusPrivateEndpointConnectionProvisioningState> _provisioningState;
+    public BicepValue<ServiceBusPrivateEndpointConnectionProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+        set { Initialize(); _provisioningState!.Assign(value); }
+    }
+    private BicepValue<ServiceBusPrivateEndpointConnectionProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ServiceBusNamespace.
     /// </summary>
-    public ServiceBusNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ServiceBusNamespace> _parent;
+    public ServiceBusNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ServiceBusNamespace>? _parent;
 
     /// <summary>
     /// Creates a new ServiceBusPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ServiceBusPrivateEndpointConnection resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusPrivateEndpointConnection.</param>
-    public ServiceBusPrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.ServiceBus/namespaces/privateEndpointConnections", resourceVersion ?? "2024-01-01")
+    public ServiceBusPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/privateEndpointConnections", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _connectionState = BicepValue<ServiceBusPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
-        _privateEndpointId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PrivateEndpointId", ["properties", "privateEndpoint", "id"]);
-        _provisioningState = BicepValue<ServiceBusPrivateEndpointConnectionProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ServiceBusNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ServiceBusPrivateEndpointConnection.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _connectionState = DefineModelProperty<ServiceBusPrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
+        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"]);
+        _provisioningState = DefineProperty<ServiceBusPrivateEndpointConnectionProvisioningState>("ProvisioningState", ["properties", "provisioningState"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ServiceBusNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -107,7 +144,7 @@ public partial class ServiceBusPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ServiceBusPrivateEndpointConnection resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -115,6 +152,6 @@ public partial class ServiceBusPrivateEndpointConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusPrivateEndpointConnection.</param>
     /// <returns>The existing ServiceBusPrivateEndpointConnection resource.</returns>
-    public static ServiceBusPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

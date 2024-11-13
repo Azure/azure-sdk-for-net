@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         void IJsonModel<ServicePrincipalInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("applicationId"u8);
             writer.WriteStringValue(ApplicationId);
             if (Optional.IsDefined(Password))
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServicePrincipalInformation IJsonModel<ServicePrincipalInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

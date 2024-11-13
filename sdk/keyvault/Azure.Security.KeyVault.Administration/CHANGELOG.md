@@ -1,11 +1,8 @@
 # Release History
 
-## 4.5.0-beta.1 (Unreleased)
+## 4.6.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Added support for service API version `7.6-preview.1`.
-- Added new methods `StartPreRestoreAsync`, `StartPreRestore`, `StartPreBackupAsync`, and `StartPreBackupAsync` to the `KeyVaultBackupClient`.
 
 ### Breaking Changes
 
@@ -13,7 +10,11 @@
 
 ### Other Changes
 
-- The default service version is now "V7_6_Preview_1".
+## 4.5.0 (2024-10-14)
+
+### Features Added
+
+- Support for Continuous Access Evaluation (CAE).
 
 ## 4.4.0 (2024-02-14)
 
@@ -88,8 +89,8 @@ The following changes are only breaking from the previous beta. They are not bre
 ### Breaking Changes
 
 - Verify the challenge resource matches the vault domain.
-    This should affect few customers who can set `KeyVaultAdministrationClientOptions.DisableChallengeResourceVerification` to `true` to disable.
-    See <https://aka.ms/azsdk/blog/vault-uri> for more information.
+  This should affect few customers who can set `KeyVaultAdministrationClientOptions.DisableChallengeResourceVerification` to `true` to disable.
+  See https://aka.ms/azsdk/blog/vault-uri for more information.
 
 ## 4.1.0 (2022-03-24)
 

@@ -163,8 +163,12 @@ public static class BicepFunction
     /// <see href="https://learn.microsoft.comazure/azure-resource-manager/bicep/bicep-functions-deployment#deployment">
     /// Bicep Functions Reference</see> for more.
     /// </remarks>
-    public static ArmDeployment GetDeployment() =>
-        ArmDeployment.FromExpression(BicepSyntax.Call("deployment"));
+    public static ArmDeployment GetDeployment()
+    {
+        ArmDeployment deployment = new("deployment");
+        ((IBicepValue)deployment).Expression = BicepSyntax.Call("deployment");
+        return deployment;
+    }
 
     /// <summary>
     /// Returns details about the subscription for the current deployment.  This
@@ -178,8 +182,12 @@ public static class BicepFunction
     /// <see href="https://learn.microsoft.com/azure/azure-resource-manager/bicep/bicep-functions-scope#subscription">
     /// Bicep Functions Reference</see> for more.
     /// </remarks>
-    public static Subscription GetSubscription() =>
-        Subscription.FromExpression(BicepSyntax.Call("subscription"));
+    public static Subscription GetSubscription()
+    {
+        Subscription subscription = new("subscription");
+        ((IBicepValue)subscription).Expression = BicepSyntax.Call("subscription");
+        return subscription;
+    }
 
     /// <summary>
     /// Returns the tenant of the user.  This represents the <c>tenant</c>
@@ -191,8 +199,12 @@ public static class BicepFunction
     /// <see href="https://learn.microsoft.com/azure/azure-resource-manager/bicep/bicep-functions-scope#tenant">
     /// Bicep Functions Reference</see> for more.
     /// </remarks>
-    public static Tenant GetTenant() =>
-        Tenant.FromExpression(BicepSyntax.Call("tenant"));
+    public static Tenant GetTenant()
+    {
+        Tenant tenant = new("tenant");
+        ((IBicepValue)tenant).Expression = BicepSyntax.Call("tenant");
+        return tenant;
+    }
 
     /// <summary>
     /// Returns an object that represents the current resource group.  This
@@ -204,8 +216,12 @@ public static class BicepFunction
     /// <see href="https://learn.microsoft.com/azure/azure-resource-manager/bicep/bicep-functions-scope#resourcegroup">
     /// Bicep Functions Reference</see> for more.
     /// </remarks>
-    public static ResourceGroup GetResourceGroup() =>
-        ResourceGroup.FromExpression(BicepSyntax.Call("resourceGroup"));
+    public static ResourceGroup GetResourceGroup()
+    {
+        ResourceGroup rg = new("resourceGroup");
+        ((IBicepValue)rg).Expression = BicepSyntax.Call("resourceGroup");
+        return rg;
+    }
 
     /// <summary>
     /// Converts a valid JSON string into a JSON data type.  This represents
@@ -297,36 +313,8 @@ public static class BicepFunction
     /// Convert a formattable string with literal text, C# expressions, and
     /// Bicep expressions into an interpolated Bicep string.
     /// </summary>
-    /// <param name="text">The formattable string.</param>
+    /// <param name="handler">A bicep interpolated string handler.</param>
     /// <returns>An interpolated string.</returns>
-    public static BicepValue<string> Interpolate(FormattableString text)
-    {
-        // TODO: Use the more efficient interpolated string handler rather than FormattableString
-
-        if (text == null) { return BicepSyntax.Null(); }
-
-        // Turn everything into BicepValues
-        BicepValue<object>[] values = new BicepValue<object>[text.ArgumentCount];
-        for (int i = 0; i < text.ArgumentCount; i++)
-        {
-            values[i] =
-                text.GetArgument(i) switch
-                {
-                    BicepValue v => v,
-                    ProvisioningVariable v => BicepSyntax.Var(v.IdentifierName),
-                    var a => new BicepValue<object>(a?.ToString() ?? "")
-                };
-        };
-
-        // Create an interpolated string expression
-        BicepValue<string> result = BicepSyntax.Interpolate(
-            text.Format,
-            [.. values.Select(v => v.Compile())]);
-
-        // Make the entire expression "secure" if any of the values are
-        result.IsSecure = values.Any(v => v.IsSecure);
-        // TODO: Link values to result to validate anything crossing module boundaries?
-
-        return result;
-    }
+    public static BicepValue<string> Interpolate(BicepInterpolatedStringHandler handler) =>
+        handler.Build();
 }

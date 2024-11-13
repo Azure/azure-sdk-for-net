@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> The credentials used to login to the image repository that has access to the specified image. </summary>
+    /// <summary> The indicator of whether the console access is enabled. </summary>
     public readonly partial struct ConsoleEnabled : IEquatable<ConsoleEnabled>
     {
         private readonly string _value;

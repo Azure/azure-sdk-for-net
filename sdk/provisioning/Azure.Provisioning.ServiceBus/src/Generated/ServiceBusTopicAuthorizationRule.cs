@@ -18,63 +18,92 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusTopicAuthorizationRule.
 /// </summary>
-public partial class ServiceBusTopicAuthorizationRule : Resource
+public partial class ServiceBusTopicAuthorizationRule : ProvisionableResource
 {
     /// <summary>
     /// The authorization rule name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The rights associated with the rule.
     /// </summary>
-    public BicepList<ServiceBusAccessRight> Rights { get => _rights; set => _rights.Assign(value); }
-    private readonly BicepList<ServiceBusAccessRight> _rights;
+    public BicepList<ServiceBusAccessRight> Rights 
+    {
+        get { Initialize(); return _rights!; }
+        set { Initialize(); _rights!.Assign(value); }
+    }
+    private BicepList<ServiceBusAccessRight>? _rights;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ServiceBusTopic.
     /// </summary>
-    public ServiceBusTopic? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ServiceBusTopic> _parent;
+    public ServiceBusTopic? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ServiceBusTopic>? _parent;
 
     /// <summary>
     /// Creates a new ServiceBusTopicAuthorizationRule.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ServiceBusTopicAuthorizationRule
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusTopicAuthorizationRule.</param>
-    public ServiceBusTopicAuthorizationRule(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.ServiceBus/namespaces/topics/authorizationRules", resourceVersion ?? "2024-01-01")
+    public ServiceBusTopicAuthorizationRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/topics/authorizationRules", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _rights = BicepList<ServiceBusAccessRight>.DefineProperty(this, "Rights", ["properties", "rights"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ServiceBusTopic>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ServiceBusTopicAuthorizationRule.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _rights = DefineListProperty<ServiceBusAccessRight>("Rights", ["properties", "rights"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ServiceBusTopic>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -101,7 +130,7 @@ public partial class ServiceBusTopicAuthorizationRule : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusTopicAuthorizationRule.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ServiceBusTopicAuthorizationRule
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -109,8 +138,8 @@ public partial class ServiceBusTopicAuthorizationRule : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusTopicAuthorizationRule.</param>
     /// <returns>The existing ServiceBusTopicAuthorizationRule resource.</returns>
-    public static ServiceBusTopicAuthorizationRule FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusTopicAuthorizationRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ServiceBusTopicAuthorizationRule
@@ -125,7 +154,10 @@ public partial class ServiceBusTopicAuthorizationRule : Resource
     /// Get access keys for this ServiceBusTopicAuthorizationRule resource.
     /// </summary>
     /// <returns>The keys for this ServiceBusTopicAuthorizationRule resource.</returns>
-    public ServiceBusAccessKeys GetKeys() =>
-        ServiceBusAccessKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(IdentifierName), "listKeys")));
+    public ServiceBusAccessKeys GetKeys()
+    {
+        ServiceBusAccessKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 }

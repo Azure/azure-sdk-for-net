@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         void IJsonModel<DailyRetentionFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DailyRetentionFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DailyRetentionFormat)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DaysOfTheMonth))
             {
                 writer.WritePropertyName("daysOfTheMonth"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DailyRetentionFormat IJsonModel<DailyRetentionFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

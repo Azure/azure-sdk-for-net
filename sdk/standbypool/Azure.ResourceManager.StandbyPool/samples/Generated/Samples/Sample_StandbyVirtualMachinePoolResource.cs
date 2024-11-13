@@ -11,18 +11,18 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StandbyPool.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StandbyPool.Samples
 {
     public partial class Sample_StandbyVirtualMachinePoolResource
     {
-        // StandbyVirtualMachinePools_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StandbyVirtualMachinePoolsGet()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachinePools_Get.json
-            // this example is just showing the usage of "StandbyVirtualMachinePools_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachinePoolResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -47,13 +47,12 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StandbyVirtualMachinePools_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_StandbyVirtualMachinePoolsDelete()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachinePools_Delete.json
-            // this example is just showing the usage of "StandbyVirtualMachinePools_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachinePoolResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -71,16 +70,15 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             // invoke the operation
             await standbyVirtualMachinePool.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StandbyVirtualMachinePools_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StandbyVirtualMachinePoolsUpdate()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachinePools_Update.json
-            // this example is just showing the usage of "StandbyVirtualMachinePools_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachinePoolResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -103,9 +101,9 @@ namespace Azure.ResourceManager.StandbyPool.Samples
 },
                 Properties = new StandbyVirtualMachinePoolUpdateProperties()
                 {
-                    ElasticityProfile = new StandbyVirtualMachinePoolElasticityProfile(304)
+                    ElasticityProfile = new StandbyVirtualMachinePoolElasticityProfile(304L)
                     {
-                        MinReadyCapacity = 300,
+                        MinReadyCapacity = 300L,
                     },
                     VirtualMachineState = StandbyVirtualMachineState.Running,
                     AttachedVirtualMachineScaleSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.Compute/virtualMachineScaleSets/myVmss"),
@@ -120,9 +118,8 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StandbyVirtualMachinePools_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetStandbyVirtualMachinePools_StandbyVirtualMachinePoolsListBySubscription()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachinePools_ListBySubscription.json
@@ -149,7 +146,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

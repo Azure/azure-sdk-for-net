@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         void IJsonModel<SshConnectivityEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SshConnectivityEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SshConnectivityEndpoint)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(Endpoint);
             if (Optional.IsDefined(PrivateSshEndpoint))
@@ -49,7 +57,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SshConnectivityEndpoint IJsonModel<SshConnectivityEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

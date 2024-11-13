@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// EncryptionScope.
 /// </summary>
-public partial class EncryptionScope : Resource
+public partial class EncryptionScope : ProvisionableResource
 {
     /// <summary>
     /// The name of the encryption scope within the specified storage account.
@@ -24,91 +24,134 @@ public partial class EncryptionScope : Resource
     /// character must be immediately preceded and followed by a letter or
     /// number.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The key vault properties for the encryption scope. This is a required
     /// field if encryption scope &apos;source&apos; attribute is set to
     /// &apos;Microsoft.KeyVault&apos;.
     /// </summary>
-    public BicepValue<EncryptionScopeKeyVaultProperties> KeyVaultProperties { get => _keyVaultProperties; set => _keyVaultProperties.Assign(value); }
-    private readonly BicepValue<EncryptionScopeKeyVaultProperties> _keyVaultProperties;
+    public EncryptionScopeKeyVaultProperties KeyVaultProperties 
+    {
+        get { Initialize(); return _keyVaultProperties!; }
+        set { Initialize(); AssignOrReplace(ref _keyVaultProperties, value); }
+    }
+    private EncryptionScopeKeyVaultProperties? _keyVaultProperties;
 
     /// <summary>
     /// A boolean indicating whether or not the service applies a secondary
     /// layer of encryption with platform managed keys for data at rest.
     /// </summary>
-    public BicepValue<bool> RequireInfrastructureEncryption { get => _requireInfrastructureEncryption; set => _requireInfrastructureEncryption.Assign(value); }
-    private readonly BicepValue<bool> _requireInfrastructureEncryption;
+    public BicepValue<bool> RequireInfrastructureEncryption 
+    {
+        get { Initialize(); return _requireInfrastructureEncryption!; }
+        set { Initialize(); _requireInfrastructureEncryption!.Assign(value); }
+    }
+    private BicepValue<bool>? _requireInfrastructureEncryption;
 
     /// <summary>
     /// The provider for the encryption scope. Possible values
     /// (case-insensitive):  Microsoft.Storage, Microsoft.KeyVault.
     /// </summary>
-    public BicepValue<EncryptionScopeSource> Source { get => _source; set => _source.Assign(value); }
-    private readonly BicepValue<EncryptionScopeSource> _source;
+    public BicepValue<EncryptionScopeSource> Source 
+    {
+        get { Initialize(); return _source!; }
+        set { Initialize(); _source!.Assign(value); }
+    }
+    private BicepValue<EncryptionScopeSource>? _source;
 
     /// <summary>
     /// The state of the encryption scope. Possible values (case-insensitive):
     /// Enabled, Disabled.
     /// </summary>
-    public BicepValue<EncryptionScopeState> State { get => _state; set => _state.Assign(value); }
-    private readonly BicepValue<EncryptionScopeState> _state;
+    public BicepValue<EncryptionScopeState> State 
+    {
+        get { Initialize(); return _state!; }
+        set { Initialize(); _state!.Assign(value); }
+    }
+    private BicepValue<EncryptionScopeState>? _state;
 
     /// <summary>
     /// Gets the creation date and time of the encryption scope in UTC.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the last modification date and time of the encryption scope in UTC.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastModifiedOn { get => _lastModifiedOn; }
-    private readonly BicepValue<DateTimeOffset> _lastModifiedOn;
+    public BicepValue<DateTimeOffset> LastModifiedOn 
+    {
+        get { Initialize(); return _lastModifiedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastModifiedOn;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent StorageAccount.
     /// </summary>
-    public StorageAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<StorageAccount> _parent;
+    public StorageAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<StorageAccount>? _parent;
 
     /// <summary>
     /// Creates a new EncryptionScope.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EncryptionScope resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the EncryptionScope.</param>
-    public EncryptionScope(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Storage/storageAccounts/encryptionScopes", resourceVersion ?? "2024-01-01")
+    public EncryptionScope(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/encryptionScopes", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _keyVaultProperties = BicepValue<EncryptionScopeKeyVaultProperties>.DefineProperty(this, "KeyVaultProperties", ["properties", "keyVaultProperties"]);
-        _requireInfrastructureEncryption = BicepValue<bool>.DefineProperty(this, "RequireInfrastructureEncryption", ["properties", "requireInfrastructureEncryption"]);
-        _source = BicepValue<EncryptionScopeSource>.DefineProperty(this, "Source", ["properties", "source"]);
-        _state = BicepValue<EncryptionScopeState>.DefineProperty(this, "State", ["properties", "state"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "creationTime"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _lastModifiedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastModifiedOn", ["properties", "lastModifiedTime"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<StorageAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of EncryptionScope.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _keyVaultProperties = DefineModelProperty<EncryptionScopeKeyVaultProperties>("KeyVaultProperties", ["properties", "keyVaultProperties"]);
+        _requireInfrastructureEncryption = DefineProperty<bool>("RequireInfrastructureEncryption", ["properties", "requireInfrastructureEncryption"]);
+        _source = DefineProperty<EncryptionScopeSource>("Source", ["properties", "source"]);
+        _state = DefineProperty<EncryptionScopeState>("State", ["properties", "state"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationTime"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _lastModifiedOn = DefineProperty<DateTimeOffset>("LastModifiedOn", ["properties", "lastModifiedTime"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<StorageAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -190,7 +233,7 @@ public partial class EncryptionScope : Resource
     /// <summary>
     /// Creates a reference to an existing EncryptionScope.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EncryptionScope resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -198,6 +241,6 @@ public partial class EncryptionScope : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the EncryptionScope.</param>
     /// <returns>The existing EncryptionScope resource.</returns>
-    public static EncryptionScope FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static EncryptionScope FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

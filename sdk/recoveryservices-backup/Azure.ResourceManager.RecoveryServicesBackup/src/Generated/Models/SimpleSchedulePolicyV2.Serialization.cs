@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         void IJsonModel<SimpleSchedulePolicyV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SimpleSchedulePolicyV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SimpleSchedulePolicyV2)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ScheduleRunFrequency))
             {
                 writer.WritePropertyName("scheduleRunFrequency"u8);
@@ -46,24 +55,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("weeklySchedule"u8);
                 writer.WriteObjectValue(WeeklySchedule, options);
             }
-            writer.WritePropertyName("schedulePolicyType"u8);
-            writer.WriteStringValue(SchedulePolicyType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         SimpleSchedulePolicyV2 IJsonModel<SimpleSchedulePolicyV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         void IJsonModel<AutoscaleSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoscaleSchedule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn);
             writer.WritePropertyName("endTime"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AutoscaleSchedule IJsonModel<AutoscaleSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

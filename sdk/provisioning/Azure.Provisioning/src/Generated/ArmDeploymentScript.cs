@@ -15,65 +15,94 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ArmDeploymentScript.
 /// </summary>
-public partial class ArmDeploymentScript : Resource
+public partial class ArmDeploymentScript : ProvisionableResource
 {
     /// <summary>
     /// Name of the deployment script.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The location of the ACI and the storage account for the deployment
     /// script.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Optional property. Managed identity to be used for this deployment
     /// script. Currently, only user-assigned MSI is supported.
     /// </summary>
-    public BicepValue<ArmDeploymentScriptManagedIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ArmDeploymentScriptManagedIdentity> _identity;
+    public ArmDeploymentScriptManagedIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ArmDeploymentScriptManagedIdentity? _identity;
 
     /// <summary>
     /// Resource tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new ArmDeploymentScript.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ArmDeploymentScript resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ArmDeploymentScript.</param>
-    public ArmDeploymentScript(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Resources/deploymentScripts", resourceVersion ?? "2023-08-01")
+    public ArmDeploymentScript(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/deploymentScripts", resourceVersion ?? "2023-08-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _identity = BicepValue<ArmDeploymentScriptManagedIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ArmDeploymentScript.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _identity = DefineModelProperty<ArmDeploymentScriptManagedIdentity>("Identity", ["identity"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -95,7 +124,7 @@ public partial class ArmDeploymentScript : Resource
     /// <summary>
     /// Creates a reference to an existing ArmDeploymentScript.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ArmDeploymentScript resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -103,6 +132,6 @@ public partial class ArmDeploymentScript : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ArmDeploymentScript.</param>
     /// <returns>The existing ArmDeploymentScript resource.</returns>
-    public static ArmDeploymentScript FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ArmDeploymentScript FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

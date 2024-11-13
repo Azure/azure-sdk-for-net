@@ -132,28 +132,12 @@ jobs:
         displayName: Set TestResources Location
 
       - ${{ if parameters.DeployTestResources }}:
-        - ${{ if parameters.TestResourceDirectories }}:
-          - ${{ each directory in parameters.TestResourceDirectories }}:
-            - template: /eng/common/TestResources/deploy-test-resources.yml
-              parameters:
-                ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
-                  Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
-                ServiceDirectory: '${{ directory }}'
-                TestResourcesDirectory: '$(TestResourcesDirectory)'
-                SubscriptionConfiguration: $(SubscriptionConfiguration)
-                ArmTemplateParameters: $(ArmTemplateParameters)
-                UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
-                ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
-                SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
-                EnvVars:
-                  Pool: $(Pool)
-                  ${{ insert }}: ${{ parameters.EnvVars }}
-        - ${{ if not(parameters.TestResourceDirectories) }}:
+        - ${{ each directory in coalesce(parameters.TestResourceDirectories, split(parameters.ServiceDirectory, '|')) }}:
           - template: /eng/common/TestResources/deploy-test-resources.yml
             parameters:
               ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
                 Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
-              ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+              ServiceDirectory: '${{ directory }}'
               TestResourcesDirectory: '$(TestResourcesDirectory)'
               SubscriptionConfiguration: $(SubscriptionConfiguration)
               ArmTemplateParameters: $(ArmTemplateParameters)
@@ -242,20 +226,10 @@ jobs:
               ${{ var.key }}: ${{ var.value }}
 
       - ${{ if parameters.DeployTestResources }}:
-        - ${{ if parameters.TestResourceDirectories }}:
-          - ${{ each directory in parameters.TestResourceDirectories }}:
-            - template: /eng/common/TestResources/remove-test-resources.yml
-              parameters:
-                ServiceDirectory: '${{ directory }}'
-                SubscriptionConfiguration: $(SubscriptionConfiguration)
-                UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
-                ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
-                SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
-
-        - ${{ if not(parameters.TestResourceDirectories) }}:
+        - ${{ each directory in coalesce(parameters.TestResourceDirectories, split(parameters.ServiceDirectory, '|')) }}:
           - template: /eng/common/TestResources/remove-test-resources.yml
             parameters:
-              ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+              ServiceDirectory: '${{ directory }}'
               SubscriptionConfiguration: $(SubscriptionConfiguration)
               UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
               ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}

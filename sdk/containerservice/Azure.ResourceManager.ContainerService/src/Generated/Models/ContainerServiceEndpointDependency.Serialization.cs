@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         void IJsonModel<ContainerServiceEndpointDependency>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceEndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServiceEndpointDependency)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerServiceEndpointDependency IJsonModel<ContainerServiceEndpointDependency>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

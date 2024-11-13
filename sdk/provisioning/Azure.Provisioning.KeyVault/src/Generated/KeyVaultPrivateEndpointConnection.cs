@@ -17,92 +17,134 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// KeyVaultPrivateEndpointConnection.
 /// </summary>
-public partial class KeyVaultPrivateEndpointConnection : Resource
+public partial class KeyVaultPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of the private endpoint connection associated with the key vault.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Approval state of the private link connection.
     /// </summary>
-    public BicepValue<KeyVaultPrivateLinkServiceConnectionState> ConnectionState { get => _connectionState; set => _connectionState.Assign(value); }
-    private readonly BicepValue<KeyVaultPrivateLinkServiceConnectionState> _connectionState;
+    public KeyVaultPrivateLinkServiceConnectionState ConnectionState 
+    {
+        get { Initialize(); return _connectionState!; }
+        set { Initialize(); AssignOrReplace(ref _connectionState, value); }
+    }
+    private KeyVaultPrivateLinkServiceConnectionState? _connectionState;
 
     /// <summary>
     /// Modified whenever there is a change in the state of private endpoint
     /// connection.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; set => _eTag.Assign(value); }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+        set { Initialize(); _eTag!.Assign(value); }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Azure location of the key vault resource.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Gets Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> PrivateEndpointId { get => _privateEndpointId; }
-    private readonly BicepValue<ResourceIdentifier> _privateEndpointId;
+    public BicepValue<ResourceIdentifier> PrivateEndpointId 
+    {
+        get { Initialize(); return _privateEndpointId!; }
+    }
+    private BicepValue<ResourceIdentifier>? _privateEndpointId;
 
     /// <summary>
     /// Provisioning state of the private endpoint connection.
     /// </summary>
-    public BicepValue<KeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<KeyVaultPrivateEndpointConnectionProvisioningState> _provisioningState;
+    public BicepValue<KeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<KeyVaultPrivateEndpointConnectionProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Tags assigned to the key vault resource.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets or sets a reference to the parent KeyVaultService.
     /// </summary>
-    public KeyVaultService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<KeyVaultService> _parent;
+    public KeyVaultService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<KeyVaultService>? _parent;
 
     /// <summary>
     /// Creates a new KeyVaultPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the KeyVaultPrivateEndpointConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the KeyVaultPrivateEndpointConnection.</param>
-    public KeyVaultPrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.KeyVault/vaults/privateEndpointConnections", resourceVersion ?? "2023-07-01")
+    public KeyVaultPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.KeyVault/vaults/privateEndpointConnections", resourceVersion ?? "2023-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _connectionState = BicepValue<KeyVaultPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["etag"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _privateEndpointId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PrivateEndpointId", ["properties", "privateEndpoint", "id"], isOutput: true);
-        _provisioningState = BicepValue<KeyVaultPrivateEndpointConnectionProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"], isOutput: true);
-        _parent = ResourceReference<KeyVaultService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// KeyVaultPrivateEndpointConnection.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _connectionState = DefineModelProperty<KeyVaultPrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"], isOutput: true);
+        _provisioningState = DefineProperty<KeyVaultPrivateEndpointConnectionProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"], isOutput: true);
+        _parent = DefineResource<KeyVaultService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -110,11 +152,6 @@ public partial class KeyVaultPrivateEndpointConnection : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2023-08-01-PREVIEW.
         /// </summary>
@@ -169,7 +206,7 @@ public partial class KeyVaultPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing KeyVaultPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the KeyVaultPrivateEndpointConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -177,6 +214,6 @@ public partial class KeyVaultPrivateEndpointConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the KeyVaultPrivateEndpointConnection.</param>
     /// <returns>The existing KeyVaultPrivateEndpointConnection resource.</returns>
-    public static KeyVaultPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static KeyVaultPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

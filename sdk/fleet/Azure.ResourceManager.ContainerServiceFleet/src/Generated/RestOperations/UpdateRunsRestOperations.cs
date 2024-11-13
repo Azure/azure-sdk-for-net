@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-10-15";
+            _apiVersion = apiVersion ?? "2024-05-02-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -440,6 +440,114 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                 case 202:
                 case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateSkipRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, ContainerServiceFleetSkipProperties body, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
+            uri.AppendPath(fleetName, true);
+            uri.AppendPath("/updateRuns/", false);
+            uri.AppendPath(updateRunName, true);
+            uri.AppendPath("/skip", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateSkipRequest(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, ContainerServiceFleetSkipProperties body, string ifMatch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
+            uri.AppendPath(fleetName, true);
+            uri.AppendPath("/updateRuns/", false);
+            uri.AppendPath(updateRunName, true);
+            uri.AppendPath("/skip", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Skips one or a combination of member/group/stage/afterStageWait(s) of an update run. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="fleetName"> The name of the Fleet resource. </param>
+        /// <param name="updateRunName"> The name of the UpdateRun resource. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="updateRunName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> SkipAsync(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, ContainerServiceFleetSkipProperties body, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var message = CreateSkipRequest(subscriptionId, resourceGroupName, fleetName, updateRunName, body, ifMatch);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Skips one or a combination of member/group/stage/afterStageWait(s) of an update run. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="fleetName"> The name of the Fleet resource. </param>
+        /// <param name="updateRunName"> The name of the UpdateRun resource. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="updateRunName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Skip(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, ContainerServiceFleetSkipProperties body, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var message = CreateSkipRequest(subscriptionId, resourceGroupName, fleetName, updateRunName, body, ifMatch);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

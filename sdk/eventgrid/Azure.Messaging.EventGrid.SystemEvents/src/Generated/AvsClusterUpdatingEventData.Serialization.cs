@@ -19,64 +19,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<AvsClusterUpdatingEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AvsClusterUpdatingEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvsClusterUpdatingEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(OperationId))
-            {
-                writer.WritePropertyName("operationId"u8);
-                writer.WriteStringValue(OperationId);
-            }
-            if (Optional.IsCollectionDefined(AddedHostNames))
-            {
-                writer.WritePropertyName("addedHostNames"u8);
-                writer.WriteStartArray();
-                foreach (var item in AddedHostNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(RemovedHostNames))
-            {
-                writer.WritePropertyName("removedHostNames"u8);
-                writer.WriteStartArray();
-                foreach (var item in RemovedHostNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(InMaintenanceHostNames))
-            {
-                writer.WritePropertyName("inMaintenanceHostNames"u8);
-                writer.WriteStartArray();
-                foreach (var item in InMaintenanceHostNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         AvsClusterUpdatingEventData IJsonModel<AvsClusterUpdatingEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

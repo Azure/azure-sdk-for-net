@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Fabric
         /// <summary> Initializes a new instance of FabricCapacitiesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="endpoint"> Service host. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public FabricCapacitiesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
@@ -618,6 +618,7 @@ namespace Azure.ResourceManager.Fabric
             switch (message.Response.Status)
             {
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -642,6 +643,7 @@ namespace Azure.ResourceManager.Fabric
             switch (message.Response.Status)
             {
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -702,6 +704,7 @@ namespace Azure.ResourceManager.Fabric
             switch (message.Response.Status)
             {
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -726,6 +729,7 @@ namespace Azure.ResourceManager.Fabric
             switch (message.Response.Status)
             {
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

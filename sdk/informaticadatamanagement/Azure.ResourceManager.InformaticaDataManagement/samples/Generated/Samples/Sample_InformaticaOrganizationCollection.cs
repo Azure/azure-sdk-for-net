@@ -11,18 +11,18 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.InformaticaDataManagement.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 {
     public partial class Sample_InformaticaOrganizationCollection
     {
-        // Organizations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_OrganizationsGet()
         {
             // Generated from example definition: 2024-05-08/Organizations_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,13 +50,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Organizations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_OrganizationsGet()
         {
             // Generated from example definition: 2024-05-08/Organizations_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -80,13 +79,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Organizations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_OrganizationsGet()
         {
             // Generated from example definition: 2024-05-08/Organizations_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -110,7 +108,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -122,13 +120,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             }
         }
 
-        // Organizations_Get_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_OrganizationsGetMin()
         {
             // Generated from example definition: 2024-05-08/Organizations_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -156,13 +153,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Organizations_Get_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_OrganizationsGetMin()
         {
             // Generated from example definition: 2024-05-08/Organizations_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -186,13 +182,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Organizations_Get_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_OrganizationsGetMin()
         {
             // Generated from example definition: 2024-05-08/Organizations_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -216,7 +211,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -228,13 +223,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             }
         }
 
-        // Organizations_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_OrganizationsCreateOrUpdate()
         {
             // Generated from example definition: 2024-05-08/Organizations_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "Organizations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -305,13 +299,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Organizations_CreateOrUpdate_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_OrganizationsCreateOrUpdateMin()
         {
             // Generated from example definition: 2024-05-08/Organizations_CreateOrUpdate_MinimumSet_Gen.json
-            // this example is just showing the usage of "Organizations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

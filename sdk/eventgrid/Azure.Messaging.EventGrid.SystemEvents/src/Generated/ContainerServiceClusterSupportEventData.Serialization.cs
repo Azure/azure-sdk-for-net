@@ -19,13 +19,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<ContainerServiceClusterSupportEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceClusterSupportEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServiceClusterSupportEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
@@ -46,7 +54,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerServiceClusterSupportEventData IJsonModel<ContainerServiceClusterSupportEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

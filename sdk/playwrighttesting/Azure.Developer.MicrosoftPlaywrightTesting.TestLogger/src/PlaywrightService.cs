@@ -7,6 +7,7 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 using Microsoft.IdentityModel.JsonWebTokens;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -78,8 +79,8 @@ public class PlaywrightService
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
-        _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential);
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
+        _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential, _jsonWebTokenHandler);
         InitializePlaywrightServiceEnvironmentVariables(getServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
@@ -109,7 +110,7 @@ public class PlaywrightService
         // 2. Not close to expiry
         if (!string.IsNullOrEmpty(_entraLifecycle!._entraIdAccessToken) && _entraLifecycle!.DoesEntraIdAccessTokenRequireRotation())
         {
-            _ = await _entraLifecycle.FetchEntraIdAccessTokenAsync(cancellationToken).ConfigureAwait(false);
+            await _entraLifecycle.FetchEntraIdAccessTokenAsync(cancellationToken).ConfigureAwait(false);
         }
         if (string.IsNullOrEmpty(GetAuthToken()))
         {
@@ -144,25 +145,17 @@ public class PlaywrightService
             // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
             // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, null);
+            return;
         }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
-        if (ServiceAuth == ServiceAuthType.AccessToken && !string.IsNullOrEmpty(GetAuthToken()))
+        if (ServiceAuth == ServiceAuthType.AccessToken)
         {
             ValidateMptPAT();
             return;
         }
-        var operationStatus = await _entraLifecycle!.FetchEntraIdAccessTokenAsync(cancellationToken).ConfigureAwait(false);
-        if (!operationStatus)
-        {
-            if (!string.IsNullOrEmpty(GetAuthToken()))
-            {
-                ValidateMptPAT(); // throws exception if token is invalid
-            }
-            return; // no need to setup rotation handler. If token is not available, it will fallback to local browser launch
+            await _entraLifecycle!.FetchEntraIdAccessTokenAsync(cancellationToken).ConfigureAwait(false);
+            RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
         }
-
-        RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
-    }
 
     /// <summary>
     /// Cleans up the resources used to setup entra id authentication.
@@ -251,18 +244,20 @@ public class PlaywrightService
 
     private void ValidateMptPAT()
     {
-        try
-        {
             string authToken = GetAuthToken()!;
+            if (string.IsNullOrEmpty(authToken))
+                throw new Exception(Constants.s_no_auth_error);
             JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(authToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
+            var tokenWorkspaceId = jsonWebToken.Claims.FirstOrDefault(c => c.Type == "aid")?.Value;
+            Match match = Regex.Match(ServiceEndpoint, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
+            if (!match.Success)
+                throw new Exception(Constants.s_invalid_service_endpoint_error_message);
+            var serviceEndpointWorkspaceId = match.Groups["workspaceId"].Value;
+            if (tokenWorkspaceId != serviceEndpointWorkspaceId)
+                throw new Exception(Constants.s_workspace_mismatch_error);
             var expiry = (long)(jsonWebToken.ValidTo - new DateTime(1970, 1, 1)).TotalSeconds;
             if (expiry <= DateTimeOffset.UtcNow.ToUnixTimeSeconds())
                 throw new Exception(Constants.s_expired_mpt_pat_error);
-        }
-        catch (Exception)
-        {
-            throw new Exception(Constants.s_invalid_mpt_pat_error);
-        }
     }
 
     private string? getServiceCompatibleOs(OSPlatform? oSPlatform)

@@ -115,10 +115,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             string resourceName = Recording.GenerateAssetName("CloudhsmSDKTest");
             CloudHsmClusterData cloudHsmClusterBody = new CloudHsmClusterData(Location)
             {
-                Properties = new CloudHsmClusterProperties()
-                {
-                    FipsApprovedMode = false
-                },
                 Sku = new CloudHsmClusterSku(CloudHsmClusterSkuFamily.B, CloudHsmClusterSkuName.StandardB1),
                 Tags =
                 {

@@ -132,7 +132,7 @@ public class EntraLifecycleTests
     }
 
     [Test]
-    public async Task FetchEntraIdAccessTokenAsync_WhenTokenIsFetched_ReturnsTrue()
+    public async Task FetchEntraIdAccessTokenAsync_WhenTokenIsFetched_ReturnVoid()
     {
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var token = "valid_token";
@@ -141,20 +141,23 @@ public class EntraLifecycleTests
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken(token, expiry));
         EntraLifecycle entraLifecycle = new(defaultAzureCredentialMock.Object);
-        Assert.That(await entraLifecycle.FetchEntraIdAccessTokenAsync(), Is.True);
+        await entraLifecycle.FetchEntraIdAccessTokenAsync();
 
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, null);
     }
 
     [Test]
-    public async Task FetchEntraIdAccessTokenAsync_WhenThrowsError_ReturnsFalse()
+    public void FetchEntraIdAccessTokenAsync_WhenThrowsError()
     {
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new Exception("sample exception"));
         EntraLifecycle entraLifecycle = new(defaultAzureCredentialMock.Object);
-        Assert.That(await entraLifecycle.FetchEntraIdAccessTokenAsync(), Is.False);
+          Exception? ex = Assert.ThrowsAsync<Exception>(async () =>
+        await entraLifecycle.FetchEntraIdAccessTokenAsync());
+
+    Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
     }
 
     [Test]

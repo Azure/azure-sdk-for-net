@@ -34,7 +34,7 @@ AtlasRelationship body = new AtlasRelationship
     Label = "r:AtlasGlossarySynonym",
     Status = StatusAtlasRelationship.Active,
     UpdatedBy = "ExampleUpdator",
-    Version = 0,
+    Version = 0L,
 };
 Response<AtlasRelationship> response = await client.CreateAsync(body);
 ]]></code></example>
@@ -72,7 +72,7 @@ AtlasRelationship body = new AtlasRelationship
     Label = "r:AtlasGlossarySynonym",
     Status = StatusAtlasRelationship.Active,
     UpdatedBy = "ExampleUpdator",
-    Version = 0,
+    Version = 0L,
 };
 Response<AtlasRelationship> response = client.Create(body);
 ]]></code></example>
@@ -108,7 +108,7 @@ using RequestContent content = RequestContent.Create(new
     status = "ACTIVE",
     createdBy = "ExampleCreator",
     updatedBy = "ExampleUpdator",
-    version = 0,
+    version = 0L,
 });
 Response response = await client.CreateAsync(content);
 
@@ -147,7 +147,7 @@ using RequestContent content = RequestContent.Create(new
     status = "ACTIVE",
     createdBy = "ExampleCreator",
     updatedBy = "ExampleUpdator",
-    version = 0,
+    version = 0L,
 });
 Response response = client.Create(content);
 
@@ -189,7 +189,7 @@ AtlasRelationship body = new AtlasRelationship
     Label = "r:AtlasGlossarySynonym",
     Status = StatusAtlasRelationship.Active,
     UpdatedBy = "ExampleUpdator",
-    Version = 0,
+    Version = 0L,
 };
 Response<AtlasRelationship> response = await client.UpdateAsync(body);
 ]]></code></example>
@@ -228,7 +228,7 @@ AtlasRelationship body = new AtlasRelationship
     Label = "r:AtlasGlossarySynonym",
     Status = StatusAtlasRelationship.Active,
     UpdatedBy = "ExampleUpdator",
-    Version = 0,
+    Version = 0L,
 };
 Response<AtlasRelationship> response = client.Update(body);
 ]]></code></example>
@@ -265,7 +265,7 @@ using RequestContent content = RequestContent.Create(new
     status = "ACTIVE",
     createdBy = "ExampleCreator",
     updatedBy = "ExampleUpdator",
-    version = 0,
+    version = 0L,
 });
 Response response = await client.UpdateAsync(content);
 
@@ -305,7 +305,7 @@ using RequestContent content = RequestContent.Create(new
     status = "ACTIVE",
     createdBy = "ExampleCreator",
     updatedBy = "ExampleUpdator",
-    version = 0,
+    version = 0L,
 });
 Response response = client.Update(content);
 

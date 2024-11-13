@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. </param>
         /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
         /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="scaleUpProperties"> Auto Scale Properties for Elastic San Appliance. </param>
         /// <returns> A new <see cref="ElasticSan.ElasticSanData"/> instance for mocking. </returns>
-        public static ElasticSanData ElasticSanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticSanSku sku = null, IEnumerable<string> availabilityZones = null, ElasticSanProvisioningState? provisioningState = null, long baseSizeTiB = default, long extendedCapacitySizeTiB = default, long? totalVolumeSizeGiB = null, long? volumeGroupCount = null, long? totalIops = null, long? totalMbps = null, long? totalSizeTiB = null, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = null, ElasticSanPublicNetworkAccess? publicNetworkAccess = null)
+        public static ElasticSanData ElasticSanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticSanSku sku = null, IEnumerable<string> availabilityZones = null, ElasticSanProvisioningState? provisioningState = null, long baseSizeTiB = default, long extendedCapacitySizeTiB = default, long? totalVolumeSizeGiB = null, long? volumeGroupCount = null, long? totalIops = null, long? totalMbps = null, long? totalSizeTiB = null, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = null, ElasticSanPublicNetworkAccess? publicNetworkAccess = null, ScaleUpProperties scaleUpProperties = null)
         {
             tags ??= new Dictionary<string, string>();
             availabilityZones ??= new List<string>();
@@ -106,6 +107,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 totalSizeTiB,
                 privateEndpointConnections?.ToList(),
                 publicNetworkAccess,
+                scaleUpProperties != null ? new AutoScaleProperties(scaleUpProperties, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
@@ -283,6 +285,32 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 sourceVolumeSizeGiB,
                 volumeName,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ElasticSan.ElasticSanData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> resource sku. </param>
+        /// <param name="availabilityZones"> Logical zone for Elastic San resource; example: ["1"]. </param>
+        /// <param name="provisioningState"> State of the operation on the resource. </param>
+        /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
+        /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
+        /// <param name="totalVolumeSizeGiB"> Total size of the provisioned Volumes in GiB. </param>
+        /// <param name="volumeGroupCount"> Total number of volume groups in this Elastic San appliance. </param>
+        /// <param name="totalIops"> Total Provisioned IOPS of the Elastic San appliance. </param>
+        /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. </param>
+        /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. </param>
+        /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
+        /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ElasticSan.ElasticSanData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticSanData ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IEnumerable<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, ElasticSanPublicNetworkAccess? publicNetworkAccess)
+        {
+            return ElasticSanData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, availabilityZones: availabilityZones, provisioningState: provisioningState, baseSizeTiB: baseSizeTiB, extendedCapacitySizeTiB: extendedCapacitySizeTiB, totalVolumeSizeGiB: totalVolumeSizeGiB, volumeGroupCount: volumeGroupCount, totalIops: totalIops, totalMbps: totalMbps, totalSizeTiB: totalSizeTiB, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, scaleUpProperties: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupData" />. </summary>

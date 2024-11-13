@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         void IJsonModel<SecurityAssessmentPartner>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentPartner>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityAssessmentPartner)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("partnerName"u8);
             writer.WriteStringValue(PartnerName);
             writer.WritePropertyName("secret"u8);
@@ -45,7 +53,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SecurityAssessmentPartner IJsonModel<SecurityAssessmentPartner>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

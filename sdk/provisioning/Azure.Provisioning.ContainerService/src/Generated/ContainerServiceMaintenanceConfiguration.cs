@@ -16,55 +16,81 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// ContainerServiceMaintenanceConfiguration.
 /// </summary>
-public partial class ContainerServiceMaintenanceConfiguration : Resource
+public partial class ContainerServiceMaintenanceConfiguration : ProvisionableResource
 {
     /// <summary>
     /// The name of the maintenance configuration.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Maintenance window for the maintenance configuration.
     /// </summary>
-    public BicepValue<ContainerServiceMaintenanceWindow> MaintenanceWindow { get => _maintenanceWindow; set => _maintenanceWindow.Assign(value); }
-    private readonly BicepValue<ContainerServiceMaintenanceWindow> _maintenanceWindow;
+    public ContainerServiceMaintenanceWindow MaintenanceWindow 
+    {
+        get { Initialize(); return _maintenanceWindow!; }
+        set { Initialize(); AssignOrReplace(ref _maintenanceWindow, value); }
+    }
+    private ContainerServiceMaintenanceWindow? _maintenanceWindow;
 
     /// <summary>
     /// Time slots on which upgrade is not allowed.
     /// </summary>
-    public BicepList<ContainerServiceTimeSpan> NotAllowedTimes { get => _notAllowedTimes; set => _notAllowedTimes.Assign(value); }
-    private readonly BicepList<ContainerServiceTimeSpan> _notAllowedTimes;
+    public BicepList<ContainerServiceTimeSpan> NotAllowedTimes 
+    {
+        get { Initialize(); return _notAllowedTimes!; }
+        set { Initialize(); _notAllowedTimes!.Assign(value); }
+    }
+    private BicepList<ContainerServiceTimeSpan>? _notAllowedTimes;
 
     /// <summary>
     /// If two array entries specify the same day of the week, the applied
     /// configuration is the union of times in both entries.
     /// </summary>
-    public BicepList<ContainerServiceTimeInWeek> TimesInWeek { get => _timesInWeek; set => _timesInWeek.Assign(value); }
-    private readonly BicepList<ContainerServiceTimeInWeek> _timesInWeek;
+    public BicepList<ContainerServiceTimeInWeek> TimesInWeek 
+    {
+        get { Initialize(); return _timesInWeek!; }
+        set { Initialize(); _timesInWeek!.Assign(value); }
+    }
+    private BicepList<ContainerServiceTimeInWeek>? _timesInWeek;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerServiceManagedCluster.
     /// </summary>
-    public ContainerServiceManagedCluster? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerServiceManagedCluster> _parent;
+    public ContainerServiceManagedCluster? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerServiceManagedCluster>? _parent;
 
     /// <summary>
     /// Creates a new ContainerServiceMaintenanceConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ContainerServiceMaintenanceConfiguration resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -72,16 +98,24 @@ public partial class ContainerServiceMaintenanceConfiguration : Resource
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceMaintenanceConfiguration.</param>
-    public ContainerServiceMaintenanceConfiguration(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion ?? "2024-08-01")
+    public ContainerServiceMaintenanceConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion ?? "2024-08-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _maintenanceWindow = BicepValue<ContainerServiceMaintenanceWindow>.DefineProperty(this, "MaintenanceWindow", ["properties", "maintenanceWindow"]);
-        _notAllowedTimes = BicepList<ContainerServiceTimeSpan>.DefineProperty(this, "NotAllowedTimes", ["properties", "notAllowedTime"]);
-        _timesInWeek = BicepList<ContainerServiceTimeInWeek>.DefineProperty(this, "TimesInWeek", ["properties", "timeInWeek"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerServiceManagedCluster>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ContainerServiceMaintenanceConfiguration.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _maintenanceWindow = DefineModelProperty<ContainerServiceMaintenanceWindow>("MaintenanceWindow", ["properties", "maintenanceWindow"]);
+        _notAllowedTimes = DefineListProperty<ContainerServiceTimeSpan>("NotAllowedTimes", ["properties", "notAllowedTime"]);
+        _timesInWeek = DefineListProperty<ContainerServiceTimeInWeek>("TimesInWeek", ["properties", "timeInWeek"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerServiceManagedCluster>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -89,11 +123,6 @@ public partial class ContainerServiceMaintenanceConfiguration : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-08-01.
         /// </summary>
@@ -349,7 +378,7 @@ public partial class ContainerServiceMaintenanceConfiguration : Resource
     /// Creates a reference to an existing
     /// ContainerServiceMaintenanceConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ContainerServiceMaintenanceConfiguration resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -358,6 +387,6 @@ public partial class ContainerServiceMaintenanceConfiguration : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceMaintenanceConfiguration.</param>
     /// <returns>The existing ContainerServiceMaintenanceConfiguration resource.</returns>
-    public static ContainerServiceMaintenanceConfiguration FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ContainerServiceMaintenanceConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

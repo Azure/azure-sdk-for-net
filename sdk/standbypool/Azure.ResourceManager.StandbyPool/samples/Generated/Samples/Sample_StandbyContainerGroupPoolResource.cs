@@ -12,18 +12,18 @@ using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StandbyPool.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StandbyPool.Samples
 {
     public partial class Sample_StandbyContainerGroupPoolResource
     {
-        // StandbyContainerGroupPools_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StandbyContainerGroupPoolsGet()
         {
             // Generated from example definition: 2024-03-01/StandbyContainerGroupPools_Get.json
-            // this example is just showing the usage of "StandbyContainerGroupPools_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyContainerGroupPoolResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -48,13 +48,12 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StandbyContainerGroupPools_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_StandbyContainerGroupPoolsDelete()
         {
             // Generated from example definition: 2024-03-01/StandbyContainerGroupPools_Delete.json
-            // this example is just showing the usage of "StandbyContainerGroupPools_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyContainerGroupPoolResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -72,16 +71,15 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             // invoke the operation
             await standbyContainerGroupPool.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StandbyContainerGroupPools_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StandbyContainerGroupPoolsUpdate()
         {
             // Generated from example definition: 2024-03-01/StandbyContainerGroupPools_Update.json
-            // this example is just showing the usage of "StandbyContainerGroupPools_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyContainerGroupPoolResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -104,13 +102,13 @@ namespace Azure.ResourceManager.StandbyPool.Samples
 },
                 Properties = new StandbyContainerGroupPoolUpdateProperties()
                 {
-                    ElasticityProfile = new StandbyContainerGroupPoolElasticityProfile(1743)
+                    ElasticityProfile = new StandbyContainerGroupPoolElasticityProfile(1743L)
                     {
                         RefillPolicy = StandbyRefillPolicy.Always,
                     },
                     ContainerGroupProperties = new StandbyContainerGroupProperties(new StandbyContainerGroupProfile(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.ContainerInstance/containerGroupProfiles/cgProfile"))
                     {
-                        Revision = 2,
+                        Revision = 2L,
                     })
                     {
                         SubnetIds =
@@ -132,9 +130,8 @@ Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000009
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StandbyContainerGroupPools_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetStandbyContainerGroupPools_StandbyContainerGroupPoolsListBySubscription()
         {
             // Generated from example definition: 2024-03-01/StandbyContainerGroupPools_ListBySubscription.json
@@ -161,7 +158,7 @@ Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000009
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

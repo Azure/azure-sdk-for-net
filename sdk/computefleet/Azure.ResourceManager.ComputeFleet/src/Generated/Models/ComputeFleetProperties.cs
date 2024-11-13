@@ -64,16 +64,20 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="spotPriorityProfile"> Configuration Options for Spot instances in Compute Fleet. </param>
         /// <param name="regularPriorityProfile"> Configuration Options for Regular instances in Compute Fleet. </param>
         /// <param name="vmSizesProfile"> List of VM sizes supported for Compute Fleet. </param>
+        /// <param name="vmAttributes"> Attribute based Fleet. </param>
+        /// <param name="additionalLocationsProfile"> Represents the configuration for additional locations where Fleet resources may be deployed. </param>
         /// <param name="computeProfile"> Compute Profile to use for running user's workloads. </param>
         /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
         /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             SpotPriorityProfile = spotPriorityProfile;
             RegularPriorityProfile = regularPriorityProfile;
             VmSizesProfile = vmSizesProfile;
+            VmAttributes = vmAttributes;
+            AdditionalLocationsProfile = additionalLocationsProfile;
             ComputeProfile = computeProfile;
             CreatedOn = createdOn;
             UniqueId = uniqueId;
@@ -93,6 +97,17 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public RegularPriorityProfile RegularPriorityProfile { get; set; }
         /// <summary> List of VM sizes supported for Compute Fleet. </summary>
         public IList<ComputeFleetVmSizeProfile> VmSizesProfile { get; }
+        /// <summary> Attribute based Fleet. </summary>
+        public ComputeFleetVmAttributes VmAttributes { get; set; }
+        /// <summary> Represents the configuration for additional locations where Fleet resources may be deployed. </summary>
+        internal AdditionalLocationsProfile AdditionalLocationsProfile { get; set; }
+        /// <summary> The list of location profiles. </summary>
+        public IList<LocationProfile> AdditionalLocationsLocationProfiles
+        {
+            get => AdditionalLocationsProfile is null ? default : AdditionalLocationsProfile.LocationProfiles;
+            set => AdditionalLocationsProfile = new AdditionalLocationsProfile(value);
+        }
+
         /// <summary> Compute Profile to use for running user's workloads. </summary>
         public ComputeFleetComputeProfile ComputeProfile { get; set; }
         /// <summary> Specifies the time at which the Compute Fleet is created. </summary>

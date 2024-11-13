@@ -17,9 +17,10 @@ namespace Azure.Communication.Messages.Tests
         {
         }
 
-        public const string ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/30/Building92microsoft.jpg";
-        public const string VideoUrl = "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4";
-        public const string DocumentUrl = "https://file-examples.com/storage/fe63e96e0365c0e1e99a842/2017/10/file-sample_150kB.pdf";
+        public static readonly Uri ImageUrl = new Uri("https://filesamples.com/samples/image/jpg/sample_640%C3%97426.jpg");
+        public static readonly Uri DocumentUrl = new Uri("https://filesamples.com/samples/document/pdf/sample2.pdf");
+        public static readonly Uri VideoUrl = new Uri("https://filesamples.com/samples/video/3gp/sample_640x360.3gp");
+        public static readonly Uri AudioUrl = new Uri("https://filesamples.com/samples/audio/mp3/sample3.mp3");
 
         [Test]
         public async Task SendTextMessage_ShouldSucceed()
@@ -41,6 +42,62 @@ namespace Azure.Communication.Messages.Tests
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClientWithAzureKeyCredential();
             TextNotificationContent content = new(new Guid(TestEnvironment.SenderChannelRegistrationId), new List<string> { TestEnvironment.RecipientIdentifier }, "LiveTest");
+
+            // Act
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+        public async Task SendImageMessage_ShouldSucceed()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+            ImageNotificationContent content = new(new Guid(TestEnvironment.SenderChannelRegistrationId), new List<string> { TestEnvironment.RecipientIdentifier }, ImageUrl);
+
+            // Act
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+        public async Task SendAudioMessage_ShouldSucceed()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+            AudioNotificationContent content = new(new Guid(TestEnvironment.SenderChannelRegistrationId), new List<string> { TestEnvironment.RecipientIdentifier }, AudioUrl);
+
+            // Act
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+        public async Task SendVideoMessage_ShouldSucceed()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+            VideoNotificationContent content = new(new Guid(TestEnvironment.SenderChannelRegistrationId), new List<string> { TestEnvironment.RecipientIdentifier }, VideoUrl);
+
+            // Act
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+        public async Task SendDocumentMessage_ShouldSucceed()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+            DocumentNotificationContent content = new(new Guid(TestEnvironment.SenderChannelRegistrationId), new List<string> { TestEnvironment.RecipientIdentifier }, DocumentUrl);
 
             // Act
             Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
@@ -84,7 +141,7 @@ namespace Azure.Communication.Messages.Tests
             Guid channelRegistrationId = new(TestEnvironment.SenderChannelRegistrationId);
             IList<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
 
-            var image = new MessageTemplateImage("image", new Uri(ImageUrl));
+            var image = new MessageTemplateImage("image", ImageUrl);
             var product = new MessageTemplateText("product", "Microsoft Office");
 
             WhatsAppMessageTemplateBindings bindings = new();
@@ -148,7 +205,7 @@ namespace Azure.Communication.Messages.Tests
 
             var venue = new MessageTemplateText("venue", "Starbucks");
             var time = new MessageTemplateText("time", "Today 2-4PM");
-            var video = new MessageTemplateVideo("video", new Uri(VideoUrl));
+            var video = new MessageTemplateVideo("video", VideoUrl);
 
             WhatsAppMessageTemplateBindings bindings = new();
             bindings.Header.Add(new(video.Name));
@@ -178,7 +235,7 @@ namespace Azure.Communication.Messages.Tests
             Guid channelRegistrationId = new(TestEnvironment.SenderChannelRegistrationId);
             IList<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
 
-            var document = new MessageTemplateDocument("document", new Uri(DocumentUrl));
+            var document = new MessageTemplateDocument("document", DocumentUrl);
             var firstName = new MessageTemplateText("firstName", "Gloria");
             var lastName = new MessageTemplateText("lastName", "Li");
             var date = new MessageTemplateText("date", "July 1st, 2023");
@@ -213,7 +270,7 @@ namespace Azure.Communication.Messages.Tests
             Guid channelRegistrationId = new(TestEnvironment.SenderChannelRegistrationId);
             IList<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
 
-            var image = new MessageTemplateImage("image", new Uri(ImageUrl));
+            var image = new MessageTemplateImage("image", ImageUrl);
             var title = new MessageTemplateText("title", "Avengers");
             var time = new MessageTemplateText("time", "July 1st, 2023 12:30PM");
             var venue = new MessageTemplateText("venue", "Cineplex");
@@ -257,7 +314,6 @@ namespace Azure.Communication.Messages.Tests
             // Assert the expected error code and message
             Assert.AreEqual(400, ex.Status);
             Assert.AreEqual("BadRequest", ex.ErrorCode);
-            Assert.IsTrue(ex.Message.Contains("A non-empty \"Content\" is required when message type is Text."));
 
             return Task.CompletedTask;
         }

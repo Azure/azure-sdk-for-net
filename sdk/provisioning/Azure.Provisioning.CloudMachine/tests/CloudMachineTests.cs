@@ -3,10 +3,8 @@
 
 #nullable enable
 
-using System;
-using Azure.Provisioning.CloudMachine;
-using Azure.Provisioning.CloudMachine.KeyVault;
-using Azure.Security.KeyVault.Secrets;
+using Azure.CloudMachine.KeyVault;
+using Azure.CloudMachine.OpenAI;
 using NUnit.Framework;
 
 namespace Azure.CloudMachine.Tests;
@@ -14,72 +12,18 @@ namespace Azure.CloudMachine.Tests;
 public class CloudMachineTests
 {
     [Theory]
-    [TestCase([new string[] { "--init" }])]
-    [TestCase([new string[] { "" }])]
-    public void Configure(string[] args)
+    [TestCase([new string[] { "-bicep" }])]
+    [TestCase([new string[] { }])]
+    public void Provisioning(string[] args)
     {
-        if (CloudMachineInfrastructure.Configure(args, (cm) => {
-            cm.AddFeature(new KeyVaultFeature()
+        CloudMachineInfrastructure.Configure(args, (cm) =>
+        {
+            cm.AddFeature(new KeyVaultFeature());
+            cm.AddFeature(new OpenAIFeature() // TODO: rework it such that models can be added as features
             {
-                //Sku = new KeyVaultSku { Name = KeyVaultSkuName.Premium, Family = KeyVaultSkuFamily.A, }
+                Chat = new AIModel("gpt-35-turbo", "0125"),
+                Embeddings = new AIModel("text-embedding-ada-002", "2")
             });
-        })) return;
-
-        CloudMachineClient cm = new();
-        Console.WriteLine(cm.Id);
-    }
-
-    [Ignore("no recordings yet")]
-    [Theory]
-    [TestCase([new string[] { "--init" }])]
-    [TestCase([new string[] { "" }])]
-    public void KeyVault(string[] args)
-    {
-        if (CloudMachineInfrastructure.Configure(args, (cm) =>
-        {
-            cm.AddFeature(new KeyVaultFeature()
-            {
-                //Sku = new KeyVaultSku { Name = KeyVaultSkuName.Premium, Family = KeyVaultSkuFamily.A, }
-            });
-        })) return;
-
-        CloudMachineClient cm = new();
-        SecretClient secrets = cm.GetKeyVaultSecretClient();
-        secrets.SetSecret("testsecret", "don't tell anybody");
-    }
-
-    [Ignore("no recordings yet")]
-    [Theory]
-    [TestCase([new string[] { "--init" }])]
-    [TestCase([new string[] { "" }])]
-    public void Storage(string[] args)
-    {
-        if (CloudMachineInfrastructure.Configure(args, (cm) => {
-        })) return;
-
-        CloudMachineClient cm = new();
-        var uploaded = cm.Upload(new
-        {
-            Foo = 5,
-            Bar = true
-        });
-        BinaryData downloaded = cm.Download(uploaded);
-    }
-
-    [Ignore("no recordings yet")]
-    [Theory]
-    [TestCase([new string[] { "--init" }])]
-    [TestCase([new string[] { "" }])]
-    public void Messaging(string[] args)
-    {
-        if (CloudMachineInfrastructure.Configure(args, (cm) => {
-        })) return;
-
-        CloudMachineClient cm = new();
-        cm.Send(new
-        {
-            Foo = 5,
-            Bar = true
         });
     }
 }

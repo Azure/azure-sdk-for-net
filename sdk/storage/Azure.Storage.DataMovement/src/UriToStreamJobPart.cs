@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement
         /// Creating job part based on a single transfer job
         /// </summary>
         private UriToStreamJobPart(
-            UriToStreamTransferJob job,
+            TransferJobInternal job,
             int partNumber)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
@@ -52,7 +52,7 @@ namespace Azure.Storage.DataMovement
         /// Creating transfer job based on a storage resource created from listing.
         /// </summary>
         private UriToStreamJobPart(
-            UriToStreamTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -84,7 +84,7 @@ namespace Azure.Storage.DataMovement
         /// Creating transfer job based on a checkpoint file.
         /// </summary>
         private UriToStreamJobPart(
-            UriToStreamTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -123,8 +123,8 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Called when creating a job part from a single transfer.
         /// </summary>
-        public static async Task<UriToStreamJobPart> CreateJobPartAsync(
-            UriToStreamTransferJob job,
+        public static async Task<JobPartInternal> CreateJobPartAsync(
+            TransferJobInternal job,
             int partNumber)
         {
             // Create Job Part file as we're initializing the job part
@@ -136,12 +136,11 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Called when creating a job part from a container transfer.
         /// </summary>
-        public static async Task<UriToStreamJobPart> CreateJobPartAsync(
-            UriToStreamTransferJob job,
+        public static async Task<JobPartInternal> CreateJobPartAsync(
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
-            StorageResourceItem destinationResource,
-            long? length = default)
+            StorageResourceItem destinationResource)
         {
             Argument.AssertNotNull(sourceResource, nameof(sourceResource));
             Argument.AssertNotNull(destinationResource, nameof(destinationResource));
@@ -151,8 +150,7 @@ namespace Azure.Storage.DataMovement
                 job: job,
                 partNumber: partNumber,
                 sourceResource: sourceResource,
-                destinationResource: destinationResource,
-                length: length);
+                destinationResource: destinationResource);
             await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
             return part;
         }
@@ -161,7 +159,7 @@ namespace Azure.Storage.DataMovement
         /// Called when creating a job part from a checkpoint file on resume.
         /// </summary>
         public static UriToStreamJobPart CreateJobPartFromCheckpoint(
-            UriToStreamTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -182,7 +180,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Processes the job to job parts
+        /// Processes the job part to chunks
         ///
         /// Just start downloading using an initial range.  If it's a
         /// small blob, we'll get the whole thing in one shot.  If it's
@@ -198,10 +196,9 @@ namespace Azure.Storage.DataMovement
         {
             // we can default the length to 0 because we know the destination is local and
             // does not require a length to be created.
-            await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
-
             try
             {
+                await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
                 if (!_sourceResource.Length.HasValue)
                 {
                     await UnknownDownloadInternal().ConfigureAwait(false);
@@ -214,7 +211,7 @@ namespace Azure.Storage.DataMovement
             catch (Exception ex)
             {
                 // The file either does not exist any more, got moved, or renamed.
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
         }
 
@@ -278,7 +275,7 @@ namespace Azure.Storage.DataMovement
             }
             catch (Exception ex)
             {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
         }
 
@@ -378,7 +375,7 @@ namespace Azure.Storage.DataMovement
             }
             catch (Exception ex)
             {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
         }
 
@@ -429,7 +426,7 @@ namespace Azure.Storage.DataMovement
                 {
                     // If the _downloadChunkHandler has been disposed before we call to it
                     // we should at least filter the exception to error handling just in case.
-                    await InvokeFailedArg(ex).ConfigureAwait(false);
+                    await InvokeFailedArgAsync(ex).ConfigureAwait(false);
                 }
             }
         }
@@ -462,7 +459,7 @@ namespace Azure.Storage.DataMovement
                 ex.Message.Contains("Cannot overwrite file."))
             {
                 // Skip file that already exists on the destination.
-                await InvokeSkippedArg().ConfigureAwait(false);
+                await InvokeSkippedArgAsync().ConfigureAwait(false);
             }
             return false;
         }
@@ -475,7 +472,7 @@ namespace Azure.Storage.DataMovement
             {
                 await source.CopyToAsync(
                     fileStream,
-                    Constants.DefaultDownloadCopyBufferSize,
+                    DataMovementConstants.DefaultStreamCopyBufferSize,
                     _cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -501,7 +498,7 @@ namespace Azure.Storage.DataMovement
                 CopyToDestinationFile = job.CopyToStreamInternal,
                 CopyToChunkFile = job.WriteChunkToTempFile,
                 ReportProgressInBytes = job.ReportBytesWritten,
-                InvokeFailedHandler = job.InvokeFailedArg,
+                InvokeFailedHandler = job.InvokeFailedArgAsync,
                 QueueCompleteFileDownload = job.QueueCompleteFileDownload
             };
         }
@@ -522,16 +519,16 @@ namespace Azure.Storage.DataMovement
         }
         #endregion PartitionedDownloader
 
-        public override async Task InvokeSkippedArg()
+        public override async Task InvokeSkippedArgAsync()
         {
             DisposeHandlers();
-            await base.InvokeSkippedArg().ConfigureAwait(false);
+            await base.InvokeSkippedArgAsync().ConfigureAwait(false);
         }
 
-        public override async Task InvokeFailedArg(Exception ex)
+        public override async Task InvokeFailedArgAsync(Exception ex)
         {
             DisposeHandlers();
-            await base.InvokeFailedArg(ex).ConfigureAwait(false);
+            await base.InvokeFailedArgAsync(ex).ConfigureAwait(false);
         }
 
         internal void DisposeHandlers()

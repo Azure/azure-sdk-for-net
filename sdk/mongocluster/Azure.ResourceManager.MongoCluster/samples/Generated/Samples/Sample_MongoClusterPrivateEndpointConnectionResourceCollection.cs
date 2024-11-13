@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MongoCluster.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MongoCluster.Samples
 {
     public partial class Sample_MongoClusterPrivateEndpointConnectionResourceCollection
     {
-        // Lists the private endpoint connection resources on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListsThePrivateEndpointConnectionResourcesOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionList.json
@@ -49,16 +49,15 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a private endpoint connection on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPrivateEndpointConnectionOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionGet.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PrivateEndpointConnectionResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -87,13 +86,12 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a private endpoint connection on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAPrivateEndpointConnectionOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionGet.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PrivateEndpointConnectionResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -118,13 +116,12 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a private endpoint connection on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAPrivateEndpointConnectionOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionGet.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PrivateEndpointConnectionResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -149,7 +146,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -161,13 +158,12 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             }
         }
 
-        // Approves a private endpoint connection on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApprovesAPrivateEndpointConnectionOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionPut.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Create" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PrivateEndpointConnectionResource_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

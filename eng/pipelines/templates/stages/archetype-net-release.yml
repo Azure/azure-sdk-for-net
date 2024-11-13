@@ -151,6 +151,14 @@ stages:
                     image: azsdk-pool-mms-win-2022-1espt
                     os: windows
 
+                  templateContext:
+                    outputs:
+                      - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
+                        - output: pipelineArtifact
+                          displayName: 'Store converted symbols in ${{parameters.ArtifactName}}-symbols artifact'
+                          targetPath: $(Build.ArtifactStagingDirectory)/symbols
+                          artifactName: ${{parameters.ArtifactName}}-symbols
+
                   strategy:
                     runOnce:
                       deploy:

@@ -11,18 +11,18 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MongoCluster.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MongoCluster.Samples
 {
     public partial class Sample_MongoClusterCollection
     {
-        // Gets a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Get.json
-            // this example is just showing the usage of "MongoClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,13 +50,12 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Get.json
-            // this example is just showing the usage of "MongoClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -80,13 +79,12 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Get.json
-            // this example is just showing the usage of "MongoClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -110,7 +108,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -122,13 +120,12 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             }
         }
 
-        // Creates a new Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesANewMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Create.json
-            // this example is just showing the usage of "MongoClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -158,7 +155,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                     },
                     ServerVersion = "5.0",
                     HighAvailabilityTargetMode = HighAvailabilityMode.SameZone,
-                    StorageSizeGb = 128,
+                    StorageSizeGb = 128L,
                     ShardingShardCount = 1,
                     ComputeTier = "M30",
                 },
@@ -173,13 +170,12 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a replica Mongo Cluster resource from a source resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesAReplicaMongoClusterResourceFromASourceResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_CreateGeoReplica.json
-            // this example is just showing the usage of "MongoClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -216,13 +212,12 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a Mongo Cluster resource from a point in time restore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesAMongoClusterResourceFromAPointInTimeRestore()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_CreatePITR.json
-            // this example is just showing the usage of "MongoClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -263,9 +258,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Lists the Mongo Cluster resources in a resource group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListsTheMongoClusterResourcesInAResourceGroup()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_ListByResourceGroup.json
@@ -296,7 +290,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

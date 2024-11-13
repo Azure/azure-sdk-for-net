@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.ServiceBus
         public string PostMigrationName { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetServiceBusNamespace { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.MigrationConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.MigrationConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.ServiceBus
         public ServiceBusAuthorizationRuleData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessRight> Rights { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -124,6 +126,7 @@ namespace Azure.ResourceManager.ServiceBus
         public long? PendingReplicationOperationsCount { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusDisasterRecoveryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusDisasterRecoveryRole? Role { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -255,6 +258,7 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -318,6 +322,7 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccessFlag? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -365,6 +370,7 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -473,6 +479,7 @@ namespace Azure.ResourceManager.ServiceBus
         public long? SizeInBytes { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusMessagingEntityStatus? Status { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusQueueData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusQueueData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -526,6 +533,7 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterType? FilterType { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter SqlFilter { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -591,6 +599,7 @@ namespace Azure.ResourceManager.ServiceBus
         public bool? RequiresSession { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusMessagingEntityStatus? Status { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -697,6 +706,7 @@ namespace Azure.ResourceManager.ServiceBus
         public int? SubscriptionCount { get { throw null; } }
         public bool? SupportOrdering { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.ServiceBusTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -789,6 +799,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         public FailoverProperties() { }
         public bool? IsSafeFailover { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.FailoverProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.FailoverProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.FailoverProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.FailoverProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.FailoverProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -803,6 +814,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public long? ScheduledMessageCount { get { throw null; } }
         public long? TransferDeadLetterMessageCount { get { throw null; } }
         public long? TransferMessageCount { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.MessageCountDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.MessageCountDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.MessageCountDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.MessageCountDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.MessageCountDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -836,6 +848,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string PrimaryKey { get { throw null; } }
         public string SecondaryConnectionString { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -859,6 +872,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string ClientId { get { throw null; } set { } }
         public bool? IsDurable { get { throw null; } set { } }
         public bool? IsShared { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -878,6 +892,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string SendTo { get { throw null; } set { } }
         public string SessionId { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -902,6 +917,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryptionKeySource? KeySource { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties> KeyVaultProperties { get { throw null; } }
         public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -931,6 +947,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public int? CompatibilityLevel { get { throw null; } set { } }
         public bool? RequiresPreprocessing { get { throw null; } set { } }
         public string SqlExpression { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -949,6 +966,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
         public string UserAssignedIdentity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -990,6 +1008,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         public ServiceBusNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1002,6 +1021,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusNameUnavailableReason? Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1023,6 +1043,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1078,6 +1099,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public ServiceBusNetworkRuleSetIPRules() { }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleIPAction? Action { get { throw null; } set { } }
         public string IPMask { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1089,6 +1111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public ServiceBusNetworkRuleSetVirtualNetworkRules() { }
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1143,6 +1166,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1154,6 +1178,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public ServiceBusPrivateLinkServiceConnectionState() { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkConnectionStatus? Status { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1202,6 +1227,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public ServiceBusRegenerateAccessKeyContent(Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeyType keyType) { }
         public string Key { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeyType KeyType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1214,6 +1240,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSkuName Name { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSkuTier? Tier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1238,6 +1265,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public int? CompatibilityLevel { get { throw null; } set { } }
         public bool? RequiresPreprocessing { get { throw null; } set { } }
         public string SqlExpression { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

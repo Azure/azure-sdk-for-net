@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 {
     public partial class Sample_CloudHsmClusterPrivateEndpointConnectionResource
     {
-        // CloudHsmClusterPrivateEndpointConnection_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CloudHsmClusterPrivateEndpointConnectionCreateMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmClusterPrivateEndpointConnection_Create_MaximumSet_Gen.json
@@ -56,9 +56,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CloudHsmClusterPrivateEndpointConnection_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_CloudHsmClusterPrivateEndpointConnectionDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmClusterPrivateEndpointConnection_Delete_MaximumSet_Gen.json
@@ -81,12 +80,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             // invoke the operation
             await cloudHsmClusterPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CloudHsmClusterPrivateEndpointConnection_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CloudHsmClusterPrivateEndpointConnectionGetMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmClusterPrivateEndpointConnection_Get_MaximumSet_Gen.json

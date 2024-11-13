@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Chaos.Samples
 {
     public partial class Sample_ChaosCapabilityCollection
     {
-        // List all Capabilities that extend a virtual machine Target resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllCapabilitiesThatExtendAVirtualMachineTargetResource()
         {
             // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/ListCapabilities.json
@@ -51,12 +51,11 @@ namespace Azure.ResourceManager.Chaos.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a Capability that extends a virtual machine Target resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACapabilityThatExtendsAVirtualMachineTargetResource()
         {
             // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetCapability.json
@@ -92,9 +91,8 @@ namespace Azure.ResourceManager.Chaos.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a Capability that extends a virtual machine Target resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetACapabilityThatExtendsAVirtualMachineTargetResource()
         {
             // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetCapability.json
@@ -126,9 +124,8 @@ namespace Azure.ResourceManager.Chaos.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a Capability that extends a virtual machine Target resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetACapabilityThatExtendsAVirtualMachineTargetResource()
         {
             // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetCapability.json
@@ -160,7 +157,7 @@ namespace Azure.ResourceManager.Chaos.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -172,9 +169,8 @@ namespace Azure.ResourceManager.Chaos.Samples
             }
         }
 
-        // Create/update a Capability that extends a virtual machine Target resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateACapabilityThatExtendsAVirtualMachineTargetResource()
         {
             // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/CreateUpdateCapability.json

@@ -47,7 +47,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 status = "ACTIVE",
                 createdBy = "ExampleCreator",
                 updatedBy = "ExampleUpdator",
-                version = 0,
+                version = 0L,
             });
             Response response = client.Create(content);
 
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 status = "ACTIVE",
                 createdBy = "ExampleCreator",
                 updatedBy = "ExampleUpdator",
-                version = 0,
+                version = 0L,
             });
             Response response = await client.CreateAsync(content);
 
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 Label = "r:AtlasGlossarySynonym",
                 Status = StatusAtlasRelationship.Active,
                 UpdatedBy = "ExampleUpdator",
-                Version = 0,
+                Version = 0L,
             };
             Response<AtlasRelationship> response = client.Create(body);
         }
@@ -165,7 +165,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 Label = "r:AtlasGlossarySynonym",
                 Status = StatusAtlasRelationship.Active,
                 UpdatedBy = "ExampleUpdator",
-                Version = 0,
+                Version = 0L,
             };
             Response<AtlasRelationship> response = await client.CreateAsync(body);
         }
@@ -202,7 +202,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 status = "ACTIVE",
                 createdBy = "ExampleCreator",
                 updatedBy = "ExampleUpdator",
-                version = 0,
+                version = 0L,
             });
             Response response = client.Update(content);
 
@@ -242,7 +242,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 status = "ACTIVE",
                 createdBy = "ExampleCreator",
                 updatedBy = "ExampleUpdator",
-                version = 0,
+                version = 0L,
             });
             Response response = await client.UpdateAsync(content);
 
@@ -284,7 +284,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 Label = "r:AtlasGlossarySynonym",
                 Status = StatusAtlasRelationship.Active,
                 UpdatedBy = "ExampleUpdator",
-                Version = 0,
+                Version = 0L,
             };
             Response<AtlasRelationship> response = client.Update(body);
         }
@@ -323,7 +323,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 Label = "r:AtlasGlossarySynonym",
                 Status = StatusAtlasRelationship.Active,
                 UpdatedBy = "ExampleUpdator",
-                Version = 0,
+                Version = 0L,
             };
             Response<AtlasRelationship> response = await client.UpdateAsync(body);
         }

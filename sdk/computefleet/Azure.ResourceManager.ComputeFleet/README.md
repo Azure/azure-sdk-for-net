@@ -17,7 +17,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure Compute Fleet management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.ComputeFleet --prerelease
+dotnet add package Azure.ResourceManager.ComputeFleet
 ```
 
 ### Prerequisites

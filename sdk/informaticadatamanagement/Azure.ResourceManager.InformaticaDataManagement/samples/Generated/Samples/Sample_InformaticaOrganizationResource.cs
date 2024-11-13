@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.InformaticaDataManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 {
     public partial class Sample_InformaticaOrganizationResource
     {
-        // Organizations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_OrganizationsGet()
         {
             // Generated from example definition: 2024-05-08/Organizations_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -46,13 +46,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Organizations_Get_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_OrganizationsGetMin()
         {
             // Generated from example definition: 2024-05-08/Organizations_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,13 +76,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Organizations_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_OrganizationsUpdate()
         {
             // Generated from example definition: 2024-05-08/Organizations_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -149,13 +147,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Organizations_Update_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_OrganizationsUpdateMin()
         {
             // Generated from example definition: 2024-05-08/Organizations_Update_MinimumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -181,13 +178,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Organizations_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_OrganizationsDelete()
         {
             // Generated from example definition: 2024-05-08/Organizations_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -205,16 +201,15 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             // invoke the operation
             await informaticaOrganization.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Organizations_Delete_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_OrganizationsDeleteMin()
         {
             // Generated from example definition: 2024-05-08/Organizations_Delete_MinimumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaOrganizationResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -232,12 +227,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             // invoke the operation
             await informaticaOrganization.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Organizations_GetServerlessMetadata
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetServerlessMetadata_OrganizationsGetServerlessMetadata()
         {
             // Generated from example definition: 2024-05-08/Organizations_GetServerlessMetadata_MaximumSet_Gen.json
@@ -262,9 +256,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Organizations_GetServerlessMetadata_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetServerlessMetadata_OrganizationsGetServerlessMetadataMin()
         {
             // Generated from example definition: 2024-05-08/Organizations_GetServerlessMetadata_MinimumSet_Gen.json
@@ -289,9 +282,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Organizations_GetAllServerlessRuntimes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllServerlessRuntimes_OrganizationsGetAllServerlessRuntimes()
         {
             // Generated from example definition: 2024-05-08/Organizations_GetAllServerlessRuntimes_MaximumSet_Gen.json
@@ -316,9 +308,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Organizations_GetAllServerlessRuntimes_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllServerlessRuntimes_OrganizationsGetAllServerlessRuntimesMin()
         {
             // Generated from example definition: 2024-05-08/Organizations_GetAllServerlessRuntimes_MinimumSet_Gen.json

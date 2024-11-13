@@ -15,86 +15,126 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// LogsSiteSlotConfig.
 /// </summary>
-public partial class LogsSiteSlotConfig : Resource
+public partial class LogsSiteSlotConfig : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Application logs configuration.
     /// </summary>
-    public BicepValue<ApplicationLogsConfig> ApplicationLogs { get => _applicationLogs; set => _applicationLogs.Assign(value); }
-    private readonly BicepValue<ApplicationLogsConfig> _applicationLogs;
+    public ApplicationLogsConfig ApplicationLogs 
+    {
+        get { Initialize(); return _applicationLogs!; }
+        set { Initialize(); AssignOrReplace(ref _applicationLogs, value); }
+    }
+    private ApplicationLogsConfig? _applicationLogs;
 
     /// <summary>
     /// HTTP logs configuration.
     /// </summary>
-    public BicepValue<AppServiceHttpLogsConfig> HttpLogs { get => _httpLogs; set => _httpLogs.Assign(value); }
-    private readonly BicepValue<AppServiceHttpLogsConfig> _httpLogs;
+    public AppServiceHttpLogsConfig HttpLogs 
+    {
+        get { Initialize(); return _httpLogs!; }
+        set { Initialize(); AssignOrReplace(ref _httpLogs, value); }
+    }
+    private AppServiceHttpLogsConfig? _httpLogs;
 
     /// <summary>
     /// True if configuration is enabled, false if it is disabled and null if
     /// configuration is not set.
     /// </summary>
-    public BicepValue<bool> IsDetailedErrorMessagesEnabled { get => _isDetailedErrorMessagesEnabled; set => _isDetailedErrorMessagesEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isDetailedErrorMessagesEnabled;
+    public BicepValue<bool> IsDetailedErrorMessagesEnabled 
+    {
+        get { Initialize(); return _isDetailedErrorMessagesEnabled!; }
+        set { Initialize(); _isDetailedErrorMessagesEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isDetailedErrorMessagesEnabled;
 
     /// <summary>
     /// True if configuration is enabled, false if it is disabled and null if
     /// configuration is not set.
     /// </summary>
-    public BicepValue<bool> IsFailedRequestsTracingEnabled { get => _isFailedRequestsTracingEnabled; set => _isFailedRequestsTracingEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isFailedRequestsTracingEnabled;
+    public BicepValue<bool> IsFailedRequestsTracingEnabled 
+    {
+        get { Initialize(); return _isFailedRequestsTracingEnabled!; }
+        set { Initialize(); _isFailedRequestsTracingEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isFailedRequestsTracingEnabled;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSiteSlot.
     /// </summary>
-    public WebSiteSlot? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSiteSlot> _parent;
+    public WebSiteSlot? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSiteSlot>? _parent;
 
     /// <summary>
     /// Creates a new LogsSiteSlotConfig.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the LogsSiteSlotConfig resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the LogsSiteSlotConfig.</param>
-    public LogsSiteSlotConfig(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/slots/config", resourceVersion ?? "2024-04-01")
+    public LogsSiteSlotConfig(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/config", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _applicationLogs = BicepValue<ApplicationLogsConfig>.DefineProperty(this, "ApplicationLogs", ["properties", "applicationLogs"]);
-        _httpLogs = BicepValue<AppServiceHttpLogsConfig>.DefineProperty(this, "HttpLogs", ["properties", "httpLogs"]);
-        _isDetailedErrorMessagesEnabled = BicepValue<bool>.DefineProperty(this, "IsDetailedErrorMessagesEnabled", ["properties", "detailedErrorMessages", "enabled"]);
-        _isFailedRequestsTracingEnabled = BicepValue<bool>.DefineProperty(this, "IsFailedRequestsTracingEnabled", ["properties", "failedRequestsTracing", "enabled"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebSiteSlot>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of LogsSiteSlotConfig.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _applicationLogs = DefineModelProperty<ApplicationLogsConfig>("ApplicationLogs", ["properties", "applicationLogs"]);
+        _httpLogs = DefineModelProperty<AppServiceHttpLogsConfig>("HttpLogs", ["properties", "httpLogs"]);
+        _isDetailedErrorMessagesEnabled = DefineProperty<bool>("IsDetailedErrorMessagesEnabled", ["properties", "detailedErrorMessages", "enabled"]);
+        _isFailedRequestsTracingEnabled = DefineProperty<bool>("IsFailedRequestsTracingEnabled", ["properties", "failedRequestsTracing", "enabled"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebSiteSlot>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -261,7 +301,7 @@ public partial class LogsSiteSlotConfig : Resource
     /// <summary>
     /// Creates a reference to an existing LogsSiteSlotConfig.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the LogsSiteSlotConfig resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -269,6 +309,6 @@ public partial class LogsSiteSlotConfig : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the LogsSiteSlotConfig.</param>
     /// <returns>The existing LogsSiteSlotConfig resource.</returns>
-    public static LogsSiteSlotConfig FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static LogsSiteSlotConfig FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

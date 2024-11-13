@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics.Tracing;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
@@ -91,6 +92,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="ownershipCount">The amount of ownership received from the storage service.</param>
         ///
         [Event(22, Level = EventLevel.Verbose, Message = "Completed listing ownership for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'.  There were {3} ownership entries were found.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         public virtual void ListOwnershipComplete(string fullyQualifiedNamespace,
                                                   string eventHubName,
                                                   string consumerGroup,
@@ -434,6 +436,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [RequiresUnreferencedCode(EventSourceRequiresUnreferencedCodeMessage)]
         private unsafe void WriteEvent<TValue1>(int eventId,
                                                 string arg1,
                                                 string arg2,
@@ -476,6 +479,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
@@ -518,6 +522,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
@@ -567,6 +572,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
@@ -621,6 +627,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [RequiresUnreferencedCode(EventSourceRequiresUnreferencedCodeMessage)]
         private unsafe void WriteEvent<TValue1>(int eventId,
                                                 string arg1,
                                                 string arg2,
@@ -677,6 +684,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
@@ -744,6 +752,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,

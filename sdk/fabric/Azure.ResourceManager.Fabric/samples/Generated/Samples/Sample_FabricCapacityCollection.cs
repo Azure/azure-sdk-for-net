@@ -11,18 +11,18 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Fabric.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Fabric.Samples
 {
     public partial class Sample_FabricCapacityCollection
     {
-        // Get a capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
-            // this example is just showing the usage of "FabricCapacities_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FabricCapacity_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,13 +50,12 @@ namespace Azure.ResourceManager.Fabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
-            // this example is just showing the usage of "FabricCapacities_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FabricCapacity_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -80,13 +79,12 @@ namespace Azure.ResourceManager.Fabric.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
-            // this example is just showing the usage of "FabricCapacities_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FabricCapacity_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -110,7 +108,7 @@ namespace Azure.ResourceManager.Fabric.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -122,13 +120,12 @@ namespace Azure.ResourceManager.Fabric.Samples
             }
         }
 
-        // Create or update a capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_CreateOrUpdate.json
-            // this example is just showing the usage of "FabricCapacities_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FabricCapacity_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -161,9 +158,8 @@ namespace Azure.ResourceManager.Fabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List capacities by resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListCapacitiesByResourceGroup()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_ListByResourceGroup.json
@@ -194,7 +190,7 @@ namespace Azure.ResourceManager.Fabric.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

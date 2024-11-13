@@ -24,7 +24,7 @@ internal class EntraLifecycle
         SetEntraIdAccessTokenFromEnvironment();
     }
 
-    internal async Task<bool> FetchEntraIdAccessTokenAsync(CancellationToken cancellationToken = default)
+    internal async Task FetchEntraIdAccessTokenAsync(CancellationToken cancellationToken = default)
     {
         try
         {
@@ -33,12 +33,12 @@ internal class EntraLifecycle
             _entraIdAccessToken = accessToken.Token;
             _entraIdAccessTokenExpiry = accessToken.ExpiresOn.ToUnixTimeSeconds();
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, _entraIdAccessToken);
-            return true;
+            return;
         }
         catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
-            return false;
+            throw new Exception(Constants.s_no_auth_error);
         }
     }
 

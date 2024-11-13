@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MongoCluster.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MongoCluster.Samples
 {
     public partial class Sample_MongoClusterFirewallRuleResource
     {
-        // Gets a firewall rule on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAFirewallRuleOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleGet.json
-            // this example is just showing the usage of "FirewallRules_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FirewallRule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -47,13 +47,12 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a firewall rule on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesAFirewallRuleOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleCreate.json
-            // this example is just showing the usage of "FirewallRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FirewallRule_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -84,13 +83,12 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes a firewall rule on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesAFirewallRuleOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleDelete.json
-            // this example is just showing the usage of "FirewallRules_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FirewallRule_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             // invoke the operation
             await mongoClusterFirewallRule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

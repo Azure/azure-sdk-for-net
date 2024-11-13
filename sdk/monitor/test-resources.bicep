@@ -296,13 +296,20 @@ output LOGS_ENDPOINT string =  'https://api.loganalytics.io'
 
 output CONNECTION_STRING string = ApplicationInsightsResource1.properties.ConnectionString
 output WORKSPACE_ID string = LogAnalyticsWorkspace1.properties.customerId
-output WORKSPACE_PRIMARY_RESOURCE_ID string = LogAnalyticsWorkspace1.id
 
 output SECONDARY_CONNECTION_STRING string = ApplicationInsightsResource2.properties.ConnectionString
 output SECONDARY_WORKSPACE_ID string = LogAnalyticsWorkspace2.properties.customerId
-output WORKSPACE_SECONDARY_RESOURCE_ID string = LogAnalyticsWorkspace2.id
 
+// VALUES NEEDED FOR AZURE.MONITOR.QUERY
+output WORKSPACE_PRIMARY_RESOURCE_ID string = LogAnalyticsWorkspace1.id
+output WORKSPACE_SECONDARY_RESOURCE_ID string = LogAnalyticsWorkspace2.id
 output STORAGE_NAME string = storageAccount.name
 output STORAGE_ID string = storageAccount.id
 output METRICS_RESOURCE_ID string = LogAnalyticsWorkspace1.id
 output METRICS_RESOURCE_NAMESPACE string = 'Microsoft.OperationalInsights/workspaces'
+
+// VALUES NEEDED FOR AZURE.MONITOR.INGESTION
+output INGESTION_DATA_COLLECTION_RULE_ID string = dataCollectionRule1.id
+output INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID string = dataCollectionRule1.properties.immutableId
+output MONITOR_INGESTION_DATA_COLLECTION_ENDPOINT string = dataCollectionEndpoint1.properties.logsIngestion.endpoint
+output INGESTION_STREAM_NAME string = streamName
