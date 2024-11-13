@@ -320,7 +320,7 @@ extends:
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
             parameters:
               Paths:
-              - "/sdk/core/Azure.Core/src/Shared"
+              - /sdk/core/Azure.Core/src/Shared
 
           - pwsh: |
               $generateJobResult = '$(generateJobResult)'
