@@ -18,103 +18,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_StorageClassGet0()
-        {
-            // Generated from example definition: 2024-03-01/StorageClass_Get.json
-            // this example is just showing the usage of "StorageClassResource_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this ConnectedClusterStorageClassResource
-            string resourceUri = "subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/cluster1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            ConnectedClusterStorageClassCollection collection = client.GetConnectedClusterStorageClasses(scopeId);
-
-            // invoke the operation
-            string storageClassName = "testrwx";
-            ConnectedClusterStorageClassResource result = await collection.GetAsync(storageClassName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ConnectedClusterStorageClassData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_StorageClassGet0()
-        {
-            // Generated from example definition: 2024-03-01/StorageClass_Get.json
-            // this example is just showing the usage of "StorageClassResource_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this ConnectedClusterStorageClassResource
-            string resourceUri = "subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/cluster1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            ConnectedClusterStorageClassCollection collection = client.GetConnectedClusterStorageClasses(scopeId);
-
-            // invoke the operation
-            string storageClassName = "testrwx";
-            bool result = await collection.ExistsAsync(storageClassName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_StorageClassGet0()
-        {
-            // Generated from example definition: 2024-03-01/StorageClass_Get.json
-            // this example is just showing the usage of "StorageClassResource_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this ConnectedClusterStorageClassResource
-            string resourceUri = "subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/cluster1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            ConnectedClusterStorageClassCollection collection = client.GetConnectedClusterStorageClasses(scopeId);
-
-            // invoke the operation
-            string storageClassName = "testrwx";
-            NullableResponse<ConnectedClusterStorageClassResource> response = await collection.GetIfExistsAsync(storageClassName);
-            ConnectedClusterStorageClassResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ConnectedClusterStorageClassData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageClassCreateOrUpdate0()
         {
             // Generated from example definition: 2024-03-01/StorageClass_CreateOrUpdate.json
@@ -125,22 +28,45 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this ConnectedClusterStorageClassResource
             string resourceUri = "subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/cluster1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            ConnectedClusterStorageClassCollection collection = client.GetConnectedClusterStorageClasses(scopeId);
+            ConnectedClusterStorageClassCollection collection = client.GetConnectedClusterStorageClasses(new ResourceIdentifier(resourceUri));
 
             // invoke the operation
             string storageClassName = "testrwx";
-            ConnectedClusterStorageClassData data = new ConnectedClusterStorageClassData()
+            ConnectedClusterStorageClassData data = new ConnectedClusterStorageClassData
             {
                 Properties = new ConnectedClusterStorageClassProperties(new RwxStorageClassTypeProperties("default")),
             };
             ArmOperation<ConnectedClusterStorageClassResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, storageClassName, data);
             ConnectedClusterStorageClassResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ConnectedClusterStorageClassData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_StorageClassGet0()
+        {
+            // Generated from example definition: 2024-03-01/StorageClass_Get.json
+            // this example is just showing the usage of "StorageClassResource_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this ConnectedClusterStorageClassResource
+            string resourceUri = "subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/cluster1";
+            ConnectedClusterStorageClassCollection collection = client.GetConnectedClusterStorageClasses(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string storageClassName = "testrwx";
+            ConnectedClusterStorageClassResource result = await collection.GetAsync(storageClassName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -161,13 +87,9 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this ConnectedClusterStorageClassResource
             string resourceUri = "subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/cluster1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            ConnectedClusterStorageClassCollection collection = client.GetConnectedClusterStorageClasses(scopeId);
+            ConnectedClusterStorageClassCollection collection = client.GetConnectedClusterStorageClasses(new ResourceIdentifier(resourceUri));
 
             // invoke the operation and iterate over the result
             await foreach (ConnectedClusterStorageClassResource item in collection.GetAllAsync())
@@ -180,6 +102,64 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             }
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_StorageClassGet0()
+        {
+            // Generated from example definition: 2024-03-01/StorageClass_Get.json
+            // this example is just showing the usage of "StorageClassResource_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this ConnectedClusterStorageClassResource
+            string resourceUri = "subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/cluster1";
+            ConnectedClusterStorageClassCollection collection = client.GetConnectedClusterStorageClasses(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string storageClassName = "testrwx";
+            bool result = await collection.ExistsAsync(storageClassName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_StorageClassGet0()
+        {
+            // Generated from example definition: 2024-03-01/StorageClass_Get.json
+            // this example is just showing the usage of "StorageClassResource_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this ConnectedClusterStorageClassResource
+            string resourceUri = "subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/cluster1";
+            ConnectedClusterStorageClassCollection collection = client.GetConnectedClusterStorageClasses(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string storageClassName = "testrwx";
+            NullableResponse<ConnectedClusterStorageClassResource> response = await collection.GetIfExistsAsync(storageClassName);
+            ConnectedClusterStorageClassResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ConnectedClusterStorageClassData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

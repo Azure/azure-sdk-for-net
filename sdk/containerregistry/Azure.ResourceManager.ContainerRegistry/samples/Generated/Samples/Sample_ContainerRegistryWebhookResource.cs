@@ -96,23 +96,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             ContainerRegistryWebhookResource containerRegistryWebhook = client.GetContainerRegistryWebhookResource(containerRegistryWebhookResourceId);
 
             // invoke the operation
-            ContainerRegistryWebhookPatch patch = new ContainerRegistryWebhookPatch()
+            ContainerRegistryWebhookPatch patch = new ContainerRegistryWebhookPatch
             {
                 Tags =
 {
-["key"] = "value",
+["key"] = "value"
 },
                 ServiceUri = new Uri("http://myservice.com"),
                 CustomHeaders =
 {
-["Authorization"] = "******",
+["Authorization"] = "******"
 },
                 Status = ContainerRegistryWebhookStatus.Enabled,
                 Scope = "myRepository",
-                Actions =
-{
-ContainerRegistryWebhookAction.Push
-},
+                Actions = { ContainerRegistryWebhookAction.Push },
             };
             ArmOperation<ContainerRegistryWebhookResource> lro = await containerRegistryWebhook.UpdateAsync(WaitUntil.Completed, patch);
             ContainerRegistryWebhookResource result = lro.Value;

@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.DataMigration.Samples
             ProjectFileResource projectFile = client.GetProjectFileResource(projectFileResourceId);
 
             // invoke the operation
-            ProjectFileData data = new ProjectFileData()
+            ProjectFileData data = new ProjectFileData
             {
-                Properties = new ProjectFileProperties()
+                Properties = new ProjectFileProperties
                 {
                     FilePath = "DmsSdkFilePath/DmsSdkFile.sql",
                 },
