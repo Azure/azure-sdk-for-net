@@ -39,7 +39,7 @@ namespace Azure.Generator.Providers.Abstraction
             => new HttpPipelineProvider(expression);
 
         public override ValueExpression PerRetryPolicy(params ValueExpression[] arguments)
-            => Empty; // TODO: implement with default retry policy for Azure
+            => New.Instance(typeof(AzureKeyCredentialPolicy), arguments);
 
         public override ClientPipelineApi ToExpression() => this;
 

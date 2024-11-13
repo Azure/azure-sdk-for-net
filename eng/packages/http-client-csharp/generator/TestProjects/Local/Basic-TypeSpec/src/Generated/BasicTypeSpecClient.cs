@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,7 +22,7 @@ namespace BasicTypeSpec
         private readonly Uri _endpoint;
         private const string AuthorizationHeader = "my-api-key";
         /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly ApiKeyCredential _keyCredential;
+        private readonly AzureKeyCredential _keyCredential;
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient for mocking. </summary>
         protected BasicTypeSpecClient()
@@ -34,7 +33,7 @@ namespace BasicTypeSpec
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, ApiKeyCredential keyCredential) : this(endpoint, keyCredential, new BasicTypeSpecClientOptions())
+        public BasicTypeSpecClient(Uri endpoint, AzureKeyCredential keyCredential) : this(endpoint, keyCredential, new BasicTypeSpecClientOptions())
         {
         }
 
@@ -43,7 +42,7 @@ namespace BasicTypeSpec
         /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, ApiKeyCredential keyCredential, BasicTypeSpecClientOptions options)
+        public BasicTypeSpecClient(Uri endpoint, AzureKeyCredential keyCredential, BasicTypeSpecClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(keyCredential, nameof(keyCredential));
@@ -52,7 +51,7 @@ namespace BasicTypeSpec
 
             _endpoint = endpoint;
             _keyCredential = keyCredential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] {  });
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new Azure.Core.AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
