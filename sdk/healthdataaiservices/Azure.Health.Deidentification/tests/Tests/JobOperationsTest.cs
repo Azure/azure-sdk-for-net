@@ -5,6 +5,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -111,6 +114,8 @@ namespace Azure.Health.Deidentification.Tests
 
             string jobName = GenerateJobName();
             const string inputPrefix = "example_patient_1";
+            const int expectedReportCount = 3;
+            const int maxPageSize = 2;
 
             DeidentificationJob job = new()
             {
@@ -125,29 +130,41 @@ namespace Azure.Health.Deidentification.Tests
             Assert.AreEqual(JobStatus.Succeeded, job.Status);
             Assert.IsNotNull(job.StartedAt);
             Assert.IsNotNull(job.Summary);
-            Assert.AreEqual(3, job.Summary.Total);
-            Assert.AreEqual(3, job.Summary.Successful);
+            Assert.AreEqual(expectedReportCount, job.Summary.Total);
+            Assert.AreEqual(expectedReportCount, job.Summary.Successful);
 
-            // Check file reports, using maxpagesize of 2 to test paging.
-            var reports = client.GetJobDocumentsAsync(jobName, 2).GetAsyncEnumerator();
-            int reportCount = 0;
-            var reportIds = new HashSet<string>();
-            while (await reports.MoveNextAsync())
+            // Check file reports, using maxpagesize parameter to test pagination.
+            var reportIds = new List<string>();
+            int numPages = 0;
+            int maxPages = 10;
+
+            IAsyncEnumerable<Page<DocumentDetails>> pages = client.GetJobDocumentsAsync(jobName, maxPageSize).AsPages();
+            IAsyncEnumerator<Page<DocumentDetails>> enumerator = pages.GetAsyncEnumerator();
+
+            while (numPages < maxPages && await enumerator.MoveNextAsync())
             {
-                reportCount++;
-                reportIds.Add(reports.Current.Id);
-                if (Mode != RecordedTestMode.Playback)
+                Page<DocumentDetails> page = enumerator.Current;
+                numPages++;
+
+                Assert.IsTrue(page.Values.Count <= maxPageSize);
+                foreach (DocumentDetails report in page.Values)
                 {
-                    Assert.IsTrue(reports.Current.Input.Location.ToString().Contains(inputPrefix), $"Input location {reports.Current.Input.Location.ToString()} does not contain input prefix.");
-                    Assert.IsTrue(reports.Current.Output.Location.ToString().Contains(OUTPUT_FOLDER));
+                    if (reportIds.Contains(report.Id))
+                    {
+                        Assert.Fail("Duplicate report ID found.");
+                    }
+                    reportIds.Add(report.Id);
+                    Assert.IsTrue(report.Input.Location.ToString().Contains(inputPrefix),
+                                  $"Input location {report.Input.Location.ToString()} does not contain input prefix.");
+                    Assert.IsTrue(report.Output.Location.ToString().Contains(OUTPUT_FOLDER));
+                    Assert.IsNotNull(report.Input.Etag);
+                    Assert.AreEqual(OperationState.Succeeded, report.Status);
+                    Assert.IsNotNull(report.Output.Etag);
+                    Assert.IsTrue(report.Id.Length == 36); // Is Guid.
                 }
-                Assert.IsNotNull(reports.Current.Input.Etag);
-                Assert.AreEqual(OperationState.Succeeded, reports.Current.Status);
-                Assert.IsNotNull(reports.Current.Output.Etag);
-                Assert.IsTrue(reports.Current.Id.Length == 36); // Is Guid.
             }
-            Assert.AreEqual(3, reportIds.Count);
-            Assert.AreEqual(3, reportCount);
+            Assert.AreEqual(Math.Ceiling((1.0 * expectedReportCount) / maxPageSize), numPages);
+            Assert.AreEqual(expectedReportCount, reportIds.Count);
         }
 
         [Test]

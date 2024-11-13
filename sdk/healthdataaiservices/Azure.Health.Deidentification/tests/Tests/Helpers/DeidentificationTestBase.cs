@@ -12,7 +12,7 @@ namespace Azure.Health.Deidentification.Tests
     {
         public DeidentificationTestBase(bool isAsync) : base(isAsync)
         {
-            BodyKeySanitizers.Add(new BodyKeySanitizer("$..location") { Value = DeidentificationTestEnvironment.FakeStorageLocation });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..location") { Value = DeidentificationTestEnvironment.FakeStorageLocation }); // update this to avoid sanitizing location in file reports, still want to sanitize location in job definitions
             BodyKeySanitizers.Add(new BodyKeySanitizer("$..nextLink") { Value = DeidentificationTestEnvironment.FakeNextLink });
             UriRegexSanitizers.Add(new UriRegexSanitizer(@"net-sdk-job-\d+-[0-9_]+") { Value = DeidentificationTestEnvironment.FakeJobName });
             UriRegexSanitizers.Add(new UriRegexSanitizer(@"continuationToken=[A-Za-z0-9%._~-]+") { Value = DeidentificationTestEnvironment.FakeContinuationTokenSegment });

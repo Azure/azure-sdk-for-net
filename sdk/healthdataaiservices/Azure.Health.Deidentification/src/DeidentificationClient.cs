@@ -20,8 +20,11 @@ namespace Azure.Health.Deidentification
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Resource list operation template. </remarks>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<DeidentificationJob> GetJobsAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
+            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobs");
+            scope.Start();
             return GetJobsInternalsAsync(maxpagesize, null, cancellationToken);
         }
 
@@ -29,8 +32,11 @@ namespace Azure.Health.Deidentification
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Resource list operation template. </remarks>
+        [ForwardsClientCalls]
         public virtual Pageable<DeidentificationJob> GetJobs(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
+            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobs");
+            scope.Start();
             return GetJobsInternals(maxpagesize, null, cancellationToken);
         }
 
@@ -53,8 +59,11 @@ namespace Azure.Health.Deidentification
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<BinaryData> GetJobsAsync(int? maxpagesize, RequestContext context)
         {
+            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobs");
+            scope.Start();
             return GetJobsInternalsAsync(maxpagesize, null, context);
         }
 
@@ -77,8 +86,11 @@ namespace Azure.Health.Deidentification
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        [ForwardsClientCalls]
         public virtual Pageable<BinaryData> GetJobs(int? maxpagesize, RequestContext context)
         {
+            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobs");
+            scope.Start();
             return GetJobsInternals(maxpagesize, null, context);
         }
 
@@ -89,8 +101,11 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> The most basic operation. </remarks>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<DocumentDetails> GetJobDocumentsAsync(string jobName, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
+            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocuments");
+            scope.Start();
             return GetJobDocumentsInternalsAsync(jobName, maxpagesize, null, cancellationToken);
         }
 
@@ -101,8 +116,11 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> The most basic operation. </remarks>
+        [ForwardsClientCalls]
         public virtual Pageable<DocumentDetails> GetJobDocuments(string jobName, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
+            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocuments");
+            scope.Start();
             return GetJobDocumentsInternals(jobName, maxpagesize, null, cancellationToken);
         }
 
@@ -128,8 +146,11 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<BinaryData> GetJobDocumentsAsync(string jobName, int? maxpagesize, RequestContext context)
         {
+            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocuments");
+            scope.Start();
             return GetJobDocumentsInternalsAsync(jobName, maxpagesize, null, context);
         }
 
@@ -155,8 +176,11 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        [ForwardsClientCalls]
         public virtual Pageable<BinaryData> GetJobDocuments(string jobName, int? maxpagesize, RequestContext context)
         {
+            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocuments");
+            scope.Start();
             return GetJobDocumentsInternals(jobName, maxpagesize, null, context);
         }
     }
