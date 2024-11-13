@@ -88,7 +88,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             if (string.IsNullOrEmpty(runId?.ToString()))
                 _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, ReporterUtils.GetRunId(cIInfo));
             else
-                _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId!.ToString());
+                _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId!.ToString()!); // runId is checked above
         }
         else
         {
