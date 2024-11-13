@@ -32,7 +32,17 @@ public class PlaywrightServiceTests
     [SetUp]
     public void Setup()
     {
+        // Temporary - Switch to IEnvironment
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, "https://playwright.microsoft.com");
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_workspace_id_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable, null);
     }
     [TearDown]
     public void TearDown()
@@ -45,6 +55,8 @@ public class PlaywrightServiceTests
         Environment.SetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable, null);
         Environment.SetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable, null);
         Environment.SetEnvironmentVariable(Constants.s_playwright_service_workspace_id_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable, null);
     }
 
     [Test]
@@ -65,9 +77,9 @@ public class PlaywrightServiceTests
             Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId), Is.Not.Null);
             Assert.That(playwrightService.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
             Assert.That(playwrightService.UseCloudHostedBrowsers, Is.True);
-            Assert.IsNull(playwrightService.Os);
-            Assert.IsNull(playwrightService.ExposeNetwork);
-            Assert.IsNull(playwrightService.RunId);
+            Assert.AreEqual(playwrightService.Os!, OSPlatform.Linux);
+            Assert.AreEqual(playwrightService.ExposeNetwork!, Constants.s_default_expose_network);
+            Assert.That(playwrightService.RunId, Is.Not.Null);
         });
     }
 
@@ -76,7 +88,7 @@ public class PlaywrightServiceTests
     {
         var playwrightService = new PlaywrightService(os: OSPlatform.Windows, entraLifecycle: null);
         Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs), Is.EqualTo(ServiceOs.Windows));
-        Assert.That(playwrightService.Os, Is.EqualTo(ServiceOs.Windows));
+        Assert.That(playwrightService.Os, Is.EqualTo(OSPlatform.Windows));
     }
 
     [Test]

@@ -214,6 +214,7 @@ internal class Constants
     internal static readonly string s_playwright_service_disable_scalable_execution_environment_variable = "_MPT_DISABLE_SCALABLE_EXECUTION";
     internal static readonly string s_playwright_service_reporting_url_environment_variable = "_MPT_REPORTING_URL";
     internal static readonly string s_playwright_service_workspace_id_environment_variable = "_MPT_WORKSPACE_ID";
+    internal static readonly string s_playwright_service_auth_type_environment_variable = "_MPT_AUTH_TYPE";
 }
 
 internal class OSConstants

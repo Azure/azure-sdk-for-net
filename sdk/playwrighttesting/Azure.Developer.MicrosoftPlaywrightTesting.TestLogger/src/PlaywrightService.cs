@@ -20,26 +20,119 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 /// </summary>
 public class PlaywrightService
 {
+    private string? _serviceAuth;
     /// <summary>
     /// Gets or sets the default authentication mechanism.
     /// </summary>
-    public string ServiceAuth { get; set; } = ServiceAuthType.EntraId;
+    public string ServiceAuth
+    {
+        // fetch class level variable if set -> fetch environment variable -> default to EntraId
+        get
+        {
+            if (!string.IsNullOrEmpty(_serviceAuth))
+                return _serviceAuth!;
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable)))
+                return Environment.GetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable)!;
+            return ServiceAuthType.EntraId;
+        }
+        set
+        {
+            _serviceAuth = value;
+        }
+    }
+
     /// <summary>
-    /// Gets or sets a flag indicating whether to use cloud-hosted browsers.
-    /// </summary>
-    public bool UseCloudHostedBrowsers { get; set; } = true;
-    /// <summary>
-    /// Gets or sets the rotation timer for the Playwright service.
+    /// Gets or sets the rotation timer for Playwright service.
     /// </summary>
     public Timer? RotationTimer { get; set; }
     /// <summary>
-    /// Gets the service endpoint for the Playwright service.
+    /// Gets the service endpoint for Playwright service.
     /// </summary>
     public static string? ServiceEndpoint => Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri);
 
-    internal string? Os { get; set; }
-    internal string? RunId { get; set; }
-    internal string? ExposeNetwork { get; set; }
+    private bool? _useCloudHostedBrowsers;
+    /// <summary>
+    /// Gets or sets a flag indicating whether to use cloud-hosted browsers.
+    /// </summary>
+    public bool UseCloudHostedBrowsers
+    {
+        // fetch class level variable if set -> fetch environment variable -> default to true
+        get
+        {
+            if (_useCloudHostedBrowsers != null)
+                return (bool)_useCloudHostedBrowsers;
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable)))
+                return !bool.Parse(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable));
+            return true;
+        }
+        set
+        {
+            _useCloudHostedBrowsers = value;
+        }
+    }
+
+    private OSPlatform? _os;
+    /// <summary>
+    /// Gets or sets the operating system for Playwright service.
+    /// </summary>
+    public OSPlatform? Os
+    {
+        // fetch class level variable if set -> fetch environment variable -> default to null
+        get
+        {
+            if (_os != null)
+                return _os;
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs)))
+                return GetOSPlatform(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs));
+            return null;
+        }
+        set
+        {
+            _os = value;
+        }
+    }
+
+    private string? _runId;
+    /// <summary>
+    /// Gets or sets the run ID.
+    /// </summary>
+    public string? RunId
+    {
+        // fetch class level variable if set -> fetch environment variable -> default to null
+        get
+        {
+            if (!string.IsNullOrEmpty(_runId))
+                return _runId;
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId)))
+                return Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
+            return null;
+        }
+        set
+        {
+            _runId = value;
+        }
+    }
+
+    private string? _exposeNetwork;
+    /// <summary>
+    /// Gets or sets the expose network field for remote browsers.
+    /// </summary>
+    public string? ExposeNetwork
+    {
+        // fetch class level variable if set -> fetch environment variable -> default to null
+        get
+        {
+            if (!string.IsNullOrEmpty(_exposeNetwork))
+                return _exposeNetwork;
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork)))
+                return Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork);
+            return null;
+        }
+        set
+        {
+            _exposeNetwork = value;
+        }
+    }
 
     private readonly EntraLifecycle? _entraLifecycle;
     private readonly JsonWebTokenHandler? _jsonWebTokenHandler;
@@ -76,7 +169,7 @@ public class PlaywrightService
             return;
         _entraLifecycle = new EntraLifecycle(tokenCredential: credential);
         _jsonWebTokenHandler = new JsonWebTokenHandler();
-        InitializePlaywrightServiceEnvironmentVariables(getServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
+        InitializePlaywrightServiceEnvironmentVariables(GetServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
     internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null)
@@ -85,7 +178,7 @@ public class PlaywrightService
             return;
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
         _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential, _jsonWebTokenHandler);
-        InitializePlaywrightServiceEnvironmentVariables(getServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
+        InitializePlaywrightServiceEnvironmentVariables(GetServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
     /// <summary>
@@ -103,9 +196,9 @@ public class PlaywrightService
             throw new Exception(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message);
         if (string.IsNullOrEmpty(ServiceEndpoint))
             throw new Exception(Constants.s_no_service_endpoint_error_message);
-        string _serviceOs = Uri.EscapeDataString(getServiceCompatibleOs(os) ?? Os ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs) ?? Constants.s_default_os);
-        string _runId = Uri.EscapeDataString(runId ?? RunId ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId) ?? GetDefaultRunId());
-        string _exposeNetwork = exposeNetwork ?? ExposeNetwork ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork) ?? Constants.s_default_expose_network;
+        string _serviceOs = Uri.EscapeDataString(GetServiceCompatibleOs(os) ?? GetServiceCompatibleOs(Os)!);
+        string _runId = Uri.EscapeDataString(runId ?? RunId!);
+        string _exposeNetwork = exposeNetwork ?? ExposeNetwork!;
 
         string wsEndpoint = $"{ServiceEndpoint}?os={_serviceOs}&runId={_runId}&api-version={Constants.s_api_version}";
 
@@ -179,9 +272,15 @@ public class PlaywrightService
 
     private void InitializePlaywrightServiceEnvironmentVariables(string? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null)
     {
+        // environment variables are set only if they are not already set
+        // If method parameters are set, environment variables are set to those values only if they are not already set
         if (!string.IsNullOrEmpty(serviceAuth))
         {
             ServiceAuth = serviceAuth!;
+        }
+        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable)))
+        {
+            Environment.SetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable, ServiceAuth);
         }
         if (useCloudHostedBrowsers != null)
         {
@@ -191,12 +290,13 @@ public class PlaywrightService
         }
         if (!string.IsNullOrEmpty(os))
         {
-            Os = os;
+            Os = GetOSPlatform(os);
             if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs)))
             {
                 Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, os);
             }
         }
+        // If OS is not provided, set it to default
         else if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs)))
         {
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, Constants.s_default_os);
@@ -276,7 +376,7 @@ public class PlaywrightService
             throw new Exception(Constants.s_expired_mpt_pat_error);
     }
 
-    private string? getServiceCompatibleOs(OSPlatform? oSPlatform)
+    internal static string? GetServiceCompatibleOs(OSPlatform? oSPlatform)
     {
         if (oSPlatform == null)
             return null;
@@ -284,6 +384,17 @@ public class PlaywrightService
             return ServiceOs.Linux;
         if (oSPlatform.Equals(OSPlatform.Windows))
             return ServiceOs.Windows;
+        throw new ArgumentException(Constants.s_invalid_os_error);
+    }
+
+    internal static OSPlatform? GetOSPlatform(string? os)
+    {
+        if (string.IsNullOrEmpty(os))
+            return null;
+        if (os == ServiceOs.Linux)
+            return OSPlatform.Linux;
+        if (os == ServiceOs.Windows)
+            return OSPlatform.Windows;
         throw new ArgumentException(Constants.s_invalid_os_error);
     }
 }
