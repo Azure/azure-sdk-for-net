@@ -17,6 +17,13 @@ namespace Azure.AI.Translation.Document
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentTranslateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
+        void IJsonModel<DocumentTranslateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
         DocumentTranslateContent IJsonModel<DocumentTranslateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentTranslateContent>)this).GetFormatFromOptions(options) : options.Format;

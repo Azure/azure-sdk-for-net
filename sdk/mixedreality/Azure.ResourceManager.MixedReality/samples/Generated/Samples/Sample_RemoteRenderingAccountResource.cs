@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.MixedReality.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MixedReality.Samples
 {
     public partial class Sample_RemoteRenderingAccountResource
     {
-        // List remote rendering accounts by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRemoteRenderingAccounts_ListRemoteRenderingAccountsBySubscription()
         {
             // Generated from example definition: specification/mixedreality/resource-manager/Microsoft.MixedReality/stable/2021-01-01/examples/remote-rendering/GetBySubscription.json
@@ -46,12 +46,11 @@ namespace Azure.ResourceManager.MixedReality.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Delete remote rendering account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteRemoteRenderingAccount()
         {
             // Generated from example definition: specification/mixedreality/resource-manager/Microsoft.MixedReality/stable/2021-01-01/examples/remote-rendering/Delete.json
@@ -73,12 +72,11 @@ namespace Azure.ResourceManager.MixedReality.Samples
             // invoke the operation
             await remoteRenderingAccount.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get remote rendering account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRemoteRenderingAccount()
         {
             // Generated from example definition: specification/mixedreality/resource-manager/Microsoft.MixedReality/stable/2021-01-01/examples/remote-rendering/Get.json
@@ -107,9 +105,8 @@ namespace Azure.ResourceManager.MixedReality.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update remote rendering account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateRemoteRenderingAccount()
         {
             // Generated from example definition: specification/mixedreality/resource-manager/Microsoft.MixedReality/stable/2021-01-01/examples/remote-rendering/Patch.json
@@ -147,9 +144,8 @@ namespace Azure.ResourceManager.MixedReality.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List remote rendering account key
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_ListRemoteRenderingAccountKey()
         {
             // Generated from example definition: specification/mixedreality/resource-manager/Microsoft.MixedReality/stable/2021-01-01/examples/remote-rendering/ListKeys.json
@@ -174,9 +170,8 @@ namespace Azure.ResourceManager.MixedReality.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Regenerate remote rendering account keys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKeys_RegenerateRemoteRenderingAccountKeys()
         {
             // Generated from example definition: specification/mixedreality/resource-manager/Microsoft.MixedReality/stable/2021-01-01/examples/remote-rendering/RegenerateKey.json

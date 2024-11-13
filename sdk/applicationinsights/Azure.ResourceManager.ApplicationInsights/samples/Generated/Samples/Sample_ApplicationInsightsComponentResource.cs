@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApplicationInsights.Samples
 {
     public partial class Sample_ApplicationInsightsComponentResource
     {
-        // ComponentsList.json
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetApplicationInsightsComponents_ComponentsListJson()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsList.json
@@ -45,12 +45,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ComponentsDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ComponentsDelete()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsDelete.json
@@ -72,12 +71,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             // invoke the operation
             await applicationInsightsComponent.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ComponentGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ComponentGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsGet.json
@@ -106,9 +104,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ComponentUpdateTagsOnly
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ComponentUpdateTagsOnly()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsUpdateTagsOnly.json
@@ -148,9 +145,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ComponentPurge
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Purge_ComponentPurge()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsPurge.json
@@ -184,9 +180,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ComponentPurge
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPurgeStatus_ComponentPurge()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsPurgeStatus.json
@@ -212,9 +207,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AnnotationsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAnnotations_AnnotationsList()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/AnnotationsList.json
@@ -241,12 +235,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AnnotationsCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateAnnotations_AnnotationsCreate()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/AnnotationsCreate.json
@@ -279,12 +272,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AnnotationsDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteAnnotation_AnnotationsDelete()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/AnnotationsDelete.json
@@ -307,12 +299,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             string annotationId = "bb820f1b-3110-4a8b-ba2c-8c1129d7eb6a";
             await applicationInsightsComponent.DeleteAnnotationAsync(annotationId);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AnnotationsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAnnotations_AnnotationsGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/AnnotationsGet.json
@@ -338,12 +329,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // APIKeysList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetApiKeys_APIKeysList()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/APIKeysList.json
@@ -368,12 +358,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // APIKeyCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateApiKey_APIKeyCreate()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/APIKeysCreate.json
@@ -410,9 +399,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // APIKeyDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteApiKey_APIKeyDelete()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/APIKeysDelete.json
@@ -438,9 +426,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // APIKeysGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetApiKey_APIKeysGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/APIKeysGet.json
@@ -466,9 +453,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExportConfigurationsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetExportConfigurations_ExportConfigurationsList()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/ExportConfigurationsList.json
@@ -493,12 +479,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ExportConfigurationPost
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateExportConfigurations_ExportConfigurationPost()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/ExportConfigurationsPost.json
@@ -535,12 +520,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ExportConfigurationDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteExportConfiguration_ExportConfigurationDelete()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/ExportConfigurationDelete.json
@@ -566,9 +550,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExportConfigurationGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetExportConfiguration_ExportConfigurationGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/ExportConfigurationGet.json
@@ -594,9 +577,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExportConfigurationUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateExportConfiguration_ExportConfigurationUpdate()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/ExportConfigurationUpdate.json
@@ -634,9 +616,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ComponentCurrentBillingFeaturesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetComponentCurrentBillingFeature_ComponentCurrentBillingFeaturesGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/CurrentBillingFeaturesGet.json
@@ -661,9 +642,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ComponentCurrentBillingFeaturesUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateComponentCurrentBillingFeature_ComponentCurrentBillingFeaturesUpdate()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/CurrentBillingFeaturesUpdate.json
@@ -700,9 +680,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ComponentCurrentBillingFeaturesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetComponentQuotaStatus_ComponentCurrentBillingFeaturesGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/QuotaStatusGet.json
@@ -727,9 +706,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ComponentCurrentBillingFeaturesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetComponentFeatureCapability_ComponentCurrentBillingFeaturesGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/FeatureCapabilitiesGet.json
@@ -754,9 +732,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ComponentCurrentBillingFeaturesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetComponentAvailableFeature_ComponentCurrentBillingFeaturesGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/AvailableBillingFeaturesGet.json
@@ -781,9 +758,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ProactiveDetectionConfigurationsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProactiveDetectionConfigurations_ProactiveDetectionConfigurationsList()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/ProactiveDetectionConfigurationsList.json
@@ -808,12 +784,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ProactiveDetectionConfigurationGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProactiveDetectionConfiguration_ProactiveDetectionConfigurationGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/ProactiveDetectionConfigurationGet.json
@@ -839,9 +814,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ProactiveDetectionConfigurationUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateProactiveDetectionConfiguration_ProactiveDetectionConfigurationUpdate()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/ProactiveDetectionConfigurationUpdate.json
@@ -889,9 +863,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // WorkItemConfigurationsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWorkItemConfigurations_WorkItemConfigurationsList()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/WorkItemConfigsGet.json
@@ -916,12 +889,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // WorkItemConfigurationsGetDefault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDefaultWorkItemConfiguration_WorkItemConfigurationsGetDefault()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/WorkItemConfigDefaultGet.json
@@ -946,9 +918,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // WorkItemConfigurationDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteWorkItemConfiguration_WorkItemConfigurationDelete()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/WorkItemConfigDelete.json
@@ -971,12 +942,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             string workItemConfigId = "Visual Studio Team Services";
             await applicationInsightsComponent.DeleteWorkItemConfigurationAsync(workItemConfigId);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // WorkItemConfigurationsGetDefault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetItemWorkItemConfiguration_WorkItemConfigurationsGetDefault()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/WorkItemConfigGet.json
@@ -1002,9 +972,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // FavoritesList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFavorites_FavoritesList()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/FavoritesList.json
@@ -1029,12 +998,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // FavoriteGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFavorite_FavoriteGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/FavoriteGet.json
@@ -1060,9 +1028,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // FavoriteAdd
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AddFavorite_FavoriteAdd()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/FavoriteAdd.json
@@ -1102,9 +1069,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // FavoriteList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateFavorite_FavoriteList()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/FavoriteUpdate.json
@@ -1144,9 +1110,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // FavoriteList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteFavorite_FavoriteList()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/FavoriteDelete.json
@@ -1169,12 +1134,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             string favoriteId = "deadb33f-5e0d-4064-8ebb-1a4ed0313eb2";
             await applicationInsightsComponent.DeleteFavoriteAsync(favoriteId);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // WebTestLocationsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWebTestLocations_WebTestLocationsList()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/WebTestLocationsList.json
@@ -1199,12 +1163,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // webTestListByComponent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWebTests_WebTestListByComponent()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/WebTestListByComponent.json
@@ -1233,12 +1196,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AnalyticsItemList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAnalyticsItems_AnalyticsItemList()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/AnalyticsItemList.json
@@ -1264,12 +1226,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AnalyticsItemGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAnalyticsItem_AnalyticsItemGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/AnalyticsItemGet.json
@@ -1296,9 +1257,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AnalyticsItemPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AddOrUpdateAnalyticsItem_AnalyticsItemPut()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/AnalyticsItemPut.json
@@ -1331,9 +1291,8 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AnalyticsItemDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteAnalyticsItem_AnalyticsItemDelete()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/AnalyticsItemDelete.json
@@ -1357,7 +1316,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             string id = "3466c160-4a10-4df8-afdf-0007f3f6dee5";
             await applicationInsightsComponent.DeleteAnalyticsItemAsync(scopePath, id: id);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

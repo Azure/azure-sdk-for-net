@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_InboundSecurityRuleCollection
     {
-        // Create Network Virtual Appliance Inbound Security Rules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNetworkVirtualApplianceInboundSecurityRules()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/InboundSecurityRulePut.json
@@ -73,9 +73,8 @@ AppliesOn =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Network Virtual Appliance Inbound Security Rules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CreateNetworkVirtualApplianceInboundSecurityRules()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/InboundSecurityRuleGet.json
@@ -108,9 +107,8 @@ AppliesOn =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Network Virtual Appliance Inbound Security Rules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_CreateNetworkVirtualApplianceInboundSecurityRules()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/InboundSecurityRuleGet.json
@@ -139,9 +137,8 @@ AppliesOn =
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Create Network Virtual Appliance Inbound Security Rules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CreateNetworkVirtualApplianceInboundSecurityRules()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/InboundSecurityRuleGet.json
@@ -170,7 +167,7 @@ AppliesOn =
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

@@ -36,6 +36,18 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Implementa
         }
 
         [Test]
+        public void UploadBuffer_WithException_LogsError()
+        {
+            string uri = "invalid_uri";
+            string buffer = "Test buffer";
+            string fileRelativePath = "test/path";
+
+            _blobService!.UploadBuffer(uri, buffer, fileRelativePath);
+
+            _loggerMock!.Verify(logger => logger.Error(It.IsAny<string>()), Times.Once);
+        }
+
+        [Test]
         public void GetCloudFilePath_WithValidParameters_ReturnsCorrectPath()
         {
             string uri = "https://example.com/container";
