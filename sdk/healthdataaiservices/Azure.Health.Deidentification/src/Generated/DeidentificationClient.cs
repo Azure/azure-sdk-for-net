@@ -791,7 +791,6 @@ namespace Azure.Health.Deidentification
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(name, true);
@@ -807,7 +806,6 @@ namespace Azure.Health.Deidentification
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(name, true);
@@ -825,7 +823,6 @@ namespace Azure.Health.Deidentification
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -848,7 +845,6 @@ namespace Azure.Health.Deidentification
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
@@ -873,7 +869,6 @@ namespace Azure.Health.Deidentification
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(name, true);
@@ -890,7 +885,6 @@ namespace Azure.Health.Deidentification
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(name, true);
@@ -906,7 +900,6 @@ namespace Azure.Health.Deidentification
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendPath("/deid", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -923,7 +916,6 @@ namespace Azure.Health.Deidentification
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -937,7 +929,6 @@ namespace Azure.Health.Deidentification
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
