@@ -38,7 +38,7 @@ variables:
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
-    SparseCheckoutPaths：
+    SparseCheckoutPaths:
       - /sdk/core/Azure.Core/src/Shared
     BuildPrereleaseVersion: ${{ parameters.BuildPrereleaseVersion }}
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
