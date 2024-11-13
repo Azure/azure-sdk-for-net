@@ -62,7 +62,6 @@ namespace Azure.Storage.DataMovement
         /// List that holds all ranges of chunks to process.
         /// </summary>
         private readonly IList<HttpRange> _ranges;
-        private int _rangesCount;
         /// <summary>
         /// Holds which range we are currently waiting on to download.
         /// </summary>
@@ -72,7 +71,7 @@ namespace Azure.Storage.DataMovement
         /// If any download chunks come in early before the chunk before it
         /// to copy to the file, let's hold it in order here before we copy it over.
         /// </summary>
-        private ConcurrentDictionary<long, string> _rangesCompleted;
+        private Dictionary<long, Stream> _pendingChunks;
 
         internal ClientDiagnostics ClientDiagnostics { get; }
 
@@ -127,6 +126,7 @@ namespace Azure.Storage.DataMovement
 
             _expectedLength = expectedLength;
             _ranges = ranges;
+            _pendingChunks = new();
 
             if (expectedLength <= 0)
             {
@@ -147,10 +147,6 @@ namespace Azure.Storage.DataMovement
                 ?? throw Errors.ArgumentNull(nameof(behaviors.InvokeFailedHandler));
             _queueCompleteFileDownload = behaviors.QueueCompleteFileDownload
                 ?? throw Errors.ArgumentNull(nameof(behaviors.QueueCompleteFileDownload));
-
-            _rangesCount = ranges.Count;
-            // Set size of the list of null streams
-            _rangesCompleted = new ConcurrentDictionary<long, string>();
 
             _downloadChunkEventHandler += DownloadChunkEvent;
             ClientDiagnostics = clientDiagnostics;
@@ -198,21 +194,8 @@ namespace Azure.Storage.DataMovement
                     long currentRangeOffset = _ranges[_currentRangeIndex].Offset;
                     if (currentRangeOffset < args.Offset)
                     {
-                        // One of the chunks finished downloading before the chunk(s)
-                        // before it (early bird, or the last chunk)
-                        // Save the chunk to a temporary file to append later
-                        string chunkFilePath = Path.GetTempFileName();
-                        using (Stream chunkContent = args.Result)
-                        {
-                            await _copyToChunkFile(chunkFilePath, chunkContent).ConfigureAwait(false);
-                        }
-                        if (!_rangesCompleted.TryAdd(args.Offset, chunkFilePath))
-                        {
-                            // Throw an error here that we were unable to idenity the
-                            // the range that has come back to us. We should never see this error
-                            // since we were the ones who calculated the range.
-                            throw Errors.InvalidDownloadOffset(args.Offset, args.BytesTransferred);
-                        }
+                        // Early chunk, add to pending
+                        _pendingChunks.Add(args.Offset, args.Result);
                     }
                     else if (currentRangeOffset == args.Offset)
                     {
@@ -223,13 +206,13 @@ namespace Azure.Storage.DataMovement
                         {
                             await _copyToDestinationFile(
                                 args.Offset,
-                                args.BytesTransferred,
+                                args.Length,
                                 content,
                                 _expectedLength).ConfigureAwait(false);
                         }
-                        UpdateBytesAndRange(args.BytesTransferred);
+                        UpdateBytesAndRange(args.Length);
 
-                        await AppendEarlyChunksToFile().ConfigureAwait(false);
+                        await AppendPendingChunks().ConfigureAwait(false);
 
                         // Check if we finished downloading the blob
                         if (_bytesTransferred == _expectedLength)
@@ -242,7 +225,7 @@ namespace Azure.Storage.DataMovement
                         // We should never reach this point because that means
                         // the range that came back was less than the next range that is supposed
                         // to be copied to the file
-                        throw Errors.InvalidDownloadOffset(args.Offset, args.BytesTransferred);
+                        throw Errors.InvalidDownloadOffset(args.Offset, args.Length);
                     }
                 }
             }
@@ -268,80 +251,43 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async Task AppendEarlyChunksToFile()
+        private async Task AppendPendingChunks()
         {
-            // If there are any other chunks that have already been downloaded that
-            // can be appended to the file, let's do it now.
-            while ((_bytesTransferred < _expectedLength) &&
-                    (_currentRangeIndex < _rangesCount) &&
-                    _rangesCompleted.ContainsKey(_ranges[_currentRangeIndex].Offset))
+            while (_currentRangeIndex < _ranges.Count &&
+                _pendingChunks.ContainsKey(_ranges[_currentRangeIndex].Offset))
             {
                 HttpRange currentRange = _ranges[_currentRangeIndex];
-                if (_rangesCompleted.TryRemove(currentRange.Offset, out string chunkFilePath))
+                using (Stream nextChunk = _pendingChunks[currentRange.Offset])
                 {
-                    if (File.Exists(chunkFilePath))
-                    {
-                        using (Stream content = File.OpenRead(chunkFilePath))
-                        {
-                            await _copyToDestinationFile(
-                                currentRange.Offset,
-                                currentRange.Length.Value,
-                                content,
-                                _expectedLength).ConfigureAwait(false);
-                        }
-                        // Delete the temporary chunk file that's no longer needed
-                        File.Delete(chunkFilePath);
-                    }
-                    else
-                    {
-                        throw Errors.TempChunkFileNotFound(
-                            offset: currentRange.Offset,
-                            length: currentRange.Length.Value,
-                            filePath: chunkFilePath);
-                    }
+                    await _copyToDestinationFile(
+                        currentRange.Offset,
+                        currentRange.Length.Value,
+                        nextChunk,
+                        _expectedLength).ConfigureAwait(false);
                 }
-                else
-                {
-                    throw Errors.InvalidDownloadOffset(currentRange.Offset, currentRange.Length.Value);
-                }
-
-                // Increment the current range we are expect, if it's null then
-                // that's the next one we have to wait on.
-                UpdateBytesAndRange((long)_ranges[_currentRangeIndex].Length);
+                _pendingChunks.Remove(currentRange.Offset);
+                UpdateBytesAndRange((long)currentRange.Length);
             }
         }
 
         private async Task InvokeFailedEvent(Exception ex)
         {
-            foreach (HttpRange range in _ranges)
+            foreach (Stream chunkStream in _pendingChunks.Values)
             {
-                if (_rangesCompleted.TryRemove(range.Offset, out string tempChunkFile))
-                {
-                    if (File.Exists(tempChunkFile))
-                    {
-                        try
-                        {
-                            File.Delete(tempChunkFile);
-                        }
-                        catch (Exception deleteException)
-                        {
-                            await _invokeFailedEventHandler(deleteException).ConfigureAwait(false);
-                        }
-                    }
-                }
+                chunkStream.Dispose();
             }
+            _pendingChunks.Clear();
             await _invokeFailedEventHandler(ex).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Update the progress handler and the current range we are waiting on.
+        /// Moves the downloader to the next range and updates/reports bytes transferred.
         /// </summary>
         /// <param name="bytesDownloaded"></param>
         private void UpdateBytesAndRange(long bytesDownloaded)
         {
-            // don't need to use Interlocked since this is the only thread reading and updating these values
-            _bytesTransferred += bytesDownloaded;
             _currentRangeIndex++;
+            _bytesTransferred += bytesDownloaded;
             _reportProgressInBytes(bytesDownloaded);
         }
     }

@@ -99,14 +99,6 @@ namespace Azure.Storage.DataMovement.Tests
             return mock;
         }
 
-        private Mock<DownloadChunkHandler.CopyToChunkFileInternal> GetExceptionCopyToChunkFileTask()
-        {
-            var mock = new Mock<DownloadChunkHandler.CopyToChunkFileInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<string>(), It.IsNotNull<Stream>()))
-                .Throws(new UnauthorizedAccessException());
-            return mock;
-        }
-
         private Mock<DownloadChunkHandler.CopyToDestinationFileInternal> GetExceptionCopyToDestinationFileTask()
         {
             var mock = new Mock<DownloadChunkHandler.CopyToDestinationFileInternal>(MockBehavior.Strict);
@@ -399,7 +391,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             PredictableStream content = new PredictableStream(blockSize);
 
-            // Act - Make initial range event
+            // Act - The second chunk returns first
             await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
                 transferId: "fake-id",
                 success: true,
@@ -415,11 +407,11 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: mockBehaviors,
                 expectedFailureCount: 0,
                 expectedCopyDestinationCount: 0,
-                expectedCopyChunkCount: 1,
+                expectedCopyChunkCount: 0,
                 expectedReportProgressCount: 0,
                 expectedCompleteFileCount: 0);
 
-            // Act - Make the repeat at the same offset to cause an error.
+            // Act - The first chunk is then returned
             await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
                 transferId: "fake-id",
                 success: true,
@@ -435,7 +427,7 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: mockBehaviors,
                 expectedFailureCount: 0,
                 expectedCopyDestinationCount: 2,
-                expectedCopyChunkCount: 1,
+                expectedCopyChunkCount: 0,
                 expectedReportProgressCount: 2,
                 expectedCompleteFileCount: 1);
         }
@@ -497,54 +489,6 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCopyChunkCount: 0,
                 expectedReportProgressCount: taskSize,
                 expectedCompleteFileCount: 1);
-        }
-
-        [Test]
-        public async Task GetCopyToChunkFileTask_ExpectedFailure()
-        {
-            // Arrange
-            MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
-            mockBehaviors.CopyToChunkFileTask = GetExceptionCopyToChunkFileTask();
-            int blockSize = 512;
-            long expectedLength = blockSize * 2;
-            List<HttpRange> ranges = GetRanges(blockSize, expectedLength);
-
-            var downloadChunkHandler = new DownloadChunkHandler(
-                currentTransferred: 0,
-                expectedLength: expectedLength,
-                ranges: ranges,
-                behaviors: new DownloadChunkHandler.Behaviors
-                {
-                    CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
-                    CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
-                    QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
-                    ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
-                    InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
-                },
-                ClientDiagnostics,
-                cancellationToken: CancellationToken.None);
-
-            PredictableStream content = new PredictableStream(blockSize);
-
-            // Act
-            await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
-                transferId: "fake-id",
-                success: true,
-                offset: blockSize,
-                bytesTransferred: blockSize,
-                result: content,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
-
-            // Assert
-            VerifyDelegateInvocations(
-                behaviors: mockBehaviors,
-                expectedFailureCount: 1,
-                expectedCopyDestinationCount: 0,
-                expectedCopyChunkCount: 1,
-                expectedReportProgressCount: 0,
-                expectedCompleteFileCount: 0);
         }
 
         [Test]

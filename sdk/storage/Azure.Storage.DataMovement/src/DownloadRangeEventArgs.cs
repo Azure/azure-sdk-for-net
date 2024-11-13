@@ -4,7 +4,6 @@
 using System;
 using System.IO;
 using System.Threading;
-using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
@@ -18,7 +17,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Will be 0 if Success is false
         /// </summary>
-        public long BytesTransferred { get; }
+        public long Length { get; }
 
         /// <summary>
         /// Stream results of the range downloaded if Sucess is true
@@ -67,7 +66,7 @@ namespace Azure.Storage.DataMovement
             }
             Success = success;
             Offset = offset;
-            BytesTransferred = bytesTransferred;
+            Length = bytesTransferred;
             Result = result;
             Exception = exception;
         }
