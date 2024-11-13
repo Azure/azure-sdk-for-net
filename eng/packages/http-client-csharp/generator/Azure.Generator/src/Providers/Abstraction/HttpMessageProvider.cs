@@ -24,9 +24,6 @@ namespace Azure.Generator.Providers
         public override ValueExpression BufferResponse()
             => Original.Property(nameof(HttpMessage.BufferResponse));
 
-        public override MethodBodyStatement[] ExtractResponse()
-            => [Original.Invoke(nameof(HttpMessage.ExtractResponseContent)).Terminate(), Return(Original.Property(nameof(HttpMessage.Response)))];
-
         public override HttpMessageApi FromExpression(ValueExpression original)
             => new HttpMessageProvider(original);
 
