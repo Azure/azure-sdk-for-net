@@ -464,20 +464,6 @@ namespace Azure.Storage.DataMovement
             return false;
         }
 
-        public async Task WriteChunkToTempFile(string chunkFilePath, Stream source)
-        {
-            CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
-
-            using (FileStream fileStream = File.OpenWrite(chunkFilePath))
-            {
-                await source.CopyToAsync(
-                    fileStream,
-                    DataMovementConstants.DefaultStreamCopyBufferSize,
-                    _cancellationToken)
-                    .ConfigureAwait(false);
-            }
-        }
-
         internal DownloadChunkHandler GetDownloadChunkHandler(
             long currentTransferred,
             long expectedLength,
@@ -496,7 +482,6 @@ namespace Azure.Storage.DataMovement
             return new DownloadChunkHandler.Behaviors()
             {
                 CopyToDestinationFile = job.CopyToStreamInternal,
-                CopyToChunkFile = job.WriteChunkToTempFile,
                 ReportProgressInBytes = job.ReportBytesWritten,
                 InvokeFailedHandler = job.InvokeFailedArgAsync,
                 QueueCompleteFileDownload = job.QueueCompleteFileDownload

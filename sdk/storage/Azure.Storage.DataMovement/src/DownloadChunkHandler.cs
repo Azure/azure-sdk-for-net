@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -16,19 +15,14 @@ namespace Azure.Storage.DataMovement
 {
     internal class DownloadChunkHandler : IDisposable
     {
-        // Indicates whether the current thread is processing stage chunks.
-        private static Task _processDownloadRangeEvents;
-
         #region Delegate Definitions
         public delegate Task CopyToDestinationFileInternal(long offset, long length, Stream stream, long expectedLength);
-        public delegate Task CopyToChunkFileInternal(string chunkFilePath, Stream stream);
         public delegate void ReportProgressInBytes(long bytesWritten);
         public delegate Task QueueCompleteFileDownloadInternal();
         public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
         #endregion Delegate Definitions
 
         private readonly CopyToDestinationFileInternal _copyToDestinationFile;
-        private readonly CopyToChunkFileInternal _copyToChunkFile;
         private readonly ReportProgressInBytes _reportProgressInBytes;
         private readonly InvokeFailedEventHandlerInternal _invokeFailedEventHandler;
         private readonly QueueCompleteFileDownloadInternal _queueCompleteFileDownload;
@@ -36,12 +30,8 @@ namespace Azure.Storage.DataMovement
         public struct Behaviors
         {
             public CopyToDestinationFileInternal CopyToDestinationFile { get; set; }
-
-            public CopyToChunkFileInternal CopyToChunkFile { get; set; }
             public ReportProgressInBytes ReportProgressInBytes { get; set; }
-
             public InvokeFailedEventHandlerInternal InvokeFailedHandler { get; set; }
-
             public QueueCompleteFileDownloadInternal QueueCompleteFileDownload { get; set; }
         }
 
@@ -49,11 +39,12 @@ namespace Azure.Storage.DataMovement
         internal SyncAsyncEventHandler<DownloadRangeEventArgs> GetDownloadChunkHandler() => _downloadChunkEventHandler;
 
         /// <summary>
-        /// Create channel of <see cref="DownloadRangeEventArgs"/> to keep track of that are
-        /// waiting to update the bytesTransferred and other required operations.
+        /// Create channel of <see cref="DownloadRangeEventArgs"/> to keep track to handle
+        /// writing downloaded chunks to the destination as well as tracking overall progress.
         /// </summary>
         private readonly Channel<DownloadRangeEventArgs> _downloadRangeChannel;
-        private CancellationToken _cancellationToken;
+        private readonly Task _processDownloadRangeEvents;
+        private readonly CancellationToken _cancellationToken;
 
         private long _bytesTransferred;
         private readonly long _expectedLength;
@@ -71,7 +62,7 @@ namespace Azure.Storage.DataMovement
         /// If any download chunks come in early before the chunk before it
         /// to copy to the file, let's hold it in order here before we copy it over.
         /// </summary>
-        private Dictionary<long, Stream> _pendingChunks;
+        private readonly Dictionary<long, Stream> _pendingChunks;
 
         internal ClientDiagnostics ClientDiagnostics { get; }
 
@@ -111,17 +102,15 @@ namespace Azure.Storage.DataMovement
             _bytesTransferred = currentTransferred;
             _currentRangeIndex = 0;
 
-            // Create channel of finished Stage Chunk Args to update the bytesTransferred
-            // and for ending tasks like commit block.
             // The size of the channel should never exceed 50k (limit on blocks in a block blob).
             // and that's in the worst case that we never read from the channel and had a maximum chunk blob.
             _downloadRangeChannel = Channel.CreateUnbounded<DownloadRangeEventArgs>(
                 new UnboundedChannelOptions()
                 {
-                    // Single reader is required as we can only read and write to bytesTransferred value
+                    // Single reader is required as we can only have one writer to the destination.
                     SingleReader = true,
                 });
-            _processDownloadRangeEvents = Task.Run(() => NotifyOfPendingChunkDownloadEvents());
+            _processDownloadRangeEvents = Task.Run(NotifyOfPendingChunkDownloadEvents);
             _cancellationToken = cancellationToken;
 
             _expectedLength = expectedLength;
@@ -139,8 +128,6 @@ namespace Azure.Storage.DataMovement
             // Set values
             _copyToDestinationFile = behaviors.CopyToDestinationFile
                 ?? throw Errors.ArgumentNull(nameof(behaviors.CopyToDestinationFile));
-            _copyToChunkFile = behaviors.CopyToChunkFile
-                ?? throw Errors.ArgumentNull(nameof(behaviors.CopyToChunkFile));
             _reportProgressInBytes = behaviors.ReportProgressInBytes
                 ?? throw Errors.ArgumentNull(nameof(behaviors.ReportProgressInBytes));
             _invokeFailedEventHandler = behaviors.InvokeFailedHandler
@@ -199,9 +186,7 @@ namespace Azure.Storage.DataMovement
                     }
                     else if (currentRangeOffset == args.Offset)
                     {
-                        // Start Copying the response to the file stream and any other chunks after
-                        // Most of the time we will always get the next chunk first so the loop
-                        // on averages runs once.
+                        // Copy the current chunk to the destination
                         using (Stream content = args.Result)
                         {
                             await _copyToDestinationFile(
@@ -212,6 +197,7 @@ namespace Azure.Storage.DataMovement
                         }
                         UpdateBytesAndRange(args.Length);
 
+                        // Check if the next chunks are already downloaeded and copy those
                         await AppendPendingChunks().ConfigureAwait(false);
 
                         // Check if we finished downloading the blob

@@ -23,7 +23,6 @@ namespace Azure.Storage.DataMovement.Tests
         private readonly int _maxDelayInSec = 1;
         private readonly string _failedEventMsg = "Amount of Failed Event Handler calls was incorrect.";
         private readonly string _copyToDestinationMsg = "Amount of Copy To Destination Task calls were incorrect.";
-        private readonly string _copyToChunkFileMsg = "Amount of Copy To Chunk File Task calls were incorrect.";
         private readonly string _reportProgressInBytesMsg = "Amount of Progress amount calls were incorrect.";
         private readonly string _completeFileDownloadMsg = "Complete File Download call amount calls were incorrect.";
 
@@ -33,7 +32,6 @@ namespace Azure.Storage.DataMovement.Tests
             MockDownloadChunkBehaviors behaviors,
             int expectedFailureCount,
             int expectedCopyDestinationCount,
-            int expectedCopyChunkCount,
             int expectedReportProgressCount,
             int expectedCompleteFileCount,
             int maxWaitTimeInSec = 6)
@@ -42,14 +40,12 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationToken cancellationToken = cancellationSource.Token;
             int currentFailedEventCount = behaviors.InvokeFailedEventHandlerTask.Invocations.Count;
             int currentCopyDestinationCount = behaviors.CopyToDestinationFileTask.Invocations.Count;
-            int currentCopyChunkCount = behaviors.CopyToChunkFileTask.Invocations.Count;
             int currentProgressReportedCount = behaviors.ReportProgressInBytesTask.Invocations.Count;
             int currentCompleteDownloadCount = behaviors.QueueCompleteFileDownloadTask.Invocations.Count;
             try
             {
                 while (currentFailedEventCount != expectedFailureCount
                        || currentCopyDestinationCount != expectedCopyDestinationCount
-                       || currentCopyChunkCount != expectedCopyChunkCount
                        || currentProgressReportedCount != expectedReportProgressCount
                        || currentCompleteDownloadCount != expectedCompleteFileCount)
                 {
@@ -63,8 +59,6 @@ namespace Azure.Storage.DataMovement.Tests
                     Assert.LessOrEqual(currentFailedEventCount, expectedFailureCount, _failedEventMsg);
                     currentCopyDestinationCount = behaviors.CopyToDestinationFileTask.Invocations.Count;
                     Assert.LessOrEqual(currentCopyDestinationCount, expectedCopyDestinationCount, _copyToDestinationMsg);
-                    currentCopyChunkCount = behaviors.CopyToChunkFileTask.Invocations.Count;
-                    Assert.LessOrEqual(currentCopyChunkCount, expectedCopyChunkCount, _copyToChunkFileMsg);
                     currentProgressReportedCount = behaviors.ReportProgressInBytesTask.Invocations.Count;
                     Assert.LessOrEqual(currentProgressReportedCount, expectedReportProgressCount, _reportProgressInBytesMsg);
                     currentCompleteDownloadCount = behaviors.QueueCompleteFileDownloadTask.Invocations.Count;
@@ -76,7 +70,6 @@ namespace Azure.Storage.DataMovement.Tests
                 string message = "Timed out waiting for the correct amount of invocations for each task\n" +
                     $"Current Failed Event Invocations: {currentFailedEventCount} | Expected: {expectedFailureCount}\n" +
                     $"Current Copy Destination Invocations: {currentCopyDestinationCount} | Expected: {expectedCopyDestinationCount}\n" +
-                    $"Current Copy Chunk Invocations: {currentCopyChunkCount} | Expected: {expectedCopyChunkCount}\n" +
                     $"Current Progress Reported Invocations: {currentProgressReportedCount} | Expected: {expectedReportProgressCount}\n" +
                     $"Current Complete Download Invocations: {currentCompleteDownloadCount} | Expected: {expectedCompleteFileCount}";
                 Assert.Fail(message);
@@ -87,14 +80,6 @@ namespace Azure.Storage.DataMovement.Tests
         {
             var mock = new Mock<DownloadChunkHandler.CopyToDestinationFileInternal>(MockBehavior.Strict);
             mock.Setup(del => del(It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsNotNull<Stream>(), It.IsNotNull<long>()))
-                .Returns(Task.CompletedTask);
-            return mock;
-        }
-
-        private Mock<DownloadChunkHandler.CopyToChunkFileInternal> GetCopyToChunkFileTask()
-        {
-            var mock = new Mock<DownloadChunkHandler.CopyToChunkFileInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<string>(),It.IsNotNull<Stream>()))
                 .Returns(Task.CompletedTask);
             return mock;
         }
@@ -141,7 +126,6 @@ namespace Azure.Storage.DataMovement.Tests
         internal struct MockDownloadChunkBehaviors
         {
             public Mock<DownloadChunkHandler.CopyToDestinationFileInternal> CopyToDestinationFileTask;
-            public Mock<DownloadChunkHandler.CopyToChunkFileInternal> CopyToChunkFileTask;
             public Mock<DownloadChunkHandler.ReportProgressInBytes> ReportProgressInBytesTask;
             public Mock<DownloadChunkHandler.QueueCompleteFileDownloadInternal> QueueCompleteFileDownloadTask;
             public Mock<DownloadChunkHandler.InvokeFailedEventHandlerInternal> InvokeFailedEventHandlerTask;
@@ -151,7 +135,6 @@ namespace Azure.Storage.DataMovement.Tests
             => new MockDownloadChunkBehaviors()
             {
                 CopyToDestinationFileTask = GetCopyToDestinationFileTask(),
-                CopyToChunkFileTask = GetCopyToChunkFileTask(),
                 ReportProgressInBytesTask = GetReportProgressInBytesTask(),
                 QueueCompleteFileDownloadTask = GetQueueCompleteFileDownloadTask(),
                 InvokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask()
@@ -207,7 +190,6 @@ namespace Azure.Storage.DataMovement.Tests
                 new DownloadChunkHandler.Behaviors
                 {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
-                    CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
@@ -233,7 +215,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: mockBehaviors,
                 expectedFailureCount: 0,
                 expectedCopyDestinationCount: 1,
-                expectedCopyChunkCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 1);
         }
@@ -254,7 +235,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: new DownloadChunkHandler.Behaviors
                 {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
-                    CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
@@ -280,7 +260,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: mockBehaviors,
                 expectedFailureCount: 0,
                 expectedCopyDestinationCount: 1,
-                expectedCopyChunkCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 0);
 
@@ -302,7 +281,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: mockBehaviors,
                 expectedFailureCount: 0,
                 expectedCopyDestinationCount: 2,
-                expectedCopyChunkCount: 0,
                 expectedReportProgressCount: 2,
                 expectedCompleteFileCount: 1);
         }
@@ -323,7 +301,6 @@ namespace Azure.Storage.DataMovement.Tests
                 ranges: ranges,
                 behaviors: new DownloadChunkHandler.Behaviors {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
-                    CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object },
@@ -359,7 +336,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: mockBehaviors,
                 expectedFailureCount: 1,
                 expectedCopyDestinationCount: 1,
-                expectedCopyChunkCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 0);
         }
@@ -381,7 +357,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: new DownloadChunkHandler.Behaviors
                 {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
-                    CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
@@ -407,7 +382,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: mockBehaviors,
                 expectedFailureCount: 0,
                 expectedCopyDestinationCount: 0,
-                expectedCopyChunkCount: 0,
                 expectedReportProgressCount: 0,
                 expectedCompleteFileCount: 0);
 
@@ -427,7 +401,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: mockBehaviors,
                 expectedFailureCount: 0,
                 expectedCopyDestinationCount: 2,
-                expectedCopyChunkCount: 0,
                 expectedReportProgressCount: 2,
                 expectedCompleteFileCount: 1);
         }
@@ -450,7 +423,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: new DownloadChunkHandler.Behaviors
                 {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
-                    CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
@@ -486,7 +458,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: mockBehaviors,
                 expectedFailureCount: 0,
                 expectedCopyDestinationCount: taskSize,
-                expectedCopyChunkCount: 0,
                 expectedReportProgressCount: taskSize,
                 expectedCompleteFileCount: 1);
         }
@@ -508,7 +479,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: new DownloadChunkHandler.Behaviors
                 {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
-                    CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
@@ -534,7 +504,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: mockBehaviors,
                 expectedFailureCount: 1,
                 expectedCopyDestinationCount: 1,
-                expectedCopyChunkCount: 0,
                 expectedReportProgressCount: 0,
                 expectedCompleteFileCount: 0);
         }
@@ -555,7 +524,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: new DownloadChunkHandler.Behaviors
                 {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
-                    CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
@@ -581,7 +549,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: mockBehaviors,
                 expectedFailureCount: 1,
                 expectedCopyDestinationCount: 1,
-                expectedCopyChunkCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 1);
         }
@@ -602,7 +569,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: new DownloadChunkHandler.Behaviors
                 {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
-                    CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
@@ -620,7 +586,6 @@ namespace Azure.Storage.DataMovement.Tests
                 behaviors: mockBehaviors,
                 expectedFailureCount: 0,
                 expectedCopyDestinationCount: 0,
-                expectedCopyChunkCount: 0,
                 expectedReportProgressCount: 0,
                 expectedCompleteFileCount: 0);
         }
