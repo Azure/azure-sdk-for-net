@@ -62,6 +62,11 @@ parameters:
   type: boolean
   default: false
 
+# Paths to sparse checkout
+- name: SparseCheckoutPaths
+  type: object
+  default: []
+
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
@@ -80,8 +85,7 @@ extends:
         steps:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
-            Paths:
-            - /sdk/core/Azure.Core/src/Shared
+            Paths: ${{ parameters.SparseCheckoutPaths }}
 
         - ${{ parameters.InitializationSteps }}
 
@@ -415,8 +419,7 @@ extends:
           steps:
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
             parameters:
-              Paths:
-              - /sdk/core/Azure.Core/src/Shared
+              Paths: ${{ parameters.SparseCheckoutPaths }}
 
           - download: current
             artifact: build_artifacts
