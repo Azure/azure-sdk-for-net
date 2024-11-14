@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.DataMovement.JobPlan;
 using Azure.Storage.DataMovement.Tests.Shared;
 using Moq;
 using NUnit.Framework;
@@ -97,7 +98,11 @@ public class TransferManagerTests
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+
         Mock<ITransferCheckpointer> checkpointer = new();
+        List<string> capturedTransferIds = new();
+        checkpointer.Setup(c => c.AddNewJobAsync(Capture.In(capturedTransferIds),
+            It.IsAny<StorageResource>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()));
 
         var resources = Enumerable.Range(0, items).Select(_ =>
         {
@@ -138,6 +143,13 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
+        Assert.That(capturedTransferIds.Count, Is.EqualTo(items));
+        foreach (string transferId in capturedTransferIds)
+        {
+            checkpointer.Verify(c => c.AddNewJobAsync(transferId, It.IsAny<StorageResource>(),
+                It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()));
+        }
+        checkpointer.VerifyNoOtherCalls();
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(items), "Error during initial Job queueing.");
 
         // process jobs
@@ -151,6 +163,17 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
+        foreach (string transferId in capturedTransferIds)
+        {
+            checkpointer.Verify(c => c.SetJobStatusAsync(transferId,
+                Match.Create<DataTransferStatus>(status => status.State == DataTransferState.InProgress),
+                It.IsAny<CancellationToken>()));
+            checkpointer.Verify(c => c.AddNewJobPartAsync(transferId, 0,
+                It.IsAny<JobPartPlanHeader>(),
+                It.IsAny<CancellationToken>()));
+            checkpointer.Verify(c => c.SetEnumerationCompleteAsync(transferId, It.IsAny<CancellationToken>()));
+        }
+        checkpointer.VerifyNoOtherCalls();
 
         // process parts
         Assert.That(await partsProcessor.StepAll(), Is.EqualTo(items));
@@ -163,6 +186,13 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
+        foreach (string transferId in capturedTransferIds)
+        {
+            checkpointer.Verify(c => c.SetJobPartStatusAsync(transferId, 0,
+                Match.Create<DataTransferStatus>(status => status.State == DataTransferState.InProgress),
+                It.IsAny<CancellationToken>()));
+        }
+        checkpointer.VerifyNoOtherCalls();
 
         // process chunks
         Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(expectedChunksInQueue));
@@ -175,12 +205,22 @@ public class TransferManagerTests
             dstResource.VerifyNoOtherCalls();
         }
 
-        await Task.Delay(20); // TODO flaky that we need this; a random one will often fail without
+        await Task.Delay(50); // TODO flaky that we need this; a random one will often fail without
 
         foreach (DataTransfer transfer in transfers)
         {
             Assert.That(transfer.HasCompleted);
         }
+        foreach (string transferId in capturedTransferIds)
+        {
+            checkpointer.Verify(c => c.SetJobPartStatusAsync(transferId, 0,
+                Match.Create<DataTransferStatus>(status => status.State == DataTransferState.Completed),
+                It.IsAny<CancellationToken>()));
+            checkpointer.Verify(c => c.SetJobStatusAsync(transferId,
+                Match.Create<DataTransferStatus>(status => status.State == DataTransferState.Completed),
+                It.IsAny<CancellationToken>()));
+        }
+        checkpointer.VerifyNoOtherCalls();
     }
 
     [Test]
