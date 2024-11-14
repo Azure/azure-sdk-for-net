@@ -51,7 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(httpUrl, requestData.Url);
             Assert.Equal("0", requestData.ResponseCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
-            Assert.False(requestData.Success);
+            Assert.True(requestData.Success);
             Assert.Null(requestData.Source);
             Assert.True(requestData.Properties.Count == 1);
             Assert.Equal("bar", requestData.Properties["foo"]);
