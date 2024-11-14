@@ -35,6 +35,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger
         public static readonly string NumberOfTestWorkers;
         public static readonly string Os;
         public static readonly string RunId;
+        public static readonly string RunName;
         public static readonly string ServiceAuthType;
         public static readonly string UseCloudHostedBrowsers;
         public RunSettingKey() { }

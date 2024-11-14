@@ -101,6 +101,8 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         runParameters.TryGetValue(RunSettingKey.Os, out var osType);
         runParameters.TryGetValue(RunSettingKey.ExposeNetwork, out var exposeNetwork);
         nunitParameters.TryGetValue(RunSettingKey.NumberOfTestWorkers, out var numberOfTestWorkers);
+        runParameters.TryGetValue(RunSettingKey.RunName, out var runName);
+
         string? enableGithubSummaryString = enableGithubSummary?.ToString();
         string? enableResultPublishString = enableResultPublish?.ToString();
 
@@ -148,6 +150,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         var cloudRunMetadata = new CloudRunMetadata
         {
             RunId = cloudRunId,
+            RunName = runName?.ToString(),
             WorkspaceId = workspaceId,
             BaseUri = baseUri,
             EnableResultPublish = _enableResultPublish,

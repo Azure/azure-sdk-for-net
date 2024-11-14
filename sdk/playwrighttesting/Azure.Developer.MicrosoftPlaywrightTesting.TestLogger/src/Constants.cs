@@ -184,6 +184,11 @@ public class RunSettingKey
     /// Number of NUnit test workers.
     /// </summary>
     public static readonly string NumberOfTestWorkers = "NumberOfTestWorkers";
+
+    /// <summary>
+    /// The run name setting key.
+    /// </summary>
+    public static readonly string RunName = "RunName";
 }
 
 internal class Constants
