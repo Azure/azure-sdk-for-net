@@ -49,6 +49,7 @@ Once `AIProjectClient` is created, you can call `GetXXXClient()` methods on this
 ## Examples
 
 ### Agents
+
 Agents in the Azure AI Projects client library are designed to facilitate various interactions and operations within your AI projects. They serve as the core components that manage and execute tasks, leveraging different tools and resources to achieve specific goals. The following steps outline the typical sequence for interacting with agents:
 
 Create an `AgentClient`
