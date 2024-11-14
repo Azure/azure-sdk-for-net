@@ -64,7 +64,7 @@ namespace Azure.AI.Translation.Document
         /// </param>
         /// <param name="storageSource"> Storage Source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationSource(Uri sourceUri, DocumentFilter filter, string languageCode, string storageSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslationSource(Uri sourceUri, DocumentFilter filter, string languageCode, TranslationStorageSource? storageSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceUri = sourceUri;
             Filter = filter;
@@ -77,5 +77,7 @@ namespace Azure.AI.Translation.Document
         internal TranslationSource()
         {
         }
+        /// <summary> Storage Source. </summary>
+        public TranslationStorageSource? StorageSource { get; set; }
     }
 }

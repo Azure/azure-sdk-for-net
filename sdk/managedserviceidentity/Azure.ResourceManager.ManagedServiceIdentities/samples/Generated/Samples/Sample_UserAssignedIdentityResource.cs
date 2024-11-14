@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagedServiceIdentities.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 {
     public partial class Sample_UserAssignedIdentityResource
     {
-        // IdentityListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUserAssignedIdentities_IdentityListBySubscription()
         {
             // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/IdentityListBySubscription.json
@@ -45,12 +45,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // IdentityUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_IdentityUpdate()
         {
             // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/IdentityUpdate.json
@@ -87,9 +86,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // IdentityGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_IdentityGet()
         {
             // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/IdentityGet.json
@@ -118,9 +116,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // IdentityDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_IdentityDelete()
         {
             // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/IdentityDelete.json
@@ -142,7 +139,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
             // invoke the operation
             await userAssignedIdentity.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

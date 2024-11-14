@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_VirtualNetworkGatewayConnectionCollection
     {
-        // CreateVirtualNetworkGatewayConnection_S2S
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkGatewayConnectionS2S()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayConnectionCreate.json
@@ -133,9 +133,8 @@ new GatewayCustomBgpIPAddressIPConfiguration("/subscriptions/subid/resourceGroup
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetVirtualNetworkGatewayConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkGatewayConnection()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayConnectionGet.json
@@ -167,9 +166,8 @@ new GatewayCustomBgpIPAddressIPConfiguration("/subscriptions/subid/resourceGroup
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetVirtualNetworkGatewayConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualNetworkGatewayConnection()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayConnectionGet.json
@@ -197,9 +195,8 @@ new GatewayCustomBgpIPAddressIPConfiguration("/subscriptions/subid/resourceGroup
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetVirtualNetworkGatewayConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualNetworkGatewayConnection()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayConnectionGet.json
@@ -227,7 +224,7 @@ new GatewayCustomBgpIPAddressIPConfiguration("/subscriptions/subid/resourceGroup
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -239,9 +236,8 @@ new GatewayCustomBgpIPAddressIPConfiguration("/subscriptions/subid/resourceGroup
             }
         }
 
-        // ListVirtualNetworkGatewayConnectionsinResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListVirtualNetworkGatewayConnectionsinResourceGroup()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayConnectionsList.json
@@ -272,7 +268,7 @@ new GatewayCustomBgpIPAddressIPConfiguration("/subscriptions/subid/resourceGroup
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

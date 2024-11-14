@@ -12,14 +12,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 {
     public partial class Sample_ReplicationProtectedItemResource
     {
-        // Gets the details of a Replication protected item.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheDetailsOfAReplicationProtectedItem()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_Get.json
@@ -51,9 +51,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Purges protection.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PurgesProtection()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_Purge.json
@@ -78,12 +77,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             await replicationProtectedItem.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Updates the replication protected Item settings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesTheReplicationProtectedItemSettings()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_Update.json
@@ -145,9 +143,8 @@ SelectionType = "SelectedByUser",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Add disk(s) for protection.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AddDisks_AddDiskSForProtection()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_AddDisks.json
@@ -190,9 +187,8 @@ new A2AVmDiskDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/datad
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Change or apply recovery point.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ApplyRecoveryPoint_ChangeOrApplyRecoveryPoint()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_ApplyRecoveryPoint.json
@@ -229,9 +225,8 @@ new A2AVmDiskDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/datad
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute cancel failover.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task FailoverCancel_ExecuteCancelFailover()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_FailoverCancel.json
@@ -264,9 +259,8 @@ new A2AVmDiskDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/datad
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute commit failover.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task FailoverCommit_ExecuteCommitFailover()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_FailoverCommit.json
@@ -299,9 +293,8 @@ new A2AVmDiskDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/datad
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute planned failover.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PlannedFailover_ExecutePlannedFailover()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_PlannedFailover.json
@@ -342,9 +335,8 @@ new A2AVmDiskDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/datad
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Removes disk(s).
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RemoveDisks_RemovesDiskS()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_RemoveDisks.json
@@ -387,9 +379,8 @@ new Uri("https://vmstorage.blob.core.windows.net/vhds/datadisk1.vhd")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Resynchronize or repair replication.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RepairReplication_ResynchronizeOrRepairReplication()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_RepairReplication.json
@@ -422,9 +413,8 @@ new Uri("https://vmstorage.blob.core.windows.net/vhds/datadisk1.vhd")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute Reverse Replication\Reprotect.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Reprotect_ExecuteReverseReplicationReprotect()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_Reprotect.json
@@ -465,9 +455,8 @@ new Uri("https://vmstorage.blob.core.windows.net/vhds/datadisk1.vhd")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Resolve health errors.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResolveHealthErrors_ResolveHealthErrors()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_ResolveHealthErrors.json
@@ -510,9 +499,8 @@ HealthErrorId = "3:8020",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute switch provider.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SwitchProvider_ExecuteSwitchProvider()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_SwitchProvider.json
@@ -553,9 +541,8 @@ HealthErrorId = "3:8020",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute test failover.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TestFailover_ExecuteTestFailover()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_TestFailover.json
@@ -595,9 +582,8 @@ HealthErrorId = "3:8020",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute test failover cleanup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TestFailoverCleanup_ExecuteTestFailoverCleanup()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_TestFailoverCleanup.json
@@ -634,9 +620,8 @@ HealthErrorId = "3:8020",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute unplanned failover.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UnplannedFailover_ExecuteUnplannedFailover()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_UnplannedFailover.json
@@ -675,9 +660,8 @@ HealthErrorId = "3:8020",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Updates appliance for replication protected Item.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAppliance_UpdatesApplianceForReplicationProtectedItem()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_UpdateAppliance.json
@@ -714,9 +698,8 @@ HealthErrorId = "3:8020",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update the mobility service on a protected item.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateMobilityService_UpdateTheMobilityServiceOnAProtectedItem()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_UpdateMobilityService.json
@@ -753,9 +736,8 @@ HealthErrorId = "3:8020",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets the list of replication protected items.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReplicationProtectedItems_GetsTheListOfReplicationProtectedItems()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationProtectedItems_List.json
@@ -784,12 +766,11 @@ HealthErrorId = "3:8020",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets the list of target compute sizes for the replication protected item.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTargetComputeSizesByReplicationProtectedItems_GetsTheListOfTargetComputeSizesForTheReplicationProtectedItem()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/TargetComputeSizes_ListByReplicationProtectedItems.json
@@ -817,7 +798,7 @@ HealthErrorId = "3:8020",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

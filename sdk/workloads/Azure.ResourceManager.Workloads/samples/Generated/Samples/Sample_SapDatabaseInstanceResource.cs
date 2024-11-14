@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Workloads.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Workloads.Samples
 {
     public partial class Sample_SapDatabaseInstanceResource
     {
-        // SAPDatabaseInstances_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SAPDatabaseInstancesGet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDatabaseInstances_Get.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SAPDatabaseInstances_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SAPDatabaseInstancesUpdate()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDatabaseInstances_Update.json
@@ -88,9 +87,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SAPDatabaseInstances_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SAPDatabaseInstancesDelete()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDatabaseInstances_Delete.json
@@ -117,9 +115,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Start the database instance of the SAP system.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StartInstance_StartTheDatabaseInstanceOfTheSAPSystem()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDatabaseInstances_StartInstance.json
@@ -146,9 +143,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Stop the database instance of the SAP system.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StopInstance_StopTheDatabaseInstanceOfTheSAPSystem()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDatabaseInstances_StopInstance.json

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
 {
     public partial class Sample_ConnectedClusterBgpPeerResource
     {
-        // BgpPeers_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BgpPeersGet()
         {
             // Generated from example definition: 2024-03-01/BgpPeers_Get.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BgpPeers_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BgpPeersCreateOrUpdate()
         {
             // Generated from example definition: 2024-03-01/BgpPeers_CreateOrUpdate.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BgpPeers_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_BgpPeersDelete()
         {
             // Generated from example definition: 2024-03-01/BgpPeers_Delete.json
@@ -103,7 +101,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             // invoke the operation
             await connectedClusterBgpPeer.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

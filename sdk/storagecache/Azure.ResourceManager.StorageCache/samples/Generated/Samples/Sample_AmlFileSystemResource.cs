@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StorageCache.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageCache.Samples
 {
     public partial class Sample_AmlFileSystemResource
     {
-        // amlFilesystems_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAmlFileSystems_AmlFilesystemsList()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/amlFilesystems_List.json
@@ -46,12 +46,11 @@ namespace Azure.ResourceManager.StorageCache.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // amlFilesystems_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AmlFilesystemsDelete()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/amlFilesystems_Delete.json
@@ -73,12 +72,11 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // invoke the operation
             await amlFileSystem.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // amlFilesystems_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AmlFilesystemsGet()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/amlFilesystems_Get.json
@@ -107,9 +105,8 @@ namespace Azure.ResourceManager.StorageCache.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // amlFilesystems_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AmlFilesystemsUpdate()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/amlFilesystems_Update.json
@@ -162,9 +159,8 @@ namespace Azure.ResourceManager.StorageCache.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // amlFilesystems_Archive
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Archive_AmlFilesystemsArchive()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/amlFilesystems_Archive.json
@@ -190,12 +186,11 @@ namespace Azure.ResourceManager.StorageCache.Samples
             };
             await amlFileSystem.ArchiveAsync(content: content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // amlFilesystems_cancelArchive
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CancelArchive_AmlFilesystemsCancelArchive()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/amlFilesystems_CancelArchive.json
@@ -217,7 +212,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // invoke the operation
             await amlFileSystem.CancelArchiveAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

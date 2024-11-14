@@ -25,7 +25,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
             BlobServiceClient = new BlobServiceClient(PerfTestEnvironment.Instance.StorageEndpoint, PerfTestEnvironment.Instance.Credential);
             LocalFileResourceProvider = new LocalFilesStorageResourceProvider();
             BlobResourceProvider = new BlobsStorageResourceProvider(PerfTestEnvironment.Instance.Credential);
-            _transferTimeout = TimeSpan.FromSeconds(10 + (Options.Count * Options.Size) / (1 * 1024 * 1024));
+            _transferTimeout = TimeSpan.FromSeconds(Options.Duration);
 
             TransferManagerOptions managerOptions = new()
             {
@@ -118,7 +118,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
 
         private Task HandleFailure(TransferItemFailedEventArgs args)
         {
-            Console.WriteLine(args.Exception);
+            Console.WriteLine($"Transfer failure event - {args.Exception}");
             return Task.CompletedTask;
         }
     }

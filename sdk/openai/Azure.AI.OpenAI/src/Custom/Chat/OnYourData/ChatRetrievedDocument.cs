@@ -14,8 +14,4 @@ public partial class ChatRetrievedDocument
     /// <summary> The file path for the citation. </summary>
     [CodeGenMember("Filepath")]
     public string FilePath { get; }
-
-    /// <summary> The location of the citation. </summary>
-    [CodeGenMember("Url")]
-    public Uri Uri { get; }
 }

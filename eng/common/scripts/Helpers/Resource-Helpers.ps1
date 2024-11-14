@@ -123,8 +123,8 @@ filter Remove-PurgeableResources {
     switch ($r.AzsdkResourceType) {
       'Key Vault' {
         if ($r.EnablePurgeProtection) {
-          # We will try anyway but will ignore errors.
           Write-Warning "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)"
+          continue
         }
 
         # Use `-AsJob` to start a lightweight, cancellable job and pass to `Wait-PurgeableResoruceJob` for consistent behavior.
@@ -134,8 +134,8 @@ filter Remove-PurgeableResources {
 
       'Managed HSM' {
         if ($r.EnablePurgeProtection) {
-          # We will try anyway but will ignore errors.
           Write-Warning "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)"
+          continue
         }
 
         # Use `GetNewClosure()` on the `-Action` ScriptBlock to make sure variables are captured.
@@ -313,14 +313,16 @@ function RemoveStorageAccount($Account) {
   if ($Account.Kind -eq "FileStorage") { return }
 
   $containers = New-AzStorageContext -StorageAccountName $Account.StorageAccountName | Get-AzStorageContainer
-  $blobs = $containers | Get-AzStorageBlob
   $deleteNow = @()
 
   try {
-    foreach ($blob in $blobs) {
-      $shouldDelete = EnableBlobDeletion -Blob $blob -StorageAccountName $Account.StorageAccountName -ResourceGroupName $Account.ResourceGroupName
-      if ($shouldDelete) {
-        $deleteNow += $blob
+    foreach ($container in $containers) {
+      $blobs = $container | Get-AzStorageBlob
+      foreach ($blob in $blobs) {
+        $shouldDelete = EnableBlobDeletion -Blob $blob -Container $container -StorageAccountName $Account.StorageAccountName -ResourceGroupName $Account.ResourceGroupName
+        if ($shouldDelete) {
+          $deleteNow += $blob
+        }
       }
     }
   } catch {
@@ -342,11 +344,15 @@ function RemoveStorageAccount($Account) {
   }
 
   foreach ($container in $containers) {
+    if (!($container | Get-Member 'BlobContainerProperties')) {
+      continue
+    }
     if ($container.BlobContainerProperties.HasImmutableStorageWithVersioning) {
       try {
         # Use AzRm cmdlet as deletion will only work through ARM with the immutability policies defined on the blobs
-        Remove-AzRmStorageContainer -Name $container.Name -StorageAccountName $Account.StorageAccountName -ResourceGroupName $Account.ResourceGroupName -Force
-        #$container | Remove-AzStorageContainer
+        # Add a retry in case blob deletion has not finished in time for container deletion, but not too many that we end up
+        # getting throttled by ARM/SRP if things are actually in a stuck state
+        Retry -Attempts 1 -Action { Remove-AzRmStorageContainer -Name $container.Name -StorageAccountName $Account.StorageAccountName -ResourceGroupName $Account.ResourceGroupName -Force }
       } catch {
         Write-Host "Container removal failed: $($container.Name), account: $($Account.storageAccountName), group: $($Account.ResourceGroupName)"
         Write-Warning "Ignoring the error and trying to delete the storage account"
@@ -360,7 +366,7 @@ function RemoveStorageAccount($Account) {
   }
 }
 
-function EnableBlobDeletion($Blob, $StorageAccountName, $ResourceGroupName) {
+function EnableBlobDeletion($Blob, $Container, $StorageAccountName, $ResourceGroupName) {
   # Some properties like immutability policies require the blob to be
   # deleted before the container can be deleted
   $forceBlobDeletion = $false
@@ -392,6 +398,10 @@ function EnableBlobDeletion($Blob, $StorageAccountName, $ResourceGroupName) {
   if ($Blob.BlobProperties.LeaseState -eq 'Leased') {
     Write-Host "Breaking blob lease: $($Blob.Name), account: $StorageAccountName, group: $ResourceGroupName"
     $Blob.ICloudBlob.BreakLease()
+  }
+
+  if (($Container | Get-Member 'BlobContainerProperties') -and $Container.BlobContainerProperties.HasImmutableStorageWithVersioning) {
+    $forceBlobDeletion = $true
   }
 
   return $forceBlobDeletion

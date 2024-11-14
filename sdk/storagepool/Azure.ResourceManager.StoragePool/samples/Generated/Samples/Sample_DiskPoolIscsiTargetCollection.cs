@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.StoragePool.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StoragePool.Samples
 {
     public partial class Sample_DiskPoolIscsiTargetCollection
     {
-        // List Disk Pools by Resource Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDiskPoolsByResourceGroup()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/IscsiTargets_ListByDiskPool.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.StoragePool.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Create or Update iSCSI Target
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateISCSITarget()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/IscsiTargets_Put.json
@@ -96,9 +95,8 @@ new ManagedDiskIscsiLun("lun0",new ResourceIdentifier("/subscriptions/11111111-1
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get iSCSI Target
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetISCSITarget()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/IscsiTargets_Get.json
@@ -131,9 +129,8 @@ new ManagedDiskIscsiLun("lun0",new ResourceIdentifier("/subscriptions/11111111-1
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get iSCSI Target
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetISCSITarget()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/IscsiTargets_Get.json
@@ -162,9 +159,8 @@ new ManagedDiskIscsiLun("lun0",new ResourceIdentifier("/subscriptions/11111111-1
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get iSCSI Target
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetISCSITarget()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/IscsiTargets_Get.json
@@ -193,7 +189,7 @@ new ManagedDiskIscsiLun("lun0",new ResourceIdentifier("/subscriptions/11111111-1
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
