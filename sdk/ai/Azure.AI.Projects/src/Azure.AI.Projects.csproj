@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Azure.AI.Inference" />
   </ItemGroup>
@@ -28,9 +29,5 @@
 
   <ItemGroup>
     <None Include="..\tsp-location.yaml" Link="tsp-location.yaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 </Project>

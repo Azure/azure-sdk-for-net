@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -35,9 +34,7 @@ namespace Azure.AI.Projects.Tests
                 "Hi, Assistant! Draw a graph for a line with a slope of 4 and y-intercept of 9.");
             ThreadMessage message = messageResponse.Value;
 
-            AsyncCollectionResult<StreamingUpdate> updates = client.CreateRunStreamingAsync(thread.Id, agent.Id);
-
-            await foreach (StreamingUpdate streamingUpdate in updates)
+            await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
             {
                 Console.WriteLine(streamingUpdate.UpdateKind);
                 if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
