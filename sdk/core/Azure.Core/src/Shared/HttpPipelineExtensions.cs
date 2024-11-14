@@ -24,15 +24,6 @@ namespace Azure.Core
                 await pipeline.SendAsync(message, cts.Token).ConfigureAwait(false);
             }
 
-            //if (message.Response.IsError && (requestContext?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
-            //{
-            //    throw new RequestFailedException(message.Response);
-            //}
-
-            //return message.BufferResponse ?
-            //    message.Response :
-            //    message.ext
-
             if (!message.Response.IsError || statusOption == ErrorOptions.NoThrow)
             {
                 return message.Response;
