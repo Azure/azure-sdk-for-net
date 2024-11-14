@@ -6973,7 +6973,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                hardLink.CreateSymbolicLinkAsync(linkText: source.Uri.ToString()),
+                hardLink.CreateHardLinkAsync(targetFile: $"{directory.Name}/{source.Name}"),
                 e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
         }
 
