@@ -1839,8 +1839,7 @@ namespace Azure.AI.Projects
             try
             {
                 using HttpMessage message = CreateCreateRunRequest(threadId, content, context);
-                await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return message.ExtractResponse();
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1881,8 +1880,7 @@ namespace Azure.AI.Projects
             try
             {
                 using HttpMessage message = CreateCreateRunRequest(threadId, content, context);
-                _pipeline.ProcessMessage(message, context);
-                return message.ExtractResponse();
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
