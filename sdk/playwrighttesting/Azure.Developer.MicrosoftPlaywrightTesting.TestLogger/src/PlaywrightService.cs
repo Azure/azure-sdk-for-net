@@ -62,7 +62,7 @@ public class PlaywrightService
             if (_useCloudHostedBrowsers != null)
                 return (bool)_useCloudHostedBrowsers;
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable)))
-                return !bool.Parse(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable));
+                return !bool.Parse(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable)!); // this is checked in the line above
             return true;
         }
         set
