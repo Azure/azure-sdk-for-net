@@ -74,7 +74,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                 catch (Exception ex)
                 {
                     activity?.SetStatus(ActivityStatusCode.Error);
-                    activity?.RecordException(ex);
+                    activity?.AddException(ex);
                 }
             }
         }

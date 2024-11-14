@@ -171,7 +171,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 catch (Exception ex)
                 {
                     activity?.SetStatus(ActivityStatusCode.Error);
-                    activity?.RecordException(ex, new TagList
+                    activity?.AddException(ex, new TagList
                     {
                         { "someKey", "someValue" },
                     });
