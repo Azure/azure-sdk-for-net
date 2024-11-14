@@ -36,6 +36,7 @@ namespace Azure.AI.Projects.Tests
 
             await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
             {
+                Console.WriteLine(streamingUpdate.UpdateKind);
                 if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
                 {
                     Console.WriteLine($"--- Run started! ---");
