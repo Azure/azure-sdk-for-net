@@ -7,15 +7,11 @@ Set-StrictMode -Version 3
 
 . (Join-Path $PSScriptRoot common.ps1)
 
+
 function ShouldVerifyChangeLog ($PkgArtifactDetails) {
   if ($PkgArtifactDetails) {
-    Write-Host $PkgArtifactDetails.Name
-    $possibleValue = $PkgArtifactDetails.PSObject.Properties["skipVerifyChangeLog"]
-
-    if ($possibleValue) {
-      if ($possibleValue -eq $true) {
-        return $false
-      }
+    if ($PkgArtifactDetails.PSObject.Properties["skipVerifyChangeLog"] -eq $true) {
+      return $false
     }
 
     return $true
