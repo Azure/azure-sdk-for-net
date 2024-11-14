@@ -22,8 +22,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string CanceledValue = "Canceled";
+        private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
 
+        /// <summary> Canceled. </summary>
+        public static RackSkuProvisioningState Canceled { get; } = new RackSkuProvisioningState(CanceledValue);
+        /// <summary> Failed. </summary>
+        public static RackSkuProvisioningState Failed { get; } = new RackSkuProvisioningState(FailedValue);
         /// <summary> Succeeded. </summary>
         public static RackSkuProvisioningState Succeeded { get; } = new RackSkuProvisioningState(SucceededValue);
         /// <summary> Determines if two <see cref="RackSkuProvisioningState"/> values are the same. </summary>

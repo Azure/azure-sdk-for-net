@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.2 (2024-11-05)
+ 
+### Features Added
+ 
+- Added support for publishing test results and artifacts to the service from the client.
 
 ## 1.0.0-beta.1 (2024-10-23)
 

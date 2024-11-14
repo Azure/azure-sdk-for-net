@@ -26,8 +26,14 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
 
         public override async Task GlobalCleanupAsync()
         {
-            await _sourceContainer.DeleteIfExistsAsync();
-            await _destinationContainer.DeleteIfExistsAsync();
+            if (_sourceContainer != null)
+            {
+                await _sourceContainer.DeleteIfExistsAsync();
+            }
+            if (_destinationContainer != null)
+            {
+                await _destinationContainer.DeleteIfExistsAsync();
+            }
             await base.GlobalCleanupAsync();
         }
 

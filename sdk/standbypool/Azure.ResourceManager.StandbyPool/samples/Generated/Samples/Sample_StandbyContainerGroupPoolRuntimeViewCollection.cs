@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StandbyPool.Samples
 {
     public partial class Sample_StandbyContainerGroupPoolRuntimeViewCollection
     {
-        // StandbyContainerGroupPoolRuntimeViews_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StandbyContainerGroupPoolRuntimeViewsGet()
         {
             // Generated from example definition: 2024-03-01/StandbyContainerGroupPoolRuntimeViews_Get.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StandbyContainerGroupPoolRuntimeViews_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_StandbyContainerGroupPoolRuntimeViewsGet()
         {
             // Generated from example definition: 2024-03-01/StandbyContainerGroupPoolRuntimeViews_Get.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StandbyContainerGroupPoolRuntimeViews_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StandbyContainerGroupPoolRuntimeViewsGet()
         {
             // Generated from example definition: 2024-03-01/StandbyContainerGroupPoolRuntimeViews_Get.json
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -123,9 +121,8 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             }
         }
 
-        // StandbyContainerGroupPoolRuntimeViews_ListByStandbyPool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_StandbyContainerGroupPoolRuntimeViewsListByStandbyPool()
         {
             // Generated from example definition: 2024-03-01/StandbyContainerGroupPoolRuntimeViews_ListByStandbyPool.json
@@ -157,7 +154,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseSqlPoolColumnResource
     {
-        // Enables sensitivity recommendations on a given column
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task EnableRecommendationSqlPoolSensitivityLabel_EnablesSensitivityRecommendationsOnAGivenColumn()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/RecommendedColumnSensitivityLabelEnable.json
@@ -42,12 +42,11 @@ namespace Azure.ResourceManager.Synapse.Samples
             // invoke the operation
             await synapseSqlPoolColumn.EnableRecommendationSqlPoolSensitivityLabelAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Disables sensitivity recommendations on a given column
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DisableRecommendationSqlPoolSensitivityLabel_DisablesSensitivityRecommendationsOnAGivenColumn()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/RecommendedColumnSensitivityLabelDisable.json
@@ -73,12 +72,11 @@ namespace Azure.ResourceManager.Synapse.Samples
             // invoke the operation
             await synapseSqlPoolColumn.DisableRecommendationSqlPoolSensitivityLabelAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get database column
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDatabaseColumn()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/SqlPoolColumnGet.json

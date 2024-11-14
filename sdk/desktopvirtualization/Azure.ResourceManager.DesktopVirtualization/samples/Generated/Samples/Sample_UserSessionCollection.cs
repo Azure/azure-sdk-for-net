@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Samples
 {
     public partial class Sample_UserSessionCollection
     {
-        // UserSession_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_UserSessionGet()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/UserSession_Get.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UserSession_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_UserSessionGet()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/UserSession_Get.json
@@ -82,9 +81,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // UserSession_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_UserSessionGet()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/UserSession_Get.json
@@ -114,7 +112,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -126,9 +124,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             }
         }
 
-        // UserSession_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_UserSessionList()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/UserSession_List.json
@@ -164,7 +161,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

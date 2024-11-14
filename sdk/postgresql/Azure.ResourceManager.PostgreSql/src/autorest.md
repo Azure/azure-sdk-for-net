@@ -12,7 +12,6 @@ library-name: PostgreSql
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 
 batch:
   - tag: package-2020-01-01

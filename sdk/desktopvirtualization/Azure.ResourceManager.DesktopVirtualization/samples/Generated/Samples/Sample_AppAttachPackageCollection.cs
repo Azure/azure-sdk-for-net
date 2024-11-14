@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Samples
 {
     public partial class Sample_AppAttachPackageCollection
     {
-        // AppAttachPackage_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AppAttachPackageGet()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/AppAttachPackage_Get.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AppAttachPackage_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_AppAttachPackageGet()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/AppAttachPackage_Get.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AppAttachPackage_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AppAttachPackageGet()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/AppAttachPackage_Get.json
@@ -110,7 +108,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -122,9 +120,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             }
         }
 
-        // AppAttachPackage_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AppAttachPackageCreate()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/AppAttachPackage_Create.json
@@ -203,9 +200,8 @@ RawPng = BinaryData.FromString("\"VGhpcyBpcyBhIHN0cmluZyB0byBoYXNo\""),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AppAttachPackage_ListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AppAttachPackageListByResourceGroup()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/AppAttachPackage_ListByResourceGroup.json
@@ -237,7 +233,7 @@ RawPng = BinaryData.FromString("\"VGhpcyBpcyBhIHN0cmluZyB0byBoYXNo\""),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

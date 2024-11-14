@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StandbyPool.Samples
 {
     public partial class Sample_StandbyVirtualMachinePoolRuntimeViewResource
     {
-        // StandbyVirtualMachinePoolRuntimeViews_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StandbyVirtualMachinePoolRuntimeViewsGet()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachinePoolRuntimeViews_Get.json
