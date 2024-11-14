@@ -57,8 +57,12 @@ public class BicepStringBuilder
     /// Combine all the subexpressions into a single interpolated string.
     /// </summary>
     /// <returns>The composed <see cref="BicepValue{String}"/> value.</returns>
-    public BicepValue<string> Build() =>
-        new(new InterpolatedStringExpression([.. _expressions])) { IsSecure = _isSecure };
+    public BicepValue<string> Build()
+    {
+        BicepValue<string> value = new(new InterpolatedStringExpression([.. _expressions]));
+        value._isSecure = _isSecure;
+        return value;
+    }
 
     /// <summary>
     /// Implicitly convert a builder to a <see cref="BicepValue{String}"/> so
@@ -90,15 +94,15 @@ public ref struct BicepInterpolatedStringHandler(int literalLength, int formatte
 
     public void AppendFormatted<T>(T t)
     {
-        if (t is BicepValue b)
+        if (t is ProvisioningVariable v)
+        {
+            _expressions.Add(BicepSyntax.Var(v.BicepIdentifier));
+            _isSecure = _isSecure || ((IBicepValue)v.Value).IsSecure;
+        }
+        else if (t is IBicepValue b)
         {
             _expressions.Add(b.Compile());
             _isSecure = _isSecure || b.IsSecure;
-        }
-        else if (t is ProvisioningVariable v)
-        {
-            _expressions.Add(BicepSyntax.Var(v.BicepIdentifier));
-            _isSecure = _isSecure || v.Value.IsSecure;
         }
         else
         {
@@ -110,6 +114,10 @@ public ref struct BicepInterpolatedStringHandler(int literalLength, int formatte
         }
     }
 
-    internal readonly BicepValue<string> Build() =>
-        new(new InterpolatedStringExpression([.. _expressions])) { IsSecure = _isSecure };
+    internal readonly BicepValue<string> Build()
+    {
+        BicepValue<string> value = new(new InterpolatedStringExpression([.. _expressions]));
+        value._isSecure = _isSecure;
+        return value;
+    }
 }

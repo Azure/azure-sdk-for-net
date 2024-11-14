@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Batch.Samples
 {
     public partial class Sample_BatchAccountResource
     {
-        // BatchAccountUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BatchAccountUpdate()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountUpdate.json
@@ -51,9 +51,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BatchAccountDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_BatchAccountDelete()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountDelete.json
@@ -75,12 +74,11 @@ namespace Azure.ResourceManager.Batch.Samples
             // invoke the operation
             await batchAccount.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BatchAccountGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BatchAccountGet()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountGet.json
@@ -109,9 +107,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateBatchAccountGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateBatchAccountGet()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PrivateBatchAccountGet.json
@@ -140,9 +137,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BatchAccountList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBatchAccounts_BatchAccountList()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountList.json
@@ -169,12 +165,11 @@ namespace Azure.ResourceManager.Batch.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BatchAccountSynchronizeAutoStorageKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SynchronizeAutoStorageKeys_BatchAccountSynchronizeAutoStorageKeys()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountSynchronizeAutoStorageKeys.json
@@ -196,12 +191,11 @@ namespace Azure.ResourceManager.Batch.Samples
             // invoke the operation
             await batchAccount.SynchronizeAutoStorageKeysAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BatchAccountRegenerateKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_BatchAccountRegenerateKey()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountRegenerateKey.json
@@ -227,9 +221,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BatchAccountGetKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_BatchAccountGetKeys()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountGetKeys.json
@@ -254,9 +247,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListOutboundNetworkDependencies
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetOutboundNetworkDependenciesEndpoints_ListOutboundNetworkDependencies()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountListOutboundNetworkDependenciesEndpoints.json
@@ -281,7 +273,7 @@ namespace Azure.ResourceManager.Batch.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

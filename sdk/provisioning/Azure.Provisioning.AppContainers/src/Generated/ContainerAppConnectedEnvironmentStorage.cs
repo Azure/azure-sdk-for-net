@@ -20,32 +20,50 @@ public partial class ContainerAppConnectedEnvironmentStorage : ProvisionableReso
     /// <summary>
     /// Name of the storage.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Azure file properties.
     /// </summary>
-    public BicepValue<ContainerAppAzureFileProperties> ConnectedEnvironmentStorageAzureFile { get => _connectedEnvironmentStorageAzureFile; set => _connectedEnvironmentStorageAzureFile.Assign(value); }
-    private readonly BicepValue<ContainerAppAzureFileProperties> _connectedEnvironmentStorageAzureFile;
+    public ContainerAppAzureFileProperties ConnectedEnvironmentStorageAzureFile 
+    {
+        get { Initialize(); return _connectedEnvironmentStorageAzureFile!; }
+        set { Initialize(); AssignOrReplace(ref _connectedEnvironmentStorageAzureFile, value); }
+    }
+    private ContainerAppAzureFileProperties? _connectedEnvironmentStorageAzureFile;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerAppConnectedEnvironment.
     /// </summary>
-    public ContainerAppConnectedEnvironment? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerAppConnectedEnvironment> _parent;
+    public ContainerAppConnectedEnvironment? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerAppConnectedEnvironment>? _parent;
 
     /// <summary>
     /// Creates a new ContainerAppConnectedEnvironmentStorage.
@@ -60,11 +78,19 @@ public partial class ContainerAppConnectedEnvironmentStorage : ProvisionableReso
     public ContainerAppConnectedEnvironmentStorage(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.App/connectedEnvironments/storages", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _connectedEnvironmentStorageAzureFile = BicepValue<ContainerAppAzureFileProperties>.DefineProperty(this, "ConnectedEnvironmentStorageAzureFile", ["properties", "azureFile"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerAppConnectedEnvironment>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ContainerAppConnectedEnvironmentStorage.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _connectedEnvironmentStorageAzureFile = DefineModelProperty<ContainerAppAzureFileProperties>("ConnectedEnvironmentStorageAzureFile", ["properties", "azureFile"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerAppConnectedEnvironment>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

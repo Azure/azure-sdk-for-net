@@ -19,54 +19,79 @@ public partial class ManagementGroupSubscription : ProvisionableResource
     /// <summary>
     /// The name of the resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The friendly name of the subscription.
     /// </summary>
-    public BicepValue<string> DisplayName { get => _displayName; }
-    private readonly BicepValue<string> _displayName;
+    public BicepValue<string> DisplayName 
+    {
+        get { Initialize(); return _displayName!; }
+    }
+    private BicepValue<string>? _displayName;
 
     /// <summary>
     /// Fully qualified resource ID for the resource. Ex -
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The fully qualified ID for the parent management group.  For example,
     /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000.
     /// </summary>
-    public BicepValue<ResourceIdentifier> ParentId { get => _parentId; }
-    private readonly BicepValue<ResourceIdentifier> _parentId;
+    public BicepValue<ResourceIdentifier> ParentId 
+    {
+        get { Initialize(); return _parentId!; }
+    }
+    private BicepValue<ResourceIdentifier>? _parentId;
 
     /// <summary>
     /// The state of the subscription.
     /// </summary>
-    public BicepValue<string> State { get => _state; }
-    private readonly BicepValue<string> _state;
+    public BicepValue<string> State 
+    {
+        get { Initialize(); return _state!; }
+    }
+    private BicepValue<string>? _state;
 
     /// <summary>
     /// Azure Resource Manager metadata containing createdBy and modifiedBy
     /// information.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The AAD Tenant ID associated with the subscription. For example,
     /// 00000000-0000-0000-0000-000000000000.
     /// </summary>
-    public BicepValue<string> Tenant { get => _tenant; }
-    private readonly BicepValue<string> _tenant;
+    public BicepValue<string> Tenant 
+    {
+        get { Initialize(); return _tenant!; }
+    }
+    private BicepValue<string>? _tenant;
 
     /// <summary>
     /// Gets or sets a reference to the parent ManagementGroup.
     /// </summary>
-    public ManagementGroup? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ManagementGroup> _parent;
+    public ManagementGroup? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ManagementGroup>? _parent;
 
     /// <summary>
     /// Creates a new ManagementGroupSubscription.
@@ -81,14 +106,21 @@ public partial class ManagementGroupSubscription : ProvisionableResource
     public ManagementGroupSubscription(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Management/managementGroups/subscriptions", resourceVersion ?? "2023-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _parentId = BicepValue<ResourceIdentifier>.DefineProperty(this, "ParentId", ["properties", "parent", "id"], isOutput: true);
-        _state = BicepValue<string>.DefineProperty(this, "State", ["properties", "state"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _tenant = BicepValue<string>.DefineProperty(this, "Tenant", ["properties", "tenant"], isOutput: true);
-        _parent = ResourceReference<ManagementGroup>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ManagementGroupSubscription.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _parentId = DefineProperty<ResourceIdentifier>("ParentId", ["properties", "parent", "id"], isOutput: true);
+        _state = DefineProperty<string>("State", ["properties", "state"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _tenant = DefineProperty<string>("Tenant", ["properties", "tenant"], isOutput: true);
+        _parent = DefineResource<ManagementGroup>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

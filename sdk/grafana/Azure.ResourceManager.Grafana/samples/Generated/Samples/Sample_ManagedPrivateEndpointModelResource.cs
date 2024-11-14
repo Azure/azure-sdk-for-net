@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Grafana.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Grafana.Samples
 {
     public partial class Sample_ManagedPrivateEndpointModelResource
     {
-        // ManagedPrivateEndpoint_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ManagedPrivateEndpointGet()
         {
             // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/ManagedPrivateEndpoints_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Grafana.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ManagedPrivateEndpoints_Patch
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ManagedPrivateEndpointsPatch()
         {
             // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/ManagedPrivateEndpoints_Patch.json
@@ -87,9 +86,8 @@ namespace Azure.ResourceManager.Grafana.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ManagedPrivateEndpoint_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ManagedPrivateEndpointDelete()
         {
             // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/ManagedPrivateEndpoints_Delete.json
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.Grafana.Samples
             // invoke the operation
             await managedPrivateEndpointModel.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

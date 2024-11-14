@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Samples
 {
     public partial class Sample_HostPoolCollection
     {
-        // HostPool_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_HostPoolGet()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/HostPool_Get.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HostPool_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_HostPoolGet()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/HostPool_Get.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // HostPool_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_HostPoolGet()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/HostPool_Get.json
@@ -110,7 +108,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -122,9 +120,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             }
         }
 
-        // HostPool_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_HostPoolCreate()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/HostPool_Create.json
@@ -199,9 +196,8 @@ DayOfWeek = DesktopVirtualizationDayOfWeek.Saturday,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HostPool_ListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_HostPoolListByResourceGroup()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/HostPool_ListByResourceGroup.json
@@ -235,7 +231,7 @@ DayOfWeek = DesktopVirtualizationDayOfWeek.Saturday,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

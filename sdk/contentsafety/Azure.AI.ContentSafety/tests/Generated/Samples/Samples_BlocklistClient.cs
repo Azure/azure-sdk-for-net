@@ -112,7 +112,10 @@ Description = "Hate word",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
-            using RequestContent content = null;
+            using RequestContent content = RequestContent.Create(new
+            {
+                description = "Test Blocklist",
+            });
             Response response = client.CreateOrUpdateTextBlocklist("TestBlocklist", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -127,7 +130,10 @@ Description = "Hate word",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
-            using RequestContent content = null;
+            using RequestContent content = RequestContent.Create(new
+            {
+                description = "Test Blocklist",
+            });
             Response response = await client.CreateOrUpdateTextBlocklistAsync("TestBlocklist", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;

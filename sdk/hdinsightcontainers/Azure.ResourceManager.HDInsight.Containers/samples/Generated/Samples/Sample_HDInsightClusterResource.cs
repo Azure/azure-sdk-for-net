@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HDInsight.Containers.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Samples
 {
     public partial class Sample_HDInsightClusterResource
     {
-        // ClustersUpgradeAKSPatchVersion
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Upgrade_ClustersUpgradeAKSPatchVersion()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/UpgradeAKSPatchVersionForCluster.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ClustersUpgradeHotfix
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Upgrade_ClustersUpgradeHotfix()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/UpgradeHotfixForCluster.json
@@ -89,9 +88,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ClusterUpgradeRollback
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpgradeManualRollback_ClusterUpgradeRollback()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ClusterUpgradeRollback.json
@@ -123,9 +121,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HDInsightClusterResize
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Resize_HDInsightClusterResize()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ResizeCluster.json
@@ -160,9 +157,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HDInsightClusterGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_HDInsightClusterGet()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/GetCluster.json
@@ -192,9 +188,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HDInsightClustersPatchTags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_HDInsightClustersPatchTags()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/PatchCluster.json
@@ -313,9 +308,8 @@ AutoscaleScheduleDay.Sunday
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HDInsightRangerClusterPatchTags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_HDInsightRangerClusterPatchTags()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/PatchRangerCluster.json
@@ -375,9 +369,8 @@ AutoscaleScheduleDay.Sunday
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HDInsightClustersDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_HDInsightClustersDelete()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/DeleteCluster.json
@@ -400,12 +393,11 @@ AutoscaleScheduleDay.Sunday
             // invoke the operation
             await hdInsightCluster.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // HDInsightClusterGetServiceConfigs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetServiceConfigs_HDInsightClusterGetServiceConfigs()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClusterServiceConfigs.json
@@ -431,12 +423,11 @@ AutoscaleScheduleDay.Sunday
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // HDInsightClusterGetInstanceViews
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetInstanceViews_HDInsightClusterGetInstanceViews()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClusterInstanceViews.json
@@ -462,12 +453,11 @@ AutoscaleScheduleDay.Sunday
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // HDInsightClusterGetInstanceView
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetInstanceView_HDInsightClusterGetInstanceView()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/GetClusterInstanceView.json
@@ -493,9 +483,8 @@ AutoscaleScheduleDay.Sunday
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetClusterAvailableUpgrade
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterAvailableUpgrades_GetClusterAvailableUpgrade()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClusterAvailableUpgrades.json
@@ -521,12 +510,11 @@ AutoscaleScheduleDay.Sunday
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ClusterUpgradeHistoriesListResult
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterUpgradeHistories_ClusterUpgradeHistoriesListResult()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClusterUpgradeHistory.json
@@ -552,12 +540,11 @@ AutoscaleScheduleDay.Sunday
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RunClusterJob
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RunJobClusterJob_RunClusterJob()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/RunClusterJob.json
@@ -597,9 +584,8 @@ AutoscaleScheduleDay.Sunday
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListClusterJobs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterJobs_ListClusterJobs()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClusterJobs.json
@@ -625,12 +611,11 @@ AutoscaleScheduleDay.Sunday
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ListPredefinedClusterLibraries
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterLibraries_ListPredefinedClusterLibraries()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListPredefinedClusterLibraries.json
@@ -657,12 +642,11 @@ AutoscaleScheduleDay.Sunday
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ListUserCustomClusterLibraries
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterLibraries_ListUserCustomClusterLibraries()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListUserCustomClusterLibraries.json
@@ -689,12 +673,11 @@ AutoscaleScheduleDay.Sunday
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // InstallNewClusterLibraries
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ManageLibrariesClusterLibrary_InstallNewClusterLibraries()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/InstallNewClusterLibraries.json
@@ -729,12 +712,11 @@ Remarks = "Maven packages.",
             }));
             await hdInsightCluster.ManageLibrariesClusterLibraryAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // UninstallExistingClusterLibraries
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ManageLibrariesClusterLibrary_UninstallExistingClusterLibraries()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/UninstallExistingClusterLibraries.json
@@ -761,7 +743,7 @@ new ClusterLibrary(new ClusterPyPILibraryProperties("tensorflow")),new ClusterLi
             }));
             await hdInsightCluster.ManageLibrariesClusterLibraryAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

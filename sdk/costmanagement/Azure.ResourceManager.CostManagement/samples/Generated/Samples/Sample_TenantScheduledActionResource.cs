@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CostManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CostManagement.Samples
 {
     public partial class Sample_TenantScheduledActionResource
     {
-        // CreateOrUpdatePrivateScheduledAction
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdatePrivateScheduledAction()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-createOrUpdate-private.json
@@ -69,9 +69,8 @@ ScheduledActionWeeksOfMonth.First,ScheduledActionWeeksOfMonth.Third
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateScheduledAction
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateScheduledAction()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-get-private.json
@@ -98,9 +97,8 @@ ScheduledActionWeeksOfMonth.First,ScheduledActionWeeksOfMonth.Third
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateScheduledActionDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PrivateScheduledActionDelete()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-delete-private.json
@@ -120,12 +118,11 @@ ScheduledActionWeeksOfMonth.First,ScheduledActionWeeksOfMonth.Third
             // invoke the operation
             await tenantScheduledAction.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ScheduledActionSendNow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Run_ScheduledActionSendNow()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-sendNow-private.json
@@ -145,7 +142,7 @@ ScheduledActionWeeksOfMonth.First,ScheduledActionWeeksOfMonth.Third
             // invoke the operation
             await tenantScheduledAction.RunAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

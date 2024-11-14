@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataBoxEdge.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataBoxEdge.Samples
 {
     public partial class Sample_DataBoxEdgeTriggerResource
     {
-        // TriggerGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TriggerGet()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/TriggerGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TriggerPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TriggerPut()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/TriggerPut.json
@@ -84,9 +83,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TriggerDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_TriggerDelete()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/TriggerDelete.json
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             // invoke the operation
             await dataBoxEdgeTrigger.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

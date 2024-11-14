@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridCompute.Samples
 {
     public partial class Sample_HybridComputeExtensionValueCollection
     {
-        // GET an extensions metadata
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GETAnExtensionsMetadata()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/extension/ExtensionMetadata_Get.json
@@ -51,9 +51,8 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GET an extensions metadata
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GETAnExtensionsMetadata()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/extension/ExtensionMetadata_Get.json
@@ -83,9 +82,8 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GET an extensions metadata
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GETAnExtensionsMetadata()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/extension/ExtensionMetadata_Get.json
@@ -115,7 +113,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -127,9 +125,8 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             }
         }
 
-        // GET a list of extensions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GETAListOfExtensions()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/extension/ExtensionMetadata_List.json
@@ -162,7 +159,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

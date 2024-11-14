@@ -21,33 +21,50 @@ public partial class TableService : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The List of CORS rules. You can include up to five CorsRule elements in
     /// the request.
     /// </summary>
-    public BicepList<StorageCorsRule> CorsRules { get => _corsRules; set => _corsRules.Assign(value); }
-    private readonly BicepList<StorageCorsRule> _corsRules;
+    public BicepList<StorageCorsRule> CorsRules 
+    {
+        get { Initialize(); return _corsRules!; }
+        set { Initialize(); _corsRules!.Assign(value); }
+    }
+    private BicepList<StorageCorsRule>? _corsRules;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent StorageAccount.
     /// </summary>
-    public StorageAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<StorageAccount> _parent;
+    public StorageAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<StorageAccount>? _parent;
 
     /// <summary>
     /// Creates a new TableService.
@@ -62,11 +79,18 @@ public partial class TableService : ProvisionableResource
     public TableService(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/tableServices", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _corsRules = BicepList<StorageCorsRule>.DefineProperty(this, "CorsRules", ["properties", "cors", "corsRules"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<StorageAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of TableService.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _corsRules = DefineListProperty<StorageCorsRule>("CorsRules", ["properties", "cors", "corsRules"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<StorageAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

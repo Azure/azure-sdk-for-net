@@ -1,5 +1,16 @@
 # Release History
 
+## 1.14.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+ - Fixed an issue where setting `DefaultAzureCredentialOptions.TenantId` twice throws an `InvalidOperationException` ([#47035](https://github.com/Azure/azure-sdk-for-net/issues/47035))
+
+### Other Changes
+
 ## 1.13.1 (2024-10-24)
 
 ### Bugs Fixed

@@ -21,15 +21,23 @@ public partial class ServiceBusTopic : ProvisionableResource
     /// <summary>
     /// The topic name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// ISO 8601 timespan idle interval after which the topic is automatically
     /// deleted. The minimum duration is 5 minutes.
     /// </summary>
-    public BicepValue<TimeSpan> AutoDeleteOnIdle { get => _autoDeleteOnIdle; set => _autoDeleteOnIdle.Assign(value); }
-    private readonly BicepValue<TimeSpan> _autoDeleteOnIdle;
+    public BicepValue<TimeSpan> AutoDeleteOnIdle 
+    {
+        get { Initialize(); return _autoDeleteOnIdle!; }
+        set { Initialize(); _autoDeleteOnIdle!.Assign(value); }
+    }
+    private BicepValue<TimeSpan>? _autoDeleteOnIdle;
 
     /// <summary>
     /// ISO 8601 Default message timespan to live value. This is the duration
@@ -37,129 +45,200 @@ public partial class ServiceBusTopic : ProvisionableResource
     /// sent to Service Bus. This is the default value used when TimeToLive is
     /// not set on a message itself.
     /// </summary>
-    public BicepValue<TimeSpan> DefaultMessageTimeToLive { get => _defaultMessageTimeToLive; set => _defaultMessageTimeToLive.Assign(value); }
-    private readonly BicepValue<TimeSpan> _defaultMessageTimeToLive;
+    public BicepValue<TimeSpan> DefaultMessageTimeToLive 
+    {
+        get { Initialize(); return _defaultMessageTimeToLive!; }
+        set { Initialize(); _defaultMessageTimeToLive!.Assign(value); }
+    }
+    private BicepValue<TimeSpan>? _defaultMessageTimeToLive;
 
     /// <summary>
     /// ISO8601 timespan structure that defines the duration of the duplicate
     /// detection history. The default value is 10 minutes.
     /// </summary>
-    public BicepValue<TimeSpan> DuplicateDetectionHistoryTimeWindow { get => _duplicateDetectionHistoryTimeWindow; set => _duplicateDetectionHistoryTimeWindow.Assign(value); }
-    private readonly BicepValue<TimeSpan> _duplicateDetectionHistoryTimeWindow;
+    public BicepValue<TimeSpan> DuplicateDetectionHistoryTimeWindow 
+    {
+        get { Initialize(); return _duplicateDetectionHistoryTimeWindow!; }
+        set { Initialize(); _duplicateDetectionHistoryTimeWindow!.Assign(value); }
+    }
+    private BicepValue<TimeSpan>? _duplicateDetectionHistoryTimeWindow;
 
     /// <summary>
     /// Value that indicates whether server-side batched operations are enabled.
     /// </summary>
-    public BicepValue<bool> EnableBatchedOperations { get => _enableBatchedOperations; set => _enableBatchedOperations.Assign(value); }
-    private readonly BicepValue<bool> _enableBatchedOperations;
+    public BicepValue<bool> EnableBatchedOperations 
+    {
+        get { Initialize(); return _enableBatchedOperations!; }
+        set { Initialize(); _enableBatchedOperations!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableBatchedOperations;
 
     /// <summary>
     /// Value that indicates whether Express Entities are enabled. An express
     /// topic holds a message in memory temporarily before writing it to
     /// persistent storage.
     /// </summary>
-    public BicepValue<bool> EnableExpress { get => _enableExpress; set => _enableExpress.Assign(value); }
-    private readonly BicepValue<bool> _enableExpress;
+    public BicepValue<bool> EnableExpress 
+    {
+        get { Initialize(); return _enableExpress!; }
+        set { Initialize(); _enableExpress!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableExpress;
 
     /// <summary>
     /// Value that indicates whether the topic to be partitioned across
     /// multiple message brokers is enabled.
     /// </summary>
-    public BicepValue<bool> EnablePartitioning { get => _enablePartitioning; set => _enablePartitioning.Assign(value); }
-    private readonly BicepValue<bool> _enablePartitioning;
+    public BicepValue<bool> EnablePartitioning 
+    {
+        get { Initialize(); return _enablePartitioning!; }
+        set { Initialize(); _enablePartitioning!.Assign(value); }
+    }
+    private BicepValue<bool>? _enablePartitioning;
 
     /// <summary>
     /// Maximum size (in KB) of the message payload that can be accepted by the
     /// topic. This property is only used in Premium today and default is 1024.
     /// </summary>
-    public BicepValue<long> MaxMessageSizeInKilobytes { get => _maxMessageSizeInKilobytes; set => _maxMessageSizeInKilobytes.Assign(value); }
-    private readonly BicepValue<long> _maxMessageSizeInKilobytes;
+    public BicepValue<long> MaxMessageSizeInKilobytes 
+    {
+        get { Initialize(); return _maxMessageSizeInKilobytes!; }
+        set { Initialize(); _maxMessageSizeInKilobytes!.Assign(value); }
+    }
+    private BicepValue<long>? _maxMessageSizeInKilobytes;
 
     /// <summary>
     /// Maximum size of the topic in megabytes, which is the size of the memory
     /// allocated for the topic. Default is 1024.
     /// </summary>
-    public BicepValue<int> MaxSizeInMegabytes { get => _maxSizeInMegabytes; set => _maxSizeInMegabytes.Assign(value); }
-    private readonly BicepValue<int> _maxSizeInMegabytes;
+    public BicepValue<int> MaxSizeInMegabytes 
+    {
+        get { Initialize(); return _maxSizeInMegabytes!; }
+        set { Initialize(); _maxSizeInMegabytes!.Assign(value); }
+    }
+    private BicepValue<int>? _maxSizeInMegabytes;
 
     /// <summary>
     /// Value indicating if this topic requires duplicate detection.
     /// </summary>
-    public BicepValue<bool> RequiresDuplicateDetection { get => _requiresDuplicateDetection; set => _requiresDuplicateDetection.Assign(value); }
-    private readonly BicepValue<bool> _requiresDuplicateDetection;
+    public BicepValue<bool> RequiresDuplicateDetection 
+    {
+        get { Initialize(); return _requiresDuplicateDetection!; }
+        set { Initialize(); _requiresDuplicateDetection!.Assign(value); }
+    }
+    private BicepValue<bool>? _requiresDuplicateDetection;
 
     /// <summary>
     /// Enumerates the possible values for the status of a messaging entity.
     /// </summary>
-    public BicepValue<ServiceBusMessagingEntityStatus> Status { get => _status; set => _status.Assign(value); }
-    private readonly BicepValue<ServiceBusMessagingEntityStatus> _status;
+    public BicepValue<ServiceBusMessagingEntityStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+        set { Initialize(); _status!.Assign(value); }
+    }
+    private BicepValue<ServiceBusMessagingEntityStatus>? _status;
 
     /// <summary>
     /// Value that indicates whether the topic supports ordering.
     /// </summary>
-    public BicepValue<bool> SupportOrdering { get => _supportOrdering; set => _supportOrdering.Assign(value); }
-    private readonly BicepValue<bool> _supportOrdering;
+    public BicepValue<bool> SupportOrdering 
+    {
+        get { Initialize(); return _supportOrdering!; }
+        set { Initialize(); _supportOrdering!.Assign(value); }
+    }
+    private BicepValue<bool>? _supportOrdering;
 
     /// <summary>
     /// Last time the message was sent, or a request was received, for this
     /// topic.
     /// </summary>
-    public BicepValue<DateTimeOffset> AccessedOn { get => _accessedOn; }
-    private readonly BicepValue<DateTimeOffset> _accessedOn;
+    public BicepValue<DateTimeOffset> AccessedOn 
+    {
+        get { Initialize(); return _accessedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _accessedOn;
 
     /// <summary>
     /// Message count details.
     /// </summary>
-    public BicepValue<MessageCountDetails> CountDetails { get => _countDetails; }
-    private readonly BicepValue<MessageCountDetails> _countDetails;
+    public MessageCountDetails CountDetails 
+    {
+        get { Initialize(); return _countDetails!; }
+    }
+    private MessageCountDetails? _countDetails;
 
     /// <summary>
     /// Exact time the message was created.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Size of the topic, in bytes.
     /// </summary>
-    public BicepValue<long> SizeInBytes { get => _sizeInBytes; }
-    private readonly BicepValue<long> _sizeInBytes;
+    public BicepValue<long> SizeInBytes 
+    {
+        get { Initialize(); return _sizeInBytes!; }
+    }
+    private BicepValue<long>? _sizeInBytes;
 
     /// <summary>
     /// Number of subscriptions.
     /// </summary>
-    public BicepValue<int> SubscriptionCount { get => _subscriptionCount; }
-    private readonly BicepValue<int> _subscriptionCount;
+    public BicepValue<int> SubscriptionCount 
+    {
+        get { Initialize(); return _subscriptionCount!; }
+    }
+    private BicepValue<int>? _subscriptionCount;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The exact time the message was updated.
     /// </summary>
-    public BicepValue<DateTimeOffset> UpdatedOn { get => _updatedOn; }
-    private readonly BicepValue<DateTimeOffset> _updatedOn;
+    public BicepValue<DateTimeOffset> UpdatedOn 
+    {
+        get { Initialize(); return _updatedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _updatedOn;
 
     /// <summary>
     /// Gets or sets a reference to the parent ServiceBusNamespace.
     /// </summary>
-    public ServiceBusNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ServiceBusNamespace> _parent;
+    public ServiceBusNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ServiceBusNamespace>? _parent;
 
     /// <summary>
     /// Creates a new ServiceBusTopic.
@@ -174,28 +253,35 @@ public partial class ServiceBusTopic : ProvisionableResource
     public ServiceBusTopic(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/topics", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _autoDeleteOnIdle = BicepValue<TimeSpan>.DefineProperty(this, "AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"], format: "P");
-        _defaultMessageTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "DefaultMessageTimeToLive", ["properties", "defaultMessageTimeToLive"], format: "P");
-        _duplicateDetectionHistoryTimeWindow = BicepValue<TimeSpan>.DefineProperty(this, "DuplicateDetectionHistoryTimeWindow", ["properties", "duplicateDetectionHistoryTimeWindow"], format: "P");
-        _enableBatchedOperations = BicepValue<bool>.DefineProperty(this, "EnableBatchedOperations", ["properties", "enableBatchedOperations"]);
-        _enableExpress = BicepValue<bool>.DefineProperty(this, "EnableExpress", ["properties", "enableExpress"]);
-        _enablePartitioning = BicepValue<bool>.DefineProperty(this, "EnablePartitioning", ["properties", "enablePartitioning"]);
-        _maxMessageSizeInKilobytes = BicepValue<long>.DefineProperty(this, "MaxMessageSizeInKilobytes", ["properties", "maxMessageSizeInKilobytes"]);
-        _maxSizeInMegabytes = BicepValue<int>.DefineProperty(this, "MaxSizeInMegabytes", ["properties", "maxSizeInMegabytes"]);
-        _requiresDuplicateDetection = BicepValue<bool>.DefineProperty(this, "RequiresDuplicateDetection", ["properties", "requiresDuplicateDetection"]);
-        _status = BicepValue<ServiceBusMessagingEntityStatus>.DefineProperty(this, "Status", ["properties", "status"]);
-        _supportOrdering = BicepValue<bool>.DefineProperty(this, "SupportOrdering", ["properties", "supportOrdering"]);
-        _accessedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "AccessedOn", ["properties", "accessedAt"], isOutput: true);
-        _countDetails = BicepValue<MessageCountDetails>.DefineProperty(this, "CountDetails", ["properties", "countDetails"], isOutput: true);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdAt"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _sizeInBytes = BicepValue<long>.DefineProperty(this, "SizeInBytes", ["properties", "sizeInBytes"], isOutput: true);
-        _subscriptionCount = BicepValue<int>.DefineProperty(this, "SubscriptionCount", ["properties", "subscriptionCount"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _updatedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "UpdatedOn", ["properties", "updatedAt"], isOutput: true);
-        _parent = ResourceReference<ServiceBusNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ServiceBusTopic.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _autoDeleteOnIdle = DefineProperty<TimeSpan>("AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"], format: "P");
+        _defaultMessageTimeToLive = DefineProperty<TimeSpan>("DefaultMessageTimeToLive", ["properties", "defaultMessageTimeToLive"], format: "P");
+        _duplicateDetectionHistoryTimeWindow = DefineProperty<TimeSpan>("DuplicateDetectionHistoryTimeWindow", ["properties", "duplicateDetectionHistoryTimeWindow"], format: "P");
+        _enableBatchedOperations = DefineProperty<bool>("EnableBatchedOperations", ["properties", "enableBatchedOperations"]);
+        _enableExpress = DefineProperty<bool>("EnableExpress", ["properties", "enableExpress"]);
+        _enablePartitioning = DefineProperty<bool>("EnablePartitioning", ["properties", "enablePartitioning"]);
+        _maxMessageSizeInKilobytes = DefineProperty<long>("MaxMessageSizeInKilobytes", ["properties", "maxMessageSizeInKilobytes"]);
+        _maxSizeInMegabytes = DefineProperty<int>("MaxSizeInMegabytes", ["properties", "maxSizeInMegabytes"]);
+        _requiresDuplicateDetection = DefineProperty<bool>("RequiresDuplicateDetection", ["properties", "requiresDuplicateDetection"]);
+        _status = DefineProperty<ServiceBusMessagingEntityStatus>("Status", ["properties", "status"]);
+        _supportOrdering = DefineProperty<bool>("SupportOrdering", ["properties", "supportOrdering"]);
+        _accessedOn = DefineProperty<DateTimeOffset>("AccessedOn", ["properties", "accessedAt"], isOutput: true);
+        _countDetails = DefineModelProperty<MessageCountDetails>("CountDetails", ["properties", "countDetails"], isOutput: true);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdAt"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _sizeInBytes = DefineProperty<long>("SizeInBytes", ["properties", "sizeInBytes"], isOutput: true);
+        _subscriptionCount = DefineProperty<int>("SubscriptionCount", ["properties", "subscriptionCount"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _updatedOn = DefineProperty<DateTimeOffset>("UpdatedOn", ["properties", "updatedAt"], isOutput: true);
+        _parent = DefineResource<ServiceBusNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

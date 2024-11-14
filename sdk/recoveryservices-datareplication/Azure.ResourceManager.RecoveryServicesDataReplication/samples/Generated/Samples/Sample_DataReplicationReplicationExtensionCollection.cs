@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 {
     public partial class Sample_DataReplicationReplicationExtensionCollection
     {
-        // ReplicationExtension_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ReplicationExtensionGet()
         {
             // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ReplicationExtension_Get.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ReplicationExtension_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ReplicationExtensionGet()
         {
             // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ReplicationExtension_Get.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ReplicationExtension_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ReplicationExtensionGet()
         {
             // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ReplicationExtension_Get.json
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -124,9 +122,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             }
         }
 
-        // ReplicationExtension_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ReplicationExtensionCreate()
         {
             // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ReplicationExtension_Create.json
@@ -161,9 +158,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ReplicationExtension_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ReplicationExtensionList()
         {
             // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ReplicationExtension_List.json
@@ -195,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

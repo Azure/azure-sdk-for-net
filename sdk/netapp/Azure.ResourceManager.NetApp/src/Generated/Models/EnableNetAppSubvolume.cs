@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Flag indicating whether subvolume operations are enabled on the volume
-    /// Serialized Name: EnableSubvolumes
-    /// </summary>
+    /// <summary> Flag indicating whether subvolume operations are enabled on the volume. </summary>
     public readonly partial struct EnableNetAppSubvolume : IEquatable<EnableNetAppSubvolume>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// subvolumes are enabled
-        /// Serialized Name: EnableSubvolumes.Enabled
-        /// </summary>
+        /// <summary> subvolumes are enabled. </summary>
         public static EnableNetAppSubvolume Enabled { get; } = new EnableNetAppSubvolume(EnabledValue);
-        /// <summary>
-        /// subvolumes are not enabled
-        /// Serialized Name: EnableSubvolumes.Disabled
-        /// </summary>
+        /// <summary> subvolumes are not enabled. </summary>
         public static EnableNetAppSubvolume Disabled { get; } = new EnableNetAppSubvolume(DisabledValue);
         /// <summary> Determines if two <see cref="EnableNetAppSubvolume"/> values are the same. </summary>
         public static bool operator ==(EnableNetAppSubvolume left, EnableNetAppSubvolume right) => left.Equals(right);

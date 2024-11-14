@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Chaos.Samples
 {
     public partial class Sample_ChaosTargetCollection
     {
-        // List all Targets that extend a virtual machine resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllTargetsThatExtendAVirtualMachineResource()
         {
             // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/ListTargets.json
@@ -53,12 +53,11 @@ namespace Azure.ResourceManager.Chaos.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a Target that extends a virtual machine resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetATargetThatExtendsAVirtualMachineResource()
         {
             // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetTarget.json
@@ -93,9 +92,8 @@ namespace Azure.ResourceManager.Chaos.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a Target that extends a virtual machine resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetATargetThatExtendsAVirtualMachineResource()
         {
             // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetTarget.json
@@ -126,9 +124,8 @@ namespace Azure.ResourceManager.Chaos.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a Target that extends a virtual machine resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetATargetThatExtendsAVirtualMachineResource()
         {
             // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetTarget.json
@@ -159,7 +156,7 @@ namespace Azure.ResourceManager.Chaos.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -171,9 +168,8 @@ namespace Azure.ResourceManager.Chaos.Samples
             }
         }
 
-        // Create/update a Target that extends a virtual machine resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateATargetThatExtendsAVirtualMachineResource()
         {
             // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/CreateUpdateTarget.json

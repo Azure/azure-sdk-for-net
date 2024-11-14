@@ -9,6 +9,7 @@ namespace Azure.Messaging.WebPubSub
     {
         Default = 0,
         Mqtt = 1,
+        SocketIO = 2,
     }
     public enum WebPubSubPermission
     {

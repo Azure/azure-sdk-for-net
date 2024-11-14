@@ -60,7 +60,7 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> Initializes a new instance of <see cref="ChatRetrievedDocument"/>. </summary>
         /// <param name="content"> The content of the citation. </param>
         /// <param name="title"> The title for the citation. </param>
-        /// <param name="uri"> The URL of the citation. </param>
+        /// <param name="url"> The URL of the citation. </param>
         /// <param name="filePath"> The file path for the citation. </param>
         /// <param name="chunkId"> The chunk ID for the citation. </param>
         /// <param name="rerankScore"> The rerank score for the retrieval. </param>
@@ -69,11 +69,11 @@ namespace Azure.AI.OpenAI.Chat
         /// <param name="originalSearchScore"> The original search score for the retrieval. </param>
         /// <param name="filterReason"> If applicable, an indication of why the document was filtered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatRetrievedDocument(string content, string title, Uri uri, string filePath, string chunkId, double? rerankScore, IReadOnlyList<string> searchQueries, int dataSourceIndex, double? originalSearchScore, ChatDocumentFilterReason? filterReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatRetrievedDocument(string content, string title, string url, string filePath, string chunkId, double? rerankScore, IReadOnlyList<string> searchQueries, int dataSourceIndex, double? originalSearchScore, ChatDocumentFilterReason? filterReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
             Title = title;
-            Uri = uri;
+            Url = url;
             FilePath = filePath;
             ChunkId = chunkId;
             RerankScore = rerankScore;
@@ -93,6 +93,8 @@ namespace Azure.AI.OpenAI.Chat
         public string Content { get; }
         /// <summary> The title for the citation. </summary>
         public string Title { get; }
+        /// <summary> The URL of the citation. </summary>
+        public string Url { get; }
         /// <summary> The chunk ID for the citation. </summary>
         public string ChunkId { get; }
         /// <summary> The rerank score for the retrieval. </summary>

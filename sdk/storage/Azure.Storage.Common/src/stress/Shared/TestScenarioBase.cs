@@ -21,7 +21,7 @@ public abstract class TestScenarioBase
     /// <summary>
     ///  Initializes a new Test instance.
     /// </summary>
-    ///\
+    ///
     /// <param name="metrics">The <see cref="Metrics" /> to use to send metrics to Application Insights.</param>
     /// <param name="testRunId">Test Run Id to differ between test runs.</param>
     ///

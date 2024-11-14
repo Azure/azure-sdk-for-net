@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Samples
 {
     public partial class Sample_VirtualWorkspaceCollection
     {
-        // Workspace_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkspaceGet()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/Workspace_Get.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Workspace_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_WorkspaceGet()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/Workspace_Get.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Workspace_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_WorkspaceGet()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/Workspace_Get.json
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -121,9 +119,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             }
         }
 
-        // Workspace_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WorkspaceCreate()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/Workspace_Create.json
@@ -166,9 +163,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Workspace_ListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_WorkspaceListByResourceGroup()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/Workspace_ListByResourceGroup.json
@@ -202,7 +198,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

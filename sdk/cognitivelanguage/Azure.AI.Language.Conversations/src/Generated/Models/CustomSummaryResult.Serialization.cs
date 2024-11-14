@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Conversations.Models
 
         void IJsonModel<CustomSummaryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CustomSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomSummaryResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("conversations"u8);
             writer.WriteStartArray();
             foreach (var item in Conversations)
@@ -64,7 +72,6 @@ namespace Azure.AI.Language.Conversations.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CustomSummaryResult IJsonModel<CustomSummaryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

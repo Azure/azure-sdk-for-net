@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_FirewallPolicyRuleCollectionGroupResource
     {
-        // Delete FirewallPolicyRuleCollectionGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteFirewallPolicyRuleCollectionGroup()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupDelete.json
@@ -40,12 +40,11 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             await firewallPolicyRuleCollectionGroup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get FirewallPolicyNatRuleCollectionGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFirewallPolicyNatRuleCollectionGroup()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyNatRuleCollectionGroupGet.json
@@ -75,9 +74,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get FirewallPolicyRuleCollectionGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFirewallPolicyRuleCollectionGroup()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupGet.json
@@ -107,9 +105,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get FirewallPolicyRuleCollectionGroup With IpGroups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFirewallPolicyRuleCollectionGroupWithIpGroups()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithIpGroupsGet.json
@@ -139,9 +136,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get FirewallPolicyRuleCollectionGroup With Web Categories
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFirewallPolicyRuleCollectionGroupWithWebCategories()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesGet.json
@@ -171,9 +167,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Firewall Policy Nat Rule Collection Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateFirewallPolicyNatRuleCollectionGroup()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyNatRuleCollectionGroupPut.json
@@ -245,9 +240,8 @@ Priority = 100,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Firewall Policy Rule Collection Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateFirewallPolicyRuleCollectionGroup()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupPut.json
@@ -314,9 +308,8 @@ Priority = 100,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Firewall Policy Rule Collection Group With IP Groups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateFirewallPolicyRuleCollectionGroupWithIPGroups()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithIpGroupsPut.json
@@ -382,9 +375,8 @@ Name = "Example-Filter-Rule-Collection",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Firewall Policy Rule Collection Group With Web Categories
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateFirewallPolicyRuleCollectionGroupWithWebCategories()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesPut.json
@@ -451,9 +443,8 @@ Name = "Example-Filter-Rule-Collection",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Firewall Policy Rule Collection Group With http header to insert
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateFirewallPolicyRuleCollectionGroupWithHttpHeaderToInsert()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithHttpHeadersToInsert.json

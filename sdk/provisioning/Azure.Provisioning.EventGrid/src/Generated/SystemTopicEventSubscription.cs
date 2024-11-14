@@ -23,8 +23,12 @@ public partial class SystemTopicEventSubscription : ProvisionableResource
     /// must be between 3 and 64 characters in length and use alphanumeric
     /// letters only.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The dead letter destination of the event subscription. Any event that
@@ -39,8 +43,12 @@ public partial class SystemTopicEventSubscription : ProvisionableResource
     /// available derived classes include
     /// Azure.ResourceManager.EventGrid.Models.StorageBlobDeadLetterDestination.
     /// </summary>
-    public BicepValue<DeadLetterDestination> DeadLetterDestination { get => _deadLetterDestination; set => _deadLetterDestination.Assign(value); }
-    private readonly BicepValue<DeadLetterDestination> _deadLetterDestination;
+    public DeadLetterDestination DeadLetterDestination 
+    {
+        get { Initialize(); return _deadLetterDestination!; }
+        set { Initialize(); AssignOrReplace(ref _deadLetterDestination, value); }
+    }
+    private DeadLetterDestination? _deadLetterDestination;
 
     /// <summary>
     /// The dead letter destination of the event subscription. Any event that
@@ -49,8 +57,12 @@ public partial class SystemTopicEventSubscription : ProvisionableResource
     /// parent resource (namely, topic or domain) to acquire the
     /// authentication tokens being used during delivery / dead-lettering.
     /// </summary>
-    public BicepValue<DeadLetterWithResourceIdentity> DeadLetterWithResourceIdentity { get => _deadLetterWithResourceIdentity; set => _deadLetterWithResourceIdentity.Assign(value); }
-    private readonly BicepValue<DeadLetterWithResourceIdentity> _deadLetterWithResourceIdentity;
+    public DeadLetterWithResourceIdentity DeadLetterWithResourceIdentity 
+    {
+        get { Initialize(); return _deadLetterWithResourceIdentity!; }
+        set { Initialize(); AssignOrReplace(ref _deadLetterWithResourceIdentity, value); }
+    }
+    private DeadLetterWithResourceIdentity? _deadLetterWithResourceIdentity;
 
     /// <summary>
     /// Information about the destination where events have to be delivered for
@@ -58,8 +70,12 @@ public partial class SystemTopicEventSubscription : ProvisionableResource
     /// the parent resource (namely, topic or domain) to acquire the
     /// authentication tokens being used during delivery / dead-lettering.
     /// </summary>
-    public BicepValue<DeliveryWithResourceIdentity> DeliveryWithResourceIdentity { get => _deliveryWithResourceIdentity; set => _deliveryWithResourceIdentity.Assign(value); }
-    private readonly BicepValue<DeliveryWithResourceIdentity> _deliveryWithResourceIdentity;
+    public DeliveryWithResourceIdentity DeliveryWithResourceIdentity 
+    {
+        get { Initialize(); return _deliveryWithResourceIdentity!; }
+        set { Initialize(); AssignOrReplace(ref _deliveryWithResourceIdentity, value); }
+    }
+    private DeliveryWithResourceIdentity? _deliveryWithResourceIdentity;
 
     /// <summary>
     /// Information about the destination where events have to be delivered for
@@ -83,69 +99,109 @@ public partial class SystemTopicEventSubscription : ProvisionableResource
     /// and
     /// Azure.ResourceManager.EventGrid.Models.WebHookEventSubscriptionDestination.
     /// </summary>
-    public BicepValue<EventSubscriptionDestination> Destination { get => _destination; set => _destination.Assign(value); }
-    private readonly BicepValue<EventSubscriptionDestination> _destination;
+    public EventSubscriptionDestination Destination 
+    {
+        get { Initialize(); return _destination!; }
+        set { Initialize(); AssignOrReplace(ref _destination, value); }
+    }
+    private EventSubscriptionDestination? _destination;
 
     /// <summary>
     /// The event delivery schema for the event subscription.
     /// </summary>
-    public BicepValue<EventDeliverySchema> EventDeliverySchema { get => _eventDeliverySchema; set => _eventDeliverySchema.Assign(value); }
-    private readonly BicepValue<EventDeliverySchema> _eventDeliverySchema;
+    public BicepValue<EventDeliverySchema> EventDeliverySchema 
+    {
+        get { Initialize(); return _eventDeliverySchema!; }
+        set { Initialize(); _eventDeliverySchema!.Assign(value); }
+    }
+    private BicepValue<EventDeliverySchema>? _eventDeliverySchema;
 
     /// <summary>
     /// Expiration time of the event subscription.
     /// </summary>
-    public BicepValue<DateTimeOffset> ExpireOn { get => _expireOn; set => _expireOn.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _expireOn;
+    public BicepValue<DateTimeOffset> ExpireOn 
+    {
+        get { Initialize(); return _expireOn!; }
+        set { Initialize(); _expireOn!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _expireOn;
 
     /// <summary>
     /// Information about the filter for the event subscription.
     /// </summary>
-    public BicepValue<EventSubscriptionFilter> Filter { get => _filter; set => _filter.Assign(value); }
-    private readonly BicepValue<EventSubscriptionFilter> _filter;
+    public EventSubscriptionFilter Filter 
+    {
+        get { Initialize(); return _filter!; }
+        set { Initialize(); AssignOrReplace(ref _filter, value); }
+    }
+    private EventSubscriptionFilter? _filter;
 
     /// <summary>
     /// List of user defined labels.
     /// </summary>
-    public BicepList<string> Labels { get => _labels; set => _labels.Assign(value); }
-    private readonly BicepList<string> _labels;
+    public BicepList<string> Labels 
+    {
+        get { Initialize(); return _labels!; }
+        set { Initialize(); _labels!.Assign(value); }
+    }
+    private BicepList<string>? _labels;
 
     /// <summary>
     /// The retry policy for events. This can be used to configure maximum
     /// number of delivery attempts and time to live for events.
     /// </summary>
-    public BicepValue<EventSubscriptionRetryPolicy> RetryPolicy { get => _retryPolicy; set => _retryPolicy.Assign(value); }
-    private readonly BicepValue<EventSubscriptionRetryPolicy> _retryPolicy;
+    public EventSubscriptionRetryPolicy RetryPolicy 
+    {
+        get { Initialize(); return _retryPolicy!; }
+        set { Initialize(); AssignOrReplace(ref _retryPolicy, value); }
+    }
+    private EventSubscriptionRetryPolicy? _retryPolicy;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the event subscription.
     /// </summary>
-    public BicepValue<EventSubscriptionProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<EventSubscriptionProvisioningState> _provisioningState;
+    public BicepValue<EventSubscriptionProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<EventSubscriptionProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Name of the topic of the event subscription.
     /// </summary>
-    public BicepValue<string> Topic { get => _topic; }
-    private readonly BicepValue<string> _topic;
+    public BicepValue<string> Topic 
+    {
+        get { Initialize(); return _topic!; }
+    }
+    private BicepValue<string>? _topic;
 
     /// <summary>
     /// Gets or sets a reference to the parent SystemTopic.
     /// </summary>
-    public SystemTopic? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SystemTopic> _parent;
+    public SystemTopic? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SystemTopic>? _parent;
 
     /// <summary>
     /// Creates a new SystemTopicEventSubscription.
@@ -160,21 +216,28 @@ public partial class SystemTopicEventSubscription : ProvisionableResource
     public SystemTopicEventSubscription(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.EventGrid/systemTopics/eventSubscriptions", resourceVersion ?? "2022-06-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _deadLetterDestination = BicepValue<DeadLetterDestination>.DefineProperty(this, "DeadLetterDestination", ["properties", "deadLetterDestination"]);
-        _deadLetterWithResourceIdentity = BicepValue<DeadLetterWithResourceIdentity>.DefineProperty(this, "DeadLetterWithResourceIdentity", ["properties", "deadLetterWithResourceIdentity"]);
-        _deliveryWithResourceIdentity = BicepValue<DeliveryWithResourceIdentity>.DefineProperty(this, "DeliveryWithResourceIdentity", ["properties", "deliveryWithResourceIdentity"]);
-        _destination = BicepValue<EventSubscriptionDestination>.DefineProperty(this, "Destination", ["properties", "destination"]);
-        _eventDeliverySchema = BicepValue<EventDeliverySchema>.DefineProperty(this, "EventDeliverySchema", ["properties", "eventDeliverySchema"]);
-        _expireOn = BicepValue<DateTimeOffset>.DefineProperty(this, "ExpireOn", ["properties", "expirationTimeUtc"]);
-        _filter = BicepValue<EventSubscriptionFilter>.DefineProperty(this, "Filter", ["properties", "filter"]);
-        _labels = BicepList<string>.DefineProperty(this, "Labels", ["properties", "labels"]);
-        _retryPolicy = BicepValue<EventSubscriptionRetryPolicy>.DefineProperty(this, "RetryPolicy", ["properties", "retryPolicy"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<EventSubscriptionProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _topic = BicepValue<string>.DefineProperty(this, "Topic", ["properties", "topic"], isOutput: true);
-        _parent = ResourceReference<SystemTopic>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SystemTopicEventSubscription.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _deadLetterDestination = DefineModelProperty<DeadLetterDestination>("DeadLetterDestination", ["properties", "deadLetterDestination"]);
+        _deadLetterWithResourceIdentity = DefineModelProperty<DeadLetterWithResourceIdentity>("DeadLetterWithResourceIdentity", ["properties", "deadLetterWithResourceIdentity"]);
+        _deliveryWithResourceIdentity = DefineModelProperty<DeliveryWithResourceIdentity>("DeliveryWithResourceIdentity", ["properties", "deliveryWithResourceIdentity"]);
+        _destination = DefineModelProperty<EventSubscriptionDestination>("Destination", ["properties", "destination"]);
+        _eventDeliverySchema = DefineProperty<EventDeliverySchema>("EventDeliverySchema", ["properties", "eventDeliverySchema"]);
+        _expireOn = DefineProperty<DateTimeOffset>("ExpireOn", ["properties", "expirationTimeUtc"]);
+        _filter = DefineModelProperty<EventSubscriptionFilter>("Filter", ["properties", "filter"]);
+        _labels = DefineListProperty<string>("Labels", ["properties", "labels"]);
+        _retryPolicy = DefineModelProperty<EventSubscriptionRetryPolicy>("RetryPolicy", ["properties", "retryPolicy"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<EventSubscriptionProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _topic = DefineProperty<string>("Topic", ["properties", "topic"], isOutput: true);
+        _parent = DefineResource<SystemTopic>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

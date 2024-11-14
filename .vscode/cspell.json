@@ -1102,6 +1102,7 @@
     {
       "filename": "**/sdk/postgresql/**/*.cs",
       "words": [
+        "awsec",
         "byok",
         "vcore",
         "vcores"

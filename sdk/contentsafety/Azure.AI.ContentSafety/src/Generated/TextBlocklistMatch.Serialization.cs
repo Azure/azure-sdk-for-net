@@ -19,13 +19,21 @@ namespace Azure.AI.ContentSafety
 
         void IJsonModel<TextBlocklistMatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TextBlocklistMatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TextBlocklistMatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("blocklistName"u8);
             writer.WriteStringValue(BlocklistName);
             writer.WritePropertyName("blocklistItemId"u8);
@@ -47,7 +55,6 @@ namespace Azure.AI.ContentSafety
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TextBlocklistMatch IJsonModel<TextBlocklistMatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
