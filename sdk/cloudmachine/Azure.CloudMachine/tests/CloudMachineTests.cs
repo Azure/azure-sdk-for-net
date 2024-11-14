@@ -23,9 +23,9 @@ public class CloudMachineTests
     [Test]
     [TestCase([new string[] { "-bicep" }])]
     [TestCase([new string[] { "" }])]
-    public void Provisioning(string[] args)
+    public void Configuration(string[] args)
     {
-        if (CloudMachineInfrastructure.Configure(args, (cm) =>
+        CloudMachineCommands.Execute(args, (cm) =>
         {
             cm.AddFeature(new KeyVaultFeature());
             cm.AddFeature(new OpenAIFeature() // TODO: rework it such that models can be added as features
@@ -33,8 +33,7 @@ public class CloudMachineTests
                 Chat = new AIModel("gpt-35-turbo", "0125"),
                 Embeddings = new AIModel("text-embedding-ada-002", "2")
             });
-        }))
-            return;
+        });
 
         CloudMachineWorkspace cm = new();
         Console.WriteLine(cm.Id);
@@ -47,12 +46,9 @@ public class CloudMachineTests
     [TestCase([new string[] { "" }])]
     public void Storage(string[] args)
     {
-        ManualResetEventSlim eventSlim = new(false);
-        if (CloudMachineInfrastructure.Configure(args, (cm) =>
-        {
-        }))
-            return;
+        CloudMachineCommands.Execute(args);
 
+        ManualResetEventSlim eventSlim = new(false);
         CloudMachineClient cm = new();
 
         cm.Storage.WhenUploaded((StorageFile file) =>
@@ -78,14 +74,13 @@ public class CloudMachineTests
     [TestCase([new string[] { "" }])]
     public void OpenAI(string[] args)
     {
-        if (CloudMachineInfrastructure.Configure(args, (cm) =>
+        CloudMachineCommands.Execute(args, (cm) =>
         {
             cm.AddFeature(new OpenAIFeature()
             {
                 Chat = new AIModel("gpt-35-turbo", "0125")
             });
-        }))
-            return;
+        });
 
         CloudMachineWorkspace cm = new();
         ChatClient chat = cm.GetOpenAIChatClient();
@@ -104,11 +99,10 @@ public class CloudMachineTests
     [TestCase([new string[] { "" }])]
     public void KeyVault(string[] args)
     {
-        if (CloudMachineInfrastructure.Configure(args, (cm) =>
+        CloudMachineCommands.Execute(args, (cm) =>
         {
             cm.AddFeature(new KeyVaultFeature());
-        }))
-            return;
+        });
 
         CloudMachineWorkspace cm = new();
         SecretClient secrets = cm.GetKeyVaultSecretsClient();
@@ -121,8 +115,7 @@ public class CloudMachineTests
     [TestCase([new string[] { "" }])]
     public void Messaging(string[] args)
     {
-        if (CloudMachineInfrastructure.Configure(args))
-            return;
+        CloudMachineCommands.Execute(args);
 
         CloudMachineClient cm = new();
         cm.Messaging.WhenMessageReceived(message =>
@@ -143,8 +136,7 @@ public class CloudMachineTests
     [TestCase([new string[] { "" }])]
     public void Demo(string[] args)
     {
-        if (CloudMachineInfrastructure.Configure(args))
-            return;
+        CloudMachineCommands.Execute(args);
 
         CloudMachineClient cm = new();
 
