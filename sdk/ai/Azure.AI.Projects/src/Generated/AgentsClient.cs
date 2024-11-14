@@ -5270,7 +5270,6 @@ namespace Azure.AI.Projects
         internal HttpMessage CreateCreateRunRequest(string threadId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            message.BufferResponse = false;
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
