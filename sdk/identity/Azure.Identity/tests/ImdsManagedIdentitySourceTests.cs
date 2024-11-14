@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -172,6 +173,60 @@ namespace Azure.Identity.Tests
 
             var expectedTimeouts = new TimeSpan?[] { null, null, null, null, null, null };
             CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+        }
+
+        [Test]
+        public void ManagedIdentityCredentialRetryBehaviorIsOverriddenWithOptions()
+        {
+            int callCount = 0;
+            List<TimeSpan?> networkTimeouts = new();
+
+            var mockTransport = MockTransport.FromMessageCallback(msg =>
+            {
+                callCount++;
+                networkTimeouts.Add(msg.NetworkTimeout);
+                Assert.IsTrue(msg.Request.Headers.TryGetValue(ImdsManagedIdentitySource.metadataHeaderName, out _));
+                return CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json");
+            });
+
+            var options = new TokenCredentialOptions()
+            {
+                Transport = mockTransport,
+                RetryPolicy = new RetryPolicy(1, DelayStrategy.CreateFixedDelayStrategy(TimeSpan.Zero))
+            };
+            options.Retry.MaxDelay = TimeSpan.Zero;
+
+            var cred = new ManagedIdentityCredential(
+                "testCLientId", options);
+
+            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
+
+            var expectedTimeouts = new TimeSpan?[] { null, null };
+            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+        }
+
+        [Test]
+        public void ManagedIdentityCredentialRespectsCancellationToken()
+        {
+            int callCount = 0;
+
+            var mockTransport = MockTransport.FromMessageCallback(msg =>
+            {
+                callCount++;
+                return CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json");
+            });
+
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            options.Retry.MaxDelay = TimeSpan.Zero;
+
+            var cred = new ManagedIdentityCredential(
+                "testCLientId", options);
+
+            var cts = new CancellationTokenSource();
+            cts.CancelAfter(TimeSpan.Zero);
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await cred.GetTokenAsync(new(new[] { "test" }), cts.Token));
+
+            Assert.AreEqual(0, callCount);
         }
 
         private MockResponse CreateMockResponse(int responseCode, string token)

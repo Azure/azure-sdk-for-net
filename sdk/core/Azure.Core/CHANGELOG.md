@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 - Fixed an issue where `BearerTokenAuthenticationPolicy` throws `ArgumentOutOfRangeException` if the `ExpiresOn` property of the token is the default value. ([#47040](https://github.com/Azure/azure-sdk-for-net/pull/47040))
+- Fixed an issue where `ManagedIdentityCredential` does not honor the `CancellationToken` passed to `GetToken` and `GetTokenAsync`. ([#47156](https://github.com/Azure/azure-sdk-for-net/issues/47156))
 
 ### Other Changes
 
