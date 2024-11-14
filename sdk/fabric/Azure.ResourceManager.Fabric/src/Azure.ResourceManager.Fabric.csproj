@@ -1,8 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-beta.3</Version>
-    <PackageId>Azure.ResourceManager.Fabric</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider Fabric.</Description>
-    <PackageTags>azure;management;arm;resource manager;fabric</PackageTags>
+    <Description>This is the Azure.ResourceManager.Fabric client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>Azure SDK Code Generation Azure.ResourceManager.Fabric for Azure Data Plane</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.ResourceManager.Fabric</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 </Project>
