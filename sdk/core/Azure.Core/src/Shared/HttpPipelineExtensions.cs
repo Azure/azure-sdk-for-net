@@ -5,7 +5,6 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -25,14 +24,12 @@ namespace Azure.Core
                 await pipeline.SendAsync(message, cts.Token).ConfigureAwait(false);
             }
 
-            if (message.Response.IsError && (requestContext?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+            if (!message.Response.IsError || statusOption == ErrorOptions.NoThrow)
             {
-                throw new RequestFailedException(message.Response);
+                return message.Response;
             }
 
-            return message.BufferResponse ?
-    message.Response :
-    message.ExtractResponse();
+            throw new RequestFailedException(message.Response);
         }
 
         public static Response ProcessMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext? requestContext, CancellationToken cancellationToken = default)
