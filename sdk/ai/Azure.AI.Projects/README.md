@@ -1,4 +1,15 @@
 # Azure AI Projects client library for .NET
+Use the AI Projects client library to:
+
+* **Develop Agents using the Azure AI Agent Service**, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers. The Azure AI Agent Service enables the building of Agents for a wide range of generative AI use cases. The package is currently in preview.
+* **Enumerate connections** in your Azure AI Studio project and get connection properties.
+For example, get the inference endpoint URL and credentials associated with your Azure OpenAI connection.
+
+[Product documentation](https://aka.ms/azsdk/azure-ai-projects/product-doc)
+| [Samples][samples]
+| [API reference documentation](https://aka.ms/azsdk/azure-ai-projects/csharp/reference)
+| [Package (NuGet)](https://aka.ms/azsdk/azure-ai-projects/csharp/package)
+| [SDK source code](https://aka.ms/azsdk/azure-ai-projects/csharp/source)
 
 ## Getting started
 
@@ -16,18 +27,17 @@ dotnet add package Azure.AI.Projects --prerelease
 
 ### Authenticate the client
 
-To interact with Azure AI Projects, you’ll need to create an instance of `AIProjectClient` using a Microsoft Entra ID credential (formerly Azure Active Directory) for a secure, keyless authentication approach.
+A secure, keyless authentication approach is to use Microsoft Entra ID (formerly Azure Active Directory) via the [Azure Identity library][azure_identity]. To use this library, you need to install the [Azure.Identity package](https://www.nuget.org/packages/Azure.Identity):
 
-### Authentication Setup
-For authentication, use the Microsoft Entra ID with the [Azure Identity library][azure_identity].
+```dotnetcli
+dotnet add package Azure.Identity
+```
 
-- Install the [Azure.Identity package](https://www.nuget.org/packages/Azure.Identity):
+## Key concepts
 
-    ```dotnetcli
-    dotnet add package Azure.Identity
-    ```
+### Create and authenticate the client
 
-- Use the appropriate credential type from the Azure Identity library. For example, [DefaultAzureCredential][azure_identity_dac]:
+To interact with Azure AI Projects, you’ll need to create an instance of `AIProjectClient`. Use the appropriate credential type from the Azure Identity library. For example, [DefaultAzureCredential][azure_identity_dac]:
 
 ```C# Snippet:OverviewCreateClient
 var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
@@ -35,10 +45,6 @@ AIProjectClient projectClient = new AIProjectClient(connectionString, new Defaul
 ```
 
 Once `AIProjectClient` is created, you can call `GetXXXClient()` methods on this client to retrieve instances of specific sub-clients.
-
-## Key concepts
-
-TODO
 
 ## Examples
 
@@ -325,9 +331,7 @@ For example, if you try to create a client using an endpoint that doesn't match 
 
 ## Next steps
 
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/tests/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+Beyond the introductory scenarios discussed, the AI Projects client library offers support for additional scenarios to help take advantage of the full feature set of the AI services.  In order to help explore some of these scenarios, the AI Projects client library offers a set of samples to serve as an illustration for common scenarios.  Please see the [samples](samples) for details.
 
 ## Contributing
 
@@ -340,6 +344,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
 
 <!-- LINKS -->
+[samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [aiprojects_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
