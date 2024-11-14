@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.RegularExpressions;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
-using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using Moq;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Implementation
