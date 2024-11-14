@@ -67,9 +67,6 @@ prepend-rp-prefix:
   - LicenseProfile
   - LicenseProfileUpdate
   - ProductFeatureUpdate
-  - GatewayType
-  - GatewayUpdate
-  - Gateway
   - Disk
   - HardwareProfile
   - Processor
@@ -110,7 +107,14 @@ rename-mapping:
   OSProfileWindowsConfiguration.patchSettings.enableHotpatching: IsHotpatchingEnabled
   PatchSettingsStatus: HybridComputePatchSettingsStatus
   OSProfileLinuxConfiguration.patchSettings.enableHotpatching: IsHotpatchingEnabled
+  GatewayType: ArcGatewayType
+  GatewayUpdate: ArcGatewayUpdate
+  Gateway: ArcGateway
   Settings: ArcSettings
+  NetworkInterface.id: -|uuid
+  RunCommandManagedIdentity.clientId: -|uuid
+  RunCommandManagedIdentity.objectId: -|uuid
+  Disk.id: -|uuid
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -185,6 +189,10 @@ directive:
   - from: HybridCompute.json
     where: $.definitions.MachineAssessPatchesResult.properties.assessmentActivityId
     transform: $['format'] = 'uuid'
+
+  - from: HybridCompute.json
+    where: $.definitions.GatewayProperties.properties.gatewayId
+    transform: $['format'] = 'arm-id'
 
   # set expand property of list and show to be both strings
   - from: HybridCompute.json

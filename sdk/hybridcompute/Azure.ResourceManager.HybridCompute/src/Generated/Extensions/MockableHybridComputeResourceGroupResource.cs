@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return GetHybridComputeMachines().Get(machineName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HybridComputeGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of HybridComputeGatewayResources and their operations over a HybridComputeGatewayResource. </returns>
-        public virtual HybridComputeGatewayCollection GetHybridComputeGateways()
+        /// <summary> Gets a collection of ArcGatewayResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ArcGatewayResources and their operations over a ArcGatewayResource. </returns>
+        public virtual ArcGatewayCollection GetArcGateways()
         {
-            return GetCachedClient(client => new HybridComputeGatewayCollection(client, Id));
+            return GetCachedClient(client => new ArcGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,9 +214,9 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HybridComputeGatewayResource>> GetHybridComputeGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcGatewayResource>> GetArcGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            return await GetHybridComputeGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetArcGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,9 +245,9 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HybridComputeGatewayResource> GetHybridComputeGateway(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<ArcGatewayResource> GetArcGateway(string gatewayName, CancellationToken cancellationToken = default)
         {
-            return GetHybridComputeGateways().Get(gatewayName, cancellationToken);
+            return GetArcGateways().Get(gatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of HybridComputePrivateLinkScopeResources in the ResourceGroupResource. </summary>

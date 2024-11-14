@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A class representing the HybridComputeGateway data model.
+    /// A class representing the ArcGateway data model.
     /// Describes an Arc Gateway.
     /// </summary>
-    public partial class HybridComputeGatewayData : TrackedResourceData
+    public partial class ArcGatewayData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HybridComputeGatewayData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcGatewayData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public HybridComputeGatewayData(AzureLocation location) : base(location)
+        public ArcGatewayData(AzureLocation location) : base(location)
         {
             AllowedFeatures = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridComputeGatewayData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="gatewayEndpoint"> The endpoint fqdn for the Gateway. </param>
         /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridComputeProvisioningState? provisioningState, string gatewayId, HybridComputeGatewayType? gatewayType, string gatewayEndpoint, IList<string> allowedFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ArcGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridComputeProvisioningState? provisioningState, ResourceIdentifier gatewayId, ArcGatewayType? gatewayType, string gatewayEndpoint, IList<string> allowedFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             GatewayId = gatewayId;
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.HybridCompute
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridComputeGatewayData"/> for deserialization. </summary>
-        internal HybridComputeGatewayData()
+        /// <summary> Initializes a new instance of <see cref="ArcGatewayData"/> for deserialization. </summary>
+        internal ArcGatewayData()
         {
         }
 
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.HybridCompute
         public HybridComputeProvisioningState? ProvisioningState { get; }
         /// <summary> A unique, immutable, identifier for the Gateway. </summary>
         [WirePath("properties.gatewayId")]
-        public string GatewayId { get; }
+        public ResourceIdentifier GatewayId { get; }
         /// <summary> The type of the Gateway resource. </summary>
         [WirePath("properties.gatewayType")]
-        public HybridComputeGatewayType? GatewayType { get; set; }
+        public ArcGatewayType? GatewayType { get; set; }
         /// <summary> The endpoint fqdn for the Gateway. </summary>
         [WirePath("properties.gatewayEndpoint")]
         public string GatewayEndpoint { get; }

@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes a License Update. </summary>
-    public partial class HybridComputeGatewayPatch : HybridComputeResourceUpdate
+    public partial class ArcGatewayPatch : HybridComputeResourceUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="HybridComputeGatewayPatch"/>. </summary>
-        public HybridComputeGatewayPatch()
+        /// <summary> Initializes a new instance of <see cref="ArcGatewayPatch"/>. </summary>
+        public ArcGatewayPatch()
         {
             AllowedFeatures = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridComputeGatewayPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcGatewayPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
-        internal HybridComputeGatewayPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> allowedFeatures) : base(tags, serializedAdditionalRawData)
+        internal ArcGatewayPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> allowedFeatures) : base(tags, serializedAdditionalRawData)
         {
             AllowedFeatures = allowedFeatures;
         }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="clientId"> Client Id (GUID value) of the user-assigned managed identity. ObjectId should not be used if this is provided. </param>
         /// <param name="objectId"> Object Id (GUID value) of the user-assigned managed identity. ClientId should not be used if this is provided. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RunCommandManagedIdentity(string clientId, string objectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RunCommandManagedIdentity(Guid? clientId, Guid? objectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             ObjectId = objectId;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Client Id (GUID value) of the user-assigned managed identity. ObjectId should not be used if this is provided. </summary>
         [WirePath("clientId")]
-        public string ClientId { get; set; }
+        public Guid? ClientId { get; set; }
         /// <summary> Object Id (GUID value) of the user-assigned managed identity. ClientId should not be used if this is provided. </summary>
         [WirePath("objectId")]
-        public string ObjectId { get; set; }
+        public Guid? ObjectId { get; set; }
     }
 }

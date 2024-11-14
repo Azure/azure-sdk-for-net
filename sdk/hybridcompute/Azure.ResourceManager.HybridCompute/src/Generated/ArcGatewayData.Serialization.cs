@@ -17,11 +17,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    public partial class HybridComputeGatewayData : IUtf8JsonSerializable, IJsonModel<HybridComputeGatewayData>
+    public partial class ArcGatewayData : IUtf8JsonSerializable, IJsonModel<ArcGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeGatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcGatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HybridComputeGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArcGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArcGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeGatewayData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcGatewayData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.HybridCompute
             writer.WriteEndObject();
         }
 
-        HybridComputeGatewayData IJsonModel<HybridComputeGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ArcGatewayData IJsonModel<ArcGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArcGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeGatewayData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcGatewayData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHybridComputeGatewayData(document.RootElement, options);
+            return DeserializeArcGatewayData(document.RootElement, options);
         }
 
-        internal static HybridComputeGatewayData DeserializeHybridComputeGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ArcGatewayData DeserializeArcGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.HybridCompute
             ResourceType type = default;
             SystemData systemData = default;
             HybridComputeProvisioningState? provisioningState = default;
-            string gatewayId = default;
-            HybridComputeGatewayType? gatewayType = default;
+            ResourceIdentifier gatewayId = default;
+            ArcGatewayType? gatewayType = default;
             string gatewayEndpoint = default;
             IList<string> allowedFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -172,7 +172,11 @@ namespace Azure.ResourceManager.HybridCompute
                         }
                         if (property0.NameEquals("gatewayId"u8))
                         {
-                            gatewayId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            gatewayId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("gatewayType"u8))
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            gatewayType = new HybridComputeGatewayType(property0.Value.GetString());
+                            gatewayType = new ArcGatewayType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("gatewayEndpoint"u8))
@@ -212,7 +216,7 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HybridComputeGatewayData(
+            return new ArcGatewayData(
                 id,
                 name,
                 type,
@@ -368,15 +372,7 @@ namespace Azure.ResourceManager.HybridCompute
                 if (Optional.IsDefined(GatewayId))
                 {
                     builder.Append("    gatewayId: ");
-                    if (GatewayId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GatewayId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GatewayId}'");
-                    }
+                    builder.AppendLine($"'{GatewayId.ToString()}'");
                 }
             }
 
@@ -459,9 +455,9 @@ namespace Azure.ResourceManager.HybridCompute
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<HybridComputeGatewayData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ArcGatewayData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArcGatewayData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -470,26 +466,26 @@ namespace Azure.ResourceManager.HybridCompute
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeGatewayData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcGatewayData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HybridComputeGatewayData IPersistableModel<HybridComputeGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ArcGatewayData IPersistableModel<ArcGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArcGatewayData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHybridComputeGatewayData(document.RootElement, options);
+                        return DeserializeArcGatewayData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeGatewayData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcGatewayData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HybridComputeGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArcGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

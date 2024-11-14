@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputeGatewayPatch : IUtf8JsonSerializable, IJsonModel<HybridComputeGatewayPatch>
+    public partial class ArcGatewayPatch : IUtf8JsonSerializable, IJsonModel<ArcGatewayPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeGatewayPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcGatewayPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HybridComputeGatewayPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArcGatewayPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArcGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeGatewayPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcGatewayPatch)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
         }
 
-        HybridComputeGatewayPatch IJsonModel<HybridComputeGatewayPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ArcGatewayPatch IJsonModel<ArcGatewayPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArcGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeGatewayPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcGatewayPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHybridComputeGatewayPatch(document.RootElement, options);
+            return DeserializeArcGatewayPatch(document.RootElement, options);
         }
 
-        internal static HybridComputeGatewayPatch DeserializeHybridComputeGatewayPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ArcGatewayPatch DeserializeArcGatewayPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -122,38 +122,38 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HybridComputeGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, allowedFeatures ?? new ChangeTrackingList<string>());
+            return new ArcGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, allowedFeatures ?? new ChangeTrackingList<string>());
         }
 
-        BinaryData IPersistableModel<HybridComputeGatewayPatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ArcGatewayPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArcGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeGatewayPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcGatewayPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HybridComputeGatewayPatch IPersistableModel<HybridComputeGatewayPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ArcGatewayPatch IPersistableModel<ArcGatewayPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArcGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHybridComputeGatewayPatch(document.RootElement, options);
+                        return DeserializeArcGatewayPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeGatewayPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcGatewayPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HybridComputeGatewayPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArcGatewayPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                writer.WriteStringValue(ClientId.Value);
             }
             if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
-                writer.WriteStringValue(ObjectId);
+                writer.WriteStringValue(ObjectId.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,20 +82,28 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            string clientId = default;
-            string objectId = default;
+            Guid? clientId = default;
+            Guid? objectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
                 {
-                    clientId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("objectId"u8))
                 {
-                    objectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    objectId = property.Value.GetGuid();
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,15 +137,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 if (Optional.IsDefined(ClientId))
                 {
                     builder.Append("  clientId: ");
-                    if (ClientId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientId}'");
-                    }
+                    builder.AppendLine($"'{ClientId.Value.ToString()}'");
                 }
             }
 
@@ -152,15 +152,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 if (Optional.IsDefined(ObjectId))
                 {
                     builder.Append("  objectId: ");
-                    if (ObjectId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ObjectId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ObjectId}'");
-                    }
+                    builder.AppendLine($"'{ObjectId.Value.ToString()}'");
                 }
             }
 

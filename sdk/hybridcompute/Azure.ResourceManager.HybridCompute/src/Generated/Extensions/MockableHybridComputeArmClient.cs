@@ -107,15 +107,15 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HybridComputeGatewayResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridComputeGatewayResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ArcGatewayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArcGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ArcGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridComputeGatewayResource"/> object. </returns>
-        public virtual HybridComputeGatewayResource GetHybridComputeGatewayResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArcGatewayResource"/> object. </returns>
+        public virtual ArcGatewayResource GetArcGatewayResource(ResourceIdentifier id)
         {
-            HybridComputeGatewayResource.ValidateResourceId(id);
-            return new HybridComputeGatewayResource(Client, id);
+            ArcGatewayResource.ValidateResourceId(id);
+            return new ArcGatewayResource(Client, id);
         }
 
         /// <summary>

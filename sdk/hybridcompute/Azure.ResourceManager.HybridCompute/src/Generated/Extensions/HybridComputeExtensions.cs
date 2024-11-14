@@ -148,22 +148,22 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HybridComputeGatewayResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridComputeGatewayResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ArcGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArcGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ArcGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetHybridComputeGatewayResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetArcGatewayResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HybridComputeGatewayResource"/> object. </returns>
-        public static HybridComputeGatewayResource GetHybridComputeGatewayResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArcGatewayResource"/> object. </returns>
+        public static ArcGatewayResource GetArcGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridComputeArmClient(client).GetHybridComputeGatewayResource(id);
+            return GetMockableHybridComputeArmClient(client).GetArcGatewayResource(id);
         }
 
         /// <summary>
@@ -431,20 +431,20 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Gets a collection of HybridComputeGatewayResources in the ResourceGroupResource.
+        /// Gets a collection of ArcGatewayResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetHybridComputeGateways()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetArcGateways()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of HybridComputeGatewayResources and their operations over a HybridComputeGatewayResource. </returns>
-        public static HybridComputeGatewayCollection GetHybridComputeGateways(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ArcGatewayResources and their operations over a ArcGatewayResource. </returns>
+        public static ArcGatewayCollection GetArcGateways(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetHybridComputeGateways();
+            return GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetArcGateways();
         }
 
         /// <summary>
@@ -464,12 +464,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetHybridComputeGatewayAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetArcGatewayAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -478,11 +478,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<HybridComputeGatewayResource>> GetHybridComputeGatewayAsync(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ArcGatewayResource>> GetArcGatewayAsync(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetHybridComputeGatewayAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetArcGatewayAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -502,12 +502,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetHybridComputeGateway(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetArcGateway(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -516,11 +516,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<HybridComputeGatewayResource> GetHybridComputeGateway(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
+        public static Response<ArcGatewayResource> GetArcGateway(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetHybridComputeGateway(gatewayName, cancellationToken);
+            return GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetArcGateway(gatewayName, cancellationToken);
         }
 
         /// <summary>
@@ -1028,23 +1028,23 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetHybridComputeGateways(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetArcGateways(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="HybridComputeGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<HybridComputeGatewayResource> GetHybridComputeGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ArcGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ArcGatewayResource> GetArcGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetHybridComputeGatewaysAsync(cancellationToken);
+            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetArcGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1064,23 +1064,23 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetHybridComputeGateways(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetArcGateways(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="HybridComputeGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<HybridComputeGatewayResource> GetHybridComputeGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ArcGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ArcGatewayResource> GetArcGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetHybridComputeGateways(cancellationToken);
+            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetArcGateways(cancellationToken);
         }
 
         /// <summary>

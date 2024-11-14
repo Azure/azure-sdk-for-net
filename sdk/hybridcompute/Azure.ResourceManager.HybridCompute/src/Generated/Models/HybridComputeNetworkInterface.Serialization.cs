@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(Id.Value);
             }
             if (Optional.IsDefined(Name))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             string macAddress = default;
-            string id = default;
+            Guid? id = default;
             string name = default;
             IReadOnlyList<HybridComputeIPAddress> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -113,7 +113,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -189,15 +193,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
+                    builder.AppendLine($"'{Id.Value.ToString()}'");
                 }
             }
 

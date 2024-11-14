@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridCompute.Samples
 {
-    public partial class Sample_HybridComputeGatewayCollection
+    public partial class Sample_ArcGatewayCollection
     {
         // Create or Update a Gateway
         [NUnit.Framework.Test]
@@ -36,25 +36,25 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this HybridComputeGatewayResource
-            HybridComputeGatewayCollection collection = resourceGroupResource.GetHybridComputeGateways();
+            // get the collection of this ArcGatewayResource
+            ArcGatewayCollection collection = resourceGroupResource.GetArcGateways();
 
             // invoke the operation
             string gatewayName = "{gatewayName}";
-            HybridComputeGatewayData data = new HybridComputeGatewayData(new AzureLocation("eastus2euap"))
+            ArcGatewayData data = new ArcGatewayData(new AzureLocation("eastus2euap"))
             {
-                GatewayType = HybridComputeGatewayType.Public,
+                GatewayType = ArcGatewayType.Public,
                 AllowedFeatures =
 {
 "*"
 },
             };
-            ArmOperation<HybridComputeGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data);
-            HybridComputeGatewayResource result = lro.Value;
+            ArmOperation<ArcGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data);
+            ArcGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            HybridComputeGatewayData resourceData = result.Data;
+            ArcGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -79,16 +79,16 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this HybridComputeGatewayResource
-            HybridComputeGatewayCollection collection = resourceGroupResource.GetHybridComputeGateways();
+            // get the collection of this ArcGatewayResource
+            ArcGatewayCollection collection = resourceGroupResource.GetArcGateways();
 
             // invoke the operation
             string gatewayName = "{gatewayName}";
-            HybridComputeGatewayResource result = await collection.GetAsync(gatewayName);
+            ArcGatewayResource result = await collection.GetAsync(gatewayName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            HybridComputeGatewayData resourceData = result.Data;
+            ArcGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this HybridComputeGatewayResource
-            HybridComputeGatewayCollection collection = resourceGroupResource.GetHybridComputeGateways();
+            // get the collection of this ArcGatewayResource
+            ArcGatewayCollection collection = resourceGroupResource.GetArcGateways();
 
             // invoke the operation
             string gatewayName = "{gatewayName}";
@@ -143,13 +143,13 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this HybridComputeGatewayResource
-            HybridComputeGatewayCollection collection = resourceGroupResource.GetHybridComputeGateways();
+            // get the collection of this ArcGatewayResource
+            ArcGatewayCollection collection = resourceGroupResource.GetArcGateways();
 
             // invoke the operation
             string gatewayName = "{gatewayName}";
-            NullableResponse<HybridComputeGatewayResource> response = await collection.GetIfExistsAsync(gatewayName);
-            HybridComputeGatewayResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ArcGatewayResource> response = await collection.GetIfExistsAsync(gatewayName);
+            ArcGatewayResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                HybridComputeGatewayData resourceData = result.Data;
+                ArcGatewayData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -185,15 +185,15 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this HybridComputeGatewayResource
-            HybridComputeGatewayCollection collection = resourceGroupResource.GetHybridComputeGateways();
+            // get the collection of this ArcGatewayResource
+            ArcGatewayCollection collection = resourceGroupResource.GetArcGateways();
 
             // invoke the operation and iterate over the result
-            await foreach (HybridComputeGatewayResource item in collection.GetAllAsync())
+            await foreach (ArcGatewayResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                HybridComputeGatewayData resourceData = item.Data;
+                ArcGatewayData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

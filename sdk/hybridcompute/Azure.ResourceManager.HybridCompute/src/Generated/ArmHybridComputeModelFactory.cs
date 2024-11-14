@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="maxSizeInBytes"> The size of the disk, in bytes. </param>
         /// <param name="usedSpaceInBytes"> The amount of space used on the disk, in bytes. </param>
         /// <returns> A new <see cref="Models.HybridComputeDisk"/> instance for mocking. </returns>
-        public static HybridComputeDisk HybridComputeDisk(string path = null, string diskType = null, string generatedId = null, string id = null, string name = null, long? maxSizeInBytes = null, long? usedSpaceInBytes = null)
+        public static HybridComputeDisk HybridComputeDisk(string path = null, string diskType = null, string generatedId = null, Guid? id = null, string name = null, long? maxSizeInBytes = null, long? usedSpaceInBytes = null)
         {
             return new HybridComputeDisk(
                 path,
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="name"> Represents the name of the network interface. </param>
         /// <param name="ipAddresses"> The list of IP addresses in this interface. </param>
         /// <returns> A new <see cref="Models.HybridComputeNetworkInterface"/> instance for mocking. </returns>
-        public static HybridComputeNetworkInterface HybridComputeNetworkInterface(string macAddress = null, string id = null, string name = null, IEnumerable<HybridComputeIPAddress> ipAddresses = null)
+        public static HybridComputeNetworkInterface HybridComputeNetworkInterface(string macAddress = null, Guid? id = null, string name = null, IEnumerable<HybridComputeIPAddress> ipAddresses = null)
         {
             ipAddresses ??= new List<HybridComputeIPAddress>();
 
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeGatewayData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.ArcGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -823,13 +823,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="gatewayType"> The type of the Gateway resource. </param>
         /// <param name="gatewayEndpoint"> The endpoint fqdn for the Gateway. </param>
         /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
-        /// <returns> A new <see cref="HybridCompute.HybridComputeGatewayData"/> instance for mocking. </returns>
-        public static HybridComputeGatewayData HybridComputeGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, string gatewayId = null, HybridComputeGatewayType? gatewayType = null, string gatewayEndpoint = null, IEnumerable<string> allowedFeatures = null)
+        /// <returns> A new <see cref="HybridCompute.ArcGatewayData"/> instance for mocking. </returns>
+        public static ArcGatewayData ArcGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, ResourceIdentifier gatewayId = null, ArcGatewayType? gatewayType = null, string gatewayEndpoint = null, IEnumerable<string> allowedFeatures = null)
         {
             tags ??= new Dictionary<string, string>();
             allowedFeatures ??= new List<string>();
 
-            return new HybridComputeGatewayData(
+            return new ArcGatewayData(
                 id,
                 name,
                 resourceType,

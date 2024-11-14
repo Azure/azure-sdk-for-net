@@ -19,28 +19,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HybridComputeGatewayResource"/> and their operations.
-    /// Each <see cref="HybridComputeGatewayResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="HybridComputeGatewayCollection"/> instance call the GetHybridComputeGateways method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="ArcGatewayResource"/> and their operations.
+    /// Each <see cref="ArcGatewayResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="ArcGatewayCollection"/> instance call the GetArcGateways method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class HybridComputeGatewayCollection : ArmCollection, IEnumerable<HybridComputeGatewayResource>, IAsyncEnumerable<HybridComputeGatewayResource>
+    public partial class ArcGatewayCollection : ArmCollection, IEnumerable<ArcGatewayResource>, IAsyncEnumerable<ArcGatewayResource>
     {
-        private readonly ClientDiagnostics _hybridComputeGatewayGatewaysClientDiagnostics;
-        private readonly GatewaysRestOperations _hybridComputeGatewayGatewaysRestClient;
+        private readonly ClientDiagnostics _arcGatewayGatewaysClientDiagnostics;
+        private readonly GatewaysRestOperations _arcGatewayGatewaysRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputeGatewayCollection"/> class for mocking. </summary>
-        protected HybridComputeGatewayCollection()
+        /// <summary> Initializes a new instance of the <see cref="ArcGatewayCollection"/> class for mocking. </summary>
+        protected ArcGatewayCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputeGatewayCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArcGatewayCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal HybridComputeGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ArcGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hybridComputeGatewayGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeGatewayResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HybridComputeGatewayResource.ResourceType, out string hybridComputeGatewayGatewaysApiVersion);
-            _hybridComputeGatewayGatewaysRestClient = new GatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeGatewayGatewaysApiVersion);
+            _arcGatewayGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ArcGatewayResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ArcGatewayResource.ResourceType, out string arcGatewayGatewaysApiVersion);
+            _arcGatewayGatewaysRestClient = new GatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, arcGatewayGatewaysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<HybridComputeGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, HybridComputeGatewayData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArcGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, ArcGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridComputeGatewayGatewaysClientDiagnostics.CreateScope("HybridComputeGatewayCollection.CreateOrUpdate");
+            using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hybridComputeGatewayGatewaysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<HybridComputeGatewayResource>(new HybridComputeGatewayOperationSource(Client), _hybridComputeGatewayGatewaysClientDiagnostics, Pipeline, _hybridComputeGatewayGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _arcGatewayGatewaysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridComputeArmOperation<ArcGatewayResource>(new ArcGatewayOperationSource(Client), _arcGatewayGatewaysClientDiagnostics, Pipeline, _arcGatewayGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<HybridComputeGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, HybridComputeGatewayData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArcGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, ArcGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridComputeGatewayGatewaysClientDiagnostics.CreateScope("HybridComputeGatewayCollection.CreateOrUpdate");
+            using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hybridComputeGatewayGatewaysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data, cancellationToken);
-                var operation = new HybridComputeArmOperation<HybridComputeGatewayResource>(new HybridComputeGatewayOperationSource(Client), _hybridComputeGatewayGatewaysClientDiagnostics, Pipeline, _hybridComputeGatewayGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _arcGatewayGatewaysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data, cancellationToken);
+                var operation = new HybridComputeArmOperation<ArcGatewayResource>(new ArcGatewayOperationSource(Client), _arcGatewayGatewaysClientDiagnostics, Pipeline, _arcGatewayGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,18 +175,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual async Task<Response<HybridComputeGatewayResource>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcGatewayResource>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _hybridComputeGatewayGatewaysClientDiagnostics.CreateScope("HybridComputeGatewayCollection.Get");
+            using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hybridComputeGatewayGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken).ConfigureAwait(false);
+                var response = await _arcGatewayGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridComputeGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArcGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,18 +220,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual Response<HybridComputeGatewayResource> Get(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<ArcGatewayResource> Get(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _hybridComputeGatewayGatewaysClientDiagnostics.CreateScope("HybridComputeGatewayCollection.Get");
+            using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = _hybridComputeGatewayGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken);
+                var response = _arcGatewayGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridComputeGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArcGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -257,17 +257,17 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridComputeGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HybridComputeGatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ArcGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ArcGatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeGatewayGatewaysRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeGatewayGatewaysRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputeGatewayResource(Client, HybridComputeGatewayData.DeserializeHybridComputeGatewayData(e)), _hybridComputeGatewayGatewaysClientDiagnostics, Pipeline, "HybridComputeGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _arcGatewayGatewaysRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _arcGatewayGatewaysRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArcGatewayResource(Client, ArcGatewayData.DeserializeArcGatewayData(e)), _arcGatewayGatewaysClientDiagnostics, Pipeline, "ArcGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -287,17 +287,17 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridComputeGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HybridComputeGatewayResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ArcGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ArcGatewayResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeGatewayGatewaysRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeGatewayGatewaysRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputeGatewayResource(Client, HybridComputeGatewayData.DeserializeHybridComputeGatewayData(e)), _hybridComputeGatewayGatewaysClientDiagnostics, Pipeline, "HybridComputeGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _arcGatewayGatewaysRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _arcGatewayGatewaysRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArcGatewayResource(Client, ArcGatewayData.DeserializeArcGatewayData(e)), _arcGatewayGatewaysClientDiagnostics, Pipeline, "ArcGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,11 +329,11 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _hybridComputeGatewayGatewaysClientDiagnostics.CreateScope("HybridComputeGatewayCollection.Exists");
+            using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hybridComputeGatewayGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _arcGatewayGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _hybridComputeGatewayGatewaysClientDiagnostics.CreateScope("HybridComputeGatewayCollection.Exists");
+            using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hybridComputeGatewayGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken);
+                var response = _arcGatewayGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,18 +411,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual async Task<NullableResponse<HybridComputeGatewayResource>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ArcGatewayResource>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _hybridComputeGatewayGatewaysClientDiagnostics.CreateScope("HybridComputeGatewayCollection.GetIfExists");
+            using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hybridComputeGatewayGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _arcGatewayGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<HybridComputeGatewayResource>(response.GetRawResponse());
-                return Response.FromValue(new HybridComputeGatewayResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ArcGatewayResource>(response.GetRawResponse());
+                return Response.FromValue(new ArcGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// <description><see cref="ArcGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,18 +456,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual NullableResponse<HybridComputeGatewayResource> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ArcGatewayResource> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _hybridComputeGatewayGatewaysClientDiagnostics.CreateScope("HybridComputeGatewayCollection.GetIfExists");
+            using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hybridComputeGatewayGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken);
+                var response = _arcGatewayGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<HybridComputeGatewayResource>(response.GetRawResponse());
-                return Response.FromValue(new HybridComputeGatewayResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ArcGatewayResource>(response.GetRawResponse());
+                return Response.FromValue(new ArcGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        IEnumerator<HybridComputeGatewayResource> IEnumerable<HybridComputeGatewayResource>.GetEnumerator()
+        IEnumerator<ArcGatewayResource> IEnumerable<ArcGatewayResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.HybridCompute
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<HybridComputeGatewayResource> IAsyncEnumerable<HybridComputeGatewayResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ArcGatewayResource> IAsyncEnumerable<ArcGatewayResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
