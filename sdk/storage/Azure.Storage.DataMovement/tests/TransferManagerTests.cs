@@ -17,6 +17,7 @@ using Azure.Storage.DataMovement.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
+using NUnit.Framework.Interfaces;
 
 namespace Azure.Storage.DataMovement.Tests;
 
@@ -243,7 +244,11 @@ public class TransferManagerTests
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+
         Mock<ITransferCheckpointer> checkpointer = new();
+        List<string> capturedTransferIds = new();
+        checkpointer.Setup(c => c.AddNewJobAsync(Capture.In(capturedTransferIds),
+            It.IsAny<StorageResource>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()));
 
         var resources = Enumerable.Range(1, numJobs).Select(i =>
         {
@@ -282,7 +287,24 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
+        Assert.That(capturedTransferIds.Count, Is.EqualTo(numJobs));
+        foreach (string transferId in capturedTransferIds)
+        {
+            checkpointer.Verify(c => c.AddNewJobAsync(transferId, It.IsAny<StorageResource>(),
+                It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()));
+        }
+        checkpointer.VerifyNoOtherCalls();
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error during initial Job queueing.");
+
+        Dictionary<string, int> jobToPartCount = new();
+        {
+            int i = 1;
+            foreach (string transferId in capturedTransferIds)
+            {
+                jobToPartCount.Add(transferId, GetItemCountFromContainerIndex(i));
+                i++;
+            }
+        }
 
         // process jobs
         Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(numJobs));
@@ -295,6 +317,20 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
+        foreach (KeyValuePair<string, int> kvp in jobToPartCount)
+        {
+            checkpointer.Verify(c => c.SetJobStatusAsync(kvp.Key,
+                Match.Create<DataTransferStatus>(status => status.State == DataTransferState.InProgress),
+                It.IsAny<CancellationToken>()));
+            checkpointer.Verify(c => c.SetEnumerationCompleteAsync(kvp.Key, It.IsAny<CancellationToken>()));
+            foreach (int part in Enumerable.Range(0, kvp.Value))
+            {
+                checkpointer.Verify(c => c.AddNewJobPartAsync(kvp.Key, part,
+                    It.IsAny<JobPartPlanHeader>(),
+                    It.IsAny<CancellationToken>()));
+            }
+        }
+        checkpointer.VerifyNoOtherCalls();
 
         // process parts
         Assert.That(await partsProcessor.StepAll(), Is.EqualTo(numJobParts));
@@ -305,6 +341,16 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
+        foreach (KeyValuePair<string, int> kvp in jobToPartCount)
+        {
+            foreach (int part in Enumerable.Range(0, kvp.Value))
+            {
+                checkpointer.Verify(c => c.SetJobPartStatusAsync(kvp.Key, part,
+                    Match.Create<DataTransferStatus>(status => status.State == DataTransferState.InProgress),
+                    It.IsAny<CancellationToken>()));
+            }
+        }
+        checkpointer.VerifyNoOtherCalls();
 
         // process chunks
         Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(numChunks));
@@ -321,6 +367,19 @@ public class TransferManagerTests
         {
             Assert.That(transfer.HasCompleted);
         }
+        foreach (KeyValuePair<string, int> kvp in jobToPartCount)
+        {
+            foreach (int part in Enumerable.Range(0, kvp.Value))
+            {
+                checkpointer.Verify(c => c.SetJobPartStatusAsync(kvp.Key, part,
+                    Match.Create<DataTransferStatus>(status => status.State == DataTransferState.Completed),
+                    It.IsAny<CancellationToken>()));
+            }
+            checkpointer.Verify(c => c.SetJobStatusAsync(kvp.Key,
+                Match.Create<DataTransferStatus>(status => status.State == DataTransferState.Completed),
+                It.IsAny<CancellationToken>()));
+        }
+        checkpointer.VerifyNoOtherCalls();
     }
 
     [Test]
