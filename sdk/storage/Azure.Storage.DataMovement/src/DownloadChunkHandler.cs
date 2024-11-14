@@ -7,7 +7,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 
@@ -35,9 +34,6 @@ namespace Azure.Storage.DataMovement
             public QueueCompleteFileDownloadInternal QueueCompleteFileDownload { get; set; }
         }
 
-        private event SyncAsyncEventHandler<DownloadRangeEventArgs> _downloadChunkEventHandler;
-        internal SyncAsyncEventHandler<DownloadRangeEventArgs> GetDownloadChunkHandler() => _downloadChunkEventHandler;
-
         /// <summary>
         /// Create channel of <see cref="DownloadRangeEventArgs"/> to keep track to handle
         /// writing downloaded chunks to the destination as well as tracking overall progress.
@@ -64,8 +60,6 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         private readonly Dictionary<long, Stream> _pendingChunks;
 
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary>
         /// The controller for downloading the chunks to each file.
         /// </summary>
@@ -81,9 +75,6 @@ namespace Azure.Storage.DataMovement
         /// <param name="behaviors">
         /// Contains all the supported function calls.
         /// </param>
-        /// <param name="clientDiagnostics">
-        /// ClientDiagnostics for handler logging.
-        /// </param>
         /// <param name="cancellationToken">
         /// Cancellation token of the job part or job to cancel any ongoing waiting in the
         /// download chunk handler to prevent infinite waiting.
@@ -94,7 +85,6 @@ namespace Azure.Storage.DataMovement
             long expectedLength,
             IList<HttpRange> ranges,
             Behaviors behaviors,
-            ClientDiagnostics clientDiagnostics,
             CancellationToken cancellationToken)
         {
             // Set bytes transferred to the length of bytes we got back from the initial
@@ -123,7 +113,6 @@ namespace Azure.Storage.DataMovement
             }
             Argument.AssertNotNullOrEmpty(ranges, nameof(ranges));
             Argument.AssertNotNull(behaviors, nameof(behaviors));
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
 
             // Set values
             _copyToDestinationFile = behaviors.CopyToDestinationFile
@@ -134,40 +123,21 @@ namespace Azure.Storage.DataMovement
                 ?? throw Errors.ArgumentNull(nameof(behaviors.InvokeFailedHandler));
             _queueCompleteFileDownload = behaviors.QueueCompleteFileDownload
                 ?? throw Errors.ArgumentNull(nameof(behaviors.QueueCompleteFileDownload));
-
-            _downloadChunkEventHandler += DownloadChunkEvent;
-            ClientDiagnostics = clientDiagnostics;
         }
 
         public void Dispose()
         {
+            foreach (Stream chunkStream in _pendingChunks.Values)
+            {
+                chunkStream.Dispose();
+            }
+            _pendingChunks.Clear();
             _downloadRangeChannel.Writer.TryComplete();
-            DisposeHandlers();
         }
 
-        private void DisposeHandlers()
+        public void QueueChunk(DownloadRangeEventArgs args)
         {
-            _downloadChunkEventHandler -= DownloadChunkEvent;
-        }
-
-        private async Task DownloadChunkEvent(DownloadRangeEventArgs args)
-        {
-            try
-            {
-                if (args.Success)
-                {
-                    _downloadRangeChannel.Writer.TryWrite(args);
-                }
-                else
-                {
-                    // Report back failed event.
-                    throw args.Exception;
-                }
-            }
-            catch (Exception ex)
-            {
-                await InvokeFailedEvent(ex).ConfigureAwait(false);
-            }
+            _downloadRangeChannel.Writer.TryWrite(args);
         }
 
         private async Task NotifyOfPendingChunkDownloadEvents()
@@ -217,23 +187,8 @@ namespace Azure.Storage.DataMovement
             }
             catch (Exception ex)
             {
-                await InvokeFailedEvent(ex).ConfigureAwait(false);
-            }
-        }
-
-        public async Task InvokeEvent(DownloadRangeEventArgs args)
-        {
-            // There's a race condition where the event handler was disposed and an event
-            // was already invoked, we should skip over this as the download chunk handler
-            // was already disposed, and we should just ignore any more incoming events.
-            if (_downloadChunkEventHandler != null)
-            {
-                await _downloadChunkEventHandler.RaiseAsync(
-                    args,
-                    nameof(DownloadChunkHandler),
-                    nameof(_downloadChunkEventHandler),
-                    ClientDiagnostics)
-                    .ConfigureAwait(false);
+                // This will trigger the job part to call Dispose on this object
+                await _invokeFailedEventHandler(ex).ConfigureAwait(false);
             }
         }
 
@@ -254,16 +209,6 @@ namespace Azure.Storage.DataMovement
                 _pendingChunks.Remove(currentRange.Offset);
                 UpdateBytesAndRange((long)currentRange.Length);
             }
-        }
-
-        private async Task InvokeFailedEvent(Exception ex)
-        {
-            foreach (Stream chunkStream in _pendingChunks.Values)
-            {
-                chunkStream.Dispose();
-            }
-            _pendingChunks.Clear();
-            await _invokeFailedEventHandler(ex).ConfigureAwait(false);
         }
 
         /// <summary>

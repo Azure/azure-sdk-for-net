@@ -395,39 +395,19 @@ namespace Azure.Storage.DataMovement
                     _cancellationToken).ConfigureAwait(false);
 
                 // The chunk handler may have been disposed in failure case
-                if (_downloadChunkHandler != null)
-                {
-                    await _downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
-                        transferId: _dataTransfer.Id,
-                        success: true,
-                        offset: range.Offset,
-                        bytesTransferred: (long)range.Length,
-                        result: result.Content,
-                        exception: default,
-                        false,
-                        _cancellationToken)).ConfigureAwait(false);
-                }
+                _downloadChunkHandler?.QueueChunk(new DownloadRangeEventArgs(
+                    transferId: _dataTransfer.Id,
+                    success: true,
+                    offset: range.Offset,
+                    bytesTransferred: (long)range.Length,
+                    result: result.Content,
+                    exception: default,
+                    false,
+                    _cancellationToken));
             }
             catch (Exception ex)
             {
-                if (_downloadChunkHandler != null)
-                {
-                    await _downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
-                        transferId: _dataTransfer.Id,
-                        success: false,
-                        offset: range.Offset,
-                        bytesTransferred: (long)range.Length,
-                        result: default,
-                        exception: ex,
-                        false,
-                        _cancellationToken)).ConfigureAwait(false);
-                }
-                else
-                {
-                    // If the _downloadChunkHandler has been disposed before we call to it
-                    // we should at least filter the exception to error handling just in case.
-                    await InvokeFailedArgAsync(ex).ConfigureAwait(false);
-                }
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
         }
 
@@ -474,17 +454,16 @@ namespace Azure.Storage.DataMovement
                 expectedLength,
                 ranges,
                 GetDownloadChunkHandlerBehaviors(jobPart),
-                ClientDiagnostics,
                 _cancellationToken);
 
-        internal static DownloadChunkHandler.Behaviors GetDownloadChunkHandlerBehaviors(UriToStreamJobPart job)
+        private static DownloadChunkHandler.Behaviors GetDownloadChunkHandlerBehaviors(UriToStreamJobPart jobPart)
         {
             return new DownloadChunkHandler.Behaviors()
             {
-                CopyToDestinationFile = job.CopyToStreamInternal,
-                ReportProgressInBytes = job.ReportBytesWritten,
-                InvokeFailedHandler = job.InvokeFailedArgAsync,
-                QueueCompleteFileDownload = job.QueueCompleteFileDownload
+                CopyToDestinationFile = jobPart.CopyToStreamInternal,
+                ReportProgressInBytes = jobPart.ReportBytesWritten,
+                InvokeFailedHandler = jobPart.InvokeFailedArgAsync,
+                QueueCompleteFileDownload = jobPart.QueueCompleteFileDownload
             };
         }
 

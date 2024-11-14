@@ -10,7 +10,6 @@ using System.IO;
 using System.Threading;
 using Azure.Core;
 using Azure.Storage.Tests.Shared;
-using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -25,8 +24,6 @@ namespace Azure.Storage.DataMovement.Tests
         private readonly string _copyToDestinationMsg = "Amount of Copy To Destination Task calls were incorrect.";
         private readonly string _reportProgressInBytesMsg = "Amount of Progress amount calls were incorrect.";
         private readonly string _completeFileDownloadMsg = "Complete File Download call amount calls were incorrect.";
-
-        private ClientDiagnostics ClientDiagnostics => new(ClientOptions.Default);
 
         private void VerifyDelegateInvocations(
             MockDownloadChunkBehaviors behaviors,
@@ -174,7 +171,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(Constants.KB)]
         [TestCase(Constants.MB)]
         [TestCase(4 * Constants.MB)]
-        public async Task OneChunkTransfer(long blockSize)
+        public void OneChunkTransfer(long blockSize)
         {
             // Arrange - Set up tasks
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
@@ -194,13 +191,12 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
 
             // Act - Make one chunk that would meet the expected length
-            await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
                 transferId: "fake-id",
                 success: true,
                 offset: 0,
@@ -222,7 +218,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         [TestCase(512)]
         [TestCase(Constants.KB)]
-        public async Task MultipleChunkTransfer(long blockSize)
+        public void MultipleChunkTransfer(long blockSize)
         {
             // Arrange - Set up tasks
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
@@ -239,13 +235,12 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
 
             // Act - Make one chunk that would update the bytes but not cause a commit block list to occur
-            await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
                 transferId: "fake-id",
                 success: true,
                 offset: 0,
@@ -266,7 +261,7 @@ namespace Azure.Storage.DataMovement.Tests
             PredictableStream content2 = new PredictableStream(blockSize);
 
             // Act - Now add the last block to meet the required commited block amount.
-            await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
                 transferId: "fake-id",
                 success: true,
                 offset: blockSize,
@@ -288,7 +283,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         [TestCase(512)]
         [TestCase(Constants.KB)]
-        public async Task MultipleChunkTransfer_UnexpectedOffsetError(long blockSize)
+        public void MultipleChunkTransfer_UnexpectedOffsetError(long blockSize)
         {
             // Arrange - Set up tasks
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
@@ -304,13 +299,12 @@ namespace Azure.Storage.DataMovement.Tests
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
 
             // Make initial range event
-            await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
                 transferId: "fake-id",
                 success: true,
                 offset: 0,
@@ -321,7 +315,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: CancellationToken.None));
 
             // Act - Make the repeat at the same offset to cause an error.
-            await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
                 transferId: "fake-id",
                 success: true,
                 offset: 0,
@@ -343,7 +337,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         [TestCase(512)]
         [TestCase(Constants.KB)]
-        public async Task MultipleChunkTransfer_EarlyChunks(long blockSize)
+        public void MultipleChunkTransfer_EarlyChunks(long blockSize)
         {
             // Arrange - Set up tasks
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
@@ -361,13 +355,12 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
 
             // Act - The second chunk returns first
-            await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
                 transferId: "fake-id",
                 success: true,
                 offset: blockSize,
@@ -386,7 +379,7 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 0);
 
             // Act - The first chunk is then returned
-            await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
                 transferId: "fake-id",
                 success: true,
                 offset: 0,
@@ -427,7 +420,6 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             List<Task> runningTasks = new List<Task>();
@@ -437,15 +429,16 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 PredictableStream content = new PredictableStream(blockSize);
 
-                Task task = downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+                long offset = i * blockSize;
+                Task task = Task.Run(() => downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
                     transferId: "fake-id",
                     success: true,
-                    offset: i * blockSize,
+                    offset: offset,
                     bytesTransferred: blockSize,
                     result: content,
                     exception: default,
                     isRunningSynchronously: false,
-                    cancellationToken: CancellationToken.None));
+                    cancellationToken: CancellationToken.None)));
                 runningTasks.Add(task);
             }
 
@@ -463,7 +456,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task GetCopyToDestinationFileTask_ExpectedFailure()
+        public void GetCopyToDestinationFileTask_ExpectedFailure()
         {
             // Arrange
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
@@ -483,13 +476,12 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
 
             // Act
-            await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
                 transferId: "fake-id",
                 success: true,
                 offset: 0,
@@ -509,7 +501,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task QueueCompleteFileDownloadTask_ExpectedFailure()
+        public void QueueCompleteFileDownloadTask_ExpectedFailure()
         {
             // Arrange
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
@@ -528,13 +520,12 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
 
             // Act
-            await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
                 transferId: "fake-id",
                 success: true,
                 offset: 0,
@@ -554,7 +545,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task DisposedEventHandler()
+        public void DisposedEventHandler()
         {
             // Arrange - Create DownloadChunkHandler then Dispose it so the event handler is disposed
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
@@ -573,14 +564,11 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             // Act
             downloadChunkHandler.Dispose();
-
-            // Assert - Do not throw when trying to invoke the event handler when disposed
-            await downloadChunkHandler.InvokeEvent(default);
+            downloadChunkHandler.QueueChunk(default);
 
             VerifyDelegateInvocations(
                 behaviors: mockBehaviors,
