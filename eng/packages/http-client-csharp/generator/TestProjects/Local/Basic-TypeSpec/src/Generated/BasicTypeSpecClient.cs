@@ -67,12 +67,12 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="headParameter"></param>
         /// <param name="queryParameter"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="optionalQuery"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SayHi(string headParameter, string queryParameter, RequestContext context, string optionalQuery = null)
+        public virtual Response SayHi(string headParameter, string queryParameter, string optionalQuery, RequestContext context = null)
         {
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
@@ -91,12 +91,12 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="headParameter"></param>
         /// <param name="queryParameter"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="optionalQuery"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SayHiAsync(string headParameter, string queryParameter, RequestContext context, string optionalQuery = null)
+        public virtual async Task<Response> SayHiAsync(string headParameter, string queryParameter, string optionalQuery, RequestContext context = null)
         {
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
@@ -116,7 +116,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
-            Response result = SayHi(headParameter, queryParameter, null, optionalQuery);
+            Response result = SayHi(headParameter, queryParameter, optionalQuery, null);
             return Response.FromValue((Thing)result, result);
         }
 
@@ -131,7 +131,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
-            Response result = await SayHiAsync(headParameter, queryParameter, null, optionalQuery).ConfigureAwait(false);
+            Response result = await SayHiAsync(headParameter, queryParameter, optionalQuery, null).ConfigureAwait(false);
             return Response.FromValue((Thing)result, result);
         }
 
