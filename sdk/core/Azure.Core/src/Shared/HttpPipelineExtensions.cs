@@ -3,10 +3,8 @@
 
 #nullable enable
 
-using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-//using Azure.AI.Projects;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core

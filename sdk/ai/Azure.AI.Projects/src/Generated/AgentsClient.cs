@@ -1839,7 +1839,9 @@ namespace Azure.AI.Projects
             try
             {
                 using HttpMessage message = CreateCreateRunRequest(threadId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response response = message.ExtractResponse();
+                return response;
             }
             catch (Exception e)
             {
