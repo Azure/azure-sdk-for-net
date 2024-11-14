@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
     /// <summary> Properties specific to Data Organization resource. </summary>
-    public partial class NeonOrganizationPropertes
+    public partial class NeonOrganizationProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NeonOrganizationPropertes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeonOrganizationProperties"/>. </summary>
         /// <param name="marketplaceDetails"> Marketplace details of the resource. </param>
         /// <param name="userDetails"> Details of the user. </param>
         /// <param name="companyDetails"> Details of the company. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceDetails"/>, <paramref name="userDetails"/> or <paramref name="companyDetails"/> is null. </exception>
-        public NeonOrganizationPropertes(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails)
+        public NeonOrganizationProperties(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails)
         {
             Argument.AssertNotNull(marketplaceDetails, nameof(marketplaceDetails));
             Argument.AssertNotNull(userDetails, nameof(userDetails));
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             CompanyDetails = companyDetails;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeonOrganizationPropertes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeonOrganizationProperties"/>. </summary>
         /// <param name="marketplaceDetails"> Marketplace details of the resource. </param>
         /// <param name="userDetails"> Details of the user. </param>
         /// <param name="companyDetails"> Details of the company. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerOrganizationProperties"> Organization properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonOrganizationPropertes(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails, NeonResourceProvisioningState? provisioningState, PartnerOrganizationProperties partnerOrganizationProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonOrganizationProperties(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails, NeonResourceProvisioningState? provisioningState, PartnerOrganizationProperties partnerOrganizationProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceDetails = marketplaceDetails;
             UserDetails = userDetails;
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeonOrganizationPropertes"/> for deserialization. </summary>
-        internal NeonOrganizationPropertes()
+        /// <summary> Initializes a new instance of <see cref="NeonOrganizationProperties"/> for deserialization. </summary>
+        internal NeonOrganizationProperties()
         {
         }
 

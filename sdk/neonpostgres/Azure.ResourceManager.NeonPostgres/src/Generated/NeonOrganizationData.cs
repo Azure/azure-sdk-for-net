@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NeonOrganizationPropertes properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NeonOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NeonOrganizationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public NeonOrganizationPropertes Properties { get; set; }
+        public NeonOrganizationProperties Properties { get; set; }
     }
 }

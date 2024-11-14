@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="NeonPostgres.NeonOrganizationData"/> instance for mocking. </returns>
-        public static NeonOrganizationData NeonOrganizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NeonOrganizationPropertes properties = null)
+        public static NeonOrganizationData NeonOrganizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NeonOrganizationProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NeonOrganizationPropertes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NeonOrganizationProperties"/>. </summary>
         /// <param name="marketplaceDetails"> Marketplace details of the resource. </param>
         /// <param name="userDetails"> Details of the user. </param>
         /// <param name="companyDetails"> Details of the company. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerOrganizationProperties"> Organization properties. </param>
-        /// <returns> A new <see cref="Models.NeonOrganizationPropertes"/> instance for mocking. </returns>
-        public static NeonOrganizationPropertes NeonOrganizationPropertes(NeonMarketplaceDetails marketplaceDetails = null, NeonUserDetails userDetails = null, NeonCompanyDetails companyDetails = null, NeonResourceProvisioningState? provisioningState = null, PartnerOrganizationProperties partnerOrganizationProperties = null)
+        /// <returns> A new <see cref="Models.NeonOrganizationProperties"/> instance for mocking. </returns>
+        public static NeonOrganizationProperties NeonOrganizationProperties(NeonMarketplaceDetails marketplaceDetails = null, NeonUserDetails userDetails = null, NeonCompanyDetails companyDetails = null, NeonResourceProvisioningState? provisioningState = null, PartnerOrganizationProperties partnerOrganizationProperties = null)
         {
-            return new NeonOrganizationPropertes(
+            return new NeonOrganizationProperties(
                 marketplaceDetails,
                 userDetails,
                 companyDetails,

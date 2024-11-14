@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    public partial class NeonOrganizationPropertes : IUtf8JsonSerializable, IJsonModel<NeonOrganizationPropertes>
+    public partial class NeonOrganizationProperties : IUtf8JsonSerializable, IJsonModel<NeonOrganizationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NeonOrganizationPropertes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NeonOrganizationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NeonOrganizationPropertes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NeonOrganizationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeonOrganizationPropertes>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NeonOrganizationPropertes)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NeonOrganizationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("marketplaceDetails"u8);
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
-        NeonOrganizationPropertes IJsonModel<NeonOrganizationPropertes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NeonOrganizationProperties IJsonModel<NeonOrganizationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeonOrganizationPropertes>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NeonOrganizationPropertes)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NeonOrganizationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNeonOrganizationPropertes(document.RootElement, options);
+            return DeserializeNeonOrganizationProperties(document.RootElement, options);
         }
 
-        internal static NeonOrganizationPropertes DeserializeNeonOrganizationPropertes(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NeonOrganizationProperties DeserializeNeonOrganizationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NeonOrganizationPropertes(
+            return new NeonOrganizationProperties(
                 marketplaceDetails,
                 userDetails,
                 companyDetails,
@@ -144,35 +144,35 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NeonOrganizationPropertes>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NeonOrganizationProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeonOrganizationPropertes>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NeonOrganizationPropertes)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeonOrganizationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NeonOrganizationPropertes IPersistableModel<NeonOrganizationPropertes>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NeonOrganizationProperties IPersistableModel<NeonOrganizationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeonOrganizationPropertes>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNeonOrganizationPropertes(document.RootElement, options);
+                        return DeserializeNeonOrganizationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NeonOrganizationPropertes)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeonOrganizationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NeonOrganizationPropertes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NeonOrganizationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

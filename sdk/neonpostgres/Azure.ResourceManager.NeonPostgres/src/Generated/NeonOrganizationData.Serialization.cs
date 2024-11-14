@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NeonPostgres
             {
                 return null;
             }
-            NeonOrganizationPropertes properties = default;
+            NeonOrganizationProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NeonPostgres
                     {
                         continue;
                     }
-                    properties = NeonOrganizationPropertes.DeserializeNeonOrganizationPropertes(property.Value, options);
+                    properties = NeonOrganizationProperties.DeserializeNeonOrganizationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
