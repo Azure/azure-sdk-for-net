@@ -16,7 +16,6 @@ using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Microsoft.Identity.Client;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Internal;

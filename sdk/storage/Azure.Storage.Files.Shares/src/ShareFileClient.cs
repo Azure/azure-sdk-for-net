@@ -130,7 +130,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         public virtual bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
 
-        //const string FileType = "file";
+        //const string filetype = "file";
 
         //// FileMaxUploadRangeBytes indicates the maximum number of bytes that can be sent in a call to UploadRange.
         //public const Int64 FileMaxUploadRangeBytes = 4 * Constants.MB; // 4MB
