@@ -30,10 +30,10 @@
     <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartFormDataContent.cs" LinkBase="Shared" />
-    <!--<Compile Include="$(AzureCoreSharedSources)OperationFinalStateVia.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationFinalStateVia.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ProtocolOperation.cs" LinkBase="Shared" />-->
+    <Compile Include="$(AzureCoreSharedSources)ProtocolOperation.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)RawRequestUriBuilder.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)RequestUriBuilderExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared" />
