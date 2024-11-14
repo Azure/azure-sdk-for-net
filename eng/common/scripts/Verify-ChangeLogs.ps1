@@ -7,12 +7,10 @@ Set-StrictMode -Version 3
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-function ShouldVerifyChangeLog ($ServiceDirectory, $PackageName) {
-    $jsonCiYmlPath = Join-Path $ServiceDirectory "ci.yml"
-
+function ShouldVerifyChangeLog ($PkgArtifactDetails, $PackageName) {
     if (Test-Path $jsonCiYmlPath)
     {
-        $ciYml = Get-Content $jsonCiYmlPath -Raw | yq -o=json | ConvertFrom-Json -AsHashTable
+        $ciYml = Get-Content $jsonCiYmlPath -Raw | CompatibleConvertFrom-Yaml
 
         if ($ciYml.extends -and $ciYml.extends.parameters -and $ciYml.extends.parameters.Artifacts) {
             $packagesCheckingChangeLog = $ciYml.extends.parameters.Artifacts `
@@ -28,10 +26,23 @@ function ShouldVerifyChangeLog ($ServiceDirectory, $PackageName) {
     }
 }
 
-if (-not (Get-Command 'yq' -ErrorAction SilentlyContinue)) {
-    Write-Host "Error: 'yq' is not installed or not found in PATH. Please remedy this before running this script."
-    exit 1
+function ShouldVerifyChangeLog ($PkgArtifactDetails) {
+  if ($PkgArtifactDetails) {
+    Write-Host $PkgArtifactDetails.Name
+    $possibleValue = $PkgArtifactDetails.PSObject.Properties["skipVerifyChangeLog"]
+
+    if ($possibleValue) {
+      if ($possibleValue -eq $true) {
+        return $false
+      }
+    }
+
+    return $true
+  }
+
+  return $false
 }
+
 
 # find which packages we need to confirm the changelog for
 $packageProperties = Get-ChildItem -Recurse "$PackagePropertiesFolder" *.json
@@ -41,7 +52,7 @@ $allPassing = $true
 foreach($propertiesFile in $packageProperties) {
   $PackageProp = Get-Content -Path $propertiesFile | ConvertFrom-Json
 
-  if (-not (ShouldVerifyChangeLog -ServiceDirectory (Join-Path $RepoRoot "sdk" $PackageProp.ServiceDirectory) -PackageName $PackageProp.Name)) {
+  if (-not (ShouldVerifyChangeLog $PackageProp.ArtifactDetails)) {
         Write-Host "Skipping changelog verification for $($PackageProp.Name)"
         continue
   }
