@@ -5,12 +5,6 @@ Use the AI Projects client library to:
 * **Enumerate connections** in your Azure AI Studio project and get connection properties.
 For example, get the inference endpoint URL and credentials associated with your Azure OpenAI connection.
 
-[Product documentation](https://aka.ms/azsdk/azure-ai-projects/product-doc)
-| [Samples][samples]
-| [API reference documentation](https://aka.ms/azsdk/azure-ai-projects/csharp/reference)
-| [Package (NuGet)](https://aka.ms/azsdk/azure-ai-projects/csharp/package)
-| [SDK source code](https://aka.ms/azsdk/azure-ai-projects/csharp/source)
-
 ## Getting started
 
 ### Prerequisites
