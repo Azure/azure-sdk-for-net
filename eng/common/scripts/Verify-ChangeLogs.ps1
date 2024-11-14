@@ -7,25 +7,6 @@ Set-StrictMode -Version 3
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-function ShouldVerifyChangeLog ($PkgArtifactDetails, $PackageName) {
-    if (Test-Path $jsonCiYmlPath)
-    {
-        $ciYml = Get-Content $jsonCiYmlPath -Raw | CompatibleConvertFrom-Yaml
-
-        if ($ciYml.extends -and $ciYml.extends.parameters -and $ciYml.extends.parameters.Artifacts) {
-            $packagesCheckingChangeLog = $ciYml.extends.parameters.Artifacts `
-                | Where-Object { -not ($_["skipVerifyChangelog"] -eq $true) } `
-                | Select-Object -ExpandProperty name
-            if ($packagesCheckingChangeLog -contains $PackageName)
-            {
-                return $true
-            } else {
-                return $false
-            }
-        }
-    }
-}
-
 function ShouldVerifyChangeLog ($PkgArtifactDetails) {
   if ($PkgArtifactDetails) {
     Write-Host $PkgArtifactDetails.Name
@@ -42,7 +23,6 @@ function ShouldVerifyChangeLog ($PkgArtifactDetails) {
 
   return $false
 }
-
 
 # find which packages we need to confirm the changelog for
 $packageProperties = Get-ChildItem -Recurse "$PackagePropertiesFolder" *.json
