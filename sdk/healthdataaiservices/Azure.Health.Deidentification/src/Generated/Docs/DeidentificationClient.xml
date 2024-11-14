@@ -163,7 +163,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
+DeidentificationContent content = new DeidentificationContent("Hello my name is John Smith.")
 {
     Operation = OperationType.Redact,
     Customizations = new CustomizationOptions
@@ -172,7 +172,7 @@ DeidentificationContent body = new DeidentificationContent("Hello my name is Joh
         SurrogateLocale = "en-US",
     },
 };
-Response<DeidentificationResult> response = await client.DeidentifyTextAsync(body);
+Response<DeidentificationResult> response = await client.DeidentifyTextAsync(content);
 ]]></code></example>
     </member>
     <member name="DeidentifyText(DeidentificationContent,CancellationToken)">
@@ -183,7 +183,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
+DeidentificationContent content = new DeidentificationContent("Hello my name is John Smith.")
 {
     Operation = OperationType.Redact,
     Customizations = new CustomizationOptions
@@ -192,7 +192,7 @@ DeidentificationContent body = new DeidentificationContent("Hello my name is Joh
         SurrogateLocale = "en-US",
     },
 };
-Response<DeidentificationResult> response = client.DeidentifyText(body);
+Response<DeidentificationResult> response = client.DeidentifyText(content);
 ]]></code></example>
     </member>
     <member name="DeidentifyTextAsync(RequestContent,RequestContext)">

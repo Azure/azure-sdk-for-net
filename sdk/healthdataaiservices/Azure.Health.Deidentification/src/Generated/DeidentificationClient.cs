@@ -370,34 +370,34 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> De-identify text. </summary>
-        /// <param name="body"> Request body for de-identification operation. </param>
+        /// <param name="content"> Request body for de-identification operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks> A remote procedure call (RPC) operation. </remarks>
         /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='DeidentifyTextAsync(DeidentificationContent,CancellationToken)']/*" />
-        public virtual async Task<Response<DeidentificationResult>> DeidentifyTextAsync(DeidentificationContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeidentificationResult>> DeidentifyTextAsync(DeidentificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DeidentifyTextAsync(content, context).ConfigureAwait(false);
+            Response response = await DeidentifyTextAsync(content0, context).ConfigureAwait(false);
             return Response.FromValue(DeidentificationResult.FromResponse(response), response);
         }
 
         /// <summary> De-identify text. </summary>
-        /// <param name="body"> Request body for de-identification operation. </param>
+        /// <param name="content"> Request body for de-identification operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks> A remote procedure call (RPC) operation. </remarks>
         /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='DeidentifyText(DeidentificationContent,CancellationToken)']/*" />
-        public virtual Response<DeidentificationResult> DeidentifyText(DeidentificationContent body, CancellationToken cancellationToken = default)
+        public virtual Response<DeidentificationResult> DeidentifyText(DeidentificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DeidentifyText(content, context);
+            Response response = DeidentifyText(content0, context);
             return Response.FromValue(DeidentificationResult.FromResponse(response), response);
         }
 
