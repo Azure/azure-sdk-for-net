@@ -10,7 +10,7 @@ namespace Azure.Health.Deidentification.Tests
         public string Endpoint => GetRecordedVariable("DEID_SERVICE_ENDPOINT");
         public string SasUri => GetRecordedVariable("SAS_URI", options => options.IsSecret());
 
-        public static string FakeNextLink => "https://deidservicetest.api.deid.azure.com/jobs?api-version=2000-01-01-preview&continuationToken=1234";
+        public static string FakeNextLink => "https://localhost:5020/jobs/net-sdk-job-1234/documents?api-version=2024-11-15&maxpagesize=2&continuationToken=1234";
         public static string FakeStorageLocation => "https://fakeblobstorage.blob.core.windows.net/container";
         public static string FakeJobName => "net-sdk-job-1234";
         public static string FakeContinuationTokenSegment => "continuationToken=1234";
