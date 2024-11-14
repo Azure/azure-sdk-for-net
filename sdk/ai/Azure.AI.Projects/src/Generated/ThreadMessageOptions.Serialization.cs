@@ -19,13 +19,21 @@ namespace Azure.AI.Projects
 
         void IJsonModel<ThreadMessageOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ThreadMessageOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreadMessageOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
             writer.WritePropertyName("content"u8);
@@ -80,7 +88,6 @@ namespace Azure.AI.Projects
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ThreadMessageOptions IJsonModel<ThreadMessageOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

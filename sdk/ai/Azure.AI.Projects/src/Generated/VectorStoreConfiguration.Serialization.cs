@@ -19,13 +19,21 @@ namespace Azure.AI.Projects
 
         void IJsonModel<VectorStoreConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VectorStoreConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VectorStoreConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("data_sources"u8);
             writer.WriteStartArray();
             foreach (var item in DataSources)
@@ -48,7 +56,6 @@ namespace Azure.AI.Projects
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         VectorStoreConfiguration IJsonModel<VectorStoreConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

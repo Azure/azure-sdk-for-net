@@ -19,13 +19,21 @@ namespace Azure.AI.Projects
 
         void IJsonModel<VectorStoreStaticChunkingStrategyOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VectorStoreStaticChunkingStrategyOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VectorStoreStaticChunkingStrategyOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("max_chunk_size_tokens"u8);
             writer.WriteNumberValue(MaxChunkSizeTokens);
             writer.WritePropertyName("chunk_overlap_tokens"u8);
@@ -45,7 +53,6 @@ namespace Azure.AI.Projects
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         VectorStoreStaticChunkingStrategyOptions IJsonModel<VectorStoreStaticChunkingStrategyOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

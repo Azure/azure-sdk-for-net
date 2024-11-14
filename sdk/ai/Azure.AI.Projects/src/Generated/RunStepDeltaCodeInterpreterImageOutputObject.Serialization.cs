@@ -19,13 +19,21 @@ namespace Azure.AI.Projects
 
         void IJsonModel<RunStepDeltaCodeInterpreterImageOutputObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaCodeInterpreterImageOutputObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RunStepDeltaCodeInterpreterImageOutputObject)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(FileId))
             {
                 writer.WritePropertyName("file_id"u8);
@@ -46,7 +54,6 @@ namespace Azure.AI.Projects
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RunStepDeltaCodeInterpreterImageOutputObject IJsonModel<RunStepDeltaCodeInterpreterImageOutputObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
