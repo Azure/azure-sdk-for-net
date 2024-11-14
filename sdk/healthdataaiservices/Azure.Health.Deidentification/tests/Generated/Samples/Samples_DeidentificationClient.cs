@@ -226,7 +226,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
+            DeidentificationContent content = new DeidentificationContent("Hello my name is John Smith.")
             {
                 Operation = OperationType.Redact,
                 Customizations = new CustomizationOptions
@@ -235,7 +235,7 @@ namespace Azure.Health.Deidentification.Samples
                     SurrogateLocale = "en-US",
                 },
             };
-            Response<DeidentificationResult> response = client.DeidentifyText(body);
+            Response<DeidentificationResult> response = client.DeidentifyText(content);
         }
 
         [Test]
@@ -246,7 +246,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
+            DeidentificationContent content = new DeidentificationContent("Hello my name is John Smith.")
             {
                 Operation = OperationType.Redact,
                 Customizations = new CustomizationOptions
@@ -255,7 +255,7 @@ namespace Azure.Health.Deidentification.Samples
                     SurrogateLocale = "en-US",
                 },
             };
-            Response<DeidentificationResult> response = await client.DeidentifyTextAsync(body);
+            Response<DeidentificationResult> response = await client.DeidentifyTextAsync(content);
         }
 
         [Test]
