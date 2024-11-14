@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MongoCluster.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MongoCluster.Samples
 {
     public partial class Sample_MongoClusterFirewallRuleResource
     {
-        // Gets a firewall rule on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAFirewallRuleOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a firewall rule on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesAFirewallRuleOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleCreate.json
@@ -84,9 +83,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes a firewall rule on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesAFirewallRuleOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleDelete.json
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             // invoke the operation
             await mongoClusterFirewallRule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

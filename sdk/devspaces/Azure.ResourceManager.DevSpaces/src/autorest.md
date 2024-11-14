@@ -18,7 +18,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 
 format-by-name-rules:
   'tenantId': 'uuid'

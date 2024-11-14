@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CostManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CostManagement.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {
-        // SavingsPlanUtilizationSummaries-BillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBenefitUtilizationSummariesByBillingAccountId_SavingsPlanUtilizationSummariesBillingAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-BillingAccount.json
@@ -41,12 +41,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SavingsPlanUtilizationSummaries-BillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBenefitUtilizationSummariesByBillingProfileId_SavingsPlanUtilizationSummariesBillingProfile()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-BillingProfile.json
@@ -70,12 +69,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SavingsPlanUtilizationSummariesDaily
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBenefitUtilizationSummariesBySavingsPlanOrder_SavingsPlanUtilizationSummariesDaily()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-SavingsPlanOrderId-Daily.json
@@ -97,12 +95,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SavingsPlanUtilizationSummariesMonthlyWithSavingsPlanId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBenefitUtilizationSummariesBySavingsPlanId_SavingsPlanUtilizationSummariesMonthlyWithSavingsPlanId()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-SavingsPlanId-Monthly.json
@@ -125,12 +122,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GenerateUtilizationSummariesReportByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateBenefitUtilizationSummariesReportBillingAccountScope_GenerateUtilizationSummariesReportByBillingAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByBillingAccount.json
@@ -157,9 +153,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GenerateUtilizationSummariesReportByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateBenefitUtilizationSummariesReportBillingProfileScope_GenerateUtilizationSummariesReportByBillingProfile()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByBillingProfile.json
@@ -187,9 +182,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GenerateUtilizationSummariesReportByReservationOrder
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateBenefitUtilizationSummariesReportReservationOrderScope_GenerateUtilizationSummariesReportByReservationOrder()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByReservationOrder.json
@@ -213,9 +207,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GenerateUtilizationSummariesReportByReservation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateBenefitUtilizationSummariesReportReservationScope_GenerateUtilizationSummariesReportByReservation()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByReservation.json
@@ -240,9 +233,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GenerateUtilizationSummariesReportBySavingsPlanOrder
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope_GenerateUtilizationSummariesReportBySavingsPlanOrder()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportBySavingsPlanOrder.json
@@ -266,9 +258,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GenerateUtilizationSummariesReportBySavingsPlan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope_GenerateUtilizationSummariesReportBySavingsPlan()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportBySavingsPlan.json
@@ -293,9 +284,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExternalBillingAccountForecast
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExternalCloudProviderUsageForecast_ExternalBillingAccountForecast()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalBillingAccountForecast.json
@@ -359,9 +349,8 @@ Dimensions = new ForecastComparisonExpression("ResourceGroup",ForecastOperatorTy
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExternalSubscriptionForecast
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExternalCloudProviderUsageForecast_ExternalSubscriptionForecast()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalSubscriptionForecast.json
@@ -425,9 +414,8 @@ Dimensions = new ForecastComparisonExpression("ResourceGroup",ForecastOperatorTy
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExternalBillingAccountDimensionList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ByExternalCloudProviderTypeDimensions_ExternalBillingAccountDimensionList()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalBillingAccountsDimensions.json
@@ -449,12 +437,11 @@ Dimensions = new ForecastComparisonExpression("ResourceGroup",ForecastOperatorTy
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ExternalSubscriptionDimensionList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ByExternalCloudProviderTypeDimensions_ExternalSubscriptionDimensionList()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalSubscriptionsDimensions.json
@@ -476,12 +463,11 @@ Dimensions = new ForecastComparisonExpression("ResourceGroup",ForecastOperatorTy
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ExternalBillingAccountQueryList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UsageByExternalCloudProviderTypeQuery_ExternalBillingAccountQueryList()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalBillingAccountsQuery.json
@@ -539,9 +525,8 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExternalSubscriptionsQuery
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UsageByExternalCloudProviderTypeQuery_ExternalSubscriptionsQuery()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalSubscriptionsQuery.json
@@ -599,9 +584,8 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ReservationDetails
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ByBillingAccountIdGenerateReservationDetailsReport_ReservationDetails()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/GenerateReservationDetailsReportByBillingAccount.json
@@ -626,9 +610,8 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ReservationDetails
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ByBillingProfileIdGenerateReservationDetailsReport_ReservationDetails()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/GenerateReservationDetailsReportByBillingProfile.json
@@ -654,9 +637,8 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PricesheetDownload
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DownloadPriceSheet_PricesheetDownload()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/PricesheetDownload.json
@@ -681,9 +663,8 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PricesheetDownloadByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DownloadByBillingProfilePriceSheet_PricesheetDownloadByBillingProfile()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/PricesheetDownloadByBillingProfile.json
@@ -707,9 +688,8 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ScheduledActionCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckCostManagementNameAvailabilityByScheduledAction_ScheduledActionCheckNameAvailability()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/checkNameAvailability-private-scheduledAction.json

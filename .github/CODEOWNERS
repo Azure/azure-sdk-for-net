@@ -654,25 +654,25 @@
 # ServiceOwners:                                                   @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @rajkumar-rangaraj @TimothyMothra
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @rajkumar-rangaraj @TimothyMothra
 
 # ServiceLabel: %Monitor - Distro
-# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+# ServiceOwners:                                                   @rajkumar-rangaraj @TimothyMothra
 
 # PRLabel: %Monitor - Exporter
-/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @rajkumar-rangaraj @TimothyMothra
 
 # ServiceLabel: %Monitor - Exporter
-# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+# ServiceOwners:                                                   @rajkumar-rangaraj @TimothyMothra
 
 # PRLabel: %Monitor - LiveMetrics
-/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @xiang17
+/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @rajkumar-rangaraj @TimothyMothra @xiang17
 
 # ServiceLabel: %Monitor - LiveMetrics
-# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @xiang17
+# ServiceOwners:                                                   @rajkumar-rangaraj @TimothyMothra @xiang17
 
 # ServiceLabel: %MySQL
 # ServiceOwners:                                                   @ajlam @ambhatna @kummanish
@@ -997,12 +997,6 @@
 # ServiceLabel: %DevOps - Infrastructure
 # ServiceOwners:                                                   @oolaoluwa
 
-# PRLabel: %Informatica Data Management
-/sdk/informaticadatamanagement/Azure.ResourceManager.*/            @almasak
-
-# ServiceLabel: %Informatica Data Management %Mgmt
-# ServiceOwners:                                                   @almasak
-
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @archerzz @ArcturusZhang @ArthurMa1978
 
@@ -1084,6 +1078,12 @@
 # ServiceLabel: %Compute - Fleet %Mgmt
 # ServiceOwners:                                                   @sahilarora92 @dhruvil009 @rahuls-microsoft
 
+# PRLabel: %HybridConnectivity
+/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @alexmahonic
+
+# ServiceLabel: %%HybridConnectivity %Mgmt
+# ServiceOwners:                                                   @alexmahonic
+
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
 /eng/common/                                                       @Azure/azure-sdk-eng
@@ -1106,7 +1106,7 @@
 #PRLabel: %CodeGen %Client
 /eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft
 
-# ServiceLabel: %CodeGen 
+# ServiceLabel: %CodeGen
 # AzureSdkOwners:                                                  @JoshLove-msft
 
 #PRLabel: %CodeGen %Client
