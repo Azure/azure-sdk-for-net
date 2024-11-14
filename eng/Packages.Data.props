@@ -174,8 +174,8 @@
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
-    <PackageReference Update="OpenTelemetry" Version="1.9.0" />
-    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.9.0" />
+    <PackageReference Update="OpenTelemetry" Version="1.10.0" />
+    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.10.0" />
     <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0" />
     <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
     <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.0" />
@@ -355,8 +355,8 @@
     <PackageReference Update="NUnit" Version="3.13.2" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />
     <PackageReference Update="OpenTelemetry" Version="1.9.0" />
-    <PackageReference Update="OpenTelemetry.Exporter.Console" Version="1.9.0" />
-    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.9.0" />
+    <PackageReference Update="OpenTelemetry.Exporter.Console" Version="1.10.0" />
+    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.10.0" />
     <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.9.0" />
     <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
     <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.9.0-beta.1" />
