@@ -14,7 +14,6 @@ namespace Azure.AI.Projects.Tests;
 public class Sample_Embeddings : SamplesBase<AIProjectsTestEnvironment>
 {
     [Test]
-    [Ignore("Model deployment needed to run this sample")]
     public void BasicEmbedding()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;

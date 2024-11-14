@@ -16,7 +16,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
     [Test]
     public async Task BasicExample()
     {
-        #region Snippet:OverviewCreateClient
+        #region Snippet:OverviewCreateAgentClient
 #if SNIPPET
         var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
 #else
@@ -101,6 +101,14 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
                 Console.WriteLine();
             }
         }
+        #endregion
+    }
+
+    public void CreateProjectClient()
+    {
+        #region Snippet:OverviewCreateClient
+        var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
+        AIProjectClient projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
         #endregion
     }
 }

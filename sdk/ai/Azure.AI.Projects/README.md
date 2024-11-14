@@ -1,19 +1,10 @@
 # Azure AI Projects client library for .NET
 
-TODO: [Update README] The Azure AI Assistants client library for .NET is an adaptation of OpenAI's REST APIs that provides an idiomatic interface
-and rich integration with the rest of the Azure SDK ecosystem. It will connect to Azure AI resources endpoint.
-
-Use this library to:
-
-- Create and manage assistants, threads, messages, and runs
-- Configure and use tools with assistants
-- Upload and manage files for use with assistants
-
 ## Getting started
 
 ### Prerequisites
 
-To use Assistants capabilities, you'll need to use an Azure AI resource, you must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure AI access](https://learn.microsoft.com/azure/cognitive-services/openai/overview#how-do-i-get-access-to-azure-openai). This will allow you to create an Azure AI resource and get both a connection URL as well as API keys. For more information, see [Quickstart: Get started generating text using Azure AI Service](https://learn.microsoft.com/azure/cognitive-services/openai/quickstart).
+To use Azure AI Projects capabilities, you must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). This will allow you to create an Azure AI resource and get a connection URL.
 
 ### Install the package
 
@@ -25,31 +16,42 @@ dotnet add package Azure.AI.Projects --prerelease
 
 ### Authenticate the client
 
-See [AzureAI's "how assistants work"](https://platform.openai.com/docs/assistants/how-it-works) documentation for an
-overview of the concepts and relationships used with assistants. This overview closely follows
-[AzureAI's overview example](https://platform.openai.com/docs/assistants/overview) to demonstrate the basics of
-creating, running, and using assistants and threads.
+To interact with Azure AI Projects, you’ll need to create an instance of `AIProjectClient` using a Microsoft Entra ID credential (formerly Azure Active Directory) for a secure, keyless authentication approach.
 
-To get started, create an `AssistantsClient`:
+### Authentication Setup
+For authentication, use the Microsoft Entra ID with the [Azure Identity library][azure_identity].
+
+- Install the [Azure.Identity package](https://www.nuget.org/packages/Azure.Identity):
+
+    ```dotnetcli
+    dotnet add package Azure.Identity
+    ```
+
+- Use the appropriate credential type from the Azure Identity library. For example, [DefaultAzureCredential][azure_identity_dac]:
+
 ```C# Snippet:OverviewCreateClient
+var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
+AIProjectClient projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
+```
+
+Once `AIProjectClient` is created, you can call `GetXXXClient()` methods on this client to retrieve instances of specific sub-clients.
+
+## Key concepts
+
+TODO
+
+## Examples
+
+### Agents
+Agents in the Azure AI Projects client library are designed to facilitate various interactions and operations within your AI projects. They serve as the core components that manage and execute tasks, leveraging different tools and resources to achieve specific goals. The following steps outline the typical sequence for interacting with agents:
+
+Create an `AgentClient`
+```C# Snippet:OverviewCreateAgentClient
 var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
 AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 ```
 
-> **NOTE**: The Assistants API should always be used from a trusted device. Because the same authentication mechanism for running threads also allows changing persistent resources like Assistant instructions, a malicious user could extract an API key and modify Assistant behavior for other customers.
-
-## Key concepts
-
-### Overview
-
-For an overview of Assistants and the pertinent key concepts like Threads, Messages, Runs, and Tools, please see
-[AzureAI's Assistants API overview](https://platform.openai.com/docs/assistants/overview).
-
-## Usage
-
-### Examples
-
-With an authenticated client, an assistant can be created:
+With an authenticated client, an agent can be created:
 ```C# Snippet:OverviewCreateAgent
 Response<Agent> agentResponse = await client.CreateAgentAsync(
     model: "gpt-4-1106-preview",
@@ -74,7 +76,7 @@ Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
 ThreadMessage message = messageResponse.Value;
 ```
 
-A run can then be started that evaluates the thread against an assistant:
+A run can then be started that evaluates the thread against an agent:
 ```C# Snippet:OverviewCreateRun
 Response<ThreadRun> runResponse = await client.CreateRunAsync(
     thread.Id,
@@ -95,7 +97,7 @@ while (runResponse.Value.Status == RunStatus.Queued
 ```
 
 Assuming the run successfully completed, listing messages from the thread that was run will now reflect new information
-added by the assistant:
+added by the agent:
 ```C# Snippet:OverviewListUpdatedMessages
 Response<PageableList<ThreadMessage>> afterRunMessagesResponse
     = await client.GetMessagesAsync(thread.Id);
@@ -122,14 +124,14 @@ foreach (ThreadMessage threadMessage in messages)
 
 Example output from this sequence:
 ```
- 2024-10-15 23:12:59 -  assistant: Yes, Jane Doe, the solution to the equation \(3x + 11 = 14\) is \(x = 1\).
- 2024-10-15 23:12:51 -       user: I need to solve the equation `3x + 11 = 14`. Can you help me?
+ 2024-10-15 23:12:59 - assistant: Yes, Jane Doe, the solution to the equation \(3x + 11 = 14\) is \(x = 1\).
+ 2024-10-15 23:12:51 - user: I need to solve the equation `3x + 11 = 14`. Can you help me?
 ```
 
-### Working with files search
+#### Working with files search
 
-Files can be uploaded and then referenced by assistants or messages. First, use the generalized upload API with a
-purpose of 'assistants' to make a file ID available:
+Files can be uploaded and then referenced by agents or messages. First, use the generalized upload API with a
+purpose of 'agents' to make a file ID available:
 ```C# Snippet:UploadAgentFilesToUse
 // Upload a file and wait for it to be processed
 File.WriteAllText(
@@ -166,16 +168,15 @@ Response<Agent> agentResponse = await client.CreateAgentAsync(
 Agent agent = agentResponse.Value;
 ```
 
-With a file ID association and a supported tool enabled, the assistant will then be able to consume the associated
+With a file ID association and a supported tool enabled, the agent will then be able to consume the associated
 data when running threads.
 
-### Using function tools and parallel function calling
+#### Using function tools and parallel function calling
 
-As [described in OpenAI's documentation for assistant tools](https://platform.openai.com/docs/assistants/tools/function-calling),
-tools that reference caller-defined capabilities as functions can be provided to an assistant to allow it to
+Tools that reference caller-defined capabilities as functions can be provided to an agent to allow it to
 dynamically resolve and disambiguate during a run.
 
-Here, outlined is a simple assistant that "knows how to," via caller-provided functions:
+Here, outlined is a simple agent that "knows how to," via caller-provided functions:
 
 1. Get the user's favorite city
 1. Get a nickname for a given city
@@ -242,7 +243,7 @@ FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
         new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
 ```
 
-With the functions defined in their appropriate tools, an assistant can be now created that has those tools enabled:
+With the functions defined in their appropriate tools, an agent can be now created that has those tools enabled:
 
 ```C# Snippet:FunctionsCreateAgentWithFunctionTools
 // note: parallel function calling is only supported with newer models like gpt-4-1106-preview
@@ -257,7 +258,7 @@ Response<Agent> agentResponse = await client.CreateAgentAsync(
 Agent agent = agentResponse.Value;
 ```
 
-If the assistant calls tools, the calling code will need to resolve `ToolCall` instances into matching
+If the agent calls tools, the calling code will need to resolve `ToolCall` instances into matching
 `ToolOutput` instances. For convenience, a basic example is extracted here:
 
 ```C# Snippet:FunctionsHandleFunctionCalls
@@ -316,27 +317,21 @@ while (runResponse.Value.Status == RunStatus.Queued
     || runResponse.Value.Status == RunStatus.InProgress);
 ```
 
-Note that, when using supported models, the assistant may request that several functions be called in parallel. Older
-models may only call one function at a time.
-
-Once all needed function calls have been resolved, the run will proceed normally and the completed messages on the
-thread will contain model output supplemented by the provided function tool outputs.
-
 ## Troubleshooting
 
-When you interact with Azure OpenAI using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][openai_rest] requests.
+When you interact with Azure AI Projects using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for REST API requests.
 
-For example, if you try to create a client using an endpoint that doesn't match your Azure OpenAI Resource endpoint, a `404` error is returned, indicating `Resource Not Found`.
+For example, if you try to create a client using an endpoint that doesn't match your Azure AI Resource endpoint, a `404` error is returned, indicating `Resource Not Found`.
 
 ## Next steps
 
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
+* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/tests/samples` directory.
 * If appropriate, point users to other packages that might be useful.
 * If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
 
 ## Contributing
 
-See the [Azure SDK CONTRIBUTING.md][openai_contrib] for details on building, testing, and contributing to this library.
+See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building, testing, and contributing to this library.
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
@@ -347,18 +342,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
-[msdocs_openai_completion]: https://learn.microsoft.com/azure/cognitive-services/openai/how-to/completions
-[msdocs_openai_embedding]: https://learn.microsoft.com/azure/cognitive-services/openai/concepts/understand-embeddings
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
-[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-[openai_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/src/Generated/OpenAIClient.cs
-[openai_rest]: https://learn.microsoft.com/azure/cognitive-services/openai/reference
-[azure_openai_completions_docs]: https://learn.microsoft.com/azure/cognitive-services/openai/how-to/completions
-[azure_openai_embeddings_docs]: https://learn.microsoft.com/azure/cognitive-services/openai/concepts/understand-embeddings
-[openai_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
+[aiprojects_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/openai/Azure.AI.OpenAI/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/ai/Azure.AI.Projects/README.png)
