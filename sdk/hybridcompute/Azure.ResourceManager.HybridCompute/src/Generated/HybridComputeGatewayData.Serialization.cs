@@ -17,11 +17,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    public partial class GatewayData : IUtf8JsonSerializable, IJsonModel<GatewayData>
+    public partial class HybridComputeGatewayData : IUtf8JsonSerializable, IJsonModel<HybridComputeGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeGatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeGatewayData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.HybridCompute
             writer.WriteEndObject();
         }
 
-        GatewayData IJsonModel<GatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HybridComputeGatewayData IJsonModel<HybridComputeGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeGatewayData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGatewayData(document.RootElement, options);
+            return DeserializeHybridComputeGatewayData(document.RootElement, options);
         }
 
-        internal static GatewayData DeserializeGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HybridComputeGatewayData DeserializeHybridComputeGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HybridCompute
             SystemData systemData = default;
             HybridComputeProvisioningState? provisioningState = default;
             string gatewayId = default;
-            GatewayType? gatewayType = default;
+            HybridComputeGatewayType? gatewayType = default;
             string gatewayEndpoint = default;
             IList<string> allowedFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            gatewayType = new GatewayType(property0.Value.GetString());
+                            gatewayType = new HybridComputeGatewayType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("gatewayEndpoint"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GatewayData(
+            return new HybridComputeGatewayData(
                 id,
                 name,
                 type,
@@ -459,9 +459,9 @@ namespace Azure.ResourceManager.HybridCompute
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<GatewayData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HybridComputeGatewayData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -470,26 +470,26 @@ namespace Azure.ResourceManager.HybridCompute
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeGatewayData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GatewayData IPersistableModel<GatewayData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HybridComputeGatewayData IPersistableModel<HybridComputeGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeGatewayData(document.RootElement, options);
+                        return DeserializeHybridComputeGatewayData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeGatewayData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

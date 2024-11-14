@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            IReadOnlyList<GatewayData> value = default;
+            IReadOnlyList<HybridComputeGatewayData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<GatewayData> array = new List<GatewayData>();
+                    List<HybridComputeGatewayData> array = new List<HybridComputeGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GatewayData.DeserializeGatewayData(item, options));
+                        array.Add(HybridComputeGatewayData.DeserializeHybridComputeGatewayData(item, options));
                     }
                     value = array;
                     continue;

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            IReadOnlyList<Disk> disks = default;
+            IReadOnlyList<HybridComputeDisk> disks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<Disk> array = new List<Disk>();
+                    List<HybridComputeDisk> array = new List<HybridComputeDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Disk.DeserializeDisk(item, options));
+                        array.Add(HybridComputeDisk.DeserializeHybridComputeDisk(item, options));
                     }
                     disks = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageProfile(disks ?? new ChangeTrackingList<Disk>(), serializedAdditionalRawData);
+            return new StorageProfile(disks ?? new ChangeTrackingList<HybridComputeDisk>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

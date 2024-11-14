@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         internal StorageProfile()
         {
-            Disks = new ChangeTrackingList<Disk>();
+            Disks = new ChangeTrackingList<HybridComputeDisk>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         /// <param name="disks"> The disks on the machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageProfile(IReadOnlyList<Disk> disks, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageProfile(IReadOnlyList<HybridComputeDisk> disks, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Disks = disks;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The disks on the machine. </summary>
         [WirePath("disks")]
-        public IReadOnlyList<Disk> Disks { get; }
+        public IReadOnlyList<HybridComputeDisk> Disks { get; }
     }
 }

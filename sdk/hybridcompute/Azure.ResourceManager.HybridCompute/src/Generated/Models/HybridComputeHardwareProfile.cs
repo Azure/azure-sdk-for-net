@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes the hardware of the machine. </summary>
-    public partial class HardwareProfile
+    public partial class HybridComputeHardwareProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
-        internal HardwareProfile()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeHardwareProfile"/>. </summary>
+        internal HybridComputeHardwareProfile()
         {
-            Processors = new ChangeTrackingList<Processor>();
+            Processors = new ChangeTrackingList<HybridComputeProcessor>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeHardwareProfile"/>. </summary>
         /// <param name="totalPhysicalMemoryInBytes"> The total physical memory on the machine. </param>
         /// <param name="numberOfCpuSockets"> The total number of CPU sockets available on the machine. </param>
         /// <param name="processors"> The physical processors of the machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HardwareProfile(long? totalPhysicalMemoryInBytes, int? numberOfCpuSockets, IReadOnlyList<Processor> processors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridComputeHardwareProfile(long? totalPhysicalMemoryInBytes, int? numberOfCpuSockets, IReadOnlyList<HybridComputeProcessor> processors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TotalPhysicalMemoryInBytes = totalPhysicalMemoryInBytes;
             NumberOfCpuSockets = numberOfCpuSockets;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public int? NumberOfCpuSockets { get; }
         /// <summary> The physical processors of the machine. </summary>
         [WirePath("processors")]
-        public IReadOnlyList<Processor> Processors { get; }
+        public IReadOnlyList<HybridComputeProcessor> Processors { get; }
     }
 }

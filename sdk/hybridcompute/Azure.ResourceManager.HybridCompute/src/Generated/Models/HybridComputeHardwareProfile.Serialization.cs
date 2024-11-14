@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HardwareProfile : IUtf8JsonSerializable, IJsonModel<HardwareProfile>
+    public partial class HybridComputeHardwareProfile : IUtf8JsonSerializable, IJsonModel<HybridComputeHardwareProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwareProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeHardwareProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HardwareProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeHardwareProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwareProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeHardwareProfile)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(TotalPhysicalMemoryInBytes))
@@ -73,19 +73,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
         }
 
-        HardwareProfile IJsonModel<HardwareProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HybridComputeHardwareProfile IJsonModel<HybridComputeHardwareProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwareProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeHardwareProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHardwareProfile(document.RootElement, options);
+            return DeserializeHybridComputeHardwareProfile(document.RootElement, options);
         }
 
-        internal static HardwareProfile DeserializeHardwareProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HybridComputeHardwareProfile DeserializeHybridComputeHardwareProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             long? totalPhysicalMemoryInBytes = default;
             int? numberOfCpuSockets = default;
-            IReadOnlyList<Processor> processors = default;
+            IReadOnlyList<HybridComputeProcessor> processors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<Processor> array = new List<Processor>();
+                    List<HybridComputeProcessor> array = new List<HybridComputeProcessor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Processor.DeserializeProcessor(item, options));
+                        array.Add(HybridComputeProcessor.DeserializeHybridComputeProcessor(item, options));
                     }
                     processors = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HardwareProfile(totalPhysicalMemoryInBytes, numberOfCpuSockets, processors ?? new ChangeTrackingList<Processor>(), serializedAdditionalRawData);
+            return new HybridComputeHardwareProfile(totalPhysicalMemoryInBytes, numberOfCpuSockets, processors ?? new ChangeTrackingList<HybridComputeProcessor>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -209,9 +209,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<HardwareProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HybridComputeHardwareProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -220,26 +220,26 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(HardwareProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeHardwareProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HardwareProfile IPersistableModel<HardwareProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HybridComputeHardwareProfile IPersistableModel<HybridComputeHardwareProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHardwareProfile(document.RootElement, options);
+                        return DeserializeHybridComputeHardwareProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HardwareProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeHardwareProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HardwareProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeHardwareProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

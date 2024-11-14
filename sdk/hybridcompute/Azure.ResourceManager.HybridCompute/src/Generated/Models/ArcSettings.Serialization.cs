@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class Settings : IUtf8JsonSerializable, IJsonModel<Settings>
+    public partial class ArcSettings : IUtf8JsonSerializable, IJsonModel<ArcSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Settings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Settings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArcSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Settings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArcSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Settings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcSettings)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
         }
 
-        Settings IJsonModel<Settings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ArcSettings IJsonModel<ArcSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Settings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArcSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Settings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSettings(document.RootElement, options);
+            return DeserializeArcSettings(document.RootElement, options);
         }
 
-        internal static Settings DeserializeSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ArcSettings DeserializeArcSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Settings(
+            return new ArcSettings(
                 id,
                 name,
                 type,
@@ -271,9 +271,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<Settings>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ArcSettings>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Settings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArcSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -282,26 +282,26 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(Settings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Settings IPersistableModel<Settings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ArcSettings IPersistableModel<ArcSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Settings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArcSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSettings(document.RootElement, options);
+                        return DeserializeArcSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Settings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Settings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArcSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

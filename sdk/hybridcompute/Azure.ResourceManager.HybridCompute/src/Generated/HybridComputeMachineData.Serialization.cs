@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.HybridCompute
             HybridComputeLocation locationData = default;
             AgentConfiguration agentConfiguration = default;
             HybridComputeServiceStatuses serviceStatuses = default;
-            HardwareProfile hardwareProfile = default;
+            HybridComputeHardwareProfile hardwareProfile = default;
             StorageProfile storageProfile = default;
             FirmwareProfile firmwareProfile = default;
             HybridComputeCloudMetadata cloudMetadata = default;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property0.Value, options);
+                            hardwareProfile = HybridComputeHardwareProfile.DeserializeHybridComputeHardwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))

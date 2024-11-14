@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class Processor : IUtf8JsonSerializable, IJsonModel<Processor>
+    public partial class HybridComputeProcessor : IUtf8JsonSerializable, IJsonModel<HybridComputeProcessor>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Processor>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeProcessor>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Processor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeProcessor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Processor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProcessor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Processor)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeProcessor)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Name))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
         }
 
-        Processor IJsonModel<Processor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HybridComputeProcessor IJsonModel<HybridComputeProcessor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Processor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProcessor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Processor)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeProcessor)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProcessor(document.RootElement, options);
+            return DeserializeHybridComputeProcessor(document.RootElement, options);
         }
 
-        internal static Processor DeserializeProcessor(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HybridComputeProcessor DeserializeHybridComputeProcessor(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Processor(name, numberOfCores, serializedAdditionalRawData);
+            return new HybridComputeProcessor(name, numberOfCores, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<Processor>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HybridComputeProcessor>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Processor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProcessor>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -175,26 +175,26 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(Processor)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeProcessor)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Processor IPersistableModel<Processor>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HybridComputeProcessor IPersistableModel<HybridComputeProcessor>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Processor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProcessor>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProcessor(document.RootElement, options);
+                        return DeserializeHybridComputeProcessor(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Processor)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeProcessor)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Processor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeProcessor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

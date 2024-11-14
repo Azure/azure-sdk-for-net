@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             string baseResourceType = "machines";
             string baseResourceName = "testMachine";
             string settingsResourceName = "default";
-            Settings settings = new Settings()
+            ArcSettings arcSettings = new ArcSettings()
             {
                 GatewayResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/hybridRG/providers/Microsoft.HybridCompute/gateways/newGateway"),
             };
-            Settings result = await resourceGroupResource.UpdateSettingAsync(baseProvider, baseResourceType, baseResourceName, settingsResourceName, settings);
+            ArcSettings result = await resourceGroupResource.UpdateSettingAsync(baseProvider, baseResourceType, baseResourceName, settingsResourceName, arcSettings);
 
             Console.WriteLine($"Succeeded: {result}");
         }

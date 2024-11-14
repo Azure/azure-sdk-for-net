@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> Describes the firmware of the machine. </summary>
-    public partial class Processor
+    /// <summary> The ArcSettings. </summary>
+    public partial class ArcSettings : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +47,31 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Processor"/>. </summary>
-        internal Processor()
+        /// <summary> Initializes a new instance of <see cref="ArcSettings"/>. </summary>
+        public ArcSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Processor"/>. </summary>
-        /// <param name="name"> The name of the processor. </param>
-        /// <param name="numberOfCores"> The total number of physical cores on the processor. </param>
+        /// <summary> Initializes a new instance of <see cref="ArcSettings"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tenantId"> Azure resource tenant Id. </param>
+        /// <param name="gatewayResourceId"> Associated Gateway Resource Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Processor(string name, int? numberOfCores, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArcSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, ResourceIdentifier gatewayResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Name = name;
-            NumberOfCores = numberOfCores;
+            TenantId = tenantId;
+            GatewayResourceId = gatewayResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the processor. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-        /// <summary> The total number of physical cores on the processor. </summary>
-        [WirePath("numberOfCores")]
-        public int? NumberOfCores { get; }
+        /// <summary> Azure resource tenant Id. </summary>
+        [WirePath("properties.tenantId")]
+        public Guid? TenantId { get; }
+        /// <summary> Associated Gateway Resource Id. </summary>
+        [WirePath("properties.gatewayResourceId")]
+        public ResourceIdentifier GatewayResourceId { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes a disk on the machine. </summary>
-    public partial class Disk
+    public partial class HybridComputeDisk
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Disk"/>. </summary>
-        internal Disk()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeDisk"/>. </summary>
+        internal HybridComputeDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Disk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeDisk"/>. </summary>
         /// <param name="path"> The path of the disk. </param>
         /// <param name="diskType"> The type of the disk. </param>
         /// <param name="generatedId"> The generated ID of the disk. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="maxSizeInBytes"> The size of the disk, in bytes. </param>
         /// <param name="usedSpaceInBytes"> The amount of space used on the disk, in bytes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Disk(string path, string diskType, string generatedId, string id, string name, long? maxSizeInBytes, long? usedSpaceInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridComputeDisk(string path, string diskType, string generatedId, string id, string name, long? maxSizeInBytes, long? usedSpaceInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             DiskType = diskType;

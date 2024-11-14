@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class Disk : IUtf8JsonSerializable, IJsonModel<Disk>
+    public partial class HybridComputeDisk : IUtf8JsonSerializable, IJsonModel<HybridComputeDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Disk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Disk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Disk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Disk)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeDisk)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Path))
@@ -87,19 +87,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
         }
 
-        Disk IJsonModel<Disk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HybridComputeDisk IJsonModel<HybridComputeDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Disk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Disk)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDisk(document.RootElement, options);
+            return DeserializeHybridComputeDisk(document.RootElement, options);
         }
 
-        internal static Disk DeserializeDisk(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HybridComputeDisk DeserializeHybridComputeDisk(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Disk(
+            return new HybridComputeDisk(
                 path,
                 diskType,
                 generatedId,
@@ -338,9 +338,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<Disk>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HybridComputeDisk>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Disk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeDisk>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -349,26 +349,26 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(Disk)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Disk IPersistableModel<Disk>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HybridComputeDisk IPersistableModel<HybridComputeDisk>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Disk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeDisk>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDisk(document.RootElement, options);
+                        return DeserializeHybridComputeDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Disk)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeDisk)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Disk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

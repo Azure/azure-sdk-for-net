@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="detectedProperties"> Detected properties from the machine. </param>
         /// <param name="networkInterfaces"> Information about the network the machine is on. </param>
         /// <returns> A new <see cref="HybridCompute.HybridComputeMachineData"/> instance for mocking. </returns>
-        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<HybridComputeMachineExtensionData> resources = null, ManagedServiceIdentity identity = null, ArcKindEnum? kind = null, HybridComputeLocation locationData = null, AgentConfiguration agentConfiguration = null, HybridComputeServiceStatuses serviceStatuses = null, HardwareProfile hardwareProfile = null, IEnumerable<Disk> storageDisks = null, FirmwareProfile firmwareProfile = null, string cloudMetadataProvider = null, AgentUpgrade agentUpgrade = null, HybridComputeOSProfile osProfile = null, LicenseProfileMachineInstanceView licenseProfile = null, string provisioningState = null, HybridComputeStatusType? status = null, DateTimeOffset? lastStatusChange = null, IEnumerable<ResponseError> errorDetails = null, string agentVersion = null, Guid? vmId = null, string displayName = null, string machineFqdn = null, string clientPublicKey = null, string osName = null, string osVersion = null, string osType = null, Guid? vmUuid = null, IEnumerable<MachineExtensionInstanceView> extensions = null, string osSku = null, string osEdition = null, string domainName = null, string adFqdn = null, string dnsFqdn = null, ResourceIdentifier privateLinkScopeResourceId = null, ResourceIdentifier parentClusterResourceId = null, string msSqlDiscovered = null, IReadOnlyDictionary<string, string> detectedProperties = null, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = null)
+        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<HybridComputeMachineExtensionData> resources = null, ManagedServiceIdentity identity = null, ArcKindEnum? kind = null, HybridComputeLocation locationData = null, AgentConfiguration agentConfiguration = null, HybridComputeServiceStatuses serviceStatuses = null, HybridComputeHardwareProfile hardwareProfile = null, IEnumerable<HybridComputeDisk> storageDisks = null, FirmwareProfile firmwareProfile = null, string cloudMetadataProvider = null, AgentUpgrade agentUpgrade = null, HybridComputeOSProfile osProfile = null, LicenseProfileMachineInstanceView licenseProfile = null, string provisioningState = null, HybridComputeStatusType? status = null, DateTimeOffset? lastStatusChange = null, IEnumerable<ResponseError> errorDetails = null, string agentVersion = null, Guid? vmId = null, string displayName = null, string machineFqdn = null, string clientPublicKey = null, string osName = null, string osVersion = null, string osType = null, Guid? vmUuid = null, IEnumerable<MachineExtensionInstanceView> extensions = null, string osSku = null, string osEdition = null, string domainName = null, string adFqdn = null, string dnsFqdn = null, ResourceIdentifier privateLinkScopeResourceId = null, ResourceIdentifier parentClusterResourceId = null, string msSqlDiscovered = null, IReadOnlyDictionary<string, string> detectedProperties = null, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = null)
         {
             tags ??= new Dictionary<string, string>();
             resources ??= new List<HybridComputeMachineExtensionData>();
-            storageDisks ??= new List<Disk>();
+            storageDisks ??= new List<HybridComputeDisk>();
             errorDetails ??= new List<ResponseError>();
             extensions ??= new List<MachineExtensionInstanceView>();
             detectedProperties ??= new Dictionary<string, string>();
@@ -213,28 +213,28 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeConfigurationExtension(publisher, configurationExtensionType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HardwareProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeHardwareProfile"/>. </summary>
         /// <param name="totalPhysicalMemoryInBytes"> The total physical memory on the machine. </param>
         /// <param name="numberOfCpuSockets"> The total number of CPU sockets available on the machine. </param>
         /// <param name="processors"> The physical processors of the machine. </param>
-        /// <returns> A new <see cref="Models.HardwareProfile"/> instance for mocking. </returns>
-        public static HardwareProfile HardwareProfile(long? totalPhysicalMemoryInBytes = null, int? numberOfCpuSockets = null, IEnumerable<Processor> processors = null)
+        /// <returns> A new <see cref="Models.HybridComputeHardwareProfile"/> instance for mocking. </returns>
+        public static HybridComputeHardwareProfile HybridComputeHardwareProfile(long? totalPhysicalMemoryInBytes = null, int? numberOfCpuSockets = null, IEnumerable<HybridComputeProcessor> processors = null)
         {
-            processors ??= new List<Processor>();
+            processors ??= new List<HybridComputeProcessor>();
 
-            return new HardwareProfile(totalPhysicalMemoryInBytes, numberOfCpuSockets, processors?.ToList(), serializedAdditionalRawData: null);
+            return new HybridComputeHardwareProfile(totalPhysicalMemoryInBytes, numberOfCpuSockets, processors?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Processor"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeProcessor"/>. </summary>
         /// <param name="name"> The name of the processor. </param>
         /// <param name="numberOfCores"> The total number of physical cores on the processor. </param>
-        /// <returns> A new <see cref="Models.Processor"/> instance for mocking. </returns>
-        public static Processor Processor(string name = null, int? numberOfCores = null)
+        /// <returns> A new <see cref="Models.HybridComputeProcessor"/> instance for mocking. </returns>
+        public static HybridComputeProcessor HybridComputeProcessor(string name = null, int? numberOfCores = null)
         {
-            return new Processor(name, numberOfCores, serializedAdditionalRawData: null);
+            return new HybridComputeProcessor(name, numberOfCores, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Disk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeDisk"/>. </summary>
         /// <param name="path"> The path of the disk. </param>
         /// <param name="diskType"> The type of the disk. </param>
         /// <param name="generatedId"> The generated ID of the disk. </param>
@@ -242,10 +242,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="name"> The name of the disk. </param>
         /// <param name="maxSizeInBytes"> The size of the disk, in bytes. </param>
         /// <param name="usedSpaceInBytes"> The amount of space used on the disk, in bytes. </param>
-        /// <returns> A new <see cref="Models.Disk"/> instance for mocking. </returns>
-        public static Disk Disk(string path = null, string diskType = null, string generatedId = null, string id = null, string name = null, long? maxSizeInBytes = null, long? usedSpaceInBytes = null)
+        /// <returns> A new <see cref="Models.HybridComputeDisk"/> instance for mocking. </returns>
+        public static HybridComputeDisk HybridComputeDisk(string path = null, string diskType = null, string generatedId = null, string id = null, string name = null, long? maxSizeInBytes = null, long? usedSpaceInBytes = null)
         {
-            return new Disk(
+            return new HybridComputeDisk(
                 path,
                 diskType,
                 generatedId,
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridCompute.GatewayData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -823,13 +823,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="gatewayType"> The type of the Gateway resource. </param>
         /// <param name="gatewayEndpoint"> The endpoint fqdn for the Gateway. </param>
         /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
-        /// <returns> A new <see cref="HybridCompute.GatewayData"/> instance for mocking. </returns>
-        public static GatewayData GatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, string gatewayId = null, GatewayType? gatewayType = null, string gatewayEndpoint = null, IEnumerable<string> allowedFeatures = null)
+        /// <returns> A new <see cref="HybridCompute.HybridComputeGatewayData"/> instance for mocking. </returns>
+        public static HybridComputeGatewayData HybridComputeGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, string gatewayId = null, HybridComputeGatewayType? gatewayType = null, string gatewayEndpoint = null, IEnumerable<string> allowedFeatures = null)
         {
             tags ??= new Dictionary<string, string>();
             allowedFeatures ??= new List<string>();
 
-            return new GatewayData(
+            return new HybridComputeGatewayData(
                 id,
                 name,
                 resourceType,
@@ -844,17 +844,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Settings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArcSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tenantId"> Azure resource tenant Id. </param>
         /// <param name="gatewayResourceId"> Associated Gateway Resource Id. </param>
-        /// <returns> A new <see cref="Models.Settings"/> instance for mocking. </returns>
-        public static Settings Settings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, ResourceIdentifier gatewayResourceId = null)
+        /// <returns> A new <see cref="Models.ArcSettings"/> instance for mocking. </returns>
+        public static ArcSettings ArcSettings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, ResourceIdentifier gatewayResourceId = null)
         {
-            return new Settings(
+            return new ArcSettings(
                 id,
                 name,
                 resourceType,
