@@ -3,9 +3,8 @@
 
 #nullable enable
 
-using Azure.Provisioning.CloudMachine;
-using Azure.Provisioning.CloudMachine.KeyVault;
-using Azure.Provisioning.CloudMachine.OpenAI;
+using Azure.CloudMachine.KeyVault;
+using Azure.CloudMachine.OpenAI;
 using NUnit.Framework;
 
 namespace Azure.CloudMachine.Tests;

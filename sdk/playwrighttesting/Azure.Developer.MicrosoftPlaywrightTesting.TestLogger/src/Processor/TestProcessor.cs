@@ -5,14 +5,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
-using Azure.Storage.Blobs;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
@@ -27,8 +24,8 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         private readonly ICloudRunErrorParser _cloudRunErrorParser;
         private readonly IServiceClient _serviceClient;
         private readonly IConsoleWriter _consoleWriter;
-        private readonly CIInfo _cIInfo;
-        private readonly CloudRunMetadata _cloudRunMetadata;
+        internal readonly CIInfo _cIInfo;
+        internal readonly CloudRunMetadata _cloudRunMetadata;
         private readonly IBlobService _blobService;
 
         // Test Metadata
@@ -174,7 +171,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                                 // Upload rawResult to blob storage using sasUri
                                 var rawTestResultJson = JsonSerializer.Serialize(rawResult);
                                 var filePath = $"{testResult.TestExecutionId}/rawTestResult.json";
-                                _blobService.UploadBufferAsync(sasUri!.Uri!, rawTestResultJson, filePath);
+                                _blobService.UploadBuffer(sasUri!.Uri!, rawTestResultJson, filePath);
                             }
                             else
                             {

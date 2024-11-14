@@ -15,10 +15,13 @@ namespace BasicTypeSpec
     public partial class BasicTypeSpecClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
+        private static ResponseClassifier _pipelineMessageClassifier201;
         private static ResponseClassifier _pipelineMessageClassifier204;
         private static Classifier2xxAnd4xx _pipelineMessageClassifier2xxAnd4xx;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+
+        private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 = new StatusCodeClassifier(stackalloc ushort[] { 201 });
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
@@ -26,10 +29,9 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateSayHiRequest(string headParameter, string queryParameter, string optionalQuery, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/hello", false);
@@ -39,251 +41,235 @@ namespace BasicTypeSpec
                 uri.AppendQuery("optionalQuery", optionalQuery, true);
             }
             request.Uri = uri;
-            request.Headers.Add("head-parameter", headParameter);
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("head-parameter", headParameter);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateHelloAgainRequest(string p2, string p1, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/againHi/", false);
             uri.AppendPath(p2, true);
             request.Uri = uri;
-            request.Headers.Add("p1", p1);
-            request.Headers.Add("Content-Type", "text/plain");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("p1", p1);
+            request.Headers.SetValue("Content-Type", "text/plain");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
         internal HttpMessage CreateNoContentTypeRequest(string p2, string p1, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/noContentType/", false);
             uri.AppendPath(p2, true);
             request.Uri = uri;
-            request.Headers.Add("p1", p1);
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("p1", p1);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
         internal HttpMessage CreateHelloDemo2Request(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/demoHi", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateCreateLiteralRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("POST");
+            request.Method = RequestMethod.Post;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/literal", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
         internal HttpMessage CreateHelloLiteralRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/helloLiteral/", false);
             uri.AppendPath(123.ToString(), true);
             uri.AppendQuery("p3", TypeFormatters.ConvertToString(true, null), true);
             request.Uri = uri;
-            request.Headers.Add("p1", "test");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("p1", "test");
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateTopActionRequest(DateTimeOffset action, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/top/", false);
             uri.AppendPath(action.ToString("O"), true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateTopAction2Request(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/top2", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreatePatchActionRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("PATCH");
+            request.Method = RequestMethod.Patch;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/patch", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
         internal HttpMessage CreateAnonymousBodyRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("POST");
+            request.Method = RequestMethod.Post;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/anonymousBody", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
         internal HttpMessage CreateFriendlyModelRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("POST");
+            request.Method = RequestMethod.Post;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/friendlyName", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
         internal HttpMessage CreateAddTimeHeaderRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier204;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             request.Uri = uri;
-            request.Headers.Add("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, "R"));
+            request.Headers.SetValue("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, "R"));
             return message;
         }
 
         internal HttpMessage CreateProjectedNameModelRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("POST");
+            request.Method = RequestMethod.Post;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projectedName", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
         internal HttpMessage CreateReturnsAnonymousModelRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("POST");
+            request.Method = RequestMethod.Post;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/returnsAnonymousModel", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateGetUnknownValueRequest(string accept, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/unknown-value", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", accept);
+            request.Headers.SetValue("Accept", accept);
             return message;
         }
 
         internal HttpMessage CreateInternalProtocolRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = new RequestMethod("POST");
+            request.Method = RequestMethod.Post;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/internalProtocol", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
         internal HttpMessage CreateStillConvenientRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier204;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stillConvenient", false);
@@ -293,10 +279,9 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateHeadAsBooleanRequest(string id, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier2xxAnd4xx;
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier2xxAnd4xx);
             Request request = message.Request;
-            request.Method = new RequestMethod("HEAD");
+            request.Method = RequestMethod.Head;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/headAsBoolean/", false);
