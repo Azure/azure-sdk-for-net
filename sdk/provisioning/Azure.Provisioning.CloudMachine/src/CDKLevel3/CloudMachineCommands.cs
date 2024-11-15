@@ -81,7 +81,7 @@ public class CloudMachineCommands
         {
             if (model.GetProperty("status").ValueEquals("succeeded"u8))
             {
-                JsonElement caps = model.GetProperty("capabilities");
+                JsonElement caps = model.GetProperty("capabilities"u8);
                 string? scenario = default;
                 if (caps.GetProperty("chat_completion"u8).GetBoolean() == true)
                 {

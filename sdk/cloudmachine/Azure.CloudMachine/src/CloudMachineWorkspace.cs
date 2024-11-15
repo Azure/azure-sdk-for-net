@@ -88,9 +88,9 @@ public class CloudMachineWorkspace : ClientWorkspace
             case "Azure.AI.OpenAI.AzureOpenAIClient":
                 return new ClientConnectionOptions(new($"https://{Id}.openai.azure.com"), Credential);
             case "OpenAI.Chat.ChatClient":
-                return new ClientConnectionOptions(Id);
+                return new ClientConnectionOptions($"{Id}_chat");
             case "OpenAI.Embeddings.EmbeddingClient":
-                return new ClientConnectionOptions($"{Id}-embedding");
+                return new ClientConnectionOptions($"{Id}_embedding");
             default:
                 throw new Exception($"unknown client {clientId}");
         }

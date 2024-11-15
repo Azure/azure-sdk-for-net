@@ -17,17 +17,14 @@ public class CloudMachineTests
         CloudMachineCommands.Execute(["-bicep"], (CloudMachineInfrastructure infrastructure) =>
         {
             infrastructure.AddFeature(new KeyVaultFeature());
-            infrastructure.AddFeature(new OpenAIFeature() // TODO: rework it such that models can be added as features
-            {
-                Chat = new AIModel("gpt-35-turbo", "0125"),
-                Embeddings = new AIModel("text-embedding-ada-002", "2")
-            });
-        });
+            infrastructure.AddFeature(new OpenAIModel("gpt-35-turbo", "0125"));
+            infrastructure.AddFeature(new OpenAIModel("text-embedding-ada-002", "2", AIModelKind.Embedding));
+        }, exitProcessIfHandled:false);
     }
 
     [Test]
     public void ListModels()
     {
-        CloudMachineCommands.Execute(["-ai", "chat"]);
+        CloudMachineCommands.Execute(["-ai", "chat"], exitProcessIfHandled: false);
     }
 }

@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
 using System;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.EventGrid;
@@ -12,14 +11,8 @@ using Azure.Provisioning.ServiceBus;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Primitives;
 using System.Collections.Generic;
-using System.ClientModel.TypeSpec;
 using Azure.Provisioning;
 using Azure.Provisioning.CloudMachine;
-using System.ClientModel.Primitives;
-using Azure.AI.OpenAI;
-using Azure.Core;
-using Azure.Identity;
-using System.Text.Json;
 
 namespace Azure.CloudMachine;
 
@@ -31,6 +24,7 @@ public class CloudMachineInfrastructure
 
     private Infrastructure _infrastructure = new Infrastructure("cm");
     private List<Provisionable> _resources = new();
+    public FeatureCollection Features { get; } = new();
     internal List<Type> Endpoints { get; } = new();
 
     // storage
@@ -219,9 +213,9 @@ public class CloudMachineInfrastructure
     {
         _resources.Add(resource);
     }
-    public void AddFeature(CloudMachineFeature resource)
+    public void AddFeature(CloudMachineFeature feature)
     {
-        resource.AddTo(this);
+        Features.Add(feature);
     }
 
     public void AddEndpoints<T>()
@@ -233,6 +227,8 @@ public class CloudMachineInfrastructure
 
     public ProvisioningPlan Build(ProvisioningBuildOptions? context = null)
     {
+        Features.AddTo(this);
+
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.
         // The Infrastructure location resolver will resolve unset Location properties to this parameter.
