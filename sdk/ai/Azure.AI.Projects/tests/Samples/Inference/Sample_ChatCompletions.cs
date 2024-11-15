@@ -12,6 +12,12 @@ namespace Azure.AI.Projects.Tests;
 
 public class Sample_ChatCompletions : SamplesBase<AIProjectsTestEnvironment>
 {
+    /*
+    Instructions:
+    1. If you are using a Serverless connection, you need to set the environment variable "USE_SERVERLESS_CONNECTION" to "true".
+    2. If this environment variable is not set, the default connection type (AzureAI services) will be used.
+    */
+
     [Test]
     public void ChatCompletions()
     {

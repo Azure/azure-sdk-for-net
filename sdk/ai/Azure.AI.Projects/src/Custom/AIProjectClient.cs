@@ -59,7 +59,13 @@ namespace Azure.AI.Projects
         private T InitializeInferenceClient<T>(Func<Uri, AzureKeyCredential, T> clientFactory)
         {
             var connectionsClient = GetConnectionsClient();
-            GetConnectionResponse connectionSecret = connectionsClient.GetDefaultConnection(ConnectionType.Serverless, true);
+
+            // Back-door way to access the old behavior where each AI model (non-OpenAI) was hosted on
+            // a separate "Serverless" connection. This is now deprecated.
+            bool useServerlessConnection = Environment.GetEnvironmentVariable("USE_SERVERLESS_CONNECTION") == "true";
+            ConnectionType connectionType = useServerlessConnection ? ConnectionType.Serverless : ConnectionType.AzureAIServices;
+
+            GetConnectionResponse connectionSecret = connectionsClient.GetDefaultConnection(connectionType, true);
 
             if (connectionSecret.Properties is InternalConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
             {
