@@ -7,8 +7,6 @@
 - Added a runName field which allows customers to customize the display name when using the reporting feature.
 - Added stacktrace into error list.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed a bug where the upload buffer and upload file methods were not awaited, which sometimes resulted in 404 errors in the web application.
