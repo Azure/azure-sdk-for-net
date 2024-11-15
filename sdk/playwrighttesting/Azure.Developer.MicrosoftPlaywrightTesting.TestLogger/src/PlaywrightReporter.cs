@@ -121,10 +121,19 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             return;
         }
         // setup entra rotation handlers
-        _playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, entraLifecycle: null, jsonWebTokenHandler: _jsonWebTokenHandler, credential: playwrightServiceSettings.AzureTokenCredential);
+        IFrameworkLogger frameworkLogger = new VSTestFrameworkLogger(_logger);
+        try
+        {
+            _playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, entraLifecycle: null, jsonWebTokenHandler: _jsonWebTokenHandler, credential: playwrightServiceSettings.AzureTokenCredential, frameworkLogger: frameworkLogger);
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-        _playwrightService.InitializeAsync().GetAwaiter().GetResult();
+            _playwrightService.InitializeAsync().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+        }
+        catch (Exception ex)
+        {
+            // We have checks for access token and base url in the next block, so we can ignore the exception here.
+            _logger.Error("Failed to initialize PlaywrightService: " + ex);
+        }
 
         var cloudRunId = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
         string baseUrl = _environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
