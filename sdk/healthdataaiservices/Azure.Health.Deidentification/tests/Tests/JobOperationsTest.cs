@@ -53,7 +53,7 @@ namespace Azure.Health.Deidentification.Tests
             Assert.IsNull(job.StartedAt);
             Assert.AreEqual(JobStatus.NotStarted, job.Status);
             Assert.IsNull(job.Error);
-            //Assert.IsNull(job.Customizations);
+            Assert.AreEqual("en-US", job.Customizations.SurrogateLocale);
             Assert.AreEqual(inputPrefix, job.SourceLocation.Prefix);
             Assert.IsTrue(job.SourceLocation.Location.ToString().Contains("blob.core.windows.net"));
             Assert.AreEqual(OUTPUT_FOLDER, job.TargetLocation.Prefix);
@@ -91,7 +91,7 @@ namespace Azure.Health.Deidentification.Tests
                     Assert.IsNull(jobs.Current.StartedAt);
                     Assert.AreEqual(JobStatus.NotStarted, jobs.Current.Status);
                     Assert.IsNull(jobs.Current.Error);
-                    //Assert.IsNull(jobs.Current.Customizations);
+                    Assert.AreEqual("en-US", job.Customizations.SurrogateLocale);
                     Assert.IsNull(jobs.Current.Summary);
                     Assert.AreEqual(inputPrefix, jobs.Current.SourceLocation.Prefix);
                     Assert.IsTrue(jobs.Current.SourceLocation.Location.ToString().Contains("blob.core.windows.net"));
