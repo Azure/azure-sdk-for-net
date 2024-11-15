@@ -41,7 +41,7 @@ namespace Azure.Health.Deidentification.Tests
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
-                Operation = OperationType.Surrogate
+                Operation = DeidentificationOperationType.Surrogate
             };
 
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Started, jobName, job)).Value;
@@ -51,7 +51,7 @@ namespace Azure.Health.Deidentification.Tests
             Assert.IsNotNull(job.CreatedAt);
             Assert.IsNotNull(job.LastUpdatedAt);
             Assert.IsNull(job.StartedAt);
-            Assert.AreEqual(JobStatus.NotStarted, job.Status);
+            Assert.AreEqual(DeidentificationJobStatus.NotStarted, job.Status);
             Assert.IsNull(job.Error);
             Assert.AreEqual("en-US", job.Customizations.SurrogateLocale);
             Assert.AreEqual(inputPrefix, job.SourceLocation.Prefix);
@@ -72,7 +72,7 @@ namespace Azure.Health.Deidentification.Tests
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
-                Operation = OperationType.Surrogate
+                Operation = DeidentificationOperationType.Surrogate
             };
 
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Started, jobName, job)).Value;
@@ -89,7 +89,7 @@ namespace Azure.Health.Deidentification.Tests
                     Assert.IsNotNull(jobs.Current.CreatedAt);
                     Assert.IsNotNull(jobs.Current.LastUpdatedAt);
                     Assert.IsNull(jobs.Current.StartedAt);
-                    Assert.AreEqual(JobStatus.NotStarted, jobs.Current.Status);
+                    Assert.AreEqual(DeidentificationJobStatus.NotStarted, jobs.Current.Status);
                     Assert.IsNull(jobs.Current.Error);
                     Assert.AreEqual("en-US", job.Customizations.SurrogateLocale);
                     Assert.IsNull(jobs.Current.Summary);
@@ -121,13 +121,13 @@ namespace Azure.Health.Deidentification.Tests
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
-                Operation = OperationType.Surrogate
+                Operation = DeidentificationOperationType.Surrogate
             };
 
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Completed, jobName, job)).Value;
             job = await client.GetJobAsync(jobName);
 
-            Assert.AreEqual(JobStatus.Succeeded, job.Status);
+            Assert.AreEqual(DeidentificationJobStatus.Succeeded, job.Status);
             Assert.IsNotNull(job.StartedAt);
             Assert.IsNotNull(job.Summary);
             Assert.AreEqual(expectedReportCount, job.Summary.Total);
@@ -138,16 +138,16 @@ namespace Azure.Health.Deidentification.Tests
             int numPages = 0;
             int maxPages = 10;
 
-            IAsyncEnumerable<Page<DocumentDetails>> pages = client.GetJobDocumentsAsync(jobName, maxPageSize).AsPages();
-            IAsyncEnumerator<Page<DocumentDetails>> enumerator = pages.GetAsyncEnumerator();
+            IAsyncEnumerable<Page<DeidentificationDocumentDetails>> pages = client.GetJobDocumentsAsync(jobName, maxPageSize).AsPages();
+            IAsyncEnumerator<Page<DeidentificationDocumentDetails>> enumerator = pages.GetAsyncEnumerator();
 
             while (numPages < maxPages && await enumerator.MoveNextAsync())
             {
-                Page<DocumentDetails> page = enumerator.Current;
+                Page<DeidentificationDocumentDetails> page = enumerator.Current;
                 numPages++;
 
                 Assert.IsTrue(page.Values.Count <= maxPageSize);
-                foreach (DocumentDetails report in page.Values)
+                foreach (DeidentificationDocumentDetails report in page.Values)
                 {
                     if (reportIds.Contains(report.Id))
                     {
@@ -179,7 +179,7 @@ namespace Azure.Health.Deidentification.Tests
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
-                Operation = OperationType.Surrogate
+                Operation = DeidentificationOperationType.Surrogate
             };
 
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Started, jobName, job)).Value;
@@ -192,13 +192,13 @@ namespace Azure.Health.Deidentification.Tests
                     await Task.Delay(1000);
                 }
             }
-            while (job.Status == JobStatus.NotStarted);
+            while (job.Status == DeidentificationJobStatus.NotStarted);
 
             string errorMessage = job.Error is not null ? job.Error.Message : "No Error Message Available.";
-            Assert.AreEqual(JobStatus.Running, job.Status, $"Job should be running. Error: {errorMessage}");
+            Assert.AreEqual(DeidentificationJobStatus.Running, job.Status, $"Job should be running. Error: {errorMessage}");
 
             job = await client.CancelJobAsync(jobName);
-            Assert.AreEqual(JobStatus.Canceled, job.Status);
+            Assert.AreEqual(DeidentificationJobStatus.Canceled, job.Status);
 
             await client.DeleteJobAsync(jobName);
 
@@ -219,14 +219,14 @@ namespace Azure.Health.Deidentification.Tests
             {
                 SourceLocation = new SourceStorageLocation(new Uri(disfunctionalStorageUri), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(disfunctionalStorageUri), OUTPUT_FOLDER),
-                Operation = OperationType.Surrogate
+                Operation = DeidentificationOperationType.Surrogate
             };
 
             Type expectedExceptionType = Mode == RecordedTestMode.Playback ? typeof(InvalidOperationException) : typeof(RequestFailedException);
             Assert.ThrowsAsync(expectedExceptionType, async () => await client.DeidentifyDocumentsAsync(WaitUntil.Completed, jobName, job));
             job = await client.GetJobAsync(jobName);
 
-            Assert.AreEqual(JobStatus.Failed, job.Status);
+            Assert.AreEqual(DeidentificationJobStatus.Failed, job.Status);
             Assert.IsNotNull(job.Error);
             Assert.AreEqual("StorageAccessDenied", job.Error.Code);
             Assert.IsTrue(job.Error.Message.Length > 10); // Arbitrary length choice.

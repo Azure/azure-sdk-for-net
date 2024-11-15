@@ -17,7 +17,7 @@ DeidentificationClient client = new(
 ## Build Request and Call Function
 
 ```C# Snippet:AzHealthDeidSample1Async_CreateRequest
-DeidentificationContent content = new("Hello, John!", OperationType.Surrogate, null, null);
+DeidentificationContent content = new("Hello, John!", DeidentificationOperationType.Surrogate, null, null);
 
 Response<DeidentificationResult> result = await client.DeidentifyTextAsync(content);
 string outputString = result.Value.OutputText;

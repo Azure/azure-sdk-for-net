@@ -26,9 +26,9 @@ namespace Azure.Health.Deidentification.Samples
             );
 
             #region Snippet:AzHealthDeidSample4Async_ListCompletedFiles
-            AsyncPageable<DocumentDetails> files = client.GetJobDocumentsAsync("job-name-1");
+            AsyncPageable<DeidentificationDocumentDetails> files = client.GetJobDocumentsAsync("job-name-1");
 
-            await foreach (DocumentDetails file in files)
+            await foreach (DeidentificationDocumentDetails file in files)
             {
                 Console.WriteLine($"File Name: {file.Input.Location}");
                 Console.WriteLine($"File Status: {file.Status}");

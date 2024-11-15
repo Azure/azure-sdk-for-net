@@ -26,9 +26,9 @@ namespace Azure.Health.Deidentification.Samples
             );
 
             #region Snippet:AzHealthDeidSample4_ListCompletedFiles
-            Pageable<DocumentDetails> files = client.GetJobDocuments("job-name-1");
+            Pageable<DeidentificationDocumentDetails> files = client.GetJobDocuments("job-name-1");
 
-            foreach (DocumentDetails file in files)
+            foreach (DeidentificationDocumentDetails file in files)
             {
                 Console.WriteLine($"File Name: {file.Input.Location}");
                 Console.WriteLine($"File Status: {file.Status}");
