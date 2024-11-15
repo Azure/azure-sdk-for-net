@@ -1,20 +1,24 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
+using System.Collections.Generic;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
+using Azure.Provisioning.Primitives;
 
 namespace Azure.CloudMachine.OpenAI;
 
 internal class OpenAIFeature : CloudMachineFeature
 {
-    public OpenAIFeature()
-    {
-    }
+    private List<OpenAIModel> _models = new List<OpenAIModel>();
 
-    public override void AddTo(CloudMachineInfrastructure cloudMachine)
+    public OpenAIFeature()
+    {}
+
+    protected override ProvisionableResource EmitCore(CloudMachineInfrastructure cloudMachine)
     {
-        CognitiveServicesAccount cognitiveServices = CreateAccount(cloudMachine);
+        CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(cloudMachine);
         cloudMachine.AddResource(cognitiveServices);
 
         cloudMachine.AddResource(cognitiveServices.CreateRoleAssignment(
@@ -22,9 +26,34 @@ internal class OpenAIFeature : CloudMachineFeature
             RoleManagementPrincipalType.User,
             cloudMachine.PrincipalIdParameter)
         );
+
+        Emited = cognitiveServices;
+
+        OpenAIModel? previous = null;
+        foreach (OpenAIModel model in _models)
+        {
+            model.Emit(cloudMachine);
+            if (previous != null)
+            {
+                model.Emited.DependsOn.Add(previous.Emited);
+            }
+            previous = model;
+        }
+
+        return cognitiveServices;
     }
 
-    internal CognitiveServicesAccount CreateAccount(CloudMachineInfrastructure cm)
+    internal void AddModel(OpenAIModel model)
+    {
+        if (model.Account!= null)
+        {
+            throw new InvalidOperationException("Model already added to an account");
+        }
+        model.Account = this;
+        _models.Add(model);
+    }
+
+    internal CognitiveServicesAccount CreateOpenAIAccount(CloudMachineInfrastructure cm)
     {
         return new("openai")
         {

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Provisioning.CloudMachine;
 
 namespace Azure.CloudMachine;
@@ -11,21 +12,18 @@ public class FeatureCollection
     private CloudMachineFeature[] _items = new CloudMachineFeature[4];
     private int _count;
 
-    public bool TryFind<T>(out T? found) where T: CloudMachineFeature
+    public IEnumerable<T> FindAll<T>() where T: CloudMachineFeature
     {
         for (int i = 0; i < _count; i++)
         {
             if (_items[i] is T item)
             {
-                found = item;
-                return true;
+                yield return item;
             }
         }
-        found = default;
-        return false;
     }
 
-    public void Add(CloudMachineFeature item)
+    internal void Add(CloudMachineFeature item)
     {
         if (_count == _items.Length)
         {
@@ -41,14 +39,14 @@ public class FeatureCollection
         }
     }
 
-    internal void AddTo(CloudMachineInfrastructure infrastructure)
+    internal void Emit(CloudMachineInfrastructure infrastructure)
     {
         int index = 0;
         while (true)
         {
             if (index >= _count) break;
             CloudMachineFeature feature = _items[index++];
-            feature.AddTo(infrastructure);
+            feature.Emit(infrastructure);
         }
     }
 }

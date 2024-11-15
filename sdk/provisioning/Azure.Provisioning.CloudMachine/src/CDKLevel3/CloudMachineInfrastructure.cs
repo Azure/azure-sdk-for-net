@@ -215,7 +215,7 @@ public class CloudMachineInfrastructure
     }
     public void AddFeature(CloudMachineFeature feature)
     {
-        Features.Add(feature);
+        feature.AddTo(this);
     }
 
     public void AddEndpoints<T>()
@@ -227,7 +227,7 @@ public class CloudMachineInfrastructure
 
     public ProvisioningPlan Build(ProvisioningBuildOptions? context = null)
     {
-        Features.AddTo(this);
+        Features.Emit(this);
 
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.

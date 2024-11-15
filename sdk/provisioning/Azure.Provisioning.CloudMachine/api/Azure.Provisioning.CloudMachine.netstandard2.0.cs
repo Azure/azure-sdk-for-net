@@ -43,8 +43,7 @@ namespace Azure.CloudMachine
     public partial class FeatureCollection
     {
         public FeatureCollection() { }
-        public void Add(Azure.Provisioning.CloudMachine.CloudMachineFeature item) { }
-        public bool TryFind<T>(out T? found) where T : Azure.Provisioning.CloudMachine.CloudMachineFeature { throw null; }
+        public System.Collections.Generic.IEnumerable<T> FindAll<T>() where T : Azure.Provisioning.CloudMachine.CloudMachineFeature { throw null; }
     }
 }
 namespace Azure.CloudMachine.KeyVault
@@ -53,7 +52,7 @@ namespace Azure.CloudMachine.KeyVault
     {
         public KeyVaultFeature(Azure.Provisioning.KeyVault.KeyVaultSku? sku = null) { }
         public Azure.Provisioning.KeyVault.KeyVaultSku Sku { get { throw null; } set { } }
-        public override void AddTo(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { throw null; }
     }
 }
 namespace Azure.CloudMachine.OpenAI
@@ -66,10 +65,10 @@ namespace Azure.CloudMachine.OpenAI
     public partial class OpenAIModel : Azure.Provisioning.CloudMachine.CloudMachineFeature
     {
         public OpenAIModel(string model, string modelVersion, Azure.CloudMachine.OpenAI.AIModelKind kind = Azure.CloudMachine.OpenAI.AIModelKind.Chat) { }
-        public Azure.Provisioning.CognitiveServices.CognitiveServicesAccount? CognitiveServices { get { throw null; } set { } }
         public string Model { get { throw null; } }
         public string ModelVersion { get { throw null; } }
         public override void AddTo(Azure.CloudMachine.CloudMachineInfrastructure cm) { }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure cm) { throw null; }
     }
 }
 namespace Azure.Provisioning.CloudMachine
@@ -78,7 +77,12 @@ namespace Azure.Provisioning.CloudMachine
     {
         protected CloudMachineFeature() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public abstract void AddTo(Azure.CloudMachine.CloudMachineInfrastructure cm);
+        public Azure.Provisioning.Primitives.ProvisionableResource Emited { get { throw null; } protected set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual void AddTo(Azure.CloudMachine.CloudMachineInfrastructure cm) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public void Emit(Azure.CloudMachine.CloudMachineInfrastructure cm) { }
+        protected abstract Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure cm);
     }
 }
 namespace System.ClientModel.TypeSpec

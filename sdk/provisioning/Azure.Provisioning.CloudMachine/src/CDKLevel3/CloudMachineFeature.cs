@@ -3,11 +3,25 @@
 
 using System.ComponentModel;
 using Azure.CloudMachine;
+using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CloudMachine;
 
 public abstract class CloudMachineFeature
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public abstract void AddTo(CloudMachineInfrastructure cm);
+    public virtual void AddTo(CloudMachineInfrastructure cm) => cm.Features.Add(this);
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void Emit(CloudMachineInfrastructure cm)
+    {
+        if (Emited != null) return;
+        ProvisionableResource provisionable = EmitCore(cm);
+        Emited = provisionable;
+    }
+
+    protected abstract ProvisionableResource EmitCore(CloudMachineInfrastructure cm);
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public ProvisionableResource Emited { get; protected set; } = default!;
 }
