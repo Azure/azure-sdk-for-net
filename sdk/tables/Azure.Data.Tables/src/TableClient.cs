@@ -1044,10 +1044,10 @@ namespace Azure.Data.Tables
         /// <para>
         /// The following string comparison methods are supported as part of a filter expression:
         /// <list type="bullet">
-        /// <item><see cref="string.Equals(string)"/></item>
-        /// <item><see cref="string.Equals(string, string)"/></item>
-        /// <item><see cref="string.CompareTo(string)"/></item>
-        /// <item><see cref="string.Compare(string, string)"/></item>
+        /// <item><description><see cref="string.Equals(string)"/></description></item>
+        /// <item><description><see cref="string.Equals(string, string)"/></description></item>
+        /// <item><description><see cref="string.CompareTo(string)"/></description></item>
+        /// <item><description><see cref="string.Compare(string, string)"/></description></item>
         /// </list>
         /// </para>
         /// </param>
@@ -1091,10 +1091,10 @@ namespace Azure.Data.Tables
         /// <para>
         /// The following string comparison methods are supported as part of a filter expression:
         /// <list type="bullet">
-        /// <item><see cref="string.Equals(string)"/></item>
-        /// <item><see cref="string.Equals(string, string)"/></item>
-        /// <item><see cref="string.CompareTo(string)"/></item>
-        /// <item><see cref="string.Compare(string, string)"/></item>
+        /// <item><description><see cref="string.Equals(string)"/></description></item>
+        /// <item><description><see cref="string.Equals(string, string)"/></description></item>
+        /// <item><description><see cref="string.CompareTo(string)"/></description></item>
+        /// <item><description><see cref="string.Compare(string, string)"/></description></item>
         /// </list>
         /// </para>
         /// </param>
@@ -1517,10 +1517,10 @@ namespace Azure.Data.Tables
         /// <para>
         /// The following string comparison methods are supported as part of a filter expression:
         /// <list type="bullet">
-        /// <item><see cref="string.Equals(string)"/></item>
-        /// <item><see cref="string.Equals(string, string)"/></item>
-        /// <item><see cref="string.CompareTo(string)"/></item>
-        /// <item><see cref="string.Compare(string, string)"/></item>
+        /// <item><description><see cref="string.Equals(string)"/></description></item>
+        /// <item><description><see cref="string.Equals(string, string)"/></description></item>
+        /// <item><description><see cref="string.CompareTo(string)"/></description></item>
+        /// <item><description><see cref="string.Compare(string, string)"/></description></item>
         /// </list>
         /// </para>
         /// </param>
