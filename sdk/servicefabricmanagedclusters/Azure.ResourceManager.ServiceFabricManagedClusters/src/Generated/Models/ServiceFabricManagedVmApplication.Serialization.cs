@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class VmApplication : IUtf8JsonSerializable, IJsonModel<VmApplication>
+    public partial class ServiceFabricManagedVmApplication : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedVmApplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmApplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedVmApplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VmApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceFabricManagedVmApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmApplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedVmApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmApplication)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedVmApplication)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ConfigurationReference))
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        VmApplication IJsonModel<VmApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServiceFabricManagedVmApplication IJsonModel<ServiceFabricManagedVmApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmApplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedVmApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmApplication)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedVmApplication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVmApplication(document.RootElement, options);
+            return DeserializeServiceFabricManagedVmApplication(document.RootElement, options);
         }
 
-        internal static VmApplication DeserializeVmApplication(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ServiceFabricManagedVmApplication DeserializeServiceFabricManagedVmApplication(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VmApplication(
+            return new ServiceFabricManagedVmApplication(
                 configurationReference,
                 enableAutomaticUpgrade,
                 order,
@@ -170,35 +170,35 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VmApplication>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ServiceFabricManagedVmApplication>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmApplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedVmApplication>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmApplication)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedVmApplication)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VmApplication IPersistableModel<VmApplication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ServiceFabricManagedVmApplication IPersistableModel<ServiceFabricManagedVmApplication>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmApplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedVmApplication>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeVmApplication(document.RootElement, options);
+                        return DeserializeServiceFabricManagedVmApplication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmApplication)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedVmApplication)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VmApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceFabricManagedVmApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

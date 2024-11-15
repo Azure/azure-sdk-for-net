@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Specifies the gallery application that should be made available to the underlying VMSS. </summary>
-    public partial class VmApplication
+    public partial class ServiceFabricManagedVmApplication
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VmApplication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedVmApplication"/>. </summary>
         /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageReferenceId"/> is null. </exception>
-        public VmApplication(ResourceIdentifier packageReferenceId)
+        public ServiceFabricManagedVmApplication(ResourceIdentifier packageReferenceId)
         {
             Argument.AssertNotNull(packageReferenceId, nameof(packageReferenceId));
 
             PackageReferenceId = packageReferenceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmApplication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedVmApplication"/>. </summary>
         /// <param name="configurationReference"> Optional, Specifies the uri to an azure blob that will replace the default configuration for the package if provided. </param>
         /// <param name="enableAutomaticUpgrade"> If set to true, when a new Gallery Application version is available in PIR/SIG, it will be automatically updated for the underlying VMSS. </param>
         /// <param name="order"> Optional, Specifies the order in which the packages have to be installed. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="vmGalleryTags"> Optional, Specifies a passthrough value for more generic context. Accepts a JSON-formatted string e.g. '{"Tag1":"Value1","Tag2":"Value2"}'. </param>
         /// <param name="treatFailureAsDeploymentFailure"> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmApplication(Uri configurationReference, bool? enableAutomaticUpgrade, int? order, ResourceIdentifier packageReferenceId, string vmGalleryTags, bool? treatFailureAsDeploymentFailure, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceFabricManagedVmApplication(Uri configurationReference, bool? enableAutomaticUpgrade, int? order, ResourceIdentifier packageReferenceId, string vmGalleryTags, bool? treatFailureAsDeploymentFailure, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigurationReference = configurationReference;
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmApplication"/> for deserialization. </summary>
-        internal VmApplication()
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedVmApplication"/> for deserialization. </summary>
+        internal ServiceFabricManagedVmApplication()
         {
         }
 

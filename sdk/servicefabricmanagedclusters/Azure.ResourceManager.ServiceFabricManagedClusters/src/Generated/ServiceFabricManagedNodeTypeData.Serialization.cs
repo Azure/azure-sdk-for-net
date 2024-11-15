@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             ResourceIdentifier dscpConfigurationId = default;
             IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations = default;
             string computerNamePrefix = default;
-            IList<VmApplication> vmApplications = default;
+            IList<ServiceFabricManagedVmApplication> vmApplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -972,10 +972,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            List<VmApplication> array = new List<VmApplication>();
+                            List<ServiceFabricManagedVmApplication> array = new List<ServiceFabricManagedVmApplication>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VmApplication.DeserializeVmApplication(item, options));
+                                array.Add(ServiceFabricManagedVmApplication.DeserializeServiceFabricManagedVmApplication(item, options));
                             }
                             vmApplications = array;
                             continue;
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 dscpConfigurationId,
                 additionalNetworkInterfaceConfigurations ?? new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>(),
                 computerNamePrefix,
-                vmApplications ?? new ChangeTrackingList<VmApplication>(),
+                vmApplications ?? new ChangeTrackingList<ServiceFabricManagedVmApplication>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

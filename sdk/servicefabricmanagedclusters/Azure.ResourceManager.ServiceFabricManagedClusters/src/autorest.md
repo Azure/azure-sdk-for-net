@@ -130,6 +130,7 @@ rename-mapping:
   NodeType.properties.enableOverProvisioning: IsOverProvisioningEnabled
   NodeType.properties.multiplePlacementGroups: HasMultiplePlacementGroups
   NodeType.properties.enableNodePublicIPv6: IsNodePublicIPv6Enabled
+  VmApplication : ServiceFabricManagedVmApplication
   VmssDataDisk: NodeTypeVmssDataDisk
   VmssDataDisk.diskSizeGB: DiskSizeInGB
   VmssExtension: NodeTypeVmssExtension

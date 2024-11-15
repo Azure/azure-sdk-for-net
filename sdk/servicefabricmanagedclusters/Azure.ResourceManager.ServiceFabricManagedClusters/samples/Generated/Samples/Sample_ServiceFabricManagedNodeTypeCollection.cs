@@ -402,7 +402,7 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-
                 ComputerNamePrefix = "BE",
                 VmApplications =
 {
-new VmApplication(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Compute/galleries/myGallery/applications/myApplication/versions/1.0.0"))
+new ServiceFabricManagedVmApplication(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Compute/galleries/myGallery/applications/myApplication/versions/1.0.0"))
 {
 ConfigurationReference = new Uri("https://mystorageaccount.blob.core.windows.net/containername/blobname"),
 EnableAutomaticUpgrade = true,
