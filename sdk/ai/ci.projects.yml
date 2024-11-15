@@ -29,5 +29,5 @@ extends:
     ServiceDirectory: ai
     ArtifactName: packages
     Artifacts:
-    - name: Azure.AI.Project
-      safeName: AzureAIProject
+    - name: Azure.AI.Projects
+      safeName: AzureAIProjects
