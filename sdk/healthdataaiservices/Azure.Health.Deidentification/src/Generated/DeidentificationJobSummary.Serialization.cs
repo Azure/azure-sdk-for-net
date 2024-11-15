@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    public partial class JobSummary : IUtf8JsonSerializable, IJsonModel<JobSummary>
+    public partial class DeidentificationJobSummary : IUtf8JsonSerializable, IJsonModel<DeidentificationJobSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeidentificationJobSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<JobSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeidentificationJobSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Health.Deidentification
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationJobSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobSummary)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeidentificationJobSummary)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("successful"u8);
@@ -61,19 +61,19 @@ namespace Azure.Health.Deidentification
             }
         }
 
-        JobSummary IJsonModel<JobSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeidentificationJobSummary IJsonModel<DeidentificationJobSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationJobSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobSummary)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeidentificationJobSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeJobSummary(document.RootElement, options);
+            return DeserializeDeidentificationJobSummary(document.RootElement, options);
         }
 
-        internal static JobSummary DeserializeJobSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeidentificationJobSummary DeserializeDeidentificationJobSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -121,7 +121,7 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new JobSummary(
+            return new DeidentificationJobSummary(
                 successful,
                 failed,
                 canceled,
@@ -130,43 +130,43 @@ namespace Azure.Health.Deidentification
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<JobSummary>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeidentificationJobSummary>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationJobSummary>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobSummary)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeidentificationJobSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
-        JobSummary IPersistableModel<JobSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeidentificationJobSummary IPersistableModel<DeidentificationJobSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationJobSummary>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeJobSummary(document.RootElement, options);
+                        return DeserializeDeidentificationJobSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobSummary)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeidentificationJobSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<JobSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeidentificationJobSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static JobSummary FromResponse(Response response)
+        internal static DeidentificationJobSummary FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeJobSummary(document.RootElement);
+            return DeserializeDeidentificationJobSummary(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

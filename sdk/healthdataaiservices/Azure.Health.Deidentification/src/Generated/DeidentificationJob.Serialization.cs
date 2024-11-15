@@ -121,16 +121,16 @@ namespace Azure.Health.Deidentification
                 return null;
             }
             string name = default;
-            OperationType? operation = default;
+            DeidentificationOperationType? operation = default;
             SourceStorageLocation sourceLocation = default;
             TargetStorageLocation targetLocation = default;
             JobCustomizationOptions customizations = default;
-            JobStatus status = default;
+            DeidentificationJobStatus status = default;
             ResponseError error = default;
             DateTimeOffset lastUpdatedAt = default;
             DateTimeOffset createdAt = default;
             DateTimeOffset? startedAt = default;
-            JobSummary summary = default;
+            DeidentificationJobSummary summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    operation = new OperationType(property.Value.GetString());
+                    operation = new DeidentificationOperationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceLocation"u8))
@@ -170,7 +170,7 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new JobStatus(property.Value.GetString());
+                    status = new DeidentificationJobStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -207,7 +207,7 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    summary = JobSummary.DeserializeJobSummary(property.Value, options);
+                    summary = DeidentificationJobSummary.DeserializeDeidentificationJobSummary(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

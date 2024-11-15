@@ -165,7 +165,7 @@ DeidentificationClient client = new DeidentificationClient(endpoint, credential)
 
 DeidentificationContent content = new DeidentificationContent("Hello my name is John Smith.")
 {
-    Operation = OperationType.Redact,
+    Operation = DeidentificationOperationType.Redact,
     Customizations = new CustomizationOptions
     {
         RedactionFormat = "[{type}]",
@@ -185,7 +185,7 @@ DeidentificationClient client = new DeidentificationClient(endpoint, credential)
 
 DeidentificationContent content = new DeidentificationContent("Hello my name is John Smith.")
 {
-    Operation = OperationType.Redact,
+    Operation = DeidentificationOperationType.Redact,
     Customizations = new CustomizationOptions
     {
         RedactionFormat = "[{type}]",
@@ -259,7 +259,7 @@ DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation
     Overwrite = true,
 })
 {
-    Operation = OperationType.Redact,
+    Operation = DeidentificationOperationType.Redact,
     Customizations = new JobCustomizationOptions
     {
         RedactionFormat = "[{type}]",
@@ -286,7 +286,7 @@ DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation
     Overwrite = true,
 })
 {
-    Operation = OperationType.Redact,
+    Operation = DeidentificationOperationType.Redact,
     Customizations = new JobCustomizationOptions
     {
         RedactionFormat = "[{type}]",

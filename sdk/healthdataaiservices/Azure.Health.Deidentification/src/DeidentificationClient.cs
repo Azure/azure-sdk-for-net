@@ -102,7 +102,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> The most basic operation. </remarks>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<DocumentDetails> GetJobDocumentsAsync(string jobName, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DeidentificationDocumentDetails> GetJobDocumentsAsync(string jobName, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocuments");
             scope.Start();
@@ -117,7 +117,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> The most basic operation. </remarks>
         [ForwardsClientCalls]
-        public virtual Pageable<DocumentDetails> GetJobDocuments(string jobName, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DeidentificationDocumentDetails> GetJobDocuments(string jobName, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocuments");
             scope.Start();
