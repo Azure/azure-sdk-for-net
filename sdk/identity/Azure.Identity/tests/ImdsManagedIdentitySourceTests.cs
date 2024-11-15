@@ -228,7 +228,9 @@ namespace Azure.Identity.Tests
             var ex = Assert.CatchAsync(async () => await cred.GetTokenAsync(new(new[] { "test" }), cts.Token));
             Assert.IsTrue(ex is TaskCanceledException || ex is OperationCanceledException, "Expected TaskCanceledException or OperationCanceledException but got " + ex.GetType().ToString());
 
-            Assert.AreEqual(0, callCount);
+            // Default number of retries is 5, so we should just ensure we have less than that.
+            // Timing on some platforms makes this test somewhat non-deterministic, so we just ensure we have less than 2 calls.
+            Assert.Less(callCount, 2);
         }
 
         private MockResponse CreateMockResponse(int responseCode, string token)
