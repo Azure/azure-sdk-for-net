@@ -225,7 +225,7 @@ namespace Azure.Identity.Tests
             var cts = new CancellationTokenSource();
             cts.CancelAfter(TimeSpan.Zero);
             var ex = Assert.CatchAsync(async () => await cred.GetTokenAsync(new(new[] { "test" }), cts.Token));
-            Assert.IsTrue(ex is TaskCanceledException || ex is OperationCanceledException);
+            Assert.IsTrue(ex is TaskCanceledException || ex is OperationCanceledException, "Expected TaskCanceledException or OperationCanceledException but got " + ex.GetType().ToString());
 
             Assert.AreEqual(0, callCount);
         }
