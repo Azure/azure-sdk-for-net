@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests
@@ -36,7 +35,6 @@ namespace Azure.AI.Projects.Tests
 
             await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
             {
-                Console.WriteLine(streamingUpdate.UpdateKind);
                 if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
                 {
                     Console.WriteLine($"--- Run started! ---");
