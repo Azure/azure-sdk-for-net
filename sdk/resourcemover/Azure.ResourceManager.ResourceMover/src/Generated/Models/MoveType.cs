@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static bool operator ==(MoveType left, MoveType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MoveType"/> values are not the same. </summary>
         public static bool operator !=(MoveType left, MoveType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MoveType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MoveType"/>. </summary>
         public static implicit operator MoveType(string value) => new MoveType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(SiteRecoveryAgentAutoUpdateStatus left, SiteRecoveryAgentAutoUpdateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SiteRecoveryAgentAutoUpdateStatus"/> values are not the same. </summary>
         public static bool operator !=(SiteRecoveryAgentAutoUpdateStatus left, SiteRecoveryAgentAutoUpdateStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SiteRecoveryAgentAutoUpdateStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryAgentAutoUpdateStatus"/>. </summary>
         public static implicit operator SiteRecoveryAgentAutoUpdateStatus(string value) => new SiteRecoveryAgentAutoUpdateStatus(value);
 
         /// <inheritdoc />

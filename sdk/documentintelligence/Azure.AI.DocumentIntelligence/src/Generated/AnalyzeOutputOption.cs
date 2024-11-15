@@ -33,7 +33,7 @@ namespace Azure.AI.DocumentIntelligence
         public static bool operator ==(AnalyzeOutputOption left, AnalyzeOutputOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeOutputOption"/> values are not the same. </summary>
         public static bool operator !=(AnalyzeOutputOption left, AnalyzeOutputOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalyzeOutputOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyzeOutputOption"/>. </summary>
         public static implicit operator AnalyzeOutputOption(string value) => new AnalyzeOutputOption(value);
 
         /// <inheritdoc />

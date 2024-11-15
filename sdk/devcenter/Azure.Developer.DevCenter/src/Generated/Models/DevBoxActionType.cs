@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator ==(DevBoxActionType left, DevBoxActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevBoxActionType"/> values are not the same. </summary>
         public static bool operator !=(DevBoxActionType left, DevBoxActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevBoxActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevBoxActionType"/>. </summary>
         public static implicit operator DevBoxActionType(string value) => new DevBoxActionType(value);
 
         /// <inheritdoc />

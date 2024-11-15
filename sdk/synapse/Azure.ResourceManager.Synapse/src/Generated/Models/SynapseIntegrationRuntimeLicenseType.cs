@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseIntegrationRuntimeLicenseType left, SynapseIntegrationRuntimeLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeLicenseType"/> values are not the same. </summary>
         public static bool operator !=(SynapseIntegrationRuntimeLicenseType left, SynapseIntegrationRuntimeLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseIntegrationRuntimeLicenseType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseIntegrationRuntimeLicenseType"/>. </summary>
         public static implicit operator SynapseIntegrationRuntimeLicenseType(string value) => new SynapseIntegrationRuntimeLicenseType(value);
 
         /// <inheritdoc />

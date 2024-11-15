@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(AuthorizationUseStatus left, AuthorizationUseStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthorizationUseStatus"/> values are not the same. </summary>
         public static bool operator !=(AuthorizationUseStatus left, AuthorizationUseStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AuthorizationUseStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthorizationUseStatus"/>. </summary>
         public static implicit operator AuthorizationUseStatus(string value) => new AuthorizationUseStatus(value);
 
         /// <inheritdoc />

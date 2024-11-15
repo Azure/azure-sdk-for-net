@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator ==(ContainerAppHttpScheme left, ContainerAppHttpScheme right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppHttpScheme"/> values are not the same. </summary>
         public static bool operator !=(ContainerAppHttpScheme left, ContainerAppHttpScheme right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerAppHttpScheme"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppHttpScheme"/>. </summary>
         public static implicit operator ContainerAppHttpScheme(string value) => new ContainerAppHttpScheme(value);
 
         /// <inheritdoc />

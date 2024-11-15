@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static bool operator ==(StorageCacheUsernameDownloadedType left, StorageCacheUsernameDownloadedType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCacheUsernameDownloadedType"/> values are not the same. </summary>
         public static bool operator !=(StorageCacheUsernameDownloadedType left, StorageCacheUsernameDownloadedType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageCacheUsernameDownloadedType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageCacheUsernameDownloadedType"/>. </summary>
         public static implicit operator StorageCacheUsernameDownloadedType(string value) => new StorageCacheUsernameDownloadedType(value);
 
         /// <inheritdoc />

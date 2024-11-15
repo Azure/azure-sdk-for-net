@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(StorageNetworkBypass left, StorageNetworkBypass right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageNetworkBypass"/> values are not the same. </summary>
         public static bool operator !=(StorageNetworkBypass left, StorageNetworkBypass right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageNetworkBypass"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageNetworkBypass"/>. </summary>
         public static implicit operator StorageNetworkBypass(string value) => new StorageNetworkBypass(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(SsisMigrationOverwriteOption left, SsisMigrationOverwriteOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SsisMigrationOverwriteOption"/> values are not the same. </summary>
         public static bool operator !=(SsisMigrationOverwriteOption left, SsisMigrationOverwriteOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SsisMigrationOverwriteOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SsisMigrationOverwriteOption"/>. </summary>
         public static implicit operator SsisMigrationOverwriteOption(string value) => new SsisMigrationOverwriteOption(value);
 
         /// <inheritdoc />

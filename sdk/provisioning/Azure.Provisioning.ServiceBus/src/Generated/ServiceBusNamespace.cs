@@ -20,169 +20,256 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusNamespace.
 /// </summary>
-public partial class ServiceBusNamespace : Resource
+public partial class ServiceBusNamespace : ProvisionableResource
 {
     /// <summary>
     /// The namespace name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Alternate name for namespace.
     /// </summary>
-    public BicepValue<string> AlternateName { get => _alternateName; set => _alternateName.Assign(value); }
-    private readonly BicepValue<string> _alternateName;
+    public BicepValue<string> AlternateName 
+    {
+        get { Initialize(); return _alternateName!; }
+        set { Initialize(); _alternateName!.Assign(value); }
+    }
+    private BicepValue<string>? _alternateName;
 
     /// <summary>
     /// This property disables SAS authentication for the Service Bus namespace.
     /// </summary>
-    public BicepValue<bool> DisableLocalAuth { get => _disableLocalAuth; set => _disableLocalAuth.Assign(value); }
-    private readonly BicepValue<bool> _disableLocalAuth;
+    public BicepValue<bool> DisableLocalAuth 
+    {
+        get { Initialize(); return _disableLocalAuth!; }
+        set { Initialize(); _disableLocalAuth!.Assign(value); }
+    }
+    private BicepValue<bool>? _disableLocalAuth;
 
     /// <summary>
     /// Properties of BYOK Encryption description.
     /// </summary>
-    public BicepValue<ServiceBusEncryption> Encryption { get => _encryption; set => _encryption.Assign(value); }
-    private readonly BicepValue<ServiceBusEncryption> _encryption;
+    public ServiceBusEncryption Encryption 
+    {
+        get { Initialize(); return _encryption!; }
+        set { Initialize(); AssignOrReplace(ref _encryption, value); }
+    }
+    private ServiceBusEncryption? _encryption;
 
     /// <summary>
     /// Properties of BYOK Identity description.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// Enabling this property creates a Premium Service Bus Namespace in
     /// regions supported availability zones.
     /// </summary>
-    public BicepValue<bool> IsZoneRedundant { get => _isZoneRedundant; set => _isZoneRedundant.Assign(value); }
-    private readonly BicepValue<bool> _isZoneRedundant;
+    public BicepValue<bool> IsZoneRedundant 
+    {
+        get { Initialize(); return _isZoneRedundant!; }
+        set { Initialize(); _isZoneRedundant!.Assign(value); }
+    }
+    private BicepValue<bool>? _isZoneRedundant;
 
     /// <summary>
     /// The minimum TLS version for the cluster to support, e.g.
     /// &apos;1.2&apos;.
     /// </summary>
-    public BicepValue<ServiceBusMinimumTlsVersion> MinimumTlsVersion { get => _minimumTlsVersion; set => _minimumTlsVersion.Assign(value); }
-    private readonly BicepValue<ServiceBusMinimumTlsVersion> _minimumTlsVersion;
+    public BicepValue<ServiceBusMinimumTlsVersion> MinimumTlsVersion 
+    {
+        get { Initialize(); return _minimumTlsVersion!; }
+        set { Initialize(); _minimumTlsVersion!.Assign(value); }
+    }
+    private BicepValue<ServiceBusMinimumTlsVersion>? _minimumTlsVersion;
 
     /// <summary>
     /// The number of partitions of a Service Bus namespace. This property is
     /// only applicable to Premium SKU namespaces. The default value is 1 and
     /// possible values are 1, 2 and 4.
     /// </summary>
-    public BicepValue<int> PremiumMessagingPartitions { get => _premiumMessagingPartitions; set => _premiumMessagingPartitions.Assign(value); }
-    private readonly BicepValue<int> _premiumMessagingPartitions;
+    public BicepValue<int> PremiumMessagingPartitions 
+    {
+        get { Initialize(); return _premiumMessagingPartitions!; }
+        set { Initialize(); _premiumMessagingPartitions!.Assign(value); }
+    }
+    private BicepValue<int>? _premiumMessagingPartitions;
 
     /// <summary>
     /// List of private endpoint connections.
     /// </summary>
-    public BicepList<ServiceBusPrivateEndpointConnectionData> PrivateEndpointConnections { get => _privateEndpointConnections; set => _privateEndpointConnections.Assign(value); }
-    private readonly BicepList<ServiceBusPrivateEndpointConnectionData> _privateEndpointConnections;
+    public BicepList<ServiceBusPrivateEndpointConnectionData> PrivateEndpointConnections 
+    {
+        get { Initialize(); return _privateEndpointConnections!; }
+        set { Initialize(); _privateEndpointConnections!.Assign(value); }
+    }
+    private BicepList<ServiceBusPrivateEndpointConnectionData>? _privateEndpointConnections;
 
     /// <summary>
     /// This determines if traffic is allowed over public network. By default
     /// it is enabled.
     /// </summary>
-    public BicepValue<ServiceBusPublicNetworkAccess> PublicNetworkAccess { get => _publicNetworkAccess; set => _publicNetworkAccess.Assign(value); }
-    private readonly BicepValue<ServiceBusPublicNetworkAccess> _publicNetworkAccess;
+    public BicepValue<ServiceBusPublicNetworkAccess> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<ServiceBusPublicNetworkAccess>? _publicNetworkAccess;
 
     /// <summary>
     /// Properties of SKU.
     /// </summary>
-    public BicepValue<ServiceBusSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<ServiceBusSku> _sku;
+    public ServiceBusSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private ServiceBusSku? _sku;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The time the namespace was created.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Identifier for Azure Insights metrics.
     /// </summary>
-    public BicepValue<string> MetricId { get => _metricId; }
-    private readonly BicepValue<string> _metricId;
+    public BicepValue<string> MetricId 
+    {
+        get { Initialize(); return _metricId!; }
+    }
+    private BicepValue<string>? _metricId;
 
     /// <summary>
     /// Provisioning state of the namespace.
     /// </summary>
-    public BicepValue<string> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<string> _provisioningState;
+    public BicepValue<string> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<string>? _provisioningState;
 
     /// <summary>
     /// Endpoint you can use to perform Service Bus operations.
     /// </summary>
-    public BicepValue<string> ServiceBusEndpoint { get => _serviceBusEndpoint; }
-    private readonly BicepValue<string> _serviceBusEndpoint;
+    public BicepValue<string> ServiceBusEndpoint 
+    {
+        get { Initialize(); return _serviceBusEndpoint!; }
+    }
+    private BicepValue<string>? _serviceBusEndpoint;
 
     /// <summary>
     /// Status of the namespace.
     /// </summary>
-    public BicepValue<string> Status { get => _status; }
-    private readonly BicepValue<string> _status;
+    public BicepValue<string> Status 
+    {
+        get { Initialize(); return _status!; }
+    }
+    private BicepValue<string>? _status;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The time the namespace was updated.
     /// </summary>
-    public BicepValue<DateTimeOffset> UpdatedOn { get => _updatedOn; }
-    private readonly BicepValue<DateTimeOffset> _updatedOn;
+    public BicepValue<DateTimeOffset> UpdatedOn 
+    {
+        get { Initialize(); return _updatedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _updatedOn;
 
     /// <summary>
     /// Creates a new ServiceBusNamespace.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusNamespace.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusNamespace resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusNamespace.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusNamespace(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces", resourceVersion ?? "2017-04-01", context)
+    public ServiceBusNamespace(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _alternateName = BicepValue<string>.DefineProperty(this, "AlternateName", ["properties", "alternateName"]);
-        _disableLocalAuth = BicepValue<bool>.DefineProperty(this, "DisableLocalAuth", ["properties", "disableLocalAuth"]);
-        _encryption = BicepValue<ServiceBusEncryption>.DefineProperty(this, "Encryption", ["properties", "encryption"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _isZoneRedundant = BicepValue<bool>.DefineProperty(this, "IsZoneRedundant", ["properties", "zoneRedundant"]);
-        _minimumTlsVersion = BicepValue<ServiceBusMinimumTlsVersion>.DefineProperty(this, "MinimumTlsVersion", ["properties", "minimumTlsVersion"]);
-        _premiumMessagingPartitions = BicepValue<int>.DefineProperty(this, "PremiumMessagingPartitions", ["properties", "premiumMessagingPartitions"]);
-        _privateEndpointConnections = BicepList<ServiceBusPrivateEndpointConnectionData>.DefineProperty(this, "PrivateEndpointConnections", ["properties", "privateEndpointConnections"]);
-        _publicNetworkAccess = BicepValue<ServiceBusPublicNetworkAccess>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
-        _sku = BicepValue<ServiceBusSku>.DefineProperty(this, "Sku", ["sku"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdAt"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _metricId = BicepValue<string>.DefineProperty(this, "MetricId", ["properties", "metricId"], isOutput: true);
-        _provisioningState = BicepValue<string>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _serviceBusEndpoint = BicepValue<string>.DefineProperty(this, "ServiceBusEndpoint", ["properties", "serviceBusEndpoint"], isOutput: true);
-        _status = BicepValue<string>.DefineProperty(this, "Status", ["properties", "status"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _updatedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "UpdatedOn", ["properties", "updatedAt"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ServiceBusNamespace.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _alternateName = DefineProperty<string>("AlternateName", ["properties", "alternateName"]);
+        _disableLocalAuth = DefineProperty<bool>("DisableLocalAuth", ["properties", "disableLocalAuth"]);
+        _encryption = DefineModelProperty<ServiceBusEncryption>("Encryption", ["properties", "encryption"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _isZoneRedundant = DefineProperty<bool>("IsZoneRedundant", ["properties", "zoneRedundant"]);
+        _minimumTlsVersion = DefineProperty<ServiceBusMinimumTlsVersion>("MinimumTlsVersion", ["properties", "minimumTlsVersion"]);
+        _premiumMessagingPartitions = DefineProperty<int>("PremiumMessagingPartitions", ["properties", "premiumMessagingPartitions"]);
+        _privateEndpointConnections = DefineListProperty<ServiceBusPrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"]);
+        _publicNetworkAccess = DefineProperty<ServiceBusPublicNetworkAccess>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _sku = DefineModelProperty<ServiceBusSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdAt"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _metricId = DefineProperty<string>("MetricId", ["properties", "metricId"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _serviceBusEndpoint = DefineProperty<string>("ServiceBusEndpoint", ["properties", "serviceBusEndpoint"], isOutput: true);
+        _status = DefineProperty<string>("Status", ["properties", "status"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _updatedOn = DefineProperty<DateTimeOffset>("UpdatedOn", ["properties", "updatedAt"], isOutput: true);
     }
 
     /// <summary>
@@ -219,11 +306,16 @@ public partial class ServiceBusNamespace : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusNamespace.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusNamespace.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusNamespace resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusNamespace.</param>
     /// <returns>The existing ServiceBusNamespace resource.</returns>
-    public static ServiceBusNamespace FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusNamespace FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ServiceBusNamespace resource.
@@ -234,35 +326,36 @@ public partial class ServiceBusNamespace : Resource
         new(minLength: 6, maxLength: 50, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// ServiceBusNamespace.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this ServiceBusNamespace.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(ServiceBusBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{ResourceName}_{identity.ResourceName}_{ServiceBusBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(ServiceBusBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{ServiceBusBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this
+    /// Creates a role assignment for a principal that grants access to this
     /// ServiceBusNamespace.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="bicepIdentifierSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(ServiceBusBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{ServiceBusBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(ServiceBusBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
+        new($"{BicepIdentifier}_{ServiceBusBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

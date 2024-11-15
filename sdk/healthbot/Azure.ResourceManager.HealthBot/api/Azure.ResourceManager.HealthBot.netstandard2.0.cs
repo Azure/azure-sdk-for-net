@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.HealthBot
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HealthBot.Models.HealthBotProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.HealthBot.Models.HealthBotSkuName? SkuName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthBot.HealthBotData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.HealthBotData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.HealthBotData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthBot.HealthBotData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.HealthBotData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -99,6 +100,7 @@ namespace Azure.ResourceManager.HealthBot.Models
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
         public string UserIdentity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -113,6 +115,7 @@ namespace Azure.ResourceManager.HealthBot.Models
         public Azure.ResourceManager.HealthBot.Models.HealthBotProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.HealthBot.Models.HealthBotSkuName? SkuName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthBot.Models.HealthBotPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthBot.Models.HealthBotPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -125,6 +128,7 @@ namespace Azure.ResourceManager.HealthBot.Models
         public System.Uri BotManagementPortalLink { get { throw null; } }
         public Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthBot.Models.HealthBotProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthBot.Models.HealthBotProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -135,6 +139,7 @@ namespace Azure.ResourceManager.HealthBot.Models
     {
         public HealthBotSku(Azure.ResourceManager.HealthBot.Models.HealthBotSkuName name) { }
         public Azure.ResourceManager.HealthBot.Models.HealthBotSkuName Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthBot.Models.HealthBotSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthBot.Models.HealthBotSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

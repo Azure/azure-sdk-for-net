@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static bool operator ==(MongoClusterNameUnavailableReason left, MongoClusterNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoClusterNameUnavailableReason"/> values are not the same. </summary>
         public static bool operator !=(MongoClusterNameUnavailableReason left, MongoClusterNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MongoClusterNameUnavailableReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterNameUnavailableReason"/>. </summary>
         public static implicit operator MongoClusterNameUnavailableReason(string value) => new MongoClusterNameUnavailableReason(value);
 
         /// <inheritdoc />

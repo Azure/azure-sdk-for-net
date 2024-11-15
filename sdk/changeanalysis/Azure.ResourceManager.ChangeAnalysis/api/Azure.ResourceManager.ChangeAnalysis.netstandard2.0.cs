@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         public System.Collections.Generic.IReadOnlyList<string> InitiatedByList { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange> PropertyChanges { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     {
         internal DetectedChangeData() { }
         public Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties Properties { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -99,6 +101,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         public Azure.ResourceManager.ChangeAnalysis.Models.PropertyChangeLevel? Level { get { throw null; } }
         public string NewValue { get { throw null; } }
         public string OldValue { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

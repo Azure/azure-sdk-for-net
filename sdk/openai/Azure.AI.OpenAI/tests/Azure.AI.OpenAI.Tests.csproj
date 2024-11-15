@@ -31,6 +31,20 @@
                HintPath="$(ExternalAzureCoreLibrary)" />
   </ItemGroup>
 
+  <Choose>
+    <When Condition="'$(GAServiceVersionLabel)' != ''">
+      <PropertyGroup>
+        <DefineConstants>AZURE_OPENAI_GA</DefineConstants>
+        <VersionSuffix/>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <VersionSuffix>beta.6</VersionSuffix>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
   <ItemGroup>
     <Using Include="NUnit.Framework" />
   </ItemGroup>

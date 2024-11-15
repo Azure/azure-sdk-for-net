@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonLineStringData
+    internal partial class GeoJsonLineStringData
     {
         internal static GeoJsonLineStringData DeserializeGeoJsonLineStringData(JsonElement element)
         {

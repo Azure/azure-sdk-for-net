@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(TranslateRequiredQueryParametersConduct left, TranslateRequiredQueryParametersConduct right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TranslateRequiredQueryParametersConduct"/> values are not the same. </summary>
         public static bool operator !=(TranslateRequiredQueryParametersConduct left, TranslateRequiredQueryParametersConduct right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TranslateRequiredQueryParametersConduct"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TranslateRequiredQueryParametersConduct"/>. </summary>
         public static implicit operator TranslateRequiredQueryParametersConduct(string value) => new TranslateRequiredQueryParametersConduct(value);
 
         /// <inheritdoc />

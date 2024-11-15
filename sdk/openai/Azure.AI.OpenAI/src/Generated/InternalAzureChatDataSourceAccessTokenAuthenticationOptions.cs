@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceAccessTokenAuthenticationOptions"/>. </summary>
         /// <param name="accessToken"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessToken"/> is null. </exception>
-        internal InternalAzureChatDataSourceAccessTokenAuthenticationOptions(string accessToken)
+        public InternalAzureChatDataSourceAccessTokenAuthenticationOptions(string accessToken)
         {
             Argument.AssertNotNull(accessToken, nameof(accessToken));
 

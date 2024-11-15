@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(EligibleProductType left, EligibleProductType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EligibleProductType"/> values are not the same. </summary>
         public static bool operator !=(EligibleProductType left, EligibleProductType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EligibleProductType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EligibleProductType"/>. </summary>
         public static implicit operator EligibleProductType(string value) => new EligibleProductType(value);
 
         /// <inheritdoc />

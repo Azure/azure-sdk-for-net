@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(RefundStatus left, RefundStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RefundStatus"/> values are not the same. </summary>
         public static bool operator !=(RefundStatus left, RefundStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RefundStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RefundStatus"/>. </summary>
         public static implicit operator RefundStatus(string value) => new RefundStatus(value);
 
         /// <inheritdoc />

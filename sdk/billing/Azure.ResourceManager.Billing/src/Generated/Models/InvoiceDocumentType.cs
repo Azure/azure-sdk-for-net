@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(InvoiceDocumentType left, InvoiceDocumentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InvoiceDocumentType"/> values are not the same. </summary>
         public static bool operator !=(InvoiceDocumentType left, InvoiceDocumentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InvoiceDocumentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InvoiceDocumentType"/>. </summary>
         public static implicit operator InvoiceDocumentType(string value) => new InvoiceDocumentType(value);
 
         /// <inheritdoc />

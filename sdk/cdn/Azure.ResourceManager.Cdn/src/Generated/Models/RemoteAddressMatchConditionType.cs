@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(RemoteAddressMatchConditionType left, RemoteAddressMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RemoteAddressMatchConditionType"/> values are not the same. </summary>
         public static bool operator !=(RemoteAddressMatchConditionType left, RemoteAddressMatchConditionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RemoteAddressMatchConditionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RemoteAddressMatchConditionType"/>. </summary>
         public static implicit operator RemoteAddressMatchConditionType(string value) => new RemoteAddressMatchConditionType(value);
 
         /// <inheritdoc />

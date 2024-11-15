@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(PreferredIPVersion left, PreferredIPVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PreferredIPVersion"/> values are not the same. </summary>
         public static bool operator !=(PreferredIPVersion left, PreferredIPVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PreferredIPVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PreferredIPVersion"/>. </summary>
         public static implicit operator PreferredIPVersion(string value) => new PreferredIPVersion(value);
 
         /// <inheritdoc />

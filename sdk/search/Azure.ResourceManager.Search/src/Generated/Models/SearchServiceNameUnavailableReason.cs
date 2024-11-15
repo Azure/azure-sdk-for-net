@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Search.Models
         public static bool operator ==(SearchServiceNameUnavailableReason left, SearchServiceNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchServiceNameUnavailableReason"/> values are not the same. </summary>
         public static bool operator !=(SearchServiceNameUnavailableReason left, SearchServiceNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchServiceNameUnavailableReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchServiceNameUnavailableReason"/>. </summary>
         public static implicit operator SearchServiceNameUnavailableReason(string value) => new SearchServiceNameUnavailableReason(value);
 
         /// <inheritdoc />

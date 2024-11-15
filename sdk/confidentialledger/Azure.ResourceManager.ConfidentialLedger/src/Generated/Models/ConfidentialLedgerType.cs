@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static bool operator ==(ConfidentialLedgerType left, ConfidentialLedgerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfidentialLedgerType"/> values are not the same. </summary>
         public static bool operator !=(ConfidentialLedgerType left, ConfidentialLedgerType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConfidentialLedgerType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfidentialLedgerType"/>. </summary>
         public static implicit operator ConfidentialLedgerType(string value) => new ConfidentialLedgerType(value);
 
         /// <inheritdoc />

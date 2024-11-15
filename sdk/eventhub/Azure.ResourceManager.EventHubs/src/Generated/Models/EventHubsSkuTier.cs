@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator ==(EventHubsSkuTier left, EventHubsSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsSkuTier"/> values are not the same. </summary>
         public static bool operator !=(EventHubsSkuTier left, EventHubsSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventHubsSkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsSkuTier"/>. </summary>
         public static implicit operator EventHubsSkuTier(string value) => new EventHubsSkuTier(value);
 
         /// <inheritdoc />

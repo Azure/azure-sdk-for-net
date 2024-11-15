@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(InMageRcmFailbackRecoveryPointType left, InMageRcmFailbackRecoveryPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InMageRcmFailbackRecoveryPointType"/> values are not the same. </summary>
         public static bool operator !=(InMageRcmFailbackRecoveryPointType left, InMageRcmFailbackRecoveryPointType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InMageRcmFailbackRecoveryPointType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InMageRcmFailbackRecoveryPointType"/>. </summary>
         public static implicit operator InMageRcmFailbackRecoveryPointType(string value) => new InMageRcmFailbackRecoveryPointType(value);
 
         /// <inheritdoc />

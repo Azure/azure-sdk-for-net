@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(ConnectorProviderName left, ConnectorProviderName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectorProviderName"/> values are not the same. </summary>
         public static bool operator !=(ConnectorProviderName left, ConnectorProviderName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectorProviderName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectorProviderName"/>. </summary>
         public static implicit operator ConnectorProviderName(string value) => new ConnectorProviderName(value);
 
         /// <inheritdoc />

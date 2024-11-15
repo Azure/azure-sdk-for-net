@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator ==(DeploymentModelVersionUpgradeOption left, DeploymentModelVersionUpgradeOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeploymentModelVersionUpgradeOption"/> values are not the same. </summary>
         public static bool operator !=(DeploymentModelVersionUpgradeOption left, DeploymentModelVersionUpgradeOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeploymentModelVersionUpgradeOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeploymentModelVersionUpgradeOption"/>. </summary>
         public static implicit operator DeploymentModelVersionUpgradeOption(string value) => new DeploymentModelVersionUpgradeOption(value);
 
         /// <inheritdoc />

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
 using System.Xml;
 using Azure.Core;
 
@@ -105,21 +104,8 @@ namespace Azure.Monitor.Query
 
         internal string ToIsoString()
         {
-            string ToString(DateTimeOffset value)
-            {
-                if (value.Offset == TimeSpan.Zero)
-                {
-                    // Some Azure service required 0-offset dates to be formatted without the
-                    // -00:00 part
-                    const string roundtripZFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
-                    return value.ToString(roundtripZFormat, CultureInfo.InvariantCulture);
-                }
-
-                return value.ToString("O", CultureInfo.InvariantCulture);
-            }
-
-            var startTime = Start != null ? ToString(Start.Value) : null;
-            var endTime = End != null ? ToString(End.Value) : null;
+            var startTime = Start.ToIsoString();
+            var endTime = End.ToIsoString();
             var duration = XmlConvert.ToString(Duration);
 
             switch (startTime, endTime, duration)

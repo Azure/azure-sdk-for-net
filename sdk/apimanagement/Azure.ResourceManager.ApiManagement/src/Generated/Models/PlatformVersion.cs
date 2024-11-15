@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(PlatformVersion left, PlatformVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlatformVersion"/> values are not the same. </summary>
         public static bool operator !=(PlatformVersion left, PlatformVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PlatformVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PlatformVersion"/>. </summary>
         public static implicit operator PlatformVersion(string value) => new PlatformVersion(value);
 
         /// <inheritdoc />

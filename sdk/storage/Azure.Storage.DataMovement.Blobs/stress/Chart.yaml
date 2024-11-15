@@ -1,5 +1,5 @@
 apiVersion: v2
-name: storage-datamovement-blobs-net-stress
+name: net-stgdm-blobs
 version: 0.1.0
 description: Stress tests for Storage Data Movement Blobs for .NET
 
@@ -11,3 +11,4 @@ dependencies:
 annotations:
   stressTest: 'true'
   namespace: 'net'
+  environment: 'storage'

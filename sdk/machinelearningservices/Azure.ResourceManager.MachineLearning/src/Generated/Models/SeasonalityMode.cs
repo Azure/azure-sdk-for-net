@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(SeasonalityMode left, SeasonalityMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SeasonalityMode"/> values are not the same. </summary>
         public static bool operator !=(SeasonalityMode left, SeasonalityMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SeasonalityMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SeasonalityMode"/>. </summary>
         public static implicit operator SeasonalityMode(string value) => new SeasonalityMode(value);
 
         /// <inheritdoc />

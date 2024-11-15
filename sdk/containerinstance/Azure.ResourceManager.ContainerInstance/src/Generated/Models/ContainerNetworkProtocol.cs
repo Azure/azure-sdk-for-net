@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static bool operator ==(ContainerNetworkProtocol left, ContainerNetworkProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerNetworkProtocol"/> values are not the same. </summary>
         public static bool operator !=(ContainerNetworkProtocol left, ContainerNetworkProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerNetworkProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerNetworkProtocol"/>. </summary>
         public static implicit operator ContainerNetworkProtocol(string value) => new ContainerNetworkProtocol(value);
 
         /// <inheritdoc />

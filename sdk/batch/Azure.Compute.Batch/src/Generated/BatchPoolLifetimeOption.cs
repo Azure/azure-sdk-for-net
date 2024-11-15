@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(BatchPoolLifetimeOption left, BatchPoolLifetimeOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchPoolLifetimeOption"/> values are not the same. </summary>
         public static bool operator !=(BatchPoolLifetimeOption left, BatchPoolLifetimeOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchPoolLifetimeOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchPoolLifetimeOption"/>. </summary>
         public static implicit operator BatchPoolLifetimeOption(string value) => new BatchPoolLifetimeOption(value);
 
         /// <inheritdoc />

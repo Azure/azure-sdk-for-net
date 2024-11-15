@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(BgpPeerState left, BgpPeerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BgpPeerState"/> values are not the same. </summary>
         public static bool operator !=(BgpPeerState left, BgpPeerState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BgpPeerState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BgpPeerState"/>. </summary>
         public static implicit operator BgpPeerState(string value) => new BgpPeerState(value);
 
         /// <inheritdoc />

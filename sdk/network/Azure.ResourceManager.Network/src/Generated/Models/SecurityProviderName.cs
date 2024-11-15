@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(SecurityProviderName left, SecurityProviderName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityProviderName"/> values are not the same. </summary>
         public static bool operator !=(SecurityProviderName left, SecurityProviderName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityProviderName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityProviderName"/>. </summary>
         public static implicit operator SecurityProviderName(string value) => new SecurityProviderName(value);
 
         /// <inheritdoc />

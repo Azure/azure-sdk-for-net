@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerState left, PostgreSqlFlexibleServerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerState"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerState left, PostgreSqlFlexibleServerState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerState"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerState(string value) => new PostgreSqlFlexibleServerState(value);
 
         /// <inheritdoc />

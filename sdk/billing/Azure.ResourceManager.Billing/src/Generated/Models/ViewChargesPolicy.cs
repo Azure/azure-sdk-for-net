@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(ViewChargesPolicy left, ViewChargesPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ViewChargesPolicy"/> values are not the same. </summary>
         public static bool operator !=(ViewChargesPolicy left, ViewChargesPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ViewChargesPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ViewChargesPolicy"/>. </summary>
         public static implicit operator ViewChargesPolicy(string value) => new ViewChargesPolicy(value);
 
         /// <inheritdoc />

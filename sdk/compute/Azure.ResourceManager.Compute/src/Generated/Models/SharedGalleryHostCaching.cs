@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(SharedGalleryHostCaching left, SharedGalleryHostCaching right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SharedGalleryHostCaching"/> values are not the same. </summary>
         public static bool operator !=(SharedGalleryHostCaching left, SharedGalleryHostCaching right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SharedGalleryHostCaching"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SharedGalleryHostCaching"/>. </summary>
         public static implicit operator SharedGalleryHostCaching(string value) => new SharedGalleryHostCaching(value);
 
         /// <inheritdoc />

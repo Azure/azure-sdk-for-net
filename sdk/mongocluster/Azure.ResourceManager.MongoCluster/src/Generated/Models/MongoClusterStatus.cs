@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static bool operator ==(MongoClusterStatus left, MongoClusterStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoClusterStatus"/> values are not the same. </summary>
         public static bool operator !=(MongoClusterStatus left, MongoClusterStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MongoClusterStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterStatus"/>. </summary>
         public static implicit operator MongoClusterStatus(string value) => new MongoClusterStatus(value);
 
         /// <inheritdoc />

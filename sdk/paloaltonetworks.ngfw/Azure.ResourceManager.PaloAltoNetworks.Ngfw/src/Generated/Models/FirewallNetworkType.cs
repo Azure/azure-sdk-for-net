@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static bool operator ==(FirewallNetworkType left, FirewallNetworkType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirewallNetworkType"/> values are not the same. </summary>
         public static bool operator !=(FirewallNetworkType left, FirewallNetworkType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FirewallNetworkType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallNetworkType"/>. </summary>
         public static implicit operator FirewallNetworkType(string value) => new FirewallNetworkType(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(CustomDomainValidationState left, CustomDomainValidationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomDomainValidationState"/> values are not the same. </summary>
         public static bool operator !=(CustomDomainValidationState left, CustomDomainValidationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CustomDomainValidationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomDomainValidationState"/>. </summary>
         public static implicit operator CustomDomainValidationState(string value) => new CustomDomainValidationState(value);
 
         /// <inheritdoc />

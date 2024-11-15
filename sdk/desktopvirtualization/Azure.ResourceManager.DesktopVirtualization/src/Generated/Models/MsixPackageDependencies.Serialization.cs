@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         void IJsonModel<MsixPackageDependencies>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MsixPackageDependencies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DependencyName))
             {
                 writer.WritePropertyName("dependencyName"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MsixPackageDependencies IJsonModel<MsixPackageDependencies>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

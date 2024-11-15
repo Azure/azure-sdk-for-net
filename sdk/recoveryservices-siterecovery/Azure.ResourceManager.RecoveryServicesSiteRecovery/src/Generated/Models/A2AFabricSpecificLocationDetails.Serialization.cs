@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         void IJsonModel<A2AFabricSpecificLocationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<A2AFabricSpecificLocationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(A2AFabricSpecificLocationDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(InitialPrimaryZone))
             {
                 writer.WritePropertyName("initialPrimaryZone"u8);
@@ -101,7 +109,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         A2AFabricSpecificLocationDetails IJsonModel<A2AFabricSpecificLocationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

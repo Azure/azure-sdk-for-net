@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(SocketAddressMatchConditionType left, SocketAddressMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SocketAddressMatchConditionType"/> values are not the same. </summary>
         public static bool operator !=(SocketAddressMatchConditionType left, SocketAddressMatchConditionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SocketAddressMatchConditionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SocketAddressMatchConditionType"/>. </summary>
         public static implicit operator SocketAddressMatchConditionType(string value) => new SocketAddressMatchConditionType(value);
 
         /// <inheritdoc />

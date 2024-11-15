@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(DisableBgpRoutePropagation left, DisableBgpRoutePropagation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DisableBgpRoutePropagation"/> values are not the same. </summary>
         public static bool operator !=(DisableBgpRoutePropagation left, DisableBgpRoutePropagation right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DisableBgpRoutePropagation"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DisableBgpRoutePropagation"/>. </summary>
         public static implicit operator DisableBgpRoutePropagation(string value) => new DisableBgpRoutePropagation(value);
 
         /// <inheritdoc />

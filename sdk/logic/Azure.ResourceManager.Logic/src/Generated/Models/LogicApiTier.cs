@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(LogicApiTier left, LogicApiTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicApiTier"/> values are not the same. </summary>
         public static bool operator !=(LogicApiTier left, LogicApiTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogicApiTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogicApiTier"/>. </summary>
         public static implicit operator LogicApiTier(string value) => new LogicApiTier(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(DistributionType left, DistributionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DistributionType"/> values are not the same. </summary>
         public static bool operator !=(DistributionType left, DistributionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DistributionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DistributionType"/>. </summary>
         public static implicit operator DistributionType(string value) => new DistributionType(value);
 
         /// <inheritdoc />

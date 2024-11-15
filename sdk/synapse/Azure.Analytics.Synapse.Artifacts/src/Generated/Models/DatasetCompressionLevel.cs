@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(DatasetCompressionLevel left, DatasetCompressionLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatasetCompressionLevel"/> values are not the same. </summary>
         public static bool operator !=(DatasetCompressionLevel left, DatasetCompressionLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DatasetCompressionLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DatasetCompressionLevel"/>. </summary>
         public static implicit operator DatasetCompressionLevel(string value) => new DatasetCompressionLevel(value);
 
         /// <inheritdoc />

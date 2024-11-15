@@ -15,14 +15,9 @@ namespace OpenAI.TestFramework.Recording.RecordingProxy
         /// <summary>
         /// Initializes a new instance of the <see cref="ProxyClientResult"/> class.
         /// </summary>
-        /// <param name="response">(Optional) The pipeline response.</param>
-        public ProxyClientResult(PipelineResponse? response = null)
-        {
-            if (response != null)
-            {
-                SetRawResponse(response);
-            }
-        }
+        /// <param name="response">The pipeline response.</param>
+        public ProxyClientResult(PipelineResponse response) : base(response)
+        { }
 
         /// <summary>
         /// Gets the recording ID from the response headers.
@@ -40,14 +35,10 @@ namespace OpenAI.TestFramework.Recording.RecordingProxy
         /// Initializes a new instance of the <see cref="ProxyClientResult{TResult}"/> class.
         /// </summary>
         /// <param name="value">The result value.</param>
-        /// <param name="response">(Optional) The pipeline response.</param>
-        public ProxyClientResult(TResult value, PipelineResponse? response = null)
+        /// <param name="response">The pipeline response.</param>
+        public ProxyClientResult(TResult value, PipelineResponse response) : base(response)
         {
             Value = value;
-            if (response != null)
-            {
-                SetRawResponse(response);
-            }
         }
 
         /// <summary>

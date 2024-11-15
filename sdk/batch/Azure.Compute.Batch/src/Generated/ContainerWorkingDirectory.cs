@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(ContainerWorkingDirectory left, ContainerWorkingDirectory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerWorkingDirectory"/> values are not the same. </summary>
         public static bool operator !=(ContainerWorkingDirectory left, ContainerWorkingDirectory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerWorkingDirectory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerWorkingDirectory"/>. </summary>
         public static implicit operator ContainerWorkingDirectory(string value) => new ContainerWorkingDirectory(value);
 
         /// <inheritdoc />

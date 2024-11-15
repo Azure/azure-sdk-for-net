@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(ScheduledEventStrategy left, ScheduledEventStrategy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduledEventStrategy"/> values are not the same. </summary>
         public static bool operator !=(ScheduledEventStrategy left, ScheduledEventStrategy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScheduledEventStrategy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledEventStrategy"/>. </summary>
         public static implicit operator ScheduledEventStrategy(string value) => new ScheduledEventStrategy(value);
 
         /// <inheritdoc />

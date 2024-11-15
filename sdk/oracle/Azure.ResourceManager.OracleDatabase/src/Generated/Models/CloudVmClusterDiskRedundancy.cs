@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(CloudVmClusterDiskRedundancy left, CloudVmClusterDiskRedundancy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudVmClusterDiskRedundancy"/> values are not the same. </summary>
         public static bool operator !=(CloudVmClusterDiskRedundancy left, CloudVmClusterDiskRedundancy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CloudVmClusterDiskRedundancy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudVmClusterDiskRedundancy"/>. </summary>
         public static implicit operator CloudVmClusterDiskRedundancy(string value) => new CloudVmClusterDiskRedundancy(value);
 
         /// <inheritdoc />

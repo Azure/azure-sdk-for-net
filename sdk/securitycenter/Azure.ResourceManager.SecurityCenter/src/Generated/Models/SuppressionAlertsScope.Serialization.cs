@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         void IJsonModel<SuppressionAlertsScope>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SuppressionAlertsScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SuppressionAlertsScope)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("allOf"u8);
             writer.WriteStartArray();
             foreach (var item in AllOf)
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SuppressionAlertsScope IJsonModel<SuppressionAlertsScope>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

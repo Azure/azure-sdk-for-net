@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(BareMetalMachineKeySetPrivilegeLevel left, BareMetalMachineKeySetPrivilegeLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BareMetalMachineKeySetPrivilegeLevel"/> values are not the same. </summary>
         public static bool operator !=(BareMetalMachineKeySetPrivilegeLevel left, BareMetalMachineKeySetPrivilegeLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BareMetalMachineKeySetPrivilegeLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineKeySetPrivilegeLevel"/>. </summary>
         public static implicit operator BareMetalMachineKeySetPrivilegeLevel(string value) => new BareMetalMachineKeySetPrivilegeLevel(value);
 
         /// <inheritdoc />

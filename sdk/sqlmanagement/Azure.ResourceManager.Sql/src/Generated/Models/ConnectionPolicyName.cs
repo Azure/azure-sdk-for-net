@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(ConnectionPolicyName left, ConnectionPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionPolicyName"/> values are not the same. </summary>
         public static bool operator !=(ConnectionPolicyName left, ConnectionPolicyName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectionPolicyName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionPolicyName"/>. </summary>
         public static implicit operator ConnectionPolicyName(string value) => new ConnectionPolicyName(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(HealthErrorCustomerResolvability left, HealthErrorCustomerResolvability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthErrorCustomerResolvability"/> values are not the same. </summary>
         public static bool operator !=(HealthErrorCustomerResolvability left, HealthErrorCustomerResolvability right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HealthErrorCustomerResolvability"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HealthErrorCustomerResolvability"/>. </summary>
         public static implicit operator HealthErrorCustomerResolvability(string value) => new HealthErrorCustomerResolvability(value);
 
         /// <inheritdoc />

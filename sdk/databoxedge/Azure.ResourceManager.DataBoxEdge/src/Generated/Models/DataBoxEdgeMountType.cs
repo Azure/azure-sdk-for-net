@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(DataBoxEdgeMountType left, DataBoxEdgeMountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeMountType"/> values are not the same. </summary>
         public static bool operator !=(DataBoxEdgeMountType left, DataBoxEdgeMountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeMountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeMountType"/>. </summary>
         public static implicit operator DataBoxEdgeMountType(string value) => new DataBoxEdgeMountType(value);
 
         /// <inheritdoc />

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static bool operator ==(PredictionPreference left, PredictionPreference right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PredictionPreference"/> values are not the same. </summary>
         public static bool operator !=(PredictionPreference left, PredictionPreference right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PredictionPreference"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PredictionPreference"/>. </summary>
         public static implicit operator PredictionPreference(string value) => new PredictionPreference(value);
 
         /// <inheritdoc />

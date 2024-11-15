@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(ContainerRegistryExportPolicyStatus left, ContainerRegistryExportPolicyStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryExportPolicyStatus"/> values are not the same. </summary>
         public static bool operator !=(ContainerRegistryExportPolicyStatus left, ContainerRegistryExportPolicyStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerRegistryExportPolicyStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryExportPolicyStatus"/>. </summary>
         public static implicit operator ContainerRegistryExportPolicyStatus(string value) => new ContainerRegistryExportPolicyStatus(value);
 
         /// <inheritdoc />

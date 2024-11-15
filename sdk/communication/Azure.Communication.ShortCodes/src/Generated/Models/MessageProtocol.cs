@@ -33,7 +33,7 @@ namespace Azure.Communication.ShortCodes.Models
         public static bool operator ==(MessageProtocol left, MessageProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageProtocol"/> values are not the same. </summary>
         public static bool operator !=(MessageProtocol left, MessageProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MessageProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MessageProtocol"/>. </summary>
         public static implicit operator MessageProtocol(string value) => new MessageProtocol(value);
 
         /// <inheritdoc />

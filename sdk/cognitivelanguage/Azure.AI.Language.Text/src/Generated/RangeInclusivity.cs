@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(RangeInclusivity left, RangeInclusivity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RangeInclusivity"/> values are not the same. </summary>
         public static bool operator !=(RangeInclusivity left, RangeInclusivity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RangeInclusivity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RangeInclusivity"/>. </summary>
         public static implicit operator RangeInclusivity(string value) => new RangeInclusivity(value);
 
         /// <inheritdoc />

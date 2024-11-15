@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ProxyAgentExecuteMode left, ProxyAgentExecuteMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProxyAgentExecuteMode"/> values are not the same. </summary>
         public static bool operator !=(ProxyAgentExecuteMode left, ProxyAgentExecuteMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProxyAgentExecuteMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProxyAgentExecuteMode"/>. </summary>
         public static implicit operator ProxyAgentExecuteMode(string value) => new ProxyAgentExecuteMode(value);
 
         /// <inheritdoc />

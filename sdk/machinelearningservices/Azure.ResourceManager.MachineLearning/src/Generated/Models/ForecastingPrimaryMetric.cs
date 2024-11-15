@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ForecastingPrimaryMetric left, ForecastingPrimaryMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ForecastingPrimaryMetric"/> values are not the same. </summary>
         public static bool operator !=(ForecastingPrimaryMetric left, ForecastingPrimaryMetric right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ForecastingPrimaryMetric"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ForecastingPrimaryMetric"/>. </summary>
         public static implicit operator ForecastingPrimaryMetric(string value) => new ForecastingPrimaryMetric(value);
 
         /// <inheritdoc />

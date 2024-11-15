@@ -53,7 +53,7 @@ namespace Azure.AI.OpenAI
         }
 
         public static BinaryContent FromEnumerable<T>(ReadOnlySpan<T> span)
-            where T : notnull
+        where T : notnull
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartArray();

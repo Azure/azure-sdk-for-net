@@ -32,7 +32,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator ==(DetectionConditionOperator left, DetectionConditionOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DetectionConditionOperator"/> values are not the same. </summary>
         public static bool operator !=(DetectionConditionOperator left, DetectionConditionOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DetectionConditionOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DetectionConditionOperator"/>. </summary>
         public static implicit operator DetectionConditionOperator(string value) => new DetectionConditionOperator(value);
 
         /// <inheritdoc />

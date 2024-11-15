@@ -57,7 +57,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static bool operator ==(RadiologyInsightsInferenceType left, RadiologyInsightsInferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RadiologyInsightsInferenceType"/> values are not the same. </summary>
         public static bool operator !=(RadiologyInsightsInferenceType left, RadiologyInsightsInferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RadiologyInsightsInferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RadiologyInsightsInferenceType"/>. </summary>
         public static implicit operator RadiologyInsightsInferenceType(string value) => new RadiologyInsightsInferenceType(value);
 
         /// <inheritdoc />

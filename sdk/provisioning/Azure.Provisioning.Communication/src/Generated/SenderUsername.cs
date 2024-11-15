@@ -15,82 +15,142 @@ namespace Azure.Provisioning.Communication;
 /// <summary>
 /// SenderUsername.
 /// </summary>
-public partial class SenderUsername : Resource
+public partial class SenderUsername : ProvisionableResource
 {
     /// <summary>
     /// The valid sender Username.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The display name for the senderUsername.
     /// </summary>
-    public BicepValue<string> DisplayName { get => _displayName; set => _displayName.Assign(value); }
-    private readonly BicepValue<string> _displayName;
+    public BicepValue<string> DisplayName 
+    {
+        get { Initialize(); return _displayName!; }
+        set { Initialize(); _displayName!.Assign(value); }
+    }
+    private BicepValue<string>? _displayName;
 
     /// <summary>
     /// A sender senderUsername to be used when sending emails.
     /// </summary>
-    public BicepValue<string> Username { get => _username; set => _username.Assign(value); }
-    private readonly BicepValue<string> _username;
+    public BicepValue<string> Username 
+    {
+        get { Initialize(); return _username!; }
+        set { Initialize(); _username!.Assign(value); }
+    }
+    private BicepValue<string>? _username;
 
     /// <summary>
     /// The location where the SenderUsername resource data is stored at rest.
     /// </summary>
-    public BicepValue<string> DataLocation { get => _dataLocation; }
-    private readonly BicepValue<string> _dataLocation;
+    public BicepValue<string> DataLocation 
+    {
+        get { Initialize(); return _dataLocation!; }
+    }
+    private BicepValue<string>? _dataLocation;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the resource. Unknown is the default state for
     /// Communication Services.
     /// </summary>
-    public BicepValue<CommunicationServiceProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<CommunicationServiceProvisioningState> _provisioningState;
+    public BicepValue<CommunicationServiceProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<CommunicationServiceProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent CommunicationDomain.
     /// </summary>
-    public CommunicationDomain? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<CommunicationDomain> _parent;
+    public CommunicationDomain? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<CommunicationDomain>? _parent;
 
     /// <summary>
     /// Creates a new SenderUsername.
     /// </summary>
-    /// <param name="resourceName">Name of the SenderUsername.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SenderUsername resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SenderUsername.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SenderUsername(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion, context)
+    public SenderUsername(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion ?? "2023-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"]);
-        _username = BicepValue<string>.DefineProperty(this, "Username", ["properties", "username"]);
-        _dataLocation = BicepValue<string>.DefineProperty(this, "DataLocation", ["properties", "dataLocation"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<CommunicationServiceProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<CommunicationDomain>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SenderUsername.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"]);
+        _username = DefineProperty<string>("Username", ["properties", "username"]);
+        _dataLocation = DefineProperty<string>("DataLocation", ["properties", "dataLocation"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<CommunicationServiceProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<CommunicationDomain>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported SenderUsername resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2023-04-01.
+        /// </summary>
+        public static readonly string V2023_04_01 = "2023-04-01";
+
+        /// <summary>
+        /// 2023-03-31.
+        /// </summary>
+        public static readonly string V2023_03_31 = "2023-03-31";
     }
 
     /// <summary>
     /// Creates a reference to an existing SenderUsername.
     /// </summary>
-    /// <param name="resourceName">Name of the SenderUsername.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SenderUsername resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SenderUsername.</param>
     /// <returns>The existing SenderUsername resource.</returns>
-    public static SenderUsername FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SenderUsername FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

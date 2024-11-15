@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static bool operator ==(SqlManagementMode left, SqlManagementMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlManagementMode"/> values are not the same. </summary>
         public static bool operator !=(SqlManagementMode left, SqlManagementMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlManagementMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlManagementMode"/>. </summary>
         public static implicit operator SqlManagementMode(string value) => new SqlManagementMode(value);
 
         /// <inheritdoc />

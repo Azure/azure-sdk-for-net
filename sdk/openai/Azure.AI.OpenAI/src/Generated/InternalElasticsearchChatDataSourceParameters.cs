@@ -48,7 +48,7 @@ namespace Azure.AI.OpenAI.Chat
         /// Please note <see cref="DataSourceAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="indexName"/> or <paramref name="authentication"/> is null. </exception>
-        internal InternalElasticsearchChatDataSourceParameters(Uri endpoint, string indexName, DataSourceAuthentication authentication)
+        public InternalElasticsearchChatDataSourceParameters(Uri endpoint, string indexName, DataSourceAuthentication authentication)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(indexName, nameof(indexName));
@@ -66,11 +66,6 @@ namespace Azure.AI.OpenAI.Chat
         /// <param name="strictness">
         /// The configured strictness of the search relevance filtering.
         /// Higher strictness will increase precision but lower recall of the answer.
-        /// </param>
-        /// <param name="roleInformation">
-        /// Additional instructions for the model to inform how it should behave and any context it should reference when
-        /// generating a response. You can describe the assistant's personality and tell it how to format responses.
-        /// This is limited to 100 tokens and counts against the overall token limit.
         /// </param>
         /// <param name="maxSearchQueries">
         /// The maximum number of rewritten queries that should be sent to the search provider for a single user message.
@@ -95,12 +90,11 @@ namespace Azure.AI.OpenAI.Chat
         /// Please note <see cref="DataSourceVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalElasticsearchChatDataSourceParameters(int? topNDocuments, bool? inScope, int? strictness, string roleInformation, int? maxSearchQueries, bool? allowPartialResult, IList<string> internalIncludeContexts, Uri endpoint, string indexName, DataSourceAuthentication authentication, DataSourceFieldMappings fieldMappings, DataSourceQueryType? queryType, DataSourceVectorizer vectorizationSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalElasticsearchChatDataSourceParameters(int? topNDocuments, bool? inScope, int? strictness, int? maxSearchQueries, bool? allowPartialResult, IList<string> internalIncludeContexts, Uri endpoint, string indexName, DataSourceAuthentication authentication, DataSourceFieldMappings fieldMappings, DataSourceQueryType? queryType, DataSourceVectorizer vectorizationSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TopNDocuments = topNDocuments;
             InScope = inScope;
             Strictness = strictness;
-            RoleInformation = roleInformation;
             MaxSearchQueries = maxSearchQueries;
             AllowPartialResult = allowPartialResult;
             _internalIncludeContexts = internalIncludeContexts;
@@ -119,30 +113,24 @@ namespace Azure.AI.OpenAI.Chat
         }
 
         /// <summary> The configured number of documents to feature in the query. </summary>
-        internal int? TopNDocuments { get; set; }
+        public int? TopNDocuments { get; set; }
         /// <summary> Whether queries should be restricted to use of the indexed data. </summary>
-        internal bool? InScope { get; set; }
+        public bool? InScope { get; set; }
         /// <summary>
         /// The configured strictness of the search relevance filtering.
         /// Higher strictness will increase precision but lower recall of the answer.
         /// </summary>
-        internal int? Strictness { get; set; }
-        /// <summary>
-        /// Additional instructions for the model to inform how it should behave and any context it should reference when
-        /// generating a response. You can describe the assistant's personality and tell it how to format responses.
-        /// This is limited to 100 tokens and counts against the overall token limit.
-        /// </summary>
-        internal string RoleInformation { get; set; }
+        public int? Strictness { get; set; }
         /// <summary>
         /// The maximum number of rewritten queries that should be sent to the search provider for a single user message.
         /// By default, the system will make an automatic determination.
         /// </summary>
-        internal int? MaxSearchQueries { get; set; }
+        public int? MaxSearchQueries { get; set; }
         /// <summary>
         /// If set to true, the system will allow partial search results to be used and the request will fail if all
         /// partial queries fail. If not specified or specified as false, the request will fail if any search query fails.
         /// </summary>
-        internal bool? AllowPartialResult { get; set; }
+        public bool? AllowPartialResult { get; set; }
         /// <summary> Gets the endpoint. </summary>
         internal Uri Endpoint { get; set; }
         /// <summary> Gets the index name. </summary>

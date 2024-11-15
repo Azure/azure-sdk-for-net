@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(MachineOperationStatus left, MachineOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineOperationStatus"/> values are not the same. </summary>
         public static bool operator !=(MachineOperationStatus left, MachineOperationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineOperationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineOperationStatus"/>. </summary>
         public static implicit operator MachineOperationStatus(string value) => new MachineOperationStatus(value);
 
         /// <inheritdoc />

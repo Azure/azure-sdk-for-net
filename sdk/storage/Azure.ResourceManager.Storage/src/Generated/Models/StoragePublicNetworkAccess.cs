@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(StoragePublicNetworkAccess left, StoragePublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StoragePublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(StoragePublicNetworkAccess left, StoragePublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StoragePublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StoragePublicNetworkAccess"/>. </summary>
         public static implicit operator StoragePublicNetworkAccess(string value) => new StoragePublicNetworkAccess(value);
 
         /// <inheritdoc />

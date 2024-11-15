@@ -21,8 +21,13 @@ public class BasicEventHubsTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter hubName = new(nameof(hubName), typeof(string)) { Value = "orders" };
-                BicepParameter groupName = new(nameof(groupName), typeof(string)) { Value = "managers" };
+                Infrastructure infra = new();
+
+                ProvisioningParameter hubName = new(nameof(hubName), typeof(string)) { Value = "orders" };
+                infra.Add(hubName);
+
+                ProvisioningParameter groupName = new(nameof(groupName), typeof(string)) { Value = "managers" };
+                infra.Add(groupName);
 
                 EventHubsNamespace ns =
                     new(nameof(ns))
@@ -34,6 +39,7 @@ public class BasicEventHubsTests(bool async)
                             Capacity = 1
                         }
                     };
+                infra.Add(ns);
 
                 EventHub hub =
                     new(nameof(hub))
@@ -41,6 +47,7 @@ public class BasicEventHubsTests(bool async)
                         Parent = ns,
                         Name = hubName
                     };
+                infra.Add(hub);
 
                 EventHubsConsumerGroup group =
                     new(nameof(group))
@@ -49,6 +56,9 @@ public class BasicEventHubsTests(bool async)
                         Name = groupName,
                         UserMetadata = BinaryData.FromObjectAsJson(new { foo = 1, bar = "hello" }).ToString()
                     };
+                infra.Add(group);
+
+                return infra;
             })
         .Compare(
             """
@@ -58,28 +68,28 @@ public class BasicEventHubsTests(bool async)
 
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
-            
-            resource ns 'Microsoft.EventHub/namespaces@2017-04-01' = {
-                name: take('ns-${uniqueString(resourceGroup().id)}', 256)
-                location: location
-                sku: {
-                    name: 'Standard'
-                    tier: 'Standard'
-                    capacity: 1
-                }
+
+            resource ns 'Microsoft.EventHub/namespaces@2024-01-01' = {
+              name: take('ns-${uniqueString(resourceGroup().id)}', 256)
+              location: location
+              sku: {
+                name: 'Standard'
+                tier: 'Standard'
+                capacity: 1
+              }
             }
 
             resource hub 'Microsoft.EventHub/namespaces/eventhubs@2024-01-01' = {
-                name: hubName
-                parent: ns
+              name: hubName
+              parent: ns
             }
 
             resource group 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2024-01-01' = {
-                name: groupName
-                properties: {
-                    userMetadata: '{"foo":1,"bar":"hello"}'
-                }
-                parent: hub
+              name: groupName
+              properties: {
+                userMetadata: '{"foo":1,"bar":"hello"}'
+              }
+              parent: hub
             }
             """)
         .Lint()

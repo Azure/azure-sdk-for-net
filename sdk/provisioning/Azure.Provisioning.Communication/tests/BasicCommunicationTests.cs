@@ -20,11 +20,14 @@ public class BasicCommunicationTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
+                Infrastructure infra = new();
+
+                ProvisioningParameter location =
                     new(nameof(location), typeof(string))
                     {
                         Value = "global"
                     };
+                infra.Add(location);
 
                 CommunicationService comm =
                     new(nameof(comm), "2023-03-31")
@@ -32,17 +35,20 @@ public class BasicCommunicationTests(bool async)
                         Location = location,
                         DataLocation = "unitedstates"
                     };
+                infra.Add(comm);
+
+                return infra;
             })
         .Compare(
             """
             param location string = 'global'
 
             resource comm 'Microsoft.Communication/communicationServices@2023-03-31' = {
-                name: take('comm-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                properties: {
-                    dataLocation: 'unitedstates'
-                }
+              name: take('comm-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              properties: {
+                dataLocation: 'unitedstates'
+              }
             }
             """)
         .Lint()

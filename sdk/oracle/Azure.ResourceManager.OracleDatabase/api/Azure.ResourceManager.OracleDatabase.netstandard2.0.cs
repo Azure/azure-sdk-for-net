@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public AutonomousDatabaseBackupData() { }
         public Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBackupProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.AutonomousDatabaseBackupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.AutonomousDatabaseBackupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.AutonomousDatabaseBackupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.AutonomousDatabaseBackupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.AutonomousDatabaseBackupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -65,6 +66,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public AutonomousDatabaseCharacterSetData() { }
         public string AutonomousDatabaseCharacterSet { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.AutonomousDatabaseCharacterSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.AutonomousDatabaseCharacterSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.AutonomousDatabaseCharacterSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.AutonomousDatabaseCharacterSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.AutonomousDatabaseCharacterSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -107,6 +109,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public AutonomousDatabaseData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBaseProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.AutonomousDatabaseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.AutonomousDatabaseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.AutonomousDatabaseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.AutonomousDatabaseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.AutonomousDatabaseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -132,6 +135,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public AutonomousDatabaseNationalCharacterSetData() { }
         public string AutonomousDatabaseNationalCharacterSet { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.AutonomousDatabaseNationalCharacterSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.AutonomousDatabaseNationalCharacterSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.AutonomousDatabaseNationalCharacterSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.AutonomousDatabaseNationalCharacterSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.AutonomousDatabaseNationalCharacterSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -210,6 +214,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public AutonomousDBVersionData() { }
         public Azure.ResourceManager.OracleDatabase.Models.AutonomousDBVersionProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.AutonomousDBVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.AutonomousDBVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.AutonomousDBVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.AutonomousDBVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.AutonomousDBVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -253,6 +258,7 @@ namespace Azure.ResourceManager.OracleDatabase
         public CloudExadataInfrastructureData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<string> zones) { }
         public Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.CloudExadataInfrastructureData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.CloudExadataInfrastructureData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.CloudExadataInfrastructureData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.CloudExadataInfrastructureData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.CloudExadataInfrastructureData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -310,6 +316,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public CloudVmClusterData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.CloudVmClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.CloudVmClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.CloudVmClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.CloudVmClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.CloudVmClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -335,6 +342,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public CloudVmClusterDBNodeData() { }
         public Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterDBNodeProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.CloudVmClusterDBNodeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.CloudVmClusterDBNodeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.CloudVmClusterDBNodeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.CloudVmClusterDBNodeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.CloudVmClusterDBNodeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -416,6 +424,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public CloudVmClusterVirtualNetworkAddressData() { }
         public Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterVirtualNetworkAddressProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.CloudVmClusterVirtualNetworkAddressData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.CloudVmClusterVirtualNetworkAddressData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.CloudVmClusterVirtualNetworkAddressData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.CloudVmClusterVirtualNetworkAddressData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.CloudVmClusterVirtualNetworkAddressData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -519,6 +528,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public OracleDBServerData() { }
         public Azure.ResourceManager.OracleDatabase.Models.OracleDBServerProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleDBServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleDBServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleDBServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleDBServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.OracleDBServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -559,6 +569,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public OracleDBSystemShapeData() { }
         public Azure.ResourceManager.OracleDatabase.Models.OracleDBSystemShapeProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleDBSystemShapeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleDBSystemShapeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleDBSystemShapeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleDBSystemShapeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.OracleDBSystemShapeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -599,6 +610,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public OracleDnsPrivateViewData() { }
         public Azure.ResourceManager.OracleDatabase.Models.OracleDnsPrivateViewProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleDnsPrivateViewData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleDnsPrivateViewData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleDnsPrivateViewData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleDnsPrivateViewData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.OracleDnsPrivateViewData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -639,6 +651,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public OracleDnsPrivateZoneData() { }
         public Azure.ResourceManager.OracleDatabase.Models.OracleDnsPrivateZoneProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleDnsPrivateZoneData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleDnsPrivateZoneData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleDnsPrivateZoneData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleDnsPrivateZoneData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.OracleDnsPrivateZoneData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -679,6 +692,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public OracleGIVersionData() { }
         public string OracleGIVersion { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleGIVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleGIVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleGIVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleGIVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.OracleGIVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -705,6 +719,7 @@ namespace Azure.ResourceManager.OracleDatabase
         public OracleSubscriptionData() { }
         public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.OracleSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -757,6 +772,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         public OracleSystemVersionData() { }
         public string OracleSystemVersion { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleSystemVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleSystemVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.OracleSystemVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.OracleSystemVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.OracleSystemVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -905,6 +921,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     {
         public AutonomousDatabaseActionContent() { }
         public string PeerDBId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseActionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseActionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -936,6 +953,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     {
         public AutonomousDatabaseBackupPatch() { }
         public int? AutonomousDatabaseBackupUpdateRetentionPeriodInDays { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBackupPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBackupPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBackupPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBackupPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBackupPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -961,6 +979,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public System.DateTimeOffset? TimeAvailableTil { get { throw null; } }
         public string TimeEnded { get { throw null; } }
         public string TimeStarted { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBackupProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBackupProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBackupProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBackupProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBackupProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1063,6 +1082,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public int? UsedDataStorageSizeInTbs { get { throw null; } }
         public Azure.Core.ResourceIdentifier VnetId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> WhitelistedIPs { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBaseProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBaseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBaseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBaseProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBaseProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1080,6 +1100,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public Azure.ResourceManager.OracleDatabase.Models.RefreshableStatusType? RefreshableStatus { get { throw null; } }
         public Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseSourceType? Source { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseCloneProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseCloneProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseCloneProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseCloneProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseCloneProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1134,6 +1155,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public Azure.ResourceManager.OracleDatabase.Models.SyntaxFormatType SyntaxFormat { get { throw null; } }
         public Azure.ResourceManager.OracleDatabase.Models.ConnectionTlsAuthenticationType? TlsAuthentication { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStringProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStringProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStringProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStringProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStringProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1149,6 +1171,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string Low { get { throw null; } }
         public string Medium { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStringProfile> Profiles { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStrings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStrings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStrings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStrings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStrings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1161,6 +1184,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string High { get { throw null; } }
         public string Low { get { throw null; } }
         public string Medium { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStringType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStringType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStringType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStringType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionStringType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1177,6 +1201,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public System.Uri MongoDBUri { get { throw null; } }
         public System.Uri OrdsUri { get { throw null; } }
         public System.Uri SqlDevWebUri { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionUrls System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionUrls>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionUrls>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionUrls System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseConnectionUrls>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1243,6 +1268,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public AutonomousDatabasePatch() { }
         public Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabasePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabasePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabasePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabasePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabasePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1270,6 +1296,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public partial class AutonomousDatabaseProperties : Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseProperties>
     {
         public AutonomousDatabaseProperties() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1307,6 +1334,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public int? LagTimeInSeconds { get { throw null; } }
         public string LifecycleDetails { get { throw null; } }
         public Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseLifecycleState? LifecycleState { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseStandbySummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseStandbySummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseStandbySummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseStandbySummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseStandbySummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1339,6 +1367,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public Azure.ResourceManager.OracleDatabase.Models.DataGuardRoleType? Role { get { throw null; } set { } }
         public Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsTypeUpdate ScheduledOperations { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> WhitelistedIPs { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1349,6 +1378,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     {
         internal AutonomousDatabaseWalletFile() { }
         public string WalletFiles { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseWalletFile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseWalletFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseWalletFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseWalletFile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabaseWalletFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1384,6 +1414,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public bool? IsFreeTierEnabled { get { throw null; } }
         public bool? IsPaidEnabled { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDBVersionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDBVersionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDBVersionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.AutonomousDBVersionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.AutonomousDBVersionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1413,6 +1444,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         internal CloudAccountActivationLinks() { }
         public string ExistingCloudAccountActivationLink { get { throw null; } }
         public string NewCloudAccountActivationLink { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudAccountActivationLinks System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudAccountActivationLinks>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudAccountActivationLinks>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudAccountActivationLinks System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.CloudAccountActivationLinks>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1424,6 +1456,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         internal CloudAccountDetails() { }
         public string CloudAccountHomeRegion { get { throw null; } }
         public string CloudAccountName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudAccountDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudAccountDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudAccountDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudAccountDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.CloudAccountDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1478,6 +1511,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructurePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructurePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructurePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructurePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructurePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1518,6 +1552,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public int? StorageCount { get { throw null; } set { } }
         public string StorageServerVersion { get { throw null; } }
         public int? TotalStorageSizeInGbs { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1532,6 +1567,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseMaintenanceWindow MaintenanceWindow { get { throw null; } set { } }
         public int? StorageCount { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1542,6 +1578,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     {
         public CloudVmClusterDBNodeContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dbServers) { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> DBServers { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterDBNodeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterDBNodeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterDBNodeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterDBNodeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterDBNodeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1574,6 +1611,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public System.DateTimeOffset? TimeMaintenanceWindowStart { get { throw null; } }
         public Azure.Core.ResourceIdentifier Vnic2Id { get { throw null; } }
         public Azure.Core.ResourceIdentifier VnicId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterDBNodeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterDBNodeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterDBNodeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterDBNodeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterDBNodeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1626,6 +1664,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public CloudVmClusterNsgCidr(string source) { }
         public Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterPortRange DestinationPortRange { get { throw null; } set { } }
         public string Source { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterNsgCidr System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterNsgCidr>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterNsgCidr>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterNsgCidr System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterNsgCidr>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1637,6 +1676,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public CloudVmClusterPatch() { }
         public Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1648,6 +1688,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public CloudVmClusterPortRange(int min, int max) { }
         public int Max { get { throw null; } set { } }
         public int Min { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterPortRange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterPortRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterPortRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterPortRange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterPortRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1705,6 +1746,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public System.Collections.Generic.IReadOnlyList<string> VipIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier VnetId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ZoneId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1725,6 +1767,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public float? OcpuCount { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SshPublicKeys { get { throw null; } }
         public int? StorageSizeInGbs { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1742,6 +1785,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public Azure.Core.ResourceIdentifier Ocid { get { throw null; } }
         public Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VmOcid { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterVirtualNetworkAddressProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterVirtualNetworkAddressProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterVirtualNetworkAddressProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterVirtualNetworkAddressProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterVirtualNetworkAddressProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1889,6 +1933,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string DBName { get { throw null; } }
         public string FlashCacheLimit { get { throw null; } }
         public int? Share { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.DBIormConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.DBIormConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.DBIormConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.DBIormConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.DBIormConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1899,6 +1944,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     {
         public DBNodeAction(Azure.ResourceManager.OracleDatabase.Models.DBNodeActionType action) { }
         public Azure.ResourceManager.OracleDatabase.Models.DBNodeActionType Action { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.DBNodeAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.DBNodeAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.DBNodeAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.DBNodeAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.DBNodeAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1974,6 +2020,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public System.DateTimeOffset? PatchingEndedOn { get { throw null; } }
         public System.DateTimeOffset? PatchingStartedOn { get { throw null; } }
         public Azure.ResourceManager.OracleDatabase.Models.DBServerPatchingStatus? PatchingStatus { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.DBServerPatchingDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.DBServerPatchingDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.DBServerPatchingDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.DBServerPatchingDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.DBServerPatchingDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2028,6 +2075,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public bool? IsDiagnosticsEventsEnabled { get { throw null; } set { } }
         public bool? IsHealthMonitoringEnabled { get { throw null; } set { } }
         public bool? IsIncidentLogsEnabled { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.DiagnosticCollectionConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.DiagnosticCollectionConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.DiagnosticCollectionConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.DiagnosticCollectionConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.DiagnosticCollectionConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2100,6 +2148,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public int? EstimatedNetworkSwitchesPatchingTime { get { throw null; } }
         public int? EstimatedStorageServerPatchingTime { get { throw null; } }
         public int? TotalEstimatedPatchingTime { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.EstimatedPatchingTime System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.EstimatedPatchingTime>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.EstimatedPatchingTime>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.EstimatedPatchingTime System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.EstimatedPatchingTime>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2113,6 +2162,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string LifecycleDetails { get { throw null; } }
         public Azure.ResourceManager.OracleDatabase.Models.IormLifecycleState? LifecycleState { get { throw null; } }
         public Azure.ResourceManager.OracleDatabase.Models.IormObjective? Objective { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.ExadataIormConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.ExadataIormConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.ExadataIormConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.ExadataIormConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.ExadataIormConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2125,6 +2175,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public Azure.ResourceManager.OracleDatabase.Models.WalletGenerateType? GenerateType { get { throw null; } set { } }
         public bool? IsRegional { get { throw null; } set { } }
         public string Password { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.GenerateAutonomousDatabaseWalletDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.GenerateAutonomousDatabaseWalletDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.GenerateAutonomousDatabaseWalletDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.GenerateAutonomousDatabaseWalletDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.GenerateAutonomousDatabaseWalletDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2180,6 +2231,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public bool? IsDisabled { get { throw null; } set { } }
         public Azure.ResourceManager.OracleDatabase.Models.RepeatCadenceType? RepeatCadence { get { throw null; } set { } }
         public int? RetentionPeriodInDays { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.LongTermBackUpScheduleDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.LongTermBackUpScheduleDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.LongTermBackUpScheduleDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.LongTermBackUpScheduleDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.LongTermBackUpScheduleDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2190,6 +2242,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     {
         public MaintenanceMonth(Azure.ResourceManager.OracleDatabase.Models.MaintenanceMonthName name) { }
         public Azure.ResourceManager.OracleDatabase.Models.MaintenanceMonthName Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.MaintenanceMonth System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.MaintenanceMonth>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.MaintenanceMonth>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.MaintenanceMonth System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.MaintenanceMonth>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2287,6 +2340,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         internal OracleApexDetailsType() { }
         public string ApexVersion { get { throw null; } }
         public string OrdsVersion { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleApexDetailsType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleApexDetailsType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleApexDetailsType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleApexDetailsType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleApexDetailsType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2297,6 +2351,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     {
         public OracleCustomerContact(string email) { }
         public string Email { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleCustomerContact System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleCustomerContact>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleCustomerContact>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleCustomerContact System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleCustomerContact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2307,6 +2362,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     {
         public OracleDatabaseDayOfWeek(Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekName name) { }
         public Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekName Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeek System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeek>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeek>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeek System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeek>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2367,6 +2423,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public Azure.ResourceManager.OracleDatabase.Models.MaintenancePatchingMode? PatchingMode { get { throw null; } set { } }
         public Azure.ResourceManager.OracleDatabase.Models.MaintenancePreference? Preference { get { throw null; } set { } }
         public System.Collections.Generic.IList<int> WeeksOfMonth { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseMaintenanceWindow System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseMaintenanceWindow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseMaintenanceWindow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseMaintenanceWindow System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseMaintenanceWindow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2435,6 +2492,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseResourceProvisioningState? ProvisioningState { get { throw null; } }
         public string Shape { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> VmClusterIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleDBServerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDBServerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDBServerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleDBServerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDBServerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2464,6 +2522,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public int? MinStorageCount { get { throw null; } }
         public int? RuntimeMinimumCoreCount { get { throw null; } }
         public string ShapeFamily { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleDBSystemShapeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDBSystemShapeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDBSystemShapeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleDBSystemShapeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDBSystemShapeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2481,6 +2540,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseResourceProvisioningState? ProvisioningState { get { throw null; } }
         public string Self { get { throw null; } }
         public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleDnsPrivateViewProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDnsPrivateViewProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDnsPrivateViewProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleDnsPrivateViewProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDnsPrivateViewProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2500,6 +2560,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string Version { get { throw null; } }
         public Azure.Core.ResourceIdentifier ViewId { get { throw null; } }
         public Azure.ResourceManager.OracleDatabase.Models.OracleDnsPrivateZoneType ZoneType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleDnsPrivateZoneProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDnsPrivateZoneProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDnsPrivateZoneProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleDnsPrivateZoneProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDnsPrivateZoneProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2547,6 +2608,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public OracleSubscriptionPatch() { }
         public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionUpdateProperties Properties { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2563,6 +2625,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionProvisioningState? ProvisioningState { get { throw null; } }
         public string SaasSubscriptionId { get { throw null; } }
         public string TermUnit { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2611,6 +2674,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public OracleSubscriptionUpdateProperties() { }
         public Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionUpdateIntent? Intent { get { throw null; } set { } }
         public string ProductCode { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleSubscriptionUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2622,6 +2686,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public PrivateIPAddressesContent(Azure.Core.ResourceIdentifier subnetId, Azure.Core.ResourceIdentifier vnicId) { }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
         public Azure.Core.ResourceIdentifier VnicId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.PrivateIPAddressesContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.PrivateIPAddressesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.PrivateIPAddressesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.PrivateIPAddressesContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.PrivateIPAddressesContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2636,6 +2701,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string IPAddress { get { throw null; } }
         public Azure.Core.ResourceIdentifier Ocid { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.PrivateIPAddressResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.PrivateIPAddressResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.PrivateIPAddressResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.PrivateIPAddressResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.PrivateIPAddressResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2702,6 +2768,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     {
         public RestoreAutonomousDatabaseDetails(System.DateTimeOffset timestamp) { }
         public System.DateTimeOffset Timestamp { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.RestoreAutonomousDatabaseDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.RestoreAutonomousDatabaseDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.RestoreAutonomousDatabaseDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.RestoreAutonomousDatabaseDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.RestoreAutonomousDatabaseDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2723,6 +2790,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string SaasSubscriptionStatus { get { throw null; } }
         public string SubscriptionName { get { throw null; } }
         public string TermUnit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.SaasSubscriptionDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.SaasSubscriptionDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.SaasSubscriptionDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.SaasSubscriptionDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.SaasSubscriptionDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2735,6 +2803,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public System.DateTimeOffset? AutoStartOn { get { throw null; } set { } }
         public System.DateTimeOffset? AutoStopOn { get { throw null; } set { } }
         public Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekName? DayOfWeekName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2747,6 +2816,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public System.DateTimeOffset? AutoStartOn { get { throw null; } set { } }
         public System.DateTimeOffset? AutoStopOn { get { throw null; } set { } }
         public Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekName? DayOfWeekName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsTypeUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsTypeUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsTypeUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsTypeUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsTypeUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static bool operator ==(AppComplianceReportStatus left, AppComplianceReportStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppComplianceReportStatus"/> values are not the same. </summary>
         public static bool operator !=(AppComplianceReportStatus left, AppComplianceReportStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppComplianceReportStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppComplianceReportStatus"/>. </summary>
         public static implicit operator AppComplianceReportStatus(string value) => new AppComplianceReportStatus(value);
 
         /// <inheritdoc />

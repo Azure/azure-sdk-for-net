@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(HostPlatformType left, HostPlatformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HostPlatformType"/> values are not the same. </summary>
         public static bool operator !=(HostPlatformType left, HostPlatformType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HostPlatformType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HostPlatformType"/>. </summary>
         public static implicit operator HostPlatformType(string value) => new HostPlatformType(value);
 
         /// <inheritdoc />

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(ArcExtensionState left, ArcExtensionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArcExtensionState"/> values are not the same. </summary>
         public static bool operator !=(ArcExtensionState left, ArcExtensionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ArcExtensionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ArcExtensionState"/>. </summary>
         public static implicit operator ArcExtensionState(string value) => new ArcExtensionState(value);
 
         /// <inheritdoc />

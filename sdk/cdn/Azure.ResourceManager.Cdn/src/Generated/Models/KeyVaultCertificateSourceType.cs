@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(KeyVaultCertificateSourceType left, KeyVaultCertificateSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultCertificateSourceType"/> values are not the same. </summary>
         public static bool operator !=(KeyVaultCertificateSourceType left, KeyVaultCertificateSourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KeyVaultCertificateSourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultCertificateSourceType"/>. </summary>
         public static implicit operator KeyVaultCertificateSourceType(string value) => new KeyVaultCertificateSourceType(value);
 
         /// <inheritdoc />

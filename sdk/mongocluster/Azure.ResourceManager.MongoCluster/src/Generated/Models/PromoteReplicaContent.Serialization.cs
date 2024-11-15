@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         void IJsonModel<PromoteReplicaContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PromoteReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PromoteReplicaContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("promoteOption"u8);
             writer.WriteStringValue(PromoteOption.ToString());
             if (Optional.IsDefined(Mode))
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PromoteReplicaContent IJsonModel<PromoteReplicaContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

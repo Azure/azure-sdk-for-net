@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(ArmApplicationArtifactName left, ArmApplicationArtifactName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArmApplicationArtifactName"/> values are not the same. </summary>
         public static bool operator !=(ArmApplicationArtifactName left, ArmApplicationArtifactName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ArmApplicationArtifactName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ArmApplicationArtifactName"/>. </summary>
         public static implicit operator ArmApplicationArtifactName(string value) => new ArmApplicationArtifactName(value);
 
         /// <inheritdoc />

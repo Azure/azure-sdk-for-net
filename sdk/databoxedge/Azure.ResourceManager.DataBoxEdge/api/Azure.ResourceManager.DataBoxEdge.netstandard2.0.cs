@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public int RateInMbps { get { throw null; } set { } }
         public System.TimeSpan StartOn { get { throw null; } set { } }
         public System.TimeSpan StopOn { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -74,6 +75,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public string Recommendation { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity? Severity { get { throw null; } }
         public string Title { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -136,6 +138,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public string SerialNumber { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku Sku { get { throw null; } set { } }
         public string TimeZone { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -277,6 +280,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? Status { get { throw null; } }
         public int? TotalRefreshErrors { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -311,6 +315,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public string SerialNumber { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType? ShipmentType { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress ShippingAddress { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -358,6 +363,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeRoleAddonData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData>
     {
         public DataBoxEdgeRoleAddonData() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -403,6 +409,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeRoleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData>
     {
         public DataBoxEdgeRoleData() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -462,6 +469,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> ShareMappings { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.ShareStatus ShareStatus { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight> UserAccessRights { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -534,6 +542,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus SslStatus { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
         public string UserName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -568,6 +577,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public string Description { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountCredentialId { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus? StorageAccountStatus { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -620,6 +630,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat DataFormat { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails RefreshDetails { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -667,6 +678,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeTriggerData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData>
     {
         public DataBoxEdgeTriggerData() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -715,6 +727,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret EncryptedPassword { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight> ShareAccessRights { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType UserType { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -744,6 +757,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     {
         public DiagnosticProactiveLogCollectionSettingData(Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent userConsent) { }
         public Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent UserConsent { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -771,6 +785,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     {
         public DiagnosticRemoteSupportSettingData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings> RemoteSupportSettingsList { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -798,6 +813,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     {
         public MonitoringMetricConfigurationData(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration> metricConfigurations) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration> MetricConfigurations { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -941,6 +957,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm EncryptionAlgorithm { get { throw null; } set { } }
         public string EncryptionCertThumbprint { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -965,6 +982,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Size { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier? Tier { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion? Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -976,6 +994,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public ClientAccessRight(string client, Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType accessPermission) { }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType AccessPermission { get { throw null; } set { } }
         public string Client { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -988,6 +1007,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription EdgeSubscription { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? LocalManagementStatus { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? RoleStatus { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.CloudEdgeManagementRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.CloudEdgeManagementRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.CloudEdgeManagementRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.CloudEdgeManagementRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.CloudEdgeManagementRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1001,6 +1021,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string PodSubnet { get { throw null; } }
         public string ServiceSubnet { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.CniConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.CniConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.CniConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.CniConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.CniConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1013,6 +1034,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public int? Occurrences { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1063,6 +1085,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ContactPerson { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> EmailList { get { throw null; } }
         public string Phone { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1073,6 +1096,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal DataBoxEdgeDataCenterAccessCode() { }
         public string AuthCode { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1145,6 +1169,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo ClusterStorageCapacityInfo { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.HostCapacity> NodeCapacityInfos { get { throw null; } }
         public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceCapacityInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceCapacityInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceCapacityInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceCapacityInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceCapacityInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1169,6 +1194,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string FileShareWitnessUsername { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus? KeyVaultSyncStatus { get { throw null; } set { } }
         public string ResourceKey { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1183,6 +1209,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.Core.ResourceIdentifier ClientSecretStoreId { get { throw null; } set { } }
         public System.Uri ClientSecretStoreUri { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus? SyncStatus { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1213,6 +1240,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         public DataBoxEdgeDeviceNetworkSettings() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter> NetworkAdapters { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1225,6 +1253,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubscriptionId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1236,6 +1265,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal DataBoxEdgeDeviceSecret() { }
         public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret EncryptedSecret { get { throw null; } }
         public string KeyVaultId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1310,6 +1340,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public double? TotalUpdateSizeInBytes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails> Updates { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> UpdateTitles { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1360,6 +1391,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal DataBoxEdgeEtcdInfo() { }
         public string EtcdInfoType { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1372,6 +1404,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Gateway { get { throw null; } }
         public System.Net.IPAddress IPAddress { get { throw null; } }
         public string Subnet { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1384,6 +1417,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Gateway { get { throw null; } }
         public string IPAddress { get { throw null; } }
         public int? PrefixLength { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1396,6 +1430,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Code { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem> ErrorDetails { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1408,6 +1443,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Recommendations { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1467,6 +1503,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal DataBoxEdgeLoadBalancerConfig() { }
         public string LoadBalancerConfigType { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1480,6 +1517,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string MdmAccount { get { throw null; } set { } }
         public string MetricNameSpace { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1493,6 +1531,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension> DimensionFilter { get { throw null; } }
         public string Instance { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1503,6 +1542,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         public DataBoxEdgeMetricCounterSet(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter> counters) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter> Counters { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1514,6 +1554,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeMetricDimension(string sourceType, string sourceName) { }
         public string SourceName { get { throw null; } set { } }
         public string SourceType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1528,6 +1569,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.Core.ResourceIdentifier RoleId { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType? RoleType { get { throw null; } }
         public Azure.Core.ResourceIdentifier ShareId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1570,6 +1612,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.Guid? NodeId { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus? RdmaStatus { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1599,6 +1642,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal DataBoxEdgeNetworkAdapterPosition() { }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup? NetworkGroup { get { throw null; } }
         public int? Port { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1670,6 +1714,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.Guid? NodeInstanceId { get { throw null; } }
         public string NodeSerialNumber { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus? NodeStatus { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1738,6 +1783,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState Status { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo TrackingInformation { get { throw null; } }
         public System.DateTimeOffset? UpdateOn { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1769,6 +1815,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.Core.ResourceIdentifier InProgressRefreshJobId { get { throw null; } set { } }
         public System.DateTimeOffset? LastCompletedRefreshJobTimeInUtc { get { throw null; } set { } }
         public string LastJob { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1780,6 +1827,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal DataBoxEdgeResourceMoveDetails() { }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus? OperationInProgress { get { throw null; } }
         public System.DateTimeOffset? OperationInProgressLockTimeoutInUtc { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1832,6 +1880,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         public DataBoxEdgeRoleSinkInfo(Azure.Core.ResourceIdentifier roleId) { }
         public Azure.Core.ResourceIdentifier RoleId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1883,6 +1932,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         public DataBoxEdgeSecuritySettings(Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret deviceAdminPassword) { }
         public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret DeviceAdminPassword { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1936,6 +1986,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Country { get { throw null; } set { } }
         public string PostalCode { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1947,6 +1998,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeSku() { }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName? Name { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier? Tier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1976,6 +2028,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal DataBoxEdgeSkuCapability() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1988,6 +2041,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ExtendedUnit { get { throw null; } }
         public string MeterId { get { throw null; } }
         public long? Quantity { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2000,6 +2054,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Sites { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2186,6 +2241,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ContainerName { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat DataFormat { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountCredentialId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2241,6 +2297,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string SerialNumber { get { throw null; } }
         public string TrackingId { get { throw null; } }
         public System.Uri TrackingUri { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2259,6 +2316,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public double? UpdateSizeInBytes { get { throw null; } }
         public string UpdateTitle { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType? UpdateType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2349,6 +2407,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeVmMemory() { }
         public long? CurrentMemoryUsageInMB { get { throw null; } set { } }
         public long? StartupMemoryInMB { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2360,6 +2419,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DeviceCapacityRequestContent(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> vmPlacementQuery) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> VmPlacementQuery { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult> VmPlacementResults { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2377,6 +2437,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ResourceName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public string Version { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeArcAddon System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeArcAddon>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeArcAddon>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeArcAddon System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeArcAddon>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2410,6 +2471,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.DateTimeOffset? LastRefreshedOn { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity MemoryCapacity { get { throw null; } set { } }
         public long? TotalProvisionedNonHpnCores { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2424,6 +2486,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public int? GpuTotalUnitsCount { get { throw null; } set { } }
         public string GpuType { get { throw null; } set { } }
         public int? GpuUsedUnitsCount { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterGpuCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterGpuCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterGpuCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterGpuCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterGpuCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2442,6 +2505,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public double? ClusterNonFailoverVmInMB { get { throw null; } set { } }
         public double? ClusterTotalMemoryInMB { get { throw null; } set { } }
         public double? ClusterUsedMemoryInMB { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2453,6 +2517,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public EdgeClusterStorageViewInfo() { }
         public double? ClusterFreeStorageInMB { get { throw null; } set { } }
         public double? ClusterTotalStorageInMB { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2483,6 +2548,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public EdgeComputeResourceInfo(int processorCount, long memoryInGB) { }
         public long MemoryInGB { get { throw null; } set { } }
         public int ProcessorCount { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2495,6 +2561,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string CustomContextTag { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SinkInfoRoleId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceInfoShareId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeFileEventTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileEventTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileEventTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeFileEventTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileEventTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2505,6 +2572,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         public EdgeFileSourceInfo(Azure.Core.ResourceIdentifier shareId) { }
         public Azure.Core.ResourceIdentifier ShareId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2520,6 +2588,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo IotEdgeDeviceDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState? ProvisioningState { get { throw null; } }
         public string Version { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeIotAddon System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotAddon>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotAddon>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeIotAddon System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotAddon>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2533,6 +2602,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string IotHostHub { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier IotHostHubId { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret SymmetricKeyConnectionString { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2550,6 +2620,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo IotEdgeDeviceDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? RoleStatus { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> ShareMappings { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeIotRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeIotRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2584,6 +2655,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo EtcdInfo { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo> Nodes { get { throw null; } }
         public string Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2595,6 +2667,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal EdgeKubernetesIPConfiguration() { }
         public string IPAddress { get { throw null; } }
         public string Port { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2607,6 +2680,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration> IPConfiguration { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType? NodeType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2641,6 +2715,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources KubernetesRoleResources { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? RoleStatus { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2653,6 +2728,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public long? MemoryInBytes { get { throw null; } }
         public int? ProcessorCount { get { throw null; } }
         public string VmProfile { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2664,6 +2740,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal EdgeKubernetesRoleNetwork() { }
         public Azure.ResourceManager.DataBoxEdge.Models.CniConfig CniConfig { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig LoadBalancerConfig { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2676,6 +2753,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute Compute { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork Network { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage Storage { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2687,6 +2765,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public EdgeKubernetesRoleStorage() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> Endpoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo> StorageClasses { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2699,6 +2778,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string KubernetesRoleStorageClassInfoType { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus? PosixCompliant { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2741,6 +2821,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState? State { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2793,6 +2874,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel? AccessLevel { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType? RemoteApplicationType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2805,6 +2887,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public string PrivateKey { get { throw null; } }
         public string PublicKey { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2820,6 +2903,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string HostName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo> NumaNodesData { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory> VmUsedMemory { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.HostCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.HostCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.HostCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.HostCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.HostCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2850,6 +2934,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.Uri ImageRepositoryUri { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret Password { get { throw null; } set { } }
         public string UserName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2900,6 +2985,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ImageName { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential ImageRepository { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2913,6 +2999,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ControllerEndpoint { get { throw null; } set { } }
         public string ResourceUniqueId { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? RoleStatus { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.MecRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.MecRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.MecRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.MecRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.MecRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2929,6 +3016,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public long? TotalMemoryInMB { get { throw null; } set { } }
         public System.Collections.Generic.IList<int> VCpuIndexesForHpn { get { throw null; } }
         public System.Collections.Generic.IList<int> VCpuIndexesForRoot { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2941,6 +3029,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string CustomContextTag { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SinkInfoRoleId { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo SourceInfo { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerEventTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerEventTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerEventTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerEventTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerEventTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2953,6 +3042,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Schedule { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
         public string Topic { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3019,6 +3109,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal ShareAccessRight() { }
         public Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType AccessType { get { throw null; } }
         public Azure.Core.ResourceIdentifier ShareId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3070,6 +3161,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal SubscriptionRegisteredFeatures() { }
         public string Name { get { throw null; } }
         public string State { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3082,6 +3174,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Include { get { throw null; } set { } }
         public System.DateTimeOffset? MaximumTimeStamp { get { throw null; } set { } }
         public System.DateTimeOffset? MinimumTimeStamp { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3097,6 +3190,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public int? PercentComplete { get { throw null; } }
         public double? TotalBytesDownloaded { get { throw null; } }
         public double? TotalBytesToDownload { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3109,6 +3203,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public int? NumberOfUpdatesInstalled { get { throw null; } }
         public int? NumberOfUpdatesToInstall { get { throw null; } }
         public int? PercentComplete { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3153,6 +3248,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public UploadCertificateContent(string certificate) { }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public string Certificate { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3170,6 +3266,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ResourceId { get { throw null; } }
         public System.Guid? ServicePrincipalClientId { get { throw null; } }
         public System.Guid? ServicePrincipalObjectId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3181,6 +3278,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public UserAccessRight(Azure.Core.ResourceIdentifier userId, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType accessType) { }
         public Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType AccessType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UserId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3194,6 +3292,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Message { get { throw null; } set { } }
         public string MessageCode { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VmSize { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

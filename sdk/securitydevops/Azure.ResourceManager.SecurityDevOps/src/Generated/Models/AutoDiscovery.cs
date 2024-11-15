@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public static bool operator ==(AutoDiscovery left, AutoDiscovery right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoDiscovery"/> values are not the same. </summary>
         public static bool operator !=(AutoDiscovery left, AutoDiscovery right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutoDiscovery"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoDiscovery"/>. </summary>
         public static implicit operator AutoDiscovery(string value) => new AutoDiscovery(value);
 
         /// <inheritdoc />

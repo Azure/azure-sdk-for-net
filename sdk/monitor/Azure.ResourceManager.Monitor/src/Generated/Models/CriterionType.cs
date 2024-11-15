@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(CriterionType left, CriterionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CriterionType"/> values are not the same. </summary>
         public static bool operator !=(CriterionType left, CriterionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CriterionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CriterionType"/>. </summary>
         public static implicit operator CriterionType(string value) => new CriterionType(value);
 
         /// <inheritdoc />

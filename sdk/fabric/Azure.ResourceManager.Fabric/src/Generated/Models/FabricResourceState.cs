@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Fabric.Models
         public static bool operator ==(FabricResourceState left, FabricResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FabricResourceState"/> values are not the same. </summary>
         public static bool operator !=(FabricResourceState left, FabricResourceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FabricResourceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FabricResourceState"/>. </summary>
         public static implicit operator FabricResourceState(string value) => new FabricResourceState(value);
 
         /// <inheritdoc />

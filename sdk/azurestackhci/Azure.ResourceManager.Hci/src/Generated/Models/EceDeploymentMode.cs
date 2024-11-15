@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(EceDeploymentMode left, EceDeploymentMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EceDeploymentMode"/> values are not the same. </summary>
         public static bool operator !=(EceDeploymentMode left, EceDeploymentMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EceDeploymentMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EceDeploymentMode"/>. </summary>
         public static implicit operator EceDeploymentMode(string value) => new EceDeploymentMode(value);
 
         /// <inheritdoc />

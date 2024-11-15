@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator ==(CommunicationIdentifierModelKind left, CommunicationIdentifierModelKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationIdentifierModelKind"/> values are not the same. </summary>
         public static bool operator !=(CommunicationIdentifierModelKind left, CommunicationIdentifierModelKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CommunicationIdentifierModelKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunicationIdentifierModelKind"/>. </summary>
         public static implicit operator CommunicationIdentifierModelKind(string value) => new CommunicationIdentifierModelKind(value);
 
         /// <inheritdoc />

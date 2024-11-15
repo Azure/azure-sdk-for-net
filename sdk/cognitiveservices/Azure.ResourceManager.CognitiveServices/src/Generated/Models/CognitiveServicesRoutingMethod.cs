@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator ==(CognitiveServicesRoutingMethod left, CognitiveServicesRoutingMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CognitiveServicesRoutingMethod"/> values are not the same. </summary>
         public static bool operator !=(CognitiveServicesRoutingMethod left, CognitiveServicesRoutingMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CognitiveServicesRoutingMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CognitiveServicesRoutingMethod"/>. </summary>
         public static implicit operator CognitiveServicesRoutingMethod(string value) => new CognitiveServicesRoutingMethod(value);
 
         /// <inheritdoc />

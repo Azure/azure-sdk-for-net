@@ -68,12 +68,19 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// If not specified, defaults to 1, which represents "Max Spreading" (using as many fault domains as possible).
         /// This property cannot be updated.
         /// </param>
+        /// <param name="additionalVirtualMachineCapabilities">
+        /// Specifies VMSS and VM API entity models support two additional capabilities as of today: ultraSSDEnabled and hibernationEnabled.
+        /// ultraSSDEnabled: Enables UltraSSD_LRS storage account type on the VMSS VMs.
+        /// hibernationEnabled: Enables the hibernation capability on the VMSS VMs.
+        /// Default value is null if not specified. This property cannot be updated once set.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetComputeProfile(ComputeFleetVmProfile baseVirtualMachineProfile, string computeApiVersion, int? platformFaultDomainCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeFleetComputeProfile(ComputeFleetVmProfile baseVirtualMachineProfile, string computeApiVersion, int? platformFaultDomainCount, AdditionalCapabilities additionalVirtualMachineCapabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BaseVirtualMachineProfile = baseVirtualMachineProfile;
             ComputeApiVersion = computeApiVersion;
             PlatformFaultDomainCount = platformFaultDomainCount;
+            AdditionalVirtualMachineCapabilities = additionalVirtualMachineCapabilities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -97,5 +104,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// This property cannot be updated.
         /// </summary>
         public int? PlatformFaultDomainCount { get; set; }
+        /// <summary>
+        /// Specifies VMSS and VM API entity models support two additional capabilities as of today: ultraSSDEnabled and hibernationEnabled.
+        /// ultraSSDEnabled: Enables UltraSSD_LRS storage account type on the VMSS VMs.
+        /// hibernationEnabled: Enables the hibernation capability on the VMSS VMs.
+        /// Default value is null if not specified. This property cannot be updated once set.
+        /// </summary>
+        public AdditionalCapabilities AdditionalVirtualMachineCapabilities { get; set; }
     }
 }

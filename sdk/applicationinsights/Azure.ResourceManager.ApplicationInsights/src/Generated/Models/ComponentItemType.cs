@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator ==(ComponentItemType left, ComponentItemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComponentItemType"/> values are not the same. </summary>
         public static bool operator !=(ComponentItemType left, ComponentItemType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComponentItemType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComponentItemType"/>. </summary>
         public static implicit operator ComponentItemType(string value) => new ComponentItemType(value);
 
         /// <inheritdoc />

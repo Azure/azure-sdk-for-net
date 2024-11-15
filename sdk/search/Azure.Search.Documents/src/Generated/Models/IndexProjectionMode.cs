@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(IndexProjectionMode left, IndexProjectionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IndexProjectionMode"/> values are not the same. </summary>
         public static bool operator !=(IndexProjectionMode left, IndexProjectionMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IndexProjectionMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IndexProjectionMode"/>. </summary>
         public static implicit operator IndexProjectionMode(string value) => new IndexProjectionMode(value);
 
         /// <inheritdoc />

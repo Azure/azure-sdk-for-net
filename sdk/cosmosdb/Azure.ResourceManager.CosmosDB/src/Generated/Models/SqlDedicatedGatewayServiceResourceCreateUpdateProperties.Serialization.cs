@@ -19,46 +19,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceResourceCreateUpdateProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DedicatedGatewayType))
             {
                 writer.WritePropertyName("dedicatedGatewayType"u8);
                 writer.WriteStringValue(DedicatedGatewayType.Value.ToString());
             }
-            if (Optional.IsDefined(InstanceSize))
-            {
-                writer.WritePropertyName("instanceSize"u8);
-                writer.WriteStringValue(InstanceSize.Value.ToString());
-            }
-            if (Optional.IsDefined(InstanceCount))
-            {
-                writer.WritePropertyName("instanceCount"u8);
-                writer.WriteNumberValue(InstanceCount.Value);
-            }
-            writer.WritePropertyName("serviceType"u8);
-            writer.WriteStringValue(ServiceType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         SqlDedicatedGatewayServiceResourceCreateUpdateProperties IJsonModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningComputeWeekDay left, MachineLearningComputeWeekDay right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningComputeWeekDay"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningComputeWeekDay left, MachineLearningComputeWeekDay right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningComputeWeekDay"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningComputeWeekDay"/>. </summary>
         public static implicit operator MachineLearningComputeWeekDay(string value) => new MachineLearningComputeWeekDay(value);
 
         /// <inheritdoc />

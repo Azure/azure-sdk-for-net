@@ -59,7 +59,7 @@ namespace Azure.Maps.Search
         private const string RomanianValue = "ro-RO";
         private const string RussianValue = "ru-RU";
         private const string SlovakValue = "sk-SK";
-        private const string SlovenianValue = "sl-SL";
+        private const string SlovenianValue = "sl-SI";
         private const string SerbianCyrillicValue = "sl-Cyrl-RS";
         private const string SwedishValue = "sv-SE";
         private const string ThaiValue = "th-TH";
@@ -147,7 +147,7 @@ namespace Azure.Maps.Search
         public static SearchLanguage Russian { get; } = new SearchLanguage(RussianValue);
         /// <summary> Return Slovak ("sk-SK"). </summary>
         public static SearchLanguage Slovak { get; } = new SearchLanguage(SlovakValue);
-        /// <summary> Return Slovenian ("sl-SL"). </summary>
+        /// <summary> Return Slovenian ("sl-SI"). </summary>
         public static SearchLanguage Slovenian { get; } = new SearchLanguage(SlovenianValue);
         /// <summary> Return Serbian (Cyrillic) ("sr-Cyrl-RS"). </summary>
         public static SearchLanguage SerbianCyrillic { get; } = new SearchLanguage(SerbianCyrillicValue);

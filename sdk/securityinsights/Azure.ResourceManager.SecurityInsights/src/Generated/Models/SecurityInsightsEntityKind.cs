@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(SecurityInsightsEntityKind left, SecurityInsightsEntityKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsEntityKind"/> values are not the same. </summary>
         public static bool operator !=(SecurityInsightsEntityKind left, SecurityInsightsEntityKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityInsightsEntityKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsEntityKind"/>. </summary>
         public static implicit operator SecurityInsightsEntityKind(string value) => new SecurityInsightsEntityKind(value);
 
         /// <inheritdoc />

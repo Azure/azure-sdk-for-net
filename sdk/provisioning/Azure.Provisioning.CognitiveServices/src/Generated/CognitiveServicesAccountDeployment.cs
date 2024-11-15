@@ -17,75 +17,163 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// CognitiveServicesAccountDeployment.
 /// </summary>
-public partial class CognitiveServicesAccountDeployment : Resource
+public partial class CognitiveServicesAccountDeployment : ProvisionableResource
 {
     /// <summary>
     /// The name of the deployment associated with the Cognitive Services
     /// Account.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Properties of Cognitive Services account deployment.
     /// </summary>
-    public BicepValue<CognitiveServicesAccountDeploymentProperties> Properties { get => _properties; set => _properties.Assign(value); }
-    private readonly BicepValue<CognitiveServicesAccountDeploymentProperties> _properties;
+    public CognitiveServicesAccountDeploymentProperties Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); AssignOrReplace(ref _properties, value); }
+    }
+    private CognitiveServicesAccountDeploymentProperties? _properties;
 
     /// <summary>
     /// The resource model definition representing SKU.
     /// </summary>
-    public BicepValue<CognitiveServicesSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<CognitiveServicesSku> _sku;
+    public CognitiveServicesSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private CognitiveServicesSku? _sku;
 
     /// <summary>
     /// Resource Etag.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent CognitiveServicesAccount.
     /// </summary>
-    public CognitiveServicesAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<CognitiveServicesAccount> _parent;
+    public CognitiveServicesAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<CognitiveServicesAccount>? _parent;
 
     /// <summary>
     /// Creates a new CognitiveServicesAccountDeployment.
     /// </summary>
-    /// <param name="resourceName">Name of the CognitiveServicesAccountDeployment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CognitiveServicesAccountDeployment
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CognitiveServicesAccountDeployment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CognitiveServicesAccountDeployment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.CognitiveServices/accounts/deployments", resourceVersion, context)
+    public CognitiveServicesAccountDeployment(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/deployments", resourceVersion ?? "2024-10-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _properties = BicepValue<CognitiveServicesAccountDeploymentProperties>.DefineProperty(this, "Properties", ["properties"]);
-        _sku = BicepValue<CognitiveServicesSku>.DefineProperty(this, "Sku", ["sku"]);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["etag"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<CognitiveServicesAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// CognitiveServicesAccountDeployment.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _properties = DefineModelProperty<CognitiveServicesAccountDeploymentProperties>("Properties", ["properties"]);
+        _sku = DefineModelProperty<CognitiveServicesSku>("Sku", ["sku"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<CognitiveServicesAccount>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported CognitiveServicesAccountDeployment resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-10-01.
+        /// </summary>
+        public static readonly string V2024_10_01 = "2024-10-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2022-10-01.
+        /// </summary>
+        public static readonly string V2022_10_01 = "2022-10-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2021-04-30.
+        /// </summary>
+        public static readonly string V2021_04_30 = "2021-04-30";
+
+        /// <summary>
+        /// 2017-04-18.
+        /// </summary>
+        public static readonly string V2017_04_18 = "2017-04-18";
     }
 
     /// <summary>
     /// Creates a reference to an existing CognitiveServicesAccountDeployment.
     /// </summary>
-    /// <param name="resourceName">Name of the CognitiveServicesAccountDeployment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CognitiveServicesAccountDeployment
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CognitiveServicesAccountDeployment.</param>
     /// <returns>The existing CognitiveServicesAccountDeployment resource.</returns>
-    public static CognitiveServicesAccountDeployment FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CognitiveServicesAccountDeployment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

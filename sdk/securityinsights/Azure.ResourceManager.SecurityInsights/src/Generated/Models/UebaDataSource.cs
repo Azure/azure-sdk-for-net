@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(UebaDataSource left, UebaDataSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UebaDataSource"/> values are not the same. </summary>
         public static bool operator !=(UebaDataSource left, UebaDataSource right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UebaDataSource"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UebaDataSource"/>. </summary>
         public static implicit operator UebaDataSource(string value) => new UebaDataSource(value);
 
         /// <inheritdoc />

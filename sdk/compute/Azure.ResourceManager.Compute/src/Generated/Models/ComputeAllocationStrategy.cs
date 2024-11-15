@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(ComputeAllocationStrategy left, ComputeAllocationStrategy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeAllocationStrategy"/> values are not the same. </summary>
         public static bool operator !=(ComputeAllocationStrategy left, ComputeAllocationStrategy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeAllocationStrategy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeAllocationStrategy"/>. </summary>
         public static implicit operator ComputeAllocationStrategy(string value) => new ComputeAllocationStrategy(value);
 
         /// <inheritdoc />

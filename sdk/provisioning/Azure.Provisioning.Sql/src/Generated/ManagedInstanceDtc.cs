@@ -16,88 +16,146 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceDtc.
 /// </summary>
-public partial class ManagedInstanceDtc : Resource
+public partial class ManagedInstanceDtc : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Active status of managed instance DTC.
     /// </summary>
-    public BicepValue<bool> DtcEnabled { get => _dtcEnabled; set => _dtcEnabled.Assign(value); }
-    private readonly BicepValue<bool> _dtcEnabled;
+    public BicepValue<bool> DtcEnabled 
+    {
+        get { Initialize(); return _dtcEnabled!; }
+        set { Initialize(); _dtcEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _dtcEnabled;
 
     /// <summary>
     /// External dns suffix search list of managed instance DTC.
     /// </summary>
-    public BicepList<string> ExternalDnsSuffixSearchList { get => _externalDnsSuffixSearchList; set => _externalDnsSuffixSearchList.Assign(value); }
-    private readonly BicepList<string> _externalDnsSuffixSearchList;
+    public BicepList<string> ExternalDnsSuffixSearchList 
+    {
+        get { Initialize(); return _externalDnsSuffixSearchList!; }
+        set { Initialize(); _externalDnsSuffixSearchList!.Assign(value); }
+    }
+    private BicepList<string>? _externalDnsSuffixSearchList;
 
     /// <summary>
     /// Security settings of managed instance DTC.
     /// </summary>
-    public BicepValue<ManagedInstanceDtcSecuritySettings> SecuritySettings { get => _securitySettings; set => _securitySettings.Assign(value); }
-    private readonly BicepValue<ManagedInstanceDtcSecuritySettings> _securitySettings;
+    public ManagedInstanceDtcSecuritySettings SecuritySettings 
+    {
+        get { Initialize(); return _securitySettings!; }
+        set { Initialize(); AssignOrReplace(ref _securitySettings, value); }
+    }
+    private ManagedInstanceDtcSecuritySettings? _securitySettings;
 
     /// <summary>
     /// Host name dns suffix of managed instance DTC.
     /// </summary>
-    public BicepValue<string> DtcHostNameDnsSuffix { get => _dtcHostNameDnsSuffix; }
-    private readonly BicepValue<string> _dtcHostNameDnsSuffix;
+    public BicepValue<string> DtcHostNameDnsSuffix 
+    {
+        get { Initialize(); return _dtcHostNameDnsSuffix!; }
+    }
+    private BicepValue<string>? _dtcHostNameDnsSuffix;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of managed instance DTC.
     /// </summary>
-    public BicepValue<JobExecutionProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<JobExecutionProvisioningState> _provisioningState;
+    public BicepValue<JobExecutionProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<JobExecutionProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ManagedInstance.
     /// </summary>
-    public ManagedInstance? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ManagedInstance> _parent;
+    public ManagedInstance? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
     /// Creates a new ManagedInstanceDtc.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceDtc.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedInstanceDtc resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceDtc.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceDtc(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/dtc", resourceVersion, context)
+    public ManagedInstanceDtc(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/dtc", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _dtcEnabled = BicepValue<bool>.DefineProperty(this, "DtcEnabled", ["properties", "dtcEnabled"]);
-        _externalDnsSuffixSearchList = BicepList<string>.DefineProperty(this, "ExternalDnsSuffixSearchList", ["properties", "externalDnsSuffixSearchList"]);
-        _securitySettings = BicepValue<ManagedInstanceDtcSecuritySettings>.DefineProperty(this, "SecuritySettings", ["properties", "securitySettings"]);
-        _dtcHostNameDnsSuffix = BicepValue<string>.DefineProperty(this, "DtcHostNameDnsSuffix", ["properties", "dtcHostNameDnsSuffix"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<JobExecutionProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ManagedInstance>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ManagedInstanceDtc.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _dtcEnabled = DefineProperty<bool>("DtcEnabled", ["properties", "dtcEnabled"]);
+        _externalDnsSuffixSearchList = DefineListProperty<string>("ExternalDnsSuffixSearchList", ["properties", "externalDnsSuffixSearchList"]);
+        _securitySettings = DefineModelProperty<ManagedInstanceDtcSecuritySettings>("SecuritySettings", ["properties", "securitySettings"]);
+        _dtcHostNameDnsSuffix = DefineProperty<string>("DtcHostNameDnsSuffix", ["properties", "dtcHostNameDnsSuffix"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<JobExecutionProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ManagedInstance>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ManagedInstanceDtc resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing ManagedInstanceDtc.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceDtc.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedInstanceDtc resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceDtc.</param>
     /// <returns>The existing ManagedInstanceDtc resource.</returns>
-    public static ManagedInstanceDtc FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceDtc FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

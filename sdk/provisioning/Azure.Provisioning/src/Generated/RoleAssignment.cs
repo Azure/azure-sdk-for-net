@@ -15,25 +15,37 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// RoleAssignment.
 /// </summary>
-public partial class RoleAssignment : Resource
+public partial class RoleAssignment : ProvisionableResource
 {
     /// <summary>
     /// The name of the role assignment. It can be any valid GUID.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The principal ID.
     /// </summary>
-    public BicepValue<Guid> PrincipalId { get => _principalId; set => _principalId.Assign(value); }
-    private readonly BicepValue<Guid> _principalId;
+    public BicepValue<Guid> PrincipalId 
+    {
+        get { Initialize(); return _principalId!; }
+        set { Initialize(); _principalId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _principalId;
 
     /// <summary>
     /// The role definition ID.
     /// </summary>
-    public BicepValue<ResourceIdentifier> RoleDefinitionId { get => _roleDefinitionId; set => _roleDefinitionId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _roleDefinitionId;
+    public BicepValue<ResourceIdentifier> RoleDefinitionId 
+    {
+        get { Initialize(); return _roleDefinitionId!; }
+        set { Initialize(); _roleDefinitionId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _roleDefinitionId;
 
     /// <summary>
     /// The conditions on the role assignment. This limits the resources it can
@@ -41,75 +53,117 @@ public partial class RoleAssignment : Resource
     /// @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName]
     /// StringEqualsIgnoreCase &apos;foo_storage_container&apos;.
     /// </summary>
-    public BicepValue<string> Condition { get => _condition; set => _condition.Assign(value); }
-    private readonly BicepValue<string> _condition;
+    public BicepValue<string> Condition 
+    {
+        get { Initialize(); return _condition!; }
+        set { Initialize(); _condition!.Assign(value); }
+    }
+    private BicepValue<string>? _condition;
 
     /// <summary>
     /// Version of the condition. Currently the only accepted value is
     /// &apos;2.0&apos;.
     /// </summary>
-    public BicepValue<string> ConditionVersion { get => _conditionVersion; set => _conditionVersion.Assign(value); }
-    private readonly BicepValue<string> _conditionVersion;
+    public BicepValue<string> ConditionVersion 
+    {
+        get { Initialize(); return _conditionVersion!; }
+        set { Initialize(); _conditionVersion!.Assign(value); }
+    }
+    private BicepValue<string>? _conditionVersion;
 
     /// <summary>
     /// Id of the delegated managed identity resource.
     /// </summary>
-    public BicepValue<ResourceIdentifier> DelegatedManagedIdentityResourceId { get => _delegatedManagedIdentityResourceId; set => _delegatedManagedIdentityResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _delegatedManagedIdentityResourceId;
+    public BicepValue<ResourceIdentifier> DelegatedManagedIdentityResourceId 
+    {
+        get { Initialize(); return _delegatedManagedIdentityResourceId!; }
+        set { Initialize(); _delegatedManagedIdentityResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _delegatedManagedIdentityResourceId;
 
     /// <summary>
     /// Description of role assignment.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// The principal type of the assigned principal ID.
     /// </summary>
-    public BicepValue<RoleManagementPrincipalType> PrincipalType { get => _principalType; set => _principalType.Assign(value); }
-    private readonly BicepValue<RoleManagementPrincipalType> _principalType;
+    public BicepValue<RoleManagementPrincipalType> PrincipalType 
+    {
+        get { Initialize(); return _principalType!; }
+        set { Initialize(); _principalType!.Assign(value); }
+    }
+    private BicepValue<RoleManagementPrincipalType>? _principalType;
 
     /// <summary>
     /// Id of the user who created the assignment.
     /// </summary>
-    public BicepValue<string> CreatedBy { get => _createdBy; }
-    private readonly BicepValue<string> _createdBy;
+    public BicepValue<string> CreatedBy 
+    {
+        get { Initialize(); return _createdBy!; }
+    }
+    private BicepValue<string>? _createdBy;
 
     /// <summary>
     /// Time it was created.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The role assignment scope.
     /// </summary>
-    public BicepValue<string> Scope { get => _scope; set => _scope.Assign(value); }
-    private readonly BicepValue<string> _scope;
+    public BicepValue<string> Scope 
+    {
+        get { Initialize(); return _scope!; }
+        set { Initialize(); _scope!.Assign(value); }
+    }
+    private BicepValue<string>? _scope;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Id of the user who updated the assignment.
     /// </summary>
-    public BicepValue<string> UpdatedBy { get => _updatedBy; }
-    private readonly BicepValue<string> _updatedBy;
+    public BicepValue<string> UpdatedBy 
+    {
+        get { Initialize(); return _updatedBy!; }
+    }
+    private BicepValue<string>? _updatedBy;
 
     /// <summary>
     /// Time it was updated.
     /// </summary>
-    public BicepValue<DateTimeOffset> UpdatedOn { get => _updatedOn; }
-    private readonly BicepValue<DateTimeOffset> _updatedOn;
+    public BicepValue<DateTimeOffset> UpdatedOn 
+    {
+        get { Initialize(); return _updatedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _updatedOn;
 
     /// <summary>
     /// Get the default value for the Name property.
@@ -119,27 +173,38 @@ public partial class RoleAssignment : Resource
     /// <summary>
     /// Creates a new RoleAssignment.
     /// </summary>
-    /// <param name="resourceName">Name of the RoleAssignment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RoleAssignment resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RoleAssignment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public RoleAssignment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Authorization/roleAssignments", resourceVersion ?? "2022-04-01", context)
+    public RoleAssignment(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Authorization/roleAssignments", resourceVersion ?? "2022-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true, defaultValue: GetNameDefaultValue());
-        _principalId = BicepValue<Guid>.DefineProperty(this, "PrincipalId", ["properties", "principalId"], isRequired: true);
-        _roleDefinitionId = BicepValue<ResourceIdentifier>.DefineProperty(this, "RoleDefinitionId", ["properties", "roleDefinitionId"], isRequired: true);
-        _condition = BicepValue<string>.DefineProperty(this, "Condition", ["properties", "condition"]);
-        _conditionVersion = BicepValue<string>.DefineProperty(this, "ConditionVersion", ["properties", "conditionVersion"]);
-        _delegatedManagedIdentityResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "DelegatedManagedIdentityResourceId", ["properties", "delegatedManagedIdentityResourceId"]);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _principalType = BicepValue<RoleManagementPrincipalType>.DefineProperty(this, "PrincipalType", ["properties", "principalType"]);
-        _createdBy = BicepValue<string>.DefineProperty(this, "CreatedBy", ["properties", "createdBy"], isOutput: true);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdOn"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _scope = BicepValue<string>.DefineProperty(this, "Scope", ["scope"]);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _updatedBy = BicepValue<string>.DefineProperty(this, "UpdatedBy", ["properties", "updatedBy"], isOutput: true);
-        _updatedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "UpdatedOn", ["properties", "updatedOn"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of RoleAssignment.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, defaultValue: GetNameDefaultValue());
+        _principalId = DefineProperty<Guid>("PrincipalId", ["properties", "principalId"], isRequired: true);
+        _roleDefinitionId = DefineProperty<ResourceIdentifier>("RoleDefinitionId", ["properties", "roleDefinitionId"], isRequired: true);
+        _condition = DefineProperty<string>("Condition", ["properties", "condition"]);
+        _conditionVersion = DefineProperty<string>("ConditionVersion", ["properties", "conditionVersion"]);
+        _delegatedManagedIdentityResourceId = DefineProperty<ResourceIdentifier>("DelegatedManagedIdentityResourceId", ["properties", "delegatedManagedIdentityResourceId"]);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _principalType = DefineProperty<RoleManagementPrincipalType>("PrincipalType", ["properties", "principalType"]);
+        _createdBy = DefineProperty<string>("CreatedBy", ["properties", "createdBy"], isOutput: true);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdOn"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _scope = DefineProperty<string>("Scope", ["scope"]);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _updatedBy = DefineProperty<string>("UpdatedBy", ["properties", "updatedBy"], isOutput: true);
+        _updatedOn = DefineProperty<DateTimeOffset>("UpdatedOn", ["properties", "updatedOn"], isOutput: true);
     }
 
     /// <summary>
@@ -186,9 +251,14 @@ public partial class RoleAssignment : Resource
     /// <summary>
     /// Creates a reference to an existing RoleAssignment.
     /// </summary>
-    /// <param name="resourceName">Name of the RoleAssignment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RoleAssignment resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RoleAssignment.</param>
     /// <returns>The existing RoleAssignment resource.</returns>
-    public static RoleAssignment FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static RoleAssignment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static bool operator ==(PurviewKafkaEventHubType left, PurviewKafkaEventHubType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PurviewKafkaEventHubType"/> values are not the same. </summary>
         public static bool operator !=(PurviewKafkaEventHubType left, PurviewKafkaEventHubType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PurviewKafkaEventHubType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PurviewKafkaEventHubType"/>. </summary>
         public static implicit operator PurviewKafkaEventHubType(string value) => new PurviewKafkaEventHubType(value);
 
         /// <inheritdoc />

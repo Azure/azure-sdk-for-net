@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(BillingProfileStatus left, BillingProfileStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingProfileStatus"/> values are not the same. </summary>
         public static bool operator !=(BillingProfileStatus left, BillingProfileStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BillingProfileStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingProfileStatus"/>. </summary>
         public static implicit operator BillingProfileStatus(string value) => new BillingProfileStatus(value);
 
         /// <inheritdoc />

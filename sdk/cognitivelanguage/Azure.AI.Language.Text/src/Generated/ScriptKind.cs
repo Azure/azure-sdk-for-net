@@ -114,7 +114,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(ScriptKind left, ScriptKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptKind"/> values are not the same. </summary>
         public static bool operator !=(ScriptKind left, ScriptKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScriptKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptKind"/>. </summary>
         public static implicit operator ScriptKind(string value) => new ScriptKind(value);
 
         /// <inheritdoc />

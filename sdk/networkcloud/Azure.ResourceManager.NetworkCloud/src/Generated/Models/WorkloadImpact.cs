@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(WorkloadImpact left, WorkloadImpact right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadImpact"/> values are not the same. </summary>
         public static bool operator !=(WorkloadImpact left, WorkloadImpact right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkloadImpact"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadImpact"/>. </summary>
         public static implicit operator WorkloadImpact(string value) => new WorkloadImpact(value);
 
         /// <inheritdoc />

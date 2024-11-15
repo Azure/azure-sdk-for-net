@@ -16,19 +16,18 @@ namespace System.ClientModel.Primitives;
 /// properties such as <code>Value</code> or <code>Status</code> as applicable
 /// for a given service operation.
 /// </summary>
-public abstract class OperationResult : ClientResult
+public abstract class OperationResult
 {
+    private PipelineResponse _response;
+
     /// <summary>
-    /// Create a new instance of <see cref="OperationResult"/>.
+    /// Creates a new instance of <see cref="OperationResult"/>.
     /// </summary>
     /// <param name="response">The <see cref="PipelineResponse"/> received from
     /// the service in response to the request that started the operation.</param>
-    /// <remarks>Derived types will call
-    /// <see cref="ClientResult.SetRawResponse(PipelineResponse)"/> when a new
-    /// response is received that updates the status of the operation.</remarks>
     protected OperationResult(PipelineResponse response)
-        : base(response)
     {
+        _response = response;
     }
 
     /// <summary>
@@ -54,6 +53,9 @@ public abstract class OperationResult : ClientResult
     /// <value>A token that can be used to rehydrate the operation, for example
     /// to monitor its progress or to obtain its final result, from a process
     /// different than the one that started the operation.</value>
+    /// <remarks>This property is abstract so that derived types that do not
+    /// support rehydration can return null without using a backing field for
+    /// an unused <see cref="ContinuationToken"/>.</remarks>
     public abstract ContinuationToken? RehydrationToken { get; protected set; }
 
     /// <summary>
@@ -158,5 +160,26 @@ public abstract class OperationResult : ClientResult
 
             SetRawResponse(result.GetRawResponse());
         }
+    }
+
+    /// <summary>
+    /// Gets the <see cref="PipelineResponse"/> corresponding to the most
+    /// recent update received from the service.
+    /// </summary>
+    /// <returns>The most recent <see cref="PipelineResponse"/> received
+    /// from the service.
+    /// </returns>
+    public PipelineResponse GetRawResponse() => _response;
+
+    /// <summary>
+    /// Update the value returned from <see cref="GetRawResponse"/>.
+    /// </summary>
+    /// <param name="response">The <see cref="PipelineResponse"/> to return
+    /// from <see cref="GetRawResponse"/>.</param>
+    protected void SetRawResponse(PipelineResponse response)
+    {
+        Argument.AssertNotNull(response, nameof(response));
+
+        _response = response;
     }
 }

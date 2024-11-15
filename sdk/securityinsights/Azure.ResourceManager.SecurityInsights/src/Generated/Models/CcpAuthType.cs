@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(CcpAuthType left, CcpAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CcpAuthType"/> values are not the same. </summary>
         public static bool operator !=(CcpAuthType left, CcpAuthType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CcpAuthType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CcpAuthType"/>. </summary>
         public static implicit operator CcpAuthType(string value) => new CcpAuthType(value);
 
         /// <inheritdoc />

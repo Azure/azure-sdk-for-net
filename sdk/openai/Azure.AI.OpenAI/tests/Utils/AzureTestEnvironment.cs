@@ -131,7 +131,7 @@ public class AzureTestEnvironment
         get
         {
             string? modeString = TestContext.Parameters["TestMode"]
-                    ?? Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+                ?? Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
 
             if (Enum.TryParse(modeString, true, out RecordedTestMode mode))
             {
@@ -139,6 +139,25 @@ public class AzureTestEnvironment
             }
 
             return RecordedTestMode.Playback;
+        }
+    }
+
+    /// <summary>
+    /// Gets whether or not we should automatically record tests.
+    /// </summary>
+    public static bool DefaultAutomaticRecordEnabled
+    {
+        get
+        {
+            string? enabledString = TestContext.Parameters["DisableAutoRecording"]
+                ?? Environment.GetEnvironmentVariable("AZURE_DISABLE_AUTO_RECORDING");
+
+            if (bool.TryParse(enabledString, out bool enabled))
+            {
+                return !enabled;
+            }
+
+            return true;
         }
     }
 

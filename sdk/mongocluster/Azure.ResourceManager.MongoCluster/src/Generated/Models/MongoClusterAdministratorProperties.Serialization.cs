@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         void IJsonModel<MongoClusterAdministratorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MongoClusterAdministratorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MongoClusterAdministratorProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MongoClusterAdministratorProperties IJsonModel<MongoClusterAdministratorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

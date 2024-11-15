@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(NetworkSecurityPerimeterConfigProvisioningState left, NetworkSecurityPerimeterConfigProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterConfigProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(NetworkSecurityPerimeterConfigProvisioningState left, NetworkSecurityPerimeterConfigProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterConfigProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkSecurityPerimeterConfigProvisioningState"/>. </summary>
         public static implicit operator NetworkSecurityPerimeterConfigProvisioningState(string value) => new NetworkSecurityPerimeterConfigProvisioningState(value);
 
         /// <inheritdoc />

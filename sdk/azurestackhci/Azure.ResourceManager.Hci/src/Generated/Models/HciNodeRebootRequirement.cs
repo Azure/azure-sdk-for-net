@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(HciNodeRebootRequirement left, HciNodeRebootRequirement right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciNodeRebootRequirement"/> values are not the same. </summary>
         public static bool operator !=(HciNodeRebootRequirement left, HciNodeRebootRequirement right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HciNodeRebootRequirement"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciNodeRebootRequirement"/>. </summary>
         public static implicit operator HciNodeRebootRequirement(string value) => new HciNodeRebootRequirement(value);
 
         /// <inheritdoc />

@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         void IJsonModel<DatabaseMigrationSqlDBProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlDBProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatabaseMigrationSqlDBProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(MigrationStatusDetails))
             {
                 writer.WritePropertyName("migrationStatusDetails"u8);
@@ -51,89 +60,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Scope))
-            {
-                writer.WritePropertyName("scope"u8);
-                writer.WriteStringValue(Scope);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MigrationStatus))
-            {
-                writer.WritePropertyName("migrationStatus"u8);
-                writer.WriteStringValue(MigrationStatus);
-            }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
-            {
-                writer.WritePropertyName("startedOn"u8);
-                writer.WriteStringValue(StartedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(EndedOn))
-            {
-                writer.WritePropertyName("endedOn"u8);
-                writer.WriteStringValue(EndedOn.Value, "O");
-            }
-            if (Optional.IsDefined(SourceSqlConnection))
-            {
-                writer.WritePropertyName("sourceSqlConnection"u8);
-                writer.WriteObjectValue(SourceSqlConnection, options);
-            }
-            if (Optional.IsDefined(SourceDatabaseName))
-            {
-                writer.WritePropertyName("sourceDatabaseName"u8);
-                writer.WriteStringValue(SourceDatabaseName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SourceServerName))
-            {
-                writer.WritePropertyName("sourceServerName"u8);
-                writer.WriteStringValue(SourceServerName);
-            }
-            if (Optional.IsDefined(MigrationService))
-            {
-                writer.WritePropertyName("migrationService"u8);
-                writer.WriteStringValue(MigrationService);
-            }
-            if (Optional.IsDefined(MigrationOperationId))
-            {
-                writer.WritePropertyName("migrationOperationId"u8);
-                writer.WriteStringValue(MigrationOperationId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MigrationFailureError))
-            {
-                writer.WritePropertyName("migrationFailureError"u8);
-                writer.WriteObjectValue(MigrationFailureError, options);
-            }
-            if (Optional.IsDefined(TargetDatabaseCollation))
-            {
-                writer.WritePropertyName("targetDatabaseCollation"u8);
-                writer.WriteStringValue(TargetDatabaseCollation);
-            }
-            if (Optional.IsDefined(ProvisioningError))
-            {
-                writer.WritePropertyName("provisioningError"u8);
-                writer.WriteStringValue(ProvisioningError);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         DatabaseMigrationSqlDBProperties IJsonModel<DatabaseMigrationSqlDBProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -3,8 +3,8 @@
 
 using System.ClientModel;
 using System.IO;
+using System.Text.Json;
 using Azure.AI.OpenAI.Tests.Utils;
-using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests.Models;
 
@@ -19,7 +19,7 @@ public class FineTuningOptions
     public BinaryContent ToBinaryContent()
     {
         MemoryStream stream = new();
-        JsonHelpers.Serialize(stream, this, JsonOptions.OpenAIJsonOptions);
+        JsonSerializer.Serialize(stream, this, JsonOptions.OpenAIJsonOptions);
         stream.Seek(0, SeekOrigin.Begin);
         return BinaryContent.Create(stream);
     }

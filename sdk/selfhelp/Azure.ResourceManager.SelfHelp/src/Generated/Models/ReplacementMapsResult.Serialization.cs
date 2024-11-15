@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         void IJsonModel<ReplacementMapsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ReplacementMapsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReplacementMapsResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(WebResults))
             {
                 writer.WritePropertyName("webResults"u8);
@@ -71,7 +79,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ReplacementMapsResult IJsonModel<ReplacementMapsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

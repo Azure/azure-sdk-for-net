@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public string PolicyName { get { throw null; } }
         public string PrimaryKey { get { throw null; } set { } }
         public string SecondaryKey { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -86,6 +87,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public string RunId { get { throw null; } }
         public Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingState? State { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -142,6 +144,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public System.DateTimeOffset? LastModified { get { throw null; } }
         public Azure.ResourceManager.CustomerInsights.Models.ConnectorState? State { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -217,6 +220,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public string ProvisioningState { get { throw null; } }
         public int? TenantFeatures { get { throw null; } set { } }
         public string WebEndpoint { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.HubData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.HubData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.HubData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.HubData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.HubData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -337,6 +341,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public System.Guid? TenantId { get { throw null; } }
         public string TimestampFieldName { get { throw null; } set { } }
         public string TypeName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -401,6 +406,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public System.Guid? TenantId { get { throw null; } }
         public Azure.ResourceManager.CustomerInsights.Models.KpiThresholds ThresHolds { get { throw null; } set { } }
         public string Unit { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.KpiResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.KpiResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.KpiResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.KpiResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.KpiResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -461,6 +467,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public Azure.ResourceManager.CustomerInsights.Models.EntityType? TargetEntityType { get { throw null; } set { } }
         public string TargetEntityTypeName { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.LinkResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.LinkResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.LinkResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.LinkResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.LinkResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -523,6 +530,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public string ScoreLabel { get { throw null; } set { } }
         public Azure.ResourceManager.CustomerInsights.Models.PredictionSystemGeneratedEntities SystemGeneratedEntities { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -592,6 +600,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public System.Guid? TenantId { get { throw null; } }
         public string TimestampFieldName { get { throw null; } set { } }
         public string TypeName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -650,6 +659,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public string RelationshipGuidId { get { throw null; } }
         public string RelationshipName { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -707,6 +717,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public string RelationshipGuidId { get { throw null; } }
         public string RelationshipName { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -772,6 +783,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public System.Guid? TenantId { get { throw null; } }
         public Azure.ResourceManager.CustomerInsights.Models.ResourceSetDescription Views { get { throw null; } set { } }
         public Azure.ResourceManager.CustomerInsights.Models.ResourceSetDescription WidgetTypes { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -821,6 +833,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public System.Guid? TenantId { get { throw null; } }
         public string UserId { get { throw null; } set { } }
         public string ViewName { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.ViewResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ViewResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ViewResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.ViewResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ViewResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -873,6 +886,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public System.Guid? TenantId { get { throw null; } }
         public string WidgetTypeName { get { throw null; } }
         public string WidgetVersion { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -972,6 +986,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public string PrincipalId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> PrincipalMetadata { get { throw null; } }
         public string PrincipalType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.AssignmentPrincipal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.AssignmentPrincipal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.AssignmentPrincipal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.AssignmentPrincipal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.AssignmentPrincipal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -985,6 +1000,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public string PolicyName { get { throw null; } }
         public string PrimaryKey { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.AuthorizationPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.AuthorizationPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.AuthorizationPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.AuthorizationPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.AuthorizationPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1004,6 +1020,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         internal CanonicalProfileDefinition() { }
         public int? CanonicalProfileId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CustomerInsights.Models.CanonicalProfileDefinitionPropertiesItem> Properties { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.CanonicalProfileDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.CanonicalProfileDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.CanonicalProfileDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.CanonicalProfileDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.CanonicalProfileDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1018,6 +1035,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public int? Rank { get { throw null; } }
         public string Value { get { throw null; } }
         public Azure.ResourceManager.CustomerInsights.Models.CanonicalPropertyValueType? ValueType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.CanonicalProfileDefinitionPropertiesItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.CanonicalProfileDefinitionPropertiesItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.CanonicalProfileDefinitionPropertiesItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.CanonicalProfileDefinitionPropertiesItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.CanonicalProfileDefinitionPropertiesItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1061,6 +1079,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public ConnectorMappingAvailability(int interval) { }
         public Azure.ResourceManager.CustomerInsights.Models.FrequencyType? Frequency { get { throw null; } set { } }
         public int Interval { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingAvailability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingAvailability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingAvailability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingAvailability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingAvailability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1072,6 +1091,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public ConnectorMappingCompleteOperation() { }
         public Azure.ResourceManager.CustomerInsights.Models.CompletionOperationType? CompletionOperationType { get { throw null; } set { } }
         public string DestinationFolder { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingCompleteOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingCompleteOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingCompleteOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingCompleteOperation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingCompleteOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1083,6 +1103,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public ConnectorMappingErrorManagement(Azure.ResourceManager.CustomerInsights.Models.ErrorManagementType errorManagementType) { }
         public int? ErrorLimit { get { throw null; } set { } }
         public Azure.ResourceManager.CustomerInsights.Models.ErrorManagementType ErrorManagementType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingErrorManagement System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingErrorManagement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingErrorManagement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingErrorManagement System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingErrorManagement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1098,6 +1119,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public Azure.ResourceManager.CustomerInsights.Models.FormatType FormatType { get { throw null; } }
         public string QuoteCharacter { get { throw null; } set { } }
         public string QuoteEscapeCharacter { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1115,6 +1137,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingFormat Format { get { throw null; } set { } }
         public bool? HasHeader { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingStructure> Structure { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1138,6 +1161,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public string CustomFormatSpecifier { get { throw null; } set { } }
         public bool? IsEncrypted { get { throw null; } set { } }
         public string PropertyName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingStructure System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingStructure>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingStructure>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingStructure System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.ConnectorMappingStructure>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1184,6 +1208,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public string Name { get { throw null; } }
         public int? Precedence { get { throw null; } }
         public Azure.ResourceManager.CustomerInsights.Models.Status? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.DataSourcePrecedence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.DataSourcePrecedence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.DataSourcePrecedence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.DataSourcePrecedence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.DataSourcePrecedence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1253,6 +1278,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public string EntityType { get { throw null; } set { } }
         public string EntityTypeName { get { throw null; } set { } }
         public string RelativePath { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.GetImageUploadUrlInput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.GetImageUploadUrlInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.GetImageUploadUrlInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.GetImageUploadUrlInput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.GetImageUploadUrlInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1265,6 +1291,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public int? MaxUnits { get { throw null; } set { } }
         public int? MinUnits { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.HubBillingInfoFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.HubBillingInfoFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.HubBillingInfoFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.HubBillingInfoFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.HubBillingInfoFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1277,6 +1304,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public System.Uri ContentUri { get { throw null; } }
         public bool? ImageExists { get { throw null; } }
         public string RelativePath { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ImageDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ImageDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ImageDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ImageDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.ImageDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1293,6 +1321,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public KpiAlias(string aliasName, string expression) { }
         public string AliasName { get { throw null; } set { } }
         public string Expression { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.KpiAlias System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.KpiAlias>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.KpiAlias>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.KpiAlias System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.KpiAlias>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1321,6 +1350,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public System.Guid? TenantId { get { throw null; } }
         public Azure.ResourceManager.CustomerInsights.Models.KpiThresholds ThresHolds { get { throw null; } }
         public string Unit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.KpiDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.KpiDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.KpiDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.KpiDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.KpiDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1332,6 +1362,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public KpiExtract(string extractName, string expression) { }
         public string Expression { get { throw null; } set { } }
         public string ExtractName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.KpiExtract System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.KpiExtract>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.KpiExtract>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.KpiExtract System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.KpiExtract>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1355,6 +1386,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, string> DisplayName { get { throw null; } }
         public string FieldName { get { throw null; } }
         public string FieldType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.KpiGroupByMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.KpiGroupByMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.KpiGroupByMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.KpiGroupByMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.KpiGroupByMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1365,6 +1397,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal KpiParticipantProfilesMetadata() { }
         public string TypeName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.KpiParticipantProfilesMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.KpiParticipantProfilesMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.KpiParticipantProfilesMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.KpiParticipantProfilesMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.KpiParticipantProfilesMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1377,6 +1410,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public bool IncreasingKpi { get { throw null; } set { } }
         public decimal LowerLimit { get { throw null; } set { } }
         public decimal UpperLimit { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.KpiThresholds System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.KpiThresholds>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.KpiThresholds>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.KpiThresholds System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.KpiThresholds>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1397,6 +1431,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.CustomerInsights.Models.ParticipantPropertyReference> ParticipantPropertyReferences { get { throw null; } }
         public string ProfileTypeName { get { throw null; } set { } }
         public string Role { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.Participant System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.Participant>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.Participant>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.Participant System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.Participant>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1408,6 +1443,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public ParticipantProfilePropertyReference(string interactionPropertyName, string profilePropertyName) { }
         public string InteractionPropertyName { get { throw null; } set { } }
         public string ProfilePropertyName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ParticipantProfilePropertyReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ParticipantProfilePropertyReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ParticipantProfilePropertyReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ParticipantProfilePropertyReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.ParticipantProfilePropertyReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1419,6 +1455,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public ParticipantPropertyReference(string sourcePropertyName, string targetPropertyName) { }
         public string SourcePropertyName { get { throw null; } set { } }
         public string TargetPropertyName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ParticipantPropertyReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ParticipantPropertyReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ParticipantPropertyReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ParticipantPropertyReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.ParticipantPropertyReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1437,6 +1474,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CustomerInsights.Models.PredictionDistributionDefinitionDistributionsItem> Distributions { get { throw null; } }
         public long? TotalNegatives { get { throw null; } }
         public long? TotalPositives { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionDistributionDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionDistributionDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionDistributionDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionDistributionDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.PredictionDistributionDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1451,6 +1489,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public long? Positives { get { throw null; } }
         public long? PositivesAboveThreshold { get { throw null; } }
         public int? ScoreThreshold { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionDistributionDefinitionDistributionsItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionDistributionDefinitionDistributionsItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionDistributionDefinitionDistributionsItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionDistributionDefinitionDistributionsItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.PredictionDistributionDefinitionDistributionsItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1463,6 +1502,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public string GradeName { get { throw null; } set { } }
         public int? MaxScoreThreshold { get { throw null; } set { } }
         public int? MinScoreThreshold { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionGradesItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionGradesItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionGradesItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionGradesItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.PredictionGradesItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1475,6 +1515,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public string Grade { get { throw null; } set { } }
         public string Reason { get { throw null; } set { } }
         public string Score { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionMappings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionMappings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionMappings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionMappings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.PredictionMappings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1529,6 +1570,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public decimal? TrainingAccuracy { get { throw null; } }
         public int? TrainingSetCount { get { throw null; } }
         public int? ValidationSetCount { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionModelStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionModelStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionModelStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionModelStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.PredictionModelStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1541,6 +1583,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public System.Collections.Generic.IReadOnlyList<string> GeneratedInteractionTypes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> GeneratedKpis { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> GeneratedLinks { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionSystemGeneratedEntities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionSystemGeneratedEntities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionSystemGeneratedEntities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionSystemGeneratedEntities System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.PredictionSystemGeneratedEntities>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1555,6 +1598,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public long? PrimaryProfileInstanceCount { get { throw null; } }
         public string ScoreName { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionTrainingResults System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionTrainingResults>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PredictionTrainingResults>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PredictionTrainingResults System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.PredictionTrainingResults>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1566,6 +1610,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public ProfileEnumValidValuesFormat() { }
         public System.Collections.Generic.IDictionary<string, string> LocalizedValueNames { get { throw null; } }
         public int? Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ProfileEnumValidValuesFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ProfileEnumValidValuesFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ProfileEnumValidValuesFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ProfileEnumValidValuesFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.ProfileEnumValidValuesFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1591,6 +1636,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public int? MaxLength { get { throw null; } set { } }
         public string PropertyId { get { throw null; } set { } }
         public string SchemaItemPropLink { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PropertyDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PropertyDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.PropertyDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.PropertyDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.PropertyDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1625,6 +1671,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public string InteractionFieldName { get { throw null; } set { } }
         public Azure.ResourceManager.CustomerInsights.Models.LinkType? LinkType { get { throw null; } set { } }
         public string RelationshipFieldName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.RelationshipLinkFieldMapping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.RelationshipLinkFieldMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.RelationshipLinkFieldMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.RelationshipLinkFieldMapping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.RelationshipLinkFieldMapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1639,6 +1686,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CustomerInsights.Models.ParticipantProfilePropertyReference> ProfilePropertyReferences { get { throw null; } }
         public string RelatedProfileName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CustomerInsights.Models.ParticipantProfilePropertyReference> RelatedProfilePropertyReferences { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.RelationshipsLookup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.RelationshipsLookup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.RelationshipsLookup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.RelationshipsLookup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.RelationshipsLookup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1650,6 +1698,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public RelationshipTypeFieldMapping(string profileFieldName, string relatedProfileKeyProperty) { }
         public string ProfileFieldName { get { throw null; } set { } }
         public string RelatedProfileKeyProperty { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.RelationshipTypeFieldMapping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.RelationshipTypeFieldMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.RelationshipTypeFieldMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.RelationshipTypeFieldMapping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.RelationshipTypeFieldMapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1660,6 +1709,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         public RelationshipTypeMapping(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.Models.RelationshipTypeFieldMapping> fieldMappings) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.CustomerInsights.Models.RelationshipTypeFieldMapping> FieldMappings { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.RelationshipTypeMapping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.RelationshipTypeMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.RelationshipTypeMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.RelationshipTypeMapping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.RelationshipTypeMapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1671,6 +1721,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public ResourceSetDescription() { }
         public System.Collections.Generic.IList<string> Elements { get { throw null; } }
         public System.Collections.Generic.IList<string> Exceptions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ResourceSetDescription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ResourceSetDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.ResourceSetDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.ResourceSetDescription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.ResourceSetDescription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1682,6 +1733,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public RoleResourceFormat() { }
         public string Description { get { throw null; } set { } }
         public string RoleName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.RoleResourceFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.RoleResourceFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.RoleResourceFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.RoleResourceFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.RoleResourceFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1723,6 +1775,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public System.Collections.Generic.IDictionary<string, string> DisplayName { get { throw null; } }
         public System.Collections.Generic.IList<string> KeyPropertyNames { get { throw null; } }
         public string StrongIdName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.StrongId System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.StrongId>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.StrongId>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.StrongId System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.StrongId>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1734,6 +1787,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         internal SuggestRelationshipLinksResponse() { }
         public string InteractionName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CustomerInsights.Models.RelationshipsLookup> SuggestedRelationships { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.SuggestRelationshipLinksResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.SuggestRelationshipLinksResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.SuggestRelationshipLinksResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.SuggestRelationshipLinksResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.SuggestRelationshipLinksResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1746,6 +1800,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public Azure.ResourceManager.CustomerInsights.Models.LinkType? LinkType { get { throw null; } set { } }
         public string SourcePropertyName { get { throw null; } set { } }
         public string TargetPropertyName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.TypePropertiesMapping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.TypePropertiesMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.Models.TypePropertiesMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CustomerInsights.Models.TypePropertiesMapping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.Models.TypePropertiesMapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

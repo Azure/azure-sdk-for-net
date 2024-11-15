@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static bool operator ==(ResponsibilitySeverity left, ResponsibilitySeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResponsibilitySeverity"/> values are not the same. </summary>
         public static bool operator !=(ResponsibilitySeverity left, ResponsibilitySeverity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResponsibilitySeverity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResponsibilitySeverity"/>. </summary>
         public static implicit operator ResponsibilitySeverity(string value) => new ResponsibilitySeverity(value);
 
         /// <inheritdoc />

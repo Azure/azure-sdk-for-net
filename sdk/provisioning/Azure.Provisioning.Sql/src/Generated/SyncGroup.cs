@@ -17,137 +17,211 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SyncGroup.
 /// </summary>
-public partial class SyncGroup : Resource
+public partial class SyncGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the sync group.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Conflict logging retention period.
     /// </summary>
-    public BicepValue<int> ConflictLoggingRetentionInDays { get => _conflictLoggingRetentionInDays; set => _conflictLoggingRetentionInDays.Assign(value); }
-    private readonly BicepValue<int> _conflictLoggingRetentionInDays;
+    public BicepValue<int> ConflictLoggingRetentionInDays 
+    {
+        get { Initialize(); return _conflictLoggingRetentionInDays!; }
+        set { Initialize(); _conflictLoggingRetentionInDays!.Assign(value); }
+    }
+    private BicepValue<int>? _conflictLoggingRetentionInDays;
 
     /// <summary>
     /// Conflict resolution policy of the sync group.
     /// </summary>
-    public BicepValue<SyncConflictResolutionPolicy> ConflictResolutionPolicy { get => _conflictResolutionPolicy; set => _conflictResolutionPolicy.Assign(value); }
-    private readonly BicepValue<SyncConflictResolutionPolicy> _conflictResolutionPolicy;
+    public BicepValue<SyncConflictResolutionPolicy> ConflictResolutionPolicy 
+    {
+        get { Initialize(); return _conflictResolutionPolicy!; }
+        set { Initialize(); _conflictResolutionPolicy!.Assign(value); }
+    }
+    private BicepValue<SyncConflictResolutionPolicy>? _conflictResolutionPolicy;
 
     /// <summary>
     /// Password for the sync group hub database credential.
     /// </summary>
-    public BicepValue<string> HubDatabasePassword { get => _hubDatabasePassword; set => _hubDatabasePassword.Assign(value); }
-    private readonly BicepValue<string> _hubDatabasePassword;
+    public BicepValue<string> HubDatabasePassword 
+    {
+        get { Initialize(); return _hubDatabasePassword!; }
+        set { Initialize(); _hubDatabasePassword!.Assign(value); }
+    }
+    private BicepValue<string>? _hubDatabasePassword;
 
     /// <summary>
     /// User name for the sync group hub database credential.
     /// </summary>
-    public BicepValue<string> HubDatabaseUserName { get => _hubDatabaseUserName; set => _hubDatabaseUserName.Assign(value); }
-    private readonly BicepValue<string> _hubDatabaseUserName;
+    public BicepValue<string> HubDatabaseUserName 
+    {
+        get { Initialize(); return _hubDatabaseUserName!; }
+        set { Initialize(); _hubDatabaseUserName!.Assign(value); }
+    }
+    private BicepValue<string>? _hubDatabaseUserName;
 
     /// <summary>
     /// Sync interval of the sync group.
     /// </summary>
-    public BicepValue<int> Interval { get => _interval; set => _interval.Assign(value); }
-    private readonly BicepValue<int> _interval;
+    public BicepValue<int> Interval 
+    {
+        get { Initialize(); return _interval!; }
+        set { Initialize(); _interval!.Assign(value); }
+    }
+    private BicepValue<int>? _interval;
 
     /// <summary>
     /// If conflict logging is enabled.
     /// </summary>
-    public BicepValue<bool> IsConflictLoggingEnabled { get => _isConflictLoggingEnabled; set => _isConflictLoggingEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isConflictLoggingEnabled;
+    public BicepValue<bool> IsConflictLoggingEnabled 
+    {
+        get { Initialize(); return _isConflictLoggingEnabled!; }
+        set { Initialize(); _isConflictLoggingEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isConflictLoggingEnabled;
 
     /// <summary>
     /// Sync schema of the sync group.
     /// </summary>
-    public BicepValue<SyncGroupSchema> Schema { get => _schema; set => _schema.Assign(value); }
-    private readonly BicepValue<SyncGroupSchema> _schema;
+    public SyncGroupSchema Schema 
+    {
+        get { Initialize(); return _schema!; }
+        set { Initialize(); AssignOrReplace(ref _schema, value); }
+    }
+    private SyncGroupSchema? _schema;
 
     /// <summary>
     /// The name and capacity of the SKU.
     /// </summary>
-    public BicepValue<SqlSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<SqlSku> _sku;
+    public SqlSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private SqlSku? _sku;
 
     /// <summary>
     /// ARM resource id of the sync database in the sync group.
     /// </summary>
-    public BicepValue<ResourceIdentifier> SyncDatabaseId { get => _syncDatabaseId; set => _syncDatabaseId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _syncDatabaseId;
+    public BicepValue<ResourceIdentifier> SyncDatabaseId 
+    {
+        get { Initialize(); return _syncDatabaseId!; }
+        set { Initialize(); _syncDatabaseId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _syncDatabaseId;
 
     /// <summary>
     /// If use private link connection is enabled.
     /// </summary>
-    public BicepValue<bool> UsePrivateLinkConnection { get => _usePrivateLinkConnection; set => _usePrivateLinkConnection.Assign(value); }
-    private readonly BicepValue<bool> _usePrivateLinkConnection;
+    public BicepValue<bool> UsePrivateLinkConnection 
+    {
+        get { Initialize(); return _usePrivateLinkConnection!; }
+        set { Initialize(); _usePrivateLinkConnection!.Assign(value); }
+    }
+    private BicepValue<bool>? _usePrivateLinkConnection;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Last sync time of the sync group.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastSyncOn { get => _lastSyncOn; }
-    private readonly BicepValue<DateTimeOffset> _lastSyncOn;
+    public BicepValue<DateTimeOffset> LastSyncOn 
+    {
+        get { Initialize(); return _lastSyncOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastSyncOn;
 
     /// <summary>
     /// Private endpoint name of the sync group if use private link connection
     /// is enabled.
     /// </summary>
-    public BicepValue<string> PrivateEndpointName { get => _privateEndpointName; }
-    private readonly BicepValue<string> _privateEndpointName;
+    public BicepValue<string> PrivateEndpointName 
+    {
+        get { Initialize(); return _privateEndpointName!; }
+    }
+    private BicepValue<string>? _privateEndpointName;
 
     /// <summary>
     /// Sync state of the sync group.
     /// </summary>
-    public BicepValue<SyncGroupState> SyncState { get => _syncState; }
-    private readonly BicepValue<SyncGroupState> _syncState;
+    public BicepValue<SyncGroupState> SyncState 
+    {
+        get { Initialize(); return _syncState!; }
+    }
+    private BicepValue<SyncGroupState>? _syncState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlDatabase.
     /// </summary>
-    public SqlDatabase? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlDatabase> _parent;
+    public SqlDatabase? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
     /// Creates a new SyncGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the SyncGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SyncGroup resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SyncGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SyncGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/syncGroups", resourceVersion ?? "2021-11-01", context)
+    public SyncGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/syncGroups", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _conflictLoggingRetentionInDays = BicepValue<int>.DefineProperty(this, "ConflictLoggingRetentionInDays", ["properties", "conflictLoggingRetentionInDays"]);
-        _conflictResolutionPolicy = BicepValue<SyncConflictResolutionPolicy>.DefineProperty(this, "ConflictResolutionPolicy", ["properties", "conflictResolutionPolicy"]);
-        _hubDatabasePassword = BicepValue<string>.DefineProperty(this, "HubDatabasePassword", ["properties", "hubDatabasePassword"]);
-        _hubDatabaseUserName = BicepValue<string>.DefineProperty(this, "HubDatabaseUserName", ["properties", "hubDatabaseUserName"]);
-        _interval = BicepValue<int>.DefineProperty(this, "Interval", ["properties", "interval"]);
-        _isConflictLoggingEnabled = BicepValue<bool>.DefineProperty(this, "IsConflictLoggingEnabled", ["properties", "enableConflictLogging"]);
-        _schema = BicepValue<SyncGroupSchema>.DefineProperty(this, "Schema", ["properties", "schema"]);
-        _sku = BicepValue<SqlSku>.DefineProperty(this, "Sku", ["sku"]);
-        _syncDatabaseId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SyncDatabaseId", ["properties", "syncDatabaseId"]);
-        _usePrivateLinkConnection = BicepValue<bool>.DefineProperty(this, "UsePrivateLinkConnection", ["properties", "usePrivateLinkConnection"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _lastSyncOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastSyncOn", ["properties", "lastSyncTime"], isOutput: true);
-        _privateEndpointName = BicepValue<string>.DefineProperty(this, "PrivateEndpointName", ["properties", "privateEndpointName"], isOutput: true);
-        _syncState = BicepValue<SyncGroupState>.DefineProperty(this, "SyncState", ["properties", "syncState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SyncGroup.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _conflictLoggingRetentionInDays = DefineProperty<int>("ConflictLoggingRetentionInDays", ["properties", "conflictLoggingRetentionInDays"]);
+        _conflictResolutionPolicy = DefineProperty<SyncConflictResolutionPolicy>("ConflictResolutionPolicy", ["properties", "conflictResolutionPolicy"]);
+        _hubDatabasePassword = DefineProperty<string>("HubDatabasePassword", ["properties", "hubDatabasePassword"]);
+        _hubDatabaseUserName = DefineProperty<string>("HubDatabaseUserName", ["properties", "hubDatabaseUserName"]);
+        _interval = DefineProperty<int>("Interval", ["properties", "interval"]);
+        _isConflictLoggingEnabled = DefineProperty<bool>("IsConflictLoggingEnabled", ["properties", "enableConflictLogging"]);
+        _schema = DefineModelProperty<SyncGroupSchema>("Schema", ["properties", "schema"]);
+        _sku = DefineModelProperty<SqlSku>("Sku", ["sku"]);
+        _syncDatabaseId = DefineProperty<ResourceIdentifier>("SyncDatabaseId", ["properties", "syncDatabaseId"]);
+        _usePrivateLinkConnection = DefineProperty<bool>("UsePrivateLinkConnection", ["properties", "usePrivateLinkConnection"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _lastSyncOn = DefineProperty<DateTimeOffset>("LastSyncOn", ["properties", "lastSyncTime"], isOutput: true);
+        _privateEndpointName = DefineProperty<string>("PrivateEndpointName", ["properties", "privateEndpointName"], isOutput: true);
+        _syncState = DefineProperty<SyncGroupState>("SyncState", ["properties", "syncState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlDatabase>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -155,11 +229,6 @@ public partial class SyncGroup : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -169,11 +238,16 @@ public partial class SyncGroup : Resource
     /// <summary>
     /// Creates a reference to an existing SyncGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the SyncGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SyncGroup resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SyncGroup.</param>
     /// <returns>The existing SyncGroup resource.</returns>
-    public static SyncGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SyncGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SyncGroup resource.

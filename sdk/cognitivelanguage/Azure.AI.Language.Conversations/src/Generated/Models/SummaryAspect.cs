@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator ==(SummaryAspect left, SummaryAspect right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SummaryAspect"/> values are not the same. </summary>
         public static bool operator !=(SummaryAspect left, SummaryAspect right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SummaryAspect"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SummaryAspect"/>. </summary>
         public static implicit operator SummaryAspect(string value) => new SummaryAspect(value);
 
         /// <inheritdoc />

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static bool operator ==(CloudHsmClusterPrivateEndpointConnectionProvisioningState left, CloudHsmClusterPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudHsmClusterPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(CloudHsmClusterPrivateEndpointConnectionProvisioningState left, CloudHsmClusterPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CloudHsmClusterPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudHsmClusterPrivateEndpointConnectionProvisioningState"/>. </summary>
         public static implicit operator CloudHsmClusterPrivateEndpointConnectionProvisioningState(string value) => new CloudHsmClusterPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc />

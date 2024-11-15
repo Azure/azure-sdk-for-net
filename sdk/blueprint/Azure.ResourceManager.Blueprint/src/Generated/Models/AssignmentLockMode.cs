@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static bool operator ==(AssignmentLockMode left, AssignmentLockMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssignmentLockMode"/> values are not the same. </summary>
         public static bool operator !=(AssignmentLockMode left, AssignmentLockMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AssignmentLockMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AssignmentLockMode"/>. </summary>
         public static implicit operator AssignmentLockMode(string value) => new AssignmentLockMode(value);
 
         /// <inheritdoc />

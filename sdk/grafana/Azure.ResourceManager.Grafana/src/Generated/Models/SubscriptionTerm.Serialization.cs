@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Grafana.Models
 
         void IJsonModel<SubscriptionTerm>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionTerm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SubscriptionTerm)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(TermUnit))
             {
                 writer.WritePropertyName("termUnit"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Grafana.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SubscriptionTerm IJsonModel<SubscriptionTerm>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

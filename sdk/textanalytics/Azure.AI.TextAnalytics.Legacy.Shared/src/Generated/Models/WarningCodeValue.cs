@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         public static bool operator ==(WarningCodeValue left, WarningCodeValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WarningCodeValue"/> values are not the same. </summary>
         public static bool operator !=(WarningCodeValue left, WarningCodeValue right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WarningCodeValue"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WarningCodeValue"/>. </summary>
         public static implicit operator WarningCodeValue(string value) => new WarningCodeValue(value);
 
         /// <inheritdoc />

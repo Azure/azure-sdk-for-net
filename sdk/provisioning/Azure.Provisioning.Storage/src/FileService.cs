@@ -12,5 +12,5 @@ public partial class FileService
     /// Get the default value for the Name property.
     /// </summary>
     private partial BicepValue<string> GetNameDefaultValue() =>
-        new StringLiteral("default");
+        new StringLiteralExpression("default");
 }

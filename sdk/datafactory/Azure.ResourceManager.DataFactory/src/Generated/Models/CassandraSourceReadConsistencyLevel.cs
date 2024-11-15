@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(CassandraSourceReadConsistencyLevel left, CassandraSourceReadConsistencyLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CassandraSourceReadConsistencyLevel"/> values are not the same. </summary>
         public static bool operator !=(CassandraSourceReadConsistencyLevel left, CassandraSourceReadConsistencyLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CassandraSourceReadConsistencyLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CassandraSourceReadConsistencyLevel"/>. </summary>
         public static implicit operator CassandraSourceReadConsistencyLevel(string value) => new CassandraSourceReadConsistencyLevel(value);
 
         /// <inheritdoc />

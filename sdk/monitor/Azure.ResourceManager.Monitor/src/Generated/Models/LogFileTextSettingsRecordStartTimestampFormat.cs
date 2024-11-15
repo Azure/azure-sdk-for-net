@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(LogFileTextSettingsRecordStartTimestampFormat left, LogFileTextSettingsRecordStartTimestampFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogFileTextSettingsRecordStartTimestampFormat"/> values are not the same. </summary>
         public static bool operator !=(LogFileTextSettingsRecordStartTimestampFormat left, LogFileTextSettingsRecordStartTimestampFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogFileTextSettingsRecordStartTimestampFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogFileTextSettingsRecordStartTimestampFormat"/>. </summary>
         public static implicit operator LogFileTextSettingsRecordStartTimestampFormat(string value) => new LogFileTextSettingsRecordStartTimestampFormat(value);
 
         /// <inheritdoc />

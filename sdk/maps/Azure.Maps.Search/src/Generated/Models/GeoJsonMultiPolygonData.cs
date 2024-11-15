@@ -13,7 +13,7 @@ using Azure.Maps.Common;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The GeoJsonMultiPolygonData. </summary>
-    public partial class GeoJsonMultiPolygonData
+    internal partial class GeoJsonMultiPolygonData
     {
         /// <summary> Initializes a new instance of <see cref="GeoJsonMultiPolygonData"/>. </summary>
         /// <param name="coordinates"> Contains a list of valid `GeoJSON Polygon` objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static bool operator ==(FleetUpdateStrategyProvisioningState left, FleetUpdateStrategyProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FleetUpdateStrategyProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(FleetUpdateStrategyProvisioningState left, FleetUpdateStrategyProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FleetUpdateStrategyProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FleetUpdateStrategyProvisioningState"/>. </summary>
         public static implicit operator FleetUpdateStrategyProvisioningState(string value) => new FleetUpdateStrategyProvisioningState(value);
 
         /// <inheritdoc />

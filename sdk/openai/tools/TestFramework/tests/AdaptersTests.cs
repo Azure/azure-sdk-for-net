@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel;
 using System.Diagnostics;
 using NUnit.Framework;
 using OpenAI.TestFramework.Adapters;
@@ -61,42 +60,6 @@ public class AdaptersTests
         SyncToAsyncCollectionResult<int> asyncAdapter = new(sync);
 
         await using var asyncEnumerator = asyncAdapter.GetAsyncEnumerator(Token);
-        Assert.ThrowsAsync<ApplicationException>(() => asyncEnumerator.MoveNextAsync().AsTask());
-    }
-
-    [Test]
-    public async Task TestSyncToAsyncPageableCollection()
-    {
-        const int start = 0;
-        const int num = 100;
-        const int itemsPerPage = 10;
-        int expectedPages = (int)Math.Ceiling((double)num / itemsPerPage);
-
-        MockPageCollection<int> sync = new(() => Enumerable.Range(start, num), new MockPipelineResponse(), itemsPerPage);
-        SyncToAsyncPageCollection<int> asyncAdapter = new(sync);
-
-        int numPages = 0;
-        int expected = 0;
-        await foreach (var page in asyncAdapter)
-        {
-            numPages++;
-            foreach (int actual in page.Values)
-            {
-                Assert.That(actual, Is.EqualTo(expected));
-                expected++;
-            }
-        }
-
-        Assert.That(numPages, Is.EqualTo(expectedPages));
-    }
-
-    [Test]
-    public async Task TestFailedSyncToAsyncPageableCollection()
-    {
-        MockPageCollection<int> sync = new(Fail, new MockPipelineResponse());
-        SyncToAsyncPageCollection<int> asyncAdapter = new(sync);
-
-        await using var asyncEnumerator = ((IAsyncEnumerable<PageResult<int>>)asyncAdapter).GetAsyncEnumerator(Token);
         Assert.ThrowsAsync<ApplicationException>(() => asyncEnumerator.MoveNextAsync().AsTask());
     }
 

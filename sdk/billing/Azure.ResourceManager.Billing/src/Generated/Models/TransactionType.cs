@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(TransactionType left, TransactionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TransactionType"/> values are not the same. </summary>
         public static bool operator !=(TransactionType left, TransactionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TransactionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TransactionType"/>. </summary>
         public static implicit operator TransactionType(string value) => new TransactionType(value);
 
         /// <inheritdoc />

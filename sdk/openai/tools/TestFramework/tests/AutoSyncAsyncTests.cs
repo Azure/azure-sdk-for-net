@@ -101,9 +101,6 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
         AsyncCollectionResult<int> coll = client.ResultCollectionAsync(num, increment);
 
         Assert.IsNotNull(coll);
-        Assert.That(coll.GetRawResponse(), Is.Not.Null);
-        Assert.That(coll.GetRawResponse().Status, Is.EqualTo(200));
-        Assert.That(coll.GetRawResponse().ReasonPhrase, Is.EqualTo("OK"));
 
         int numResults = 0;
         await foreach (int i in coll)
@@ -127,57 +124,6 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
         Assert.That(coll, Is.Not.Null);
 
         IAsyncEnumerator<int> enumerator = coll.GetAsyncEnumerator();
-        Assert.That(enumerator, Is.Not.Null);
-        ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(() => enumerator.MoveNextAsync().AsTask());
-        Assert.That(ex, Is.Not.Null);
-        Assert.That(ex!.Message, Is.EqualTo(EX_MSG));
-        AssertCorrectFunctionCalled(client);
-    }
-
-    [Test]
-    public async Task PageableCollectionWorks()
-    {
-        const int num = 50;
-        const int increment = 1;
-        const int itemsPerPage = 20;
-        int expectedPages = (int)Math.Ceiling((double)num / itemsPerPage);
-
-        MockClient client = WrapClient(new MockClient());
-        AsyncPageCollection<int> coll = client.PageableCollectionAsync(num, increment, itemsPerPage);
-        Assert.IsNotNull(coll);
-
-        int numPages = 0;
-        int numResults = 0;
-        await foreach(PageResult<int> page in coll)
-        {
-            Assert.That(page.GetRawResponse(), Is.Not.Null);
-            Assert.That(page.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(page.GetRawResponse().ReasonPhrase, Is.EqualTo("OK"));
-
-            numPages++;
-            foreach (int actual in page.Values)
-            {
-                Assert.That(actual, Is.EqualTo(numResults * increment));
-                numResults++;
-            }
-        }
-
-        Assert.That(numResults, Is.EqualTo(num));
-        Assert.That(numPages, Is.EqualTo(expectedPages));
-        AssertCorrectFunctionCalled(client);
-    }
-
-    [Test]
-    public void FailedPageableCollection()
-    {
-        MockClient client = WrapClient(new MockClient());
-
-        // For now we mimic how the OpenAI and Azure OpenAI libraries work in that no service requests are sent
-        // until we try to enumerate the async collections. So exceptions aren't expected initially
-        AsyncPageCollection<int> coll = client.FailPageableCollectionAsync(EX_MSG);
-        Assert.That(coll, Is.Not.Null);
-
-        IAsyncEnumerator<PageResult<int>> enumerator = ((IAsyncEnumerable<PageResult<int>>)coll).GetAsyncEnumerator();
         Assert.That(enumerator, Is.Not.Null);
         ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(() => enumerator.MoveNextAsync().AsTask());
         Assert.That(ex, Is.Not.Null);

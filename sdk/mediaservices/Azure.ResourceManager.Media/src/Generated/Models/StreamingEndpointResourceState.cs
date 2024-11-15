@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(StreamingEndpointResourceState left, StreamingEndpointResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingEndpointResourceState"/> values are not the same. </summary>
         public static bool operator !=(StreamingEndpointResourceState left, StreamingEndpointResourceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StreamingEndpointResourceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StreamingEndpointResourceState"/>. </summary>
         public static implicit operator StreamingEndpointResourceState(string value) => new StreamingEndpointResourceState(value);
 
         /// <inheritdoc />

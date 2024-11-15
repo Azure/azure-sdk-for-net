@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(OracleSubscriptionProvisioningState left, OracleSubscriptionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OracleSubscriptionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(OracleSubscriptionProvisioningState left, OracleSubscriptionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OracleSubscriptionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OracleSubscriptionProvisioningState"/>. </summary>
         public static implicit operator OracleSubscriptionProvisioningState(string value) => new OracleSubscriptionProvisioningState(value);
 
         /// <inheritdoc />

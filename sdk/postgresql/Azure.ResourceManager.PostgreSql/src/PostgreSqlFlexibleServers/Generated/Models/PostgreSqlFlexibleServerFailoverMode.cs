@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerFailoverMode left, PostgreSqlFlexibleServerFailoverMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFailoverMode"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerFailoverMode left, PostgreSqlFlexibleServerFailoverMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerFailoverMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerFailoverMode"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerFailoverMode(string value) => new PostgreSqlFlexibleServerFailoverMode(value);
 
         /// <inheritdoc />

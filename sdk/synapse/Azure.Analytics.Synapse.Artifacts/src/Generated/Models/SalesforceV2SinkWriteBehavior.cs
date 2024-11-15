@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(SalesforceV2SinkWriteBehavior left, SalesforceV2SinkWriteBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SalesforceV2SinkWriteBehavior"/> values are not the same. </summary>
         public static bool operator !=(SalesforceV2SinkWriteBehavior left, SalesforceV2SinkWriteBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SalesforceV2SinkWriteBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SalesforceV2SinkWriteBehavior"/>. </summary>
         public static implicit operator SalesforceV2SinkWriteBehavior(string value) => new SalesforceV2SinkWriteBehavior(value);
 
         /// <inheritdoc />

@@ -14,15 +14,18 @@ namespace Azure.Provisioning;
 /// Represents a list of Bicep values.
 /// </summary>
 /// <typeparam name="T">The type of element represented by the values.</typeparam>
-public class BicepList<T> : BicepValue, IList<BicepValue<T>>
+public class BicepList<T> :
+    BicepValue,
+    IList<BicepValue<T>>,
+    IReadOnlyList<BicepValue<T>>
 {
     // Literal values
     private IList<BicepValue<T>> _values;
-    internal override object? GetLiteralValue() => _values;
+    private protected override object? GetLiteralValue() => _values;
 
     // We're empty if unset or no literal values
-    internal override bool IsEmpty =>
-        base.IsEmpty || (Kind == BicepValueKind.Literal && _values.Count == 0);
+    public override bool IsEmpty =>
+        base.IsEmpty || (_kind == BicepValueKind.Literal && _values.Count == 0);
 
     /// <summary>
     /// Creates a new BicepList.
@@ -34,24 +37,23 @@ public class BicepList<T> : BicepValue, IList<BicepValue<T>>
     /// </summary>
     public BicepList(IList<BicepValue<T>>? values) : this(self: null, values) { }
 
-    private BicepList(Expression expression) : base(self: null, expression) { _values = []; }
-    private protected BicepList(BicepValueReference? self, Expression expression) : base(self, expression) { _values = []; }
-    private BicepList(BicepValueReference? self, IList<BicepValue<T>>? values = null)
+    private BicepList(BicepExpression expression) : base(self: null, expression) { _values = []; }
+    private protected BicepList(BicepValueReference? self, BicepExpression expression) : base(self, expression) { _values = []; }
+    internal BicepList(BicepValueReference? self, IList<BicepValue<T>>? values = null)
         : base(self)
     {
-        Kind = BicepValueKind.Literal;
-        _values = values != null ? [.. values] : [];
+        _kind = BicepValueKind.Literal;
         // Shallow clone their list
+        _values = values != null ? [.. values] : [];
     }
 
     // Move literal elements when assigning values to a list
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Assign(BicepList<T> source) => Assign((BicepValue)source);
-    internal override void Assign(BicepValue source)
+    internal override void Assign(IBicepValue source)
     {
         if (source is BicepList<T> typed)
         {
-            // TODO: Decide if we'd rather shallow copy or steal their reference.
             _values = typed._values;
         }
 
@@ -60,21 +62,16 @@ public class BicepList<T> : BicepValue, IList<BicepValue<T>>
     }
 
     /// <summary>
-    /// Convert a BicepVariable or BicepParameter to a BicepList.
+    /// Convert a ProvisioningVariable or ProvisioningParameter to a BicepList.
     /// </summary>
     /// <param name="reference">The variable or parameter.</param>
-    public static implicit operator BicepList<T>(BicepVariable reference) =>
+    public static implicit operator BicepList<T>(ProvisioningVariable reference) =>
         new(
-            new BicepValueReference(reference, "<value>"),
-            BicepSyntax.Var(reference.ResourceName))
+            new BicepValueReference(reference, "[]"),
+            BicepSyntax.Var(reference.BicepIdentifier))
         {
-            IsSecure = reference is BicepParameter p && p.IsSecure
+            _isSecure = reference is ProvisioningParameter p && p.IsSecure
         };
-
-    // TODO: Make it possible to correctly reference these values
-    // (especially across module boundaries)?  Currently we only allow
-    // pulling values into collections.
-    private BicepValue<T> WrapValue(BicepValue<T> value) => value;
 
     /// <summary>
     /// Gets or sets a value at a given index.
@@ -85,12 +82,12 @@ public class BicepList<T> : BicepValue, IList<BicepValue<T>>
     {
         get
         {
-            if (Kind == BicepValueKind.Expression)
+            if (_kind == BicepValueKind.Expression)
             {
                 // If we're being overridden by an expression, then turn any
                 // reads into expressions as well, but of type T so people
                 // can reference their members.
-                return _referenceFactory!(BicepSyntax.Index(Expression!, BicepSyntax.Value(index)));
+                return _referenceFactory!(BicepSyntax.Index(_expression!, BicepSyntax.Value(index)));
             }
             else
             {
@@ -99,16 +96,16 @@ public class BicepList<T> : BicepValue, IList<BicepValue<T>>
         }
         set
         {
-            if (Kind == BicepValueKind.Expression || IsOutput)
+            if (_kind == BicepValueKind.Expression || _isOutput)
             {
-                throw new InvalidOperationException($"Cannot assign to {Self?.PropertyName}");
+                throw new InvalidOperationException($"Cannot assign to {_self?.PropertyName}");
             }
-            _values[index] = WrapValue(value);
+            _values[index] = value;
         }
     }
 
-    public void Insert(int index, BicepValue<T> item) => _values.Insert(index, WrapValue(item));
-    public void Add(BicepValue<T> item) => _values.Add(WrapValue(item));
+    public void Insert(int index, BicepValue<T> item) => _values.Insert(index, item);
+    public void Add(BicepValue<T> item) => _values.Add(item);
 
     // TODO: Decide whether it's important to "unlink" resources on removal
     public void RemoveAt(int index) => _values.RemoveAt(index);
@@ -135,25 +132,7 @@ public class BicepList<T> : BicepValue, IList<BicepValue<T>>
     /// </param>
     /// <returns>A BicepList.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static BicepList<T> FromExpression(Func<Expression, T> referenceFactory, Expression expression) =>
+    public static BicepList<T> FromExpression(Func<BicepExpression, T> referenceFactory, BicepExpression expression) =>
         new(expression) { _referenceFactory = referenceFactory };
-    private Func<Expression, T>? _referenceFactory = null;
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static BicepList<T> DefineProperty(
-        ProvisioningConstruct construct,
-        string propertyName,
-        string[]? bicepPath,
-        bool isOutput = false,
-        bool isRequired = false)
-    {
-        BicepList<T> values =
-            new(new BicepValueReference(construct, propertyName, bicepPath))
-            {
-                IsOutput = isOutput,
-                IsRequired = isRequired
-            };
-        construct.ProvisioningProperties[propertyName] = values;
-        return values;
-    }
+    private Func<BicepExpression, T>? _referenceFactory = null;
 }

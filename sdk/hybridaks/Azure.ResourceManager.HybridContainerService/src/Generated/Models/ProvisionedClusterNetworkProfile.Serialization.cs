@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         void IJsonModel<ProvisionedClusterNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProvisionedClusterNetworkProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(LoadBalancerProfile))
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ProvisionedClusterNetworkProfile IJsonModel<ProvisionedClusterNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

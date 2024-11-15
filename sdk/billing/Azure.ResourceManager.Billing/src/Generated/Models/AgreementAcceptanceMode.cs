@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(AgreementAcceptanceMode left, AgreementAcceptanceMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgreementAcceptanceMode"/> values are not the same. </summary>
         public static bool operator !=(AgreementAcceptanceMode left, AgreementAcceptanceMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AgreementAcceptanceMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AgreementAcceptanceMode"/>. </summary>
         public static implicit operator AgreementAcceptanceMode(string value) => new AgreementAcceptanceMode(value);
 
         /// <inheritdoc />

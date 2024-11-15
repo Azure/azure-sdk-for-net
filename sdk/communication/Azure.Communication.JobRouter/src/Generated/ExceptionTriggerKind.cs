@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter
         public static bool operator ==(ExceptionTriggerKind left, ExceptionTriggerKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExceptionTriggerKind"/> values are not the same. </summary>
         public static bool operator !=(ExceptionTriggerKind left, ExceptionTriggerKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExceptionTriggerKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExceptionTriggerKind"/>. </summary>
         public static implicit operator ExceptionTriggerKind(string value) => new ExceptionTriggerKind(value);
 
         /// <inheritdoc />

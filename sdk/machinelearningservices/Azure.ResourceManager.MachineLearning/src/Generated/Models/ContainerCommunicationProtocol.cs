@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ContainerCommunicationProtocol left, ContainerCommunicationProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerCommunicationProtocol"/> values are not the same. </summary>
         public static bool operator !=(ContainerCommunicationProtocol left, ContainerCommunicationProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerCommunicationProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerCommunicationProtocol"/>. </summary>
         public static implicit operator ContainerCommunicationProtocol(string value) => new ContainerCommunicationProtocol(value);
 
         /// <inheritdoc />

@@ -79,6 +79,7 @@ namespace Azure.AI.OpenAI.Chat
                     case "key_and_key_id": return InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions.DeserializeInternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions(element, options);
                     case "system_assigned_managed_identity": return InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions.DeserializeInternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions(element, options);
                     case "user_assigned_managed_identity": return InternalAzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions.DeserializeInternalAzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions(element, options);
+                    case "username_and_password": return InternalAzureChatDataSourceUsernameAndPasswordAuthenticationOptions.DeserializeInternalAzureChatDataSourceUsernameAndPasswordAuthenticationOptions(element, options);
                 }
             }
             return InternalUnknownAzureChatDataSourceAuthenticationOptions.DeserializeInternalUnknownAzureChatDataSourceAuthenticationOptions(element, options);

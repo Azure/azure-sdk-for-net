@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(ConnectivityStatusType left, ConnectivityStatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectivityStatusType"/> values are not the same. </summary>
         public static bool operator !=(ConnectivityStatusType left, ConnectivityStatusType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectivityStatusType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectivityStatusType"/>. </summary>
         public static implicit operator ConnectivityStatusType(string value) => new ConnectivityStatusType(value);
 
         /// <inheritdoc />

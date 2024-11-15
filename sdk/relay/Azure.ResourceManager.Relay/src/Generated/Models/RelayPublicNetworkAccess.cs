@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Relay.Models
         public static bool operator ==(RelayPublicNetworkAccess left, RelayPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelayPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(RelayPublicNetworkAccess left, RelayPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RelayPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RelayPublicNetworkAccess"/>. </summary>
         public static implicit operator RelayPublicNetworkAccess(string value) => new RelayPublicNetworkAccess(value);
 
         /// <inheritdoc />

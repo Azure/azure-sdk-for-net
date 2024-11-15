@@ -13,14 +13,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_VirtualMachineScaleSetCollection
     {
-        // Create a VMSS with an extension that has suppressFailures enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMSSWithAnExtensionThatHasSuppressFailuresEnabled()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithExtensionsSuppressFailuresEnabled.json
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -134,9 +134,8 @@ SuppressFailures = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a VMSS with an extension with protectedSettingsFromKeyVault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMSSWithAnExtensionWithProtectedSettingsFromKeyVault()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithProtectedSettingsFromKeyVault.json
@@ -165,7 +164,7 @@ SuppressFailures = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -253,9 +252,8 @@ Id = new ResourceIdentifier("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a custom-image scale set from an unmanaged generalized os image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateACustomImageScaleSetFromAnUnmanagedGeneralizedOsImage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_CustomImageFromAnUnmanagedGeneralizedOsImage.json
@@ -284,7 +282,7 @@ Id = new ResourceIdentifier("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -338,9 +336,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a platform-image scale set with unmanaged os disks.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAPlatformImageScaleSetWithUnmanagedOsDisks()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_PlatformImageWithUnmanagedOsDisks.json
@@ -369,7 +366,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -433,9 +430,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set from a custom image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetFromACustomImage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_FromACustomImage.json
@@ -464,7 +460,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -524,9 +520,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set from a generalized shared image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetFromAGeneralizedSharedImage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_FromAGeneralizedSharedImage.json
@@ -555,7 +550,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -615,9 +610,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set from a specialized shared image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetFromASpecializedSharedImage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_FromASpecializedSharedImage.json
@@ -646,7 +640,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -700,9 +694,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set where nic config has DisableTcpStateTracking property
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWhereNicConfigHasDisableTcpStateTrackingProperty()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_FromWithDisableTcpStateTrackingNetworkInterface.json
@@ -731,7 +724,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -808,9 +801,8 @@ EnableIPForwarding = false,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Application Profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithApplicationProfile()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithApplicationProfile.json
@@ -839,7 +831,7 @@ EnableIPForwarding = false,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -913,9 +905,8 @@ EnableAutomaticUpgrade = false,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Disk Controller Type
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithDiskControllerType()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithDiskControllerType.json
@@ -944,7 +935,7 @@ EnableAutomaticUpgrade = false,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1023,9 +1014,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with DiskEncryptionSet resource in os disk and data disk.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithDiskEncryptionSetResourceInOsDiskAndDataDisk()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithDiskEncryptionSetResource.json
@@ -1054,7 +1044,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DS1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1128,9 +1118,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Fpga Network Interfaces.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithFpgaNetworkInterfaces()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_FromWithFpgaNetworkInterface.json
@@ -1159,7 +1148,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1234,9 +1223,8 @@ EnableIPForwarding = false,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Host Encryption using encryptionAtHost property.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithHostEncryptionUsingEncryptionAtHostProperty()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithEncryptionAtHost.json
@@ -1265,7 +1253,7 @@ EnableIPForwarding = false,
                 {
                     Name = "Standard_DS1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 Plan = new ComputePlan()
                 {
@@ -1338,9 +1326,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Network Interfaces with public ip address dns settings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithNetworkInterfacesWithPublicIpAddressDnsSettings()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_FromWithNetworkInterfaceWithDnsSettings.json
@@ -1369,7 +1356,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1456,9 +1443,8 @@ EnableIPForwarding = false,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with OS image scheduled events enabled.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithOSImageScheduledEventsEnabled()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithOSImageScheduledEventEnabled.json
@@ -1487,7 +1473,7 @@ EnableIPForwarding = false,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1558,9 +1544,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with ProxyAgent Settings of enabled and mode.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithProxyAgentSettingsOfEnabledAndMode()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithProxyAgentSettings.json
@@ -1589,7 +1574,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D2s_v3",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1660,9 +1645,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Resilient VM Creation enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithResilientVMCreationEnabled()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithResilientVMCreationPolicy.json
@@ -1691,7 +1675,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1758,9 +1742,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Resilient VM Deletion enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithResilientVMDeletionEnabled()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithResilientVMDeletionPolicy.json
@@ -1789,7 +1772,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1856,9 +1839,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Security Posture Reference
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithSecurityPostureReference()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithSecurityPostureReference.json
@@ -1887,7 +1869,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_A1",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1952,9 +1934,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with SecurityType as ConfidentialVM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithSecurityTypeAsConfidentialVM()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithSecurityTypeConfidentialVM.json
@@ -1983,7 +1964,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DC2as_v5",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2059,9 +2040,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with SecurityType as ConfidentialVM and NonPersistedTPM securityEncryptionType
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithSecurityTypeAsConfidentialVMAndNonPersistedTPMSecurityEncryptionType()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithSecurityTypeConfidentialVMWithNonPersistedTPM.json
@@ -2090,7 +2070,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DC2es_v5",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2166,9 +2146,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Service Artifact Reference
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithServiceArtifactReference()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithServiceArtifactReference.json
@@ -2197,7 +2176,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_A1",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2262,9 +2241,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Uefi Settings of secureBoot and vTPM.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithUefiSettingsOfSecureBootAndVTPM()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithUefiSettings.json
@@ -2293,7 +2271,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D2s_v3",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2365,9 +2343,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with a marketplace image plan.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithAMarketplaceImagePlan()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithAMarketplaceImagePlan.json
@@ -2396,7 +2373,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 Plan = new ComputePlan()
                 {
@@ -2465,9 +2442,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with an azure application gateway.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithAnAzureApplicationGateway()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithAzureApplicationGateway.json
@@ -2496,7 +2472,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2566,9 +2542,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with an azure load balancer.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithAnAzureLoadBalancer()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithAzureLoadBalancer.json
@@ -2597,7 +2572,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2678,9 +2653,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with automatic repairs enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithAutomaticRepairsEnabled()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithAutomaticRepairs.json
@@ -2709,7 +2683,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2786,9 +2760,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with boot diagnostics.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithBootDiagnostics()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithBootDiagnostics.json
@@ -2817,7 +2790,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2885,9 +2858,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with empty data disks on each vm.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithEmptyDataDisksOnEachVm()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithEmptyDataDisksOnEachVm.json
@@ -2916,7 +2888,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D2_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2990,9 +2962,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with ephemeral os disk provisioning in Nvme disk using placement property.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithEphemeralOsDiskProvisioningInNvmeDiskUsingPlacementProperty()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_CreateA_WithDiffOsDiskUsingDiffDiskPlacementAsNvmeDisk.json
@@ -3021,7 +2992,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DS1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 Plan = new ComputePlan()
                 {
@@ -3095,9 +3066,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with ephemeral os disks using placement property.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithEphemeralOsDisksUsingPlacementProperty()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_CreateA_WithDiffOsDiskUsingDiffDiskPlacement.json
@@ -3126,7 +3096,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DS1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 Plan = new ComputePlan()
                 {
@@ -3200,9 +3170,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with ephemeral os disks.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithEphemeralOsDisks()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithDiffOsDisk.json
@@ -3231,7 +3200,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DS1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 Plan = new ComputePlan()
                 {
@@ -3304,9 +3273,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with extension time budget.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithExtensionTimeBudget()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithExtensionsTimeBudget.json
@@ -3335,7 +3303,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -3420,9 +3388,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with managed boot diagnostics.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithManagedBootDiagnostics()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithManagedBootDiagnostics.json
@@ -3451,7 +3418,7 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -3518,9 +3485,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with password authentication.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithPasswordAuthentication()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithPasswordAuthentication.json
@@ -3549,7 +3515,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -3612,9 +3578,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with premium storage.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithPremiumStorage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithPremiumStorage.json
@@ -3643,7 +3608,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -3706,9 +3671,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with priority mix policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithPriorityMixPolicy()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithPriorityMixPolicy.json
@@ -3737,7 +3701,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_A8m_v2",
                     Tier = "Standard",
-                    Capacity = 10,
+                    Capacity = 10L,
                 },
                 VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                 {
@@ -3805,9 +3769,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with scaleInPolicy.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithScaleInPolicy()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithScaleInPolicy.json
@@ -3836,7 +3799,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -3907,9 +3870,8 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with sku profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithSkuProfile()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithSkuProfile.json
@@ -3937,7 +3899,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
                 Sku = new ComputeSku()
                 {
                     Name = "Mix",
-                    Capacity = 10,
+                    Capacity = 10L,
                 },
                 VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                 {
@@ -4022,9 +3984,8 @@ Name = "Standard_D2s_v5",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with spot restore policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithSpotRestorePolicy()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithSpotRestorePolicy.json
@@ -4053,7 +4014,7 @@ Name = "Standard_D2s_v5",
                 {
                     Name = "Standard_A8m_v2",
                     Tier = "Standard",
-                    Capacity = 2,
+                    Capacity = 2L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4124,9 +4085,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with ssh authentication.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithSshAuthentication()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithSshAuthentication.json
@@ -4155,7 +4115,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4229,9 +4189,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with terminate scheduled events enabled.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithTerminateScheduledEventsEnabled()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithTerminateScheduledEventEnabled.json
@@ -4260,7 +4219,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4331,9 +4290,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with userData.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithUserData()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithUserData.json
@@ -4362,7 +4320,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4426,9 +4384,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with virtual machines in different zones.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithVirtualMachinesInDifferentZones()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithVMsInDifferentZones.json
@@ -4457,7 +4414,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_A1_v2",
                     Tier = "Standard",
-                    Capacity = 2,
+                    Capacity = 2L,
                 },
                 Zones =
 {
@@ -4535,9 +4492,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with vm size properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithVmSizeProperties()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithVMSizeProperties.json
@@ -4566,7 +4522,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4635,9 +4591,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with zonalPlatformFaultDomainAlignMode as Aligned
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithZonalPlatformFaultDomainAlignModeAsAligned()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithZonalPlatformFaultDomainAlignMode.json
@@ -4666,7 +4621,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4739,9 +4694,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a scale set with capacity reservation.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAScaleSetWithCapacityReservation()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithCapacityReservation.json
@@ -4770,7 +4724,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DS1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4834,9 +4788,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get VM scale set VM with Disk Controller Type
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVMScaleSetVMWithDiskControllerType()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithDiskControllerType.json
@@ -4869,9 +4822,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get VM scale set VM with Disk Controller Type
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVMScaleSetVMWithDiskControllerType()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithDiskControllerType.json
@@ -4900,9 +4852,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get VM scale set VM with Disk Controller Type
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVMScaleSetVMWithDiskControllerType()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithDiskControllerType.json
@@ -4931,7 +4882,7 @@ EnableIPForwarding = true,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -4943,9 +4894,8 @@ EnableIPForwarding = true,
             }
         }
 
-        // Get a virtual machine scale set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachineScaleSet()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get.json
@@ -4977,9 +4927,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual machine scale set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAVirtualMachineScaleSet()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get.json
@@ -5007,9 +4956,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a virtual machine scale set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAVirtualMachineScaleSet()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get.json
@@ -5037,7 +4985,7 @@ EnableIPForwarding = true,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -5049,9 +4997,8 @@ EnableIPForwarding = true,
             }
         }
 
-        // Get a virtual machine scale set placed on a dedicated host group through automatic placement.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachineScaleSetPlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_AutoPlacedOnDedicatedHostGroup.json
@@ -5083,9 +5030,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual machine scale set placed on a dedicated host group through automatic placement.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAVirtualMachineScaleSetPlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_AutoPlacedOnDedicatedHostGroup.json
@@ -5113,9 +5059,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a virtual machine scale set placed on a dedicated host group through automatic placement.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAVirtualMachineScaleSetPlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_AutoPlacedOnDedicatedHostGroup.json
@@ -5143,7 +5088,7 @@ EnableIPForwarding = true,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -5155,9 +5100,8 @@ EnableIPForwarding = true,
             }
         }
 
-        // Get a virtual machine scale set with UserData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachineScaleSetWithUserData()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithUserData.json
@@ -5190,9 +5134,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual machine scale set with UserData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAVirtualMachineScaleSetWithUserData()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithUserData.json
@@ -5221,9 +5164,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a virtual machine scale set with UserData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAVirtualMachineScaleSetWithUserData()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithUserData.json
@@ -5252,7 +5194,7 @@ EnableIPForwarding = true,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -5264,9 +5206,8 @@ EnableIPForwarding = true,
             }
         }
 
-        // VirtualMachineScaleSet_List_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VirtualMachineScaleSetListMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_List_MaximumSet_Gen.json
@@ -5297,12 +5238,11 @@ EnableIPForwarding = true,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSet_List_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VirtualMachineScaleSetListMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_List_MinimumSet_Gen.json
@@ -5333,7 +5273,7 @@ EnableIPForwarding = true,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

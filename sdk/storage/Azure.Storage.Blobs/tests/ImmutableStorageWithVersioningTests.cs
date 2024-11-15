@@ -564,6 +564,92 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetDeleteImmutibilityPolicyAsync_Snapshot()
+        {
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+
+            Response<BlobSnapshotInfo> createSnapshotResponse = await blob.CreateSnapshotAsync();
+            BlobBaseClient snapshotClient = blob.WithSnapshot(createSnapshotResponse.Value.Snapshot);
+            try
+            {
+                BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+                {
+                    ExpiresOn = Recording.UtcNow.AddSeconds(5),
+                    PolicyMode = BlobImmutabilityPolicyMode.Unlocked
+                };
+
+                // Act
+                await snapshotClient.SetImmutabilityPolicyAsync(immutabilityPolicy);
+
+                // Assert that the base blob does not have an immutability policy.
+                Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+
+                // Assert that the blob snapshot has an immuability policy.
+                propertiesResponse = await snapshotClient.GetPropertiesAsync();
+                Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+                Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+
+                await snapshotClient.DeleteImmutabilityPolicyAsync();
+
+                // Assert
+                propertiesResponse = await snapshotClient.GetPropertiesAsync();
+                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+            }
+            finally
+            {
+                await snapshotClient.DeleteAsync();
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetDeleteImmutibilityPolicyAsync_BlobVersion()
+        {
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            // Create Blob Version
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobBaseClient versionClient = blob.WithVersion(setMetadataResponse.Value.VersionId);
+
+            // Create another blob Version
+            await blob.SetMetadataAsync(new Dictionary<string, string>());
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiresOn = Recording.UtcNow.AddSeconds(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
+            };
+
+            // Act
+            await versionClient.SetImmutabilityPolicyAsync(immutabilityPolicy);
+
+            // Assert that the base blob does not have an immutability policy
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+
+            // Assert that the blob version does have an immutability policy
+            propertiesResponse = await versionClient.GetPropertiesAsync();
+            Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+
+            await versionClient.DeleteImmutabilityPolicyAsync();
+
+            // Assert blob version does not have an immutability policy
+            propertiesResponse = await versionClient.GetPropertiesAsync();
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task DeleteImmutibilityPolicyAsync_Error()
         {
             // Arrange
@@ -619,6 +705,67 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsFalse(response.Value.HasLegalHold);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetLegalHoldAsync_Snapshot()
+        {
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+
+            Response<BlobSnapshotInfo> createSnapshotResponse = await blob.CreateSnapshotAsync();
+            BlobBaseClient snapshotClient = blob.WithSnapshot(createSnapshotResponse.Value.Snapshot);
+
+            try
+            {
+                // Act
+                await snapshotClient.SetLegalHoldAsync(true);
+
+                // Assert the blob snapshot has a legal hold
+                Response<BlobProperties> propertiesResponse = await snapshotClient.GetPropertiesAsync();
+                Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
+
+                // Assert the base blob does not have a legal hold
+                propertiesResponse = await blob.GetPropertiesAsync();
+                Assert.IsFalse(propertiesResponse.Value.HasLegalHold);
+
+                await snapshotClient.SetLegalHoldAsync(false);
+            }
+            finally
+            {
+                await snapshotClient.DeleteAsync();
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetLegalHoldAsync_BlobVersion()
+        {
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            // Create Blob Version
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobBaseClient versionClient = blob.WithVersion(setMetadataResponse.Value.VersionId);
+
+            // Create another blob Version
+            await blob.SetMetadataAsync(new Dictionary<string, string>());
+
+            // Act
+            await versionClient.SetLegalHoldAsync(true);
+
+            // Assert the blob version has a legal hold
+            Response<BlobProperties> propertiesResponse = await versionClient.GetPropertiesAsync();
+            Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
+
+            // Assert the base blob does not have a legal hold
+            propertiesResponse = await blob.GetPropertiesAsync();
+            Assert.IsFalse(propertiesResponse.Value.HasLegalHold);
+
+            await versionClient.SetLegalHoldAsync(false);
         }
 
         [Test]

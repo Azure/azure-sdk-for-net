@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(AuthenticationType left, AuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(AuthenticationType left, AuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthenticationType"/>. </summary>
         public static implicit operator AuthenticationType(string value) => new AuthenticationType(value);
 
         /// <inheritdoc />

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         void IJsonModel<MonthlyRetentionSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MonthlyRetentionSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MonthlyRetentionSchedule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(RetentionScheduleFormatType))
             {
                 writer.WritePropertyName("retentionScheduleFormatType"u8);
@@ -71,7 +79,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MonthlyRetentionSchedule IJsonModel<MonthlyRetentionSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

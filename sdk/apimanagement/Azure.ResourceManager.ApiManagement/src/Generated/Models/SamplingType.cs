@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(SamplingType left, SamplingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SamplingType"/> values are not the same. </summary>
         public static bool operator !=(SamplingType left, SamplingType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SamplingType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SamplingType"/>. </summary>
         public static implicit operator SamplingType(string value) => new SamplingType(value);
 
         /// <inheritdoc />

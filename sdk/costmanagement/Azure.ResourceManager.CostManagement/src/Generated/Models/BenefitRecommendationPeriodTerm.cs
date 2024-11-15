@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(BenefitRecommendationPeriodTerm left, BenefitRecommendationPeriodTerm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BenefitRecommendationPeriodTerm"/> values are not the same. </summary>
         public static bool operator !=(BenefitRecommendationPeriodTerm left, BenefitRecommendationPeriodTerm right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BenefitRecommendationPeriodTerm"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BenefitRecommendationPeriodTerm"/>. </summary>
         public static implicit operator BenefitRecommendationPeriodTerm(string value) => new BenefitRecommendationPeriodTerm(value);
 
         /// <inheritdoc />

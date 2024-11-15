@@ -15,74 +15,146 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// SignalRCustomDomain.
 /// </summary>
-public partial class SignalRCustomDomain : Resource
+public partial class SignalRCustomDomain : ProvisionableResource
 {
     /// <summary>
     /// Custom domain name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The custom domain name.
     /// </summary>
-    public BicepValue<string> DomainName { get => _domainName; set => _domainName.Assign(value); }
-    private readonly BicepValue<string> _domainName;
+    public BicepValue<string> DomainName 
+    {
+        get { Initialize(); return _domainName!; }
+        set { Initialize(); _domainName!.Assign(value); }
+    }
+    private BicepValue<string>? _domainName;
 
     /// <summary>
     /// Gets or sets Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> CustomCertificateId { get => _customCertificateId; set => _customCertificateId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _customCertificateId;
+    public BicepValue<ResourceIdentifier> CustomCertificateId 
+    {
+        get { Initialize(); return _customCertificateId!; }
+        set { Initialize(); _customCertificateId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _customCertificateId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the resource.
     /// </summary>
-    public BicepValue<SignalRProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<SignalRProvisioningState> _provisioningState;
+    public BicepValue<SignalRProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<SignalRProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SignalRService.
     /// </summary>
-    public SignalRService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SignalRService> _parent;
+    public SignalRService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SignalRService>? _parent;
 
     /// <summary>
     /// Creates a new SignalRCustomDomain.
     /// </summary>
-    /// <param name="resourceName">Name of the SignalRCustomDomain.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SignalRCustomDomain resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SignalRCustomDomain.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SignalRCustomDomain(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.SignalRService/signalR/customDomains", resourceVersion, context)
+    public SignalRCustomDomain(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.SignalRService/signalR/customDomains", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _domainName = BicepValue<string>.DefineProperty(this, "DomainName", ["properties", "domainName"], isRequired: true);
-        _customCertificateId = BicepValue<ResourceIdentifier>.DefineProperty(this, "CustomCertificateId", ["properties", "customCertificate", "id"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<SignalRProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SignalRService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SignalRCustomDomain.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _domainName = DefineProperty<string>("DomainName", ["properties", "domainName"], isRequired: true);
+        _customCertificateId = DefineProperty<ResourceIdentifier>("CustomCertificateId", ["properties", "customCertificate", "id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<SignalRProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SignalRService>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported SignalRCustomDomain resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-02-01.
+        /// </summary>
+        public static readonly string V2023_02_01 = "2023-02-01";
+
+        /// <summary>
+        /// 2022-02-01.
+        /// </summary>
+        public static readonly string V2022_02_01 = "2022-02-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2020-05-01.
+        /// </summary>
+        public static readonly string V2020_05_01 = "2020-05-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing SignalRCustomDomain.
     /// </summary>
-    /// <param name="resourceName">Name of the SignalRCustomDomain.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SignalRCustomDomain resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SignalRCustomDomain.</param>
     /// <returns>The existing SignalRCustomDomain resource.</returns>
-    public static SignalRCustomDomain FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SignalRCustomDomain FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

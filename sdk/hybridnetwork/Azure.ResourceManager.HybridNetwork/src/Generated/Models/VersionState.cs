@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator ==(VersionState left, VersionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VersionState"/> values are not the same. </summary>
         public static bool operator !=(VersionState left, VersionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VersionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VersionState"/>. </summary>
         public static implicit operator VersionState(string value) => new VersionState(value);
 
         /// <inheritdoc />

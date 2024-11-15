@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static bool operator ==(IotCentralPrivateEndpointServiceConnectionStatus left, IotCentralPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotCentralPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(IotCentralPrivateEndpointServiceConnectionStatus left, IotCentralPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IotCentralPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IotCentralPrivateEndpointServiceConnectionStatus"/>. </summary>
         public static implicit operator IotCentralPrivateEndpointServiceConnectionStatus(string value) => new IotCentralPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc />

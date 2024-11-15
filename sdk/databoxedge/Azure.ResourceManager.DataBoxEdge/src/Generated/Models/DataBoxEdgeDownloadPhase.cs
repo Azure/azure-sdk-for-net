@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(DataBoxEdgeDownloadPhase left, DataBoxEdgeDownloadPhase right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeDownloadPhase"/> values are not the same. </summary>
         public static bool operator !=(DataBoxEdgeDownloadPhase left, DataBoxEdgeDownloadPhase right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeDownloadPhase"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeDownloadPhase"/>. </summary>
         public static implicit operator DataBoxEdgeDownloadPhase(string value) => new DataBoxEdgeDownloadPhase(value);
 
         /// <inheritdoc />

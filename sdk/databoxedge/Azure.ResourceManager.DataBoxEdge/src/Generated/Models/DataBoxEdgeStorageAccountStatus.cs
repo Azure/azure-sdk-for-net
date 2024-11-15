@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(DataBoxEdgeStorageAccountStatus left, DataBoxEdgeStorageAccountStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeStorageAccountStatus"/> values are not the same. </summary>
         public static bool operator !=(DataBoxEdgeStorageAccountStatus left, DataBoxEdgeStorageAccountStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeStorageAccountStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeStorageAccountStatus"/>. </summary>
         public static implicit operator DataBoxEdgeStorageAccountStatus(string value) => new DataBoxEdgeStorageAccountStatus(value);
 
         /// <inheritdoc />

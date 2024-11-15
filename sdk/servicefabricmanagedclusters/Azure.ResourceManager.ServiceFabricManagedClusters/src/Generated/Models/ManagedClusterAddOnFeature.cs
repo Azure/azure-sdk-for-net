@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(ManagedClusterAddOnFeature left, ManagedClusterAddOnFeature right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterAddOnFeature"/> values are not the same. </summary>
         public static bool operator !=(ManagedClusterAddOnFeature left, ManagedClusterAddOnFeature right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedClusterAddOnFeature"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterAddOnFeature"/>. </summary>
         public static implicit operator ManagedClusterAddOnFeature(string value) => new ManagedClusterAddOnFeature(value);
 
         /// <inheritdoc />

@@ -226,9 +226,7 @@ namespace Azure.Identity
                             _record,
                             tenantId,
                             requestContext.IsCaeEnabled,
-#if PREVIEW_FEATURE_FLAG
-                            null,
-#endif
+                            requestContext,
                             async,
                             cancellationToken)
                             .ConfigureAwait(false);

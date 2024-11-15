@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Azure.Monitor.Query.Models;
@@ -51,5 +52,20 @@ namespace Azure.Monitor.Query
                 new List<string>() :
                 // TODO: #10600 - Verify we don't need to worry about escaping
                 new List<string>(value.Split(','));
+
+        internal static string ToIsoString(this DateTimeOffset value)
+        {
+            if (value.Offset == TimeSpan.Zero)
+            {
+                // Some Azure service required 0-offset dates to be formatted without the
+                // -00:00 part
+                const string roundtripZFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
+                return value.ToString(roundtripZFormat, CultureInfo.InvariantCulture);
+            }
+
+            return value.ToString("O", CultureInfo.InvariantCulture);
+        }
+
+        internal static string ToIsoString(this DateTimeOffset? value) => value?.ToIsoString();
     }
 }

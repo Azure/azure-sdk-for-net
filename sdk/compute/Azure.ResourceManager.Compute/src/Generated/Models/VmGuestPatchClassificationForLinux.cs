@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(VmGuestPatchClassificationForLinux left, VmGuestPatchClassificationForLinux right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmGuestPatchClassificationForLinux"/> values are not the same. </summary>
         public static bool operator !=(VmGuestPatchClassificationForLinux left, VmGuestPatchClassificationForLinux right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VmGuestPatchClassificationForLinux"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VmGuestPatchClassificationForLinux"/>. </summary>
         public static implicit operator VmGuestPatchClassificationForLinux(string value) => new VmGuestPatchClassificationForLinux(value);
 
         /// <inheritdoc />

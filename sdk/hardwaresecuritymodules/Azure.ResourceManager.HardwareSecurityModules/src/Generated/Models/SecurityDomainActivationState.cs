@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static bool operator ==(SecurityDomainActivationState left, SecurityDomainActivationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityDomainActivationState"/> values are not the same. </summary>
         public static bool operator !=(SecurityDomainActivationState left, SecurityDomainActivationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityDomainActivationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityDomainActivationState"/>. </summary>
         public static implicit operator SecurityDomainActivationState(string value) => new SecurityDomainActivationState(value);
 
         /// <inheritdoc />

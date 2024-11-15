@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(WafGranularity left, WafGranularity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafGranularity"/> values are not the same. </summary>
         public static bool operator !=(WafGranularity left, WafGranularity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WafGranularity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WafGranularity"/>. </summary>
         public static implicit operator WafGranularity(string value) => new WafGranularity(value);
 
         /// <inheritdoc />

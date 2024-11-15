@@ -33,7 +33,7 @@ namespace Azure.Maps.Routing
         public static bool operator ==(AlternativeRouteType left, AlternativeRouteType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlternativeRouteType"/> values are not the same. </summary>
         public static bool operator !=(AlternativeRouteType left, AlternativeRouteType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AlternativeRouteType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AlternativeRouteType"/>. </summary>
         public static implicit operator AlternativeRouteType(string value) => new AlternativeRouteType(value);
 
         /// <inheritdoc />

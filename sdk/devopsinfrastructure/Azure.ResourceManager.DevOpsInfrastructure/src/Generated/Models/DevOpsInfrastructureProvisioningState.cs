@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static bool operator ==(DevOpsInfrastructureProvisioningState left, DevOpsInfrastructureProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevOpsInfrastructureProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(DevOpsInfrastructureProvisioningState left, DevOpsInfrastructureProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevOpsInfrastructureProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsInfrastructureProvisioningState"/>. </summary>
         public static implicit operator DevOpsInfrastructureProvisioningState(string value) => new DevOpsInfrastructureProvisioningState(value);
 
         /// <inheritdoc />

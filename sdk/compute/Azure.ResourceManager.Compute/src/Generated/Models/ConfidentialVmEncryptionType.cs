@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(ConfidentialVmEncryptionType left, ConfidentialVmEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfidentialVmEncryptionType"/> values are not the same. </summary>
         public static bool operator !=(ConfidentialVmEncryptionType left, ConfidentialVmEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConfidentialVmEncryptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfidentialVmEncryptionType"/>. </summary>
         public static implicit operator ConfidentialVmEncryptionType(string value) => new ConfidentialVmEncryptionType(value);
 
         /// <inheritdoc />

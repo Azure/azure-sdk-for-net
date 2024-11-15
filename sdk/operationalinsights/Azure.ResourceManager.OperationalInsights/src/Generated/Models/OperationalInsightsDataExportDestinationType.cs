@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static bool operator ==(OperationalInsightsDataExportDestinationType left, OperationalInsightsDataExportDestinationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsDataExportDestinationType"/> values are not the same. </summary>
         public static bool operator !=(OperationalInsightsDataExportDestinationType left, OperationalInsightsDataExportDestinationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OperationalInsightsDataExportDestinationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsDataExportDestinationType"/>. </summary>
         public static implicit operator OperationalInsightsDataExportDestinationType(string value) => new OperationalInsightsDataExportDestinationType(value);
 
         /// <inheritdoc />

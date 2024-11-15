@@ -19,13 +19,21 @@ namespace Azure.Communication.Messages.Models.Channels
 
         void IJsonModel<WhatsAppMessageTemplateBindingsButton>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateBindingsButton>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindingsButton)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("subType"u8);
             writer.WriteStringValue(SubType);
             writer.WritePropertyName("refValue"u8);
@@ -45,7 +53,6 @@ namespace Azure.Communication.Messages.Models.Channels
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WhatsAppMessageTemplateBindingsButton IJsonModel<WhatsAppMessageTemplateBindingsButton>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

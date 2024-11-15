@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public static bool operator ==(LargeInstanceSizeName left, LargeInstanceSizeName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LargeInstanceSizeName"/> values are not the same. </summary>
         public static bool operator !=(LargeInstanceSizeName left, LargeInstanceSizeName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LargeInstanceSizeName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LargeInstanceSizeName"/>. </summary>
         public static implicit operator LargeInstanceSizeName(string value) => new LargeInstanceSizeName(value);
 
         /// <inheritdoc />

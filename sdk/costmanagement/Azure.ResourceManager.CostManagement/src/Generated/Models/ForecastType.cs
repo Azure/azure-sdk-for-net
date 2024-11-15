@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ForecastType left, ForecastType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ForecastType"/> values are not the same. </summary>
         public static bool operator !=(ForecastType left, ForecastType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ForecastType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ForecastType"/>. </summary>
         public static implicit operator ForecastType(string value) => new ForecastType(value);
 
         /// <inheritdoc />

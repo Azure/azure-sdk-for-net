@@ -7,20 +7,20 @@ using System.Linq;
 namespace Azure.Provisioning.Primitives;
 
 /// <summary>
-/// Moves all the <see cref="BicepParameter"/>s to the top and all
-/// <see cref="BicepOutput"/>s to the bottom of the <see cref="Infrastructure"/>.
+/// Moves all the <see cref="ProvisioningParameter"/>s to the top and all
+/// <see cref="ProvisioningOutput"/>s to the bottom of the <see cref="Infrastructure"/>.
 /// </summary>
 public class OrderingInfrastructureResolver : InfrastructureResolver
 {
     /// <inheritdoc />
     public override IEnumerable<Provisionable> ResolveResources(
-        ProvisioningContext context,
-        IEnumerable<Provisionable> resources) =>
+        IEnumerable<Provisionable> resources,
+        ProvisioningBuildOptions options) =>
         resources.OrderBy(construct =>
             construct switch
             {
-                BicepParameter => 0,
-                BicepOutput => 2,
+                ProvisioningParameter => 0,
+                ProvisioningOutput => 2,
                 _ => 1
             });
 }

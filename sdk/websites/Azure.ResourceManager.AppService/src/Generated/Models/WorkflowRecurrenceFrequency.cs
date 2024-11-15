@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(WorkflowRecurrenceFrequency left, WorkflowRecurrenceFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkflowRecurrenceFrequency"/> values are not the same. </summary>
         public static bool operator !=(WorkflowRecurrenceFrequency left, WorkflowRecurrenceFrequency right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkflowRecurrenceFrequency"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkflowRecurrenceFrequency"/>. </summary>
         public static implicit operator WorkflowRecurrenceFrequency(string value) => new WorkflowRecurrenceFrequency(value);
 
         /// <inheritdoc />

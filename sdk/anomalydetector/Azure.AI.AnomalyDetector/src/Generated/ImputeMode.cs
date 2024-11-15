@@ -45,7 +45,7 @@ namespace Azure.AI.AnomalyDetector
         public static bool operator ==(ImputeMode left, ImputeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImputeMode"/> values are not the same. </summary>
         public static bool operator !=(ImputeMode left, ImputeMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImputeMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImputeMode"/>. </summary>
         public static implicit operator ImputeMode(string value) => new ImputeMode(value);
 
         /// <inheritdoc />

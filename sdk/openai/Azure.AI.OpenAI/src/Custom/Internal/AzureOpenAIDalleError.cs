@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Json;
 
 namespace Azure.AI.OpenAI;
 
+[Experimental("AOAI001")]
 [CodeGenModel("AzureOpenAIDalleError")]
 internal partial class AzureOpenAIDalleError
 {

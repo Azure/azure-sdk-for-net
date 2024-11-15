@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(DeleteBillingProfileEligibilityCode left, DeleteBillingProfileEligibilityCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeleteBillingProfileEligibilityCode"/> values are not the same. </summary>
         public static bool operator !=(DeleteBillingProfileEligibilityCode left, DeleteBillingProfileEligibilityCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeleteBillingProfileEligibilityCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeleteBillingProfileEligibilityCode"/>. </summary>
         public static implicit operator DeleteBillingProfileEligibilityCode(string value) => new DeleteBillingProfileEligibilityCode(value);
 
         /// <inheritdoc />

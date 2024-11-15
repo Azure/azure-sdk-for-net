@@ -1,5 +1,15 @@
 # Release History
 
+## 1.6.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.5.0 (2024-09-15)
 
 ### Features Added
@@ -22,6 +32,7 @@
   - Added `ContainerHostBatchBindMounts` to `BatchTaskContainerSettings` definition.
 
 - Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Other Changes
 

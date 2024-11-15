@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator ==(SourceDataStoreType left, SourceDataStoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceDataStoreType"/> values are not the same. </summary>
         public static bool operator !=(SourceDataStoreType left, SourceDataStoreType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SourceDataStoreType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceDataStoreType"/>. </summary>
         public static implicit operator SourceDataStoreType(string value) => new SourceDataStoreType(value);
 
         /// <inheritdoc />

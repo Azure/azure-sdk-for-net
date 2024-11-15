@@ -143,7 +143,7 @@ namespace Azure.AI.OpenAI.Tests.Utils.Config
             else
             {
                 value = MaskData(key, value);
-                JsonElement json = JsonHelpers.SerializeToElement(value, JsonConfig.JSON_OPTIONS);
+                JsonElement json = JsonSerializer.SerializeToElement(value, JsonConfig.JSON_OPTIONS);
                 ExtensionData[key] = json;
             }
         }

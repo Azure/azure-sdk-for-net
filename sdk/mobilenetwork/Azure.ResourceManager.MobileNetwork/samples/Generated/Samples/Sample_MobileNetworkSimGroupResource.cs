@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.MobileNetwork.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MobileNetwork.Samples
 {
     public partial class Sample_MobileNetworkSimGroupResource
     {
-        // Bulk upload SIMs in a SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task BulkUploadSim_BulkUploadSIMsInASIMGroup()
         {
             // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimBulkUpload.json
@@ -81,9 +81,8 @@ OperatorKeyCode = "00000000000000000000000000000000",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Bulk delete SIMs from a SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task BulkDeleteSim_BulkDeleteSIMsFromASIMGroup()
         {
             // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimBulkDelete.json
@@ -113,9 +112,8 @@ OperatorKeyCode = "00000000000000000000000000000000",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Bulk upload encrypted SIMs to a SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task BulkUploadEncryptedSim_BulkUploadEncryptedSIMsToASIMGroup()
         {
             // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimBulkUploadEncrypted.json
@@ -175,9 +173,8 @@ EncryptedCredentials = "ABC123",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Move list of SIMs to target SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MoveSim_MoveListOfSIMsToTargetSIMGroup()
         {
             // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimMove.json
@@ -210,9 +207,8 @@ EncryptedCredentials = "ABC123",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Clone list of SIMs to target SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CloneSim_CloneListOfSIMsToTargetSIMGroup()
         {
             // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimClone.json
@@ -245,9 +241,8 @@ EncryptedCredentials = "ABC123",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Delete SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSIMGroup()
         {
             // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimGroupDelete.json
@@ -269,12 +264,11 @@ EncryptedCredentials = "ABC123",
             // invoke the operation
             await mobileNetworkSimGroup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSIMGroup()
         {
             // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimGroupGet.json
@@ -303,9 +297,8 @@ EncryptedCredentials = "ABC123",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchSIMGroup()
         {
             // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimGroupPatch.json
@@ -349,9 +342,8 @@ EncryptedCredentials = "ABC123",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List SIM groups in a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMobileNetworkSimGroups_ListSIMGroupsInASubscription()
         {
             // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimGroupListBySubscription.json
@@ -378,7 +370,7 @@ EncryptedCredentials = "ABC123",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

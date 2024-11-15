@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public static bool operator ==(SapInstanceEnvironment left, SapInstanceEnvironment right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapInstanceEnvironment"/> values are not the same. </summary>
         public static bool operator !=(SapInstanceEnvironment left, SapInstanceEnvironment right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapInstanceEnvironment"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapInstanceEnvironment"/>. </summary>
         public static implicit operator SapInstanceEnvironment(string value) => new SapInstanceEnvironment(value);
 
         /// <inheritdoc />

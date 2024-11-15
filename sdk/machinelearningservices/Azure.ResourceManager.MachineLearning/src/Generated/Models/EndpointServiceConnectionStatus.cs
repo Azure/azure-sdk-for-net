@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(EndpointServiceConnectionStatus left, EndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EndpointServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(EndpointServiceConnectionStatus left, EndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EndpointServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EndpointServiceConnectionStatus"/>. </summary>
         public static implicit operator EndpointServiceConnectionStatus(string value) => new EndpointServiceConnectionStatus(value);
 
         /// <inheritdoc />

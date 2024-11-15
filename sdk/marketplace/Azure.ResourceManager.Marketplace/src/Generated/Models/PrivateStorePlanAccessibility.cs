@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public static bool operator ==(PrivateStorePlanAccessibility left, PrivateStorePlanAccessibility right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateStorePlanAccessibility"/> values are not the same. </summary>
         public static bool operator !=(PrivateStorePlanAccessibility left, PrivateStorePlanAccessibility right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PrivateStorePlanAccessibility"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateStorePlanAccessibility"/>. </summary>
         public static implicit operator PrivateStorePlanAccessibility(string value) => new PrivateStorePlanAccessibility(value);
 
         /// <inheritdoc />

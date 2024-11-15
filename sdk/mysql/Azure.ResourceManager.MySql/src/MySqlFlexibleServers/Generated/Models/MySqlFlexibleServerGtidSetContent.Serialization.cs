@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         void IJsonModel<MySqlFlexibleServerGtidSetContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerGtidSetContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MySqlFlexibleServerGtidSetContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(GtidSet))
             {
                 writer.WritePropertyName("gtidSet"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MySqlFlexibleServerGtidSetContent IJsonModel<MySqlFlexibleServerGtidSetContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

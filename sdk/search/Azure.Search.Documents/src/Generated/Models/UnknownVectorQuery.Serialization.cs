@@ -42,6 +42,16 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
+            if (Optional.IsDefined(Threshold))
+            {
+                writer.WritePropertyName("threshold"u8);
+                writer.WriteObjectValue(Threshold);
+            }
+            if (Optional.IsDefined(FilterOverride))
+            {
+                writer.WritePropertyName("filterOverride"u8);
+                writer.WriteStringValue(FilterOverride);
+            }
             writer.WriteEndObject();
         }
 
@@ -57,6 +67,8 @@ namespace Azure.Search.Documents.Models
             bool? exhaustive = default;
             double? oversampling = default;
             float? weight = default;
+            VectorThreshold threshold = default;
+            string filterOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -105,6 +117,20 @@ namespace Azure.Search.Documents.Models
                     weight = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("threshold"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    threshold = VectorThreshold.DeserializeVectorThreshold(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("filterOverride"u8))
+                {
+                    filterOverride = property.Value.GetString();
+                    continue;
+                }
             }
             return new UnknownVectorQuery(
                 kind,
@@ -112,7 +138,9 @@ namespace Azure.Search.Documents.Models
                 fields,
                 exhaustive,
                 oversampling,
-                weight);
+                weight,
+                threshold,
+                filterOverride);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

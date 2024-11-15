@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sphere.Models
         public static bool operator ==(SphereCertificateStatus left, SphereCertificateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SphereCertificateStatus"/> values are not the same. </summary>
         public static bool operator !=(SphereCertificateStatus left, SphereCertificateStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SphereCertificateStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SphereCertificateStatus"/>. </summary>
         public static implicit operator SphereCertificateStatus(string value) => new SphereCertificateStatus(value);
 
         /// <inheritdoc />

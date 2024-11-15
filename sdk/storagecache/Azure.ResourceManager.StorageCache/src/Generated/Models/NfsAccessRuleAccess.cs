@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static bool operator ==(NfsAccessRuleAccess left, NfsAccessRuleAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NfsAccessRuleAccess"/> values are not the same. </summary>
         public static bool operator !=(NfsAccessRuleAccess left, NfsAccessRuleAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NfsAccessRuleAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NfsAccessRuleAccess"/>. </summary>
         public static implicit operator NfsAccessRuleAccess(string value) => new NfsAccessRuleAccess(value);
 
         /// <inheritdoc />

@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using System.ComponentModel;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -28,18 +27,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// The permissions for the acl policy.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [CodeGenMember("Permission")]
-        public string Permissions
-        {
-            get => QueueAccessPolicyPermissions.ToPermissionsString();
-            set => QueueAccessPolicyPermissions = value.ToPermissionsEnum();
-        }
-
-        /// <summary>
-        /// To get/set the permissions enum for the queue access policy.
-        /// </summary>
-        [CodeGenMember("QueueAccessPolicyPermission")]
-        public QueueAccessPolicyPermissions? QueueAccessPolicyPermissions { get; set; }
+        public string Permissions { get; set; }
     }
 }

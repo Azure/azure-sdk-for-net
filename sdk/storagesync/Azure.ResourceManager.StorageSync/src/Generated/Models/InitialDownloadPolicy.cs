@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static bool operator ==(InitialDownloadPolicy left, InitialDownloadPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InitialDownloadPolicy"/> values are not the same. </summary>
         public static bool operator !=(InitialDownloadPolicy left, InitialDownloadPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InitialDownloadPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InitialDownloadPolicy"/>. </summary>
         public static implicit operator InitialDownloadPolicy(string value) => new InitialDownloadPolicy(value);
 
         /// <inheritdoc />

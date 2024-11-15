@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(NodeSizeFamily left, NodeSizeFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeSizeFamily"/> values are not the same. </summary>
         public static bool operator !=(NodeSizeFamily left, NodeSizeFamily right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NodeSizeFamily"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NodeSizeFamily"/>. </summary>
         public static implicit operator NodeSizeFamily(string value) => new NodeSizeFamily(value);
 
         /// <inheritdoc />

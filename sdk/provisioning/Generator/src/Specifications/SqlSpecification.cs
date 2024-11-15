@@ -3,6 +3,7 @@
 
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager.AppService;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 
@@ -70,6 +71,9 @@ public class SqlSpecification() :
         // Patch models
         RemoveModel<DiffBackupIntervalInHours>(); // TODO: Maybe support extensible enums of other types?
         CustomizeProperty<BackupShortTermRetentionPolicyResource>("DiffBackupIntervalInHours", p => p.PropertyType = TypeRegistry.Get<int>());
+        CustomizePropertyIsoDuration<SqlServerJobSchedule>("Interval");
+        // Not generated today:
+        // CustomizePropertyIsoDuration<MaintenanceWindowTimeRange>("Duration");
 
         // Naming requirements
         AddNameRequirements<ManagedInstanceResource>(min: 1, max: 63, lower: true, digits: true, hyphen: true);

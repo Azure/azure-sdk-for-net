@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ExpressRouteCircuitSkuFamily left, ExpressRouteCircuitSkuFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteCircuitSkuFamily"/> values are not the same. </summary>
         public static bool operator !=(ExpressRouteCircuitSkuFamily left, ExpressRouteCircuitSkuFamily right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExpressRouteCircuitSkuFamily"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRouteCircuitSkuFamily"/>. </summary>
         public static implicit operator ExpressRouteCircuitSkuFamily(string value) => new ExpressRouteCircuitSkuFamily(value);
 
         /// <inheritdoc />

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(EnrollmentAccountOwnerViewCharge left, EnrollmentAccountOwnerViewCharge right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnrollmentAccountOwnerViewCharge"/> values are not the same. </summary>
         public static bool operator !=(EnrollmentAccountOwnerViewCharge left, EnrollmentAccountOwnerViewCharge right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EnrollmentAccountOwnerViewCharge"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EnrollmentAccountOwnerViewCharge"/>. </summary>
         public static implicit operator EnrollmentAccountOwnerViewCharge(string value) => new EnrollmentAccountOwnerViewCharge(value);
 
         /// <inheritdoc />

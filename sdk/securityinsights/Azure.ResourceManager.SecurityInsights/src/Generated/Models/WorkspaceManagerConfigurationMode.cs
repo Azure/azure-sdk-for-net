@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(WorkspaceManagerConfigurationMode left, WorkspaceManagerConfigurationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkspaceManagerConfigurationMode"/> values are not the same. </summary>
         public static bool operator !=(WorkspaceManagerConfigurationMode left, WorkspaceManagerConfigurationMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkspaceManagerConfigurationMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkspaceManagerConfigurationMode"/>. </summary>
         public static implicit operator WorkspaceManagerConfigurationMode(string value) => new WorkspaceManagerConfigurationMode(value);
 
         /// <inheritdoc />

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(ReservationPurchasesPolicy left, ReservationPurchasesPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservationPurchasesPolicy"/> values are not the same. </summary>
         public static bool operator !=(ReservationPurchasesPolicy left, ReservationPurchasesPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReservationPurchasesPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReservationPurchasesPolicy"/>. </summary>
         public static implicit operator ReservationPurchasesPolicy(string value) => new ReservationPurchasesPolicy(value);
 
         /// <inheritdoc />

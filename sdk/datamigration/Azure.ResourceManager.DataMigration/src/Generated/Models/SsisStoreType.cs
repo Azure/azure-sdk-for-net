@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(SsisStoreType left, SsisStoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SsisStoreType"/> values are not the same. </summary>
         public static bool operator !=(SsisStoreType left, SsisStoreType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SsisStoreType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SsisStoreType"/>. </summary>
         public static implicit operator SsisStoreType(string value) => new SsisStoreType(value);
 
         /// <inheritdoc />

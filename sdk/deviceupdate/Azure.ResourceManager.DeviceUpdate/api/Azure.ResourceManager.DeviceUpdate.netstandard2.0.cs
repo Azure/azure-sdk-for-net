@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku? Sku { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -111,6 +112,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public bool? EnableDiagnostics { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateIotHubSettings> IotHubs { get { throw null; } }
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -166,6 +168,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -196,6 +199,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointConnectionProxyProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateRemotePrivateEndpoint RemotePrivateEndpoint { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -266,6 +270,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateLinkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateLinkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateLinkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateLinkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateLinkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -334,6 +339,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         internal DeviceUpdateAccountLocationDetail() { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationRole? Role { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -364,6 +370,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -375,6 +382,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public DeviceUpdateAvailabilityContent() { }
         public Azure.Core.ResourceType? CheckNameAvailabilityRequestType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -386,6 +394,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public DeviceUpdateEncryption() { }
         public System.Uri KeyVaultKeyUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateEncryption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateEncryption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateEncryption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateEncryption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateEncryption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -396,6 +405,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     {
         public DeviceUpdateInstancePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateInstancePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateInstancePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateInstancePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateInstancePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateInstancePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -406,6 +416,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     {
         public DeviceUpdateIotHubSettings(Azure.Core.ResourceIdentifier resourceId) { }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateIotHubSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateIotHubSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateIotHubSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateIotHubSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateIotHubSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -418,6 +429,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateNameUnavailableReason? Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -450,6 +462,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string LinkIdentifier { get { throw null; } }
         public string MemberName { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointConnectionDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointConnectionDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointConnectionDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointConnectionDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointConnectionDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -523,6 +536,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string ImmutableSubscriptionId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string VnetTrafficTag { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -554,6 +568,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public string RequestMessage { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -566,6 +581,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -579,6 +595,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RemotePrivateEndpointConnectionId { get { throw null; } }
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnectionState RemotePrivateLinkServiceConnectionState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceProxy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceProxy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceProxy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceProxy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceProxy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -637,6 +654,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnection> PrivateLinkServiceConnections { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceProxy> PrivateLinkServiceProxies { get { throw null; } }
         public string VnetTrafficTag { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateRemotePrivateEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateRemotePrivateEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateRemotePrivateEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateRemotePrivateEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateRemotePrivateEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -684,6 +702,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public Azure.ResourceManager.DeviceUpdate.Models.DiagnosticStorageAuthenticationType AuthenticationType { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DiagnosticStorageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DiagnosticStorageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.DiagnosticStorageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.DiagnosticStorageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.DiagnosticStorageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -699,6 +718,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string MemberName { get { throw null; } }
         public Azure.Core.AzureLocation? PrivateLinkServiceArmRegion { get { throw null; } set { } }
         public string RedirectMapId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.GroupConnectivityInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.GroupConnectivityInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceUpdate.Models.GroupConnectivityInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceUpdate.Models.GroupConnectivityInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceUpdate.Models.GroupConnectivityInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(SsisLogLocationType left, SsisLogLocationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SsisLogLocationType"/> values are not the same. </summary>
         public static bool operator !=(SsisLogLocationType left, SsisLogLocationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SsisLogLocationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SsisLogLocationType"/>. </summary>
         public static implicit operator SsisLogLocationType(string value) => new SsisLogLocationType(value);
 
         /// <inheritdoc />

@@ -63,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(ScriptActivityParameterType left, ScriptActivityParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptActivityParameterType"/> values are not the same. </summary>
         public static bool operator !=(ScriptActivityParameterType left, ScriptActivityParameterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScriptActivityParameterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptActivityParameterType"/>. </summary>
         public static implicit operator ScriptActivityParameterType(string value) => new ScriptActivityParameterType(value);
 
         /// <inheritdoc />

@@ -16,95 +16,234 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AppServiceCertificate.
 /// </summary>
-public partial class AppServiceCertificate : Resource
+public partial class AppServiceCertificate : ProvisionableResource
 {
     /// <summary>
     /// Name of the certificate.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Key Vault resource Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> KeyVaultId { get => _keyVaultId; set => _keyVaultId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _keyVaultId;
+    public BicepValue<ResourceIdentifier> KeyVaultId 
+    {
+        get { Initialize(); return _keyVaultId!; }
+        set { Initialize(); _keyVaultId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _keyVaultId;
 
     /// <summary>
     /// Key Vault secret name.
     /// </summary>
-    public BicepValue<string> KeyVaultSecretName { get => _keyVaultSecretName; set => _keyVaultSecretName.Assign(value); }
-    private readonly BicepValue<string> _keyVaultSecretName;
+    public BicepValue<string> KeyVaultSecretName 
+    {
+        get { Initialize(); return _keyVaultSecretName!; }
+        set { Initialize(); _keyVaultSecretName!.Assign(value); }
+    }
+    private BicepValue<string>? _keyVaultSecretName;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Status of the Key Vault secret.
     /// </summary>
-    public BicepValue<KeyVaultSecretStatus> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<KeyVaultSecretStatus> _provisioningState;
+    public BicepValue<KeyVaultSecretStatus> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<KeyVaultSecretStatus>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent AppServiceCertificateOrder.
     /// </summary>
-    public AppServiceCertificateOrder? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<AppServiceCertificateOrder> _parent;
+    public AppServiceCertificateOrder? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<AppServiceCertificateOrder>? _parent;
 
     /// <summary>
     /// Creates a new AppServiceCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the AppServiceCertificate.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppServiceCertificate resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppServiceCertificate.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppServiceCertificate(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.CertificateRegistration/certificateOrders/certificates", resourceVersion, context)
+    public AppServiceCertificate(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.CertificateRegistration/certificateOrders/certificates", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _keyVaultId = BicepValue<ResourceIdentifier>.DefineProperty(this, "KeyVaultId", ["properties", "keyVaultId"]);
-        _keyVaultSecretName = BicepValue<string>.DefineProperty(this, "KeyVaultSecretName", ["properties", "keyVaultSecretName"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<KeyVaultSecretStatus>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<AppServiceCertificateOrder>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of AppServiceCertificate.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _keyVaultId = DefineProperty<ResourceIdentifier>("KeyVaultId", ["properties", "keyVaultId"]);
+        _keyVaultSecretName = DefineProperty<string>("KeyVaultSecretName", ["properties", "keyVaultSecretName"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<KeyVaultSecretStatus>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<AppServiceCertificateOrder>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported AppServiceCertificate resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
+        /// <summary>
+        /// 2023-12-01.
+        /// </summary>
+        public static readonly string V2023_12_01 = "2023-12-01";
+
+        /// <summary>
+        /// 2023-01-01.
+        /// </summary>
+        public static readonly string V2023_01_01 = "2023-01-01";
+
+        /// <summary>
+        /// 2022-09-01.
+        /// </summary>
+        public static readonly string V2022_09_01 = "2022-09-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
+
+        /// <summary>
+        /// 2021-03-01.
+        /// </summary>
+        public static readonly string V2021_03_01 = "2021-03-01";
+
+        /// <summary>
+        /// 2021-02-01.
+        /// </summary>
+        public static readonly string V2021_02_01 = "2021-02-01";
+
+        /// <summary>
+        /// 2021-01-15.
+        /// </summary>
+        public static readonly string V2021_01_15 = "2021-01-15";
+
+        /// <summary>
+        /// 2021-01-01.
+        /// </summary>
+        public static readonly string V2021_01_01 = "2021-01-01";
+
+        /// <summary>
+        /// 2020-12-01.
+        /// </summary>
+        public static readonly string V2020_12_01 = "2020-12-01";
+
+        /// <summary>
+        /// 2020-10-01.
+        /// </summary>
+        public static readonly string V2020_10_01 = "2020-10-01";
+
+        /// <summary>
+        /// 2020-09-01.
+        /// </summary>
+        public static readonly string V2020_09_01 = "2020-09-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2019-08-01.
+        /// </summary>
+        public static readonly string V2019_08_01 = "2019-08-01";
+
+        /// <summary>
+        /// 2018-02-01.
+        /// </summary>
+        public static readonly string V2018_02_01 = "2018-02-01";
+
+        /// <summary>
+        /// 2015-08-01.
+        /// </summary>
+        public static readonly string V2015_08_01 = "2015-08-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing AppServiceCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the AppServiceCertificate.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppServiceCertificate resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppServiceCertificate.</param>
     /// <returns>The existing AppServiceCertificate resource.</returns>
-    public static AppServiceCertificate FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static AppServiceCertificate FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

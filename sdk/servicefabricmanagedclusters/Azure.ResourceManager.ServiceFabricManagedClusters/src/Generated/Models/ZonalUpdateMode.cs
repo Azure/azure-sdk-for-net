@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(ZonalUpdateMode left, ZonalUpdateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ZonalUpdateMode"/> values are not the same. </summary>
         public static bool operator !=(ZonalUpdateMode left, ZonalUpdateMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ZonalUpdateMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ZonalUpdateMode"/>. </summary>
         public static implicit operator ZonalUpdateMode(string value) => new ZonalUpdateMode(value);
 
         /// <inheritdoc />

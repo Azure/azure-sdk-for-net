@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         void IJsonModel<StatefulServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StatefulServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(HasPersistedState))
             {
                 writer.WritePropertyName("hasPersistedState"u8);
@@ -61,93 +70,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("servicePlacementTimeLimit"u8);
                 writer.WriteStringValue(ServicePlacementTimeLimit.Value, "c");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
-            writer.WritePropertyName("serviceKind"u8);
-            writer.WriteStringValue(ServiceKind.ToString());
-            writer.WritePropertyName("serviceTypeName"u8);
-            writer.WriteStringValue(ServiceTypeName);
-            writer.WritePropertyName("partitionDescription"u8);
-            writer.WriteObjectValue(PartitionDescription, options);
-            if (Optional.IsDefined(ServicePackageActivationMode))
-            {
-                writer.WritePropertyName("servicePackageActivationMode"u8);
-                writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
-            }
-            if (Optional.IsDefined(ServiceDnsName))
-            {
-                writer.WritePropertyName("serviceDnsName"u8);
-                writer.WriteStringValue(ServiceDnsName);
-            }
-            if (Optional.IsDefined(PlacementConstraints))
-            {
-                writer.WritePropertyName("placementConstraints"u8);
-                writer.WriteStringValue(PlacementConstraints);
-            }
-            if (Optional.IsCollectionDefined(CorrelationScheme))
-            {
-                writer.WritePropertyName("correlationScheme"u8);
-                writer.WriteStartArray();
-                foreach (var item in CorrelationScheme)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
-            {
-                writer.WritePropertyName("serviceLoadMetrics"u8);
-                writer.WriteStartArray();
-                foreach (var item in ServiceLoadMetrics)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
-            {
-                writer.WritePropertyName("servicePlacementPolicies"u8);
-                writer.WriteStartArray();
-                foreach (var item in ServicePlacementPolicies)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(DefaultMoveCost))
-            {
-                writer.WritePropertyName("defaultMoveCost"u8);
-                writer.WriteStringValue(DefaultMoveCost.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(ScalingPolicies))
-            {
-                writer.WritePropertyName("scalingPolicies"u8);
-                writer.WriteStartArray();
-                foreach (var item in ScalingPolicies)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         StatefulServiceProperties IJsonModel<StatefulServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

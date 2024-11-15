@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This client library provides access to the Microsoft Azure Batch service.</Description>
     <Version>16.4.0-beta.1</Version>
-    <ApiCompatVersion>16.3.0</ApiCompatVersion>
+    <ApiCompatVersion>16.3.1</ApiCompatVersion>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

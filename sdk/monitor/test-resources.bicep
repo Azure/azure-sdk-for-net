@@ -5,9 +5,6 @@ param location string = resourceGroup().location
 @description('The client OID to grant access to test resources.')
 param testApplicationOid string
 
-@description('Random string to generate storage account name.')
-param utc string = utcNow()
-
 @description('The base resource name.')
 param baseName string = resourceGroup().name
 
@@ -276,6 +273,24 @@ resource dataCollectionEndpoint2 'Microsoft.Insights/dataCollectionEndpoints@202
   }
 }
 
+//STORAGE ACCOUNT FOR METRICSCLIENT
+@description('The base resource name.')
+param storageAccountName string = uniqueString(baseName, 'storage')
+@description('The base resource name.')
+param storageAccountsku string = 'Standard_LRS'
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
+  name: storageAccountName
+  location: location
+  sku: {
+    name: storageAccountsku
+  }
+  kind: 'StorageV2'
+  tags: {
+    ObjectName: storageAccountName
+  }
+  properties: {}
+}
+
 // OUTPUT VALUES USED BY TEST ENVIRONMENT
 output LOGS_ENDPOINT string =  'https://api.loganalytics.io'
 
@@ -284,3 +299,17 @@ output WORKSPACE_ID string = LogAnalyticsWorkspace1.properties.customerId
 
 output SECONDARY_CONNECTION_STRING string = ApplicationInsightsResource2.properties.ConnectionString
 output SECONDARY_WORKSPACE_ID string = LogAnalyticsWorkspace2.properties.customerId
+
+// VALUES NEEDED FOR AZURE.MONITOR.QUERY
+output WORKSPACE_PRIMARY_RESOURCE_ID string = LogAnalyticsWorkspace1.id
+output WORKSPACE_SECONDARY_RESOURCE_ID string = LogAnalyticsWorkspace2.id
+output STORAGE_NAME string = storageAccount.name
+output STORAGE_ID string = storageAccount.id
+output METRICS_RESOURCE_ID string = LogAnalyticsWorkspace1.id
+output METRICS_RESOURCE_NAMESPACE string = 'Microsoft.OperationalInsights/workspaces'
+
+// VALUES NEEDED FOR AZURE.MONITOR.INGESTION
+output INGESTION_DATA_COLLECTION_RULE_ID string = dataCollectionRule1.id
+output INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID string = dataCollectionRule1.properties.immutableId
+output MONITOR_INGESTION_DATA_COLLECTION_ENDPOINT string = dataCollectionEndpoint1.properties.logsIngestion.endpoint
+output INGESTION_STREAM_NAME string = streamName

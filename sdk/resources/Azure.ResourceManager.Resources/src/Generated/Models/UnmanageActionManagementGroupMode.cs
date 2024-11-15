@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(UnmanageActionManagementGroupMode left, UnmanageActionManagementGroupMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UnmanageActionManagementGroupMode"/> values are not the same. </summary>
         public static bool operator !=(UnmanageActionManagementGroupMode left, UnmanageActionManagementGroupMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UnmanageActionManagementGroupMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UnmanageActionManagementGroupMode"/>. </summary>
         public static implicit operator UnmanageActionManagementGroupMode(string value) => new UnmanageActionManagementGroupMode(value);
 
         /// <inheritdoc />

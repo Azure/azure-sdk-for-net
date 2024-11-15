@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(AllowedCopyScope left, AllowedCopyScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AllowedCopyScope"/> values are not the same. </summary>
         public static bool operator !=(AllowedCopyScope left, AllowedCopyScope right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AllowedCopyScope"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AllowedCopyScope"/>. </summary>
         public static implicit operator AllowedCopyScope(string value) => new AllowedCopyScope(value);
 
         /// <inheritdoc />

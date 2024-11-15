@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static bool operator ==(LoggingDirection left, LoggingDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoggingDirection"/> values are not the same. </summary>
         public static bool operator !=(LoggingDirection left, LoggingDirection right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LoggingDirection"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LoggingDirection"/>. </summary>
         public static implicit operator LoggingDirection(string value) => new LoggingDirection(value);
 
         /// <inheritdoc />

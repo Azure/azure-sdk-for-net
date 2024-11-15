@@ -16,27 +16,39 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusQueue.
 /// </summary>
-public partial class ServiceBusQueue : Resource
+public partial class ServiceBusQueue : ProvisionableResource
 {
     /// <summary>
     /// The queue name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// ISO 8061 timeSpan idle interval after which the queue is automatically
     /// deleted. The minimum duration is 5 minutes.
     /// </summary>
-    public BicepValue<TimeSpan> AutoDeleteOnIdle { get => _autoDeleteOnIdle; set => _autoDeleteOnIdle.Assign(value); }
-    private readonly BicepValue<TimeSpan> _autoDeleteOnIdle;
+    public BicepValue<TimeSpan> AutoDeleteOnIdle 
+    {
+        get { Initialize(); return _autoDeleteOnIdle!; }
+        set { Initialize(); _autoDeleteOnIdle!.Assign(value); }
+    }
+    private BicepValue<TimeSpan>? _autoDeleteOnIdle;
 
     /// <summary>
     /// A value that indicates whether this queue has dead letter support when
     /// a message expires.
     /// </summary>
-    public BicepValue<bool> DeadLetteringOnMessageExpiration { get => _deadLetteringOnMessageExpiration; set => _deadLetteringOnMessageExpiration.Assign(value); }
-    private readonly BicepValue<bool> _deadLetteringOnMessageExpiration;
+    public BicepValue<bool> DeadLetteringOnMessageExpiration 
+    {
+        get { Initialize(); return _deadLetteringOnMessageExpiration!; }
+        set { Initialize(); _deadLetteringOnMessageExpiration!.Assign(value); }
+    }
+    private BicepValue<bool>? _deadLetteringOnMessageExpiration;
 
     /// <summary>
     /// ISO 8601 default message timespan to live value. This is the duration
@@ -44,194 +56,292 @@ public partial class ServiceBusQueue : Resource
     /// sent to Service Bus. This is the default value used when TimeToLive is
     /// not set on a message itself.
     /// </summary>
-    public BicepValue<TimeSpan> DefaultMessageTimeToLive { get => _defaultMessageTimeToLive; set => _defaultMessageTimeToLive.Assign(value); }
-    private readonly BicepValue<TimeSpan> _defaultMessageTimeToLive;
+    public BicepValue<TimeSpan> DefaultMessageTimeToLive 
+    {
+        get { Initialize(); return _defaultMessageTimeToLive!; }
+        set { Initialize(); _defaultMessageTimeToLive!.Assign(value); }
+    }
+    private BicepValue<TimeSpan>? _defaultMessageTimeToLive;
 
     /// <summary>
     /// ISO 8601 timeSpan structure that defines the duration of the duplicate
     /// detection history. The default value is 10 minutes.
     /// </summary>
-    public BicepValue<TimeSpan> DuplicateDetectionHistoryTimeWindow { get => _duplicateDetectionHistoryTimeWindow; set => _duplicateDetectionHistoryTimeWindow.Assign(value); }
-    private readonly BicepValue<TimeSpan> _duplicateDetectionHistoryTimeWindow;
+    public BicepValue<TimeSpan> DuplicateDetectionHistoryTimeWindow 
+    {
+        get { Initialize(); return _duplicateDetectionHistoryTimeWindow!; }
+        set { Initialize(); _duplicateDetectionHistoryTimeWindow!.Assign(value); }
+    }
+    private BicepValue<TimeSpan>? _duplicateDetectionHistoryTimeWindow;
 
     /// <summary>
     /// Value that indicates whether server-side batched operations are enabled.
     /// </summary>
-    public BicepValue<bool> EnableBatchedOperations { get => _enableBatchedOperations; set => _enableBatchedOperations.Assign(value); }
-    private readonly BicepValue<bool> _enableBatchedOperations;
+    public BicepValue<bool> EnableBatchedOperations 
+    {
+        get { Initialize(); return _enableBatchedOperations!; }
+        set { Initialize(); _enableBatchedOperations!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableBatchedOperations;
 
     /// <summary>
     /// A value that indicates whether Express Entities are enabled. An express
     /// queue holds a message in memory temporarily before writing it to
     /// persistent storage.
     /// </summary>
-    public BicepValue<bool> EnableExpress { get => _enableExpress; set => _enableExpress.Assign(value); }
-    private readonly BicepValue<bool> _enableExpress;
+    public BicepValue<bool> EnableExpress 
+    {
+        get { Initialize(); return _enableExpress!; }
+        set { Initialize(); _enableExpress!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableExpress;
 
     /// <summary>
     /// A value that indicates whether the queue is to be partitioned across
     /// multiple message brokers.
     /// </summary>
-    public BicepValue<bool> EnablePartitioning { get => _enablePartitioning; set => _enablePartitioning.Assign(value); }
-    private readonly BicepValue<bool> _enablePartitioning;
+    public BicepValue<bool> EnablePartitioning 
+    {
+        get { Initialize(); return _enablePartitioning!; }
+        set { Initialize(); _enablePartitioning!.Assign(value); }
+    }
+    private BicepValue<bool>? _enablePartitioning;
 
     /// <summary>
     /// Queue/Topic name to forward the Dead Letter message.
     /// </summary>
-    public BicepValue<string> ForwardDeadLetteredMessagesTo { get => _forwardDeadLetteredMessagesTo; set => _forwardDeadLetteredMessagesTo.Assign(value); }
-    private readonly BicepValue<string> _forwardDeadLetteredMessagesTo;
+    public BicepValue<string> ForwardDeadLetteredMessagesTo 
+    {
+        get { Initialize(); return _forwardDeadLetteredMessagesTo!; }
+        set { Initialize(); _forwardDeadLetteredMessagesTo!.Assign(value); }
+    }
+    private BicepValue<string>? _forwardDeadLetteredMessagesTo;
 
     /// <summary>
     /// Queue/Topic name to forward the messages.
     /// </summary>
-    public BicepValue<string> ForwardTo { get => _forwardTo; set => _forwardTo.Assign(value); }
-    private readonly BicepValue<string> _forwardTo;
+    public BicepValue<string> ForwardTo 
+    {
+        get { Initialize(); return _forwardTo!; }
+        set { Initialize(); _forwardTo!.Assign(value); }
+    }
+    private BicepValue<string>? _forwardTo;
 
     /// <summary>
     /// ISO 8601 timespan duration of a peek-lock; that is, the amount of time
     /// that the message is locked for other receivers. The maximum value for
     /// LockDuration is 5 minutes; the default value is 1 minute.
     /// </summary>
-    public BicepValue<TimeSpan> LockDuration { get => _lockDuration; set => _lockDuration.Assign(value); }
-    private readonly BicepValue<TimeSpan> _lockDuration;
+    public BicepValue<TimeSpan> LockDuration 
+    {
+        get { Initialize(); return _lockDuration!; }
+        set { Initialize(); _lockDuration!.Assign(value); }
+    }
+    private BicepValue<TimeSpan>? _lockDuration;
 
     /// <summary>
     /// The maximum delivery count. A message is automatically deadlettered
     /// after this number of deliveries. default value is 10.
     /// </summary>
-    public BicepValue<int> MaxDeliveryCount { get => _maxDeliveryCount; set => _maxDeliveryCount.Assign(value); }
-    private readonly BicepValue<int> _maxDeliveryCount;
+    public BicepValue<int> MaxDeliveryCount 
+    {
+        get { Initialize(); return _maxDeliveryCount!; }
+        set { Initialize(); _maxDeliveryCount!.Assign(value); }
+    }
+    private BicepValue<int>? _maxDeliveryCount;
 
     /// <summary>
     /// Maximum size (in KB) of the message payload that can be accepted by the
     /// queue. This property is only used in Premium today and default is 1024.
     /// </summary>
-    public BicepValue<long> MaxMessageSizeInKilobytes { get => _maxMessageSizeInKilobytes; set => _maxMessageSizeInKilobytes.Assign(value); }
-    private readonly BicepValue<long> _maxMessageSizeInKilobytes;
+    public BicepValue<long> MaxMessageSizeInKilobytes 
+    {
+        get { Initialize(); return _maxMessageSizeInKilobytes!; }
+        set { Initialize(); _maxMessageSizeInKilobytes!.Assign(value); }
+    }
+    private BicepValue<long>? _maxMessageSizeInKilobytes;
 
     /// <summary>
     /// The maximum size of the queue in megabytes, which is the size of memory
     /// allocated for the queue. Default is 1024.
     /// </summary>
-    public BicepValue<int> MaxSizeInMegabytes { get => _maxSizeInMegabytes; set => _maxSizeInMegabytes.Assign(value); }
-    private readonly BicepValue<int> _maxSizeInMegabytes;
+    public BicepValue<int> MaxSizeInMegabytes 
+    {
+        get { Initialize(); return _maxSizeInMegabytes!; }
+        set { Initialize(); _maxSizeInMegabytes!.Assign(value); }
+    }
+    private BicepValue<int>? _maxSizeInMegabytes;
 
     /// <summary>
     /// A value indicating if this queue requires duplicate detection.
     /// </summary>
-    public BicepValue<bool> RequiresDuplicateDetection { get => _requiresDuplicateDetection; set => _requiresDuplicateDetection.Assign(value); }
-    private readonly BicepValue<bool> _requiresDuplicateDetection;
+    public BicepValue<bool> RequiresDuplicateDetection 
+    {
+        get { Initialize(); return _requiresDuplicateDetection!; }
+        set { Initialize(); _requiresDuplicateDetection!.Assign(value); }
+    }
+    private BicepValue<bool>? _requiresDuplicateDetection;
 
     /// <summary>
     /// A value that indicates whether the queue supports the concept of
     /// sessions.
     /// </summary>
-    public BicepValue<bool> RequiresSession { get => _requiresSession; set => _requiresSession.Assign(value); }
-    private readonly BicepValue<bool> _requiresSession;
+    public BicepValue<bool> RequiresSession 
+    {
+        get { Initialize(); return _requiresSession!; }
+        set { Initialize(); _requiresSession!.Assign(value); }
+    }
+    private BicepValue<bool>? _requiresSession;
 
     /// <summary>
     /// Enumerates the possible values for the status of a messaging entity.
     /// </summary>
-    public BicepValue<ServiceBusMessagingEntityStatus> Status { get => _status; set => _status.Assign(value); }
-    private readonly BicepValue<ServiceBusMessagingEntityStatus> _status;
+    public BicepValue<ServiceBusMessagingEntityStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+        set { Initialize(); _status!.Assign(value); }
+    }
+    private BicepValue<ServiceBusMessagingEntityStatus>? _status;
 
     /// <summary>
     /// Last time a message was sent, or the last time there was a receive
     /// request to this queue.
     /// </summary>
-    public BicepValue<DateTimeOffset> AccessedOn { get => _accessedOn; }
-    private readonly BicepValue<DateTimeOffset> _accessedOn;
+    public BicepValue<DateTimeOffset> AccessedOn 
+    {
+        get { Initialize(); return _accessedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _accessedOn;
 
     /// <summary>
     /// Message Count Details.
     /// </summary>
-    public BicepValue<MessageCountDetails> CountDetails { get => _countDetails; }
-    private readonly BicepValue<MessageCountDetails> _countDetails;
+    public MessageCountDetails CountDetails 
+    {
+        get { Initialize(); return _countDetails!; }
+    }
+    private MessageCountDetails? _countDetails;
 
     /// <summary>
     /// The exact time the message was created.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The number of messages in the queue.
     /// </summary>
-    public BicepValue<long> MessageCount { get => _messageCount; }
-    private readonly BicepValue<long> _messageCount;
+    public BicepValue<long> MessageCount 
+    {
+        get { Initialize(); return _messageCount!; }
+    }
+    private BicepValue<long>? _messageCount;
 
     /// <summary>
     /// The size of the queue, in bytes.
     /// </summary>
-    public BicepValue<long> SizeInBytes { get => _sizeInBytes; }
-    private readonly BicepValue<long> _sizeInBytes;
+    public BicepValue<long> SizeInBytes 
+    {
+        get { Initialize(); return _sizeInBytes!; }
+    }
+    private BicepValue<long>? _sizeInBytes;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The exact time the message was updated.
     /// </summary>
-    public BicepValue<DateTimeOffset> UpdatedOn { get => _updatedOn; }
-    private readonly BicepValue<DateTimeOffset> _updatedOn;
+    public BicepValue<DateTimeOffset> UpdatedOn 
+    {
+        get { Initialize(); return _updatedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _updatedOn;
 
     /// <summary>
     /// Gets or sets a reference to the parent ServiceBusNamespace.
     /// </summary>
-    public ServiceBusNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ServiceBusNamespace> _parent;
+    public ServiceBusNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ServiceBusNamespace>? _parent;
 
     /// <summary>
     /// Creates a new ServiceBusQueue.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusQueue.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusQueue resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusQueue.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusQueue(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/queues", resourceVersion ?? "2024-01-01", context)
+    public ServiceBusQueue(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/queues", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _autoDeleteOnIdle = BicepValue<TimeSpan>.DefineProperty(this, "AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"]);
-        _deadLetteringOnMessageExpiration = BicepValue<bool>.DefineProperty(this, "DeadLetteringOnMessageExpiration", ["properties", "deadLetteringOnMessageExpiration"]);
-        _defaultMessageTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "DefaultMessageTimeToLive", ["properties", "defaultMessageTimeToLive"]);
-        _duplicateDetectionHistoryTimeWindow = BicepValue<TimeSpan>.DefineProperty(this, "DuplicateDetectionHistoryTimeWindow", ["properties", "duplicateDetectionHistoryTimeWindow"]);
-        _enableBatchedOperations = BicepValue<bool>.DefineProperty(this, "EnableBatchedOperations", ["properties", "enableBatchedOperations"]);
-        _enableExpress = BicepValue<bool>.DefineProperty(this, "EnableExpress", ["properties", "enableExpress"]);
-        _enablePartitioning = BicepValue<bool>.DefineProperty(this, "EnablePartitioning", ["properties", "enablePartitioning"]);
-        _forwardDeadLetteredMessagesTo = BicepValue<string>.DefineProperty(this, "ForwardDeadLetteredMessagesTo", ["properties", "forwardDeadLetteredMessagesTo"]);
-        _forwardTo = BicepValue<string>.DefineProperty(this, "ForwardTo", ["properties", "forwardTo"]);
-        _lockDuration = BicepValue<TimeSpan>.DefineProperty(this, "LockDuration", ["properties", "lockDuration"]);
-        _maxDeliveryCount = BicepValue<int>.DefineProperty(this, "MaxDeliveryCount", ["properties", "maxDeliveryCount"]);
-        _maxMessageSizeInKilobytes = BicepValue<long>.DefineProperty(this, "MaxMessageSizeInKilobytes", ["properties", "maxMessageSizeInKilobytes"]);
-        _maxSizeInMegabytes = BicepValue<int>.DefineProperty(this, "MaxSizeInMegabytes", ["properties", "maxSizeInMegabytes"]);
-        _requiresDuplicateDetection = BicepValue<bool>.DefineProperty(this, "RequiresDuplicateDetection", ["properties", "requiresDuplicateDetection"]);
-        _requiresSession = BicepValue<bool>.DefineProperty(this, "RequiresSession", ["properties", "requiresSession"]);
-        _status = BicepValue<ServiceBusMessagingEntityStatus>.DefineProperty(this, "Status", ["properties", "status"]);
-        _accessedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "AccessedOn", ["properties", "accessedAt"], isOutput: true);
-        _countDetails = BicepValue<MessageCountDetails>.DefineProperty(this, "CountDetails", ["properties", "countDetails"], isOutput: true);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdAt"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _messageCount = BicepValue<long>.DefineProperty(this, "MessageCount", ["properties", "messageCount"], isOutput: true);
-        _sizeInBytes = BicepValue<long>.DefineProperty(this, "SizeInBytes", ["properties", "sizeInBytes"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _updatedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "UpdatedOn", ["properties", "updatedAt"], isOutput: true);
-        _parent = ResourceReference<ServiceBusNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ServiceBusQueue.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _autoDeleteOnIdle = DefineProperty<TimeSpan>("AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"], format: "P");
+        _deadLetteringOnMessageExpiration = DefineProperty<bool>("DeadLetteringOnMessageExpiration", ["properties", "deadLetteringOnMessageExpiration"]);
+        _defaultMessageTimeToLive = DefineProperty<TimeSpan>("DefaultMessageTimeToLive", ["properties", "defaultMessageTimeToLive"], format: "P");
+        _duplicateDetectionHistoryTimeWindow = DefineProperty<TimeSpan>("DuplicateDetectionHistoryTimeWindow", ["properties", "duplicateDetectionHistoryTimeWindow"], format: "P");
+        _enableBatchedOperations = DefineProperty<bool>("EnableBatchedOperations", ["properties", "enableBatchedOperations"]);
+        _enableExpress = DefineProperty<bool>("EnableExpress", ["properties", "enableExpress"]);
+        _enablePartitioning = DefineProperty<bool>("EnablePartitioning", ["properties", "enablePartitioning"]);
+        _forwardDeadLetteredMessagesTo = DefineProperty<string>("ForwardDeadLetteredMessagesTo", ["properties", "forwardDeadLetteredMessagesTo"]);
+        _forwardTo = DefineProperty<string>("ForwardTo", ["properties", "forwardTo"]);
+        _lockDuration = DefineProperty<TimeSpan>("LockDuration", ["properties", "lockDuration"], format: "P");
+        _maxDeliveryCount = DefineProperty<int>("MaxDeliveryCount", ["properties", "maxDeliveryCount"]);
+        _maxMessageSizeInKilobytes = DefineProperty<long>("MaxMessageSizeInKilobytes", ["properties", "maxMessageSizeInKilobytes"]);
+        _maxSizeInMegabytes = DefineProperty<int>("MaxSizeInMegabytes", ["properties", "maxSizeInMegabytes"]);
+        _requiresDuplicateDetection = DefineProperty<bool>("RequiresDuplicateDetection", ["properties", "requiresDuplicateDetection"]);
+        _requiresSession = DefineProperty<bool>("RequiresSession", ["properties", "requiresSession"]);
+        _status = DefineProperty<ServiceBusMessagingEntityStatus>("Status", ["properties", "status"]);
+        _accessedOn = DefineProperty<DateTimeOffset>("AccessedOn", ["properties", "accessedAt"], isOutput: true);
+        _countDetails = DefineModelProperty<MessageCountDetails>("CountDetails", ["properties", "countDetails"], isOutput: true);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdAt"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _messageCount = DefineProperty<long>("MessageCount", ["properties", "messageCount"], isOutput: true);
+        _sizeInBytes = DefineProperty<long>("SizeInBytes", ["properties", "sizeInBytes"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _updatedOn = DefineProperty<DateTimeOffset>("UpdatedOn", ["properties", "updatedAt"], isOutput: true);
+        _parent = DefineResource<ServiceBusNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -258,11 +368,16 @@ public partial class ServiceBusQueue : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusQueue.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusQueue.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusQueue resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusQueue.</param>
     /// <returns>The existing ServiceBusQueue resource.</returns>
-    public static ServiceBusQueue FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusQueue FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ServiceBusQueue resource.

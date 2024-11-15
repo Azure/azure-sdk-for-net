@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(AcquireStorageAccountLock left, AcquireStorageAccountLock right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcquireStorageAccountLock"/> values are not the same. </summary>
         public static bool operator !=(AcquireStorageAccountLock left, AcquireStorageAccountLock right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AcquireStorageAccountLock"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AcquireStorageAccountLock"/>. </summary>
         public static implicit operator AcquireStorageAccountLock(string value) => new AcquireStorageAccountLock(value);
 
         /// <inheritdoc />

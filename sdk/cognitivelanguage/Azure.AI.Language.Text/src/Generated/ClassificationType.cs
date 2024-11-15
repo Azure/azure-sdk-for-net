@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(ClassificationType left, ClassificationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClassificationType"/> values are not the same. </summary>
         public static bool operator !=(ClassificationType left, ClassificationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClassificationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClassificationType"/>. </summary>
         public static implicit operator ClassificationType(string value) => new ClassificationType(value);
 
         /// <inheritdoc />

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(SoapApiType left, SoapApiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SoapApiType"/> values are not the same. </summary>
         public static bool operator !=(SoapApiType left, SoapApiType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SoapApiType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SoapApiType"/>. </summary>
         public static implicit operator SoapApiType(string value) => new SoapApiType(value);
 
         /// <inheritdoc />

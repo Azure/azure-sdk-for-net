@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(LogicWorkflowStatus left, LogicWorkflowStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicWorkflowStatus"/> values are not the same. </summary>
         public static bool operator !=(LogicWorkflowStatus left, LogicWorkflowStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogicWorkflowStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogicWorkflowStatus"/>. </summary>
         public static implicit operator LogicWorkflowStatus(string value) => new LogicWorkflowStatus(value);
 
         /// <inheritdoc />

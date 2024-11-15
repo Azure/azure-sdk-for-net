@@ -79,7 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat
             {
                 // Setting even a single custom filter for Azure SDK logs will reset the default warning level and switch to listening at the verbose level.
                 // This gives the customer full control over the log levels for all Azure SDK components.
-                _listener ??= new AzureEventSourceListener((e, s) => LogEvent(e), _hasAzureLoggerFilterOptionsRules ? EventLevel.Verbose : EventLevel.Warning);
+                _listener ??= new AzureEventSourceListener(LogEvent, _hasAzureLoggerFilterOptionsRules ? EventLevel.Verbose : EventLevel.Warning);
             }
 
             return Task.CompletedTask;

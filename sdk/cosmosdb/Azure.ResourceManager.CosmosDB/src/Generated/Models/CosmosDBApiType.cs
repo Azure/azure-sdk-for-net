@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CosmosDBApiType left, CosmosDBApiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBApiType"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBApiType left, CosmosDBApiType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBApiType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBApiType"/>. </summary>
         public static implicit operator CosmosDBApiType(string value) => new CosmosDBApiType(value);
 
         /// <inheritdoc />

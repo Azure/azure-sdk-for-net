@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator ==(SelfHelpDiagnosticStatus left, SelfHelpDiagnosticStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SelfHelpDiagnosticStatus"/> values are not the same. </summary>
         public static bool operator !=(SelfHelpDiagnosticStatus left, SelfHelpDiagnosticStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SelfHelpDiagnosticStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SelfHelpDiagnosticStatus"/>. </summary>
         public static implicit operator SelfHelpDiagnosticStatus(string value) => new SelfHelpDiagnosticStatus(value);
 
         /// <inheritdoc />

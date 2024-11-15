@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         public static bool operator ==(ErrorCodeValue left, ErrorCodeValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ErrorCodeValue"/> values are not the same. </summary>
         public static bool operator !=(ErrorCodeValue left, ErrorCodeValue right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ErrorCodeValue"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ErrorCodeValue"/>. </summary>
         public static implicit operator ErrorCodeValue(string value) => new ErrorCodeValue(value);
 
         /// <inheritdoc />

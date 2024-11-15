@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.DefenderEasm
         public string Color { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.DefenderEasm.Models.EasmResourceProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DefenderEasm.EasmLabelData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.EasmLabelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.EasmLabelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DefenderEasm.EasmLabelData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmLabelData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.DefenderEasm
         public EasmWorkspaceData(Azure.Core.AzureLocation location) { }
         public string DataPlaneEndpoint { get { throw null; } }
         public Azure.ResourceManager.DefenderEasm.Models.EasmResourceProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DefenderEasm.EasmWorkspaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.EasmWorkspaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.EasmWorkspaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DefenderEasm.EasmWorkspaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmWorkspaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -155,6 +157,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         public string Color { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.DefenderEasm.Models.EasmResourceProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DefenderEasm.Models.EasmLabelPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.Models.EasmLabelPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.Models.EasmLabelPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DefenderEasm.Models.EasmLabelPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.Models.EasmLabelPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -201,6 +204,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         public string Reason { get { throw null; } set { } }
         public string StartedAt { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DefenderEasm.Models.EasmTask System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.Models.EasmTask>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.Models.EasmTask>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DefenderEasm.Models.EasmTask System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.Models.EasmTask>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -212,6 +216,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         public EasmWorkspacePatch() { }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DefenderEasm.Models.EasmWorkspacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.Models.EasmWorkspacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.Models.EasmWorkspacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DefenderEasm.Models.EasmWorkspacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.Models.EasmWorkspacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -30,7 +30,7 @@ namespace Azure.Communication.PhoneNumbers
         public static bool operator ==(BillingFrequency left, BillingFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingFrequency"/> values are not the same. </summary>
         public static bool operator !=(BillingFrequency left, BillingFrequency right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BillingFrequency"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingFrequency"/>. </summary>
         public static implicit operator BillingFrequency(string value) => new BillingFrequency(value);
 
         /// <inheritdoc />

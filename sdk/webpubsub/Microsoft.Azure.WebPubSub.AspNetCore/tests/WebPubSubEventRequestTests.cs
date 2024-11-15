@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
@@ -171,6 +172,100 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.AreEqual(TestUri.Host, connectRequest.ConnectionContext.Origin);
         }
 
+        [TestCase(MqttProtocolVersion.V311)]
+        [TestCase(MqttProtocolVersion.V500)]
+        public async Task TestParseMqttConnectRequest(MqttProtocolVersion protocolVersion)
+        {
+            var hubName = "simplechat";
+            var body = "{\"mqtt\":{\"protocolVersion\":" + ((int)protocolVersion).ToString() + ",\"username\":\"username\",\"password\":\"password\",\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"claims\":{\"iat\":[\"1723005952\"],\"exp\":[\"1726605954\"],\"aud\":[\"ws://localhost:8080/clients/mqtt/hubs/simplechat\"],\"http://schemas.microsoft.com/ws/2008/06/identity/claims/role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"user1\"],\"role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"nameid\":[\"user1\"]},\"query\":{\"access_token\":[\"REDATED\"]},\"headers\":{\"Connection\":[\"Upgrade\"],\"Host\":[\"localhost:8080\"],\"Upgrade\":[\"websocket\"],\"Sec-WebSocket-Version\":[\"13\"],\"Sec-WebSocket-Key\":[\"REDATED\"],\"Sec-WebSocket-Extensions\":[\"permessage-deflate; client_max_window_bits\"],\"Sec-WebSocket-Protocol\":[\"mqtt\"]},\"subprotocols\":[\"mqtt\"],\"clientCertificates\":[{\"thumbprint\":\"thumbprint\",\"content\":\"certificate content\"}]}";
+            var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectEvent,
+                hub: hubName,
+                addtionalHeaders: new Dictionary<string, StringValues>
+                {
+                    { Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId" },
+                    { Constants.Headers.CloudEvents.Subprotocol, "mqtt" }
+                },
+                body: body);
+            var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
+            Assert.IsInstanceOf<MqttConnectEventRequest>(request);
+            var mqttRequest = request as MqttConnectEventRequest;
+            var mqttResponse = mqttRequest.CreateMqttResponse("userId", new string[] { "group1", "group2" }, new string[] { "role1", "role2" });
+            mqttResponse.Mqtt = new()
+            {
+                UserProperties = new List<MqttUserProperty> { new("name1", "value1") }
+            };
+
+            Assert.AreEqual("mqtt", mqttRequest.Subprotocols.Single());
+            var clientCert = mqttRequest.ClientCertificates.Single();
+            Assert.AreEqual("thumbprint", clientCert.Thumbprint);
+            Assert.AreEqual("certificate content", clientCert.Content);
+            Assert.AreEqual("username", mqttRequest.Mqtt.Username);
+            Assert.AreEqual("password", mqttRequest.Mqtt.Password);
+            var userProperty = mqttRequest.Mqtt.UserProperties.Single();
+            Assert.AreEqual("a", userProperty.Name);
+            Assert.AreEqual("b", userProperty.Value);
+            Assert.AreEqual(protocolVersion, mqttRequest.Mqtt.ProtocolVersion);
+
+            var mqttContext = mqttRequest.ConnectionContext as MqttConnectionContext;
+            Assert.AreEqual(hubName, mqttContext.Hub);
+            Assert.AreEqual("physicalConnectionId", mqttContext.PhysicalConnectionId);
+            Assert.Null(mqttContext.SessionId);
+        }
+
+        [TestCase]
+        public async Task TestParseMqttConnectedRequest()
+        {
+            var hubName = "simplechat";
+            var body = "{}";
+            var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectedEvent,
+                hub: hubName,
+                addtionalHeaders: new Dictionary<string, StringValues>
+                {
+                    { Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId" },
+                    { Constants.Headers.CloudEvents.Subprotocol, "mqtt" },
+                    { Constants.Headers.CloudEvents.MqttSessionId, "sessionId" }
+                },
+                body: body);
+            var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
+            Assert.IsInstanceOf<ConnectedEventRequest>(request);
+
+            var mqttContext = request.ConnectionContext as MqttConnectionContext;
+            Assert.NotNull(mqttContext);
+            Assert.AreEqual(hubName, mqttContext.Hub);
+            Assert.AreEqual("physicalConnectionId", mqttContext.PhysicalConnectionId);
+            Assert.AreEqual("sessionId", mqttContext.SessionId);
+        }
+
+        [TestCase]
+        public async Task TestParseMqttDisconnectedRequest()
+        {
+            var hubName = "simplechat";
+            var body = "{\"mqtt\":{\"initiatedByClient\":false,\"disconnectPacket\":{\"code\":128,\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]}},\"reason\":\"reason\"}";
+            var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.DisconnectedEvent,
+                hub: hubName,
+                addtionalHeaders: new Dictionary<string, StringValues>
+                {
+                    { Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId" },
+                    { Constants.Headers.CloudEvents.Subprotocol, "mqtt" },
+                    { Constants.Headers.CloudEvents.MqttSessionId, "sessionId" }
+                },
+                body: body);
+            var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
+            Assert.IsInstanceOf<MqttDisconnectedEventRequest>(request);
+            var mqttRequest = (MqttDisconnectedEventRequest)request;
+
+            Assert.False(mqttRequest.Mqtt.InitiatedByClient);
+            Assert.AreEqual(128, (int)mqttRequest.Mqtt.DisconnectPacket.Code);
+            Assert.AreEqual("a", mqttRequest.Mqtt.DisconnectPacket.UserProperties.Single().Name);
+            Assert.AreEqual("b", mqttRequest.Mqtt.DisconnectPacket.UserProperties.Single().Value);
+
+            var mqttContext = mqttRequest.ConnectionContext as MqttConnectionContext;
+            Assert.NotNull(mqttContext);
+            Assert.AreEqual(hubName, mqttContext.Hub);
+            Assert.AreEqual("physicalConnectionId", mqttContext.PhysicalConnectionId);
+            Assert.AreEqual("sessionId", mqttContext.SessionId);
+        }
+
         [Test]
         public async Task TestParseConnectedRequest()
         {
@@ -238,7 +333,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 origin: TestUri.Host);
-            var validator = new RequestValidator(Options.Create(new WebPubSubOptions{ ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};Version=1.0;") }));
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};Version=1.0;") }));
             var result = validator.IsValidSignature(connectionContext);
             Assert.True(result);
         }
@@ -319,7 +414,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             string userId = "testuser",
             string body = null,
             string contentType = Constants.ContentTypes.PlainTextContentType,
-            bool multiDomains = false)
+            bool multiDomains = false,
+            Dictionary<string, StringValues> addtionalHeaders = null)
         {
             var context = new DefaultHttpContext();
             var services = new ServiceCollection();
@@ -343,6 +439,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 { Constants.Headers.CloudEvents.ConnectionId, connectionId },
                 { Constants.Headers.CloudEvents.Signature, signatures }
             };
+            if (addtionalHeaders != null)
+            {
+                foreach (var item in addtionalHeaders)
+                {
+                    headers.Add(item);
+                }
+            }
 
             if (!string.IsNullOrEmpty(uri.Host))
             {

@@ -41,6 +41,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultOversampling");
                 }
             }
+            if (Optional.IsDefined(TruncationDimension))
+            {
+                if (TruncationDimension != null)
+                {
+                    writer.WritePropertyName("truncationDimension"u8);
+                    writer.WriteNumberValue(TruncationDimension.Value);
+                }
+                else
+                {
+                    writer.WriteNull("truncationDimension");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -55,6 +67,7 @@ namespace Azure.Search.Documents.Indexes.Models
             VectorSearchCompressionKind kind = default;
             bool? rerankWithOriginalVectors = default;
             double? defaultOversampling = default;
+            int? truncationDimension = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scalarQuantizationParameters"u8))
@@ -95,8 +108,24 @@ namespace Azure.Search.Documents.Indexes.Models
                     defaultOversampling = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("truncationDimension"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        truncationDimension = null;
+                        continue;
+                    }
+                    truncationDimension = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new ScalarQuantizationCompression(name, kind, rerankWithOriginalVectors, defaultOversampling, scalarQuantizationParameters);
+            return new ScalarQuantizationCompression(
+                name,
+                kind,
+                rerankWithOriginalVectors,
+                defaultOversampling,
+                truncationDimension,
+                scalarQuantizationParameters);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

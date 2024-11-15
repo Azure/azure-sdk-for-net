@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         void IJsonModel<DevOpsStateful>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DevOpsStateful>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsStateful)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(MaxAgentLifetime))
             {
                 writer.WritePropertyName("maxAgentLifetime"u8);
@@ -36,34 +45,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 writer.WritePropertyName("gracePeriodTimeSpan"u8);
                 writer.WriteStringValue(GracePeriodTimeSpan);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(ResourcePredictions))
-            {
-                writer.WritePropertyName("resourcePredictions"u8);
-                writer.WriteObjectValue(ResourcePredictions, options);
-            }
-            if (Optional.IsDefined(ResourcePredictionsProfile))
-            {
-                writer.WritePropertyName("resourcePredictionsProfile"u8);
-                writer.WriteObjectValue(ResourcePredictionsProfile, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         DevOpsStateful IJsonModel<DevOpsStateful>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

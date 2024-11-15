@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(AvroCompressionCodec left, AvroCompressionCodec right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvroCompressionCodec"/> values are not the same. </summary>
         public static bool operator !=(AvroCompressionCodec left, AvroCompressionCodec right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvroCompressionCodec"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvroCompressionCodec"/>. </summary>
         public static implicit operator AvroCompressionCodec(string value) => new AvroCompressionCodec(value);
 
         /// <inheritdoc />

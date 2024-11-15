@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(InvoiceSectionStateReasonCode left, InvoiceSectionStateReasonCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InvoiceSectionStateReasonCode"/> values are not the same. </summary>
         public static bool operator !=(InvoiceSectionStateReasonCode left, InvoiceSectionStateReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InvoiceSectionStateReasonCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InvoiceSectionStateReasonCode"/>. </summary>
         public static implicit operator InvoiceSectionStateReasonCode(string value) => new InvoiceSectionStateReasonCode(value);
 
         /// <inheritdoc />

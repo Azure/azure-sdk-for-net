@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         public static bool operator ==(InformaticaProvisioningState left, InformaticaProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InformaticaProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(InformaticaProvisioningState left, InformaticaProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InformaticaProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InformaticaProvisioningState"/>. </summary>
         public static implicit operator InformaticaProvisioningState(string value) => new InformaticaProvisioningState(value);
 
         /// <inheritdoc />

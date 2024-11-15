@@ -17,101 +17,155 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// FailoverGroup.
 /// </summary>
-public partial class FailoverGroup : Resource
+public partial class FailoverGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the failover group.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// List of databases in the failover group.
     /// </summary>
-    public BicepList<ResourceIdentifier> FailoverDatabases { get => _failoverDatabases; set => _failoverDatabases.Assign(value); }
-    private readonly BicepList<ResourceIdentifier> _failoverDatabases;
+    public BicepList<ResourceIdentifier> FailoverDatabases 
+    {
+        get { Initialize(); return _failoverDatabases!; }
+        set { Initialize(); _failoverDatabases!.Assign(value); }
+    }
+    private BicepList<ResourceIdentifier>? _failoverDatabases;
 
     /// <summary>
     /// List of partner server information for the failover group.
     /// </summary>
-    public BicepList<PartnerServerInfo> PartnerServers { get => _partnerServers; set => _partnerServers.Assign(value); }
-    private readonly BicepList<PartnerServerInfo> _partnerServers;
+    public BicepList<PartnerServerInfo> PartnerServers 
+    {
+        get { Initialize(); return _partnerServers!; }
+        set { Initialize(); _partnerServers!.Assign(value); }
+    }
+    private BicepList<PartnerServerInfo>? _partnerServers;
 
     /// <summary>
     /// Read-only endpoint of the failover group instance.
     /// </summary>
-    public BicepValue<FailoverGroupReadOnlyEndpoint> ReadOnlyEndpoint { get => _readOnlyEndpoint; set => _readOnlyEndpoint.Assign(value); }
-    private readonly BicepValue<FailoverGroupReadOnlyEndpoint> _readOnlyEndpoint;
+    public FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint 
+    {
+        get { Initialize(); return _readOnlyEndpoint!; }
+        set { Initialize(); AssignOrReplace(ref _readOnlyEndpoint, value); }
+    }
+    private FailoverGroupReadOnlyEndpoint? _readOnlyEndpoint;
 
     /// <summary>
     /// Read-write endpoint of the failover group instance.
     /// </summary>
-    public BicepValue<FailoverGroupReadWriteEndpoint> ReadWriteEndpoint { get => _readWriteEndpoint; set => _readWriteEndpoint.Assign(value); }
-    private readonly BicepValue<FailoverGroupReadWriteEndpoint> _readWriteEndpoint;
+    public FailoverGroupReadWriteEndpoint ReadWriteEndpoint 
+    {
+        get { Initialize(); return _readWriteEndpoint!; }
+        set { Initialize(); AssignOrReplace(ref _readWriteEndpoint, value); }
+    }
+    private FailoverGroupReadWriteEndpoint? _readWriteEndpoint;
 
     /// <summary>
     /// Resource tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Resource location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Local replication role of the failover group instance.
     /// </summary>
-    public BicepValue<FailoverGroupReplicationRole> ReplicationRole { get => _replicationRole; }
-    private readonly BicepValue<FailoverGroupReplicationRole> _replicationRole;
+    public BicepValue<FailoverGroupReplicationRole> ReplicationRole 
+    {
+        get { Initialize(); return _replicationRole!; }
+    }
+    private BicepValue<FailoverGroupReplicationRole>? _replicationRole;
 
     /// <summary>
     /// Replication state of the failover group instance.
     /// </summary>
-    public BicepValue<string> ReplicationState { get => _replicationState; }
-    private readonly BicepValue<string> _replicationState;
+    public BicepValue<string> ReplicationState 
+    {
+        get { Initialize(); return _replicationState!; }
+    }
+    private BicepValue<string>? _replicationState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServer.
     /// </summary>
-    public SqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlServer> _parent;
+    public SqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlServer>? _parent;
 
     /// <summary>
     /// Creates a new FailoverGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the FailoverGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the FailoverGroup resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the FailoverGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public FailoverGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/failoverGroups", resourceVersion ?? "2021-11-01", context)
+    public FailoverGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/failoverGroups", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _failoverDatabases = BicepList<ResourceIdentifier>.DefineProperty(this, "FailoverDatabases", ["properties", "databases"]);
-        _partnerServers = BicepList<PartnerServerInfo>.DefineProperty(this, "PartnerServers", ["properties", "partnerServers"]);
-        _readOnlyEndpoint = BicepValue<FailoverGroupReadOnlyEndpoint>.DefineProperty(this, "ReadOnlyEndpoint", ["properties", "readOnlyEndpoint"]);
-        _readWriteEndpoint = BicepValue<FailoverGroupReadWriteEndpoint>.DefineProperty(this, "ReadWriteEndpoint", ["properties", "readWriteEndpoint"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _replicationRole = BicepValue<FailoverGroupReplicationRole>.DefineProperty(this, "ReplicationRole", ["properties", "replicationRole"], isOutput: true);
-        _replicationState = BicepValue<string>.DefineProperty(this, "ReplicationState", ["properties", "replicationState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of FailoverGroup.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _failoverDatabases = DefineListProperty<ResourceIdentifier>("FailoverDatabases", ["properties", "databases"]);
+        _partnerServers = DefineListProperty<PartnerServerInfo>("PartnerServers", ["properties", "partnerServers"]);
+        _readOnlyEndpoint = DefineModelProperty<FailoverGroupReadOnlyEndpoint>("ReadOnlyEndpoint", ["properties", "readOnlyEndpoint"]);
+        _readWriteEndpoint = DefineModelProperty<FailoverGroupReadWriteEndpoint>("ReadWriteEndpoint", ["properties", "readWriteEndpoint"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _replicationRole = DefineProperty<FailoverGroupReplicationRole>("ReplicationRole", ["properties", "replicationRole"], isOutput: true);
+        _replicationState = DefineProperty<string>("ReplicationState", ["properties", "replicationState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -119,11 +173,6 @@ public partial class FailoverGroup : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -133,11 +182,16 @@ public partial class FailoverGroup : Resource
     /// <summary>
     /// Creates a reference to an existing FailoverGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the FailoverGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the FailoverGroup resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the FailoverGroup.</param>
     /// <returns>The existing FailoverGroup resource.</returns>
-    public static FailoverGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static FailoverGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this FailoverGroup resource.

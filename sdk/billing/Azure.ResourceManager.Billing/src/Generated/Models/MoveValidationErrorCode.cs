@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(MoveValidationErrorCode left, MoveValidationErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MoveValidationErrorCode"/> values are not the same. </summary>
         public static bool operator !=(MoveValidationErrorCode left, MoveValidationErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MoveValidationErrorCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MoveValidationErrorCode"/>. </summary>
         public static implicit operator MoveValidationErrorCode(string value) => new MoveValidationErrorCode(value);
 
         /// <inheritdoc />

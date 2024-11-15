@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Models
         public static bool operator ==(SystemAssignedServiceIdentityType left, SystemAssignedServiceIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SystemAssignedServiceIdentityType"/> values are not the same. </summary>
         public static bool operator !=(SystemAssignedServiceIdentityType left, SystemAssignedServiceIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SystemAssignedServiceIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SystemAssignedServiceIdentityType"/>. </summary>
         public static implicit operator SystemAssignedServiceIdentityType(string value) => new SystemAssignedServiceIdentityType(value);
 
         /// <inheritdoc />

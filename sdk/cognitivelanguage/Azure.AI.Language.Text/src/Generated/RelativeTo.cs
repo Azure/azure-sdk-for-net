@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(RelativeTo left, RelativeTo right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelativeTo"/> values are not the same. </summary>
         public static bool operator !=(RelativeTo left, RelativeTo right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RelativeTo"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RelativeTo"/>. </summary>
         public static implicit operator RelativeTo(string value) => new RelativeTo(value);
 
         /// <inheritdoc />

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(NetworkExperimentResourceState left, NetworkExperimentResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkExperimentResourceState"/> values are not the same. </summary>
         public static bool operator !=(NetworkExperimentResourceState left, NetworkExperimentResourceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkExperimentResourceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkExperimentResourceState"/>. </summary>
         public static implicit operator NetworkExperimentResourceState(string value) => new NetworkExperimentResourceState(value);
 
         /// <inheritdoc />

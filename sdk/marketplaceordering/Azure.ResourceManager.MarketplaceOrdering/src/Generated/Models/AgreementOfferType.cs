@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Models
         public static bool operator ==(AgreementOfferType left, AgreementOfferType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgreementOfferType"/> values are not the same. </summary>
         public static bool operator !=(AgreementOfferType left, AgreementOfferType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AgreementOfferType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AgreementOfferType"/>. </summary>
         public static implicit operator AgreementOfferType(string value) => new AgreementOfferType(value);
 
         /// <inheritdoc />

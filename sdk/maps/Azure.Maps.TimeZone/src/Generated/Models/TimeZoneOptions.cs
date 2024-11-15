@@ -39,7 +39,7 @@ namespace Azure.Maps.TimeZone.Models
         public static bool operator ==(TimeZoneOptions left, TimeZoneOptions right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TimeZoneOptions"/> values are not the same. </summary>
         public static bool operator !=(TimeZoneOptions left, TimeZoneOptions right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TimeZoneOptions"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TimeZoneOptions"/>. </summary>
         public static implicit operator TimeZoneOptions(string value) => new TimeZoneOptions(value);
 
         /// <inheritdoc />

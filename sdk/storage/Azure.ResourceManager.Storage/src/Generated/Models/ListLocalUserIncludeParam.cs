@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(ListLocalUserIncludeParam left, ListLocalUserIncludeParam right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ListLocalUserIncludeParam"/> values are not the same. </summary>
         public static bool operator !=(ListLocalUserIncludeParam left, ListLocalUserIncludeParam right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ListLocalUserIncludeParam"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ListLocalUserIncludeParam"/>. </summary>
         public static implicit operator ListLocalUserIncludeParam(string value) => new ListLocalUserIncludeParam(value);
 
         /// <inheritdoc />

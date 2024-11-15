@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(RoutingState left, RoutingState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoutingState"/> values are not the same. </summary>
         public static bool operator !=(RoutingState left, RoutingState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoutingState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutingState"/>. </summary>
         public static implicit operator RoutingState(string value) => new RoutingState(value);
 
         /// <inheritdoc />

@@ -120,10 +120,12 @@ var processor = new EventProcessorClient(storageClient, consumerGroup, eventHubs
 In order to use the `EventProcessorClient`, handlers for event processing and errors must be provided.  These handlers are considered self-contained and developers are responsible for ensuring that exceptions within the handler code are accounted for.
 
 ```C# Snippet:EventHubs_Processor_ReadMe_ConfigureHandlers
-var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var credential = new DefaultAzureCredential();
+
+var storageAccountEndpoint = "<< Account Uri (likely similar to https://{your-account}.blob.core.windows.net) >>";
 var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
-var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
@@ -157,8 +159,23 @@ async Task processErrorHandler(ProcessErrorEventArgs eventArgs)
     }
 }
 
-var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
-var processor = new EventProcessorClient(storageClient, consumerGroup, eventHubsConnectionString, eventHubName);
+var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+{
+    BlobContainerName = blobContainerName
+};
+
+var storageClient = new BlobContainerClient(
+    blobUriBuilder.ToUri(),
+    credential);
+
+var processor = new EventProcessorClient
+(
+    storageClient,
+    consumerGroup,
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential
+);
 
 processor.ProcessEventAsync += processEventHandler;
 processor.ProcessErrorAsync += processErrorHandler;
@@ -172,18 +189,35 @@ The `EventProcessorClient` will perform its processing in the background once it
 var cancellationSource = new CancellationTokenSource();
 cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
 
-var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var credential = new DefaultAzureCredential();
+
+var storageAccountEndpoint = "<< Account Uri (likely similar to https://{your-account}.blob.core.windows.net) >>";
 var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
-var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
 Task processEventHandler(ProcessEventArgs eventArgs) => Task.CompletedTask;
 Task processErrorHandler(ProcessErrorEventArgs eventArgs) => Task.CompletedTask;
 
-var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
-var processor = new EventProcessorClient(storageClient, consumerGroup, eventHubsConnectionString, eventHubName);
+var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+{
+    BlobContainerName = blobContainerName
+};
+
+var storageClient = new BlobContainerClient(
+    blobUriBuilder.ToUri(),
+    credential);
+
+var processor = new EventProcessorClient
+(
+    storageClient,
+    consumerGroup,
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential
+);
 
 processor.ProcessEventAsync += processEventHandler;
 processor.ProcessErrorAsync += processErrorHandler;
@@ -225,13 +259,22 @@ To make use of an Active Directory principal with Azure Storage blob containers,
 
 ```C# Snippet:EventHubs_Processor_ReadMe_CreateWithIdentity
 var credential = new DefaultAzureCredential();
-var blobStorageUrl ="<< FULLY-QUALIFIED CONTAINER URL (like https://myaccount.blob.core.windows.net/mycontainer) >>";
 
-var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
+var storageAccountEndpoint = "<< Account Uri (likely similar to https://{your-account}.blob.core.windows.net) >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
-var storageClient = new BlobContainerClient(new Uri(blobStorageUrl), credential);
+var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+{
+    BlobContainerName = blobContainerName
+};
+
+var storageClient = new BlobContainerClient(
+    blobUriBuilder.ToUri(),
+    credential);
 
 var processor = new EventProcessorClient
 (

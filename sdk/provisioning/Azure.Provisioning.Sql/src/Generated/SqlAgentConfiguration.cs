@@ -15,52 +15,80 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlAgentConfiguration.
 /// </summary>
-public partial class SqlAgentConfiguration : Resource
+public partial class SqlAgentConfiguration : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The state of Sql Agent.
     /// </summary>
-    public BicepValue<SqlAgentConfigurationPropertiesState> State { get => _state; set => _state.Assign(value); }
-    private readonly BicepValue<SqlAgentConfigurationPropertiesState> _state;
+    public BicepValue<SqlAgentConfigurationPropertiesState> State 
+    {
+        get { Initialize(); return _state!; }
+        set { Initialize(); _state!.Assign(value); }
+    }
+    private BicepValue<SqlAgentConfigurationPropertiesState>? _state;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ManagedInstance.
     /// </summary>
-    public ManagedInstance? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ManagedInstance> _parent;
+    public ManagedInstance? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
     /// Creates a new SqlAgentConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlAgentConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlAgentConfiguration resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlAgentConfiguration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlAgentConfiguration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/sqlAgent", resourceVersion ?? "2021-11-01", context)
+    public SqlAgentConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/sqlAgent", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _state = BicepValue<SqlAgentConfigurationPropertiesState>.DefineProperty(this, "State", ["properties", "state"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ManagedInstance>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SqlAgentConfiguration.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _state = DefineProperty<SqlAgentConfigurationPropertiesState>("State", ["properties", "state"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ManagedInstance>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -68,11 +96,6 @@ public partial class SqlAgentConfiguration : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -87,9 +110,14 @@ public partial class SqlAgentConfiguration : Resource
     /// <summary>
     /// Creates a reference to an existing SqlAgentConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlAgentConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlAgentConfiguration resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlAgentConfiguration.</param>
     /// <returns>The existing SqlAgentConfiguration resource.</returns>
-    public static SqlAgentConfiguration FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlAgentConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

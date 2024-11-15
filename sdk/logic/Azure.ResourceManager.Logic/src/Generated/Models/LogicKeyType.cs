@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(LogicKeyType left, LogicKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicKeyType"/> values are not the same. </summary>
         public static bool operator !=(LogicKeyType left, LogicKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogicKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogicKeyType"/>. </summary>
         public static implicit operator LogicKeyType(string value) => new LogicKeyType(value);
 
         /// <inheritdoc />

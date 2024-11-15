@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static bool operator ==(DataReplicationRecoveryPointType left, DataReplicationRecoveryPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataReplicationRecoveryPointType"/> values are not the same. </summary>
         public static bool operator !=(DataReplicationRecoveryPointType left, DataReplicationRecoveryPointType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataReplicationRecoveryPointType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReplicationRecoveryPointType"/>. </summary>
         public static implicit operator DataReplicationRecoveryPointType(string value) => new DataReplicationRecoveryPointType(value);
 
         /// <inheritdoc />

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(LogSizeUnit left, LogSizeUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogSizeUnit"/> values are not the same. </summary>
         public static bool operator !=(LogSizeUnit left, LogSizeUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogSizeUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogSizeUnit"/>. </summary>
         public static implicit operator LogSizeUnit(string value) => new LogSizeUnit(value);
 
         /// <inheritdoc />

@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.LabServices
         public Azure.ResourceManager.LabServices.Models.LabState? State { get { throw null; } }
         public string Title { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile VirtualMachineProfile { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.LabData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.LabData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -66,6 +67,7 @@ namespace Azure.ResourceManager.LabServices
         public Azure.ResourceManager.LabServices.Models.LabServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SharedGalleryId { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo SupportInfo { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.LabPlanData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabPlanData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabPlanData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.LabPlanData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabPlanData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -177,6 +179,7 @@ namespace Azure.ResourceManager.LabServices
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.DateTimeOffset? StopOn { get { throw null; } set { } }
         public string TimeZoneId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.LabServicesScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.LabServicesScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -230,6 +233,7 @@ namespace Azure.ResourceManager.LabServices
         public Azure.ResourceManager.LabServices.Models.LabServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabUserRegistrationState? RegistrationState { get { throw null; } }
         public System.TimeSpan? TotalUsage { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.LabUserData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabUserData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabUserData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.LabUserData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabUserData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -280,6 +284,7 @@ namespace Azure.ResourceManager.LabServices
         public Azure.ResourceManager.LabServices.Models.LabServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineState? State { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineType? VmType { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.LabVirtualMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.LabVirtualMachineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -322,6 +327,7 @@ namespace Azure.ResourceManager.LabServices
         public string Sku { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? TermsStatus { get { throw null; } }
         public string Version { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.LabVirtualMachineImageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.LabVirtualMachineImageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -441,6 +447,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions> Restrictions { get { throw null; } }
         public string Size { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier? Tier { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -452,6 +459,7 @@ namespace Azure.ResourceManager.LabServices.Models
         internal AvailableLabServicesSkuCapability() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -465,6 +473,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public long? Maximum { get { throw null; } }
         public long? Minimum { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabServicesSkuCapacityScaleType? ScaleType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -477,6 +486,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public string ExtendedUnit { get { throw null; } }
         public string MeterId { get { throw null; } }
         public float? Quantity { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -489,6 +499,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType? LabServicesSkuRestrictionType { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode? ReasonCode { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -522,6 +533,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? ShutdownOnDisconnect { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineShutdownOnIdleMode? ShutdownOnIdle { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? ShutdownWhenNotConnected { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -535,6 +547,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionType? ClientSshAccess { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionType? WebRdpAccess { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionType? WebSshAccess { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabConnectionProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabConnectionProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabConnectionProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabConnectionProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabConnectionProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -547,6 +560,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public Azure.Core.ResourceIdentifier LoadBalancerId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabNetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabNetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabNetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabNetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -564,6 +578,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public Azure.ResourceManager.LabServices.Models.LabSecurityProfile SecurityProfile { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile VirtualMachineProfile { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -581,6 +596,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public System.Uri LinkedLmsInstance { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SharedGalleryId { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo SupportInfo { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabPlanPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPlanPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPlanPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabPlanPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPlanPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -594,6 +610,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public string Instructions { get { throw null; } set { } }
         public string Phone { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -608,6 +625,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public string LtiClientId { get { throw null; } set { } }
         public string LtiContextId { get { throw null; } set { } }
         public System.Uri LtiRosterEndpoint { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabRosterProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabRosterProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabRosterProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabRosterProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabRosterProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -619,6 +637,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public LabSecurityProfile() { }
         public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? OpenAccess { get { throw null; } set { } }
         public string RegistrationCode { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -644,6 +663,7 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         public LabServicesPatchBaseInfo() { }
         public System.Collections.Generic.IList<string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -671,6 +691,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public Azure.ResourceManager.LabServices.Models.LabServicesRecurrenceFrequency Frequency { get { throw null; } set { } }
         public int? Interval { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.LabServices.Models.LabServicesDayOfWeek> WeekDays { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -685,6 +706,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.DateTimeOffset? StopOn { get { throw null; } set { } }
         public string TimeZoneId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -699,6 +721,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabServicesSkuTier? Tier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabServicesSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabServicesSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -774,6 +797,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public long? Limit { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabServicesUsageName Name { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit? Unit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabServicesUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabServicesUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -786,6 +810,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public string LocalizedValue { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SkuInstances { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabServicesUsageName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesUsageName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesUsageName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabServicesUsageName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesUsageName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -828,6 +853,7 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         public LabUserInviteRequestContent() { }
         public System.BinaryData Text { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -838,6 +864,7 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         public LabUserPatch() { }
         public System.TimeSpan? AdditionalUsageQuota { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabUserPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabUserPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabUserPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabUserPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabUserPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -859,6 +886,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public System.Uri RdpInBrowserUri { get { throw null; } }
         public string SshAuthority { get { throw null; } }
         public System.Uri SshInBrowserUri { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -881,6 +909,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public LabVirtualMachineCredential(string username) { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -892,6 +921,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public LabVirtualMachineImageContent() { }
         public Azure.Core.ResourceIdentifier LabVirtualMachineId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -912,6 +942,7 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         public LabVirtualMachineImagePatch() { }
         public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? EnabledState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -927,6 +958,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public string Publisher { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -945,6 +977,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public Azure.ResourceManager.LabServices.Models.LabServicesSku Sku { get { throw null; } set { } }
         public System.TimeSpan UsageQuota { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? UseSharedPassword { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -956,6 +989,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public LabVirtualMachineResetPasswordContent(string username, string password) { }
         public string Password { get { throw null; } }
         public string Username { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

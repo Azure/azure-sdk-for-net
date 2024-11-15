@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         public static bool operator ==(PrivateDnsResolutionPolicy left, PrivateDnsResolutionPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateDnsResolutionPolicy"/> values are not the same. </summary>
         public static bool operator !=(PrivateDnsResolutionPolicy left, PrivateDnsResolutionPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PrivateDnsResolutionPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateDnsResolutionPolicy"/>. </summary>
         public static implicit operator PrivateDnsResolutionPolicy(string value) => new PrivateDnsResolutionPolicy(value);
 
         /// <inheritdoc />

@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonObject
+    internal partial class GeoJsonObject
     {
         internal static GeoJsonObject DeserializeGeoJsonObject(JsonElement element)
         {
@@ -21,7 +21,7 @@ namespace Azure.Maps.Search.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Boundary": return Boundary.DeserializeBoundary(element);
+                    case "Boundary": return BoundaryInternal.DeserializeBoundaryInternal(element);
                     case "Feature": return GeoJsonFeature.DeserializeGeoJsonFeature(element);
                     case "FeatureCollection": return GeoJsonFeatureCollection.DeserializeGeoJsonFeatureCollection(element);
                     case "GeoJsonGeometry": return GeoJsonGeometry.DeserializeGeoJsonGeometry(element);

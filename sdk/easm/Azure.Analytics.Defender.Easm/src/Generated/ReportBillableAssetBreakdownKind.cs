@@ -36,7 +36,7 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator ==(ReportBillableAssetBreakdownKind left, ReportBillableAssetBreakdownKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReportBillableAssetBreakdownKind"/> values are not the same. </summary>
         public static bool operator !=(ReportBillableAssetBreakdownKind left, ReportBillableAssetBreakdownKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReportBillableAssetBreakdownKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReportBillableAssetBreakdownKind"/>. </summary>
         public static implicit operator ReportBillableAssetBreakdownKind(string value) => new ReportBillableAssetBreakdownKind(value);
 
         /// <inheritdoc />

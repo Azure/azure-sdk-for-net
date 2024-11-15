@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(PipelineGroupExporterType left, PipelineGroupExporterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PipelineGroupExporterType"/> values are not the same. </summary>
         public static bool operator !=(PipelineGroupExporterType left, PipelineGroupExporterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PipelineGroupExporterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PipelineGroupExporterType"/>. </summary>
         public static implicit operator PipelineGroupExporterType(string value) => new PipelineGroupExporterType(value);
 
         /// <inheritdoc />

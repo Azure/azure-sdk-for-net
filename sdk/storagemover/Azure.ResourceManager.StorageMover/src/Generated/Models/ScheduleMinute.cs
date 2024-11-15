@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static bool operator ==(ScheduleMinute left, ScheduleMinute right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduleMinute"/> values are not the same. </summary>
         public static bool operator !=(ScheduleMinute left, ScheduleMinute right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScheduleMinute"/>. </summary>
+        /// <summary> Converts a <see cref="int"/> to a <see cref="ScheduleMinute"/>. </summary>
         public static implicit operator ScheduleMinute(int value) => new ScheduleMinute(value);
 
         /// <inheritdoc />

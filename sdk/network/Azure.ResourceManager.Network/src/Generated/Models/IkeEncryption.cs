@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(IkeEncryption left, IkeEncryption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IkeEncryption"/> values are not the same. </summary>
         public static bool operator !=(IkeEncryption left, IkeEncryption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IkeEncryption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IkeEncryption"/>. </summary>
         public static implicit operator IkeEncryption(string value) => new IkeEncryption(value);
 
         /// <inheritdoc />

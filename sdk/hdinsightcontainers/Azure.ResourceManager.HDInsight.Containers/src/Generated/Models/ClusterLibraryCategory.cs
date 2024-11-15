@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(ClusterLibraryCategory left, ClusterLibraryCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterLibraryCategory"/> values are not the same. </summary>
         public static bool operator !=(ClusterLibraryCategory left, ClusterLibraryCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterLibraryCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterLibraryCategory"/>. </summary>
         public static implicit operator ClusterLibraryCategory(string value) => new ClusterLibraryCategory(value);
 
         /// <inheritdoc />

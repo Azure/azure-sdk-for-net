@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static bool operator ==(PostgreSqlServerKeyType left, PostgreSqlServerKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlServerKeyType"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlServerKeyType left, PostgreSqlServerKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlServerKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlServerKeyType"/>. </summary>
         public static implicit operator PostgreSqlServerKeyType(string value) => new PostgreSqlServerKeyType(value);
 
         /// <inheritdoc />

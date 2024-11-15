@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
         public static bool operator ==(VoiceServicesCommunicationsPlatform left, VoiceServicesCommunicationsPlatform right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VoiceServicesCommunicationsPlatform"/> values are not the same. </summary>
         public static bool operator !=(VoiceServicesCommunicationsPlatform left, VoiceServicesCommunicationsPlatform right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VoiceServicesCommunicationsPlatform"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VoiceServicesCommunicationsPlatform"/>. </summary>
         public static implicit operator VoiceServicesCommunicationsPlatform(string value) => new VoiceServicesCommunicationsPlatform(value);
 
         /// <inheritdoc />

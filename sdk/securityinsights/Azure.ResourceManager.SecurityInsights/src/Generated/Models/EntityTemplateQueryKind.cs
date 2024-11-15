@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(EntityTemplateQueryKind left, EntityTemplateQueryKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EntityTemplateQueryKind"/> values are not the same. </summary>
         public static bool operator !=(EntityTemplateQueryKind left, EntityTemplateQueryKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EntityTemplateQueryKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EntityTemplateQueryKind"/>. </summary>
         public static implicit operator EntityTemplateQueryKind(string value) => new EntityTemplateQueryKind(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(ShortTermRetentionPolicyName left, ShortTermRetentionPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShortTermRetentionPolicyName"/> values are not the same. </summary>
         public static bool operator !=(ShortTermRetentionPolicyName left, ShortTermRetentionPolicyName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ShortTermRetentionPolicyName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ShortTermRetentionPolicyName"/>. </summary>
         public static implicit operator ShortTermRetentionPolicyName(string value) => new ShortTermRetentionPolicyName(value);
 
         /// <inheritdoc />

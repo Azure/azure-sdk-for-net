@@ -1,42 +1,58 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !AZURE_OPENAI_GA
+
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Text.Json;
+using OpenAI.Batch;
 
 namespace Azure.AI.OpenAI.Batch;
 
 internal partial class AzureBatchClient : BatchClient
 {
-    public override async Task<ClientResult> CreateBatchAsync(BinaryContent content, RequestOptions options = null)
+    public override async Task<CreateBatchOperation> CreateBatchAsync(BinaryContent content, bool waitUntilCompleted, RequestOptions options = null)
     {
         Argument.AssertNotNull(content, nameof(content));
 
         using PipelineMessage message = CreateCreateBatchRequest(content, options);
-        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+
+        using JsonDocument doc = JsonDocument.Parse(response.Content);
+        string batchId = doc.RootElement.GetProperty("id"u8).GetString();
+        string status = doc.RootElement.GetProperty("status"u8).GetString();
+
+        CreateBatchOperation operation = new(Pipeline, _endpoint, batchId, status, response);
+        return await operation.WaitUntilAsync(waitUntilCompleted, options).ConfigureAwait(false);
     }
 
-    public override ClientResult CreateBatch(BinaryContent content, RequestOptions options = null)
+    public override CreateBatchOperation CreateBatch(BinaryContent content, bool waitUntilCompleted, RequestOptions options = null)
     {
         Argument.AssertNotNull(content, nameof(content));
 
         using PipelineMessage message = CreateCreateBatchRequest(content, options);
-        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        PipelineResponse response = Pipeline.ProcessMessage(message, options);
+
+        using JsonDocument doc = JsonDocument.Parse(response.Content);
+        string batchId = doc.RootElement.GetProperty("id"u8).GetString();
+        string status = doc.RootElement.GetProperty("status"u8).GetString();
+
+        CreateBatchOperation operation = new(Pipeline, _endpoint, batchId, status, response);
+        return operation.WaitUntil(waitUntilCompleted, options);
     }
 
-    public override IAsyncEnumerable<ClientResult> GetBatchesAsync(string after, int? limit, RequestOptions options)
+    public override AsyncCollectionResult GetBatchesAsync(string after, int? limit, RequestOptions options)
     {
-        BatchesPageEnumerator enumerator = new(Pipeline, _endpoint, after, limit, options);
-        return PageCollectionHelpers.CreateAsync(enumerator);
+        return new AsyncBatchCollectionResult(this, Pipeline, options, limit, after);
     }
 
-    public override IEnumerable<ClientResult> GetBatches(string after, int? limit, RequestOptions options)
+    public override CollectionResult GetBatches(string after, int? limit, RequestOptions options)
     {
-        BatchesPageEnumerator enumerator = new(Pipeline, _endpoint, after, limit, options);
-        return PageCollectionHelpers.Create(enumerator);
+        return new BatchCollectionResult(this, Pipeline, options, limit, after);
     }
 
-    public override async Task<ClientResult> GetBatchAsync(string batchId, RequestOptions options)
+    internal override async Task<ClientResult> GetBatchAsync(string batchId, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
@@ -44,7 +60,7 @@ internal partial class AzureBatchClient : BatchClient
         return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
     }
 
-    public override ClientResult GetBatch(string batchId, RequestOptions options)
+    internal override ClientResult GetBatch(string batchId, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
@@ -52,23 +68,7 @@ internal partial class AzureBatchClient : BatchClient
         return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
     }
 
-    public override async Task<ClientResult> CancelBatchAsync(string batchId, RequestOptions options)
-    {
-        Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
-
-        using PipelineMessage message = CreateCancelBatchRequest(batchId, options);
-        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-    }
-
-    public override ClientResult CancelBatch(string batchId, RequestOptions options)
-    {
-        Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
-
-        using PipelineMessage message = CreateCancelBatchRequest(batchId, options);
-        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-    }
-
-    private new PipelineMessage CreateCreateBatchRequest(BinaryContent content, RequestOptions options)
+    internal override PipelineMessage CreateCreateBatchRequest(BinaryContent content, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion, _deploymentName)
             .WithMethod("POST")
             .WithPath("batches")
@@ -77,7 +77,7 @@ internal partial class AzureBatchClient : BatchClient
             .WithOptions(options)
             .Build();
 
-    private new PipelineMessage CreateGetBatchesRequest(string after, int? limit, RequestOptions options)
+    internal override PipelineMessage CreateGetBatchesRequest(string after, int? limit, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion, _deploymentName)
             .WithMethod("GET")
             .WithPath("batches")
@@ -87,7 +87,7 @@ internal partial class AzureBatchClient : BatchClient
             .WithOptions(options)
             .Build();
 
-    private new PipelineMessage CreateRetrieveBatchRequest(string batchId, RequestOptions options)
+    internal override PipelineMessage CreateRetrieveBatchRequest(string batchId, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion, _deploymentName)
             .WithMethod("GET")
             .WithPath("batches", batchId)
@@ -95,7 +95,7 @@ internal partial class AzureBatchClient : BatchClient
             .WithOptions(options)
             .Build();
 
-    private new PipelineMessage CreateCancelBatchRequest(string batchId, RequestOptions options)
+    internal override PipelineMessage CreateCancelBatchRequest(string batchId, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion, _deploymentName)
             .WithMethod("POST")
             .WithPath("batches", batchId, "cancel")
@@ -103,3 +103,5 @@ internal partial class AzureBatchClient : BatchClient
             .WithOptions(options)
             .Build();
 }
+
+#endif

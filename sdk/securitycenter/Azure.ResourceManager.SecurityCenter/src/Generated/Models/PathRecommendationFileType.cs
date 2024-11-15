@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(PathRecommendationFileType left, PathRecommendationFileType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PathRecommendationFileType"/> values are not the same. </summary>
         public static bool operator !=(PathRecommendationFileType left, PathRecommendationFileType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PathRecommendationFileType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PathRecommendationFileType"/>. </summary>
         public static implicit operator PathRecommendationFileType(string value) => new PathRecommendationFileType(value);
 
         /// <inheritdoc />

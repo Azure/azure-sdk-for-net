@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static bool operator ==(SignalRFeatureFlag left, SignalRFeatureFlag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRFeatureFlag"/> values are not the same. </summary>
         public static bool operator !=(SignalRFeatureFlag left, SignalRFeatureFlag right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SignalRFeatureFlag"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SignalRFeatureFlag"/>. </summary>
         public static implicit operator SignalRFeatureFlag(string value) => new SignalRFeatureFlag(value);
 
         /// <inheritdoc />

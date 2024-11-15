@@ -42,7 +42,7 @@ namespace Azure.Communication.Email
         public static bool operator ==(EmailSendStatus left, EmailSendStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EmailSendStatus"/> values are not the same. </summary>
         public static bool operator !=(EmailSendStatus left, EmailSendStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EmailSendStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EmailSendStatus"/>. </summary>
         public static implicit operator EmailSendStatus(string value) => new EmailSendStatus(value);
 
         /// <inheritdoc />

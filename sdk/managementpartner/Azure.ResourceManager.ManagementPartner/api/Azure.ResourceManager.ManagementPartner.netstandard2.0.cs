@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.ManagementPartner
         public System.Guid? TenantId { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public int? Version { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagementPartner.PartnerResponseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagementPartner.PartnerResponseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -109,6 +110,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
         public string Operation { get { throw null; } }
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagementPartner.Models.OperationDisplay System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagementPartner.Models.OperationDisplay>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagementPartner.Models.OperationDisplay>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagementPartner.Models.OperationDisplay System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagementPartner.Models.OperationDisplay>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -121,6 +123,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
         public Azure.ResourceManager.ManagementPartner.Models.OperationDisplay Display { get { throw null; } }
         public string Name { get { throw null; } }
         public string Origin { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagementPartner.Models.OperationResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagementPartner.Models.OperationResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagementPartner.Models.OperationResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagementPartner.Models.OperationResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagementPartner.Models.OperationResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

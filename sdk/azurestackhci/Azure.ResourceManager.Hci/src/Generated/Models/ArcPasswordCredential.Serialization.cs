@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Hci.Models
 
         void IJsonModel<ArcPasswordCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ArcPasswordCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArcPasswordCredential)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SecretText))
             {
                 writer.WritePropertyName("secretText"u8);
@@ -62,7 +70,6 @@ namespace Azure.ResourceManager.Hci.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ArcPasswordCredential IJsonModel<ArcPasswordCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

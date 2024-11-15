@@ -9,11 +9,11 @@
   "scripts": {
     "clean": "rimraf ./dist ./emitter/temp && dotnet clean ./generator",
     "build:emitter": "tsc -p ./emitter/tsconfig.build.json",
-    "build:generator": "dotnet build ./generator",
-    "build": "npm run build:emitter && npm run build:generator && copyfiles -u 5 ./node_modules/@typespec/http-client-csharp/dist/generator/Microsoft.Generator.CSharp.runtimeconfig.json ./dist/generator",
-    "test:emitter": "vitest run -c ./emitter/vitest.config.ts",
-    "test:generator": "dotnet test ./generator",
-    "test": "npm run test:emitter && npm run test:generator",
+    "build:generator": "dotnet build ./generator && copyfiles -u 5 ./node_modules/@typespec/http-client-csharp/dist/generator/Microsoft.Generator.CSharp.runtimeconfig.json ./dist/generator",
+    "build": "npm run build:emitter && npm run build:generator",
+    "test:emitter": "vitest run -c ./emitter/vitest.config.ts --passWithNoTests",
+    "test:generator": "dotnet test ./generator --logger \"trx;LogFileName=debug.trx\"",
+    "test": "npm run test:generator && npm run test:emitter",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
     "prettier:fix": "prettier --write --config .prettierrc.json ./**/*.ts",
@@ -23,21 +23,43 @@
     "dist/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "0.1.9-alpha.20240912.2"
+    "@typespec/http-client-csharp": "0.1.9-alpha.20241010.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.2.0",
-    "@types/node": "~18.13.0",
+    "@azure-tools/typespec-azure-core": "0.46.0",
+    "@azure-tools/typespec-client-generator-core": "0.46.2",
+    "@azure-tools/typespec-azure-resource-manager": "0.46.1",
+    "@azure-tools/typespec-azure-rulesets": "0.46.0",
+    "@azure-tools/typespec-autorest": "0.46.0",
+    "@typespec/compiler": "0.60.0",
+    "@typespec/http": "0.60.0",
+    "@typespec/json-schema": "0.60.0",
+    "@typespec/library-linter": "0.60.0",
+    "@typespec/openapi": "0.60.0",
+    "@typespec/rest": "0.60.0",
+    "@typespec/versioning": "0.60.0",
+    "@typespec/xml": "0.60.0",
+    "@types/node": "~22.7.5",
     "@types/prettier": "^2.6.3",
     "@vitest/coverage-v8": "^1.4.0",
     "@vitest/ui": "^1.4.0",
     "c8": "^9.1.0",
     "rimraf": "~5.0.5",
-    "typescript": "~5.4.3",
+    "typescript": "~5.6.3",
     "vitest": "^1.4.0",
     "copyfiles": "^2.4.1",
     "eslint": "^8.57.0",
+    "@eslint/js": "^9.2.0",
     "prettier": "~3.0.3",
     "typescript-eslint": "^7.8.0"
-  }
+  },
+  "azure-sdk/emitter-package-json-pinning": [
+    "@azure-tools/typespec-azure-core",
+    "@azure-tools/typespec-client-generator-core",
+    "@typespec/compiler",
+    "@typespec/http",
+    "@typespec/openapi",
+    "@typespec/rest",
+    "@typespec/versioning"
+  ]
 }

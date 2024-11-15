@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(LastBackupStatus left, LastBackupStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LastBackupStatus"/> values are not the same. </summary>
         public static bool operator !=(LastBackupStatus left, LastBackupStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LastBackupStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LastBackupStatus"/>. </summary>
         public static implicit operator LastBackupStatus(string value) => new LastBackupStatus(value);
 
         /// <inheritdoc />

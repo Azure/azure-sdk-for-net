@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator ==(NotificationHookKind left, NotificationHookKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationHookKind"/> values are not the same. </summary>
         public static bool operator !=(NotificationHookKind left, NotificationHookKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NotificationHookKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationHookKind"/>. </summary>
         public static implicit operator NotificationHookKind(string value) => new NotificationHookKind(value);
 
         /// <inheritdoc />

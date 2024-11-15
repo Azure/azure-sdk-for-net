@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ContentSafetyStatus left, ContentSafetyStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentSafetyStatus"/> values are not the same. </summary>
         public static bool operator !=(ContentSafetyStatus left, ContentSafetyStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContentSafetyStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContentSafetyStatus"/>. </summary>
         public static implicit operator ContentSafetyStatus(string value) => new ContentSafetyStatus(value);
 
         /// <inheritdoc />

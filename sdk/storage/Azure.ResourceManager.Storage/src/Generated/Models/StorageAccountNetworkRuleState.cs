@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(StorageAccountNetworkRuleState left, StorageAccountNetworkRuleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountNetworkRuleState"/> values are not the same. </summary>
         public static bool operator !=(StorageAccountNetworkRuleState left, StorageAccountNetworkRuleState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageAccountNetworkRuleState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountNetworkRuleState"/>. </summary>
         public static implicit operator StorageAccountNetworkRuleState(string value) => new StorageAccountNetworkRuleState(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(HiveThriftTransportProtocol left, HiveThriftTransportProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HiveThriftTransportProtocol"/> values are not the same. </summary>
         public static bool operator !=(HiveThriftTransportProtocol left, HiveThriftTransportProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HiveThriftTransportProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HiveThriftTransportProtocol"/>. </summary>
         public static implicit operator HiveThriftTransportProtocol(string value) => new HiveThriftTransportProtocol(value);
 
         /// <inheritdoc />

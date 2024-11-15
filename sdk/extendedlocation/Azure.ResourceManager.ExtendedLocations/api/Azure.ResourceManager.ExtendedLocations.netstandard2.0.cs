@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Namespace { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ExtendedLocations.CustomLocationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ExtendedLocations.CustomLocationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ExtendedLocations.CustomLocationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ExtendedLocations.CustomLocationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ExtendedLocations.CustomLocationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -104,6 +105,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         public CustomLocationAuthentication() { }
         public string CustomLocationPropertiesAuthenticationType { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ExtendedLocations.Models.CustomLocationAuthentication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationAuthentication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationAuthentication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ExtendedLocations.Models.CustomLocationAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -116,6 +118,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         public Azure.Core.ResourceIdentifier ClusterExtensionId { get { throw null; } set { } }
         public string ExtensionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceTypeMetadata> TypesMetadata { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -128,6 +131,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         public string ApiVersion { get { throw null; } set { } }
         public string ResourceProviderNamespace { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceTypeMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceTypeMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceTypeMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceTypeMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceTypeMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -163,6 +167,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         public string Namespace { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ExtendedLocations.Models.CustomLocationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ExtendedLocations.Models.CustomLocationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

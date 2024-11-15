@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(DataCollectionRuleKnownPrometheusForwarderDataSourceStream left, DataCollectionRuleKnownPrometheusForwarderDataSourceStream right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataCollectionRuleKnownPrometheusForwarderDataSourceStream"/> values are not the same. </summary>
         public static bool operator !=(DataCollectionRuleKnownPrometheusForwarderDataSourceStream left, DataCollectionRuleKnownPrometheusForwarderDataSourceStream right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataCollectionRuleKnownPrometheusForwarderDataSourceStream"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataCollectionRuleKnownPrometheusForwarderDataSourceStream"/>. </summary>
         public static implicit operator DataCollectionRuleKnownPrometheusForwarderDataSourceStream(string value) => new DataCollectionRuleKnownPrometheusForwarderDataSourceStream(value);
 
         /// <inheritdoc />

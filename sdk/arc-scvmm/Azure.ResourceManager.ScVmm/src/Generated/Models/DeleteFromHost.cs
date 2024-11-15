@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static bool operator ==(DeleteFromHost left, DeleteFromHost right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeleteFromHost"/> values are not the same. </summary>
         public static bool operator !=(DeleteFromHost left, DeleteFromHost right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeleteFromHost"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeleteFromHost"/>. </summary>
         public static implicit operator DeleteFromHost(string value) => new DeleteFromHost(value);
 
         /// <inheritdoc />

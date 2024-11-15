@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator ==(RoleManagementPrincipalType left, RoleManagementPrincipalType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementPrincipalType"/> values are not the same. </summary>
         public static bool operator !=(RoleManagementPrincipalType left, RoleManagementPrincipalType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoleManagementPrincipalType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementPrincipalType"/>. </summary>
         public static implicit operator RoleManagementPrincipalType(string value) => new RoleManagementPrincipalType(value);
 
         /// <inheritdoc />

@@ -15,115 +15,179 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteHostNameBinding.
 /// </summary>
-public partial class SiteHostNameBinding : Resource
+public partial class SiteHostNameBinding : ProvisionableResource
 {
     /// <summary>
     /// Hostname in the hostname binding.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Azure resource name.
     /// </summary>
-    public BicepValue<string> AzureResourceName { get => _azureResourceName; set => _azureResourceName.Assign(value); }
-    private readonly BicepValue<string> _azureResourceName;
+    public BicepValue<string> AzureResourceName 
+    {
+        get { Initialize(); return _azureResourceName!; }
+        set { Initialize(); _azureResourceName!.Assign(value); }
+    }
+    private BicepValue<string>? _azureResourceName;
 
     /// <summary>
     /// Azure resource type.
     /// </summary>
-    public BicepValue<AppServiceResourceType> AzureResourceType { get => _azureResourceType; set => _azureResourceType.Assign(value); }
-    private readonly BicepValue<AppServiceResourceType> _azureResourceType;
+    public BicepValue<AppServiceResourceType> AzureResourceType 
+    {
+        get { Initialize(); return _azureResourceType!; }
+        set { Initialize(); _azureResourceType!.Assign(value); }
+    }
+    private BicepValue<AppServiceResourceType>? _azureResourceType;
 
     /// <summary>
     /// Custom DNS record type.
     /// </summary>
-    public BicepValue<CustomHostNameDnsRecordType> CustomHostNameDnsRecordType { get => _customHostNameDnsRecordType; set => _customHostNameDnsRecordType.Assign(value); }
-    private readonly BicepValue<CustomHostNameDnsRecordType> _customHostNameDnsRecordType;
+    public BicepValue<CustomHostNameDnsRecordType> CustomHostNameDnsRecordType 
+    {
+        get { Initialize(); return _customHostNameDnsRecordType!; }
+        set { Initialize(); _customHostNameDnsRecordType!.Assign(value); }
+    }
+    private BicepValue<CustomHostNameDnsRecordType>? _customHostNameDnsRecordType;
 
     /// <summary>
     /// Fully qualified ARM domain resource URI.
     /// </summary>
-    public BicepValue<string> DomainId { get => _domainId; set => _domainId.Assign(value); }
-    private readonly BicepValue<string> _domainId;
+    public BicepValue<string> DomainId 
+    {
+        get { Initialize(); return _domainId!; }
+        set { Initialize(); _domainId!.Assign(value); }
+    }
+    private BicepValue<string>? _domainId;
 
     /// <summary>
     /// Hostname type.
     /// </summary>
-    public BicepValue<AppServiceHostNameType> HostNameType { get => _hostNameType; set => _hostNameType.Assign(value); }
-    private readonly BicepValue<AppServiceHostNameType> _hostNameType;
+    public BicepValue<AppServiceHostNameType> HostNameType 
+    {
+        get { Initialize(); return _hostNameType!; }
+        set { Initialize(); _hostNameType!.Assign(value); }
+    }
+    private BicepValue<AppServiceHostNameType>? _hostNameType;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// App Service app name.
     /// </summary>
-    public BicepValue<string> SiteName { get => _siteName; set => _siteName.Assign(value); }
-    private readonly BicepValue<string> _siteName;
+    public BicepValue<string> SiteName 
+    {
+        get { Initialize(); return _siteName!; }
+        set { Initialize(); _siteName!.Assign(value); }
+    }
+    private BicepValue<string>? _siteName;
 
     /// <summary>
     /// SSL type.
     /// </summary>
-    public BicepValue<HostNameBindingSslState> SslState { get => _sslState; set => _sslState.Assign(value); }
-    private readonly BicepValue<HostNameBindingSslState> _sslState;
+    public BicepValue<HostNameBindingSslState> SslState 
+    {
+        get { Initialize(); return _sslState!; }
+        set { Initialize(); _sslState!.Assign(value); }
+    }
+    private BicepValue<HostNameBindingSslState>? _sslState;
 
     /// <summary>
     /// SSL certificate thumbprint.
     /// </summary>
-    public BicepValue<string> ThumbprintString { get => _thumbprintString; set => _thumbprintString.Assign(value); }
-    private readonly BicepValue<string> _thumbprintString;
+    public BicepValue<string> ThumbprintString 
+    {
+        get { Initialize(); return _thumbprintString!; }
+        set { Initialize(); _thumbprintString!.Assign(value); }
+    }
+    private BicepValue<string>? _thumbprintString;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Virtual IP address assigned to the hostname if IP based SSL is enabled.
     /// </summary>
-    public BicepValue<string> VirtualIP { get => _virtualIP; }
-    private readonly BicepValue<string> _virtualIP;
+    public BicepValue<string> VirtualIP 
+    {
+        get { Initialize(); return _virtualIP!; }
+    }
+    private BicepValue<string>? _virtualIP;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSite.
     /// </summary>
-    public WebSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSite> _parent;
+    public WebSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSite>? _parent;
 
     /// <summary>
     /// Creates a new SiteHostNameBinding.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteHostNameBinding.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteHostNameBinding resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteHostNameBinding.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteHostNameBinding(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/hostNameBindings", resourceVersion ?? "2023-12-01", context)
+    public SiteHostNameBinding(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/hostNameBindings", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _azureResourceName = BicepValue<string>.DefineProperty(this, "AzureResourceName", ["properties", "azureResourceName"]);
-        _azureResourceType = BicepValue<AppServiceResourceType>.DefineProperty(this, "AzureResourceType", ["properties", "azureResourceType"]);
-        _customHostNameDnsRecordType = BicepValue<CustomHostNameDnsRecordType>.DefineProperty(this, "CustomHostNameDnsRecordType", ["properties", "customHostNameDnsRecordType"]);
-        _domainId = BicepValue<string>.DefineProperty(this, "DomainId", ["properties", "domainId"]);
-        _hostNameType = BicepValue<AppServiceHostNameType>.DefineProperty(this, "HostNameType", ["properties", "hostNameType"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _siteName = BicepValue<string>.DefineProperty(this, "SiteName", ["properties", "siteName"]);
-        _sslState = BicepValue<HostNameBindingSslState>.DefineProperty(this, "SslState", ["properties", "sslState"]);
-        _thumbprintString = BicepValue<string>.DefineProperty(this, "ThumbprintString", ["properties", "thumbprint"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _virtualIP = BicepValue<string>.DefineProperty(this, "VirtualIP", ["properties", "virtualIP"], isOutput: true);
-        _parent = ResourceReference<WebSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SiteHostNameBinding.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _azureResourceName = DefineProperty<string>("AzureResourceName", ["properties", "azureResourceName"]);
+        _azureResourceType = DefineProperty<AppServiceResourceType>("AzureResourceType", ["properties", "azureResourceType"]);
+        _customHostNameDnsRecordType = DefineProperty<CustomHostNameDnsRecordType>("CustomHostNameDnsRecordType", ["properties", "customHostNameDnsRecordType"]);
+        _domainId = DefineProperty<string>("DomainId", ["properties", "domainId"]);
+        _hostNameType = DefineProperty<AppServiceHostNameType>("HostNameType", ["properties", "hostNameType"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _siteName = DefineProperty<string>("SiteName", ["properties", "siteName"]);
+        _sslState = DefineProperty<HostNameBindingSslState>("SslState", ["properties", "sslState"]);
+        _thumbprintString = DefineProperty<string>("ThumbprintString", ["properties", "thumbprint"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _virtualIP = DefineProperty<string>("VirtualIP", ["properties", "virtualIP"], isOutput: true);
+        _parent = DefineResource<WebSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -131,6 +195,11 @@ public partial class SiteHostNameBinding : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
         /// <summary>
         /// 2023-12-01.
         /// </summary>
@@ -250,9 +319,14 @@ public partial class SiteHostNameBinding : Resource
     /// <summary>
     /// Creates a reference to an existing SiteHostNameBinding.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteHostNameBinding.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteHostNameBinding resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteHostNameBinding.</param>
     /// <returns>The existing SiteHostNameBinding resource.</returns>
-    public static SiteHostNameBinding FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteHostNameBinding FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(MtpProvider left, MtpProvider right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MtpProvider"/> values are not the same. </summary>
         public static bool operator !=(MtpProvider left, MtpProvider right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MtpProvider"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MtpProvider"/>. </summary>
         public static implicit operator MtpProvider(string value) => new MtpProvider(value);
 
         /// <inheritdoc />

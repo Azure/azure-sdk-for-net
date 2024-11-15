@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(BlobInventoryPolicySchedule left, BlobInventoryPolicySchedule right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobInventoryPolicySchedule"/> values are not the same. </summary>
         public static bool operator !=(BlobInventoryPolicySchedule left, BlobInventoryPolicySchedule right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BlobInventoryPolicySchedule"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobInventoryPolicySchedule"/>. </summary>
         public static implicit operator BlobInventoryPolicySchedule(string value) => new BlobInventoryPolicySchedule(value);
 
         /// <inheritdoc />

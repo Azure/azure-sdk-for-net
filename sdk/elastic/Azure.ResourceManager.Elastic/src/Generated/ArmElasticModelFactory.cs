@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -48,18 +49,32 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
         /// <param name="elasticProperties"> Elastic cloud properties. </param>
         /// <param name="userInfo"> User information. </param>
+        /// <param name="planDetails"> Plan details of the monitor resource. </param>
+        /// <param name="version"> Version of elastic of the monitor resource. </param>
+        /// <param name="subscriptionState"> State of the Azure Subscription containing the monitor resource. </param>
+        /// <param name="saaSAzureSubscriptionStatus"> Status of Azure Subscription where Marketplace SaaS is located. </param>
+        /// <param name="sourceCampaignName"> Name of the marketing campaign. </param>
+        /// <param name="sourceCampaignId"> A unique identifier associated with the campaign. </param>
         /// <param name="liftrResourceCategory"></param>
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
+        /// <param name="generateApiKey"> Flag to determine if User API Key has to be generated and shared. </param>
         /// <returns> A new <see cref="Models.MonitorProperties"/> instance for mocking. </returns>
-        public static MonitorProperties MonitorProperties(ProvisioningState? provisioningState = null, MonitoringStatus? monitoringStatus = null, ElasticProperties elasticProperties = null, UserInfo userInfo = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null)
+        public static MonitorProperties MonitorProperties(ProvisioningState? provisioningState = null, MonitoringStatus? monitoringStatus = null, ElasticProperties elasticProperties = null, UserInfo userInfo = null, PlanDetails planDetails = null, string version = null, string subscriptionState = null, string saaSAzureSubscriptionStatus = null, string sourceCampaignName = null, string sourceCampaignId = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null, bool? generateApiKey = null)
         {
             return new MonitorProperties(
                 provisioningState,
                 monitoringStatus,
                 elasticProperties,
                 userInfo,
+                planDetails,
+                version,
+                subscriptionState,
+                saaSAzureSubscriptionStatus,
+                sourceCampaignName,
+                sourceCampaignId,
                 liftrResourceCategory,
                 liftrResourcePreference,
+                generateApiKey,
                 serializedAdditionalRawData: null);
         }
 
@@ -95,6 +110,53 @@ namespace Azure.ResourceManager.Elastic.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticVersionListFormat"/>. </summary>
+        /// <param name="version"> Elastic Version Properties. </param>
+        /// <returns> A new <see cref="Models.ElasticVersionListFormat"/> instance for mocking. </returns>
+        public static ElasticVersionListFormat ElasticVersionListFormat(string version = null)
+        {
+            return new ElasticVersionListFormat(version != null ? new ElasticVersionListProperties(version, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Elastic.MonitoredSubscriptionPropertyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </param>
+        /// <returns> A new <see cref="Elastic.MonitoredSubscriptionPropertyData"/> instance for mocking. </returns>
+        public static MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ElasticModelSubscriptionList properties = null)
+        {
+            return new MonitoredSubscriptionPropertyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticModelSubscriptionList"/>. </summary>
+        /// <param name="operation"> The operation for the patch on the resource. </param>
+        /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
+        /// <returns> A new <see cref="Models.ElasticModelSubscriptionList"/> instance for mocking. </returns>
+        public static ElasticModelSubscriptionList ElasticModelSubscriptionList(ElasticModelOperation? operation = null, IEnumerable<MonitoredSubscription> monitoredSubscriptionList = null, ProvisioningState? provisioningState = null)
+        {
+            monitoredSubscriptionList ??= new List<MonitoredSubscription>();
+
+            return new ElasticModelSubscriptionList(operation, monitoredSubscriptionList?.ToList(), provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MonitoringTagRulesProperties"/>. </summary>
+        /// <param name="provisioningState"> Provisioning state of the monitoring tag rules. </param>
+        /// <param name="logRules"> Rules for sending logs. </param>
+        /// <returns> A new <see cref="Models.MonitoringTagRulesProperties"/> instance for mocking. </returns>
+        public static MonitoringTagRulesProperties MonitoringTagRulesProperties(ProvisioningState? provisioningState = null, LogRules logRules = null)
+        {
+            return new MonitoringTagRulesProperties(provisioningState, logRules, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MonitoredResourceContent"/>. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingLogs"> Flag indicating the status of the resource for sending logs operation to Elastic. </param>
@@ -110,10 +172,141 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="version"> Version of the elasticsearch in Elastic cloud deployment. </param>
         /// <param name="memoryCapacity"> RAM capacity of the elasticsearch in Elastic cloud deployment. </param>
         /// <param name="diskCapacity"> Disk capacity of the elasticsearch in Elastic cloud deployment. </param>
+        /// <param name="elasticsearchEndPoint"> Elasticsearch endpoint in Elastic cloud deployment. This is either the aliased_endpoint if available, or the service_url otherwise. </param>
+        /// <param name="deploymentUri"> Deployment URL of the elasticsearch in Elastic cloud deployment. </param>
+        /// <param name="marketplaceSaasInfo"> Marketplace SaaS Info of the resource. </param>
         /// <returns> A new <see cref="Models.DeploymentInfoResponse"/> instance for mocking. </returns>
-        public static DeploymentInfoResponse DeploymentInfoResponse(ElasticDeploymentStatus? status = null, string version = null, string memoryCapacity = null, string diskCapacity = null)
+        public static DeploymentInfoResponse DeploymentInfoResponse(ElasticDeploymentStatus? status = null, string version = null, string memoryCapacity = null, string diskCapacity = null, string elasticsearchEndPoint = null, Uri deploymentUri = null, MarketplaceSaaSInfo marketplaceSaasInfo = null)
         {
-            return new DeploymentInfoResponse(status, version, memoryCapacity, diskCapacity, serializedAdditionalRawData: null);
+            return new DeploymentInfoResponse(
+                status,
+                version,
+                memoryCapacity,
+                diskCapacity,
+                elasticsearchEndPoint,
+                deploymentUri,
+                marketplaceSaasInfo,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfo"/>. </summary>
+        /// <param name="marketplaceSubscription"> Marketplace Subscription. </param>
+        /// <param name="marketplaceName"> Marketplace Subscription Details: SAAS Name. </param>
+        /// <param name="marketplaceResourceId"> Marketplace Subscription Details: Resource URI. </param>
+        /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
+        /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
+        /// <param name="subscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
+        /// <returns> A new <see cref="Models.MarketplaceSaaSInfo"/> instance for mocking. </returns>
+        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(MarketplaceSaaSInfoMarketplaceSubscription marketplaceSubscription = null, string marketplaceName = null, string marketplaceResourceId = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null, bool? subscribed = null)
+        {
+            return new MarketplaceSaaSInfo(
+                marketplaceSubscription,
+                marketplaceName,
+                marketplaceResourceId,
+                marketplaceStatus,
+                billedAzureSubscriptionId,
+                subscribed,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfoMarketplaceSubscription"/>. </summary>
+        /// <param name="id"> Marketplace Subscription Id. This is a GUID-formatted string. </param>
+        /// <param name="publisherId"> Publisher Id of the Marketplace offer. </param>
+        /// <param name="offerId"> Offer Id of the Marketplace offer,. </param>
+        /// <returns> A new <see cref="Models.MarketplaceSaaSInfoMarketplaceSubscription"/> instance for mocking. </returns>
+        public static MarketplaceSaaSInfoMarketplaceSubscription MarketplaceSaaSInfoMarketplaceSubscription(string id = null, string publisherId = null, string offerId = null)
+        {
+            return new MarketplaceSaaSInfoMarketplaceSubscription(id, publisherId, offerId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExternalUserCreationResponse"/>. </summary>
+        /// <param name="created"> Shows if user is created or updated. </param>
+        /// <returns> A new <see cref="Models.ExternalUserCreationResponse"/> instance for mocking. </returns>
+        public static ExternalUserCreationResponse ExternalUserCreationResponse(bool? created = null)
+        {
+            return new ExternalUserCreationResponse(created, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BillingInfoResponse"/>. </summary>
+        /// <param name="marketplaceSaasInfo"> Marketplace Subscription details. </param>
+        /// <param name="partnerBillingEntity"> Partner Billing Entity details: Organization Info. </param>
+        /// <returns> A new <see cref="Models.BillingInfoResponse"/> instance for mocking. </returns>
+        public static BillingInfoResponse BillingInfoResponse(MarketplaceSaaSInfo marketplaceSaasInfo = null, PartnerBillingEntity partnerBillingEntity = null)
+        {
+            return new BillingInfoResponse(marketplaceSaasInfo, partnerBillingEntity, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PartnerBillingEntity"/>. </summary>
+        /// <param name="id"> The Elastic Organization Id. </param>
+        /// <param name="name"> The Elastic Organization Name. </param>
+        /// <param name="partnerEntityUri"> Link to the elastic organization page. </param>
+        /// <returns> A new <see cref="Models.PartnerBillingEntity"/> instance for mocking. </returns>
+        public static PartnerBillingEntity PartnerBillingEntity(string id = null, string name = null, Uri partnerEntityUri = null)
+        {
+            return new PartnerBillingEntity(id, name, partnerEntityUri, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectedPartnerResourcesListFormat"/>. </summary>
+        /// <param name="properties"> Connected Partner Resource Properties. </param>
+        /// <returns> A new <see cref="Models.ConnectedPartnerResourcesListFormat"/> instance for mocking. </returns>
+        public static ConnectedPartnerResourcesListFormat ConnectedPartnerResourcesListFormat(ConnectedPartnerResourceProperties properties = null)
+        {
+            return new ConnectedPartnerResourcesListFormat(properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectedPartnerResourceProperties"/>. </summary>
+        /// <param name="partnerDeploymentName"> Elastic deployment name. </param>
+        /// <param name="partnerDeploymentUri"> Deployment URL of the elasticsearch in Elastic cloud deployment. </param>
+        /// <param name="azureResourceId"> The azure resource Id of the deployment. </param>
+        /// <param name="location"> The location of the deployment. </param>
+        /// <returns> A new <see cref="Models.ConnectedPartnerResourceProperties"/> instance for mocking. </returns>
+        public static ConnectedPartnerResourceProperties ConnectedPartnerResourceProperties(string partnerDeploymentName = null, Uri partnerDeploymentUri = null, string azureResourceId = null, AzureLocation? location = null)
+        {
+            return new ConnectedPartnerResourceProperties(partnerDeploymentName, partnerDeploymentUri, azureResourceId, location, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Elastic.OpenAIIntegrationRPModelData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Open AI Integration details. </param>
+        /// <returns> A new <see cref="Elastic.OpenAIIntegrationRPModelData"/> instance for mocking. </returns>
+        public static OpenAIIntegrationRPModelData OpenAIIntegrationRPModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, OpenAIIntegrationProperties properties = null)
+        {
+            return new OpenAIIntegrationRPModelData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OpenAIIntegrationProperties"/>. </summary>
+        /// <param name="openAIResourceId"> The resource name of Open AI resource. </param>
+        /// <param name="openAIResourceEndpoint"> The API endpoint for Open AI resource. </param>
+        /// <param name="openAIConnectorId"> The connector id of Open AI resource. </param>
+        /// <param name="key"> Value of API key for Open AI resource. </param>
+        /// <param name="lastRefreshOn"> Last Update Timestamp for key updation. </param>
+        /// <returns> A new <see cref="Models.OpenAIIntegrationProperties"/> instance for mocking. </returns>
+        public static OpenAIIntegrationProperties OpenAIIntegrationProperties(string openAIResourceId = null, string openAIResourceEndpoint = null, string openAIConnectorId = null, string key = null, DateTimeOffset? lastRefreshOn = null)
+        {
+            return new OpenAIIntegrationProperties(
+                openAIResourceId,
+                openAIResourceEndpoint,
+                openAIConnectorId,
+                key,
+                lastRefreshOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OpenAIIntegrationStatusResponse"/>. </summary>
+        /// <param name="status"> Status of the OpenAI Integration. </param>
+        /// <returns> A new <see cref="Models.OpenAIIntegrationStatusResponse"/> instance for mocking. </returns>
+        public static OpenAIIntegrationStatusResponse OpenAIIntegrationStatusResponse(string status = null)
+        {
+            return new OpenAIIntegrationStatusResponse(status != null ? new OpenAIIntegrationStatusResponseProperties(status, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Elastic.MonitoringTagRuleData"/>. </summary>
@@ -149,6 +342,96 @@ namespace Azure.ResourceManager.Elastic.Models
         public static VmIngestionDetailsResponse VmIngestionDetailsResponse(string cloudId = null, string ingestionKey = null)
         {
             return new VmIngestionDetailsResponse(cloudId, ingestionKey, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.UpgradableVersionsList"/>. </summary>
+        /// <param name="currentVersion"> Current version of the elastic monitor. </param>
+        /// <param name="upgradableVersions"> Stack Versions that this version can upgrade to. </param>
+        /// <returns> A new <see cref="Models.UpgradableVersionsList"/> instance for mocking. </returns>
+        public static UpgradableVersionsList UpgradableVersionsList(string currentVersion = null, IEnumerable<string> upgradableVersions = null)
+        {
+            upgradableVersions ??= new List<string>();
+
+            return new UpgradableVersionsList(currentVersion, upgradableVersions?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticTrafficFilterResponse"/>. </summary>
+        /// <param name="rulesets"> List of elastic traffic filters in the account. </param>
+        /// <returns> A new <see cref="Models.ElasticTrafficFilterResponse"/> instance for mocking. </returns>
+        public static ElasticTrafficFilterResponse ElasticTrafficFilterResponse(IEnumerable<ElasticTrafficFilter> rulesets = null)
+        {
+            rulesets ??= new List<ElasticTrafficFilter>();
+
+            return new ElasticTrafficFilterResponse(rulesets?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticTrafficFilter"/>. </summary>
+        /// <param name="id"> Id of the elastic filter. </param>
+        /// <param name="name"> Name of the elastic filter. </param>
+        /// <param name="description"> Description of the elastic filter. </param>
+        /// <param name="region"> Region of the elastic filter. </param>
+        /// <param name="elasticTrafficFilterType"> Type of the elastic filter. </param>
+        /// <param name="includeByDefault"> IncludeByDefault for the elastic filter. </param>
+        /// <param name="rules"> Rules in the elastic filter. </param>
+        /// <returns> A new <see cref="Models.ElasticTrafficFilter"/> instance for mocking. </returns>
+        public static ElasticTrafficFilter ElasticTrafficFilter(string id = null, string name = null, string description = null, string region = null, ElasticModelType? elasticTrafficFilterType = null, bool? includeByDefault = null, IEnumerable<ElasticTrafficFilterRule> rules = null)
+        {
+            rules ??= new List<ElasticTrafficFilterRule>();
+
+            return new ElasticTrafficFilter(
+                id,
+                name,
+                description,
+                region,
+                elasticTrafficFilterType,
+                includeByDefault,
+                rules?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticTrafficFilterRule"/>. </summary>
+        /// <param name="source"> IP of the elastic filter rule. </param>
+        /// <param name="description"> Description of the elastic filter rule. </param>
+        /// <param name="azureEndpointGuid"> Guid of Private Endpoint in the elastic filter rule. </param>
+        /// <param name="azureEndpointName"> Name of the Private Endpoint in the elastic filter rule. </param>
+        /// <param name="id"> Id of the elastic filter rule. </param>
+        /// <returns> A new <see cref="Models.ElasticTrafficFilterRule"/> instance for mocking. </returns>
+        public static ElasticTrafficFilterRule ElasticTrafficFilterRule(string source = null, string description = null, string azureEndpointGuid = null, string azureEndpointName = null, string id = null)
+        {
+            return new ElasticTrafficFilterRule(
+                source,
+                description,
+                azureEndpointGuid,
+                azureEndpointName,
+                id,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.UserApiKeyResponse"/>. </summary>
+        /// <param name="apiKey"></param>
+        /// <returns> A new <see cref="Models.UserApiKeyResponse"/> instance for mocking. </returns>
+        public static UserApiKeyResponse UserApiKeyResponse(string apiKey = null)
+        {
+            return new UserApiKeyResponse(apiKey != null ? new UserApiKeyResponseProperties(apiKey, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticOrganizationToAzureSubscriptionMappingResponse"/>. </summary>
+        /// <param name="properties"> The properties of Azure Subscription ID to which the Organization of the logged in user belongs and gets billed into. </param>
+        /// <returns> A new <see cref="Models.ElasticOrganizationToAzureSubscriptionMappingResponse"/> instance for mocking. </returns>
+        public static ElasticOrganizationToAzureSubscriptionMappingResponse ElasticOrganizationToAzureSubscriptionMappingResponse(ElasticOrganizationToAzureSubscriptionMappingResponseProperties properties = null)
+        {
+            return new ElasticOrganizationToAzureSubscriptionMappingResponse(properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticOrganizationToAzureSubscriptionMappingResponseProperties"/>. </summary>
+        /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Organization belongs and gets billed into. This is empty for a new user OR a user without an Elastic Organization. </param>
+        /// <param name="marketplaceSaasInfo"> Marketplace SaaS Info of the resource. </param>
+        /// <param name="elasticOrganizationId"> The Elastic Organization Id. </param>
+        /// <param name="elasticOrganizationName"> The Elastic Organization Name. </param>
+        /// <returns> A new <see cref="Models.ElasticOrganizationToAzureSubscriptionMappingResponseProperties"/> instance for mocking. </returns>
+        public static ElasticOrganizationToAzureSubscriptionMappingResponseProperties ElasticOrganizationToAzureSubscriptionMappingResponseProperties(string billedAzureSubscriptionId = null, MarketplaceSaaSInfo marketplaceSaasInfo = null, string elasticOrganizationId = null, string elasticOrganizationName = null)
+        {
+            return new ElasticOrganizationToAzureSubscriptionMappingResponseProperties(billedAzureSubscriptionId, marketplaceSaasInfo, elasticOrganizationId, elasticOrganizationName, serializedAdditionalRawData: null);
         }
     }
 }

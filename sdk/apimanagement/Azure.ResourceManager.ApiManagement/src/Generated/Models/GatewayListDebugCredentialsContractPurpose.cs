@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(GatewayListDebugCredentialsContractPurpose left, GatewayListDebugCredentialsContractPurpose right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GatewayListDebugCredentialsContractPurpose"/> values are not the same. </summary>
         public static bool operator !=(GatewayListDebugCredentialsContractPurpose left, GatewayListDebugCredentialsContractPurpose right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GatewayListDebugCredentialsContractPurpose"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GatewayListDebugCredentialsContractPurpose"/>. </summary>
         public static implicit operator GatewayListDebugCredentialsContractPurpose(string value) => new GatewayListDebugCredentialsContractPurpose(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator ==(ContainerAppExtendedLocationType left, ContainerAppExtendedLocationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppExtendedLocationType"/> values are not the same. </summary>
         public static bool operator !=(ContainerAppExtendedLocationType left, ContainerAppExtendedLocationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerAppExtendedLocationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppExtendedLocationType"/>. </summary>
         public static implicit operator ContainerAppExtendedLocationType(string value) => new ContainerAppExtendedLocationType(value);
 
         /// <inheritdoc />

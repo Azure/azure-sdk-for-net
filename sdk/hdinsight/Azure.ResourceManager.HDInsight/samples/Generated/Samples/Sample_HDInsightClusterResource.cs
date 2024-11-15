@@ -13,14 +13,14 @@ using Azure.Identity;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HDInsight.Samples
 {
     public partial class Sample_HDInsightClusterResource
     {
-        // Patch HDInsight Linux clusters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchHDInsightLinuxClusters()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/PatchLinuxHadoopCluster.json
@@ -57,9 +57,8 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch HDInsight Linux clusters with system assigned MSI
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchHDInsightLinuxClustersWithSystemAssignedMSI()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/PatchLinuxHadoopClusterWithSystemMSI.json
@@ -97,9 +96,8 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Hadoop on Linux cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteHadoopOnLinuxCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/DeleteLinuxHadoopCluster.json
@@ -121,12 +119,11 @@ namespace Azure.ResourceManager.HDInsight.Samples
             // invoke the operation
             await hdInsightCluster.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Hadoop on Linux cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetHadoopOnLinuxCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxHadoopCluster.json
@@ -155,9 +152,8 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Spark on Linux cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSparkOnLinuxCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxSparkCluster.json
@@ -186,9 +182,8 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Resize the worker nodes for a Hadoop on Linux cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Resize_ResizeTheWorkerNodesForAHadoopOnLinuxCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/ResizeLinuxHadoopCluster.json
@@ -215,12 +210,11 @@ namespace Azure.ResourceManager.HDInsight.Samples
             };
             await hdInsightCluster.ResizeAsync(WaitUntil.Completed, roleName, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Disable Autoscale for the HDInsight cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAutoScaleConfiguration_DisableAutoscaleForTheHDInsightCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/DisableClusterAutoScale.json
@@ -244,12 +238,11 @@ namespace Azure.ResourceManager.HDInsight.Samples
             HDInsightAutoScaleConfigurationUpdateContent content = new HDInsightAutoScaleConfigurationUpdateContent();
             await hdInsightCluster.UpdateAutoScaleConfigurationAsync(WaitUntil.Completed, roleName, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Enable or Update Autoscale with the load based configuration for HDInsight cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAutoScaleConfiguration_EnableOrUpdateAutoscaleWithTheLoadBasedConfigurationForHDInsightCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/EnableOrUpdateAutoScaleWithLoadBasedConfiguration.json
@@ -283,12 +276,11 @@ namespace Azure.ResourceManager.HDInsight.Samples
             };
             await hdInsightCluster.UpdateAutoScaleConfigurationAsync(WaitUntil.Completed, roleName, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Enable or Update Autoscale with the schedule based configuration for HDInsight cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAutoScaleConfiguration_EnableOrUpdateAutoscaleWithTheScheduleBasedConfigurationForHDInsightCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/EnableOrUpdateAutoScaleWithScheduleBasedConfiguration.json
@@ -337,12 +329,11 @@ MaxInstanceCount = 4,
             };
             await hdInsightCluster.UpdateAutoScaleConfigurationAsync(WaitUntil.Completed, roleName, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get All Hadoop on Linux clusters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHDInsightClusters_GetAllHadoopOnLinuxClusters()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxHadoopAllClusters.json
@@ -369,12 +360,11 @@ MaxInstanceCount = 4,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Rotate disk encryption key of the specified HDInsight cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RotateDiskEncryptionKey_RotateDiskEncryptionKeyOfTheSpecifiedHDInsightCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/RotateLinuxHadoopClusterDiskEncryptionKey.json
@@ -402,12 +392,11 @@ MaxInstanceCount = 4,
             };
             await hdInsightCluster.RotateDiskEncryptionKeyAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get HTTP settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGatewaySettings_GetHTTPSettings()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Clusters_GetGatewaySettings.json
@@ -432,9 +421,8 @@ MaxInstanceCount = 4,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Enable HTTP connectivity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateGatewaySettings_EnableHTTPConnectivity()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Clusters_UpdateGatewaySettings_Enable.json
@@ -462,12 +450,11 @@ MaxInstanceCount = 4,
             };
             await hdInsightCluster.UpdateGatewaySettingsAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Async Operation Status of Creating Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAsyncOperationStatus_GetAsyncOperationStatusOfCreatingCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetClusterCreatingAsyncOperationStatus.json
@@ -493,9 +480,8 @@ MaxInstanceCount = 4,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Update cluster identity certificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateIdentityCertificate_UpdateClusterIdentityCertificate()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Clusters_UpdateClusterIdentityCertificate.json
@@ -523,12 +509,11 @@ MaxInstanceCount = 4,
             };
             await hdInsightCluster.UpdateIdentityCertificateAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Execute script action on HDInsight cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExecuteScriptActions_ExecuteScriptActionOnHDInsightCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/PostExecuteScriptAction.json
@@ -563,12 +548,11 @@ Parameters = "",
             };
             await hdInsightCluster.ExecuteScriptActionsAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get all configuration information
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConfiguration_GetAllConfigurationInformation()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Configurations_List.json
@@ -593,9 +577,8 @@ Parameters = "",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Disable HTTP connectivity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateConfiguration_DisableHTTPConnectivity()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/ChangeHttpConnectivityDisable.json
@@ -622,12 +605,11 @@ Parameters = "",
             };
             await hdInsightCluster.UpdateConfigurationAsync(WaitUntil.Completed, configurationName, clusterConfiguration);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Enable HTTP connectivity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateConfiguration_EnableHTTPConnectivity()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/ChangeHttpConnectivityEnable.json
@@ -656,12 +638,11 @@ Parameters = "",
             };
             await hdInsightCluster.UpdateConfigurationAsync(WaitUntil.Completed, configurationName, clusterConfiguration);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Core site settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConfiguration_GetCoreSiteSettings()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Configurations_Get.json
@@ -688,9 +669,8 @@ Parameters = "",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Enable cluster monitoring
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task EnableClusterMonitoringExtension_EnableClusterMonitoring()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/EnableLinuxClusterMonitoring.json
@@ -717,12 +697,11 @@ Parameters = "",
             };
             await hdInsightCluster.EnableClusterMonitoringExtensionAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get cluster monitoring status
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterMonitoringExtensionStatus_GetClusterMonitoringStatus()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxClusterMonitoringStatus.json
@@ -747,9 +726,8 @@ Parameters = "",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Disable cluster monitoring
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DisableClusterMonitoringExtension_DisableClusterMonitoring()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/DisableLinuxClusterMonitoring.json
@@ -771,12 +749,11 @@ Parameters = "",
             // invoke the operation
             await hdInsightCluster.DisableClusterMonitoringExtensionAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Enable azure monitor
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task EnableAzureMonitorExtension_EnableAzureMonitor()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/EnableLinuxClusterAzureMonitor.json
@@ -803,12 +780,11 @@ Parameters = "",
             };
             await hdInsightCluster.EnableAzureMonitorExtensionAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get azure monitor status
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAzureMonitorExtensionStatus_GetAzureMonitorStatus()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxClusterAzureMonitorStatus.json
@@ -833,9 +809,8 @@ Parameters = "",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Disable azure monitor
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DisableAzureMonitorExtension_DisableAzureMonitor()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/DisableLinuxClusterAzureMonitor.json
@@ -857,12 +832,11 @@ Parameters = "",
             // invoke the operation
             await hdInsightCluster.DisableAzureMonitorExtensionAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Enable azure monitoring agent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task EnableAzureMonitorAgentExtension_EnableAzureMonitoringAgent()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/EnableLinuxClusterAzureMonitorAgent.json
@@ -889,12 +863,11 @@ Parameters = "",
             };
             await hdInsightCluster.EnableAzureMonitorAgentExtensionAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get azure monitor agent status
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAzureMonitorAgentStatusExtension_GetAzureMonitorAgentStatus()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxClusterAzureMonitorAgentStatus.json
@@ -919,9 +892,8 @@ Parameters = "",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Disable azure monitor agent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DisableAzureMonitorAgentExtension_DisableAzureMonitorAgent()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/DisableLinuxClusterAzureMonitorAgent.json
@@ -943,12 +915,11 @@ Parameters = "",
             // invoke the operation
             await hdInsightCluster.DisableAzureMonitorAgentExtensionAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Create a monitoring extension on Hadoop Linux cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateExtension_CreateAMonitoringExtensionOnHadoopLinuxCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateExtension.json
@@ -976,12 +947,11 @@ Parameters = "",
             };
             await hdInsightCluster.CreateExtensionAsync(WaitUntil.Completed, extensionName, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get an extension
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetExtension_GetAnExtension()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetExtension.json
@@ -1007,9 +977,8 @@ Parameters = "",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Delete an extension
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteExtension_DeleteAnExtension()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/DeleteExtension.json
@@ -1032,12 +1001,11 @@ Parameters = "",
             string extensionName = "clustermonitoring";
             await hdInsightCluster.DeleteExtensionAsync(WaitUntil.Completed, extensionName);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets the azure async operation status.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetExtensionAsyncOperationStatus_GetsTheAzureAsyncOperationStatus()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetExtensionCreationAsyncOperationStatus.json
@@ -1064,9 +1032,8 @@ Parameters = "",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Delete a script action on HDInsight cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteScriptAction_DeleteAScriptActionOnHDInsightCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/DeleteScriptAction.json
@@ -1089,12 +1056,11 @@ Parameters = "",
             string scriptName = "scriptName";
             await hdInsightCluster.DeleteScriptActionAsync(scriptName);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List all persisted script actions for the given cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetScriptActions_ListAllPersistedScriptActionsForTheGivenCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxHadoopScriptAction.json
@@ -1119,12 +1085,11 @@ Parameters = "",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get script execution history by script id
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetScriptActionExecutionDetail_GetScriptExecutionHistoryByScriptId()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetScriptActionById.json
@@ -1150,9 +1115,8 @@ Parameters = "",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets the async execution operation status.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetScriptActionExecutionAsyncOperationStatus_GetsTheAsyncExecutionOperationStatus()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetScriptExecutionAsyncOperationStatus.json
@@ -1178,9 +1142,8 @@ Parameters = "",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Script Execution History List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetScriptExecutionHistories_GetScriptExecutionHistoryList()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetScriptExecutionHistory.json
@@ -1205,12 +1168,11 @@ Parameters = "",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Promote a script action on HDInsight cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PromoteScriptExecutionHistory_PromoteAScriptActionOnHDInsightCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/PromoteLinuxHadoopScriptAction.json
@@ -1233,12 +1195,11 @@ Parameters = "",
             string scriptExecutionId = "391145124054712";
             await hdInsightCluster.PromoteScriptExecutionHistoryAsync(scriptExecutionId);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get All hosts in the cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualMachineHosts_GetAllHostsInTheCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetClusterVirtualMachines.json
@@ -1263,12 +1224,11 @@ Parameters = "",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Restarts the specified HDInsight cluster hosts.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RestartVirtualMachineHosts_RestartsTheSpecifiedHDInsightClusterHosts()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/RestartVirtualMachinesOperation.json
@@ -1294,12 +1254,11 @@ Parameters = "",
             };
             await hdInsightCluster.RestartVirtualMachineHostsAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets the async operation status of restarting host.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualMachineAsyncOperationStatus_GetsTheAsyncOperationStatusOfRestartingHost()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetRestartHostsAsyncOperationStatus.json

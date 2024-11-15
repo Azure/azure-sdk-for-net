@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Nginx.Tests.Helpers
 {
-    internal class ResourceDataHelper
+    internal static class ResourceDataHelper
     {
         public static void AssertTrackedResourceData(TrackedResourceData r1, TrackedResourceData r2)
         {

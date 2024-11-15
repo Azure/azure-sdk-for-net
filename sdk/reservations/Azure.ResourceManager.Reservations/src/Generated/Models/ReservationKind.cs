@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator ==(ReservationKind left, ReservationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservationKind"/> values are not the same. </summary>
         public static bool operator !=(ReservationKind left, ReservationKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReservationKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReservationKind"/>. </summary>
         public static implicit operator ReservationKind(string value) => new ReservationKind(value);
 
         /// <inheritdoc />

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static bool operator ==(AppPlatformCustomDomainProvisioningState left, AppPlatformCustomDomainProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformCustomDomainProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AppPlatformCustomDomainProvisioningState left, AppPlatformCustomDomainProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppPlatformCustomDomainProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppPlatformCustomDomainProvisioningState"/>. </summary>
         public static implicit operator AppPlatformCustomDomainProvisioningState(string value) => new AppPlatformCustomDomainProvisioningState(value);
 
         /// <inheritdoc />

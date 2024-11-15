@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static bool operator ==(MongoClusterPreviewFeature left, MongoClusterPreviewFeature right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoClusterPreviewFeature"/> values are not the same. </summary>
         public static bool operator !=(MongoClusterPreviewFeature left, MongoClusterPreviewFeature right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MongoClusterPreviewFeature"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterPreviewFeature"/>. </summary>
         public static implicit operator MongoClusterPreviewFeature(string value) => new MongoClusterPreviewFeature(value);
 
         /// <inheritdoc />

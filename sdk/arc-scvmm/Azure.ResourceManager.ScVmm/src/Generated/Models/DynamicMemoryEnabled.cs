@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static bool operator ==(DynamicMemoryEnabled left, DynamicMemoryEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicMemoryEnabled"/> values are not the same. </summary>
         public static bool operator !=(DynamicMemoryEnabled left, DynamicMemoryEnabled right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DynamicMemoryEnabled"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynamicMemoryEnabled"/>. </summary>
         public static implicit operator DynamicMemoryEnabled(string value) => new DynamicMemoryEnabled(value);
 
         /// <inheritdoc />

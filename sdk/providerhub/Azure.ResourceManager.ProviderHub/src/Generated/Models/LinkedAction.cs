@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static bool operator ==(LinkedAction left, LinkedAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkedAction"/> values are not the same. </summary>
         public static bool operator !=(LinkedAction left, LinkedAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LinkedAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LinkedAction"/>. </summary>
         public static implicit operator LinkedAction(string value) => new LinkedAction(value);
 
         /// <inheritdoc />

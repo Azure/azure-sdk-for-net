@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator ==(AppliedScopeType left, AppliedScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppliedScopeType"/> values are not the same. </summary>
         public static bool operator !=(AppliedScopeType left, AppliedScopeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppliedScopeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppliedScopeType"/>. </summary>
         public static implicit operator AppliedScopeType(string value) => new AppliedScopeType(value);
 
         /// <inheritdoc />

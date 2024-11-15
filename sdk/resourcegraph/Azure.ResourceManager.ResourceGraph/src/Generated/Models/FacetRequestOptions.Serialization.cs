@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         void IJsonModel<FacetRequestOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FacetRequestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SortBy))
             {
                 writer.WritePropertyName("sortBy"u8);
@@ -61,7 +69,6 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FacetRequestOptions IJsonModel<FacetRequestOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

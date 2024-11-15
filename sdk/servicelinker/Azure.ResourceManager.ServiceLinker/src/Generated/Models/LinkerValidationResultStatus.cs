@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static bool operator ==(LinkerValidationResultStatus left, LinkerValidationResultStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkerValidationResultStatus"/> values are not the same. </summary>
         public static bool operator !=(LinkerValidationResultStatus left, LinkerValidationResultStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LinkerValidationResultStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LinkerValidationResultStatus"/>. </summary>
         public static implicit operator LinkerValidationResultStatus(string value) => new LinkerValidationResultStatus(value);
 
         /// <inheritdoc />

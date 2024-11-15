@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(PolicyOverrideCancellation left, PolicyOverrideCancellation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyOverrideCancellation"/> values are not the same. </summary>
         public static bool operator !=(PolicyOverrideCancellation left, PolicyOverrideCancellation right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PolicyOverrideCancellation"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyOverrideCancellation"/>. </summary>
         public static implicit operator PolicyOverrideCancellation(string value) => new PolicyOverrideCancellation(value);
 
         /// <inheritdoc />

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(SqlDayOfWeek left, SqlDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlDayOfWeek"/> values are not the same. </summary>
         public static bool operator !=(SqlDayOfWeek left, SqlDayOfWeek right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlDayOfWeek"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlDayOfWeek"/>. </summary>
         public static implicit operator SqlDayOfWeek(string value) => new SqlDayOfWeek(value);
 
         /// <inheritdoc />

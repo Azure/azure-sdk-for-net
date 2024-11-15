@@ -5,26 +5,13 @@
       <example>
 This sample shows how to call AuthorizeModelCopyAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("<modelId>");
-Response<CopyAuthorization> response = await client.AuthorizeModelCopyAsync(authorizeCopyRequest);
-]]></code>
-This sample shows how to call AuthorizeModelCopyAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("<modelId>")
+AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("targetModel")
 {
-    Description = "<description>",
-    Tags =
-    {
-        ["key"] = "<tags>"
-    },
+    Description = "Target model description",
 };
 Response<CopyAuthorization> response = await client.AuthorizeModelCopyAsync(authorizeCopyRequest);
 ]]></code></example>
@@ -33,26 +20,13 @@ Response<CopyAuthorization> response = await client.AuthorizeModelCopyAsync(auth
       <example>
 This sample shows how to call AuthorizeModelCopy.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("<modelId>");
-Response<CopyAuthorization> response = client.AuthorizeModelCopy(authorizeCopyRequest);
-]]></code>
-This sample shows how to call AuthorizeModelCopy with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("<modelId>")
+AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("targetModel")
 {
-    Description = "<description>",
-    Tags =
-    {
-        ["key"] = "<tags>"
-    },
+    Description = "Target model description",
 };
 Response<CopyAuthorization> response = client.AuthorizeModelCopy(authorizeCopyRequest);
 ]]></code></example>
@@ -61,38 +35,14 @@ Response<CopyAuthorization> response = client.AuthorizeModelCopy(authorizeCopyRe
       <example>
 This sample shows how to call AuthorizeModelCopyAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    modelId = "<modelId>",
-});
-Response response = await client.AuthorizeModelCopyAsync(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("targetResourceId").ToString());
-Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
-Console.WriteLine(result.GetProperty("targetModelId").ToString());
-Console.WriteLine(result.GetProperty("targetModelLocation").ToString());
-Console.WriteLine(result.GetProperty("accessToken").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-]]></code>
-This sample shows how to call AuthorizeModelCopyAsync with all request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    modelId = "<modelId>",
-    description = "<description>",
-    tags = new
-    {
-        key = "<tags>",
-    },
+    modelId = "targetModel",
+    description = "Target model description",
 });
 Response response = await client.AuthorizeModelCopyAsync(content);
 
@@ -109,38 +59,14 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
       <example>
 This sample shows how to call AuthorizeModelCopy and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    modelId = "<modelId>",
-});
-Response response = client.AuthorizeModelCopy(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("targetResourceId").ToString());
-Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
-Console.WriteLine(result.GetProperty("targetModelId").ToString());
-Console.WriteLine(result.GetProperty("targetModelLocation").ToString());
-Console.WriteLine(result.GetProperty("accessToken").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-]]></code>
-This sample shows how to call AuthorizeModelCopy with all request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    modelId = "<modelId>",
-    description = "<description>",
-    tags = new
-    {
-        key = "<tags>",
-    },
+    modelId = "targetModel",
+    description = "Target model description",
 });
 Response response = client.AuthorizeModelCopy(content);
 
@@ -157,183 +83,103 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
       <example>
 This sample shows how to call GetModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response<DocumentModelDetails> response = await client.GetModelAsync("<modelId>");
+Response<DocumentModelDetails> response = await client.GetModelAsync("myCustomModel");
 ]]></code>
-This sample shows how to call GetModelAsync with all parameters.
+This sample shows how to call GetModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response<DocumentModelDetails> response = await client.GetModelAsync("<modelId>");
+Response<DocumentModelDetails> response = await client.GetModelAsync("prebuilt-invoice");
 ]]></code></example>
     </member>
     <member name="GetModel(string,CancellationToken)">
       <example>
 This sample shows how to call GetModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response<DocumentModelDetails> response = client.GetModel("<modelId>");
+Response<DocumentModelDetails> response = client.GetModel("myCustomModel");
 ]]></code>
-This sample shows how to call GetModel with all parameters.
+This sample shows how to call GetModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response<DocumentModelDetails> response = client.GetModel("<modelId>");
+Response<DocumentModelDetails> response = client.GetModel("prebuilt-invoice");
 ]]></code></example>
     </member>
     <member name="GetModelAsync(string,RequestContext)">
       <example>
 This sample shows how to call GetModelAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = await client.GetModelAsync("<modelId>", null);
+Response response = await client.GetModelAsync("myCustomModel", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
-This sample shows how to call GetModelAsync with all parameters and parse the result.
+This sample shows how to call GetModelAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = await client.GetModelAsync("<modelId>", null);
+Response response = await client.GetModelAsync("prebuilt-invoice", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("split").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="GetModel(string,RequestContext)">
       <example>
 This sample shows how to call GetModel and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = client.GetModel("<modelId>", null);
+Response response = client.GetModel("myCustomModel", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
-This sample shows how to call GetModel with all parameters and parse the result.
+This sample shows how to call GetModel and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = client.GetModel("<modelId>", null);
+Response response = client.GetModel("prebuilt-invoice", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("split").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="DeleteModelAsync(string,RequestContext)">
       <example>
 This sample shows how to call DeleteModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = await client.DeleteModelAsync("<modelId>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call DeleteModelAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response response = await client.DeleteModelAsync("<modelId>");
+Response response = await client.DeleteModelAsync("myCustomModel");
 
 Console.WriteLine(response.Status);
 ]]></code></example>
@@ -342,21 +188,11 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = client.DeleteModel("<modelId>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call DeleteModel with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response response = client.DeleteModel("<modelId>");
+Response response = client.DeleteModel("myCustomModel");
 
 Console.WriteLine(response.Status);
 ]]></code></example>
@@ -365,15 +201,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetResourceInfoAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response<ResourceDetails> response = await client.GetResourceInfoAsync();
-]]></code>
-This sample shows how to call GetResourceInfoAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -384,15 +212,7 @@ Response<ResourceDetails> response = await client.GetResourceInfoAsync();
       <example>
 This sample shows how to call GetResourceInfo.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response<ResourceDetails> response = client.GetResourceInfo();
-]]></code>
-This sample shows how to call GetResourceInfo with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -403,19 +223,7 @@ Response<ResourceDetails> response = client.GetResourceInfo();
       <example>
 This sample shows how to call GetResourceInfoAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response response = await client.GetResourceInfoAsync(null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("count").ToString());
-Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("limit").ToString());
-]]></code>
-This sample shows how to call GetResourceInfoAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -430,19 +238,7 @@ Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("limit"
       <example>
 This sample shows how to call GetResourceInfo and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response response = client.GetResourceInfo(null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("count").ToString());
-Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("limit").ToString());
-]]></code>
-This sample shows how to call GetResourceInfo with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -457,49 +253,33 @@ Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("limit"
       <example>
 This sample shows how to call GetOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response<OperationDetails> response = await client.GetOperationAsync("<operationId>");
-]]></code>
-This sample shows how to call GetOperationAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response<OperationDetails> response = await client.GetOperationAsync("<operationId>");
+Response<OperationDetails> response = await client.GetOperationAsync("b704bb00-d130-4f3f-a1d8-ca96de3eabb4");
 ]]></code></example>
     </member>
     <member name="GetOperation(string,CancellationToken)">
       <example>
 This sample shows how to call GetOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response<OperationDetails> response = client.GetOperation("<operationId>");
-]]></code>
-This sample shows how to call GetOperation with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response<OperationDetails> response = client.GetOperation("<operationId>");
+Response<OperationDetails> response = client.GetOperation("b704bb00-d130-4f3f-a1d8-ca96de3eabb4");
 ]]></code></example>
     </member>
     <member name="GetOperationAsync(string,RequestContext)">
       <example>
 This sample shows how to call GetOperationAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = await client.GetOperationAsync("<operationId>", null);
+Response response = await client.GetOperationAsync("b704bb00-d130-4f3f-a1d8-ca96de3eabb4", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -508,41 +288,17 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
-]]></code>
-This sample shows how to call GetOperationAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response response = await client.GetOperationAsync("<operationId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("operationId").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("percentCompleted").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("resourceLocation").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
 ]]></code></example>
     </member>
     <member name="GetOperation(string,RequestContext)">
       <example>
 This sample shows how to call GetOperation and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = client.GetOperation("<operationId>", null);
+Response response = client.GetOperation("b704bb00-d130-4f3f-a1d8-ca96de3eabb4", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -551,56 +307,19 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
-]]></code>
-This sample shows how to call GetOperation with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response response = client.GetOperation("<operationId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("operationId").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("percentCompleted").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("resourceLocation").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
 ]]></code></example>
     </member>
     <member name="AuthorizeClassifierCopyAsync(AuthorizeClassifierCopyContent,CancellationToken)">
       <example>
 This sample shows how to call AuthorizeClassifierCopyAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("<classifierId>");
-Response<ClassifierCopyAuthorization> response = await client.AuthorizeClassifierCopyAsync(authorizeCopyRequest);
-]]></code>
-This sample shows how to call AuthorizeClassifierCopyAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("<classifierId>")
+AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("targetClassifier")
 {
-    Description = "<description>",
-    Tags =
-    {
-        ["key"] = "<tags>"
-    },
+    Description = "Target classifier description",
 };
 Response<ClassifierCopyAuthorization> response = await client.AuthorizeClassifierCopyAsync(authorizeCopyRequest);
 ]]></code></example>
@@ -609,26 +328,13 @@ Response<ClassifierCopyAuthorization> response = await client.AuthorizeClassifie
       <example>
 This sample shows how to call AuthorizeClassifierCopy.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("<classifierId>");
-Response<ClassifierCopyAuthorization> response = client.AuthorizeClassifierCopy(authorizeCopyRequest);
-]]></code>
-This sample shows how to call AuthorizeClassifierCopy with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("<classifierId>")
+AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("targetClassifier")
 {
-    Description = "<description>",
-    Tags =
-    {
-        ["key"] = "<tags>"
-    },
+    Description = "Target classifier description",
 };
 Response<ClassifierCopyAuthorization> response = client.AuthorizeClassifierCopy(authorizeCopyRequest);
 ]]></code></example>
@@ -637,38 +343,14 @@ Response<ClassifierCopyAuthorization> response = client.AuthorizeClassifierCopy(
       <example>
 This sample shows how to call AuthorizeClassifierCopyAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    classifierId = "<classifierId>",
-});
-Response response = await client.AuthorizeClassifierCopyAsync(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("targetResourceId").ToString());
-Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
-Console.WriteLine(result.GetProperty("targetClassifierId").ToString());
-Console.WriteLine(result.GetProperty("targetClassifierLocation").ToString());
-Console.WriteLine(result.GetProperty("accessToken").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-]]></code>
-This sample shows how to call AuthorizeClassifierCopyAsync with all request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    classifierId = "<classifierId>",
-    description = "<description>",
-    tags = new
-    {
-        key = "<tags>",
-    },
+    classifierId = "targetClassifier",
+    description = "Target classifier description",
 });
 Response response = await client.AuthorizeClassifierCopyAsync(content);
 
@@ -685,38 +367,14 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
       <example>
 This sample shows how to call AuthorizeClassifierCopy and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    classifierId = "<classifierId>",
-});
-Response response = client.AuthorizeClassifierCopy(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("targetResourceId").ToString());
-Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
-Console.WriteLine(result.GetProperty("targetClassifierId").ToString());
-Console.WriteLine(result.GetProperty("targetClassifierLocation").ToString());
-Console.WriteLine(result.GetProperty("accessToken").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-]]></code>
-This sample shows how to call AuthorizeClassifierCopy with all request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    classifierId = "<classifierId>",
-    description = "<description>",
-    tags = new
-    {
-        key = "<tags>",
-    },
+    classifierId = "targetClassifier",
+    description = "Target classifier description",
 });
 Response response = client.AuthorizeClassifierCopy(content);
 
@@ -733,141 +391,67 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
       <example>
 This sample shows how to call GetClassifierAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response<DocumentClassifierDetails> response = await client.GetClassifierAsync("<classifierId>");
-]]></code>
-This sample shows how to call GetClassifierAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response<DocumentClassifierDetails> response = await client.GetClassifierAsync("<classifierId>");
+Response<DocumentClassifierDetails> response = await client.GetClassifierAsync("myClassifier");
 ]]></code></example>
     </member>
     <member name="GetClassifier(string,CancellationToken)">
       <example>
 This sample shows how to call GetClassifier.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response<DocumentClassifierDetails> response = client.GetClassifier("<classifierId>");
-]]></code>
-This sample shows how to call GetClassifier with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response<DocumentClassifierDetails> response = client.GetClassifier("<classifierId>");
+Response<DocumentClassifierDetails> response = client.GetClassifier("myClassifier");
 ]]></code></example>
     </member>
     <member name="GetClassifierAsync(string,RequestContext)">
       <example>
 This sample shows how to call GetClassifierAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = await client.GetClassifierAsync("<classifierId>", null);
+Response response = await client.GetClassifierAsync("myClassifier", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("classifierId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("apiVersion").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString());
-]]></code>
-This sample shows how to call GetClassifierAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response response = await client.GetClassifierAsync("<classifierId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="GetClassifier(string,RequestContext)">
       <example>
 This sample shows how to call GetClassifier and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = client.GetClassifier("<classifierId>", null);
+Response response = client.GetClassifier("myClassifier", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("classifierId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("apiVersion").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString());
-]]></code>
-This sample shows how to call GetClassifier with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response response = client.GetClassifier("<classifierId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="DeleteClassifierAsync(string,RequestContext)">
       <example>
 This sample shows how to call DeleteClassifierAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = await client.DeleteClassifierAsync("<classifierId>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call DeleteClassifierAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response response = await client.DeleteClassifierAsync("<classifierId>");
+Response response = await client.DeleteClassifierAsync("myClassifier");
 
 Console.WriteLine(response.Status);
 ]]></code></example>
@@ -876,21 +460,11 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteClassifier.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = client.DeleteClassifier("<classifierId>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call DeleteClassifier with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-Response response = client.DeleteClassifier("<classifierId>");
+Response response = client.DeleteClassifier("myClassifier");
 
 Console.WriteLine(response.Status);
 ]]></code></example>
@@ -899,17 +473,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetModelsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-await foreach (DocumentModelDetails item in client.GetModelsAsync())
-{
-}
-]]></code>
-This sample shows how to call GetModelsAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -922,17 +486,7 @@ await foreach (DocumentModelDetails item in client.GetModelsAsync())
       <example>
 This sample shows how to call GetModels.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-foreach (DocumentModelDetails item in client.GetModels())
-{
-}
-]]></code>
-This sample shows how to call GetModels with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -945,7 +499,7 @@ foreach (DocumentModelDetails item in client.GetModels())
       <example>
 This sample shows how to call GetModelsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -954,54 +508,6 @@ await foreach (BinaryData item in client.GetModelsAsync(null))
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("modelId").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-}
-]]></code>
-This sample shows how to call GetModelsAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-await foreach (BinaryData item in client.GetModelsAsync(null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-    Console.WriteLine(result.GetProperty("apiVersion").ToString());
-    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-    Console.WriteLine(result.GetProperty("buildMode").ToString());
-    Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-    Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-    Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-    Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-    Console.WriteLine(result.GetProperty("classifierId").ToString());
-    Console.WriteLine(result.GetProperty("split").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
-    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("trainingHours").ToString());
 }
 ]]></code></example>
     </member>
@@ -1009,7 +515,7 @@ await foreach (BinaryData item in client.GetModelsAsync(null))
       <example>
 This sample shows how to call GetModels and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1018,54 +524,6 @@ foreach (BinaryData item in client.GetModels(null))
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("modelId").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-}
-]]></code>
-This sample shows how to call GetModels with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-foreach (BinaryData item in client.GetModels(null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-    Console.WriteLine(result.GetProperty("apiVersion").ToString());
-    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-    Console.WriteLine(result.GetProperty("buildMode").ToString());
-    Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-    Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-    Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-    Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-    Console.WriteLine(result.GetProperty("classifierId").ToString());
-    Console.WriteLine(result.GetProperty("split").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
-    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("trainingHours").ToString());
 }
 ]]></code></example>
     </member>
@@ -1073,17 +531,7 @@ foreach (BinaryData item in client.GetModels(null))
       <example>
 This sample shows how to call GetOperationsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-await foreach (OperationDetails item in client.GetOperationsAsync())
-{
-}
-]]></code>
-This sample shows how to call GetOperationsAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1096,17 +544,7 @@ await foreach (OperationDetails item in client.GetOperationsAsync())
       <example>
 This sample shows how to call GetOperations.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-foreach (OperationDetails item in client.GetOperations())
-{
-}
-]]></code>
-This sample shows how to call GetOperations with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1119,7 +557,7 @@ foreach (OperationDetails item in client.GetOperations())
       <example>
 This sample shows how to call GetOperationsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1132,31 +570,6 @@ await foreach (BinaryData item in client.GetOperationsAsync(null))
     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
     Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("resourceLocation").ToString());
-}
-]]></code>
-This sample shows how to call GetOperationsAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-await foreach (BinaryData item in client.GetOperationsAsync(null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("operationId").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("percentCompleted").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("kind").ToString());
-    Console.WriteLine(result.GetProperty("resourceLocation").ToString());
-    Console.WriteLine(result.GetProperty("apiVersion").ToString());
-    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
 }
 ]]></code></example>
     </member>
@@ -1164,7 +577,7 @@ await foreach (BinaryData item in client.GetOperationsAsync(null))
       <example>
 This sample shows how to call GetOperations and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1177,31 +590,6 @@ foreach (BinaryData item in client.GetOperations(null))
     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
     Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("resourceLocation").ToString());
-}
-]]></code>
-This sample shows how to call GetOperations with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-foreach (BinaryData item in client.GetOperations(null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("operationId").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("percentCompleted").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("kind").ToString());
-    Console.WriteLine(result.GetProperty("resourceLocation").ToString());
-    Console.WriteLine(result.GetProperty("apiVersion").ToString());
-    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
 }
 ]]></code></example>
     </member>
@@ -1209,17 +597,7 @@ foreach (BinaryData item in client.GetOperations(null))
       <example>
 This sample shows how to call GetClassifiersAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-await foreach (DocumentClassifierDetails item in client.GetClassifiersAsync())
-{
-}
-]]></code>
-This sample shows how to call GetClassifiersAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1232,17 +610,7 @@ await foreach (DocumentClassifierDetails item in client.GetClassifiersAsync())
       <example>
 This sample shows how to call GetClassifiers.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-foreach (DocumentClassifierDetails item in client.GetClassifiers())
-{
-}
-]]></code>
-This sample shows how to call GetClassifiers with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1255,7 +623,7 @@ foreach (DocumentClassifierDetails item in client.GetClassifiers())
       <example>
 This sample shows how to call GetClassifiersAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1266,31 +634,6 @@ await foreach (BinaryData item in client.GetClassifiersAsync(null))
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("apiVersion").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString());
-}
-]]></code>
-This sample shows how to call GetClassifiersAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-await foreach (BinaryData item in client.GetClassifiersAsync(null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("classifierId").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-    Console.WriteLine(result.GetProperty("apiVersion").ToString());
-    Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
 }
 ]]></code></example>
     </member>
@@ -1298,7 +641,7 @@ await foreach (BinaryData item in client.GetClassifiersAsync(null))
       <example>
 This sample shows how to call GetClassifiers and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1310,65 +653,27 @@ foreach (BinaryData item in client.GetClassifiers(null))
     Console.WriteLine(result.GetProperty("apiVersion").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString());
 }
-]]></code>
-This sample shows how to call GetClassifiers with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-foreach (BinaryData item in client.GetClassifiers(null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("classifierId").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-    Console.WriteLine(result.GetProperty("apiVersion").ToString());
-    Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-}
 ]]></code></example>
     </member>
     <member name="BuildDocumentModelAsync(WaitUntil,BuildDocumentModelContent,CancellationToken)">
       <example>
 This sample shows how to call BuildDocumentModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId>", DocumentBuildMode.Template);
-Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
-DocumentModelDetails responseData = operation.Value;
-]]></code>
-This sample shows how to call BuildDocumentModelAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId>", DocumentBuildMode.Template)
+BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("myCustomModel", DocumentBuildMode.Template)
 {
-    Description = "<description>",
-    AzureBlobSource = new AzureBlobContentSource(new Uri("http://localhost:3000"))
+    Description = "Custom model description",
+    AzureBlobSource = new AzureBlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
     {
-        Prefix = "<prefix>",
+        Prefix = "trainingDocs/",
     },
-    AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("http://localhost:3000"), "<fileList>"),
     Tags =
     {
-        ["key"] = "<tags>"
+        ["createdBy"] = "myUserId"
     },
-    MaxTrainingHours = 123.45F,
-    AllowOverwrite = true,
 };
 Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
 DocumentModelDetails responseData = operation.Value;
@@ -1378,34 +683,21 @@ DocumentModelDetails responseData = operation.Value;
       <example>
 This sample shows how to call BuildDocumentModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId>", DocumentBuildMode.Template);
-Operation<DocumentModelDetails> operation = client.BuildDocumentModel(WaitUntil.Completed, buildRequest);
-DocumentModelDetails responseData = operation.Value;
-]]></code>
-This sample shows how to call BuildDocumentModel with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId>", DocumentBuildMode.Template)
+BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("myCustomModel", DocumentBuildMode.Template)
 {
-    Description = "<description>",
-    AzureBlobSource = new AzureBlobContentSource(new Uri("http://localhost:3000"))
+    Description = "Custom model description",
+    AzureBlobSource = new AzureBlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
     {
-        Prefix = "<prefix>",
+        Prefix = "trainingDocs/",
     },
-    AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("http://localhost:3000"), "<fileList>"),
     Tags =
     {
-        ["key"] = "<tags>"
+        ["createdBy"] = "myUserId"
     },
-    MaxTrainingHours = 123.45F,
-    AllowOverwrite = true,
 };
 Operation<DocumentModelDetails> operation = client.BuildDocumentModel(WaitUntil.Completed, buildRequest);
 DocumentModelDetails responseData = operation.Value;
@@ -1415,242 +707,85 @@ DocumentModelDetails responseData = operation.Value;
       <example>
 This sample shows how to call BuildDocumentModelAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    modelId = "<modelId>",
-    buildMode = "template",
-});
-Operation<BinaryData> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-]]></code>
-This sample shows how to call BuildDocumentModelAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    modelId = "<modelId>",
-    description = "<description>",
+    modelId = "myCustomModel",
+    description = "Custom model description",
     buildMode = "template",
     azureBlobSource = new
     {
-        containerUrl = "http://localhost:3000",
-        prefix = "<prefix>",
-    },
-    azureBlobFileListSource = new
-    {
-        containerUrl = "http://localhost:3000",
-        fileList = "<fileList>",
+        containerUrl = "https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken",
+        prefix = "trainingDocs/",
     },
     tags = new
     {
-        key = "<tags>",
+        createdBy = "myUserId",
     },
-    maxTrainingHours = 123.45F,
-    allowOverwrite = true,
 });
 Operation<BinaryData> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("split").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="BuildDocumentModel(WaitUntil,RequestContent,RequestContext)">
       <example>
 This sample shows how to call BuildDocumentModel and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    modelId = "<modelId>",
-    buildMode = "template",
-});
-Operation<BinaryData> operation = client.BuildDocumentModel(WaitUntil.Completed, content);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-]]></code>
-This sample shows how to call BuildDocumentModel with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    modelId = "<modelId>",
-    description = "<description>",
+    modelId = "myCustomModel",
+    description = "Custom model description",
     buildMode = "template",
     azureBlobSource = new
     {
-        containerUrl = "http://localhost:3000",
-        prefix = "<prefix>",
-    },
-    azureBlobFileListSource = new
-    {
-        containerUrl = "http://localhost:3000",
-        fileList = "<fileList>",
+        containerUrl = "https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken",
+        prefix = "trainingDocs/",
     },
     tags = new
     {
-        key = "<tags>",
+        createdBy = "myUserId",
     },
-    maxTrainingHours = 123.45F,
-    allowOverwrite = true,
 });
 Operation<BinaryData> operation = client.BuildDocumentModel(WaitUntil.Completed, content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("split").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="ComposeModelAsync(WaitUntil,ComposeDocumentModelContent,CancellationToken)">
       <example>
 This sample shows how to call ComposeModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", "<classifierId>", new Dictionary<string, DocumentTypeDetails>
+ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("composedModel", "customClassifier", new Dictionary<string, DocumentTypeDetails>
 {
-    ["key"] = new DocumentTypeDetails()
-});
-Operation<DocumentModelDetails> operation = await client.ComposeModelAsync(WaitUntil.Completed, composeRequest);
-DocumentModelDetails responseData = operation.Value;
-]]></code>
-This sample shows how to call ComposeModelAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", "<classifierId>", new Dictionary<string, DocumentTypeDetails>
-{
-    ["key"] = new DocumentTypeDetails
+    ["formA"] = new DocumentTypeDetails
     {
-        Description = "<description>",
-        BuildMode = DocumentBuildMode.Template,
-        FieldSchema =
-        {
-            ["key"] = new DocumentFieldSchema(DocumentFieldType.String)
-            {
-                Description = "<description>",
-                Example = "<example>",
-                Items = default,
-                Properties =
-                {
-                    ["key"] = default
-                },
-            }
-        },
-        FieldConfidence =
-        {
-            ["key"] = 123.45F
-        },
-        ModelId = "<modelId>",
-        ConfidenceThreshold = 123.45F,
-        Features = { DocumentAnalysisFeature.OcrHighResolution },
-        QueryFields = { "<queryFields>" },
-        MaxDocumentsToAnalyze = 1234,
+        ModelId = "model1",
+    },
+    ["formB"] = new DocumentTypeDetails
+    {
+        ModelId = "model2",
     }
 })
 {
-    Description = "<description>",
-    Split = SplitMode.Auto,
-    Tags =
-    {
-        ["key"] = "<tags>"
-    },
+    Description = "Composed model description",
 };
 Operation<DocumentModelDetails> operation = await client.ComposeModelAsync(WaitUntil.Completed, composeRequest);
 DocumentModelDetails responseData = operation.Value;
@@ -1660,60 +795,23 @@ DocumentModelDetails responseData = operation.Value;
       <example>
 This sample shows how to call ComposeModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", "<classifierId>", new Dictionary<string, DocumentTypeDetails>
+ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("composedModel", "customClassifier", new Dictionary<string, DocumentTypeDetails>
 {
-    ["key"] = new DocumentTypeDetails()
-});
-Operation<DocumentModelDetails> operation = client.ComposeModel(WaitUntil.Completed, composeRequest);
-DocumentModelDetails responseData = operation.Value;
-]]></code>
-This sample shows how to call ComposeModel with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", "<classifierId>", new Dictionary<string, DocumentTypeDetails>
-{
-    ["key"] = new DocumentTypeDetails
+    ["formA"] = new DocumentTypeDetails
     {
-        Description = "<description>",
-        BuildMode = DocumentBuildMode.Template,
-        FieldSchema =
-        {
-            ["key"] = new DocumentFieldSchema(DocumentFieldType.String)
-            {
-                Description = "<description>",
-                Example = "<example>",
-                Items = default,
-                Properties =
-                {
-                    ["key"] = default
-                },
-            }
-        },
-        FieldConfidence =
-        {
-            ["key"] = 123.45F
-        },
-        ModelId = "<modelId>",
-        ConfidenceThreshold = 123.45F,
-        Features = { DocumentAnalysisFeature.OcrHighResolution },
-        QueryFields = { "<queryFields>" },
-        MaxDocumentsToAnalyze = 1234,
+        ModelId = "model1",
+    },
+    ["formB"] = new DocumentTypeDetails
+    {
+        ModelId = "model2",
     }
 })
 {
-    Description = "<description>",
-    Split = SplitMode.Auto,
-    Tags =
-    {
-        ["key"] = "<tags>"
-    },
+    Description = "Composed model description",
 };
 Operation<DocumentModelDetails> operation = client.ComposeModel(WaitUntil.Completed, composeRequest);
 DocumentModelDetails responseData = operation.Value;
@@ -1723,268 +821,84 @@ DocumentModelDetails responseData = operation.Value;
       <example>
 This sample shows how to call ComposeModelAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    modelId = "<modelId>",
-    classifierId = "<classifierId>",
+    modelId = "composedModel",
+    description = "Composed model description",
+    classifierId = "customClassifier",
     docTypes = new
     {
-        key = new object(),
-    },
-});
-Operation<BinaryData> operation = await client.ComposeModelAsync(WaitUntil.Completed, content);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-]]></code>
-This sample shows how to call ComposeModelAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    modelId = "<modelId>",
-    description = "<description>",
-    classifierId = "<classifierId>",
-    split = "auto",
-    docTypes = new
-    {
-        key = new
+        formA = new
         {
-            description = "<description>",
-            buildMode = "template",
-            fieldSchema = new
-            {
-                key = new
-                {
-                    type = "string",
-                    description = "<description>",
-                    example = "<example>",
-                    properties = new { },
-                },
-            },
-            fieldConfidence = new
-            {
-                key = 123.45F,
-            },
-            modelId = "<modelId>",
-            confidenceThreshold = 123.45F,
-            features = new object[]
-            {
-                "ocrHighResolution"
-            },
-            queryFields = new object[]
-            {
-                "<queryFields>"
-            },
-            maxDocumentsToAnalyze = 1234,
+            modelId = "model1",
+        },
+        formB = new
+        {
+            modelId = "model2",
         },
     },
-    tags = new
-    {
-        key = "<tags>",
-    },
 });
 Operation<BinaryData> operation = await client.ComposeModelAsync(WaitUntil.Completed, content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("split").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="ComposeModel(WaitUntil,RequestContent,RequestContext)">
       <example>
 This sample shows how to call ComposeModel and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    modelId = "<modelId>",
-    classifierId = "<classifierId>",
+    modelId = "composedModel",
+    description = "Composed model description",
+    classifierId = "customClassifier",
     docTypes = new
     {
-        key = new object(),
-    },
-});
-Operation<BinaryData> operation = client.ComposeModel(WaitUntil.Completed, content);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-]]></code>
-This sample shows how to call ComposeModel with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    modelId = "<modelId>",
-    description = "<description>",
-    classifierId = "<classifierId>",
-    split = "auto",
-    docTypes = new
-    {
-        key = new
+        formA = new
         {
-            description = "<description>",
-            buildMode = "template",
-            fieldSchema = new
-            {
-                key = new
-                {
-                    type = "string",
-                    description = "<description>",
-                    example = "<example>",
-                    properties = new { },
-                },
-            },
-            fieldConfidence = new
-            {
-                key = 123.45F,
-            },
-            modelId = "<modelId>",
-            confidenceThreshold = 123.45F,
-            features = new object[]
-            {
-                "ocrHighResolution"
-            },
-            queryFields = new object[]
-            {
-                "<queryFields>"
-            },
-            maxDocumentsToAnalyze = 1234,
+            modelId = "model1",
+        },
+        formB = new
+        {
+            modelId = "model2",
         },
     },
-    tags = new
-    {
-        key = "<tags>",
-    },
 });
 Operation<BinaryData> operation = client.ComposeModel(WaitUntil.Completed, content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("split").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="CopyModelToAsync(WaitUntil,string,CopyAuthorization,CancellationToken)">
       <example>
 This sample shows how to call CopyModelToAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 CopyAuthorization copyToRequest = new CopyAuthorization(
-"<targetResourceId>",
-"<targetResourceRegion>",
-"<targetModelId>",
-new Uri("http://localhost:3000"),
-"<accessToken>",
-DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
-Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
-DocumentModelDetails responseData = operation.Value;
-]]></code>
-This sample shows how to call CopyModelToAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-CopyAuthorization copyToRequest = new CopyAuthorization(
-"<targetResourceId>",
-"<targetResourceRegion>",
-"<targetModelId>",
-new Uri("http://localhost:3000"),
-"<accessToken>",
-DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
-Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
+"/subscriptions/targetSub/resourceGroups/targetRG/providers/Microsoft.CognitiveServices/accounts/targetService",
+"targetResourceRegion",
+"targetModel",
+new Uri("https://targetEndpoint.cognitiveservices.azure.com/documentintelligence/documentModels/targetModel"),
+"accessToken",
+DateTimeOffset.Parse("2021-09-23T09:12:54.552Z"));
+Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "sourceModel", copyToRequest);
 DocumentModelDetails responseData = operation.Value;
 ]]></code></example>
     </member>
@@ -1992,34 +906,18 @@ DocumentModelDetails responseData = operation.Value;
       <example>
 This sample shows how to call CopyModelTo.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 CopyAuthorization copyToRequest = new CopyAuthorization(
-"<targetResourceId>",
-"<targetResourceRegion>",
-"<targetModelId>",
-new Uri("http://localhost:3000"),
-"<accessToken>",
-DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
-Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
-DocumentModelDetails responseData = operation.Value;
-]]></code>
-This sample shows how to call CopyModelTo with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-CopyAuthorization copyToRequest = new CopyAuthorization(
-"<targetResourceId>",
-"<targetResourceRegion>",
-"<targetModelId>",
-new Uri("http://localhost:3000"),
-"<accessToken>",
-DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
-Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
+"/subscriptions/targetSub/resourceGroups/targetRG/providers/Microsoft.CognitiveServices/accounts/targetService",
+"targetResourceRegion",
+"targetModel",
+new Uri("https://targetEndpoint.cognitiveservices.azure.com/documentintelligence/documentModels/targetModel"),
+"accessToken",
+DateTimeOffset.Parse("2021-09-23T09:12:54.552Z"));
+Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "sourceModel", copyToRequest);
 DocumentModelDetails responseData = operation.Value;
 ]]></code></example>
     </member>
@@ -2027,203 +925,76 @@ DocumentModelDetails responseData = operation.Value;
       <example>
 This sample shows how to call CopyModelToAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    targetResourceId = "<targetResourceId>",
-    targetResourceRegion = "<targetResourceRegion>",
-    targetModelId = "<targetModelId>",
-    targetModelLocation = "http://localhost:3000",
-    accessToken = "<accessToken>",
-    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
+    targetResourceId = "/subscriptions/targetSub/resourceGroups/targetRG/providers/Microsoft.CognitiveServices/accounts/targetService",
+    targetResourceRegion = "targetResourceRegion",
+    targetModelId = "targetModel",
+    targetModelLocation = "https://targetEndpoint.cognitiveservices.azure.com/documentintelligence/documentModels/targetModel",
+    accessToken = "accessToken",
+    expirationDateTime = "2021-09-23T09:12:54.552Z",
 });
-Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", content);
+Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Completed, "sourceModel", content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-]]></code>
-This sample shows how to call CopyModelToAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    targetResourceId = "<targetResourceId>",
-    targetResourceRegion = "<targetResourceRegion>",
-    targetModelId = "<targetModelId>",
-    targetModelLocation = "http://localhost:3000",
-    accessToken = "<accessToken>",
-    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
-});
-Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", content);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("split").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="CopyModelTo(WaitUntil,string,RequestContent,RequestContext)">
       <example>
 This sample shows how to call CopyModelTo and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    targetResourceId = "<targetResourceId>",
-    targetResourceRegion = "<targetResourceRegion>",
-    targetModelId = "<targetModelId>",
-    targetModelLocation = "http://localhost:3000",
-    accessToken = "<accessToken>",
-    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
+    targetResourceId = "/subscriptions/targetSub/resourceGroups/targetRG/providers/Microsoft.CognitiveServices/accounts/targetService",
+    targetResourceRegion = "targetResourceRegion",
+    targetModelId = "targetModel",
+    targetModelLocation = "https://targetEndpoint.cognitiveservices.azure.com/documentintelligence/documentModels/targetModel",
+    accessToken = "accessToken",
+    expirationDateTime = "2021-09-23T09:12:54.552Z",
 });
-Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", content);
+Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "sourceModel", content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-]]></code>
-This sample shows how to call CopyModelTo with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    targetResourceId = "<targetResourceId>",
-    targetResourceRegion = "<targetResourceRegion>",
-    targetModelId = "<targetModelId>",
-    targetModelLocation = "http://localhost:3000",
-    accessToken = "<accessToken>",
-    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
-});
-Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", content);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("split").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="BuildClassifierAsync(WaitUntil,BuildDocumentClassifierContent,CancellationToken)">
       <example>
 This sample shows how to call BuildClassifierAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
+BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("myClassifier", new Dictionary<string, ClassifierDocumentTypeDetails>
 {
-    ["key"] = new ClassifierDocumentTypeDetails()
-});
-Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, buildRequest);
-DocumentClassifierDetails responseData = operation.Value;
-]]></code>
-This sample shows how to call BuildClassifierAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
-{
-    ["key"] = new ClassifierDocumentTypeDetails
+    ["formA"] = new ClassifierDocumentTypeDetails
     {
-        SourceKind = ContentSourceKind.Url,
-        AzureBlobSource = new AzureBlobContentSource(new Uri("http://localhost:3000"))
+        AzureBlobSource = new AzureBlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
         {
-            Prefix = "<prefix>",
+            Prefix = "formADocs/",
         },
-        AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("http://localhost:3000"), "<fileList>"),
+    },
+    ["formB"] = new ClassifierDocumentTypeDetails
+    {
+        AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"), "formB.jsonl"),
     }
 })
 {
-    Description = "<description>",
-    BaseClassifierId = "<baseClassifierId>",
-    AllowOverwrite = true,
+    Description = "Classifier description",
 };
 Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, buildRequest);
 DocumentClassifierDetails responseData = operation.Value;
@@ -2233,39 +1004,26 @@ DocumentClassifierDetails responseData = operation.Value;
       <example>
 This sample shows how to call BuildClassifier.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
+BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("myClassifier", new Dictionary<string, ClassifierDocumentTypeDetails>
 {
-    ["key"] = new ClassifierDocumentTypeDetails()
-});
-Operation<DocumentClassifierDetails> operation = client.BuildClassifier(WaitUntil.Completed, buildRequest);
-DocumentClassifierDetails responseData = operation.Value;
-]]></code>
-This sample shows how to call BuildClassifier with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
-{
-    ["key"] = new ClassifierDocumentTypeDetails
+    ["formA"] = new ClassifierDocumentTypeDetails
     {
-        SourceKind = ContentSourceKind.Url,
-        AzureBlobSource = new AzureBlobContentSource(new Uri("http://localhost:3000"))
+        AzureBlobSource = new AzureBlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
         {
-            Prefix = "<prefix>",
+            Prefix = "formADocs/",
         },
-        AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("http://localhost:3000"), "<fileList>"),
+    },
+    ["formB"] = new ClassifierDocumentTypeDetails
+    {
+        AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"), "formB.jsonl"),
     }
 })
 {
-    Description = "<description>",
-    BaseClassifierId = "<baseClassifierId>",
-    AllowOverwrite = true,
+    Description = "Classifier description",
 };
 Operation<DocumentClassifierDetails> operation = client.BuildClassifier(WaitUntil.Completed, buildRequest);
 DocumentClassifierDetails responseData = operation.Value;
@@ -2275,16 +1033,32 @@ DocumentClassifierDetails responseData = operation.Value;
       <example>
 This sample shows how to call BuildClassifierAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    classifierId = "<classifierId>",
+    classifierId = "myClassifier",
+    description = "Classifier description",
     docTypes = new
     {
-        key = new object(),
+        formA = new
+        {
+            azureBlobSource = new
+            {
+                containerUrl = "https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken",
+                prefix = "formADocs/",
+            },
+        },
+        formB = new
+        {
+            azureBlobFileListSource = new
+            {
+                containerUrl = "https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken",
+                fileList = "formB.jsonl",
+            },
+        },
     },
 });
 Operation<BinaryData> operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
@@ -2295,71 +1069,38 @@ Console.WriteLine(result.GetProperty("classifierId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("apiVersion").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString());
-]]></code>
-This sample shows how to call BuildClassifierAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    classifierId = "<classifierId>",
-    description = "<description>",
-    baseClassifierId = "<baseClassifierId>",
-    docTypes = new
-    {
-        key = new
-        {
-            sourceKind = "url",
-            azureBlobSource = new
-            {
-                containerUrl = "http://localhost:3000",
-                prefix = "<prefix>",
-            },
-            azureBlobFileListSource = new
-            {
-                containerUrl = "http://localhost:3000",
-                fileList = "<fileList>",
-            },
-        },
-    },
-    allowOverwrite = true,
-});
-Operation<BinaryData> operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="BuildClassifier(WaitUntil,RequestContent,RequestContext)">
       <example>
 This sample shows how to call BuildClassifier and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    classifierId = "<classifierId>",
+    classifierId = "myClassifier",
+    description = "Classifier description",
     docTypes = new
     {
-        key = new object(),
+        formA = new
+        {
+            azureBlobSource = new
+            {
+                containerUrl = "https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken",
+                prefix = "formADocs/",
+            },
+        },
+        formB = new
+        {
+            azureBlobFileListSource = new
+            {
+                containerUrl = "https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken",
+                fileList = "formB.jsonl",
+            },
+        },
     },
 });
 Operation<BinaryData> operation = client.BuildClassifier(WaitUntil.Completed, content);
@@ -2370,89 +1111,24 @@ Console.WriteLine(result.GetProperty("classifierId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("apiVersion").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString());
-]]></code>
-This sample shows how to call BuildClassifier with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    classifierId = "<classifierId>",
-    description = "<description>",
-    baseClassifierId = "<baseClassifierId>",
-    docTypes = new
-    {
-        key = new
-        {
-            sourceKind = "url",
-            azureBlobSource = new
-            {
-                containerUrl = "http://localhost:3000",
-                prefix = "<prefix>",
-            },
-            azureBlobFileListSource = new
-            {
-                containerUrl = "http://localhost:3000",
-                fileList = "<fileList>",
-            },
-        },
-    },
-    allowOverwrite = true,
-});
-Operation<BinaryData> operation = client.BuildClassifier(WaitUntil.Completed, content);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="CopyClassifierToAsync(WaitUntil,string,ClassifierCopyAuthorization,CancellationToken)">
       <example>
 This sample shows how to call CopyClassifierToAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 ClassifierCopyAuthorization copyToRequest = new ClassifierCopyAuthorization(
-"<targetResourceId>",
-"<targetResourceRegion>",
-"<targetClassifierId>",
-new Uri("http://localhost:3000"),
-"<accessToken>",
-DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
-Operation<DocumentClassifierDetails> operation = await client.CopyClassifierToAsync(WaitUntil.Completed, "<classifierId>", copyToRequest);
-DocumentClassifierDetails responseData = operation.Value;
-]]></code>
-This sample shows how to call CopyClassifierToAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-ClassifierCopyAuthorization copyToRequest = new ClassifierCopyAuthorization(
-"<targetResourceId>",
-"<targetResourceRegion>",
-"<targetClassifierId>",
-new Uri("http://localhost:3000"),
-"<accessToken>",
-DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
-Operation<DocumentClassifierDetails> operation = await client.CopyClassifierToAsync(WaitUntil.Completed, "<classifierId>", copyToRequest);
+"/subscriptions/targetSub/resourceGroups/targetRG/providers/Microsoft.CognitiveServices/accounts/targetService",
+"targetResourceRegion",
+"targetClassifier",
+new Uri("https://targetEndpoint.cognitiveservices.azure.com/documentintelligence/documentClassifiers/targetClassifier"),
+"accessToken",
+DateTimeOffset.Parse("2021-09-23T09:12:54.552Z"));
+Operation<DocumentClassifierDetails> operation = await client.CopyClassifierToAsync(WaitUntil.Completed, "sourceClassifier", copyToRequest);
 DocumentClassifierDetails responseData = operation.Value;
 ]]></code></example>
     </member>
@@ -2460,34 +1136,18 @@ DocumentClassifierDetails responseData = operation.Value;
       <example>
 This sample shows how to call CopyClassifierTo.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 ClassifierCopyAuthorization copyToRequest = new ClassifierCopyAuthorization(
-"<targetResourceId>",
-"<targetResourceRegion>",
-"<targetClassifierId>",
-new Uri("http://localhost:3000"),
-"<accessToken>",
-DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
-Operation<DocumentClassifierDetails> operation = client.CopyClassifierTo(WaitUntil.Completed, "<classifierId>", copyToRequest);
-DocumentClassifierDetails responseData = operation.Value;
-]]></code>
-This sample shows how to call CopyClassifierTo with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-ClassifierCopyAuthorization copyToRequest = new ClassifierCopyAuthorization(
-"<targetResourceId>",
-"<targetResourceRegion>",
-"<targetClassifierId>",
-new Uri("http://localhost:3000"),
-"<accessToken>",
-DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
-Operation<DocumentClassifierDetails> operation = client.CopyClassifierTo(WaitUntil.Completed, "<classifierId>", copyToRequest);
+"/subscriptions/targetSub/resourceGroups/targetRG/providers/Microsoft.CognitiveServices/accounts/targetService",
+"targetResourceRegion",
+"targetClassifier",
+new Uri("https://targetEndpoint.cognitiveservices.azure.com/documentintelligence/documentClassifiers/targetClassifier"),
+"accessToken",
+DateTimeOffset.Parse("2021-09-23T09:12:54.552Z"));
+Operation<DocumentClassifierDetails> operation = client.CopyClassifierTo(WaitUntil.Completed, "sourceClassifier", copyToRequest);
 DocumentClassifierDetails responseData = operation.Value;
 ]]></code></example>
     </member>
@@ -2495,20 +1155,20 @@ DocumentClassifierDetails responseData = operation.Value;
       <example>
 This sample shows how to call CopyClassifierToAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    targetResourceId = "<targetResourceId>",
-    targetResourceRegion = "<targetResourceRegion>",
-    targetClassifierId = "<targetClassifierId>",
-    targetClassifierLocation = "http://localhost:3000",
-    accessToken = "<accessToken>",
-    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
+    targetResourceId = "/subscriptions/targetSub/resourceGroups/targetRG/providers/Microsoft.CognitiveServices/accounts/targetService",
+    targetResourceRegion = "targetResourceRegion",
+    targetClassifierId = "targetClassifier",
+    targetClassifierLocation = "https://targetEndpoint.cognitiveservices.azure.com/documentintelligence/documentClassifiers/targetClassifier",
+    accessToken = "accessToken",
+    expirationDateTime = "2021-09-23T09:12:54.552Z",
 });
-Operation<BinaryData> operation = await client.CopyClassifierToAsync(WaitUntil.Completed, "<classifierId>", content);
+Operation<BinaryData> operation = await client.CopyClassifierToAsync(WaitUntil.Completed, "sourceClassifier", content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -2516,60 +1176,26 @@ Console.WriteLine(result.GetProperty("classifierId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("apiVersion").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString());
-]]></code>
-This sample shows how to call CopyClassifierToAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    targetResourceId = "<targetResourceId>",
-    targetResourceRegion = "<targetResourceRegion>",
-    targetClassifierId = "<targetClassifierId>",
-    targetClassifierLocation = "http://localhost:3000",
-    accessToken = "<accessToken>",
-    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
-});
-Operation<BinaryData> operation = await client.CopyClassifierToAsync(WaitUntil.Completed, "<classifierId>", content);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="CopyClassifierTo(WaitUntil,string,RequestContent,RequestContext)">
       <example>
 This sample shows how to call CopyClassifierTo and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    targetResourceId = "<targetResourceId>",
-    targetResourceRegion = "<targetResourceRegion>",
-    targetClassifierId = "<targetClassifierId>",
-    targetClassifierLocation = "http://localhost:3000",
-    accessToken = "<accessToken>",
-    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
+    targetResourceId = "/subscriptions/targetSub/resourceGroups/targetRG/providers/Microsoft.CognitiveServices/accounts/targetService",
+    targetResourceRegion = "targetResourceRegion",
+    targetClassifierId = "targetClassifier",
+    targetClassifierLocation = "https://targetEndpoint.cognitiveservices.azure.com/documentintelligence/documentClassifiers/targetClassifier",
+    accessToken = "accessToken",
+    expirationDateTime = "2021-09-23T09:12:54.552Z",
 });
-Operation<BinaryData> operation = client.CopyClassifierTo(WaitUntil.Completed, "<classifierId>", content);
+Operation<BinaryData> operation = client.CopyClassifierTo(WaitUntil.Completed, "sourceClassifier", content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -2577,40 +1203,6 @@ Console.WriteLine(result.GetProperty("classifierId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("apiVersion").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString());
-]]></code>
-This sample shows how to call CopyClassifierTo with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    targetResourceId = "<targetResourceId>",
-    targetResourceRegion = "<targetResourceRegion>",
-    targetClassifierId = "<targetClassifierId>",
-    targetClassifierLocation = "http://localhost:3000",
-    accessToken = "<accessToken>",
-    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
-});
-Operation<BinaryData> operation = client.CopyClassifierTo(WaitUntil.Completed, "<classifierId>", content);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("classifierId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
-Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
 ]]></code></example>
     </member>
   </members>

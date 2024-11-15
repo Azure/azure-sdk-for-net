@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(KeyVaultObjectType left, KeyVaultObjectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultObjectType"/> values are not the same. </summary>
         public static bool operator !=(KeyVaultObjectType left, KeyVaultObjectType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KeyVaultObjectType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultObjectType"/>. </summary>
         public static implicit operator KeyVaultObjectType(string value) => new KeyVaultObjectType(value);
 
         /// <inheritdoc />

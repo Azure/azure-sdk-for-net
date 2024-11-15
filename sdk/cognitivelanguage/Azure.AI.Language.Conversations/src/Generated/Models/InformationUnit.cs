@@ -66,7 +66,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator ==(InformationUnit left, InformationUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InformationUnit"/> values are not the same. </summary>
         public static bool operator !=(InformationUnit left, InformationUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InformationUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InformationUnit"/>. </summary>
         public static implicit operator InformationUnit(string value) => new InformationUnit(value);
 
         /// <inheritdoc />

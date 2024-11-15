@@ -21,13 +21,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         void IJsonModel<TemplateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TemplateProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(MainTemplate))
             {
                 writer.WritePropertyName("mainTemplate"u8);
@@ -50,172 +59,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContentId))
-            {
-                writer.WritePropertyName("contentId"u8);
-                writer.WriteStringValue(ContentId);
-            }
-            if (Optional.IsDefined(ContentProductId))
-            {
-                writer.WritePropertyName("contentProductId"u8);
-                writer.WriteStringValue(ContentProductId);
-            }
-            if (Optional.IsDefined(PackageVersion))
-            {
-                writer.WritePropertyName("packageVersion"u8);
-                writer.WriteStringValue(PackageVersion);
-            }
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (Optional.IsDefined(ContentKind))
-            {
-                writer.WritePropertyName("contentKind"u8);
-                writer.WriteStringValue(ContentKind.Value.ToString());
-            }
-            if (Optional.IsDefined(Source))
-            {
-                writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
-            }
-            if (Optional.IsDefined(Author))
-            {
-                writer.WritePropertyName("author"u8);
-                writer.WriteObjectValue(Author, options);
-            }
-            if (Optional.IsDefined(Support))
-            {
-                writer.WritePropertyName("support"u8);
-                writer.WriteObjectValue(Support, options);
-            }
-            if (Optional.IsDefined(Dependencies))
-            {
-                writer.WritePropertyName("dependencies"u8);
-                writer.WriteObjectValue(Dependencies, options);
-            }
-            if (Optional.IsDefined(Categories))
-            {
-                writer.WritePropertyName("categories"u8);
-                writer.WriteObjectValue(Categories, options);
-            }
-            if (Optional.IsCollectionDefined(Providers))
-            {
-                writer.WritePropertyName("providers"u8);
-                writer.WriteStartArray();
-                foreach (var item in Providers)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(FirstPublishOn))
-            {
-                writer.WritePropertyName("firstPublishDate"u8);
-                writer.WriteStringValue(FirstPublishOn.Value, "D");
-            }
-            if (Optional.IsDefined(LastPublishOn))
-            {
-                writer.WritePropertyName("lastPublishDate"u8);
-                writer.WriteStringValue(LastPublishOn.Value, "D");
-            }
-            if (Optional.IsDefined(CustomVersion))
-            {
-                writer.WritePropertyName("customVersion"u8);
-                writer.WriteStringValue(CustomVersion);
-            }
-            if (Optional.IsDefined(ContentSchemaVersion))
-            {
-                writer.WritePropertyName("contentSchemaVersion"u8);
-                writer.WriteStringValue(ContentSchemaVersion);
-            }
-            if (Optional.IsDefined(Icon))
-            {
-                writer.WritePropertyName("icon"u8);
-                writer.WriteStringValue(Icon);
-            }
-            if (Optional.IsCollectionDefined(ThreatAnalysisTactics))
-            {
-                writer.WritePropertyName("threatAnalysisTactics"u8);
-                writer.WriteStartArray();
-                foreach (var item in ThreatAnalysisTactics)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ThreatAnalysisTechniques))
-            {
-                writer.WritePropertyName("threatAnalysisTechniques"u8);
-                writer.WriteStartArray();
-                foreach (var item in ThreatAnalysisTechniques)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(PreviewImages))
-            {
-                writer.WritePropertyName("previewImages"u8);
-                writer.WriteStartArray();
-                foreach (var item in PreviewImages)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(PreviewImagesDark))
-            {
-                writer.WritePropertyName("previewImagesDark"u8);
-                writer.WriteStartArray();
-                foreach (var item in PreviewImagesDark)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(PackageId))
-            {
-                writer.WritePropertyName("packageId"u8);
-                writer.WriteStringValue(PackageId);
-            }
-            if (Optional.IsDefined(PackageKind))
-            {
-                writer.WritePropertyName("packageKind"u8);
-                writer.WriteStringValue(PackageKind.Value.ToString());
-            }
-            if (Optional.IsDefined(PackageName))
-            {
-                writer.WritePropertyName("packageName"u8);
-                writer.WriteStringValue(PackageName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsDeprecated))
-            {
-                writer.WritePropertyName("isDeprecated"u8);
-                writer.WriteStringValue(IsDeprecated.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         TemplateProperties IJsonModel<TemplateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Maps.Models
         public static bool operator ==(MapsSigningKey left, MapsSigningKey right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapsSigningKey"/> values are not the same. </summary>
         public static bool operator !=(MapsSigningKey left, MapsSigningKey right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MapsSigningKey"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MapsSigningKey"/>. </summary>
         public static implicit operator MapsSigningKey(string value) => new MapsSigningKey(value);
 
         /// <inheritdoc />

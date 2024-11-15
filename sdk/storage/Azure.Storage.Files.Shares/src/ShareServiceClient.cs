@@ -892,6 +892,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: options?.EnablePaidBursting,
                 paidBurstingMaxIops: options?.PaidBurstingMaxIops,
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
+                provisionedMaxIops: options?.PaidBurstingMaxIops,
+                provisionedMaxBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
                 async: false,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -944,6 +946,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: options?.EnablePaidBursting,
                 paidBurstingMaxIops: options?.PaidBurstingMaxIops,
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
+                provisionedMaxIops: options?.PaidBurstingMaxIops,
+                provisionedMaxBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
                 async: true,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -1001,6 +1005,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthMibps: default,
                 async: false,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -1058,6 +1064,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthMibps: default,
                 async: true,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")

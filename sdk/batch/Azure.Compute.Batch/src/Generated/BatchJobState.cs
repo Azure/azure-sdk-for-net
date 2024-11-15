@@ -48,7 +48,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(BatchJobState left, BatchJobState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchJobState"/> values are not the same. </summary>
         public static bool operator !=(BatchJobState left, BatchJobState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchJobState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchJobState"/>. </summary>
         public static implicit operator BatchJobState(string value) => new BatchJobState(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(PollingFrequency left, PollingFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PollingFrequency"/> values are not the same. </summary>
         public static bool operator !=(PollingFrequency left, PollingFrequency right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PollingFrequency"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PollingFrequency"/>. </summary>
         public static implicit operator PollingFrequency(string value) => new PollingFrequency(value);
 
         /// <inheritdoc />

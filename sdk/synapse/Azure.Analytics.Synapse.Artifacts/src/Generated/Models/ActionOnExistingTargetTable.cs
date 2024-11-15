@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(ActionOnExistingTargetTable left, ActionOnExistingTargetTable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActionOnExistingTargetTable"/> values are not the same. </summary>
         public static bool operator !=(ActionOnExistingTargetTable left, ActionOnExistingTargetTable right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ActionOnExistingTargetTable"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ActionOnExistingTargetTable"/>. </summary>
         public static implicit operator ActionOnExistingTargetTable(string value) => new ActionOnExistingTargetTable(value);
 
         /// <inheritdoc />

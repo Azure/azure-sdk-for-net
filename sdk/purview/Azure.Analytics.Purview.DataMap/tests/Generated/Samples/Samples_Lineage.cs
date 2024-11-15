@@ -18,13 +18,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Lineage_GetLineage_ShortVersion()
+        public void Example_Lineage_GetLineage_LineageGet()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
-            Response response = client.GetLineage("<guid>", "INPUT");
+            Response response = client.GetLineage("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -32,13 +32,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Lineage_GetLineage_ShortVersion_Async()
+        public async Task Example_Lineage_GetLineage_LineageGet_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
-            Response response = await client.GetLineageAsync("<guid>", "INPUT");
+            Response response = await client.GetLineageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -46,163 +46,35 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Lineage_GetLineage_ShortVersion_Convenience()
+        public void Example_Lineage_GetLineage_LineageGet_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
-            Response<AtlasLineageInfo> response = client.GetLineage("<guid>", LineageDirection.Input);
+            Response<AtlasLineageInfo> response = client.GetLineage("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Lineage_GetLineage_ShortVersion_Convenience_Async()
+        public async Task Example_Lineage_GetLineage_LineageGet_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
-            Response<AtlasLineageInfo> response = await client.GetLineageAsync("<guid>", LineageDirection.Input);
+            Response<AtlasLineageInfo> response = await client.GetLineageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Lineage_GetLineage_AllParameters()
+        public void Example_Lineage_GetNextPage_LineageGetNextPage()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
-
-            Response response = client.GetLineage("<guid>", "INPUT", depth: 1234);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("widthCounts").GetProperty("<key>").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("lineageDepth").ToString());
-            Console.WriteLine(result.GetProperty("lineageWidth").ToString());
-            Console.WriteLine(result.GetProperty("childrenCount").ToString());
-            Console.WriteLine(result.GetProperty("lineageDirection").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("childEntityId").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("relationshipId").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("parentEntityId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("fromEntityId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Lineage_GetLineage_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
-
-            Response response = await client.GetLineageAsync("<guid>", "INPUT", depth: 1234);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("widthCounts").GetProperty("<key>").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("lineageDepth").ToString());
-            Console.WriteLine(result.GetProperty("lineageWidth").ToString());
-            Console.WriteLine(result.GetProperty("childrenCount").ToString());
-            Console.WriteLine(result.GetProperty("lineageDirection").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("childEntityId").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("relationshipId").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("parentEntityId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("fromEntityId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Lineage_GetLineage_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
-
-            Response<AtlasLineageInfo> response = client.GetLineage("<guid>", LineageDirection.Input, depth: 1234);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Lineage_GetLineage_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
-
-            Response<AtlasLineageInfo> response = await client.GetLineageAsync("<guid>", LineageDirection.Input, depth: 1234);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Lineage_GetNextPage_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
 
-            Response response = client.GetNextPage("<guid>", "INPUT");
+            Response response = client.GetNextPage("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -210,13 +82,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Lineage_GetNextPage_ShortVersion_Async()
+        public async Task Example_Lineage_GetNextPage_LineageGetNextPage_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
 
-            Response response = await client.GetNextPageAsync("<guid>", "INPUT");
+            Response response = await client.GetNextPageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -224,163 +96,35 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Lineage_GetNextPage_ShortVersion_Convenience()
+        public void Example_Lineage_GetNextPage_LineageGetNextPage_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
 
-            Response<AtlasLineageInfo> response = client.GetNextPage("<guid>", LineageDirection.Input);
+            Response<AtlasLineageInfo> response = client.GetNextPage("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Lineage_GetNextPage_ShortVersion_Convenience_Async()
+        public async Task Example_Lineage_GetNextPage_LineageGetNextPage_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
 
-            Response<AtlasLineageInfo> response = await client.GetNextPageAsync("<guid>", LineageDirection.Input);
+            Response<AtlasLineageInfo> response = await client.GetNextPageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Lineage_GetNextPage_AllParameters()
+        public void Example_Lineage_GetByUniqueAttribute_LineageGetByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
-
-            Response response = client.GetNextPage("<guid>", "INPUT", offset: 1234, limit: 1234);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("widthCounts").GetProperty("<key>").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("lineageDepth").ToString());
-            Console.WriteLine(result.GetProperty("lineageWidth").ToString());
-            Console.WriteLine(result.GetProperty("childrenCount").ToString());
-            Console.WriteLine(result.GetProperty("lineageDirection").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("childEntityId").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("relationshipId").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("parentEntityId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("fromEntityId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Lineage_GetNextPage_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
-
-            Response response = await client.GetNextPageAsync("<guid>", "INPUT", offset: 1234, limit: 1234);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("widthCounts").GetProperty("<key>").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("lineageDepth").ToString());
-            Console.WriteLine(result.GetProperty("lineageWidth").ToString());
-            Console.WriteLine(result.GetProperty("childrenCount").ToString());
-            Console.WriteLine(result.GetProperty("lineageDirection").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("childEntityId").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("relationshipId").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("parentEntityId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("fromEntityId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Lineage_GetNextPage_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
-
-            Response<AtlasLineageInfo> response = client.GetNextPage("<guid>", LineageDirection.Input, offset: 1234, limit: 1234);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Lineage_GetNextPage_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
-
-            Response<AtlasLineageInfo> response = await client.GetNextPageAsync("<guid>", LineageDirection.Input, offset: 1234, limit: 1234);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Lineage_GetByUniqueAttribute_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
-            Response response = client.GetByUniqueAttribute("<typeName>", "INPUT");
+            Response response = client.GetByUniqueAttribute("azure_blob_path", "BOTH");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -388,13 +132,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Lineage_GetByUniqueAttribute_ShortVersion_Async()
+        public async Task Example_Lineage_GetByUniqueAttribute_LineageGetByUniqueAttribute_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
-            Response response = await client.GetByUniqueAttributeAsync("<typeName>", "INPUT");
+            Response response = await client.GetByUniqueAttributeAsync("azure_blob_path", "BOTH");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -402,152 +146,24 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Lineage_GetByUniqueAttribute_ShortVersion_Convenience()
+        public void Example_Lineage_GetByUniqueAttribute_LineageGetByUniqueAttribute_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
-            Response<AtlasLineageInfo> response = client.GetByUniqueAttribute("<typeName>", LineageDirection.Input);
+            Response<AtlasLineageInfo> response = client.GetByUniqueAttribute("azure_blob_path", LineageDirection.Both);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Lineage_GetByUniqueAttribute_ShortVersion_Convenience_Async()
+        public async Task Example_Lineage_GetByUniqueAttribute_LineageGetByUniqueAttribute_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
-            Response<AtlasLineageInfo> response = await client.GetByUniqueAttributeAsync("<typeName>", LineageDirection.Input);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Lineage_GetByUniqueAttribute_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
-
-            Response response = client.GetByUniqueAttribute("<typeName>", "INPUT", depth: 1234, attribute: "<attribute>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("widthCounts").GetProperty("<key>").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("lineageDepth").ToString());
-            Console.WriteLine(result.GetProperty("lineageWidth").ToString());
-            Console.WriteLine(result.GetProperty("childrenCount").ToString());
-            Console.WriteLine(result.GetProperty("lineageDirection").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("childEntityId").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("relationshipId").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("parentEntityId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("fromEntityId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Lineage_GetByUniqueAttribute_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
-
-            Response response = await client.GetByUniqueAttributeAsync("<typeName>", "INPUT", depth: 1234, attribute: "<attribute>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("widthCounts").GetProperty("<key>").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("lineageDepth").ToString());
-            Console.WriteLine(result.GetProperty("lineageWidth").ToString());
-            Console.WriteLine(result.GetProperty("childrenCount").ToString());
-            Console.WriteLine(result.GetProperty("lineageDirection").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("childEntityId").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("relationshipId").ToString());
-            Console.WriteLine(result.GetProperty("parentRelations")[0].GetProperty("parentEntityId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("fromEntityId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId").ToString());
-            Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Lineage_GetByUniqueAttribute_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
-
-            Response<AtlasLineageInfo> response = client.GetByUniqueAttribute("<typeName>", LineageDirection.Input, depth: 1234, attribute: "<attribute>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Lineage_GetByUniqueAttribute_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
-
-            Response<AtlasLineageInfo> response = await client.GetByUniqueAttributeAsync("<typeName>", LineageDirection.Input, depth: 1234, attribute: "<attribute>");
+            Response<AtlasLineageInfo> response = await client.GetByUniqueAttributeAsync("azure_blob_path", LineageDirection.Both);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MarketplaceSubscriptionProvisioningState left, MarketplaceSubscriptionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(MarketplaceSubscriptionProvisioningState left, MarketplaceSubscriptionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MarketplaceSubscriptionProvisioningState"/>. </summary>
         public static implicit operator MarketplaceSubscriptionProvisioningState(string value) => new MarketplaceSubscriptionProvisioningState(value);
 
         /// <inheritdoc />

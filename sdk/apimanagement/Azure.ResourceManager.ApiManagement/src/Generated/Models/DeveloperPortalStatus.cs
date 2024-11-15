@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(DeveloperPortalStatus left, DeveloperPortalStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeveloperPortalStatus"/> values are not the same. </summary>
         public static bool operator !=(DeveloperPortalStatus left, DeveloperPortalStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeveloperPortalStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeveloperPortalStatus"/>. </summary>
         public static implicit operator DeveloperPortalStatus(string value) => new DeveloperPortalStatus(value);
 
         /// <inheritdoc />

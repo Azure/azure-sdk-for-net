@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         public static bool operator ==(FluidRelayStorageSku left, FluidRelayStorageSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FluidRelayStorageSku"/> values are not the same. </summary>
         public static bool operator !=(FluidRelayStorageSku left, FluidRelayStorageSku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FluidRelayStorageSku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FluidRelayStorageSku"/>. </summary>
         public static implicit operator FluidRelayStorageSku(string value) => new FluidRelayStorageSku(value);
 
         /// <inheritdoc />

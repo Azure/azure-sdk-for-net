@@ -1,8 +1,6 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
-using System;
-using System.Net.Http;
 using System.Text.Json;
 
 namespace OpenTelemetry.Resources.Azure;
@@ -26,7 +24,7 @@ internal static class AzureVmMetaDataRequestor
 
         if (res != null)
         {
-#if NET6_0_OR_GREATER
+#if NET
             return JsonSerializer.Deserialize(res, SourceGenerationContext.Default.AzureVmMetadataResponse);
 #else
             return JsonSerializer.Deserialize<AzureVmMetadataResponse>(res);

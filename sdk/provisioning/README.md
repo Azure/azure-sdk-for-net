@@ -11,7 +11,7 @@ Azure.Provisioning contains the core functionality for the Azure Provisioning li
 Install the specific service libraries for .NET with [NuGet](https://www.nuget.org/) required for your application.
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.KeyVault
+dotnet add package Azure.Provisioning.KeyVault --prerelease
 ```
 
 Note that `Azure.Provisioning` will be pulled in as a transitive dependency

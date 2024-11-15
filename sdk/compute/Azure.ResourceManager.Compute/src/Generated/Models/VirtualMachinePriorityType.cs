@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(VirtualMachinePriorityType left, VirtualMachinePriorityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachinePriorityType"/> values are not the same. </summary>
         public static bool operator !=(VirtualMachinePriorityType left, VirtualMachinePriorityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualMachinePriorityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachinePriorityType"/>. </summary>
         public static implicit operator VirtualMachinePriorityType(string value) => new VirtualMachinePriorityType(value);
 
         /// <inheritdoc />

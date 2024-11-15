@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(FrontDoorResourceState left, FrontDoorResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorResourceState"/> values are not the same. </summary>
         public static bool operator !=(FrontDoorResourceState left, FrontDoorResourceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FrontDoorResourceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorResourceState"/>. </summary>
         public static implicit operator FrontDoorResourceState(string value) => new FrontDoorResourceState(value);
 
         /// <inheritdoc />

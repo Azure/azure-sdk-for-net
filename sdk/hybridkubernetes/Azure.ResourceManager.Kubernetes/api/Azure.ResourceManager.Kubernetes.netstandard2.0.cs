@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Kubernetes
         public Azure.ResourceManager.Kubernetes.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
         public int? TotalCoreCount { get { throw null; } }
         public int? TotalNodeCount { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kubernetes.ConnectedClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.ConnectedClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.ConnectedClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kubernetes.ConnectedClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kubernetes.ConnectedClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -131,6 +132,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public ConnectedClusterPatch() { }
         public System.BinaryData Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kubernetes.Models.ConnectedClusterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.ConnectedClusterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.ConnectedClusterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kubernetes.Models.ConnectedClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kubernetes.Models.ConnectedClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -162,6 +164,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         internal CredentialResult() { }
         public string Name { get { throw null; } }
         public byte[] Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kubernetes.Models.CredentialResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.CredentialResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.CredentialResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kubernetes.Models.CredentialResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kubernetes.Models.CredentialResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -173,6 +176,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         internal CredentialResults() { }
         public Azure.ResourceManager.Kubernetes.Models.HybridConnectionConfig HybridConnectionConfig { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Kubernetes.Models.CredentialResult> Kubeconfigs { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kubernetes.Models.CredentialResults System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.CredentialResults>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.CredentialResults>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kubernetes.Models.CredentialResults System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kubernetes.Models.CredentialResults>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -186,6 +190,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public string HybridConnectionName { get { throw null; } }
         public string Relay { get { throw null; } }
         public string Token { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kubernetes.Models.HybridConnectionConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.HybridConnectionConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.HybridConnectionConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kubernetes.Models.HybridConnectionConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kubernetes.Models.HybridConnectionConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -197,6 +202,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public ListClusterUserCredentialProperties(Azure.ResourceManager.Kubernetes.Models.AuthenticationMethod authenticationMethod, bool clientProxy) { }
         public Azure.ResourceManager.Kubernetes.Models.AuthenticationMethod AuthenticationMethod { get { throw null; } }
         public bool ClientProxy { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kubernetes.Models.ListClusterUserCredentialProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.ListClusterUserCredentialProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.ListClusterUserCredentialProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kubernetes.Models.ListClusterUserCredentialProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kubernetes.Models.ListClusterUserCredentialProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

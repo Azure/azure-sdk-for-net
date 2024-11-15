@@ -31,11 +31,10 @@ public class Utf8JsonSerializableConverter : JsonConverter<IUtf8JsonSerializable
         => value.Write(writer);
 }
 
-#if NET6_0
+#if !NET7_0_OR_GREATER
 /// <summary>
-/// .Net 6.0 has some odd quirks and is particularly pedantic with converters so directly using Utf8JsonSerializableConverter would
-/// result in an InvalidCastException. The work around is to use a converter factory. Thankfully, neither .Net Framework, nor .Net 7+
-/// exhibit this behavior.
+/// In versions of .Net older than 7.0, System.Text.Json version 6.0.9 has an odd quirk and is particularly pedantic with converters
+/// so directly using Utf8JsonSerializableConverter would result in an InvalidCastException. The work around is to use a converter factory.
 /// </summary>
 public class Utf8JsonSerializableConverterFactory : JsonConverterFactory
 {

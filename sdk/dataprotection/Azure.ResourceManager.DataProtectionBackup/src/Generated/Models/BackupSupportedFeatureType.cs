@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator ==(BackupSupportedFeatureType left, BackupSupportedFeatureType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupSupportedFeatureType"/> values are not the same. </summary>
         public static bool operator !=(BackupSupportedFeatureType left, BackupSupportedFeatureType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupSupportedFeatureType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupSupportedFeatureType"/>. </summary>
         public static implicit operator BackupSupportedFeatureType(string value) => new BackupSupportedFeatureType(value);
 
         /// <inheritdoc />

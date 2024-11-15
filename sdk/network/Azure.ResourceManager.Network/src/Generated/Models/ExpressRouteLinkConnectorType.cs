@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ExpressRouteLinkConnectorType left, ExpressRouteLinkConnectorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteLinkConnectorType"/> values are not the same. </summary>
         public static bool operator !=(ExpressRouteLinkConnectorType left, ExpressRouteLinkConnectorType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExpressRouteLinkConnectorType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRouteLinkConnectorType"/>. </summary>
         public static implicit operator ExpressRouteLinkConnectorType(string value) => new ExpressRouteLinkConnectorType(value);
 
         /// <inheritdoc />

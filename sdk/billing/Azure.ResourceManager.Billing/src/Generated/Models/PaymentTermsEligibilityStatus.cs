@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(PaymentTermsEligibilityStatus left, PaymentTermsEligibilityStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PaymentTermsEligibilityStatus"/> values are not the same. </summary>
         public static bool operator !=(PaymentTermsEligibilityStatus left, PaymentTermsEligibilityStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PaymentTermsEligibilityStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PaymentTermsEligibilityStatus"/>. </summary>
         public static implicit operator PaymentTermsEligibilityStatus(string value) => new PaymentTermsEligibilityStatus(value);
 
         /// <inheritdoc />

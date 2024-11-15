@@ -80,7 +80,7 @@ namespace Azure.AI.OpenAI
             }
             InternalAzureOpenAIChatErrorInnerErrorCode? code = default;
             string revisedPrompt = default;
-            ContentFilterResultForPrompt contentFilterResults = default;
+            RequestContentFilterResult contentFilterResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    contentFilterResults = ContentFilterResultForPrompt.DeserializeContentFilterResultForPrompt(property.Value, options);
+                    contentFilterResults = RequestContentFilterResult.DeserializeRequestContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

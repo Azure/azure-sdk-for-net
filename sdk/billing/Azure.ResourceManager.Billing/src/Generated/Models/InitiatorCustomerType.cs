@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(InitiatorCustomerType left, InitiatorCustomerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InitiatorCustomerType"/> values are not the same. </summary>
         public static bool operator !=(InitiatorCustomerType left, InitiatorCustomerType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InitiatorCustomerType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InitiatorCustomerType"/>. </summary>
         public static implicit operator InitiatorCustomerType(string value) => new InitiatorCustomerType(value);
 
         /// <inheritdoc />

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(ManagedHSMSecurityDomainActivationStatus left, ManagedHSMSecurityDomainActivationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHSMSecurityDomainActivationStatus"/> values are not the same. </summary>
         public static bool operator !=(ManagedHSMSecurityDomainActivationStatus left, ManagedHSMSecurityDomainActivationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedHSMSecurityDomainActivationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedHSMSecurityDomainActivationStatus"/>. </summary>
         public static implicit operator ManagedHSMSecurityDomainActivationStatus(string value) => new ManagedHSMSecurityDomainActivationStatus(value);
 
         /// <inheritdoc />

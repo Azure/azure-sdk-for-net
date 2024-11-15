@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static bool operator ==(IncomingTrafficPolicy left, IncomingTrafficPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IncomingTrafficPolicy"/> values are not the same. </summary>
         public static bool operator !=(IncomingTrafficPolicy left, IncomingTrafficPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IncomingTrafficPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IncomingTrafficPolicy"/>. </summary>
         public static implicit operator IncomingTrafficPolicy(string value) => new IncomingTrafficPolicy(value);
 
         /// <inheritdoc />

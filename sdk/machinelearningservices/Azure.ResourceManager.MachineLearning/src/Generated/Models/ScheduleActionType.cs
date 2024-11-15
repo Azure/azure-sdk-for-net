@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ScheduleActionType left, ScheduleActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduleActionType"/> values are not the same. </summary>
         public static bool operator !=(ScheduleActionType left, ScheduleActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScheduleActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduleActionType"/>. </summary>
         public static implicit operator ScheduleActionType(string value) => new ScheduleActionType(value);
 
         /// <inheritdoc />

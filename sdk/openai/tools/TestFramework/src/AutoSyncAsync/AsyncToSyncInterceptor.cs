@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
@@ -186,13 +187,13 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return genericTypes[0];
         }
-        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncPageCollection<>), out genericTypes))
-        {
-            return typeof(PageCollection<>).MakeGenericType(genericTypes);
-        }
         else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncCollectionResult<>), out genericTypes))
         {
             return typeof(CollectionResult<>).MakeGenericType(genericTypes);
+        }
+        else if (typeof(AsyncCollectionResult).IsAssignableFrom(asyncReturnType))
+        {
+            return typeof(CollectionResult);
         }
         else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(IAsyncEnumerable<>), out genericTypes))
         {
@@ -233,16 +234,16 @@ public class AsyncToSyncInterceptor : IInterceptor
                 typeof(ValueTask<>).MakeGenericType(genericTypes),
                 result);
         }
-        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncPageCollection<>), out genericTypes))
-        {
-            return Activator.CreateInstance(
-                typeof(SyncToAsyncPageCollection<>).MakeGenericType(genericTypes),
-                result);
-        }
         else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncCollectionResult<>), out genericTypes))
         {
             return Activator.CreateInstance(
                 typeof(SyncToAsyncCollectionResult<>).MakeGenericType(genericTypes),
+                result);
+        }
+        else if (typeof(AsyncCollectionResult).IsAssignableFrom(asyncReturnType))
+        {
+            return Activator.CreateInstance(
+                typeof(SyncToAsyncCollectionResult),
                 result);
         }
         else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(IAsyncEnumerable<>), out genericTypes))
@@ -289,16 +290,16 @@ public class AsyncToSyncInterceptor : IInterceptor
                 typeof(ValueTask<>).MakeGenericType(genericTypes),
                 failedTask);
         }
-        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncPageCollection<>), out genericTypes))
-        {
-            return Activator.CreateInstance(
-                typeof(SyncToAsyncPageCollection<>).MakeGenericType(genericTypes),
-                ex);
-        }
         else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncCollectionResult<>), out genericTypes))
         {
             return Activator.CreateInstance(
                 typeof(SyncToAsyncCollectionResult<>).MakeGenericType(genericTypes),
+                ex);
+        }
+        else if (typeof(AsyncCollectionResult).IsAssignableFrom(asyncReturnType))
+        {
+            return Activator.CreateInstance(
+                typeof(SyncToAsyncCollectionResult),
                 ex);
         }
         else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(IAsyncEnumerable<>), out genericTypes))

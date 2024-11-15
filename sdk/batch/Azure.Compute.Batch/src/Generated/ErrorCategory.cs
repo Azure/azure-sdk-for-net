@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(ErrorCategory left, ErrorCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ErrorCategory"/> values are not the same. </summary>
         public static bool operator !=(ErrorCategory left, ErrorCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ErrorCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ErrorCategory"/>. </summary>
         public static implicit operator ErrorCategory(string value) => new ErrorCategory(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Models
         public static bool operator ==(FieldValueSelectionMark left, FieldValueSelectionMark right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FieldValueSelectionMark"/> values are not the same. </summary>
         public static bool operator !=(FieldValueSelectionMark left, FieldValueSelectionMark right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FieldValueSelectionMark"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FieldValueSelectionMark"/>. </summary>
         public static implicit operator FieldValueSelectionMark(string value) => new FieldValueSelectionMark(value);
 
         /// <inheritdoc />

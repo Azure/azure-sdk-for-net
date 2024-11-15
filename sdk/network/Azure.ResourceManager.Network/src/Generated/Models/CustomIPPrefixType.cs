@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(CustomIPPrefixType left, CustomIPPrefixType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomIPPrefixType"/> values are not the same. </summary>
         public static bool operator !=(CustomIPPrefixType left, CustomIPPrefixType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CustomIPPrefixType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomIPPrefixType"/>. </summary>
         public static implicit operator CustomIPPrefixType(string value) => new CustomIPPrefixType(value);
 
         /// <inheritdoc />

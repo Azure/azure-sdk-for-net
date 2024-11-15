@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(TeradataPartitionOption left, TeradataPartitionOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TeradataPartitionOption"/> values are not the same. </summary>
         public static bool operator !=(TeradataPartitionOption left, TeradataPartitionOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TeradataPartitionOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TeradataPartitionOption"/>. </summary>
         public static implicit operator TeradataPartitionOption(string value) => new TeradataPartitionOption(value);
 
         /// <inheritdoc />

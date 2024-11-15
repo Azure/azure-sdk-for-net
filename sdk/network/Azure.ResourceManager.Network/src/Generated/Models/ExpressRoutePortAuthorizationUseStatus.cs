@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ExpressRoutePortAuthorizationUseStatus left, ExpressRoutePortAuthorizationUseStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRoutePortAuthorizationUseStatus"/> values are not the same. </summary>
         public static bool operator !=(ExpressRoutePortAuthorizationUseStatus left, ExpressRoutePortAuthorizationUseStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExpressRoutePortAuthorizationUseStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRoutePortAuthorizationUseStatus"/>. </summary>
         public static implicit operator ExpressRoutePortAuthorizationUseStatus(string value) => new ExpressRoutePortAuthorizationUseStatus(value);
 
         /// <inheritdoc />

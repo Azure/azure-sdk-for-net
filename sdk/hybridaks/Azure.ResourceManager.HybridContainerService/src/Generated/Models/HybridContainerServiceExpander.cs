@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static bool operator ==(HybridContainerServiceExpander left, HybridContainerServiceExpander right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridContainerServiceExpander"/> values are not the same. </summary>
         public static bool operator !=(HybridContainerServiceExpander left, HybridContainerServiceExpander right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HybridContainerServiceExpander"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridContainerServiceExpander"/>. </summary>
         public static implicit operator HybridContainerServiceExpander(string value) => new HybridContainerServiceExpander(value);
 
         /// <inheritdoc />

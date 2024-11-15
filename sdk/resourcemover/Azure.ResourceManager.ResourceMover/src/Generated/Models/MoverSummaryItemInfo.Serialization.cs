@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         void IJsonModel<MoverSummaryItemInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MoverSummaryItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MoverSummaryItemInfo IJsonModel<MoverSummaryItemInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

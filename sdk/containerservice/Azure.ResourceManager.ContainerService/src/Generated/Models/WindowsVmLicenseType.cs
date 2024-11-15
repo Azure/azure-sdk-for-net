@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(WindowsVmLicenseType left, WindowsVmLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WindowsVmLicenseType"/> values are not the same. </summary>
         public static bool operator !=(WindowsVmLicenseType left, WindowsVmLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WindowsVmLicenseType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WindowsVmLicenseType"/>. </summary>
         public static implicit operator WindowsVmLicenseType(string value) => new WindowsVmLicenseType(value);
 
         /// <inheritdoc />

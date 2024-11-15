@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(BillingAppliedScopeType left, BillingAppliedScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingAppliedScopeType"/> values are not the same. </summary>
         public static bool operator !=(BillingAppliedScopeType left, BillingAppliedScopeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BillingAppliedScopeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingAppliedScopeType"/>. </summary>
         public static implicit operator BillingAppliedScopeType(string value) => new BillingAppliedScopeType(value);
 
         /// <inheritdoc />

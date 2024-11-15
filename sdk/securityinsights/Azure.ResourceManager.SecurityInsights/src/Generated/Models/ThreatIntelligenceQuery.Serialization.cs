@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         void IJsonModel<ThreatIntelligenceQuery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceQuery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreatIntelligenceQuery)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
@@ -61,7 +69,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ThreatIntelligenceQuery IJsonModel<ThreatIntelligenceQuery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

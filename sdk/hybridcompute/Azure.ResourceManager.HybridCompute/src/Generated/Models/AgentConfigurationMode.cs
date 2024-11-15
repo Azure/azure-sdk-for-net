@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(AgentConfigurationMode left, AgentConfigurationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentConfigurationMode"/> values are not the same. </summary>
         public static bool operator !=(AgentConfigurationMode left, AgentConfigurationMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AgentConfigurationMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AgentConfigurationMode"/>. </summary>
         public static implicit operator AgentConfigurationMode(string value) => new AgentConfigurationMode(value);
 
         /// <inheritdoc />

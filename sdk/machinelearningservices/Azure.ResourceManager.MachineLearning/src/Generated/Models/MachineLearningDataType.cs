@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningDataType left, MachineLearningDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningDataType"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningDataType left, MachineLearningDataType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningDataType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningDataType"/>. </summary>
         public static implicit operator MachineLearningDataType(string value) => new MachineLearningDataType(value);
 
         /// <inheritdoc />

@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static bool operator ==(SparkStatementLanguageType left, SparkStatementLanguageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkStatementLanguageType"/> values are not the same. </summary>
         public static bool operator !=(SparkStatementLanguageType left, SparkStatementLanguageType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SparkStatementLanguageType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SparkStatementLanguageType"/>. </summary>
         public static implicit operator SparkStatementLanguageType(string value) => new SparkStatementLanguageType(value);
 
         /// <inheritdoc />

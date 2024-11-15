@@ -65,7 +65,8 @@
         "SummaryComment": "The specific version of the platform image or marketplace image used to create the node. This read-only field differs from 'version' only if the value specified for 'version' when the pool was created was 'latest'.",
         "RemarksComment": null,
         "BoundAccess": "read",
-        "UnboundAccess": "read"
+        "UnboundAccess": "read",
+        "HideSetter": true
       },
       "Value": null
     },

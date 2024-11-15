@@ -20,32 +20,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         void IJsonModel<AadSolutionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AadSolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AadSolutionProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ConnectivityState))
             {
                 writer.WritePropertyName("connectivityState"u8);
                 writer.WriteStringValue(ConnectivityState.Value.ToString());
-            }
-            if (Optional.IsDefined(DeviceVendor))
-            {
-                writer.WritePropertyName("deviceVendor"u8);
-                writer.WriteStringValue(DeviceVendor);
-            }
-            if (Optional.IsDefined(DeviceType))
-            {
-                writer.WritePropertyName("deviceType"u8);
-                writer.WriteStringValue(DeviceType);
-            }
-            if (Optional.IsDefined(Workspace))
-            {
-                writer.WritePropertyName("workspace"u8);
-                JsonSerializer.Serialize(writer, Workspace);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -59,7 +53,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         AadSolutionProperties IJsonModel<AadSolutionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

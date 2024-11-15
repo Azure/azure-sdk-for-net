@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(ServiceScalability left, ServiceScalability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceScalability"/> values are not the same. </summary>
         public static bool operator !=(ServiceScalability left, ServiceScalability right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceScalability"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceScalability"/>. </summary>
         public static implicit operator ServiceScalability(string value) => new ServiceScalability(value);
 
         /// <inheritdoc />

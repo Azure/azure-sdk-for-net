@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(JobStepActionType left, JobStepActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobStepActionType"/> values are not the same. </summary>
         public static bool operator !=(JobStepActionType left, JobStepActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobStepActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobStepActionType"/>. </summary>
         public static implicit operator JobStepActionType(string value) => new JobStepActionType(value);
 
         /// <inheritdoc />

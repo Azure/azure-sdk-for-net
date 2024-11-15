@@ -4,11 +4,22 @@
 
 ### Features Added
 
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.1 (2024-09-14)
+
+### Bugs Fixed
+
+- Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/45884.
+    - Handle incorrect returned ResourceType of "Microsoft.MachineLearningServices/registries/data" in `MachineLearningDataContainerData`.
+    - Handle incorrect returned ResourceType of "Microsoft.MachineLearningServices/registries/environments" in `MachineLearningEnvironmentContainerData`.
+    - Override the `ValidateResourceId` method in `MachineLearningEnvironmentContainerResource` and `MachineLearningDataContainerResource` to avoid validation exception.
 
 ## 1.2.0 (2024-09-06)
 

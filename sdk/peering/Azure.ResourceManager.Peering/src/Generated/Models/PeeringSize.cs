@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static bool operator ==(PeeringSize left, PeeringSize right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringSize"/> values are not the same. </summary>
         public static bool operator !=(PeeringSize left, PeeringSize right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PeeringSize"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PeeringSize"/>. </summary>
         public static implicit operator PeeringSize(string value) => new PeeringSize(value);
 
         /// <inheritdoc />

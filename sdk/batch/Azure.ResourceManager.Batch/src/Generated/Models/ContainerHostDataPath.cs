@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static bool operator ==(ContainerHostDataPath left, ContainerHostDataPath right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerHostDataPath"/> values are not the same. </summary>
         public static bool operator !=(ContainerHostDataPath left, ContainerHostDataPath right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerHostDataPath"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerHostDataPath"/>. </summary>
         public static implicit operator ContainerHostDataPath(string value) => new ContainerHostDataPath(value);
 
         /// <inheritdoc />

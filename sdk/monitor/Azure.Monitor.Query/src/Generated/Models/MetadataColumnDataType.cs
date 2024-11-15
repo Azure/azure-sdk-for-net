@@ -57,7 +57,7 @@ namespace Azure.Monitor.Query.Models
         public static bool operator ==(MetadataColumnDataType left, MetadataColumnDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetadataColumnDataType"/> values are not the same. </summary>
         public static bool operator !=(MetadataColumnDataType left, MetadataColumnDataType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MetadataColumnDataType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MetadataColumnDataType"/>. </summary>
         public static implicit operator MetadataColumnDataType(string value) => new MetadataColumnDataType(value);
 
         /// <inheritdoc />

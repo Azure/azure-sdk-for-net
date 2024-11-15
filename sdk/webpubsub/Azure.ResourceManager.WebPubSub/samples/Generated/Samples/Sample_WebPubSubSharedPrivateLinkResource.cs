@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.WebPubSub.Samples
 {
     public partial class Sample_WebPubSubSharedPrivateLinkResource
     {
-        // WebPubSubSharedPrivateLinkResources_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_WebPubSubSharedPrivateLinkResourcesGet()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubSharedPrivateLinkResources_Get.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // WebPubSubSharedPrivateLinkResources_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_WebPubSubSharedPrivateLinkResourcesCreateOrUpdate()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubSharedPrivateLinkResources_CreateOrUpdate.json
@@ -85,9 +84,8 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // WebPubSubSharedPrivateLinkResources_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_WebPubSubSharedPrivateLinkResourcesDelete()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubSharedPrivateLinkResources_Delete.json
@@ -110,7 +108,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // invoke the operation
             await webPubSubSharedPrivateLink.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

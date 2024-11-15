@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(AggregationFunctionType left, AggregationFunctionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AggregationFunctionType"/> values are not the same. </summary>
         public static bool operator !=(AggregationFunctionType left, AggregationFunctionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AggregationFunctionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AggregationFunctionType"/>. </summary>
         public static implicit operator AggregationFunctionType(string value) => new AggregationFunctionType(value);
 
         /// <inheritdoc />

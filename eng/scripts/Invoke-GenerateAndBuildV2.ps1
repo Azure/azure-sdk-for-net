@@ -87,6 +87,7 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
         $autorestConfigYaml = ConvertTo-YAML $yml
     }
     Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
+    $generatedSDKPackages[$generatedSDKPackages.Count - 1]['readmeMd'] = @($readmeFile)
 }
 
 #update services without readme.md
@@ -156,6 +157,7 @@ if ($relatedTypeSpecProjectFolder) {
             -generatedSDKPackages $generatedSDKPackages `
             -specRepoRoot $swaggerDir
         }
+        $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
     }
 }
 $outputJson = [PSCustomObject]@{

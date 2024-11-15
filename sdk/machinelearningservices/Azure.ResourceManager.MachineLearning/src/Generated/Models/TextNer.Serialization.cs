@@ -20,13 +20,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<TextNer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TextNer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TextNer)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(PrimaryMetric))
             {
                 writer.WritePropertyName("primaryMetric"u8);
@@ -68,43 +77,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
-            if (Optional.IsDefined(LogVerbosity))
-            {
-                writer.WritePropertyName("logVerbosity"u8);
-                writer.WriteStringValue(LogVerbosity.Value.ToString());
-            }
-            writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData, options);
-            if (Optional.IsDefined(TargetColumnName))
-            {
-                if (TargetColumnName != null)
-                {
-                    writer.WritePropertyName("targetColumnName"u8);
-                    writer.WriteStringValue(TargetColumnName);
-                }
-                else
-                {
-                    writer.WriteNull("targetColumnName");
-                }
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         TextNer IJsonModel<TextNer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

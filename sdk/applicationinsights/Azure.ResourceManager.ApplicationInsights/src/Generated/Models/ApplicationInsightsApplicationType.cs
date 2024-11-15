@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator ==(ApplicationInsightsApplicationType left, ApplicationInsightsApplicationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationInsightsApplicationType"/> values are not the same. </summary>
         public static bool operator !=(ApplicationInsightsApplicationType left, ApplicationInsightsApplicationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationInsightsApplicationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationInsightsApplicationType"/>. </summary>
         public static implicit operator ApplicationInsightsApplicationType(string value) => new ApplicationInsightsApplicationType(value);
 
         /// <inheritdoc />

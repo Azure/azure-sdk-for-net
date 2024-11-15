@@ -36,7 +36,7 @@ namespace Azure.Maps.Search.Models
         public static bool operator ==(MatchCodesEnum left, MatchCodesEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MatchCodesEnum"/> values are not the same. </summary>
         public static bool operator !=(MatchCodesEnum left, MatchCodesEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MatchCodesEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MatchCodesEnum"/>. </summary>
         public static implicit operator MatchCodesEnum(string value) => new MatchCodesEnum(value);
 
         /// <inheritdoc />

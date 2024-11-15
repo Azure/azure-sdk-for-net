@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static bool operator ==(DedicatedHsmJsonWebKeyType left, DedicatedHsmJsonWebKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DedicatedHsmJsonWebKeyType"/> values are not the same. </summary>
         public static bool operator !=(DedicatedHsmJsonWebKeyType left, DedicatedHsmJsonWebKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DedicatedHsmJsonWebKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DedicatedHsmJsonWebKeyType"/>. </summary>
         public static implicit operator DedicatedHsmJsonWebKeyType(string value) => new DedicatedHsmJsonWebKeyType(value);
 
         /// <inheritdoc />

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(SqlCapabilityGroup left, SqlCapabilityGroup right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlCapabilityGroup"/> values are not the same. </summary>
         public static bool operator !=(SqlCapabilityGroup left, SqlCapabilityGroup right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlCapabilityGroup"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlCapabilityGroup"/>. </summary>
         public static implicit operator SqlCapabilityGroup(string value) => new SqlCapabilityGroup(value);
 
         /// <inheritdoc />

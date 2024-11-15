@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(ManagedHsmProvisioningState left, ManagedHsmProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ManagedHsmProvisioningState left, ManagedHsmProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedHsmProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedHsmProvisioningState"/>. </summary>
         public static implicit operator ManagedHsmProvisioningState(string value) => new ManagedHsmProvisioningState(value);
 
         /// <inheritdoc />

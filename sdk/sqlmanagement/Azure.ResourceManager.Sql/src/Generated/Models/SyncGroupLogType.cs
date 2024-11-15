@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(SyncGroupLogType left, SyncGroupLogType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyncGroupLogType"/> values are not the same. </summary>
         public static bool operator !=(SyncGroupLogType left, SyncGroupLogType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SyncGroupLogType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SyncGroupLogType"/>. </summary>
         public static implicit operator SyncGroupLogType(string value) => new SyncGroupLogType(value);
 
         /// <inheritdoc />

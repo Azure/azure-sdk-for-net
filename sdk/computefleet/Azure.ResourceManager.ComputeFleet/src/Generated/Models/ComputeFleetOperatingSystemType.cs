@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetOperatingSystemType left, ComputeFleetOperatingSystemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetOperatingSystemType"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetOperatingSystemType left, ComputeFleetOperatingSystemType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetOperatingSystemType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetOperatingSystemType"/>. </summary>
         public static implicit operator ComputeFleetOperatingSystemType(string value) => new ComputeFleetOperatingSystemType(value);
 
         /// <inheritdoc />

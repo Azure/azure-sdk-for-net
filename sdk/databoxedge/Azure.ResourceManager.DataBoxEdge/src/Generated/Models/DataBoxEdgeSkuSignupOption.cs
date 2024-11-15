@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(DataBoxEdgeSkuSignupOption left, DataBoxEdgeSkuSignupOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuSignupOption"/> values are not the same. </summary>
         public static bool operator !=(DataBoxEdgeSkuSignupOption left, DataBoxEdgeSkuSignupOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeSkuSignupOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeSkuSignupOption"/>. </summary>
         public static implicit operator DataBoxEdgeSkuSignupOption(string value) => new DataBoxEdgeSkuSignupOption(value);
 
         /// <inheritdoc />

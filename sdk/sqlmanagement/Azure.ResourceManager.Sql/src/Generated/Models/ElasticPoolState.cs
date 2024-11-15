@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(ElasticPoolState left, ElasticPoolState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticPoolState"/> values are not the same. </summary>
         public static bool operator !=(ElasticPoolState left, ElasticPoolState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ElasticPoolState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticPoolState"/>. </summary>
         public static implicit operator ElasticPoolState(string value) => new ElasticPoolState(value);
 
         /// <inheritdoc />

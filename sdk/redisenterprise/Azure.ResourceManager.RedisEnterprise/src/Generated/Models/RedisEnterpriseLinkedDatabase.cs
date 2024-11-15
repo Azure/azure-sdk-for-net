@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Resource ID of a database resource to link with this database. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> State of the link between the database resources. </summary>
+        [WirePath("state")]
         public RedisEnterpriseDatabaseLinkState? State { get; }
     }
 }

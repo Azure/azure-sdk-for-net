@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(AmazonRdsForSqlAuthenticationType left, AmazonRdsForSqlAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AmazonRdsForSqlAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(AmazonRdsForSqlAuthenticationType left, AmazonRdsForSqlAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AmazonRdsForSqlAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AmazonRdsForSqlAuthenticationType"/>. </summary>
         public static implicit operator AmazonRdsForSqlAuthenticationType(string value) => new AmazonRdsForSqlAuthenticationType(value);
 
         /// <inheritdoc />

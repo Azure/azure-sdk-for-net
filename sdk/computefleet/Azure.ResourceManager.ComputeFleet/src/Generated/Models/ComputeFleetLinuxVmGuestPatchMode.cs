@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetLinuxVmGuestPatchMode left, ComputeFleetLinuxVmGuestPatchMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetLinuxVmGuestPatchMode"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetLinuxVmGuestPatchMode left, ComputeFleetLinuxVmGuestPatchMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetLinuxVmGuestPatchMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetLinuxVmGuestPatchMode"/>. </summary>
         public static implicit operator ComputeFleetLinuxVmGuestPatchMode(string value) => new ComputeFleetLinuxVmGuestPatchMode(value);
 
         /// <inheritdoc />

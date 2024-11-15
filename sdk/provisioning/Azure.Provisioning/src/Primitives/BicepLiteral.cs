@@ -13,11 +13,9 @@ namespace Azure.Provisioning.Primitives;
 /// <summary>
 /// Inject literal bicep statements.
 /// </summary>
-public class BicepLiteral(string resourceName, params Statement[] statements)
-    : NamedProvisioningConstruct(resourceName)
+public class BicepLiteral(params BicepStatement[] statements)
+    : ProvisionableConstruct()
 {
-    public IList<Statement> Statements { get; } = statements;
-
-    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default) =>
-        Statements;
+    public IList<BicepStatement> Statements { get; } = statements;
+    protected internal override IEnumerable<BicepStatement> Compile() => Statements;
 }

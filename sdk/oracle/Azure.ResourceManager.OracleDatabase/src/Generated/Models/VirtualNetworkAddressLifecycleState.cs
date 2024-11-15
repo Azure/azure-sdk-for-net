@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(VirtualNetworkAddressLifecycleState left, VirtualNetworkAddressLifecycleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkAddressLifecycleState"/> values are not the same. </summary>
         public static bool operator !=(VirtualNetworkAddressLifecycleState left, VirtualNetworkAddressLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualNetworkAddressLifecycleState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkAddressLifecycleState"/>. </summary>
         public static implicit operator VirtualNetworkAddressLifecycleState(string value) => new VirtualNetworkAddressLifecycleState(value);
 
         /// <inheritdoc />

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(MediaPrivateEndpointConnectionProvisioningState left, MediaPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(MediaPrivateEndpointConnectionProvisioningState left, MediaPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MediaPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MediaPrivateEndpointConnectionProvisioningState"/>. </summary>
         public static implicit operator MediaPrivateEndpointConnectionProvisioningState(string value) => new MediaPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc />

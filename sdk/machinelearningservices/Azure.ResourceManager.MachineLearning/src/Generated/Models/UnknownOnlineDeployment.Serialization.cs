@@ -21,214 +21,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<MachineLearningOnlineDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("endpointComputeType"u8);
-            writer.WriteStringValue(EndpointComputeType.ToString());
-            if (Optional.IsDefined(ScaleSettings))
-            {
-                if (ScaleSettings != null)
-                {
-                    writer.WritePropertyName("scaleSettings"u8);
-                    writer.WriteObjectValue(ScaleSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("scaleSettings");
-                }
-            }
-            if (Optional.IsDefined(RequestSettings))
-            {
-                if (RequestSettings != null)
-                {
-                    writer.WritePropertyName("requestSettings"u8);
-                    writer.WriteObjectValue(RequestSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("requestSettings");
-                }
-            }
-            if (Optional.IsDefined(ModelMountPath))
-            {
-                if (ModelMountPath != null)
-                {
-                    writer.WritePropertyName("modelMountPath"u8);
-                    writer.WriteStringValue(ModelMountPath);
-                }
-                else
-                {
-                    writer.WriteNull("modelMountPath");
-                }
-            }
-            if (Optional.IsDefined(AppInsightsEnabled))
-            {
-                writer.WritePropertyName("appInsightsEnabled"u8);
-                writer.WriteBooleanValue(AppInsightsEnabled.Value);
-            }
-            if (Optional.IsDefined(LivenessProbe))
-            {
-                if (LivenessProbe != null)
-                {
-                    writer.WritePropertyName("livenessProbe"u8);
-                    writer.WriteObjectValue(LivenessProbe, options);
-                }
-                else
-                {
-                    writer.WriteNull("livenessProbe");
-                }
-            }
-            if (Optional.IsDefined(ReadinessProbe))
-            {
-                if (ReadinessProbe != null)
-                {
-                    writer.WritePropertyName("readinessProbe"u8);
-                    writer.WriteObjectValue(ReadinessProbe, options);
-                }
-                else
-                {
-                    writer.WriteNull("readinessProbe");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(InstanceType))
-            {
-                if (InstanceType != null)
-                {
-                    writer.WritePropertyName("instanceType"u8);
-                    writer.WriteStringValue(InstanceType);
-                }
-                else
-                {
-                    writer.WriteNull("instanceType");
-                }
-            }
-            if (Optional.IsDefined(Model))
-            {
-                if (Model != null)
-                {
-                    writer.WritePropertyName("model"u8);
-                    writer.WriteStringValue(Model);
-                }
-                else
-                {
-                    writer.WriteNull("model");
-                }
-            }
-            if (Optional.IsDefined(EgressPublicNetworkAccess))
-            {
-                writer.WritePropertyName("egressPublicNetworkAccess"u8);
-                writer.WriteStringValue(EgressPublicNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsDefined(DataCollector))
-            {
-                if (DataCollector != null)
-                {
-                    writer.WritePropertyName("dataCollector"u8);
-                    writer.WriteObjectValue(DataCollector, options);
-                }
-                else
-                {
-                    writer.WriteNull("dataCollector");
-                }
-            }
-            if (Optional.IsDefined(Description))
-            {
-                if (Description != null)
-                {
-                    writer.WritePropertyName("description"u8);
-                    writer.WriteStringValue(Description);
-                }
-                else
-                {
-                    writer.WriteNull("description");
-                }
-            }
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                if (Properties != null)
-                {
-                    writer.WritePropertyName("properties"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Properties)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("properties");
-                }
-            }
-            if (Optional.IsDefined(CodeConfiguration))
-            {
-                if (CodeConfiguration != null)
-                {
-                    writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration, options);
-                }
-                else
-                {
-                    writer.WriteNull("codeConfiguration");
-                }
-            }
-            if (Optional.IsDefined(EnvironmentId))
-            {
-                if (EnvironmentId != null)
-                {
-                    writer.WritePropertyName("environmentId"u8);
-                    writer.WriteStringValue(EnvironmentId);
-                }
-                else
-                {
-                    writer.WriteNull("environmentId");
-                }
-            }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
-            {
-                if (EnvironmentVariables != null)
-                {
-                    writer.WritePropertyName("environmentVariables"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in EnvironmentVariables)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("environmentVariables");
-                }
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         MachineLearningOnlineDeploymentProperties IJsonModel<MachineLearningOnlineDeploymentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
         public static bool operator ==(HealthState left, HealthState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthState"/> values are not the same. </summary>
         public static bool operator !=(HealthState left, HealthState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HealthState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HealthState"/>. </summary>
         public static implicit operator HealthState(string value) => new HealthState(value);
 
         /// <inheritdoc />

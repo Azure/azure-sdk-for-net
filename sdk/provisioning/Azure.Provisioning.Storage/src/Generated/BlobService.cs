@@ -16,28 +16,40 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// BlobService.
 /// </summary>
-public partial class BlobService : Resource
+public partial class BlobService : ProvisionableResource
 {
-    private readonly BicepValue<string> _name;
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The blob service properties for change feed events.
     /// </summary>
-    public BicepValue<BlobServiceChangeFeed> ChangeFeed { get => _changeFeed; set => _changeFeed.Assign(value); }
-    private readonly BicepValue<BlobServiceChangeFeed> _changeFeed;
+    public BlobServiceChangeFeed ChangeFeed 
+    {
+        get { Initialize(); return _changeFeed!; }
+        set { Initialize(); AssignOrReplace(ref _changeFeed, value); }
+    }
+    private BlobServiceChangeFeed? _changeFeed;
 
     /// <summary>
     /// The blob service properties for container soft delete.
     /// </summary>
-    public BicepValue<DeleteRetentionPolicy> ContainerDeleteRetentionPolicy { get => _containerDeleteRetentionPolicy; set => _containerDeleteRetentionPolicy.Assign(value); }
-    private readonly BicepValue<DeleteRetentionPolicy> _containerDeleteRetentionPolicy;
+    public DeleteRetentionPolicy ContainerDeleteRetentionPolicy 
+    {
+        get { Initialize(); return _containerDeleteRetentionPolicy!; }
+        set { Initialize(); AssignOrReplace(ref _containerDeleteRetentionPolicy, value); }
+    }
+    private DeleteRetentionPolicy? _containerDeleteRetentionPolicy;
 
     /// <summary>
     /// The List of CORS rules. You can include up to five CorsRule elements in
     /// the request.
     /// </summary>
-    public BicepList<StorageCorsRule> CorsRules { get => _corsRules; set => _corsRules.Assign(value); }
-    private readonly BicepList<StorageCorsRule> _corsRules;
+    public BicepList<StorageCorsRule> CorsRules 
+    {
+        get { Initialize(); return _corsRules!; }
+        set { Initialize(); _corsRules!.Assign(value); }
+    }
+    private BicepList<StorageCorsRule>? _corsRules;
 
     /// <summary>
     /// DefaultServiceVersion indicates the default version to use for requests
@@ -45,63 +57,100 @@ public partial class BlobService : Resource
     /// Possible values include version 2008-10-27 and all more recent
     /// versions.
     /// </summary>
-    public BicepValue<string> DefaultServiceVersion { get => _defaultServiceVersion; set => _defaultServiceVersion.Assign(value); }
-    private readonly BicepValue<string> _defaultServiceVersion;
+    public BicepValue<string> DefaultServiceVersion 
+    {
+        get { Initialize(); return _defaultServiceVersion!; }
+        set { Initialize(); _defaultServiceVersion!.Assign(value); }
+    }
+    private BicepValue<string>? _defaultServiceVersion;
 
     /// <summary>
     /// The blob service properties for blob soft delete.
     /// </summary>
-    public BicepValue<DeleteRetentionPolicy> DeleteRetentionPolicy { get => _deleteRetentionPolicy; set => _deleteRetentionPolicy.Assign(value); }
-    private readonly BicepValue<DeleteRetentionPolicy> _deleteRetentionPolicy;
+    public DeleteRetentionPolicy DeleteRetentionPolicy 
+    {
+        get { Initialize(); return _deleteRetentionPolicy!; }
+        set { Initialize(); AssignOrReplace(ref _deleteRetentionPolicy, value); }
+    }
+    private DeleteRetentionPolicy? _deleteRetentionPolicy;
 
     /// <summary>
     /// Deprecated in favor of isVersioningEnabled property.
     /// </summary>
-    public BicepValue<bool> IsAutomaticSnapshotPolicyEnabled { get => _isAutomaticSnapshotPolicyEnabled; set => _isAutomaticSnapshotPolicyEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isAutomaticSnapshotPolicyEnabled;
+    public BicepValue<bool> IsAutomaticSnapshotPolicyEnabled 
+    {
+        get { Initialize(); return _isAutomaticSnapshotPolicyEnabled!; }
+        set { Initialize(); _isAutomaticSnapshotPolicyEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAutomaticSnapshotPolicyEnabled;
 
     /// <summary>
     /// Versioning is enabled if set to true.
     /// </summary>
-    public BicepValue<bool> IsVersioningEnabled { get => _isVersioningEnabled; set => _isVersioningEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isVersioningEnabled;
+    public BicepValue<bool> IsVersioningEnabled 
+    {
+        get { Initialize(); return _isVersioningEnabled!; }
+        set { Initialize(); _isVersioningEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isVersioningEnabled;
 
     /// <summary>
     /// The blob service property to configure last access time based tracking
     /// policy.
     /// </summary>
-    public BicepValue<LastAccessTimeTrackingPolicy> LastAccessTimeTrackingPolicy { get => _lastAccessTimeTrackingPolicy; set => _lastAccessTimeTrackingPolicy.Assign(value); }
-    private readonly BicepValue<LastAccessTimeTrackingPolicy> _lastAccessTimeTrackingPolicy;
+    public LastAccessTimeTrackingPolicy LastAccessTimeTrackingPolicy 
+    {
+        get { Initialize(); return _lastAccessTimeTrackingPolicy!; }
+        set { Initialize(); AssignOrReplace(ref _lastAccessTimeTrackingPolicy, value); }
+    }
+    private LastAccessTimeTrackingPolicy? _lastAccessTimeTrackingPolicy;
 
     /// <summary>
     /// The blob service properties for blob restore policy.
     /// </summary>
-    public BicepValue<RestorePolicy> RestorePolicy { get => _restorePolicy; set => _restorePolicy.Assign(value); }
-    private readonly BicepValue<RestorePolicy> _restorePolicy;
+    public RestorePolicy RestorePolicy 
+    {
+        get { Initialize(); return _restorePolicy!; }
+        set { Initialize(); AssignOrReplace(ref _restorePolicy, value); }
+    }
+    private RestorePolicy? _restorePolicy;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Sku name and tier.
     /// </summary>
-    public BicepValue<StorageSku> Sku { get => _sku; }
-    private readonly BicepValue<StorageSku> _sku;
+    public StorageSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+    }
+    private StorageSku? _sku;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent StorageAccount.
     /// </summary>
-    public StorageAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<StorageAccount> _parent;
+    public StorageAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<StorageAccount>? _parent;
 
     /// <summary>
     /// Get the default value for the Name property.
@@ -111,26 +160,37 @@ public partial class BlobService : Resource
     /// <summary>
     /// Creates a new BlobService.
     /// </summary>
-    /// <param name="resourceName">Name of the BlobService.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the BlobService resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the BlobService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public BlobService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/blobServices", resourceVersion ?? "2023-01-01", context)
+    public BlobService(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/blobServices", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], defaultValue: GetNameDefaultValue());
-        _changeFeed = BicepValue<BlobServiceChangeFeed>.DefineProperty(this, "ChangeFeed", ["properties", "changeFeed"]);
-        _containerDeleteRetentionPolicy = BicepValue<DeleteRetentionPolicy>.DefineProperty(this, "ContainerDeleteRetentionPolicy", ["properties", "containerDeleteRetentionPolicy"]);
-        _corsRules = BicepList<StorageCorsRule>.DefineProperty(this, "CorsRules", ["properties", "cors", "corsRules"]);
-        _defaultServiceVersion = BicepValue<string>.DefineProperty(this, "DefaultServiceVersion", ["properties", "defaultServiceVersion"]);
-        _deleteRetentionPolicy = BicepValue<DeleteRetentionPolicy>.DefineProperty(this, "DeleteRetentionPolicy", ["properties", "deleteRetentionPolicy"]);
-        _isAutomaticSnapshotPolicyEnabled = BicepValue<bool>.DefineProperty(this, "IsAutomaticSnapshotPolicyEnabled", ["properties", "automaticSnapshotPolicyEnabled"]);
-        _isVersioningEnabled = BicepValue<bool>.DefineProperty(this, "IsVersioningEnabled", ["properties", "isVersioningEnabled"]);
-        _lastAccessTimeTrackingPolicy = BicepValue<LastAccessTimeTrackingPolicy>.DefineProperty(this, "LastAccessTimeTrackingPolicy", ["properties", "lastAccessTimeTrackingPolicy"]);
-        _restorePolicy = BicepValue<RestorePolicy>.DefineProperty(this, "RestorePolicy", ["properties", "restorePolicy"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _sku = BicepValue<StorageSku>.DefineProperty(this, "Sku", ["sku"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<StorageAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of BlobService.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], defaultValue: GetNameDefaultValue());
+        _changeFeed = DefineModelProperty<BlobServiceChangeFeed>("ChangeFeed", ["properties", "changeFeed"]);
+        _containerDeleteRetentionPolicy = DefineModelProperty<DeleteRetentionPolicy>("ContainerDeleteRetentionPolicy", ["properties", "containerDeleteRetentionPolicy"]);
+        _corsRules = DefineListProperty<StorageCorsRule>("CorsRules", ["properties", "cors", "corsRules"]);
+        _defaultServiceVersion = DefineProperty<string>("DefaultServiceVersion", ["properties", "defaultServiceVersion"]);
+        _deleteRetentionPolicy = DefineModelProperty<DeleteRetentionPolicy>("DeleteRetentionPolicy", ["properties", "deleteRetentionPolicy"]);
+        _isAutomaticSnapshotPolicyEnabled = DefineProperty<bool>("IsAutomaticSnapshotPolicyEnabled", ["properties", "automaticSnapshotPolicyEnabled"]);
+        _isVersioningEnabled = DefineProperty<bool>("IsVersioningEnabled", ["properties", "isVersioningEnabled"]);
+        _lastAccessTimeTrackingPolicy = DefineModelProperty<LastAccessTimeTrackingPolicy>("LastAccessTimeTrackingPolicy", ["properties", "lastAccessTimeTrackingPolicy"]);
+        _restorePolicy = DefineModelProperty<RestorePolicy>("RestorePolicy", ["properties", "restorePolicy"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _sku = DefineModelProperty<StorageSku>("Sku", ["sku"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<StorageAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -252,9 +312,14 @@ public partial class BlobService : Resource
     /// <summary>
     /// Creates a reference to an existing BlobService.
     /// </summary>
-    /// <param name="resourceName">Name of the BlobService.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the BlobService resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the BlobService.</param>
     /// <returns>The existing BlobService resource.</returns>
-    public static BlobService FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static BlobService FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

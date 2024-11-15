@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator ==(ArtifactType left, ArtifactType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArtifactType"/> values are not the same. </summary>
         public static bool operator !=(ArtifactType left, ArtifactType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ArtifactType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ArtifactType"/>. </summary>
         public static implicit operator ArtifactType(string value) => new ArtifactType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static bool operator ==(NewRelicObservabilitySendingLogsStatus left, NewRelicObservabilitySendingLogsStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NewRelicObservabilitySendingLogsStatus"/> values are not the same. </summary>
         public static bool operator !=(NewRelicObservabilitySendingLogsStatus left, NewRelicObservabilitySendingLogsStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NewRelicObservabilitySendingLogsStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NewRelicObservabilitySendingLogsStatus"/>. </summary>
         public static implicit operator NewRelicObservabilitySendingLogsStatus(string value) => new NewRelicObservabilitySendingLogsStatus(value);
 
         /// <inheritdoc />

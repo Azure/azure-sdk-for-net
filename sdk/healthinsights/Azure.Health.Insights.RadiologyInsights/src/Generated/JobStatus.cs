@@ -42,7 +42,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static bool operator ==(JobStatus left, JobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobStatus"/> values are not the same. </summary>
         public static bool operator !=(JobStatus left, JobStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobStatus"/>. </summary>
         public static implicit operator JobStatus(string value) => new JobStatus(value);
 
         /// <inheritdoc />

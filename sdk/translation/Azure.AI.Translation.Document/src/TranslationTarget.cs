@@ -9,8 +9,8 @@ namespace Azure.AI.Translation.Document
     [CodeGenModel("TargetInput")]
     public partial class TranslationTarget
     {
-        [CodeGenMember("StorageSource")]
-        internal string StorageSource { get; set; }
+        [CodeGenMember("TranslationStorageSource")]
+        internal string TranslationStorageSource { get; set; }
 
         /// <summary>
         /// Location of the container with your documents.

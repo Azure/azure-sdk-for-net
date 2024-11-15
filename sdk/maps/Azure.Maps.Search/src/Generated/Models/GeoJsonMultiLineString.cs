@@ -13,7 +13,7 @@ using Azure.Maps.Common;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> A valid `GeoJSON MultiLineString` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.5) for details. </summary>
-    public partial class GeoJsonMultiLineString : GeoJsonGeometry
+    internal partial class GeoJsonMultiLineString : GeoJsonGeometry
     {
         /// <summary> Initializes a new instance of <see cref="GeoJsonMultiLineString"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiLineString` geometry. </param>

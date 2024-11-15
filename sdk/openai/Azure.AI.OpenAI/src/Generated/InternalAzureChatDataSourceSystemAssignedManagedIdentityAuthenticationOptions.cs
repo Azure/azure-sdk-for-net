@@ -11,7 +11,7 @@ namespace Azure.AI.OpenAI.Chat
     internal partial class InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions : DataSourceAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions"/>. </summary>
-        internal InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions()
+        public InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions()
         {
             Type = "system_assigned_managed_identity";
         }

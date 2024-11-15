@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         void IJsonModel<StandbyContainerGroupPoolProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StandbyContainerGroupPoolProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("elasticityProfile"u8);
             writer.WriteObjectValue(ElasticityProfile, options);
             writer.WritePropertyName("containerGroupProperties"u8);
@@ -50,7 +58,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StandbyContainerGroupPoolProperties IJsonModel<StandbyContainerGroupPoolProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

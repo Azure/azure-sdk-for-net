@@ -14,7 +14,7 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentIntelligenceClient
     {
         // CUSTOM CODE NOTE: we're overwriting the behavior of the AnalyzeDocument API to
-        // return an instance of TrainingOperation. This is a workaround since Operation.Id
+        // return an instance of OperationWithId. This is a workaround since Operation.Id
         // is not supported by our generator yet (it throws a NotSupportedException), but
         // this ID is needed for the GetAnalyzeResultPdf and the GetAnalyzeResultImage APIs.
 
@@ -62,18 +62,18 @@ namespace Azure.AI.DocumentIntelligence
             {
                 using HttpMessage message = CreateAnalyzeDocumentRequest(modelId, content, pages, locale, stringIndexType, features, queryFields, outputContentFormat, output, context);
                 var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started).ConfigureAwait(false);
-                var trainingOperation = new TrainingOperation(internalOperation);
+                var operationWithId = new OperationWithId(internalOperation);
 
                 // Workaround to obtain the operation ID. The operation-location header is only returned after
                 // the first request that starts the LRO. Because of this we're setting waitUntil to 'Started'
-                // above so we have time to extract the operation ID in the TrainingOperation constructor.
+                // above so we have time to extract the operation ID in the OperationWithId constructor.
 
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await trainingOperation.WaitForCompletionAsync(context?.CancellationToken ?? default).ConfigureAwait(false);
+                    await operationWithId.WaitForCompletionAsync(context?.CancellationToken ?? default).ConfigureAwait(false);
                 }
 
-                return trainingOperation;
+                return operationWithId;
             }
             catch (Exception e)
             {
@@ -126,18 +126,18 @@ namespace Azure.AI.DocumentIntelligence
             {
                 using HttpMessage message = CreateAnalyzeDocumentRequest(modelId, content, pages, locale, stringIndexType, features, queryFields, outputContentFormat, output, context);
                 var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
-                var trainingOperation = new TrainingOperation(internalOperation);
+                var operationWithId = new OperationWithId(internalOperation);
 
                 // Workaround to obtain the operation ID. The operation-location header is only returned after
                 // the first request that starts the LRO. Because of this we're setting waitUntil to 'Started'
-                // above so we have time to extract the operation ID in the TrainingOperation constructor.
+                // above so we have time to extract the operation ID in the OperationWithId constructor.
 
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    trainingOperation.WaitForCompletion(context?.CancellationToken ?? default);
+                    operationWithId.WaitForCompletion(context?.CancellationToken ?? default);
                 }
 
-                return trainingOperation;
+                return operationWithId;
             }
             catch (Exception e)
             {

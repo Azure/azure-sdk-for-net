@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator ==(AnalyzeConversationResultKind left, AnalyzeConversationResultKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeConversationResultKind"/> values are not the same. </summary>
         public static bool operator !=(AnalyzeConversationResultKind left, AnalyzeConversationResultKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalyzeConversationResultKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyzeConversationResultKind"/>. </summary>
         public static implicit operator AnalyzeConversationResultKind(string value) => new AnalyzeConversationResultKind(value);
 
         /// <inheritdoc />

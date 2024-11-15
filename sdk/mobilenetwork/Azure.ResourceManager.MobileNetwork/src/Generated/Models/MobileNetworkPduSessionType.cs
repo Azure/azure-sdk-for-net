@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(MobileNetworkPduSessionType left, MobileNetworkPduSessionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkPduSessionType"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkPduSessionType left, MobileNetworkPduSessionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkPduSessionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkPduSessionType"/>. </summary>
         public static implicit operator MobileNetworkPduSessionType(string value) => new MobileNetworkPduSessionType(value);
 
         /// <inheritdoc />

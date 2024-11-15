@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static bool operator ==(AgentVmSizeType left, AgentVmSizeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentVmSizeType"/> values are not the same. </summary>
         public static bool operator !=(AgentVmSizeType left, AgentVmSizeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AgentVmSizeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AgentVmSizeType"/>. </summary>
         public static implicit operator AgentVmSizeType(string value) => new AgentVmSizeType(value);
 
         /// <inheritdoc />

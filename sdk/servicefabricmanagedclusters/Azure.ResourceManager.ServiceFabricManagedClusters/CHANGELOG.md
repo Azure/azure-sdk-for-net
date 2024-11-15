@@ -1,16 +1,12 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (2024-11-15)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version tag from 'package-2024-04' to 'package-2024-06-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/readme.md.
 
-### Bugs Fixed
-
-### Other Changes
-
-## 1.2.0 (2026-06-25)
+## 1.2.0 (2024-06-25)
 
 ### Features Added
 

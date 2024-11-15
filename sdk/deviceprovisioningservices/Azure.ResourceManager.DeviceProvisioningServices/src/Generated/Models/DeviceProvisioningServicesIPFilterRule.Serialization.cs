@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         void IJsonModel<DeviceProvisioningServicesIPFilterRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesIPFilterRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceProvisioningServicesIPFilterRule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("filterName"u8);
             writer.WriteStringValue(FilterName);
             writer.WritePropertyName("action"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DeviceProvisioningServicesIPFilterRule IJsonModel<DeviceProvisioningServicesIPFilterRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(ExecutionIntervalUnit left, ExecutionIntervalUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExecutionIntervalUnit"/> values are not the same. </summary>
         public static bool operator !=(ExecutionIntervalUnit left, ExecutionIntervalUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExecutionIntervalUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExecutionIntervalUnit"/>. </summary>
         public static implicit operator ExecutionIntervalUnit(string value) => new ExecutionIntervalUnit(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetProtocolType left, ComputeFleetProtocolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetProtocolType"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetProtocolType left, ComputeFleetProtocolType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetProtocolType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetProtocolType"/>. </summary>
         public static implicit operator ComputeFleetProtocolType(string value) => new ComputeFleetProtocolType(value);
 
         /// <inheritdoc />

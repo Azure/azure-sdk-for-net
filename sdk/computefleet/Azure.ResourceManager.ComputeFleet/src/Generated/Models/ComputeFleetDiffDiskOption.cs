@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetDiffDiskOption left, ComputeFleetDiffDiskOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetDiffDiskOption"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetDiffDiskOption left, ComputeFleetDiffDiskOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetDiffDiskOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetDiffDiskOption"/>. </summary>
         public static implicit operator ComputeFleetDiffDiskOption(string value) => new ComputeFleetDiffDiskOption(value);
 
         /// <inheritdoc />

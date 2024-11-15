@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Fabric.Models
         public static bool operator ==(FabricSkuTier left, FabricSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FabricSkuTier"/> values are not the same. </summary>
         public static bool operator !=(FabricSkuTier left, FabricSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FabricSkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FabricSkuTier"/>. </summary>
         public static implicit operator FabricSkuTier(string value) => new FabricSkuTier(value);
 
         /// <inheritdoc />

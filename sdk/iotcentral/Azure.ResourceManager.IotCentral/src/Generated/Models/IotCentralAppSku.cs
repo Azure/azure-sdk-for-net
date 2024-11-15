@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static bool operator ==(IotCentralAppSku left, IotCentralAppSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotCentralAppSku"/> values are not the same. </summary>
         public static bool operator !=(IotCentralAppSku left, IotCentralAppSku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IotCentralAppSku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IotCentralAppSku"/>. </summary>
         public static implicit operator IotCentralAppSku(string value) => new IotCentralAppSku(value);
 
         /// <inheritdoc />

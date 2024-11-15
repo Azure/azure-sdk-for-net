@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ReservationReportSchema left, ReservationReportSchema right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservationReportSchema"/> values are not the same. </summary>
         public static bool operator !=(ReservationReportSchema left, ReservationReportSchema right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReservationReportSchema"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReservationReportSchema"/>. </summary>
         public static implicit operator ReservationReportSchema(string value) => new ReservationReportSchema(value);
 
         /// <inheritdoc />

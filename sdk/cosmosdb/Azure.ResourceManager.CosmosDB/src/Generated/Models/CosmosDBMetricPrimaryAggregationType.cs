@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CosmosDBMetricPrimaryAggregationType left, CosmosDBMetricPrimaryAggregationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBMetricPrimaryAggregationType"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBMetricPrimaryAggregationType left, CosmosDBMetricPrimaryAggregationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBMetricPrimaryAggregationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBMetricPrimaryAggregationType"/>. </summary>
         public static implicit operator CosmosDBMetricPrimaryAggregationType(string value) => new CosmosDBMetricPrimaryAggregationType(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(ThreatIntelligenceType left, ThreatIntelligenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ThreatIntelligenceType"/> values are not the same. </summary>
         public static bool operator !=(ThreatIntelligenceType left, ThreatIntelligenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ThreatIntelligenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ThreatIntelligenceType"/>. </summary>
         public static implicit operator ThreatIntelligenceType(string value) => new ThreatIntelligenceType(value);
 
         /// <inheritdoc />

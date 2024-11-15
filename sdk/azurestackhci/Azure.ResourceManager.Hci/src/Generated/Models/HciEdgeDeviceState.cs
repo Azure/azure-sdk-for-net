@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(HciEdgeDeviceState left, HciEdgeDeviceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciEdgeDeviceState"/> values are not the same. </summary>
         public static bool operator !=(HciEdgeDeviceState left, HciEdgeDeviceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HciEdgeDeviceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciEdgeDeviceState"/>. </summary>
         public static implicit operator HciEdgeDeviceState(string value) => new HciEdgeDeviceState(value);
 
         /// <inheritdoc />

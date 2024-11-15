@@ -35,7 +35,7 @@ namespace Azure.Storage.Files.Shares
         public int? ProvisionedEgressMBps => _response.Headers.TryGetValue("x-ms-share-provisioned-egress-mbps", out int? value) ? value : null;
         /// <summary> Returns the current share next allowed quota downgrade time. </summary>
         public DateTimeOffset? NextAllowedQuotaDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-quota-downgrade-time", out DateTimeOffset? value) ? value : null;
-        /// <summary> Returns the current share provisioned bandwidth in megabits per second. </summary>
+        /// <summary> Returns the current share provisioned bandwidth in mebibytes per second. </summary>
         public int? ProvisionedBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-provisioned-bandwidth-mibps", out int? value) ? value : null;
         /// <summary> When a share is leased, specifies whether the lease is of infinite or fixed duration. </summary>
         public ShareLeaseDuration? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToShareLeaseDuration() : null;
@@ -61,5 +61,13 @@ namespace Azure.Storage.Files.Shares
         public long? PaidBurstingMaxIops => _response.Headers.TryGetValue("x-ms-share-paid-bursting-max-iops", out long? value) ? value : null;
         /// <summary> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec. </summary>
         public long? PaidBurstingMaxBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-paid-bursting-max-bandwidth-mibps", out long? value) ? value : null;
+        /// <summary> Return the calculated burst IOPS of the share. </summary>
+        public long? IncludedBurstIops => _response.Headers.TryGetValue("x-ms-share-included-burst-iops", out long? value) ? value : null;
+        /// <summary> Returned the calculated maximum burst credits. This is not the current burst credit level, but the maximum burst credits the share can have. </summary>
+        public long? MaxBurstCreditsForIops => _response.Headers.TryGetValue("x-ms-share-max-burst-credits-for-iops", out long? value) ? value : null;
+        /// <summary> Returns the current share next allowed provisioned iops downgrade time. </summary>
+        public DateTimeOffset? NextAllowedProvisionedIopsDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-iops-downgrade-time", out DateTimeOffset? value) ? value : null;
+        /// <summary> Returns the current share next allowed provisioned bandwidth downgrade time. </summary>
+        public DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-bandwidth-downgrade-time", out DateTimeOffset? value) ? value : null;
     }
 }

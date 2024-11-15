@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(SourceControlVersion left, SourceControlVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceControlVersion"/> values are not the same. </summary>
         public static bool operator !=(SourceControlVersion left, SourceControlVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SourceControlVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlVersion"/>. </summary>
         public static implicit operator SourceControlVersion(string value) => new SourceControlVersion(value);
 
         /// <inheritdoc />

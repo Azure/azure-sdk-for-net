@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator ==(MySqlPrivateEndpointProvisioningState left, MySqlPrivateEndpointProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlPrivateEndpointProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(MySqlPrivateEndpointProvisioningState left, MySqlPrivateEndpointProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlPrivateEndpointProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlPrivateEndpointProvisioningState"/>. </summary>
         public static implicit operator MySqlPrivateEndpointProvisioningState(string value) => new MySqlPrivateEndpointProvisioningState(value);
 
         /// <inheritdoc />

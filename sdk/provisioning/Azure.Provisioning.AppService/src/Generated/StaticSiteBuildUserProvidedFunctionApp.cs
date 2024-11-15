@@ -15,67 +15,104 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteBuildUserProvidedFunctionApp.
 /// </summary>
-public partial class StaticSiteBuildUserProvidedFunctionApp : Resource
+public partial class StaticSiteBuildUserProvidedFunctionApp : ProvisionableResource
 {
     /// <summary>
     /// Gets or sets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The region of the function app registered with the static site.
     /// </summary>
-    public BicepValue<string> FunctionAppRegion { get => _functionAppRegion; set => _functionAppRegion.Assign(value); }
-    private readonly BicepValue<string> _functionAppRegion;
+    public BicepValue<string> FunctionAppRegion 
+    {
+        get { Initialize(); return _functionAppRegion!; }
+        set { Initialize(); _functionAppRegion!.Assign(value); }
+    }
+    private BicepValue<string>? _functionAppRegion;
 
     /// <summary>
     /// The resource id of the function app registered with the static site.
     /// </summary>
-    public BicepValue<ResourceIdentifier> FunctionAppResourceId { get => _functionAppResourceId; set => _functionAppResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _functionAppResourceId;
+    public BicepValue<ResourceIdentifier> FunctionAppResourceId 
+    {
+        get { Initialize(); return _functionAppResourceId!; }
+        set { Initialize(); _functionAppResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _functionAppResourceId;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The date and time on which the function app was registered with the
     /// static site.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new StaticSiteBuildUserProvidedFunctionApp.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteBuildUserProvidedFunctionApp.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// StaticSiteBuildUserProvidedFunctionApp resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBuildUserProvidedFunctionApp.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StaticSiteBuildUserProvidedFunctionApp(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/staticSites/builds/userProvidedFunctionApps", resourceVersion ?? "2020-12-01", context)
+    public StaticSiteBuildUserProvidedFunctionApp(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/builds/userProvidedFunctionApps", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _functionAppRegion = BicepValue<string>.DefineProperty(this, "FunctionAppRegion", ["properties", "functionAppRegion"]);
-        _functionAppResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "FunctionAppResourceId", ["properties", "functionAppResourceId"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdOn"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// StaticSiteBuildUserProvidedFunctionApp.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _functionAppRegion = DefineProperty<string>("FunctionAppRegion", ["properties", "functionAppRegion"]);
+        _functionAppResourceId = DefineProperty<ResourceIdentifier>("FunctionAppResourceId", ["properties", "functionAppResourceId"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdOn"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -83,6 +120,11 @@ public partial class StaticSiteBuildUserProvidedFunctionApp : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
         /// <summary>
         /// 2023-12-01.
         /// </summary>
@@ -133,9 +175,14 @@ public partial class StaticSiteBuildUserProvidedFunctionApp : Resource
     /// Creates a reference to an existing
     /// StaticSiteBuildUserProvidedFunctionApp.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteBuildUserProvidedFunctionApp.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// StaticSiteBuildUserProvidedFunctionApp resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBuildUserProvidedFunctionApp.</param>
     /// <returns>The existing StaticSiteBuildUserProvidedFunctionApp resource.</returns>
-    public static StaticSiteBuildUserProvidedFunctionApp FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StaticSiteBuildUserProvidedFunctionApp FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

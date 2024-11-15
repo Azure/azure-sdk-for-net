@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(SecurityAlertMinimalSeverity left, SecurityAlertMinimalSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAlertMinimalSeverity"/> values are not the same. </summary>
         public static bool operator !=(SecurityAlertMinimalSeverity left, SecurityAlertMinimalSeverity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityAlertMinimalSeverity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAlertMinimalSeverity"/>. </summary>
         public static implicit operator SecurityAlertMinimalSeverity(string value) => new SecurityAlertMinimalSeverity(value);
 
         /// <inheritdoc />

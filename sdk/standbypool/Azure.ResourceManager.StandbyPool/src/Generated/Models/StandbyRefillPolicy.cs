@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         public static bool operator ==(StandbyRefillPolicy left, StandbyRefillPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StandbyRefillPolicy"/> values are not the same. </summary>
         public static bool operator !=(StandbyRefillPolicy left, StandbyRefillPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StandbyRefillPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StandbyRefillPolicy"/>. </summary>
         public static implicit operator StandbyRefillPolicy(string value) => new StandbyRefillPolicy(value);
 
         /// <inheritdoc />

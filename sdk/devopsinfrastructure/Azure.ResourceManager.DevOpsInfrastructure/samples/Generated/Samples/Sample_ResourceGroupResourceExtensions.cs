@@ -11,18 +11,18 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DevOpsInfrastructure.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
-        // ImageVersions_ListByImage
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetImageVersionsByImage_ImageVersionsListByImage()
         {
-            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-04-04-preview/examples/ImageVersions_ListByImage.json
-            // this example is just showing the usage of "ImageVersions_ListByImage" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-10-19/ImageVersions_ListByImage.json
+            // this example is just showing the usage of "ImageVersion_ListByImage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

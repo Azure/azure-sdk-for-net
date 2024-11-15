@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(AutoProvisionState left, AutoProvisionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoProvisionState"/> values are not the same. </summary>
         public static bool operator !=(AutoProvisionState left, AutoProvisionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutoProvisionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoProvisionState"/>. </summary>
         public static implicit operator AutoProvisionState(string value) => new AutoProvisionState(value);
 
         /// <inheritdoc />

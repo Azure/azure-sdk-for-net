@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator ==(StorageBlobAccessTier left, StorageBlobAccessTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageBlobAccessTier"/> values are not the same. </summary>
         public static bool operator !=(StorageBlobAccessTier left, StorageBlobAccessTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageBlobAccessTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageBlobAccessTier"/>. </summary>
         public static implicit operator StorageBlobAccessTier(string value) => new StorageBlobAccessTier(value);
 
         /// <inheritdoc />

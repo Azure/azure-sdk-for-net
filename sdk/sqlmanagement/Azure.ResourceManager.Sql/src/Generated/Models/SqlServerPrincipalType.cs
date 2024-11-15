@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(SqlServerPrincipalType left, SqlServerPrincipalType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlServerPrincipalType"/> values are not the same. </summary>
         public static bool operator !=(SqlServerPrincipalType left, SqlServerPrincipalType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlServerPrincipalType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlServerPrincipalType"/>. </summary>
         public static implicit operator SqlServerPrincipalType(string value) => new SqlServerPrincipalType(value);
 
         /// <inheritdoc />

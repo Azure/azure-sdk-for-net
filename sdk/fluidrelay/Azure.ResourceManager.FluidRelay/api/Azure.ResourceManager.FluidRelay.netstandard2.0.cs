@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.FluidRelay
         public System.Guid? FrsTenantId { get { throw null; } }
         public System.DateTimeOffset? LastAccessOn { get { throw null; } }
         public Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.FluidRelayContainerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.FluidRelayContainerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.FluidRelayContainerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.FluidRelayContainerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayContainerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -82,6 +83,7 @@ namespace Azure.ResourceManager.FluidRelay
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState? ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku? StorageSku { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.FluidRelayServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.FluidRelayServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.FluidRelayServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.FluidRelayServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -157,6 +159,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         public CmkEncryptionProperties() { }
         public Azure.ResourceManager.FluidRelay.Models.CmkIdentity KeyEncryptionKeyIdentity { get { throw null; } set { } }
         public System.Uri KeyEncryptionKeyUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.Models.CmkEncryptionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.Models.CmkEncryptionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.Models.CmkEncryptionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.Models.CmkEncryptionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.Models.CmkEncryptionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -168,6 +171,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         public CmkIdentity() { }
         public Azure.ResourceManager.FluidRelay.Models.CmkIdentityType? IdentityType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UserAssignedIdentityResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.Models.CmkIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.Models.CmkIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.Models.CmkIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.Models.CmkIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.Models.CmkIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -185,6 +189,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         public System.Collections.Generic.IReadOnlyList<string> OrdererEndpoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ServiceEndpoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> StorageEndpoints { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.Models.FluidRelayEndpoints System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.Models.FluidRelayEndpoints>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.Models.FluidRelayEndpoints>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.Models.FluidRelayEndpoints System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.Models.FluidRelayEndpoints>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -220,6 +225,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         internal FluidRelayServerKeys() { }
         public string PrimaryKey { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.Models.FluidRelayServerKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.Models.FluidRelayServerKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.Models.FluidRelayServerKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.Models.FluidRelayServerKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.Models.FluidRelayServerKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -233,6 +239,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.Models.FluidRelayServerPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.Models.FluidRelayServerPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.Models.FluidRelayServerPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.Models.FluidRelayServerPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.Models.FluidRelayServerPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -261,6 +268,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
     {
         public RegenerateKeyContent(Azure.ResourceManager.FluidRelay.Models.FluidRelayKeyName keyName) { }
         public Azure.ResourceManager.FluidRelay.Models.FluidRelayKeyName KeyName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.Models.RegenerateKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.Models.RegenerateKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.Models.RegenerateKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FluidRelay.Models.RegenerateKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.Models.RegenerateKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

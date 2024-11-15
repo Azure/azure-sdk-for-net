@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator ==(CognitiveServicesSkuRestrictionReasonCode left, CognitiveServicesSkuRestrictionReasonCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CognitiveServicesSkuRestrictionReasonCode"/> values are not the same. </summary>
         public static bool operator !=(CognitiveServicesSkuRestrictionReasonCode left, CognitiveServicesSkuRestrictionReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CognitiveServicesSkuRestrictionReasonCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CognitiveServicesSkuRestrictionReasonCode"/>. </summary>
         public static implicit operator CognitiveServicesSkuRestrictionReasonCode(string value) => new CognitiveServicesSkuRestrictionReasonCode(value);
 
         /// <inheritdoc />

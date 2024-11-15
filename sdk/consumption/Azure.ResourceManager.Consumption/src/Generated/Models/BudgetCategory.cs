@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static bool operator ==(BudgetCategory left, BudgetCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BudgetCategory"/> values are not the same. </summary>
         public static bool operator !=(BudgetCategory left, BudgetCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BudgetCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BudgetCategory"/>. </summary>
         public static implicit operator BudgetCategory(string value) => new BudgetCategory(value);
 
         /// <inheritdoc />

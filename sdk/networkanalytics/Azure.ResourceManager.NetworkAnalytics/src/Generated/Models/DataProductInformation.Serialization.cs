@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 
         void IJsonModel<DataProductInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataProductInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataProductInformation)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("dataProductName"u8);
             writer.WriteStringValue(DataProductName);
             writer.WritePropertyName("description"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataProductInformation IJsonModel<DataProductInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

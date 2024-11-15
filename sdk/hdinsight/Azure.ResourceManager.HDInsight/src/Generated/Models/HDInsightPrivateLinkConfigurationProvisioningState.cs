@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static bool operator ==(HDInsightPrivateLinkConfigurationProvisioningState left, HDInsightPrivateLinkConfigurationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkConfigurationProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(HDInsightPrivateLinkConfigurationProvisioningState left, HDInsightPrivateLinkConfigurationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HDInsightPrivateLinkConfigurationProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightPrivateLinkConfigurationProvisioningState"/>. </summary>
         public static implicit operator HDInsightPrivateLinkConfigurationProvisioningState(string value) => new HDInsightPrivateLinkConfigurationProvisioningState(value);
 
         /// <inheritdoc />

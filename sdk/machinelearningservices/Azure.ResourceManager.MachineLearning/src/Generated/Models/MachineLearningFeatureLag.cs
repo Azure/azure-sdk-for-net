@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningFeatureLag left, MachineLearningFeatureLag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningFeatureLag"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningFeatureLag left, MachineLearningFeatureLag right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningFeatureLag"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningFeatureLag"/>. </summary>
         public static implicit operator MachineLearningFeatureLag(string value) => new MachineLearningFeatureLag(value);
 
         /// <inheritdoc />

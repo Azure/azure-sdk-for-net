@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static bool operator ==(CloudEndpointChangeEnumerationActivityState left, CloudEndpointChangeEnumerationActivityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudEndpointChangeEnumerationActivityState"/> values are not the same. </summary>
         public static bool operator !=(CloudEndpointChangeEnumerationActivityState left, CloudEndpointChangeEnumerationActivityState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CloudEndpointChangeEnumerationActivityState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudEndpointChangeEnumerationActivityState"/>. </summary>
         public static implicit operator CloudEndpointChangeEnumerationActivityState(string value) => new CloudEndpointChangeEnumerationActivityState(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(ClusterManagerConnectionStatus left, ClusterManagerConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterManagerConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(ClusterManagerConnectionStatus left, ClusterManagerConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterManagerConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterManagerConnectionStatus"/>. </summary>
         public static implicit operator ClusterManagerConnectionStatus(string value) => new ClusterManagerConnectionStatus(value);
 
         /// <inheritdoc />

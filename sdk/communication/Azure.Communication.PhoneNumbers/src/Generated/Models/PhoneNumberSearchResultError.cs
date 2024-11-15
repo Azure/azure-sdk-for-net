@@ -78,7 +78,7 @@ namespace Azure.Communication.PhoneNumbers
         public static bool operator ==(PhoneNumberSearchResultError left, PhoneNumberSearchResultError right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoneNumberSearchResultError"/> values are not the same. </summary>
         public static bool operator !=(PhoneNumberSearchResultError left, PhoneNumberSearchResultError right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PhoneNumberSearchResultError"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PhoneNumberSearchResultError"/>. </summary>
         public static implicit operator PhoneNumberSearchResultError(string value) => new PhoneNumberSearchResultError(value);
 
         /// <inheritdoc />

@@ -36,11 +36,6 @@ namespace Azure.AI.OpenAI.Chat
                 writer.WritePropertyName("strictness"u8);
                 writer.WriteNumberValue(Strictness.Value);
             }
-            if (SerializedAdditionalRawData?.ContainsKey("role_information") != true && Optional.IsDefined(RoleInformation))
-            {
-                writer.WritePropertyName("role_information"u8);
-                writer.WriteStringValue(RoleInformation);
-            }
             if (SerializedAdditionalRawData?.ContainsKey("max_search_queries") != true && Optional.IsDefined(MaxSearchQueries))
             {
                 writer.WritePropertyName("max_search_queries"u8);
@@ -131,7 +126,6 @@ namespace Azure.AI.OpenAI.Chat
             int? topNDocuments = default;
             bool? inScope = default;
             int? strictness = default;
-            string roleInformation = default;
             int? maxSearchQueries = default;
             bool? allowPartialResult = default;
             IList<string> includeContexts = default;
@@ -169,11 +163,6 @@ namespace Azure.AI.OpenAI.Chat
                         continue;
                     }
                     strictness = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("role_information"u8))
-                {
-                    roleInformation = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("max_search_queries"u8))
@@ -244,7 +233,6 @@ namespace Azure.AI.OpenAI.Chat
                 topNDocuments,
                 inScope,
                 strictness,
-                roleInformation,
                 maxSearchQueries,
                 allowPartialResult,
                 includeContexts ?? new ChangeTrackingList<string>(),

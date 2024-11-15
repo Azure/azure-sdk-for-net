@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static bool operator ==(MonitoringStatus left, MonitoringStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitoringStatus"/> values are not the same. </summary>
         public static bool operator !=(MonitoringStatus left, MonitoringStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitoringStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitoringStatus"/>. </summary>
         public static implicit operator MonitoringStatus(string value) => new MonitoringStatus(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator ==(BackupVaultSoftDeleteState left, BackupVaultSoftDeleteState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupVaultSoftDeleteState"/> values are not the same. </summary>
         public static bool operator !=(BackupVaultSoftDeleteState left, BackupVaultSoftDeleteState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupVaultSoftDeleteState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupVaultSoftDeleteState"/>. </summary>
         public static implicit operator BackupVaultSoftDeleteState(string value) => new BackupVaultSoftDeleteState(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetVmDeleteOption left, ComputeFleetVmDeleteOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetVmDeleteOption"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetVmDeleteOption left, ComputeFleetVmDeleteOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetVmDeleteOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetVmDeleteOption"/>. </summary>
         public static implicit operator ComputeFleetVmDeleteOption(string value) => new ComputeFleetVmDeleteOption(value);
 
         /// <inheritdoc />

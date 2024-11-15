@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(AutoMLVerticalRegressionPrimaryMetric left, AutoMLVerticalRegressionPrimaryMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoMLVerticalRegressionPrimaryMetric"/> values are not the same. </summary>
         public static bool operator !=(AutoMLVerticalRegressionPrimaryMetric left, AutoMLVerticalRegressionPrimaryMetric right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutoMLVerticalRegressionPrimaryMetric"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoMLVerticalRegressionPrimaryMetric"/>. </summary>
         public static implicit operator AutoMLVerticalRegressionPrimaryMetric(string value) => new AutoMLVerticalRegressionPrimaryMetric(value);
 
         /// <inheritdoc />

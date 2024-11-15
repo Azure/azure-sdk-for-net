@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(BackupEngineType left, BackupEngineType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupEngineType"/> values are not the same. </summary>
         public static bool operator !=(BackupEngineType left, BackupEngineType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupEngineType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupEngineType"/>. </summary>
         public static implicit operator BackupEngineType(string value) => new BackupEngineType(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(WafMetric left, WafMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafMetric"/> values are not the same. </summary>
         public static bool operator !=(WafMetric left, WafMetric right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WafMetric"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WafMetric"/>. </summary>
         public static implicit operator WafMetric(string value) => new WafMetric(value);
 
         /// <inheritdoc />

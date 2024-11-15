@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(HybridComputeProvisioningIssueType left, HybridComputeProvisioningIssueType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridComputeProvisioningIssueType"/> values are not the same. </summary>
         public static bool operator !=(HybridComputeProvisioningIssueType left, HybridComputeProvisioningIssueType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HybridComputeProvisioningIssueType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeProvisioningIssueType"/>. </summary>
         public static implicit operator HybridComputeProvisioningIssueType(string value) => new HybridComputeProvisioningIssueType(value);
 
         /// <inheritdoc />

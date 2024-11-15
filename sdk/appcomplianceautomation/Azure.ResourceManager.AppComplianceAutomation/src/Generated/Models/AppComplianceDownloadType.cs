@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static bool operator ==(AppComplianceDownloadType left, AppComplianceDownloadType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppComplianceDownloadType"/> values are not the same. </summary>
         public static bool operator !=(AppComplianceDownloadType left, AppComplianceDownloadType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppComplianceDownloadType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppComplianceDownloadType"/>. </summary>
         public static implicit operator AppComplianceDownloadType(string value) => new AppComplianceDownloadType(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator ==(ServiceBusEncryptionKeySource left, ServiceBusEncryptionKeySource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusEncryptionKeySource"/> values are not the same. </summary>
         public static bool operator !=(ServiceBusEncryptionKeySource left, ServiceBusEncryptionKeySource right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceBusEncryptionKeySource"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusEncryptionKeySource"/>. </summary>
         public static implicit operator ServiceBusEncryptionKeySource(string value) => new ServiceBusEncryptionKeySource(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(ThroughputPolicyType left, ThroughputPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ThroughputPolicyType"/> values are not the same. </summary>
         public static bool operator !=(ThroughputPolicyType left, ThroughputPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ThroughputPolicyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ThroughputPolicyType"/>. </summary>
         public static implicit operator ThroughputPolicyType(string value) => new ThroughputPolicyType(value);
 
         /// <inheritdoc />

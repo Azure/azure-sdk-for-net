@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(SparkConfigurationReferenceType left, SparkConfigurationReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkConfigurationReferenceType"/> values are not the same. </summary>
         public static bool operator !=(SparkConfigurationReferenceType left, SparkConfigurationReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SparkConfigurationReferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SparkConfigurationReferenceType"/>. </summary>
         public static implicit operator SparkConfigurationReferenceType(string value) => new SparkConfigurationReferenceType(value);
 
         /// <inheritdoc />

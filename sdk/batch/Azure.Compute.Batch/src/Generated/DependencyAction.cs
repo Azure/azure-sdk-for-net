@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(DependencyAction left, DependencyAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DependencyAction"/> values are not the same. </summary>
         public static bool operator !=(DependencyAction left, DependencyAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DependencyAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DependencyAction"/>. </summary>
         public static implicit operator DependencyAction(string value) => new DependencyAction(value);
 
         /// <inheritdoc />

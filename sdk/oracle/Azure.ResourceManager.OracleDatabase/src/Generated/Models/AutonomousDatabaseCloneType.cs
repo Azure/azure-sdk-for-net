@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(AutonomousDatabaseCloneType left, AutonomousDatabaseCloneType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutonomousDatabaseCloneType"/> values are not the same. </summary>
         public static bool operator !=(AutonomousDatabaseCloneType left, AutonomousDatabaseCloneType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutonomousDatabaseCloneType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutonomousDatabaseCloneType"/>. </summary>
         public static implicit operator AutonomousDatabaseCloneType(string value) => new AutonomousDatabaseCloneType(value);
 
         /// <inheritdoc />

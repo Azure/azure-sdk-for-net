@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ValidationMetricType left, ValidationMetricType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ValidationMetricType"/> values are not the same. </summary>
         public static bool operator !=(ValidationMetricType left, ValidationMetricType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ValidationMetricType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ValidationMetricType"/>. </summary>
         public static implicit operator ValidationMetricType(string value) => new ValidationMetricType(value);
 
         /// <inheritdoc />

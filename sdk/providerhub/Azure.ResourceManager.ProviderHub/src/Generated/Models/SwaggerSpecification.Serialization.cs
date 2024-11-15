@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         void IJsonModel<SwaggerSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SwaggerSpecification)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ApiVersions))
             {
                 writer.WritePropertyName("apiVersions"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SwaggerSpecification IJsonModel<SwaggerSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

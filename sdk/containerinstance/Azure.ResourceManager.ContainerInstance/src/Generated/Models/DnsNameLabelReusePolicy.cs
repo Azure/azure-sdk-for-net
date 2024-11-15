@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static bool operator ==(DnsNameLabelReusePolicy left, DnsNameLabelReusePolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsNameLabelReusePolicy"/> values are not the same. </summary>
         public static bool operator !=(DnsNameLabelReusePolicy left, DnsNameLabelReusePolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DnsNameLabelReusePolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsNameLabelReusePolicy"/>. </summary>
         public static implicit operator DnsNameLabelReusePolicy(string value) => new DnsNameLabelReusePolicy(value);
 
         /// <inheritdoc />

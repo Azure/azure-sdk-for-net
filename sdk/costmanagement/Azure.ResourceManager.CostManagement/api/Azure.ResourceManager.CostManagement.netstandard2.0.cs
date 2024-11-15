@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.CostManagement
         public Azure.ResourceManager.CostManagement.Models.CostManagementAlertStatus? Status { get { throw null; } set { } }
         public string StatusModificationUserName { get { throw null; } set { } }
         public System.DateTimeOffset? StatusModifiedOn { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.CostManagementAlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementAlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementAlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.CostManagementAlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementAlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.CostManagement
         public bool? PartitionData { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CostManagement.Models.ExportRun> RunHistoryValue { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ExportSchedule Schedule { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.CostManagementExportData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementExportData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementExportData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.CostManagementExportData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementExportData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -205,6 +207,7 @@ namespace Azure.ResourceManager.CostManagement
         public Azure.ResourceManager.CostManagement.Models.ReportTimeframeType? Timeframe { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod TimePeriod { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ViewReportType? TypePropertiesQueryType { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.CostManagementViewData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementViewData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementViewData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.CostManagementViewData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementViewData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -277,6 +280,7 @@ namespace Azure.ResourceManager.CostManagement
         public Azure.Core.ResourceIdentifier Scope { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ScheduledActionStatus? Status { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ViewId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.ScheduledActionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.ScheduledActionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.ScheduledActionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.ScheduledActionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.ScheduledActionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -508,6 +512,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.CostManagementAlertType? AlertType { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.CostManagementAlertCategory? Category { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.AlertCriterion? Criteria { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -539,6 +544,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.AlertTimeGrainType? TimeGrainType { get { throw null; } set { } }
         public string TriggeredBy { get { throw null; } set { } }
         public string Unit { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -580,6 +586,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public decimal? SavingsPercentage { get { throw null; } }
         public decimal? TotalCost { get { throw null; } }
         public decimal? WastageCost { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -591,6 +598,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         internal AllSavingsList() { }
         public System.Uri NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails> Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.AllSavingsList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AllSavingsList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AllSavingsList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.AllSavingsList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AllSavingsList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -635,6 +643,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema? ReportUri { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema? SecondaryReportUri { get { throw null; } }
         public System.DateTimeOffset? ValidUntil { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -646,6 +655,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public BenefitRecommendationModel() { }
         public Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -685,6 +695,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm? Term { get { throw null; } set { } }
         public int? TotalHours { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails Usage { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -721,6 +732,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain Grain { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind? Kind { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -733,6 +745,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent Input { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties Properties { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.OperationStatusType? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -742,6 +755,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     public partial class BenefitUtilizationSummary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary>
     {
         public BenefitUtilizationSummary() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -801,6 +815,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public System.DateTimeOffset? NextRunTimeEstimate { get { throw null; } }
         public bool? PartitionData { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CostManagement.Models.ExportRun> RunHistoryValue { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.CommonExportProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CommonExportProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CommonExportProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.CommonExportProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CommonExportProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -881,6 +896,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.CostManagementAlertStatus? Status { get { throw null; } set { } }
         public string StatusModificationUserName { get { throw null; } set { } }
         public System.DateTimeOffset? StatusModifiedOn { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -965,6 +981,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public int? Total { get { throw null; } }
         public System.DateTimeOffset? UsageEnd { get { throw null; } }
         public System.DateTimeOffset? UsageStart { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.CostManagementDimension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementDimension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementDimension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.CostManagementDimension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementDimension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -976,6 +993,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public CostManagementNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -988,6 +1006,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.CostManagementUnavailabilityReason? Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1018,6 +1037,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public System.Uri DownloadUri { get { throw null; } }
         public System.DateTimeOffset? ExpiryOn { get { throw null; } }
         public System.DateTimeOffset? ValidTill { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.DownloadURL System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.DownloadURL>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.DownloadURL>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.DownloadURL System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.DownloadURL>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1029,6 +1049,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ExportDataset() { }
         public System.Collections.Generic.IList<string> Columns { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.GranularityType? Granularity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportDataset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDataset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1042,6 +1063,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.ExportType ExportType { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.TimeframeType Timeframe { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ExportTimePeriod TimePeriod { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1056,6 +1078,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public string RootFolderPath { get { throw null; } set { } }
         public string SasToken { get { throw null; } set { } }
         public string StorageAccount { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1066,6 +1089,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     {
         public ExportDeliveryInfo(Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination destination) { }
         public Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination Destination { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1094,6 +1118,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ExportRecurrencePeriod(System.DateTimeOffset from) { }
         public System.DateTimeOffset From { get { throw null; } set { } }
         public System.DateTimeOffset? To { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1113,6 +1138,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus? Status { get { throw null; } set { } }
         public string SubmittedBy { get { throw null; } set { } }
         public System.DateTimeOffset? SubmittedOn { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportRun System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRun>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRun>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportRun System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRun>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1124,6 +1150,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ExportRunErrorDetails() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1177,6 +1204,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.ExportScheduleRecurrenceType? Recurrence { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod RecurrencePeriod { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ExportScheduleStatusType? Status { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1226,6 +1254,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ExportTimePeriod(System.DateTimeOffset from, System.DateTimeOffset to) { }
         public System.DateTimeOffset From { get { throw null; } set { } }
         public System.DateTimeOffset To { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportTimePeriod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportTimePeriod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportTimePeriod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ExportTimePeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportTimePeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1274,6 +1303,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ForecastAggregation(Azure.ResourceManager.CostManagement.Models.FunctionName name, Azure.ResourceManager.CostManagement.Models.FunctionType function) { }
         public Azure.ResourceManager.CostManagement.Models.FunctionType Function { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.FunctionName Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastAggregation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastAggregation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastAggregation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastAggregation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastAggregation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1285,6 +1315,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         internal ForecastColumn() { }
         public string ForecastColumnType { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastColumn System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastColumn>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastColumn>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastColumn System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastColumn>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1297,6 +1328,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public string Name { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ForecastOperatorType Operator { get { throw null; } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1310,6 +1342,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public System.Collections.Generic.IList<string> Columns { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ForecastFilter Filter { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.GranularityType? Granularity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastDataset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastDataset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1325,6 +1358,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public bool? IncludeFreshPartialCost { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ForecastTimeframe Timeframe { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod TimePeriod { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1338,6 +1372,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression Dimensions { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ForecastFilter> Or { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression Tags { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1371,6 +1406,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.BinaryData>> Rows { get { throw null; } }
         public string Sku { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1399,6 +1435,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ForecastTimePeriod(System.DateTimeOffset from, System.DateTimeOffset to) { }
         public System.DateTimeOffset From { get { throw null; } }
         public System.DateTimeOffset To { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1506,6 +1543,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind? BenefitType { get { throw null; } set { } }
         public System.DateTimeOffset? UsageOn { get { throw null; } }
         public decimal? UtilizationPercentage { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1539,6 +1577,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public string RegionalFormat { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> To { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.NotificationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.NotificationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.NotificationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.NotificationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.NotificationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1551,6 +1590,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.ReservationReportSchema? ReportUri { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.OperationStatusType? Status { get { throw null; } }
         public System.DateTimeOffset? ValidUntil { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.OperationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.OperationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.OperationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.OperationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.OperationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1582,6 +1622,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public QueryAggregation(string name, Azure.ResourceManager.CostManagement.Models.FunctionType function) { }
         public Azure.ResourceManager.CostManagement.Models.FunctionType Function { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryAggregation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryAggregation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryAggregation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryAggregation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryAggregation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1593,6 +1634,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         internal QueryColumn() { }
         public string Name { get { throw null; } }
         public string QueryColumnType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryColumn System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryColumn>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryColumn>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryColumn System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryColumn>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1623,6 +1665,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public string Name { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.QueryOperatorType Operator { get { throw null; } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1637,6 +1680,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.QueryFilter Filter { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.GranularityType? Granularity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.QueryGrouping> Grouping { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryDataset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryDataset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1650,6 +1694,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.ExportType ExportType { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.TimeframeType Timeframe { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.QueryTimePeriod TimePeriod { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1663,6 +1708,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression Dimensions { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.QueryFilter> Or { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression Tags { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1674,6 +1720,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public QueryGrouping(Azure.ResourceManager.CostManagement.Models.QueryColumnType columnType, string name) { }
         public Azure.ResourceManager.CostManagement.Models.QueryColumnType ColumnType { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryGrouping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryGrouping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryGrouping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryGrouping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryGrouping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1707,6 +1754,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.BinaryData>> Rows { get { throw null; } }
         public string Sku { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1718,6 +1766,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public QueryTimePeriod(System.DateTimeOffset from, System.DateTimeOffset to) { }
         public System.DateTimeOffset From { get { throw null; } }
         public System.DateTimeOffset To { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryTimePeriod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryTimePeriod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryTimePeriod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.QueryTimePeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryTimePeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1729,6 +1778,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public RecommendationUsageDetails() { }
         public System.Collections.Generic.IReadOnlyList<decimal> Charges { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain? UsageGrain { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1740,6 +1790,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ReportConfigAggregation(string name, Azure.ResourceManager.CostManagement.Models.FunctionType function) { }
         public Azure.ResourceManager.CostManagement.Models.FunctionType Function { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1752,6 +1803,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1767,6 +1819,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.ReportGranularityType? Granularity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping> Grouping { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ReportConfigSorting> Sorting { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigDataset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigDataset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1780,6 +1833,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression Dimensions { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ReportConfigFilter> Or { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression Tags { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1791,6 +1845,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ReportConfigGrouping(Azure.ResourceManager.CostManagement.Models.QueryColumnType queryColumnType, string name) { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.QueryColumnType QueryColumnType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1802,6 +1857,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ReportConfigSorting(string name) { }
         public Azure.ResourceManager.CostManagement.Models.ReportConfigSortingType? Direction { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigSorting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigSorting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigSorting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigSorting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigSorting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1831,6 +1887,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ReportConfigTimePeriod(System.DateTimeOffset from, System.DateTimeOffset to) { }
         public System.DateTimeOffset From { get { throw null; } set { } }
         public System.DateTimeOffset To { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1913,6 +1970,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public decimal? MaxUtilizationPercentage { get { throw null; } }
         public decimal? MinUtilizationPercentage { get { throw null; } }
         public System.DateTimeOffset? UsageOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2046,6 +2104,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public int? HourOfDay { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth> WeeksOfMonth { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ScheduleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ScheduleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ScheduleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ScheduleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ScheduleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2055,6 +2114,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     public partial class SharedScopeBenefitRecommendationProperties : Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties>
     {
         public SharedScopeBenefitRecommendationProperties() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2066,6 +2126,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public SingleScopeBenefitRecommendationProperties() { }
         public string ResourceGroup { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2131,6 +2192,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ViewKpiType? KpiType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ViewKpiProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ViewKpiProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ViewKpiProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ViewKpiProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ViewKpiProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2179,6 +2241,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ViewPivotProperties() { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ViewPivotType? PivotType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ViewPivotProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ViewPivotProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ViewPivotProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CostManagement.Models.ViewPivotProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ViewPivotProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

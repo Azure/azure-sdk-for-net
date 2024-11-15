@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(StaticRoutingEnrichmentType left, StaticRoutingEnrichmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StaticRoutingEnrichmentType"/> values are not the same. </summary>
         public static bool operator !=(StaticRoutingEnrichmentType left, StaticRoutingEnrichmentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StaticRoutingEnrichmentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StaticRoutingEnrichmentType"/>. </summary>
         public static implicit operator StaticRoutingEnrichmentType(string value) => new StaticRoutingEnrichmentType(value);
 
         /// <inheritdoc />

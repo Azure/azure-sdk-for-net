@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator ==(EventHubsSchemaType left, EventHubsSchemaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsSchemaType"/> values are not the same. </summary>
         public static bool operator !=(EventHubsSchemaType left, EventHubsSchemaType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventHubsSchemaType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsSchemaType"/>. </summary>
         public static implicit operator EventHubsSchemaType(string value) => new EventHubsSchemaType(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.Data.Tables.Models
         public static bool operator ==(OdataMetadataFormat left, OdataMetadataFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OdataMetadataFormat"/> values are not the same. </summary>
         public static bool operator !=(OdataMetadataFormat left, OdataMetadataFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OdataMetadataFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OdataMetadataFormat"/>. </summary>
         public static implicit operator OdataMetadataFormat(string value) => new OdataMetadataFormat(value);
 
         /// <inheritdoc />

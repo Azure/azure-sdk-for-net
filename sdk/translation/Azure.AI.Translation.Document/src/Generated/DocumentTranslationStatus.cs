@@ -44,7 +44,7 @@ namespace Azure.AI.Translation.Document
         public static bool operator ==(DocumentTranslationStatus left, DocumentTranslationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentTranslationStatus"/> values are not the same. </summary>
         public static bool operator !=(DocumentTranslationStatus left, DocumentTranslationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DocumentTranslationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentTranslationStatus"/>. </summary>
         public static implicit operator DocumentTranslationStatus(string value) => new DocumentTranslationStatus(value);
 
         /// <inheritdoc />

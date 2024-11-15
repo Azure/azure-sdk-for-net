@@ -20,8 +20,8 @@ For more general information and examples on mocking with the Azure SDK, please 
 
 ## Publishing events with the `EventHubProducerClient`
 
-When using batches to publish to Event Hubs, the key interactions with the `EventHubProducerClient` are calling `CreateBatchAsync` to create the batch and `SendAsync` to publish it. 
- Mocked batches accept a `List<EventData>` that is used as a backing store and can be inspected to verify that the application is adding events to the batch as expected.  The custom `TryAdd` callback can be used to control the decision for whether an event is accepted into the batch or is rejected.   
+When using batches to publish to Event Hubs, the key interactions with the `EventHubProducerClient` are calling `CreateBatchAsync` to create the batch and `SendAsync` to publish it.
+ Mocked batches accept a `List<EventData>` that is used as a backing store and can be inspected to verify that the application is adding events to the batch as expected.  The custom `TryAdd` callback can be used to control the decision for whether an event is accepted into the batch or is rejected.
 
 This snippet demonstrates mocking the `EventHubProducerClient`, and creating `EventDataBatch` instances using the `EventHubsModelFactory`.
 
@@ -321,7 +321,7 @@ await foreach (PartitionEvent receivedEvent in consumer.ReadEventsFromPartitionA
 
 ## Consuming events using the `PartitionReceiver`
 
-The sample below illustrates how to mock a `PartitionReceiver`, and set up its `ReceiveBatchAsync` method to return a simple data batch. 
+The sample below illustrates how to mock a `PartitionReceiver`, and set up its `ReceiveBatchAsync` method to return a simple data batch.
 
 Given the purpose of the `PartitionReceiver`, it is anticipated that most applications will have complex code surrounding their receivers, so this snippet is intentionally simple, with the focus being on using the `EventHubsModelFactory` to mock events being returned from the broker.
 

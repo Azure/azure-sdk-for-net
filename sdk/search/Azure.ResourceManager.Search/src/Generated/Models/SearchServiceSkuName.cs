@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Search.Models
         public static bool operator ==(SearchServiceSkuName left, SearchServiceSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchServiceSkuName"/> values are not the same. </summary>
         public static bool operator !=(SearchServiceSkuName left, SearchServiceSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchServiceSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchServiceSkuName"/>. </summary>
         public static implicit operator SearchServiceSkuName(string value) => new SearchServiceSkuName(value);
 
         /// <inheritdoc />

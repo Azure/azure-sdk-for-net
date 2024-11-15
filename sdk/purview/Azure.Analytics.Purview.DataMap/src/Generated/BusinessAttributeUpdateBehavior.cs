@@ -36,7 +36,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static bool operator ==(BusinessAttributeUpdateBehavior left, BusinessAttributeUpdateBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BusinessAttributeUpdateBehavior"/> values are not the same. </summary>
         public static bool operator !=(BusinessAttributeUpdateBehavior left, BusinessAttributeUpdateBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BusinessAttributeUpdateBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BusinessAttributeUpdateBehavior"/>. </summary>
         public static implicit operator BusinessAttributeUpdateBehavior(string value) => new BusinessAttributeUpdateBehavior(value);
 
         /// <inheritdoc />

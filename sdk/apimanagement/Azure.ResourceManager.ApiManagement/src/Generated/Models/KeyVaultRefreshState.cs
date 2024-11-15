@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(KeyVaultRefreshState left, KeyVaultRefreshState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultRefreshState"/> values are not the same. </summary>
         public static bool operator !=(KeyVaultRefreshState left, KeyVaultRefreshState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KeyVaultRefreshState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultRefreshState"/>. </summary>
         public static implicit operator KeyVaultRefreshState(string value) => new KeyVaultRefreshState(value);
 
         /// <inheritdoc />

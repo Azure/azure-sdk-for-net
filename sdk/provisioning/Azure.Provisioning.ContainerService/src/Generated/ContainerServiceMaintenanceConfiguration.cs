@@ -16,76 +16,377 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// ContainerServiceMaintenanceConfiguration.
 /// </summary>
-public partial class ContainerServiceMaintenanceConfiguration : Resource
+public partial class ContainerServiceMaintenanceConfiguration : ProvisionableResource
 {
     /// <summary>
     /// The name of the maintenance configuration.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Maintenance window for the maintenance configuration.
     /// </summary>
-    public BicepValue<ContainerServiceMaintenanceWindow> MaintenanceWindow { get => _maintenanceWindow; set => _maintenanceWindow.Assign(value); }
-    private readonly BicepValue<ContainerServiceMaintenanceWindow> _maintenanceWindow;
+    public ContainerServiceMaintenanceWindow MaintenanceWindow 
+    {
+        get { Initialize(); return _maintenanceWindow!; }
+        set { Initialize(); AssignOrReplace(ref _maintenanceWindow, value); }
+    }
+    private ContainerServiceMaintenanceWindow? _maintenanceWindow;
 
     /// <summary>
     /// Time slots on which upgrade is not allowed.
     /// </summary>
-    public BicepList<ContainerServiceTimeSpan> NotAllowedTimes { get => _notAllowedTimes; set => _notAllowedTimes.Assign(value); }
-    private readonly BicepList<ContainerServiceTimeSpan> _notAllowedTimes;
+    public BicepList<ContainerServiceTimeSpan> NotAllowedTimes 
+    {
+        get { Initialize(); return _notAllowedTimes!; }
+        set { Initialize(); _notAllowedTimes!.Assign(value); }
+    }
+    private BicepList<ContainerServiceTimeSpan>? _notAllowedTimes;
 
     /// <summary>
     /// If two array entries specify the same day of the week, the applied
     /// configuration is the union of times in both entries.
     /// </summary>
-    public BicepList<ContainerServiceTimeInWeek> TimesInWeek { get => _timesInWeek; set => _timesInWeek.Assign(value); }
-    private readonly BicepList<ContainerServiceTimeInWeek> _timesInWeek;
+    public BicepList<ContainerServiceTimeInWeek> TimesInWeek 
+    {
+        get { Initialize(); return _timesInWeek!; }
+        set { Initialize(); _timesInWeek!.Assign(value); }
+    }
+    private BicepList<ContainerServiceTimeInWeek>? _timesInWeek;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerServiceManagedCluster.
     /// </summary>
-    public ContainerServiceManagedCluster? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerServiceManagedCluster> _parent;
+    public ContainerServiceManagedCluster? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerServiceManagedCluster>? _parent;
 
     /// <summary>
     /// Creates a new ContainerServiceMaintenanceConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerServiceMaintenanceConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerServiceMaintenanceConfiguration resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceMaintenanceConfiguration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerServiceMaintenanceConfiguration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion, context)
+    public ContainerServiceMaintenanceConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion ?? "2024-08-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _maintenanceWindow = BicepValue<ContainerServiceMaintenanceWindow>.DefineProperty(this, "MaintenanceWindow", ["properties", "maintenanceWindow"]);
-        _notAllowedTimes = BicepList<ContainerServiceTimeSpan>.DefineProperty(this, "NotAllowedTimes", ["properties", "notAllowedTime"]);
-        _timesInWeek = BicepList<ContainerServiceTimeInWeek>.DefineProperty(this, "TimesInWeek", ["properties", "timeInWeek"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerServiceManagedCluster>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ContainerServiceMaintenanceConfiguration.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _maintenanceWindow = DefineModelProperty<ContainerServiceMaintenanceWindow>("MaintenanceWindow", ["properties", "maintenanceWindow"]);
+        _notAllowedTimes = DefineListProperty<ContainerServiceTimeSpan>("NotAllowedTimes", ["properties", "notAllowedTime"]);
+        _timesInWeek = DefineListProperty<ContainerServiceTimeInWeek>("TimesInWeek", ["properties", "timeInWeek"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerServiceManagedCluster>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ContainerServiceMaintenanceConfiguration resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-08-01.
+        /// </summary>
+        public static readonly string V2024_08_01 = "2024-08-01";
+
+        /// <summary>
+        /// 2024-07-01.
+        /// </summary>
+        public static readonly string V2024_07_01 = "2024-07-01";
+
+        /// <summary>
+        /// 2024-06-01.
+        /// </summary>
+        public static readonly string V2024_06_01 = "2024-06-01";
+
+        /// <summary>
+        /// 2024-05-01.
+        /// </summary>
+        public static readonly string V2024_05_01 = "2024-05-01";
+
+        /// <summary>
+        /// 2024-02-01.
+        /// </summary>
+        public static readonly string V2024_02_01 = "2024-02-01";
+
+        /// <summary>
+        /// 2024-01-01.
+        /// </summary>
+        public static readonly string V2024_01_01 = "2024-01-01";
+
+        /// <summary>
+        /// 2023-11-01.
+        /// </summary>
+        public static readonly string V2023_11_01 = "2023-11-01";
+
+        /// <summary>
+        /// 2023-10-01.
+        /// </summary>
+        public static readonly string V2023_10_01 = "2023-10-01";
+
+        /// <summary>
+        /// 2023-09-01.
+        /// </summary>
+        public static readonly string V2023_09_01 = "2023-09-01";
+
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
+        /// <summary>
+        /// 2023-07-01.
+        /// </summary>
+        public static readonly string V2023_07_01 = "2023-07-01";
+
+        /// <summary>
+        /// 2023-06-01.
+        /// </summary>
+        public static readonly string V2023_06_01 = "2023-06-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2023-04-01.
+        /// </summary>
+        public static readonly string V2023_04_01 = "2023-04-01";
+
+        /// <summary>
+        /// 2023-03-01.
+        /// </summary>
+        public static readonly string V2023_03_01 = "2023-03-01";
+
+        /// <summary>
+        /// 2023-02-01.
+        /// </summary>
+        public static readonly string V2023_02_01 = "2023-02-01";
+
+        /// <summary>
+        /// 2023-01-01.
+        /// </summary>
+        public static readonly string V2023_01_01 = "2023-01-01";
+
+        /// <summary>
+        /// 2022-11-01.
+        /// </summary>
+        public static readonly string V2022_11_01 = "2022-11-01";
+
+        /// <summary>
+        /// 2022-09-01.
+        /// </summary>
+        public static readonly string V2022_09_01 = "2022-09-01";
+
+        /// <summary>
+        /// 2022-08-01.
+        /// </summary>
+        public static readonly string V2022_08_01 = "2022-08-01";
+
+        /// <summary>
+        /// 2022-07-01.
+        /// </summary>
+        public static readonly string V2022_07_01 = "2022-07-01";
+
+        /// <summary>
+        /// 2022-06-01.
+        /// </summary>
+        public static readonly string V2022_06_01 = "2022-06-01";
+
+        /// <summary>
+        /// 2022-04-01.
+        /// </summary>
+        public static readonly string V2022_04_01 = "2022-04-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
+
+        /// <summary>
+        /// 2022-02-01.
+        /// </summary>
+        public static readonly string V2022_02_01 = "2022-02-01";
+
+        /// <summary>
+        /// 2022-01-01.
+        /// </summary>
+        public static readonly string V2022_01_01 = "2022-01-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2021-09-01.
+        /// </summary>
+        public static readonly string V2021_09_01 = "2021-09-01";
+
+        /// <summary>
+        /// 2021-08-01.
+        /// </summary>
+        public static readonly string V2021_08_01 = "2021-08-01";
+
+        /// <summary>
+        /// 2021-07-01.
+        /// </summary>
+        public static readonly string V2021_07_01 = "2021-07-01";
+
+        /// <summary>
+        /// 2021-05-01.
+        /// </summary>
+        public static readonly string V2021_05_01 = "2021-05-01";
+
+        /// <summary>
+        /// 2021-03-01.
+        /// </summary>
+        public static readonly string V2021_03_01 = "2021-03-01";
+
+        /// <summary>
+        /// 2021-02-01.
+        /// </summary>
+        public static readonly string V2021_02_01 = "2021-02-01";
+
+        /// <summary>
+        /// 2020-12-01.
+        /// </summary>
+        public static readonly string V2020_12_01 = "2020-12-01";
+
+        /// <summary>
+        /// 2020-11-01.
+        /// </summary>
+        public static readonly string V2020_11_01 = "2020-11-01";
+
+        /// <summary>
+        /// 2020-09-01.
+        /// </summary>
+        public static readonly string V2020_09_01 = "2020-09-01";
+
+        /// <summary>
+        /// 2020-07-01.
+        /// </summary>
+        public static readonly string V2020_07_01 = "2020-07-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2020-04-01.
+        /// </summary>
+        public static readonly string V2020_04_01 = "2020-04-01";
+
+        /// <summary>
+        /// 2020-03-01.
+        /// </summary>
+        public static readonly string V2020_03_01 = "2020-03-01";
+
+        /// <summary>
+        /// 2020-02-01.
+        /// </summary>
+        public static readonly string V2020_02_01 = "2020-02-01";
+
+        /// <summary>
+        /// 2020-01-01.
+        /// </summary>
+        public static readonly string V2020_01_01 = "2020-01-01";
+
+        /// <summary>
+        /// 2019-11-01.
+        /// </summary>
+        public static readonly string V2019_11_01 = "2019-11-01";
+
+        /// <summary>
+        /// 2019-10-01.
+        /// </summary>
+        public static readonly string V2019_10_01 = "2019-10-01";
+
+        /// <summary>
+        /// 2019-08-01.
+        /// </summary>
+        public static readonly string V2019_08_01 = "2019-08-01";
+
+        /// <summary>
+        /// 2019-06-01.
+        /// </summary>
+        public static readonly string V2019_06_01 = "2019-06-01";
+
+        /// <summary>
+        /// 2019-04-01.
+        /// </summary>
+        public static readonly string V2019_04_01 = "2019-04-01";
+
+        /// <summary>
+        /// 2019-02-01.
+        /// </summary>
+        public static readonly string V2019_02_01 = "2019-02-01";
+
+        /// <summary>
+        /// 2018-03-31.
+        /// </summary>
+        public static readonly string V2018_03_31 = "2018-03-31";
+
+        /// <summary>
+        /// 2017-08-31.
+        /// </summary>
+        public static readonly string V2017_08_31 = "2017-08-31";
     }
 
     /// <summary>
     /// Creates a reference to an existing
     /// ContainerServiceMaintenanceConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerServiceMaintenanceConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerServiceMaintenanceConfiguration resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceMaintenanceConfiguration.</param>
     /// <returns>The existing ContainerServiceMaintenanceConfiguration resource.</returns>
-    public static ContainerServiceMaintenanceConfiguration FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerServiceMaintenanceConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static bool operator ==(AllowDnsProxyType left, AllowDnsProxyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AllowDnsProxyType"/> values are not the same. </summary>
         public static bool operator !=(AllowDnsProxyType left, AllowDnsProxyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AllowDnsProxyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AllowDnsProxyType"/>. </summary>
         public static implicit operator AllowDnsProxyType(string value) => new AllowDnsProxyType(value);
 
         /// <inheritdoc />

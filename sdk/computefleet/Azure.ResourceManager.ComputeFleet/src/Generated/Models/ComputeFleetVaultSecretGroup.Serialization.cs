@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         void IJsonModel<ComputeFleetVaultSecretGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVaultSecretGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVaultSecretGroup)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SourceVault))
             {
                 writer.WritePropertyName("sourceVault"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ComputeFleetVaultSecretGroup IJsonModel<ComputeFleetVaultSecretGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

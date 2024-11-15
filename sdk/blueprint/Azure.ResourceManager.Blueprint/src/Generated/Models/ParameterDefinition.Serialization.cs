@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         void IJsonModel<ParameterDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ParameterDefinition)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TemplateParameterType.ToString());
             if (Optional.IsDefined(DefaultValue))
@@ -95,7 +103,6 @@ namespace Azure.ResourceManager.Blueprint.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ParameterDefinition IJsonModel<ParameterDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

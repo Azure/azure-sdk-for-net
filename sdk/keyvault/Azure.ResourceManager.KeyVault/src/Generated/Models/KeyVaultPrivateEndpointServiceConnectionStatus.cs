@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(KeyVaultPrivateEndpointServiceConnectionStatus left, KeyVaultPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(KeyVaultPrivateEndpointServiceConnectionStatus left, KeyVaultPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KeyVaultPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultPrivateEndpointServiceConnectionStatus"/>. </summary>
         public static implicit operator KeyVaultPrivateEndpointServiceConnectionStatus(string value) => new KeyVaultPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc />

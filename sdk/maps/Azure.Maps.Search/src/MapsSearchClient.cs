@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,8 +13,6 @@ using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
 using Azure.Maps.Common;
 using Azure.Maps.Search.Models;
-using Azure.Maps.Search.Models.Options;
-using Azure.Maps.Search.Models.Queries;
 
 namespace Azure.Maps.Search
 {
@@ -221,7 +218,7 @@ namespace Azure.Maps.Search
 
         /// <param name="queries"> The list of address geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is emoty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is empty. </exception>
         public virtual async Task<Response<GeocodingBatchResponse>> GetGeocodingBatchAsync(IEnumerable<GeocodingQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetGeocodingBatch");
@@ -277,15 +274,16 @@ namespace Azure.Maps.Search
                 }
 
                 IEnumerable<double> coordinates = null;
-                if (options?.Coordinates != null)
+                if (options.Coordinates != null)
                 {
                     coordinates = coordinates = new[]
                     {
-                        Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                        Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                        Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                        Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                     };
                 }
-                return await RestClient.GetPolygonAsync(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken).ConfigureAwait(false);
+                var boundaryInternal = await RestClient.GetPolygonAsync(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Boundary(boundaryInternal.Value), boundaryInternal.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -312,11 +310,12 @@ namespace Azure.Maps.Search
                 }
 
                 IEnumerable<double> coordinates = null;
-                if (options?.Coordinates != null)
+                if (options.Coordinates != null)
                 {
-                    coordinates = new[] { (double)options.Coordinates?.Longitude, (double)options.Coordinates?.Latitude };
+                    coordinates = new[] { (double)options.Coordinates.Longitude, (double)options.Coordinates.Latitude };
                 }
-                return RestClient.GetPolygon(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken);
+                var boundaryInternal = RestClient.GetPolygon(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken);
+                return Response.FromValue(new Boundary(boundaryInternal.Value), boundaryInternal.GetRawResponse());
             }
             catch (Exception e)
             {

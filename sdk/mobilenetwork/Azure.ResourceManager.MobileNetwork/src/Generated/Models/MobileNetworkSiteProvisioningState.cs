@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(MobileNetworkSiteProvisioningState left, MobileNetworkSiteProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkSiteProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkSiteProvisioningState left, MobileNetworkSiteProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkSiteProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkSiteProvisioningState"/>. </summary>
         public static implicit operator MobileNetworkSiteProvisioningState(string value) => new MobileNetworkSiteProvisioningState(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(KubeConfigFormat left, KubeConfigFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubeConfigFormat"/> values are not the same. </summary>
         public static bool operator !=(KubeConfigFormat left, KubeConfigFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KubeConfigFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KubeConfigFormat"/>. </summary>
         public static implicit operator KubeConfigFormat(string value) => new KubeConfigFormat(value);
 
         /// <inheritdoc />

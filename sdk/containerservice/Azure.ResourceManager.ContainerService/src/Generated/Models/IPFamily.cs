@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(IPFamily left, IPFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IPFamily"/> values are not the same. </summary>
         public static bool operator !=(IPFamily left, IPFamily right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IPFamily"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IPFamily"/>. </summary>
         public static implicit operator IPFamily(string value) => new IPFamily(value);
 
         /// <inheritdoc />

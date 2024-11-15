@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator ==(StreamAnalyticsClusterSkuName left, StreamAnalyticsClusterSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamAnalyticsClusterSkuName"/> values are not the same. </summary>
         public static bool operator !=(StreamAnalyticsClusterSkuName left, StreamAnalyticsClusterSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StreamAnalyticsClusterSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StreamAnalyticsClusterSkuName"/>. </summary>
         public static implicit operator StreamAnalyticsClusterSkuName(string value) => new StreamAnalyticsClusterSkuName(value);
 
         /// <inheritdoc />

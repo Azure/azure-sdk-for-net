@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(LibraryManagementAction left, LibraryManagementAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LibraryManagementAction"/> values are not the same. </summary>
         public static bool operator !=(LibraryManagementAction left, LibraryManagementAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LibraryManagementAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LibraryManagementAction"/>. </summary>
         public static implicit operator LibraryManagementAction(string value) => new LibraryManagementAction(value);
 
         /// <inheritdoc />

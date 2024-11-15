@@ -42,7 +42,7 @@ namespace Azure.AI.Inference
         public static bool operator ==(ChatMessageImageDetailLevel left, ChatMessageImageDetailLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChatMessageImageDetailLevel"/> values are not the same. </summary>
         public static bool operator !=(ChatMessageImageDetailLevel left, ChatMessageImageDetailLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChatMessageImageDetailLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChatMessageImageDetailLevel"/>. </summary>
         public static implicit operator ChatMessageImageDetailLevel(string value) => new ChatMessageImageDetailLevel(value);
 
         /// <inheritdoc />

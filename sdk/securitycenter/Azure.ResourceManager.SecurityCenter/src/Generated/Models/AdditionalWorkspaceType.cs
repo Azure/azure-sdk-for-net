@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(AdditionalWorkspaceType left, AdditionalWorkspaceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdditionalWorkspaceType"/> values are not the same. </summary>
         public static bool operator !=(AdditionalWorkspaceType left, AdditionalWorkspaceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AdditionalWorkspaceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AdditionalWorkspaceType"/>. </summary>
         public static implicit operator AdditionalWorkspaceType(string value) => new AdditionalWorkspaceType(value);
 
         /// <inheritdoc />

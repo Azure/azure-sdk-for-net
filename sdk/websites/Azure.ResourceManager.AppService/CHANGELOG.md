@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.2 (2024-11-11)
+
+### Bugs Fixed
+
+- Add status code 202 and allow some properties to be empty. Issue at 'https://github.com/Azure/azure-sdk-for-net/issues/46854.
+
+## 1.3.0-beta.1 (2024-10-14)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.2.0 (2024-07-29)
 

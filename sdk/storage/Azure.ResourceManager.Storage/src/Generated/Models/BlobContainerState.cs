@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(BlobContainerState left, BlobContainerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobContainerState"/> values are not the same. </summary>
         public static bool operator !=(BlobContainerState left, BlobContainerState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BlobContainerState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobContainerState"/>. </summary>
         public static implicit operator BlobContainerState(string value) => new BlobContainerState(value);
 
         /// <inheritdoc />

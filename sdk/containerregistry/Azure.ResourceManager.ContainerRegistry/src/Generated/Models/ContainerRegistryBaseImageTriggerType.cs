@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(ContainerRegistryBaseImageTriggerType left, ContainerRegistryBaseImageTriggerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryBaseImageTriggerType"/> values are not the same. </summary>
         public static bool operator !=(ContainerRegistryBaseImageTriggerType left, ContainerRegistryBaseImageTriggerType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerRegistryBaseImageTriggerType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryBaseImageTriggerType"/>. </summary>
         public static implicit operator ContainerRegistryBaseImageTriggerType(string value) => new ContainerRegistryBaseImageTriggerType(value);
 
         /// <inheritdoc />

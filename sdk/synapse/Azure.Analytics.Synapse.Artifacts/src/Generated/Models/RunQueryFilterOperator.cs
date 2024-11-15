@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(RunQueryFilterOperator left, RunQueryFilterOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunQueryFilterOperator"/> values are not the same. </summary>
         public static bool operator !=(RunQueryFilterOperator left, RunQueryFilterOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RunQueryFilterOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RunQueryFilterOperator"/>. </summary>
         public static implicit operator RunQueryFilterOperator(string value) => new RunQueryFilterOperator(value);
 
         /// <inheritdoc />

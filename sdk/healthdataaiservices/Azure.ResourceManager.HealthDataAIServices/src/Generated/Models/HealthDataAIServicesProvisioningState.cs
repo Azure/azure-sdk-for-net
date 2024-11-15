@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         public static bool operator ==(HealthDataAIServicesProvisioningState left, HealthDataAIServicesProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthDataAIServicesProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(HealthDataAIServicesProvisioningState left, HealthDataAIServicesProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HealthDataAIServicesProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HealthDataAIServicesProvisioningState"/>. </summary>
         public static implicit operator HealthDataAIServicesProvisioningState(string value) => new HealthDataAIServicesProvisioningState(value);
 
         /// <inheritdoc />

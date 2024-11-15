@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(NodeArcState left, NodeArcState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeArcState"/> values are not the same. </summary>
         public static bool operator !=(NodeArcState left, NodeArcState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NodeArcState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NodeArcState"/>. </summary>
         public static implicit operator NodeArcState(string value) => new NodeArcState(value);
 
         /// <inheritdoc />

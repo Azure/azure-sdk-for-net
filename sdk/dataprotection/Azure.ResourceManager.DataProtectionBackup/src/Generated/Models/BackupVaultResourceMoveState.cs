@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator ==(BackupVaultResourceMoveState left, BackupVaultResourceMoveState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupVaultResourceMoveState"/> values are not the same. </summary>
         public static bool operator !=(BackupVaultResourceMoveState left, BackupVaultResourceMoveState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupVaultResourceMoveState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupVaultResourceMoveState"/>. </summary>
         public static implicit operator BackupVaultResourceMoveState(string value) => new BackupVaultResourceMoveState(value);
 
         /// <inheritdoc />

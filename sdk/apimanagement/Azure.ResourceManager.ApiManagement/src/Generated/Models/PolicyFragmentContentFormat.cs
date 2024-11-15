@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(PolicyFragmentContentFormat left, PolicyFragmentContentFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyFragmentContentFormat"/> values are not the same. </summary>
         public static bool operator !=(PolicyFragmentContentFormat left, PolicyFragmentContentFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PolicyFragmentContentFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyFragmentContentFormat"/>. </summary>
         public static implicit operator PolicyFragmentContentFormat(string value) => new PolicyFragmentContentFormat(value);
 
         /// <inheritdoc />

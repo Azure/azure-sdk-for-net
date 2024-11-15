@@ -65,11 +65,6 @@ namespace Azure.Security.KeyVault.Administration
                 _id = selectiveRestoreHeaders.Headers.JobId() ?? throw new InvalidOperationException("The response does not contain an Id");
                 _retryAfterSeconds = selectiveRestoreHeaders.Headers.RetryAfter;
             }
-            else if (response is ResponseWithHeaders<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders> preRestoreHeaders)
-            {
-                _id = preRestoreHeaders.Headers.JobId() ?? throw new InvalidOperationException("The response does not contain an Id");
-                _retryAfterSeconds = (int)preRestoreHeaders.Headers.RetryAfter;
-            }
             else
             {
                 throw new ArgumentException("Invalid header type", nameof(response));

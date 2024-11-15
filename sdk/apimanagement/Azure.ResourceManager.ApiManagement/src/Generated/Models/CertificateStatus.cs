@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(CertificateStatus left, CertificateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CertificateStatus"/> values are not the same. </summary>
         public static bool operator !=(CertificateStatus left, CertificateStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CertificateStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CertificateStatus"/>. </summary>
         public static implicit operator CertificateStatus(string value) => new CertificateStatus(value);
 
         /// <inheritdoc />

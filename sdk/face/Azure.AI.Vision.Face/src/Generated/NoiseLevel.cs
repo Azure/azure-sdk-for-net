@@ -36,7 +36,7 @@ namespace Azure.AI.Vision.Face
         public static bool operator ==(NoiseLevel left, NoiseLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NoiseLevel"/> values are not the same. </summary>
         public static bool operator !=(NoiseLevel left, NoiseLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NoiseLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NoiseLevel"/>. </summary>
         public static implicit operator NoiseLevel(string value) => new NoiseLevel(value);
 
         /// <inheritdoc />

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(MaxSizeUnit left, MaxSizeUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaxSizeUnit"/> values are not the same. </summary>
         public static bool operator !=(MaxSizeUnit left, MaxSizeUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MaxSizeUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MaxSizeUnit"/>. </summary>
         public static implicit operator MaxSizeUnit(string value) => new MaxSizeUnit(value);
 
         /// <inheritdoc />

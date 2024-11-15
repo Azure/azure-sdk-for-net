@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CosmosDBAccountKeyKind left, CosmosDBAccountKeyKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBAccountKeyKind"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBAccountKeyKind left, CosmosDBAccountKeyKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBAccountKeyKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBAccountKeyKind"/>. </summary>
         public static implicit operator CosmosDBAccountKeyKind(string value) => new CosmosDBAccountKeyKind(value);
 
         /// <inheritdoc />

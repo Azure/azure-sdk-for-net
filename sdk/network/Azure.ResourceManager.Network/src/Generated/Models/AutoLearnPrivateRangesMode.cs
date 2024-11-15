@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(AutoLearnPrivateRangesMode left, AutoLearnPrivateRangesMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoLearnPrivateRangesMode"/> values are not the same. </summary>
         public static bool operator !=(AutoLearnPrivateRangesMode left, AutoLearnPrivateRangesMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutoLearnPrivateRangesMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoLearnPrivateRangesMode"/>. </summary>
         public static implicit operator AutoLearnPrivateRangesMode(string value) => new AutoLearnPrivateRangesMode(value);
 
         /// <inheritdoc />

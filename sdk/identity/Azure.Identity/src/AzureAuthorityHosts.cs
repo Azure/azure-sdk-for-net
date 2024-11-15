@@ -27,6 +27,7 @@ namespace Azure.Identity
         /// <summary>
         /// The host of the Microsoft Entra authority for tenants in the Azure German Cloud.
         /// </summary>
+        [Obsolete("Microsoft Cloud Germany was closed on October 29th, 2021.")]
         public static Uri AzureGermany { get; } = new Uri(AzureGermanyHostUrl);
 
         /// <summary>

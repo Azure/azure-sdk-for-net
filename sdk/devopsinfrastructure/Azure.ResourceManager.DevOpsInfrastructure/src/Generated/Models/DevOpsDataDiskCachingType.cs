@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static bool operator ==(DevOpsDataDiskCachingType left, DevOpsDataDiskCachingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevOpsDataDiskCachingType"/> values are not the same. </summary>
         public static bool operator !=(DevOpsDataDiskCachingType left, DevOpsDataDiskCachingType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevOpsDataDiskCachingType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsDataDiskCachingType"/>. </summary>
         public static implicit operator DevOpsDataDiskCachingType(string value) => new DevOpsDataDiskCachingType(value);
 
         /// <inheritdoc />

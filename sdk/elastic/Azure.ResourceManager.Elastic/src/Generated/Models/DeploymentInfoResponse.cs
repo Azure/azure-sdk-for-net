@@ -55,13 +55,19 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="version"> Version of the elasticsearch in Elastic cloud deployment. </param>
         /// <param name="memoryCapacity"> RAM capacity of the elasticsearch in Elastic cloud deployment. </param>
         /// <param name="diskCapacity"> Disk capacity of the elasticsearch in Elastic cloud deployment. </param>
+        /// <param name="elasticsearchEndPoint"> Elasticsearch endpoint in Elastic cloud deployment. This is either the aliased_endpoint if available, or the service_url otherwise. </param>
+        /// <param name="deploymentUri"> Deployment URL of the elasticsearch in Elastic cloud deployment. </param>
+        /// <param name="marketplaceSaasInfo"> Marketplace SaaS Info of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentInfoResponse(ElasticDeploymentStatus? status, string version, string memoryCapacity, string diskCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentInfoResponse(ElasticDeploymentStatus? status, string version, string memoryCapacity, string diskCapacity, string elasticsearchEndPoint, Uri deploymentUri, MarketplaceSaaSInfo marketplaceSaasInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Version = version;
             MemoryCapacity = memoryCapacity;
             DiskCapacity = diskCapacity;
+            ElasticsearchEndPoint = elasticsearchEndPoint;
+            DeploymentUri = deploymentUri;
+            MarketplaceSaasInfo = marketplaceSaasInfo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,5 +79,11 @@ namespace Azure.ResourceManager.Elastic.Models
         public string MemoryCapacity { get; }
         /// <summary> Disk capacity of the elasticsearch in Elastic cloud deployment. </summary>
         public string DiskCapacity { get; }
+        /// <summary> Elasticsearch endpoint in Elastic cloud deployment. This is either the aliased_endpoint if available, or the service_url otherwise. </summary>
+        public string ElasticsearchEndPoint { get; }
+        /// <summary> Deployment URL of the elasticsearch in Elastic cloud deployment. </summary>
+        public Uri DeploymentUri { get; }
+        /// <summary> Marketplace SaaS Info of the resource. </summary>
+        public MarketplaceSaaSInfo MarketplaceSaasInfo { get; }
     }
 }

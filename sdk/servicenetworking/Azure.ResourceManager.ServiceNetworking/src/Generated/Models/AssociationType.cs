@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public static bool operator ==(AssociationType left, AssociationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssociationType"/> values are not the same. </summary>
         public static bool operator !=(AssociationType left, AssociationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AssociationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AssociationType"/>. </summary>
         public static implicit operator AssociationType(string value) => new AssociationType(value);
 
         /// <inheritdoc />

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator ==(MySqlServerVersion left, MySqlServerVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlServerVersion"/> values are not the same. </summary>
         public static bool operator !=(MySqlServerVersion left, MySqlServerVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlServerVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlServerVersion"/>. </summary>
         public static implicit operator MySqlServerVersion(string value) => new MySqlServerVersion(value);
 
         /// <inheritdoc />

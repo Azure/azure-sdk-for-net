@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(DataReferenceCredentialType left, DataReferenceCredentialType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataReferenceCredentialType"/> values are not the same. </summary>
         public static bool operator !=(DataReferenceCredentialType left, DataReferenceCredentialType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataReferenceCredentialType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReferenceCredentialType"/>. </summary>
         public static implicit operator DataReferenceCredentialType(string value) => new DataReferenceCredentialType(value);
 
         /// <inheritdoc />

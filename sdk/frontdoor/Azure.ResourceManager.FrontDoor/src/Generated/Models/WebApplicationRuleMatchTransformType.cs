@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(WebApplicationRuleMatchTransformType left, WebApplicationRuleMatchTransformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchTransformType"/> values are not the same. </summary>
         public static bool operator !=(WebApplicationRuleMatchTransformType left, WebApplicationRuleMatchTransformType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebApplicationRuleMatchTransformType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationRuleMatchTransformType"/>. </summary>
         public static implicit operator WebApplicationRuleMatchTransformType(string value) => new WebApplicationRuleMatchTransformType(value);
 
         /// <inheritdoc />

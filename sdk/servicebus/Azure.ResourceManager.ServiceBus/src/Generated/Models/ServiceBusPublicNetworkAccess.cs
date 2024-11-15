@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator ==(ServiceBusPublicNetworkAccess left, ServiceBusPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(ServiceBusPublicNetworkAccess left, ServiceBusPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceBusPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusPublicNetworkAccess"/>. </summary>
         public static implicit operator ServiceBusPublicNetworkAccess(string value) => new ServiceBusPublicNetworkAccess(value);
 
         /// <inheritdoc />

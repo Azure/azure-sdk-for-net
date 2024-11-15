@@ -61,8 +61,9 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="scalingProperties"> Information on how the deployment will be scaled. </param>
         /// <param name="autoUpgradeProfile"> Autoupgrade settings of a deployment. </param>
         /// <param name="userProfile"></param>
+        /// <param name="nginxAppProtect"> Settings for NGINX App Protect (NAP). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentProperties(NginxProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, AutoUpgradeProfile autoUpgradeProfile, NginxDeploymentUserProfile userProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxDeploymentProperties(NginxProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, AutoUpgradeProfile autoUpgradeProfile, NginxDeploymentUserProfile userProfile, NginxDeploymentPropertiesNginxAppProtect nginxAppProtect, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             NginxVersion = nginxVersion;
@@ -74,6 +75,7 @@ namespace Azure.ResourceManager.Nginx.Models
             ScalingProperties = scalingProperties;
             AutoUpgradeProfile = autoUpgradeProfile;
             UserProfile = userProfile;
+            NginxAppProtect = nginxAppProtect;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -127,5 +129,8 @@ namespace Azure.ResourceManager.Nginx.Models
                 UserProfile.PreferredEmail = value;
             }
         }
+
+        /// <summary> Settings for NGINX App Protect (NAP). </summary>
+        public NginxDeploymentPropertiesNginxAppProtect NginxAppProtect { get; set; }
     }
 }

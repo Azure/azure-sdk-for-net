@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(EnhancedSecurityState left, EnhancedSecurityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnhancedSecurityState"/> values are not the same. </summary>
         public static bool operator !=(EnhancedSecurityState left, EnhancedSecurityState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EnhancedSecurityState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EnhancedSecurityState"/>. </summary>
         public static implicit operator EnhancedSecurityState(string value) => new EnhancedSecurityState(value);
 
         /// <inheritdoc />

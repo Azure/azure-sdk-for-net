@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(NetAppKeyVaultStatus left, NetAppKeyVaultStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppKeyVaultStatus"/> values are not the same. </summary>
         public static bool operator !=(NetAppKeyVaultStatus left, NetAppKeyVaultStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppKeyVaultStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppKeyVaultStatus"/>. </summary>
         public static implicit operator NetAppKeyVaultStatus(string value) => new NetAppKeyVaultStatus(value);
 
         /// <inheritdoc />

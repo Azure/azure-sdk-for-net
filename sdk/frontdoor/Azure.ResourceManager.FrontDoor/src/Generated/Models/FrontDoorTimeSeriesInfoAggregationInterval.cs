@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(FrontDoorTimeSeriesInfoAggregationInterval left, FrontDoorTimeSeriesInfoAggregationInterval right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorTimeSeriesInfoAggregationInterval"/> values are not the same. </summary>
         public static bool operator !=(FrontDoorTimeSeriesInfoAggregationInterval left, FrontDoorTimeSeriesInfoAggregationInterval right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FrontDoorTimeSeriesInfoAggregationInterval"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorTimeSeriesInfoAggregationInterval"/>. </summary>
         public static implicit operator FrontDoorTimeSeriesInfoAggregationInterval(string value) => new FrontDoorTimeSeriesInfoAggregationInterval(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(AutomationRulePropertyArrayConditionSupportedArrayConditionType left, AutomationRulePropertyArrayConditionSupportedArrayConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationRulePropertyArrayConditionSupportedArrayConditionType"/> values are not the same. </summary>
         public static bool operator !=(AutomationRulePropertyArrayConditionSupportedArrayConditionType left, AutomationRulePropertyArrayConditionSupportedArrayConditionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutomationRulePropertyArrayConditionSupportedArrayConditionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationRulePropertyArrayConditionSupportedArrayConditionType"/>. </summary>
         public static implicit operator AutomationRulePropertyArrayConditionSupportedArrayConditionType(string value) => new AutomationRulePropertyArrayConditionSupportedArrayConditionType(value);
 
         /// <inheritdoc />

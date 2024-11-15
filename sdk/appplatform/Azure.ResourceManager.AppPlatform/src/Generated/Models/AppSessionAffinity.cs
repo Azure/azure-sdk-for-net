@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static bool operator ==(AppSessionAffinity left, AppSessionAffinity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppSessionAffinity"/> values are not the same. </summary>
         public static bool operator !=(AppSessionAffinity left, AppSessionAffinity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppSessionAffinity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppSessionAffinity"/>. </summary>
         public static implicit operator AppSessionAffinity(string value) => new AppSessionAffinity(value);
 
         /// <inheritdoc />

@@ -162,7 +162,7 @@ internal class AzureDeploymentClient : IDisposable
                 && response.Headers.GetFirstOrDefault("Content-Type")?.StartsWith("application/json") == true)
             {
                 using Stream errorStream = response.Content.ToStream();
-                ErrorInfo? error = JsonHelpers.Deserialize<ErrorInfo>(errorStream, JsonOptions.AzureJsonOptions);
+                ErrorInfo? error = JsonSerializer.Deserialize<ErrorInfo>(errorStream, JsonOptions.AzureJsonOptions);
                 if (error?.Error != null)
                 {
                     throw new ClientResultException($"[{response.Status} - {error.Error.Code}] {error.Error.Message}", response);
@@ -178,7 +178,7 @@ internal class AzureDeploymentClient : IDisposable
         ThrowOnFailed(response);
 
         using Stream stream = response.Content.ToStream();
-        return JsonHelpers.Deserialize<T>(stream, JsonOptions.AzureJsonOptions)
+        return JsonSerializer.Deserialize<T>(stream, JsonOptions.AzureJsonOptions)
             ?? throw new InvalidDataException("Service returned a null JSON response body");
     }
 

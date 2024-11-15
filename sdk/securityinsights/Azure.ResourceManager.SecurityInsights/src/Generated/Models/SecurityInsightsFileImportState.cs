@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(SecurityInsightsFileImportState left, SecurityInsightsFileImportState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsFileImportState"/> values are not the same. </summary>
         public static bool operator !=(SecurityInsightsFileImportState left, SecurityInsightsFileImportState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityInsightsFileImportState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsFileImportState"/>. </summary>
         public static implicit operator SecurityInsightsFileImportState(string value) => new SecurityInsightsFileImportState(value);
 
         /// <inheritdoc />

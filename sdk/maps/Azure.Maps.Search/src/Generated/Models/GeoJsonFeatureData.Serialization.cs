@@ -10,7 +10,7 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonFeatureData
+    internal partial class GeoJsonFeatureData
     {
         internal static GeoJsonFeatureData DeserializeGeoJsonFeatureData(JsonElement element)
         {

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(SecurityConfigurationRuleProtocol left, SecurityConfigurationRuleProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityConfigurationRuleProtocol"/> values are not the same. </summary>
         public static bool operator !=(SecurityConfigurationRuleProtocol left, SecurityConfigurationRuleProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityConfigurationRuleProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityConfigurationRuleProtocol"/>. </summary>
         public static implicit operator SecurityConfigurationRuleProtocol(string value) => new SecurityConfigurationRuleProtocol(value);
 
         /// <inheritdoc />

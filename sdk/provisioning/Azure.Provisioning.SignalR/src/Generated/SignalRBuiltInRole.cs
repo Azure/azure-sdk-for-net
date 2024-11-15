@@ -52,8 +52,8 @@ public readonly struct SignalRBuiltInRole(string value) : IEquatable<SignalRBuil
     /// <summary>
     /// Create, Read, Update, and Delete SignalR service resources
     /// </summary>
-    public static SignalRBuiltInRole SignalRWebPubSubContributor { get; } = new(SignalRWebPubSubContributorValue);
-    internal const string SignalRWebPubSubContributorValue = "8cf5e20a-e4b2-4e9d-b3a1-5ceb692c2761";
+    public static SignalRBuiltInRole SignalRContributor { get; } = new(SignalRContributorValue);
+    internal const string SignalRContributorValue = "8cf5e20a-e4b2-4e9d-b3a1-5ceb692c2761";
 
     /// <summary>
     /// Try to get the name of a built-in SignalR role from its ID value.
@@ -71,7 +71,7 @@ public readonly struct SignalRBuiltInRole(string value) : IEquatable<SignalRBuil
             SignalRRestApiOwnerValue => nameof(SignalRRestApiOwner),
             SignalRRestApiReaderValue => nameof(SignalRRestApiReader),
             SignalRServiceOwnerValue => nameof(SignalRServiceOwner),
-            SignalRWebPubSubContributorValue => nameof(SignalRWebPubSubContributor),
+            SignalRContributorValue => nameof(SignalRContributor),
             _ => value._value
         };
 

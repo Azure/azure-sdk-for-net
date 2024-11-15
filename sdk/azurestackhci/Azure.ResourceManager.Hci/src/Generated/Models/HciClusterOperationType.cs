@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(HciClusterOperationType left, HciClusterOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciClusterOperationType"/> values are not the same. </summary>
         public static bool operator !=(HciClusterOperationType left, HciClusterOperationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HciClusterOperationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciClusterOperationType"/>. </summary>
         public static implicit operator HciClusterOperationType(string value) => new HciClusterOperationType(value);
 
         /// <inheritdoc />

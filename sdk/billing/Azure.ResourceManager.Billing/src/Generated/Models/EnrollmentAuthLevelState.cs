@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(EnrollmentAuthLevelState left, EnrollmentAuthLevelState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnrollmentAuthLevelState"/> values are not the same. </summary>
         public static bool operator !=(EnrollmentAuthLevelState left, EnrollmentAuthLevelState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EnrollmentAuthLevelState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EnrollmentAuthLevelState"/>. </summary>
         public static implicit operator EnrollmentAuthLevelState(string value) => new EnrollmentAuthLevelState(value);
 
         /// <inheritdoc />

@@ -23,6 +23,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string scheduleTime = default;
             StorageLifecyclePolicyActionSummaryDetail deleteSummary = default;
             StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = default;
+            StorageLifecyclePolicyActionSummaryDetail tierToColdSummary = default;
             StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,6 +50,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     tierToCoolSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value);
                     continue;
                 }
+                if (property.NameEquals("tierToColdSummary"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tierToColdSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("tierToArchiveSummary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -59,7 +69,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageLifecyclePolicyCompletedEventData(scheduleTime, deleteSummary, tierToCoolSummary, tierToArchiveSummary);
+            return new StorageLifecyclePolicyCompletedEventData(scheduleTime, deleteSummary, tierToCoolSummary, tierToColdSummary, tierToArchiveSummary);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

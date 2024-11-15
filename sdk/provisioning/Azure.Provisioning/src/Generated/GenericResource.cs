@@ -15,49 +15,76 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// GenericResource.
 /// </summary>
-public partial class GenericResource : Resource
+public partial class GenericResource : ProvisionableResource
 {
     /// <summary>
     /// The name of the resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Resource extended location.
     /// </summary>
-    public BicepValue<ExtendedAzureLocation> ExtendedLocation { get => _extendedLocation; set => _extendedLocation.Assign(value); }
-    private readonly BicepValue<ExtendedAzureLocation> _extendedLocation;
+    public ExtendedAzureLocation ExtendedLocation 
+    {
+        get { Initialize(); return _extendedLocation!; }
+        set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
+    }
+    private ExtendedAzureLocation? _extendedLocation;
 
     /// <summary>
     /// The identity of the resource.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// The kind of the resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// ID of the resource that manages this resource.
     /// </summary>
-    public BicepValue<string> ManagedBy { get => _managedBy; set => _managedBy.Assign(value); }
-    private readonly BicepValue<string> _managedBy;
+    public BicepValue<string> ManagedBy 
+    {
+        get { Initialize(); return _managedBy!; }
+        set { Initialize(); _managedBy!.Assign(value); }
+    }
+    private BicepValue<string>? _managedBy;
 
     /// <summary>
     /// The plan of the resource.
     /// </summary>
-    public BicepValue<ArmPlan> Plan { get => _plan; set => _plan.Assign(value); }
-    private readonly BicepValue<ArmPlan> _plan;
+    public ArmPlan Plan 
+    {
+        get { Initialize(); return _plan!; }
+        set { Initialize(); AssignOrReplace(ref _plan, value); }
+    }
+    private ArmPlan? _plan;
 
     /// <summary>
     /// The resource properties.                          To assign an object
@@ -75,88 +102,131 @@ public partial class GenericResource : Resource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> Properties { get => _properties; set => _properties.Assign(value); }
-    private readonly BicepValue<BinaryData> _properties;
+    public BicepValue<BinaryData> Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); _properties!.Assign(value); }
+    }
+    private BicepValue<BinaryData>? _properties;
 
     /// <summary>
     /// The SKU of the resource.
     /// </summary>
-    public BicepValue<ResourcesSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<ResourcesSku> _sku;
+    public ResourcesSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private ResourcesSku? _sku;
 
     /// <summary>
     /// Resource tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The changed time of the resource. This is only present if requested via
     /// the $expand query parameter.
     /// </summary>
-    public BicepValue<DateTimeOffset> ChangedOn { get => _changedOn; }
-    private readonly BicepValue<DateTimeOffset> _changedOn;
+    public BicepValue<DateTimeOffset> ChangedOn 
+    {
+        get { Initialize(); return _changedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _changedOn;
 
     /// <summary>
     /// The created time of the resource. This is only present if requested via
     /// the $expand query parameter.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Fully qualified resource ID for the resource. Ex -
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The provisioning state of the resource. This is only present if
     /// requested via the $expand query parameter.
     /// </summary>
-    public BicepValue<string> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<string> _provisioningState;
+    public BicepValue<string> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<string>? _provisioningState;
 
     /// <summary>
     /// Azure Resource Manager metadata containing createdBy and modifiedBy
     /// information.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new GenericResource.
     /// </summary>
-    /// <param name="resourceName">Name of the GenericResource.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the GenericResource resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the GenericResource.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public GenericResource(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "", resourceVersion, context)
+    public GenericResource(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _extendedLocation = BicepValue<ExtendedAzureLocation>.DefineProperty(this, "ExtendedLocation", ["extendedLocation"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _managedBy = BicepValue<string>.DefineProperty(this, "ManagedBy", ["managedBy"]);
-        _plan = BicepValue<ArmPlan>.DefineProperty(this, "Plan", ["plan"]);
-        _properties = BicepValue<BinaryData>.DefineProperty(this, "Properties", ["properties"]);
-        _sku = BicepValue<ResourcesSku>.DefineProperty(this, "Sku", ["sku"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _changedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "ChangedOn", ["changedTime"], isOutput: true);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["createdTime"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<string>.DefineProperty(this, "ProvisioningState", ["provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of GenericResource.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _managedBy = DefineProperty<string>("ManagedBy", ["managedBy"]);
+        _plan = DefineModelProperty<ArmPlan>("Plan", ["plan"]);
+        _properties = DefineProperty<BinaryData>("Properties", ["properties"]);
+        _sku = DefineModelProperty<ResourcesSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _changedOn = DefineProperty<DateTimeOffset>("ChangedOn", ["changedTime"], isOutput: true);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["createdTime"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
     /// Creates a reference to an existing GenericResource.
     /// </summary>
-    /// <param name="resourceName">Name of the GenericResource.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the GenericResource resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the GenericResource.</param>
     /// <returns>The existing GenericResource resource.</returns>
-    public static GenericResource FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static GenericResource FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

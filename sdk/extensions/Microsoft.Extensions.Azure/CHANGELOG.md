@@ -1,6 +1,6 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.9.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.8.0 (2024-11-05)
+
+### Features Added
+
+- Added support for constructing a `ManagedIdentityCredential` from config by setting the `managedIdentityObjectId` key.
+
+### Other Changes
+
+- Updated dependency `Azure.Identity` to version `1.13.1`.
+
+## 1.7.6 (2024-10-04)
+
+### Other Changes
+
+- Improved the efficiency of `AzureEventSourceLogForwarder` by eliminating message formatting. ([#46202](https://github.com/Azure/azure-sdk-for-net/pull/46202))
 
 ## 1.7.5 (2024-08-15)
 

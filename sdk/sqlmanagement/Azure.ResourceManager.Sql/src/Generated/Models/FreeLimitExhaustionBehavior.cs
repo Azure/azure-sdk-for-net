@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(FreeLimitExhaustionBehavior left, FreeLimitExhaustionBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FreeLimitExhaustionBehavior"/> values are not the same. </summary>
         public static bool operator !=(FreeLimitExhaustionBehavior left, FreeLimitExhaustionBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FreeLimitExhaustionBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FreeLimitExhaustionBehavior"/>. </summary>
         public static implicit operator FreeLimitExhaustionBehavior(string value) => new FreeLimitExhaustionBehavior(value);
 
         /// <inheritdoc />

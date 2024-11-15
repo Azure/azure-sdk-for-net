@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(DatastoreType left, DatastoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatastoreType"/> values are not the same. </summary>
         public static bool operator !=(DatastoreType left, DatastoreType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DatastoreType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DatastoreType"/>. </summary>
         public static implicit operator DatastoreType(string value) => new DatastoreType(value);
 
         /// <inheritdoc />

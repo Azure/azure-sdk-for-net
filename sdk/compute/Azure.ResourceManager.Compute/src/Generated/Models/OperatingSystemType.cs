@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(OperatingSystemType left, OperatingSystemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperatingSystemType"/> values are not the same. </summary>
         public static bool operator !=(OperatingSystemType left, OperatingSystemType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OperatingSystemType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OperatingSystemType"/>. </summary>
         public static implicit operator OperatingSystemType(string value) => new OperatingSystemType(value);
 
         /// <inheritdoc />

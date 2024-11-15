@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public static bool operator ==(ConnectorType left, ConnectorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectorType"/> values are not the same. </summary>
         public static bool operator !=(ConnectorType left, ConnectorType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectorType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectorType"/>. </summary>
         public static implicit operator ConnectorType(string value) => new ConnectorType(value);
 
         /// <inheritdoc />

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(BigDataPoolNodeSizeFamily left, BigDataPoolNodeSizeFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BigDataPoolNodeSizeFamily"/> values are not the same. </summary>
         public static bool operator !=(BigDataPoolNodeSizeFamily left, BigDataPoolNodeSizeFamily right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BigDataPoolNodeSizeFamily"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BigDataPoolNodeSizeFamily"/>. </summary>
         public static implicit operator BigDataPoolNodeSizeFamily(string value) => new BigDataPoolNodeSizeFamily(value);
 
         /// <inheritdoc />

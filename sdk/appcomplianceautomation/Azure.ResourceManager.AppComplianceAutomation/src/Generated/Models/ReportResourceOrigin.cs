@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static bool operator ==(ReportResourceOrigin left, ReportResourceOrigin right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReportResourceOrigin"/> values are not the same. </summary>
         public static bool operator !=(ReportResourceOrigin left, ReportResourceOrigin right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReportResourceOrigin"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReportResourceOrigin"/>. </summary>
         public static implicit operator ReportResourceOrigin(string value) => new ReportResourceOrigin(value);
 
         /// <inheritdoc />

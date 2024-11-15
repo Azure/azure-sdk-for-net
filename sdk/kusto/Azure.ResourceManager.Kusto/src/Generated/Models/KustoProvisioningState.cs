@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator ==(KustoProvisioningState left, KustoProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(KustoProvisioningState left, KustoProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KustoProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoProvisioningState"/>. </summary>
         public static implicit operator KustoProvisioningState(string value) => new KustoProvisioningState(value);
 
         /// <inheritdoc />

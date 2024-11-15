@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(OracleSubscriptionUpdateIntent left, OracleSubscriptionUpdateIntent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OracleSubscriptionUpdateIntent"/> values are not the same. </summary>
         public static bool operator !=(OracleSubscriptionUpdateIntent left, OracleSubscriptionUpdateIntent right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OracleSubscriptionUpdateIntent"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OracleSubscriptionUpdateIntent"/>. </summary>
         public static implicit operator OracleSubscriptionUpdateIntent(string value) => new OracleSubscriptionUpdateIntent(value);
 
         /// <inheritdoc />

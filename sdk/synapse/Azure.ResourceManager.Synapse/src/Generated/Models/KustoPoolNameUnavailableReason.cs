@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(KustoPoolNameUnavailableReason left, KustoPoolNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoPoolNameUnavailableReason"/> values are not the same. </summary>
         public static bool operator !=(KustoPoolNameUnavailableReason left, KustoPoolNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KustoPoolNameUnavailableReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoPoolNameUnavailableReason"/>. </summary>
         public static implicit operator KustoPoolNameUnavailableReason(string value) => new KustoPoolNameUnavailableReason(value);
 
         /// <inheritdoc />

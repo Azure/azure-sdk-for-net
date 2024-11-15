@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static bool operator ==(HybridContainerServiceResourceProvisioningState left, HybridContainerServiceResourceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridContainerServiceResourceProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(HybridContainerServiceResourceProvisioningState left, HybridContainerServiceResourceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HybridContainerServiceResourceProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridContainerServiceResourceProvisioningState"/>. </summary>
         public static implicit operator HybridContainerServiceResourceProvisioningState(string value) => new HybridContainerServiceResourceProvisioningState(value);
 
         /// <inheritdoc />

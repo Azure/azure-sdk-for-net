@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CosmosDBIndexKind left, CosmosDBIndexKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBIndexKind"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBIndexKind left, CosmosDBIndexKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBIndexKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBIndexKind"/>. </summary>
         public static implicit operator CosmosDBIndexKind(string value) => new CosmosDBIndexKind(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(SourceCodeRepoAuthTokenType left, SourceCodeRepoAuthTokenType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceCodeRepoAuthTokenType"/> values are not the same. </summary>
         public static bool operator !=(SourceCodeRepoAuthTokenType left, SourceCodeRepoAuthTokenType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SourceCodeRepoAuthTokenType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceCodeRepoAuthTokenType"/>. </summary>
         public static implicit operator SourceCodeRepoAuthTokenType(string value) => new SourceCodeRepoAuthTokenType(value);
 
         /// <inheritdoc />

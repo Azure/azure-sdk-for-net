@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static bool operator ==(ConnectivityStatus left, ConnectivityStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectivityStatus"/> values are not the same. </summary>
         public static bool operator !=(ConnectivityStatus left, ConnectivityStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectivityStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectivityStatus"/>. </summary>
         public static implicit operator ConnectivityStatus(string value) => new ConnectivityStatus(value);
 
         /// <inheritdoc />

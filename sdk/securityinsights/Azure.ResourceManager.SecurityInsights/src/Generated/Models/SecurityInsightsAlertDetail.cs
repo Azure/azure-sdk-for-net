@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(SecurityInsightsAlertDetail left, SecurityInsightsAlertDetail right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertDetail"/> values are not the same. </summary>
         public static bool operator !=(SecurityInsightsAlertDetail left, SecurityInsightsAlertDetail right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityInsightsAlertDetail"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsAlertDetail"/>. </summary>
         public static implicit operator SecurityInsightsAlertDetail(string value) => new SecurityInsightsAlertDetail(value);
 
         /// <inheritdoc />

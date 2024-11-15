@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static bool operator ==(ExtensionOptionType left, ExtensionOptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExtensionOptionType"/> values are not the same. </summary>
         public static bool operator !=(ExtensionOptionType left, ExtensionOptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExtensionOptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExtensionOptionType"/>. </summary>
         public static implicit operator ExtensionOptionType(string value) => new ExtensionOptionType(value);
 
         /// <inheritdoc />

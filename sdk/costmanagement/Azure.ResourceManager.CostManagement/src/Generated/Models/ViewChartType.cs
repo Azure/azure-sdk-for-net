@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ViewChartType left, ViewChartType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ViewChartType"/> values are not the same. </summary>
         public static bool operator !=(ViewChartType left, ViewChartType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ViewChartType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ViewChartType"/>. </summary>
         public static implicit operator ViewChartType(string value) => new ViewChartType(value);
 
         /// <inheritdoc />

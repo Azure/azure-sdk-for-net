@@ -17,52 +17,80 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AppServicePlan.
 /// </summary>
-public partial class AppServicePlan : Resource
+public partial class AppServicePlan : ProvisionableResource
 {
     /// <summary>
     /// Name of the App Service plan.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Extended Location.
     /// </summary>
-    public BicepValue<ExtendedAzureLocation> ExtendedLocation { get => _extendedLocation; set => _extendedLocation.Assign(value); }
-    private readonly BicepValue<ExtendedAzureLocation> _extendedLocation;
+    public ExtendedAzureLocation ExtendedLocation 
+    {
+        get { Initialize(); return _extendedLocation!; }
+        set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
+    }
+    private ExtendedAzureLocation? _extendedLocation;
 
     /// <summary>
     /// The time when the server farm free offer expires.
     /// </summary>
-    public BicepValue<DateTimeOffset> FreeOfferExpireOn { get => _freeOfferExpireOn; set => _freeOfferExpireOn.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _freeOfferExpireOn;
+    public BicepValue<DateTimeOffset> FreeOfferExpireOn 
+    {
+        get { Initialize(); return _freeOfferExpireOn!; }
+        set { Initialize(); _freeOfferExpireOn!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _freeOfferExpireOn;
 
     /// <summary>
     /// Specification for the App Service Environment to use for the App
     /// Service plan.
     /// </summary>
-    public BicepValue<HostingEnvironmentProfile> HostingEnvironmentProfile { get => _hostingEnvironmentProfile; set => _hostingEnvironmentProfile.Assign(value); }
-    private readonly BicepValue<HostingEnvironmentProfile> _hostingEnvironmentProfile;
+    public HostingEnvironmentProfile HostingEnvironmentProfile 
+    {
+        get { Initialize(); return _hostingEnvironmentProfile!; }
+        set { Initialize(); AssignOrReplace(ref _hostingEnvironmentProfile, value); }
+    }
+    private HostingEnvironmentProfile? _hostingEnvironmentProfile;
 
     /// <summary>
     /// ServerFarm supports ElasticScale. Apps in this plan will scale as if
     /// the ServerFarm was ElasticPremium sku.
     /// </summary>
-    public BicepValue<bool> IsElasticScaleEnabled { get => _isElasticScaleEnabled; set => _isElasticScaleEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isElasticScaleEnabled;
+    public BicepValue<bool> IsElasticScaleEnabled 
+    {
+        get { Initialize(); return _isElasticScaleEnabled!; }
+        set { Initialize(); _isElasticScaleEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isElasticScaleEnabled;
 
     /// <summary>
     /// If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;,
     /// &lt;code&gt;false&lt;/code&gt; otherwise.
     /// </summary>
-    public BicepValue<bool> IsHyperV { get => _isHyperV; set => _isHyperV.Assign(value); }
-    private readonly BicepValue<bool> _isHyperV;
+    public BicepValue<bool> IsHyperV 
+    {
+        get { Initialize(); return _isHyperV!; }
+        set { Initialize(); _isHyperV!.Assign(value); }
+    }
+    private BicepValue<bool>? _isHyperV;
 
     /// <summary>
     /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service
@@ -70,30 +98,46 @@ public partial class AppServicePlan : Resource
     /// &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan
     /// will scale to all instances of the plan.
     /// </summary>
-    public BicepValue<bool> IsPerSiteScaling { get => _isPerSiteScaling; set => _isPerSiteScaling.Assign(value); }
-    private readonly BicepValue<bool> _isPerSiteScaling;
+    public BicepValue<bool> IsPerSiteScaling 
+    {
+        get { Initialize(); return _isPerSiteScaling!; }
+        set { Initialize(); _isPerSiteScaling!.Assign(value); }
+    }
+    private BicepValue<bool>? _isPerSiteScaling;
 
     /// <summary>
     /// If Linux app service plan &lt;code&gt;true&lt;/code&gt;,
     /// &lt;code&gt;false&lt;/code&gt; otherwise.
     /// </summary>
-    public BicepValue<bool> IsReserved { get => _isReserved; set => _isReserved.Assign(value); }
-    private readonly BicepValue<bool> _isReserved;
+    public BicepValue<bool> IsReserved 
+    {
+        get { Initialize(); return _isReserved!; }
+        set { Initialize(); _isReserved!.Assign(value); }
+    }
+    private BicepValue<bool>? _isReserved;
 
     /// <summary>
     /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot
     /// instances.
     /// </summary>
-    public BicepValue<bool> IsSpot { get => _isSpot; set => _isSpot.Assign(value); }
-    private readonly BicepValue<bool> _isSpot;
+    public BicepValue<bool> IsSpot 
+    {
+        get { Initialize(); return _isSpot!; }
+        set { Initialize(); _isSpot!.Assign(value); }
+    }
+    private BicepValue<bool>? _isSpot;
 
     /// <summary>
     /// Obsolete: If Hyper-V container app service plan
     /// &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;
     /// otherwise.
     /// </summary>
-    public BicepValue<bool> IsXenon { get => _isXenon; set => _isXenon.Assign(value); }
-    private readonly BicepValue<bool> _isXenon;
+    public BicepValue<bool> IsXenon 
+    {
+        get { Initialize(); return _isXenon!; }
+        set { Initialize(); _isXenon!.Assign(value); }
+    }
+    private BicepValue<bool>? _isXenon;
 
     /// <summary>
     /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform
@@ -101,177 +145,409 @@ public partial class AppServicePlan : Resource
     /// &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform
     /// availability zone balancing.
     /// </summary>
-    public BicepValue<bool> IsZoneRedundant { get => _isZoneRedundant; set => _isZoneRedundant.Assign(value); }
-    private readonly BicepValue<bool> _isZoneRedundant;
+    public BicepValue<bool> IsZoneRedundant 
+    {
+        get { Initialize(); return _isZoneRedundant!; }
+        set { Initialize(); _isZoneRedundant!.Assign(value); }
+    }
+    private BicepValue<bool>? _isZoneRedundant;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Specification for the Kubernetes Environment to use for the App Service
     /// plan.
     /// </summary>
-    public BicepValue<KubeEnvironmentProfile> KubeEnvironmentProfile { get => _kubeEnvironmentProfile; set => _kubeEnvironmentProfile.Assign(value); }
-    private readonly BicepValue<KubeEnvironmentProfile> _kubeEnvironmentProfile;
+    public KubeEnvironmentProfile KubeEnvironmentProfile 
+    {
+        get { Initialize(); return _kubeEnvironmentProfile!; }
+        set { Initialize(); AssignOrReplace(ref _kubeEnvironmentProfile, value); }
+    }
+    private KubeEnvironmentProfile? _kubeEnvironmentProfile;
 
     /// <summary>
     /// Maximum number of total workers allowed for this ElasticScaleEnabled
     /// App Service Plan.
     /// </summary>
-    public BicepValue<int> MaximumElasticWorkerCount { get => _maximumElasticWorkerCount; set => _maximumElasticWorkerCount.Assign(value); }
-    private readonly BicepValue<int> _maximumElasticWorkerCount;
+    public BicepValue<int> MaximumElasticWorkerCount 
+    {
+        get { Initialize(); return _maximumElasticWorkerCount!; }
+        set { Initialize(); _maximumElasticWorkerCount!.Assign(value); }
+    }
+    private BicepValue<int>? _maximumElasticWorkerCount;
 
     /// <summary>
     /// Description of a SKU for a scalable resource.
     /// </summary>
-    public BicepValue<AppServiceSkuDescription> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<AppServiceSkuDescription> _sku;
+    public AppServiceSkuDescription Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private AppServiceSkuDescription? _sku;
 
     /// <summary>
     /// The time when the server farm expires. Valid only if it is a spot
     /// server farm.
     /// </summary>
-    public BicepValue<DateTimeOffset> SpotExpireOn { get => _spotExpireOn; set => _spotExpireOn.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _spotExpireOn;
+    public BicepValue<DateTimeOffset> SpotExpireOn 
+    {
+        get { Initialize(); return _spotExpireOn!; }
+        set { Initialize(); _spotExpireOn!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _spotExpireOn;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Scaling worker count.
     /// </summary>
-    public BicepValue<int> TargetWorkerCount { get => _targetWorkerCount; set => _targetWorkerCount.Assign(value); }
-    private readonly BicepValue<int> _targetWorkerCount;
+    public BicepValue<int> TargetWorkerCount 
+    {
+        get { Initialize(); return _targetWorkerCount!; }
+        set { Initialize(); _targetWorkerCount!.Assign(value); }
+    }
+    private BicepValue<int>? _targetWorkerCount;
 
     /// <summary>
     /// Scaling worker size ID.
     /// </summary>
-    public BicepValue<int> TargetWorkerSizeId { get => _targetWorkerSizeId; set => _targetWorkerSizeId.Assign(value); }
-    private readonly BicepValue<int> _targetWorkerSizeId;
+    public BicepValue<int> TargetWorkerSizeId 
+    {
+        get { Initialize(); return _targetWorkerSizeId!; }
+        set { Initialize(); _targetWorkerSizeId!.Assign(value); }
+    }
+    private BicepValue<int>? _targetWorkerSizeId;
 
     /// <summary>
     /// Target worker tier assigned to the App Service plan.
     /// </summary>
-    public BicepValue<string> WorkerTierName { get => _workerTierName; set => _workerTierName.Assign(value); }
-    private readonly BicepValue<string> _workerTierName;
+    public BicepValue<string> WorkerTierName 
+    {
+        get { Initialize(); return _workerTierName!; }
+        set { Initialize(); _workerTierName!.Assign(value); }
+    }
+    private BicepValue<string>? _workerTierName;
 
     /// <summary>
     /// Geographical location for the App Service plan.
     /// </summary>
-    public BicepValue<string> GeoRegion { get => _geoRegion; }
-    private readonly BicepValue<string> _geoRegion;
+    public BicepValue<string> GeoRegion 
+    {
+        get { Initialize(); return _geoRegion!; }
+    }
+    private BicepValue<string>? _geoRegion;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Maximum number of instances that can be assigned to this App Service
     /// plan.
     /// </summary>
-    public BicepValue<int> MaximumNumberOfWorkers { get => _maximumNumberOfWorkers; }
-    private readonly BicepValue<int> _maximumNumberOfWorkers;
+    public BicepValue<int> MaximumNumberOfWorkers 
+    {
+        get { Initialize(); return _maximumNumberOfWorkers!; }
+    }
+    private BicepValue<int>? _maximumNumberOfWorkers;
 
     /// <summary>
     /// Number of apps assigned to this App Service plan.
     /// </summary>
-    public BicepValue<int> NumberOfSites { get => _numberOfSites; }
-    private readonly BicepValue<int> _numberOfSites;
+    public BicepValue<int> NumberOfSites 
+    {
+        get { Initialize(); return _numberOfSites!; }
+    }
+    private BicepValue<int>? _numberOfSites;
 
     /// <summary>
     /// The number of instances that are assigned to this App Service plan.
     /// </summary>
-    public BicepValue<int> NumberOfWorkers { get => _numberOfWorkers; }
-    private readonly BicepValue<int> _numberOfWorkers;
+    public BicepValue<int> NumberOfWorkers 
+    {
+        get { Initialize(); return _numberOfWorkers!; }
+    }
+    private BicepValue<int>? _numberOfWorkers;
 
     /// <summary>
     /// Provisioning state of the App Service Plan.
     /// </summary>
-    public BicepValue<ProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ProvisioningState> _provisioningState;
+    public BicepValue<ProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Resource group of the App Service plan.
     /// </summary>
-    public BicepValue<string> ResourceGroup { get => _resourceGroup; }
-    private readonly BicepValue<string> _resourceGroup;
+    public BicepValue<string> ResourceGroup 
+    {
+        get { Initialize(); return _resourceGroup!; }
+    }
+    private BicepValue<string>? _resourceGroup;
 
     /// <summary>
     /// App Service plan status.
     /// </summary>
-    public BicepValue<AppServicePlanStatus> Status { get => _status; }
-    private readonly BicepValue<AppServicePlanStatus> _status;
+    public BicepValue<AppServicePlanStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+    }
+    private BicepValue<AppServicePlanStatus>? _status;
 
     /// <summary>
     /// App Service plan subscription.
     /// </summary>
-    public BicepValue<string> Subscription { get => _subscription; }
-    private readonly BicepValue<string> _subscription;
+    public BicepValue<string> Subscription 
+    {
+        get { Initialize(); return _subscription!; }
+    }
+    private BicepValue<string>? _subscription;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new AppServicePlan.
     /// </summary>
-    /// <param name="resourceName">Name of the AppServicePlan.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppServicePlan resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppServicePlan.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppServicePlan(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/serverfarms", resourceVersion, context)
+    public AppServicePlan(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/serverfarms", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _extendedLocation = BicepValue<ExtendedAzureLocation>.DefineProperty(this, "ExtendedLocation", ["extendedLocation"]);
-        _freeOfferExpireOn = BicepValue<DateTimeOffset>.DefineProperty(this, "FreeOfferExpireOn", ["properties", "freeOfferExpirationTime"]);
-        _hostingEnvironmentProfile = BicepValue<HostingEnvironmentProfile>.DefineProperty(this, "HostingEnvironmentProfile", ["properties", "hostingEnvironmentProfile"]);
-        _isElasticScaleEnabled = BicepValue<bool>.DefineProperty(this, "IsElasticScaleEnabled", ["properties", "elasticScaleEnabled"]);
-        _isHyperV = BicepValue<bool>.DefineProperty(this, "IsHyperV", ["properties", "hyperV"]);
-        _isPerSiteScaling = BicepValue<bool>.DefineProperty(this, "IsPerSiteScaling", ["properties", "perSiteScaling"]);
-        _isReserved = BicepValue<bool>.DefineProperty(this, "IsReserved", ["properties", "reserved"]);
-        _isSpot = BicepValue<bool>.DefineProperty(this, "IsSpot", ["properties", "isSpot"]);
-        _isXenon = BicepValue<bool>.DefineProperty(this, "IsXenon", ["properties", "isXenon"]);
-        _isZoneRedundant = BicepValue<bool>.DefineProperty(this, "IsZoneRedundant", ["properties", "zoneRedundant"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _kubeEnvironmentProfile = BicepValue<KubeEnvironmentProfile>.DefineProperty(this, "KubeEnvironmentProfile", ["properties", "kubeEnvironmentProfile"]);
-        _maximumElasticWorkerCount = BicepValue<int>.DefineProperty(this, "MaximumElasticWorkerCount", ["properties", "maximumElasticWorkerCount"]);
-        _sku = BicepValue<AppServiceSkuDescription>.DefineProperty(this, "Sku", ["sku"]);
-        _spotExpireOn = BicepValue<DateTimeOffset>.DefineProperty(this, "SpotExpireOn", ["properties", "spotExpirationTime"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _targetWorkerCount = BicepValue<int>.DefineProperty(this, "TargetWorkerCount", ["properties", "targetWorkerCount"]);
-        _targetWorkerSizeId = BicepValue<int>.DefineProperty(this, "TargetWorkerSizeId", ["properties", "targetWorkerSizeId"]);
-        _workerTierName = BicepValue<string>.DefineProperty(this, "WorkerTierName", ["properties", "workerTierName"]);
-        _geoRegion = BicepValue<string>.DefineProperty(this, "GeoRegion", ["properties", "geoRegion"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _maximumNumberOfWorkers = BicepValue<int>.DefineProperty(this, "MaximumNumberOfWorkers", ["properties", "maximumNumberOfWorkers"], isOutput: true);
-        _numberOfSites = BicepValue<int>.DefineProperty(this, "NumberOfSites", ["properties", "numberOfSites"], isOutput: true);
-        _numberOfWorkers = BicepValue<int>.DefineProperty(this, "NumberOfWorkers", ["properties", "numberOfWorkers"], isOutput: true);
-        _provisioningState = BicepValue<ProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _resourceGroup = BicepValue<string>.DefineProperty(this, "ResourceGroup", ["properties", "resourceGroup"], isOutput: true);
-        _status = BicepValue<AppServicePlanStatus>.DefineProperty(this, "Status", ["properties", "status"], isOutput: true);
-        _subscription = BicepValue<string>.DefineProperty(this, "Subscription", ["properties", "subscription"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of AppServicePlan.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
+        _freeOfferExpireOn = DefineProperty<DateTimeOffset>("FreeOfferExpireOn", ["properties", "freeOfferExpirationTime"]);
+        _hostingEnvironmentProfile = DefineModelProperty<HostingEnvironmentProfile>("HostingEnvironmentProfile", ["properties", "hostingEnvironmentProfile"]);
+        _isElasticScaleEnabled = DefineProperty<bool>("IsElasticScaleEnabled", ["properties", "elasticScaleEnabled"]);
+        _isHyperV = DefineProperty<bool>("IsHyperV", ["properties", "hyperV"]);
+        _isPerSiteScaling = DefineProperty<bool>("IsPerSiteScaling", ["properties", "perSiteScaling"]);
+        _isReserved = DefineProperty<bool>("IsReserved", ["properties", "reserved"]);
+        _isSpot = DefineProperty<bool>("IsSpot", ["properties", "isSpot"]);
+        _isXenon = DefineProperty<bool>("IsXenon", ["properties", "isXenon"]);
+        _isZoneRedundant = DefineProperty<bool>("IsZoneRedundant", ["properties", "zoneRedundant"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _kubeEnvironmentProfile = DefineModelProperty<KubeEnvironmentProfile>("KubeEnvironmentProfile", ["properties", "kubeEnvironmentProfile"]);
+        _maximumElasticWorkerCount = DefineProperty<int>("MaximumElasticWorkerCount", ["properties", "maximumElasticWorkerCount"]);
+        _sku = DefineModelProperty<AppServiceSkuDescription>("Sku", ["sku"]);
+        _spotExpireOn = DefineProperty<DateTimeOffset>("SpotExpireOn", ["properties", "spotExpirationTime"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _targetWorkerCount = DefineProperty<int>("TargetWorkerCount", ["properties", "targetWorkerCount"]);
+        _targetWorkerSizeId = DefineProperty<int>("TargetWorkerSizeId", ["properties", "targetWorkerSizeId"]);
+        _workerTierName = DefineProperty<string>("WorkerTierName", ["properties", "workerTierName"]);
+        _geoRegion = DefineProperty<string>("GeoRegion", ["properties", "geoRegion"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _maximumNumberOfWorkers = DefineProperty<int>("MaximumNumberOfWorkers", ["properties", "maximumNumberOfWorkers"], isOutput: true);
+        _numberOfSites = DefineProperty<int>("NumberOfSites", ["properties", "numberOfSites"], isOutput: true);
+        _numberOfWorkers = DefineProperty<int>("NumberOfWorkers", ["properties", "numberOfWorkers"], isOutput: true);
+        _provisioningState = DefineProperty<ProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _resourceGroup = DefineProperty<string>("ResourceGroup", ["properties", "resourceGroup"], isOutput: true);
+        _status = DefineProperty<AppServicePlanStatus>("Status", ["properties", "status"], isOutput: true);
+        _subscription = DefineProperty<string>("Subscription", ["properties", "subscription"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported AppServicePlan resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
+        /// <summary>
+        /// 2023-12-01.
+        /// </summary>
+        public static readonly string V2023_12_01 = "2023-12-01";
+
+        /// <summary>
+        /// 2023-01-01.
+        /// </summary>
+        public static readonly string V2023_01_01 = "2023-01-01";
+
+        /// <summary>
+        /// 2022-09-01.
+        /// </summary>
+        public static readonly string V2022_09_01 = "2022-09-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
+
+        /// <summary>
+        /// 2021-03-01.
+        /// </summary>
+        public static readonly string V2021_03_01 = "2021-03-01";
+
+        /// <summary>
+        /// 2021-02-01.
+        /// </summary>
+        public static readonly string V2021_02_01 = "2021-02-01";
+
+        /// <summary>
+        /// 2021-01-15.
+        /// </summary>
+        public static readonly string V2021_01_15 = "2021-01-15";
+
+        /// <summary>
+        /// 2021-01-01.
+        /// </summary>
+        public static readonly string V2021_01_01 = "2021-01-01";
+
+        /// <summary>
+        /// 2020-12-01.
+        /// </summary>
+        public static readonly string V2020_12_01 = "2020-12-01";
+
+        /// <summary>
+        /// 2020-10-01.
+        /// </summary>
+        public static readonly string V2020_10_01 = "2020-10-01";
+
+        /// <summary>
+        /// 2020-09-01.
+        /// </summary>
+        public static readonly string V2020_09_01 = "2020-09-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2019-08-01.
+        /// </summary>
+        public static readonly string V2019_08_01 = "2019-08-01";
+
+        /// <summary>
+        /// 2018-11-01.
+        /// </summary>
+        public static readonly string V2018_11_01 = "2018-11-01";
+
+        /// <summary>
+        /// 2018-02-01.
+        /// </summary>
+        public static readonly string V2018_02_01 = "2018-02-01";
+
+        /// <summary>
+        /// 2017-08-01.
+        /// </summary>
+        public static readonly string V2017_08_01 = "2017-08-01";
+
+        /// <summary>
+        /// 2016-09-01.
+        /// </summary>
+        public static readonly string V2016_09_01 = "2016-09-01";
+
+        /// <summary>
+        /// 2016-03-01.
+        /// </summary>
+        public static readonly string V2016_03_01 = "2016-03-01";
+
+        /// <summary>
+        /// 2015-08-01.
+        /// </summary>
+        public static readonly string V2015_08_01 = "2015-08-01";
+
+        /// <summary>
+        /// 2015-07-01.
+        /// </summary>
+        public static readonly string V2015_07_01 = "2015-07-01";
+
+        /// <summary>
+        /// 2015-06-01.
+        /// </summary>
+        public static readonly string V2015_06_01 = "2015-06-01";
+
+        /// <summary>
+        /// 2015-05-01.
+        /// </summary>
+        public static readonly string V2015_05_01 = "2015-05-01";
+
+        /// <summary>
+        /// 2015-04-01.
+        /// </summary>
+        public static readonly string V2015_04_01 = "2015-04-01";
+
+        /// <summary>
+        /// 2015-02-01.
+        /// </summary>
+        public static readonly string V2015_02_01 = "2015-02-01";
+
+        /// <summary>
+        /// 2014-11-01.
+        /// </summary>
+        public static readonly string V2014_11_01 = "2014-11-01";
+
+        /// <summary>
+        /// 2014-06-01.
+        /// </summary>
+        public static readonly string V2014_06_01 = "2014-06-01";
+
+        /// <summary>
+        /// 2014-04-01.
+        /// </summary>
+        public static readonly string V2014_04_01 = "2014-04-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing AppServicePlan.
     /// </summary>
-    /// <param name="resourceName">Name of the AppServicePlan.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppServicePlan resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppServicePlan.</param>
     /// <returns>The existing AppServicePlan resource.</returns>
-    public static AppServicePlan FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static AppServicePlan FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this AppServicePlan resource.

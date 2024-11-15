@@ -13,6 +13,8 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// Represents the response properties of an MQTT connection failure.
 /// </summary>
 [DataContract]
+[JsonConverter(typeof(MqttConnectEventErrorResponseJsonConverter))]
+// During JSON (de)serialization of this class with Newtonsoft.Json, remember to ignore the properties in the base class `EventErrorResponse`.
 public class MqttConnectEventErrorResponse : EventErrorResponse
 {
     internal const string MqttProperty = "mqtt";
@@ -50,11 +52,22 @@ public class MqttConnectEventErrorResponse : EventErrorResponse
     }
 
     /// <summary>
-    /// Default constructor for JsonSerialize.
+    /// Creates an instance of <see cref="MqttConnectEventErrorResponse"/>.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public MqttConnectEventErrorResponse(MqttConnectEventErrorResponseProperties mqtt)
     {
         Mqtt = mqtt;
+        // Set the proper WebPubSubErrorCode
+        if (mqtt.Code < 0x80)
+        {
+            // MQTT 3.1.1
+            Code = WebPubSubErrorCodeExtensions.FromMqttV311ConnectReturnCode((MqttV311ConnectReturnCode)mqtt.Code);
+        }
+        else
+        {
+            // MQTT 5.0
+            Code = WebPubSubErrorCodeExtensions.FromMqttV500ConnectReasonCode((MqttV500ConnectReasonCode)mqtt.Code);
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.Communication.ShortCodes.Models
         public static bool operator ==(MessageDirection left, MessageDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageDirection"/> values are not the same. </summary>
         public static bool operator !=(MessageDirection left, MessageDirection right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MessageDirection"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MessageDirection"/>. </summary>
         public static implicit operator MessageDirection(string value) => new MessageDirection(value);
 
         /// <inheritdoc />

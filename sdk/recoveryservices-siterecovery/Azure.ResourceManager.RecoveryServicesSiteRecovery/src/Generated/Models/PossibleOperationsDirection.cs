@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(PossibleOperationsDirection left, PossibleOperationsDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PossibleOperationsDirection"/> values are not the same. </summary>
         public static bool operator !=(PossibleOperationsDirection left, PossibleOperationsDirection right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PossibleOperationsDirection"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PossibleOperationsDirection"/>. </summary>
         public static implicit operator PossibleOperationsDirection(string value) => new PossibleOperationsDirection(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static bool operator ==(AzureResourceType left, AzureResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureResourceType"/> values are not the same. </summary>
         public static bool operator !=(AzureResourceType left, AzureResourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AzureResourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureResourceType"/>. </summary>
         public static implicit operator AzureResourceType(string value) => new AzureResourceType(value);
 
         /// <inheritdoc />

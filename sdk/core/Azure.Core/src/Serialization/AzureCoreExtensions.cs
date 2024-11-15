@@ -54,6 +54,8 @@ namespace Azure
         /// Otherwise, it returns either an object[] or Dictionary&lt;string, object&gt;.
         /// Each value in the key value pair or list will also be converted into a primitive or another complex type recursively.
         /// </returns>
+        [RequiresUnreferencedCode(DynamicData.SerializationRequiresUnreferencedCode)]
+        [RequiresDynamicCode(DynamicData.SerializationRequiresUnreferencedCode)]
         public static object? ToObjectFromJson(this BinaryData data)
         {
             JsonElement element = data.ToObjectFromJson<JsonElement>();

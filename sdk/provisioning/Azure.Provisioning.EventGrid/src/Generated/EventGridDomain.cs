@@ -17,19 +17,27 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventGridDomain.
 /// </summary>
-public partial class EventGridDomain : Resource
+public partial class EventGridDomain : ProvisionableResource
 {
     /// <summary>
     /// Name of the domain.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// This Boolean is used to specify the creation mechanism for
@@ -49,8 +57,12 @@ public partial class EventGridDomain : Resource
     /// creation mode, user is allowed to create the             domain topic
     /// on demand if needed.
     /// </summary>
-    public BicepValue<bool> AutoCreateTopicWithFirstSubscription { get => _autoCreateTopicWithFirstSubscription; set => _autoCreateTopicWithFirstSubscription.Assign(value); }
-    private readonly BicepValue<bool> _autoCreateTopicWithFirstSubscription;
+    public BicepValue<bool> AutoCreateTopicWithFirstSubscription 
+    {
+        get { Initialize(); return _autoCreateTopicWithFirstSubscription!; }
+        set { Initialize(); _autoCreateTopicWithFirstSubscription!.Assign(value); }
+    }
+    private BicepValue<bool>? _autoCreateTopicWithFirstSubscription;
 
     /// <summary>
     /// This Boolean is used to specify the deletion mechanism for
@@ -69,42 +81,66 @@ public partial class EventGridDomain : Resource
     /// while auto-managed mode provides the flexibility to perform less
     /// operations and manage fewer             resources by the user.
     /// </summary>
-    public BicepValue<bool> AutoDeleteTopicWithLastSubscription { get => _autoDeleteTopicWithLastSubscription; set => _autoDeleteTopicWithLastSubscription.Assign(value); }
-    private readonly BicepValue<bool> _autoDeleteTopicWithLastSubscription;
+    public BicepValue<bool> AutoDeleteTopicWithLastSubscription 
+    {
+        get { Initialize(); return _autoDeleteTopicWithLastSubscription!; }
+        set { Initialize(); _autoDeleteTopicWithLastSubscription!.Assign(value); }
+    }
+    private BicepValue<bool>? _autoDeleteTopicWithLastSubscription;
 
     /// <summary>
     /// Data Residency Boundary of the resource.
     /// </summary>
-    public BicepValue<DataResidencyBoundary> DataResidencyBoundary { get => _dataResidencyBoundary; set => _dataResidencyBoundary.Assign(value); }
-    private readonly BicepValue<DataResidencyBoundary> _dataResidencyBoundary;
+    public BicepValue<DataResidencyBoundary> DataResidencyBoundary 
+    {
+        get { Initialize(); return _dataResidencyBoundary!; }
+        set { Initialize(); _dataResidencyBoundary!.Assign(value); }
+    }
+    private BicepValue<DataResidencyBoundary>? _dataResidencyBoundary;
 
     /// <summary>
     /// Event Type Information for the domain. This information is provided by
     /// the publisher and can be used by the             subscriber to view
     /// different types of events that are published.
     /// </summary>
-    public BicepValue<PartnerTopicEventTypeInfo> EventTypeInfo { get => _eventTypeInfo; set => _eventTypeInfo.Assign(value); }
-    private readonly BicepValue<PartnerTopicEventTypeInfo> _eventTypeInfo;
+    public PartnerTopicEventTypeInfo EventTypeInfo 
+    {
+        get { Initialize(); return _eventTypeInfo!; }
+        set { Initialize(); AssignOrReplace(ref _eventTypeInfo, value); }
+    }
+    private PartnerTopicEventTypeInfo? _eventTypeInfo;
 
     /// <summary>
     /// Identity information for the Event Grid Domain resource.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// This can be used to restrict traffic from specific IPs instead of all
     /// IPs. Note: These are considered only if PublicNetworkAccess is enabled.
     /// </summary>
-    public BicepList<EventGridInboundIPRule> InboundIPRules { get => _inboundIPRules; set => _inboundIPRules.Assign(value); }
-    private readonly BicepList<EventGridInboundIPRule> _inboundIPRules;
+    public BicepList<EventGridInboundIPRule> InboundIPRules 
+    {
+        get { Initialize(); return _inboundIPRules!; }
+        set { Initialize(); _inboundIPRules!.Assign(value); }
+    }
+    private BicepList<EventGridInboundIPRule>? _inboundIPRules;
 
     /// <summary>
     /// This determines the format that Event Grid should expect for incoming
     /// events published to the Event Grid Domain Resource.
     /// </summary>
-    public BicepValue<EventGridInputSchema> InputSchema { get => _inputSchema; set => _inputSchema.Assign(value); }
-    private readonly BicepValue<EventGridInputSchema> _inputSchema;
+    public BicepValue<EventGridInputSchema> InputSchema 
+    {
+        get { Initialize(); return _inputSchema!; }
+        set { Initialize(); _inputSchema!.Assign(value); }
+    }
+    private BicepValue<EventGridInputSchema>? _inputSchema;
 
     /// <summary>
     /// Information about the InputSchemaMapping which specified the info about
@@ -116,22 +152,34 @@ public partial class EventGridDomain : Resource
     /// available derived classes include
     /// Azure.ResourceManager.EventGrid.Models.EventGridJsonInputSchemaMapping.
     /// </summary>
-    public BicepValue<EventGridInputSchemaMapping> InputSchemaMapping { get => _inputSchemaMapping; set => _inputSchemaMapping.Assign(value); }
-    private readonly BicepValue<EventGridInputSchemaMapping> _inputSchemaMapping;
+    public EventGridInputSchemaMapping InputSchemaMapping 
+    {
+        get { Initialize(); return _inputSchemaMapping!; }
+        set { Initialize(); AssignOrReplace(ref _inputSchemaMapping, value); }
+    }
+    private EventGridInputSchemaMapping? _inputSchemaMapping;
 
     /// <summary>
     /// This boolean is used to enable or disable local auth. Default value is
     /// false. When the property is set to true, only AAD token will be used
     /// to authenticate if user is allowed to publish to the domain.
     /// </summary>
-    public BicepValue<bool> IsLocalAuthDisabled { get => _isLocalAuthDisabled; set => _isLocalAuthDisabled.Assign(value); }
-    private readonly BicepValue<bool> _isLocalAuthDisabled;
+    public BicepValue<bool> IsLocalAuthDisabled 
+    {
+        get { Initialize(); return _isLocalAuthDisabled!; }
+        set { Initialize(); _isLocalAuthDisabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isLocalAuthDisabled;
 
     /// <summary>
     /// Minimum TLS version of the publisher allowed to publish to this domain.
     /// </summary>
-    public BicepValue<TlsVersion> MinimumTlsVersionAllowed { get => _minimumTlsVersionAllowed; set => _minimumTlsVersionAllowed.Assign(value); }
-    private readonly BicepValue<TlsVersion> _minimumTlsVersionAllowed;
+    public BicepValue<TlsVersion> MinimumTlsVersionAllowed 
+    {
+        get { Initialize(); return _minimumTlsVersionAllowed!; }
+        set { Initialize(); _minimumTlsVersionAllowed!.Assign(value); }
+    }
+    private BicepValue<TlsVersion>? _minimumTlsVersionAllowed;
 
     /// <summary>
     /// This determines if traffic is allowed over public network. By default
@@ -140,88 +188,129 @@ public partial class EventGridDomain : Resource
     /// cref=&quot;P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainProperties.InboundIpRules&quot;
     /// /&gt;
     /// </summary>
-    public BicepValue<EventGridPublicNetworkAccess> PublicNetworkAccess { get => _publicNetworkAccess; set => _publicNetworkAccess.Assign(value); }
-    private readonly BicepValue<EventGridPublicNetworkAccess> _publicNetworkAccess;
+    public BicepValue<EventGridPublicNetworkAccess> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<EventGridPublicNetworkAccess>? _publicNetworkAccess;
 
     /// <summary>
     /// The Sku name of the resource. The possible values are: Basic or Premium.
     /// </summary>
-    public BicepValue<EventGridSku> SkuName { get => _skuName; set => _skuName.Assign(value); }
-    private readonly BicepValue<EventGridSku> _skuName;
+    public BicepValue<EventGridSku> SkuName 
+    {
+        get { Initialize(); return _skuName!; }
+        set { Initialize(); _skuName!.Assign(value); }
+    }
+    private BicepValue<EventGridSku>? _skuName;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Endpoint for the Event Grid Domain Resource which is used for
     /// publishing the events.
     /// </summary>
-    public BicepValue<Uri> Endpoint { get => _endpoint; }
-    private readonly BicepValue<Uri> _endpoint;
+    public BicepValue<Uri> Endpoint 
+    {
+        get { Initialize(); return _endpoint!; }
+    }
+    private BicepValue<Uri>? _endpoint;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Metric resource id for the Event Grid Domain Resource.
     /// </summary>
-    public BicepValue<string> MetricResourceId { get => _metricResourceId; }
-    private readonly BicepValue<string> _metricResourceId;
+    public BicepValue<string> MetricResourceId 
+    {
+        get { Initialize(); return _metricResourceId!; }
+    }
+    private BicepValue<string>? _metricResourceId;
 
     /// <summary>
     /// List of private endpoint connections.
     /// </summary>
-    public BicepList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get => _privateEndpointConnections; }
-    private readonly BicepList<EventGridPrivateEndpointConnectionData> _privateEndpointConnections;
+    public BicepList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections 
+    {
+        get { Initialize(); return _privateEndpointConnections!; }
+    }
+    private BicepList<EventGridPrivateEndpointConnectionData>? _privateEndpointConnections;
 
     /// <summary>
     /// Provisioning state of the Event Grid Domain Resource.
     /// </summary>
-    public BicepValue<EventGridDomainProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<EventGridDomainProvisioningState> _provisioningState;
+    public BicepValue<EventGridDomainProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<EventGridDomainProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new EventGridDomain.
     /// </summary>
-    /// <param name="resourceName">Name of the EventGridDomain.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventGridDomain resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventGridDomain.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventGridDomain(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/domains", resourceVersion ?? "2022-06-15", context)
+    public EventGridDomain(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/domains", resourceVersion ?? "2022-06-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _autoCreateTopicWithFirstSubscription = BicepValue<bool>.DefineProperty(this, "AutoCreateTopicWithFirstSubscription", ["properties", "autoCreateTopicWithFirstSubscription"]);
-        _autoDeleteTopicWithLastSubscription = BicepValue<bool>.DefineProperty(this, "AutoDeleteTopicWithLastSubscription", ["properties", "autoDeleteTopicWithLastSubscription"]);
-        _dataResidencyBoundary = BicepValue<DataResidencyBoundary>.DefineProperty(this, "DataResidencyBoundary", ["properties", "dataResidencyBoundary"]);
-        _eventTypeInfo = BicepValue<PartnerTopicEventTypeInfo>.DefineProperty(this, "EventTypeInfo", ["properties", "eventTypeInfo"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _inboundIPRules = BicepList<EventGridInboundIPRule>.DefineProperty(this, "InboundIPRules", ["properties", "inboundIpRules"]);
-        _inputSchema = BicepValue<EventGridInputSchema>.DefineProperty(this, "InputSchema", ["properties", "inputSchema"]);
-        _inputSchemaMapping = BicepValue<EventGridInputSchemaMapping>.DefineProperty(this, "InputSchemaMapping", ["properties", "inputSchemaMapping"]);
-        _isLocalAuthDisabled = BicepValue<bool>.DefineProperty(this, "IsLocalAuthDisabled", ["properties", "disableLocalAuth"]);
-        _minimumTlsVersionAllowed = BicepValue<TlsVersion>.DefineProperty(this, "MinimumTlsVersionAllowed", ["properties", "minimumTlsVersionAllowed"]);
-        _publicNetworkAccess = BicepValue<EventGridPublicNetworkAccess>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
-        _skuName = BicepValue<EventGridSku>.DefineProperty(this, "SkuName", ["sku", "name"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _endpoint = BicepValue<Uri>.DefineProperty(this, "Endpoint", ["properties", "endpoint"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _metricResourceId = BicepValue<string>.DefineProperty(this, "MetricResourceId", ["properties", "metricResourceId"], isOutput: true);
-        _privateEndpointConnections = BicepList<EventGridPrivateEndpointConnectionData>.DefineProperty(this, "PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
-        _provisioningState = BicepValue<EventGridDomainProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of EventGridDomain.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _autoCreateTopicWithFirstSubscription = DefineProperty<bool>("AutoCreateTopicWithFirstSubscription", ["properties", "autoCreateTopicWithFirstSubscription"]);
+        _autoDeleteTopicWithLastSubscription = DefineProperty<bool>("AutoDeleteTopicWithLastSubscription", ["properties", "autoDeleteTopicWithLastSubscription"]);
+        _dataResidencyBoundary = DefineProperty<DataResidencyBoundary>("DataResidencyBoundary", ["properties", "dataResidencyBoundary"]);
+        _eventTypeInfo = DefineModelProperty<PartnerTopicEventTypeInfo>("EventTypeInfo", ["properties", "eventTypeInfo"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _inboundIPRules = DefineListProperty<EventGridInboundIPRule>("InboundIPRules", ["properties", "inboundIpRules"]);
+        _inputSchema = DefineProperty<EventGridInputSchema>("InputSchema", ["properties", "inputSchema"]);
+        _inputSchemaMapping = DefineModelProperty<EventGridInputSchemaMapping>("InputSchemaMapping", ["properties", "inputSchemaMapping"]);
+        _isLocalAuthDisabled = DefineProperty<bool>("IsLocalAuthDisabled", ["properties", "disableLocalAuth"]);
+        _minimumTlsVersionAllowed = DefineProperty<TlsVersion>("MinimumTlsVersionAllowed", ["properties", "minimumTlsVersionAllowed"]);
+        _publicNetworkAccess = DefineProperty<EventGridPublicNetworkAccess>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _skuName = DefineProperty<EventGridSku>("SkuName", ["sku", "name"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _endpoint = DefineProperty<Uri>("Endpoint", ["properties", "endpoint"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _metricResourceId = DefineProperty<string>("MetricResourceId", ["properties", "metricResourceId"], isOutput: true);
+        _privateEndpointConnections = DefineListProperty<EventGridPrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _provisioningState = DefineProperty<EventGridDomainProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -229,11 +318,6 @@ public partial class EventGridDomain : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
-
         /// <summary>
         /// 2022-06-15.
         /// </summary>
@@ -258,11 +342,16 @@ public partial class EventGridDomain : Resource
     /// <summary>
     /// Creates a reference to an existing EventGridDomain.
     /// </summary>
-    /// <param name="resourceName">Name of the EventGridDomain.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventGridDomain resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventGridDomain.</param>
     /// <returns>The existing EventGridDomain resource.</returns>
-    public static EventGridDomain FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventGridDomain FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this EventGridDomain resource.

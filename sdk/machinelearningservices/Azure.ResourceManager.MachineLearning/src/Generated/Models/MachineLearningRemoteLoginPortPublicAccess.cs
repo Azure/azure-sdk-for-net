@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningRemoteLoginPortPublicAccess left, MachineLearningRemoteLoginPortPublicAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningRemoteLoginPortPublicAccess"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningRemoteLoginPortPublicAccess left, MachineLearningRemoteLoginPortPublicAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningRemoteLoginPortPublicAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningRemoteLoginPortPublicAccess"/>. </summary>
         public static implicit operator MachineLearningRemoteLoginPortPublicAccess(string value) => new MachineLearningRemoteLoginPortPublicAccess(value);
 
         /// <inheritdoc />

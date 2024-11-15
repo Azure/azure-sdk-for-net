@@ -25,11 +25,7 @@ public static class JsonOptions
     {
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = SnakeCaseLower,
-#if NETFRAMEWORK
-        IgnoreNullValues = true,
-#else
         DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
-#endif
         Converters =
         {
             new ModelReaderWriterConverter(),
@@ -41,11 +37,7 @@ public static class JsonOptions
     {
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-#if NETFRAMEWORK
-        IgnoreNullValues = true,
-#else
         DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
-#endif
     };
 
     // Ported over from the source code for newer versions of System.Text.Json
