@@ -16,6 +16,8 @@ public class Sample_ChatCompletions : SamplesBase<AIProjectsTestEnvironment>
     public void ChatCompletions()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+
         ChatCompletionsClient chatClient = new AIProjectClient(connectionString, new DefaultAzureCredential()).GetChatCompletionsClient();
 
         var requestOptions = new ChatCompletionsOptions()
@@ -25,6 +27,7 @@ public class Sample_ChatCompletions : SamplesBase<AIProjectsTestEnvironment>
                     new ChatRequestSystemMessage("You are a helpful assistant."),
                     new ChatRequestUserMessage("How many feet are in a mile?"),
                 },
+            Model = modelDeploymentName
         };
 
         Response<ChatCompletions> response = chatClient.Complete(requestOptions);

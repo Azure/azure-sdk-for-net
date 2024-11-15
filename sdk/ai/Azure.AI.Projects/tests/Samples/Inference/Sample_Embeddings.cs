@@ -17,10 +17,15 @@ public class Sample_Embeddings : SamplesBase<AIProjectsTestEnvironment>
     public void BasicEmbedding()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+
         EmbeddingsClient embeddingsClient = new AIProjectClient(connectionString, new DefaultAzureCredential()).GetEmbeddingsClient();
 
-        var input = new List<string> { "King", "Queen", "Jack", "Page" };
-        var requestOptions = new EmbeddingsOptions(input);
+        var input = new List<string> { "first phrase", "second phrase", "third phrase" };
+        var requestOptions = new EmbeddingsOptions(input)
+        {
+            Model = modelDeploymentName
+        };
 
         Response<EmbeddingsResult> response = embeddingsClient.Embed(requestOptions);
         foreach (EmbeddingItem item in response.Value.Data)

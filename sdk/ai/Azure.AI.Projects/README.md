@@ -2,8 +2,27 @@
 Use the AI Projects client library to:
 
 * **Develop Agents using the Azure AI Agent Service**, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers. The Azure AI Agent Service enables the building of Agents for a wide range of generative AI use cases. The package is currently in preview.
-* **Enumerate connections** in your Azure AI Studio project and get connection properties.
-For example, get the inference endpoint URL and credentials associated with your Azure OpenAI connection.
+* **Enumerate connections** in your Azure AI Studio project and get connection properties. For example, get the inference endpoint URL and credentials associated with your Azure OpenAI connection.
+
+## Table of contents
+
+- [Getting started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Install the package](#install-the-package)
+- [Key concepts](#key-concepts)
+  - [Create and authenticate the client](#create-and-authenticate-the-client)
+- [Examples](#examples)
+  - [Agents](#agents)
+    - [Create an Agent](#create-an-agent)
+      - [Create thread](#create-thread)
+      - [Create message](#create-message)
+      - [Create and execute run](#create-and-execute-run)
+      - [Retrieve messages](#retrieve-messages)
+    - [File search](#file-search)
+    - [Function call](#function-call)
+- [Troubleshooting](#troubleshooting)
+- [Next steps](#next-steps)
+- [Contributing](#contributing)
 
 ## Getting started
 
@@ -34,11 +53,11 @@ dotnet add package Azure.Identity
 To interact with Azure AI Projects, you’ll need to create an instance of `AIProjectClient`. Use the appropriate credential type from the Azure Identity library. For example, [DefaultAzureCredential][azure_identity_dac]:
 
 ```C# Snippet:OverviewCreateClient
-var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
+var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 AIProjectClient projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
 ```
 
-Once `AIProjectClient` is created, you can call `GetXXXClient()` methods on this client to retrieve instances of specific sub-clients.
+Once the `AIProjectClient` is created, you can call methods in the form of `GetXxxClient()` on this client to retrieve instances of specific sub-clients.
 
 ## Examples
 
@@ -46,9 +65,11 @@ Once `AIProjectClient` is created, you can call `GetXXXClient()` methods on this
 
 Agents in the Azure AI Projects client library are designed to facilitate various interactions and operations within your AI projects. They serve as the core components that manage and execute tasks, leveraging different tools and resources to achieve specific goals. The following steps outline the typical sequence for interacting with agents:
 
-Create an `AgentClient`
+#### Create an Agent
+
+First, you need to create an `AgentsClient`
 ```C# Snippet:OverviewCreateAgentClient
-var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
+var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 ```
 
@@ -62,11 +83,15 @@ Response<Agent> agentResponse = await client.CreateAgentAsync(
 Agent agent = agentResponse.Value;
 ```
 
+#### Create thread
+
 Next, create a thread:
 ```C# Snippet:OverviewCreateThread
 Response<AgentThread> threadResponse = await client.CreateThreadAsync();
 AgentThread thread = threadResponse.Value;
 ```
+
+#### Create message
 
 With a thread created, messages can be created on it:
 ```C# Snippet:OverviewCreateMessage
@@ -76,6 +101,8 @@ Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
 ThreadMessage message = messageResponse.Value;
 ```
+
+#### Create and execute run
 
 A run can then be started that evaluates the thread against an agent:
 ```C# Snippet:OverviewCreateRun
@@ -96,6 +123,8 @@ do
 while (runResponse.Value.Status == RunStatus.Queued
     || runResponse.Value.Status == RunStatus.InProgress);
 ```
+
+#### Retrieve messages
 
 Assuming the run successfully completed, listing messages from the thread that was run will now reflect new information
 added by the agent:
@@ -129,7 +158,7 @@ Example output from this sequence:
  2024-10-15 23:12:51 - user: I need to solve the equation `3x + 11 = 14`. Can you help me?
 ```
 
-#### Working with files search
+#### File search
 
 Files can be uploaded and then referenced by agents or messages. First, use the generalized upload API with a
 purpose of 'agents' to make a file ID available:
@@ -172,7 +201,7 @@ Agent agent = agentResponse.Value;
 With a file ID association and a supported tool enabled, the agent will then be able to consume the associated
 data when running threads.
 
-#### Using function tools and parallel function calling
+#### Function call
 
 Tools that reference caller-defined capabilities as functions can be provided to an agent to allow it to
 dynamically resolve and disambiguate during a run.
@@ -320,9 +349,24 @@ while (runResponse.Value.Status == RunStatus.Queued
 
 ## Troubleshooting
 
-When you interact with Azure AI Projects using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for REST API requests.
+Any operation that fails will throw a [RequestFailedException][RequestFailedException]. The exception's `code` will hold the HTTP response status code. The exception's `message` contains a detailed message that may be helpful in diagnosing the issue:
 
-For example, if you try to create a client using an endpoint that doesn't match your Azure AI Resource endpoint, a `404` error is returned, indicating `Resource Not Found`.
+```C# Snippet:Readme_Troubleshooting
+try
+{
+    client.CreateMessage(
+    "1234",
+    MessageRole.User,
+    "I need to solve the equation `3x + 11 = 14`. Can you help me?");
+}
+catch (RequestFailedException ex) when (ex.Status == 404)
+{
+    Console.WriteLine($"Exception status code: {ex.Status}");
+    Console.WriteLine($"Exception message: {ex.Message}");
+}
+```
+
+To further diagnose and troubleshoot issues, you can enable logging following the [Azure SDK logging documentation](https://learn.microsoft.com/dotnet/azure/sdk/logging). This allows you to capture additional insights into request and response details, which can be particularly helpful when diagnosing complex issues.
 
 ## Next steps
 
@@ -340,6 +384,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples
+[RequestFailedException]: https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [aiprojects_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
