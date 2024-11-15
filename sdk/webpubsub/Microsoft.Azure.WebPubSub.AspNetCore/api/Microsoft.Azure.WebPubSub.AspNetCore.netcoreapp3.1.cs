@@ -3,6 +3,7 @@ namespace Microsoft.AspNetCore.Builder
     public static partial class WebPubSubEndpointRouteBuilderExtensions
     {
         public static Microsoft.AspNetCore.Builder.IEndpointConventionBuilder MapWebPubSubHub<THub>(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder endpoints, string path) where THub : Microsoft.Azure.WebPubSub.AspNetCore.WebPubSubHub { throw null; }
+        public static Microsoft.AspNetCore.Builder.IEndpointConventionBuilder MapWebPubSubHub<THub>(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder endpoints, string path, string hubName) where THub : Microsoft.Azure.WebPubSub.AspNetCore.WebPubSubHub { throw null; }
     }
 }
 namespace Microsoft.Azure.WebPubSub.AspNetCore

@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -80,7 +81,18 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
 
         internal static async Task<string> RunCommandAsync(string command, bool async = false)
         {
-            var processInfo = new ProcessStartInfo("cmd", $"/c {command}")
+            string shell, shellArgs;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                shell = "/bin/bash";
+                shellArgs = $"-c \"{command}\"";
+            }
+            else
+            {
+                shell = "cmd";
+                shellArgs = $"/c {command}";
+            }
+            var processInfo = new ProcessStartInfo(shell, shellArgs)
             {
                 RedirectStandardOutput = true,
                 UseShellExecute = false,

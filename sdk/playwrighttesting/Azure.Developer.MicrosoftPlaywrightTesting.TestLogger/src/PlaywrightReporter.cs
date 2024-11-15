@@ -101,6 +101,8 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         runParameters.TryGetValue(RunSettingKey.Os, out var osType);
         runParameters.TryGetValue(RunSettingKey.ExposeNetwork, out var exposeNetwork);
         nunitParameters.TryGetValue(RunSettingKey.NumberOfTestWorkers, out var numberOfTestWorkers);
+        runParameters.TryGetValue(RunSettingKey.RunName, out var runName);
+
         string? enableGithubSummaryString = enableGithubSummary?.ToString();
         string? enableResultPublishString = enableResultPublish?.ToString();
 
@@ -119,10 +121,19 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             return;
         }
         // setup entra rotation handlers
-        _playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, entraLifecycle: null, jsonWebTokenHandler: _jsonWebTokenHandler, credential: playwrightServiceSettings.AzureTokenCredential);
+        IFrameworkLogger frameworkLogger = new VSTestFrameworkLogger(_logger);
+        try
+        {
+            _playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, entraLifecycle: null, jsonWebTokenHandler: _jsonWebTokenHandler, credential: playwrightServiceSettings.AzureTokenCredential, frameworkLogger: frameworkLogger);
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-        _playwrightService.InitializeAsync().GetAwaiter().GetResult();
+            _playwrightService.InitializeAsync().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+        }
+        catch (Exception ex)
+        {
+            // We have checks for access token and base url in the next block, so we can ignore the exception here.
+            _logger.Error("Failed to initialize PlaywrightService: " + ex);
+        }
 
         var cloudRunId = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
         string? baseUrl = _environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
@@ -148,6 +159,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         var cloudRunMetadata = new CloudRunMetadata
         {
             RunId = cloudRunId,
+            RunName = runName?.ToString(),
             WorkspaceId = workspaceId,
             BaseUri = baseUri,
             EnableResultPublish = _enableResultPublish,

@@ -8,7 +8,8 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/ai/
+    - sdk/ai/ci.projects.yml
+    - sdk/ai/Azure.AI.Projects
 
 pr:
   branches:
@@ -19,7 +20,8 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/ai/
+    - sdk/ai/ci.projects.yml
+    - sdk/ai/Azure.AI.Projects
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -27,5 +29,5 @@ extends:
     ServiceDirectory: ai
     ArtifactName: packages
     Artifacts:
-    - name: Azure.AI.Inference
-      safeName: AzureAIInference
+    - name: Azure.AI.Projects
+      safeName: AzureAIProjects

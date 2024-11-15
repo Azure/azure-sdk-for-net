@@ -9,6 +9,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model
     {
         internal string? WorkspaceId { get; set; }
         internal string? RunId { get; set; }
+        internal string? RunName { get; set; }
         internal Uri? BaseUri { get; set; }
         internal string? PortalUrl
         {

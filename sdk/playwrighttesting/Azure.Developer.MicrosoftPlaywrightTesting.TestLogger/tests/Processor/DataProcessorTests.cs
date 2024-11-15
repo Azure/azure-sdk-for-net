@@ -5,6 +5,7 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using Moq;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
 {
@@ -67,6 +68,32 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             Assert.AreEqual("1.0.0-beta.1", result.TestRunConfig!.ReporterPackageVersion);
             Assert.IsNotNull(result.TestRunConfig!.Shards);
             Assert.AreEqual(1, result.TestRunConfig!.Shards!.Total);
+        }
+        [Test]
+        public void GetTestRun_ShouldUseRunName_WhenRunNameIsNotEmpty()
+        {
+            var cloudRunMetadata = new CloudRunMetadata
+            {
+                RunName = "runName",
+                WorkspaceId = "workspaceId",
+                RunId = "runId",
+                AccessTokenDetails = new()
+                {
+                    oid = "oid",
+                    userName = "  userName  "
+                }
+            };
+            var cIInfo = new CIInfo
+            {
+                Branch = "branch_name",
+                Author = "author",
+                CommitId = "commitId",
+                RevisionUrl = "revisionUrl",
+                Provider = CIConstants.s_gITHUB_ACTIONS
+            };
+            var dataProcessor = new DataProcessor(cloudRunMetadata, cIInfo);
+            TestRunDto result = dataProcessor.GetTestRun();
+            Assert.AreEqual("runName", result.DisplayName);
         }
 
         [Test]
@@ -151,7 +178,58 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             Assert.AreEqual(TestCaseResultStatus.s_iNCONCLUSIVE, result.ResultsSummary.Status);
             Assert.AreEqual(TestCaseResultStatus.s_iNCONCLUSIVE, result.Status);
         }
-
+        [Test]
+        [Ignore("Need to mock GetRunName response")]
+        public void GetTestRun_ShouldUseGitBasedRunName_WhenRunNameIsEmptyAndGitBasedRunNameIsNotEmpty()
+        {
+            var cloudRunMetadata = new CloudRunMetadata
+            {
+                RunName = "",
+                WorkspaceId = "workspaceId",
+                RunId = "runId",
+                AccessTokenDetails = new()
+                {
+                    oid = "oid",
+                    userName = "  userName  "
+                }
+            };
+            var cIInfo = new CIInfo
+            {
+                Branch = "branch_name",
+                Author = "author",
+                CommitId = "commitId",
+                RevisionUrl = "revisionUrl",
+                Provider = CIConstants.s_gITHUB_ACTIONS
+            };
+            var gitBasedRunName = ReporterUtils.GetRunName(cIInfo);
+            var dataProcessor = new DataProcessor(cloudRunMetadata, cIInfo);
+            TestRunDto result = dataProcessor.GetTestRun();
+            Assert.AreEqual(gitBasedRunName, result.DisplayName);
+        }
+        [Test]
+        [Ignore("Need to mock GetRunName response")]
+        public void GetTestRun_ShouldUseRunId_WhenRunNameAndGitBasedRunNameAreEmpty()
+        {
+            var cloudRunMetadata = new CloudRunMetadata
+            {
+                RunName = "",
+                WorkspaceId = "workspaceId",
+                RunId = "runId",
+                AccessTokenDetails = new()
+                {
+                    oid = "oid",
+                    userName = "  userName  "
+                }
+            };
+            var cIInfo = new CIInfo
+            {
+            };
+            var reporterUtilsMock = new Mock<ReporterUtils>();
+            reporterUtilsMock.Setup(r => ReporterUtils.GetRunName(cIInfo)).Returns(string.Empty);
+            var dataProcessor = new DataProcessor(cloudRunMetadata, cIInfo);
+            TestRunDto result = dataProcessor.GetTestRun();
+            Assert.AreEqual("runId", result.DisplayName);
+        }
         [Test]
         public void GetRawResultObject_WithNullTestResult_ReturnsRawTestResultWithEmptyErrorsAndStdErr()
         {
