@@ -17,7 +17,7 @@ Each service might have a number of libraries available from each of the followi
 * [Management - New Releases](#management-new-releases)
 * [Management - Previous Versions](#management-previous-versions)
 
-### Client: New Releases
+### Client: New Releases 
 
 New wave of packages that we are announcing as **GA** and several that are currently releasing in **preview**. These libraries follow the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet/guidelines/) and share a number of core features such as HTTP retries, logging, transport protocols, authentication protocols, etc., so that once you learn how to use these features in one client library, you will know how to use them in other client libraries. You can learn about these shared features at [Azure.Core](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md).
 
