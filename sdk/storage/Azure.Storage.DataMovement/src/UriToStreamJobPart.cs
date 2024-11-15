@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading;
 using Azure.Core;
 using Azure.Storage.Common;
+using System.Linq;
 
 namespace Azure.Storage.DataMovement
 {
@@ -218,9 +219,9 @@ namespace Azure.Storage.DataMovement
         internal async Task UnknownDownloadInternal()
         {
             Task<StorageResourceReadStreamResult> initialTask = _sourceResource.ReadStreamAsync(
-                        position: 0,
-                        length: _initialTransferSize,
-                        _cancellationToken);
+                position: 0,
+                length: _initialTransferSize,
+                _cancellationToken);
 
             try
             {
@@ -325,7 +326,7 @@ namespace Azure.Storage.DataMovement
         private async Task QueueChunksToChannel(long initialLength, long totalLength)
         {
             // Get list of ranges of the blob
-            IList<HttpRange> ranges = GetRangesList(initialLength, totalLength, _transferChunkSize);
+            IList<HttpRange> ranges = GetRanges(initialLength, totalLength, _transferChunkSize).ToList();
 
             // Create Download Chunk event handler to manage when the ranges finish downloading
             _downloadChunkHandler = GetDownloadChunkHandler(
@@ -467,14 +468,12 @@ namespace Azure.Storage.DataMovement
             return QueueChunkToChannelAsync(CompleteFileDownload);
         }
 
-        private static IList<HttpRange> GetRangesList(long initialLength, long totalLength, long rangeSize)
+        private static IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength, long rangeSize)
         {
-            IList<HttpRange> list = new List<HttpRange>();
             for (long offset = initialLength; offset < totalLength; offset += rangeSize)
             {
-                list.Add(new HttpRange(offset, Math.Min(totalLength - offset, rangeSize)));
+                yield return new HttpRange(offset, Math.Min(totalLength - offset, rangeSize));
             }
-            return list;
         }
         #endregion PartitionedDownloader
 
