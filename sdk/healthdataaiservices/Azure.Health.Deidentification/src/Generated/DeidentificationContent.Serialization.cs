@@ -84,7 +84,7 @@ namespace Azure.Health.Deidentification
                 return null;
             }
             string inputText = default;
-            OperationType? operation = default;
+            DeidentificationOperationType? operation = default;
             CustomizationOptions customizations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    operation = new OperationType(property.Value.GetString());
+                    operation = new DeidentificationOperationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("customizations"u8))

@@ -33,7 +33,7 @@ namespace Azure.Health.Deidentification
         /// <param name="startedAt"> Date and time when the job was started. </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationJob"/> instance for mocking. </returns>
-        public static DeidentificationJob DeidentificationJob(string name = null, OperationType? operation = null, SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, JobCustomizationOptions customizations = null, JobStatus status = default, ResponseError error = null, DateTimeOffset lastUpdatedAt = default, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, JobSummary summary = null)
+        public static DeidentificationJob DeidentificationJob(string name = null, DeidentificationOperationType? operation = null, SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, JobCustomizationOptions customizations = null, DeidentificationJobStatus status = default, ResponseError error = null, DateTimeOffset lastUpdatedAt = default, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, DeidentificationJobSummary summary = null)
         {
             return new DeidentificationJob(
                 name,
@@ -50,16 +50,16 @@ namespace Azure.Health.Deidentification
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Deidentification.JobSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationJobSummary"/>. </summary>
         /// <param name="successful"> Number of documents that have completed. </param>
         /// <param name="failed"> Number of documents that have failed. </param>
         /// <param name="canceled"> Number of documents that have been canceled. </param>
         /// <param name="total"> Number of documents total. </param>
         /// <param name="bytesProcessed"> Number of bytes processed. </param>
-        /// <returns> A new <see cref="Deidentification.JobSummary"/> instance for mocking. </returns>
-        public static JobSummary JobSummary(int successful = default, int failed = default, int canceled = default, int total = default, long bytesProcessed = default)
+        /// <returns> A new <see cref="Deidentification.DeidentificationJobSummary"/> instance for mocking. </returns>
+        public static DeidentificationJobSummary DeidentificationJobSummary(int successful = default, int failed = default, int canceled = default, int total = default, long bytesProcessed = default)
         {
-            return new JobSummary(
+            return new DeidentificationJobSummary(
                 successful,
                 failed,
                 canceled,
@@ -68,16 +68,16 @@ namespace Azure.Health.Deidentification
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Deidentification.DocumentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationDocumentDetails"/>. </summary>
         /// <param name="id"> Id of the document details. </param>
         /// <param name="input"> Location for the input. </param>
         /// <param name="output"> Location for the output. </param>
         /// <param name="status"> Status of the document. </param>
         /// <param name="error"> Error when document fails. </param>
-        /// <returns> A new <see cref="Deidentification.DocumentDetails"/> instance for mocking. </returns>
-        public static DocumentDetails DocumentDetails(string id = null, DocumentLocation input = null, DocumentLocation output = null, OperationState status = default, ResponseError error = null)
+        /// <returns> A new <see cref="Deidentification.DeidentificationDocumentDetails"/> instance for mocking. </returns>
+        public static DeidentificationDocumentDetails DeidentificationDocumentDetails(string id = null, DeidentificationDocumentLocation input = null, DeidentificationDocumentLocation output = null, OperationState status = default, ResponseError error = null)
         {
-            return new DocumentDetails(
+            return new DeidentificationDocumentDetails(
                 id,
                 input,
                 output,
@@ -86,13 +86,13 @@ namespace Azure.Health.Deidentification
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Deidentification.DocumentLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationDocumentLocation"/>. </summary>
         /// <param name="location"> Location of document in storage. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
-        /// <returns> A new <see cref="Deidentification.DocumentLocation"/> instance for mocking. </returns>
-        public static DocumentLocation DocumentLocation(Uri location = null, ETag etag = default)
+        /// <returns> A new <see cref="Deidentification.DeidentificationDocumentLocation"/> instance for mocking. </returns>
+        public static DeidentificationDocumentLocation DeidentificationDocumentLocation(Uri location = null, ETag etag = default)
         {
-            return new DocumentLocation(location, etag, serializedAdditionalRawData: null);
+            return new DeidentificationDocumentLocation(location, etag, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationContent"/>. </summary>
@@ -100,7 +100,7 @@ namespace Azure.Health.Deidentification
         /// <param name="operation"> Operation to perform on the input documents. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
-        public static DeidentificationContent DeidentificationContent(string inputText = null, OperationType? operation = null, CustomizationOptions customizations = null)
+        public static DeidentificationContent DeidentificationContent(string inputText = null, DeidentificationOperationType? operation = null, CustomizationOptions customizations = null)
         {
             return new DeidentificationContent(inputText, operation, customizations, serializedAdditionalRawData: null);
         }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Health.Deidentification
 {
     /// <summary> Location of a document. </summary>
-    public partial class DocumentLocation
+    public partial class DeidentificationDocumentLocation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,29 @@ namespace Azure.Health.Deidentification
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeidentificationDocumentLocation"/>. </summary>
         /// <param name="location"> Location of document in storage. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        internal DocumentLocation(Uri location)
+        internal DeidentificationDocumentLocation(Uri location)
         {
             Argument.AssertNotNull(location, nameof(location));
 
             Location = location;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeidentificationDocumentLocation"/>. </summary>
         /// <param name="location"> Location of document in storage. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentLocation(Uri location, ETag etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationDocumentLocation(Uri location, ETag etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Etag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentLocation"/> for deserialization. </summary>
-        internal DocumentLocation()
+        /// <summary> Initializes a new instance of <see cref="DeidentificationDocumentLocation"/> for deserialization. </summary>
+        internal DeidentificationDocumentLocation()
         {
         }
 
