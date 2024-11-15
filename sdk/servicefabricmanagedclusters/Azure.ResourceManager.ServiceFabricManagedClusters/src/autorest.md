@@ -8,12 +8,12 @@ azure-arm: true
 csharp: true
 library-name: ServiceFabricManagedClusters
 namespace: Azure.ResourceManager.ServiceFabricManagedClusters
-require:  https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/readme.md
+require:  https://github.com/Azure/azure-rest-api-specs/blob/f17b769690a46d858134ee68ef0d89635083b560/specification/servicefabricmanagedclusters/resource-manager/readme.md
 
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/managedcluster.json
-- https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/nodetype.json
-- https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/managedapplication.json
+- https://github.com/Azure/azure-rest-api-specs/blob/f17b769690a46d858134ee68ef0d89635083b560/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/managedcluster.json
+- https://github.com/Azure/azure-rest-api-specs/blob/f17b769690a46d858134ee68ef0d89635083b560/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/nodetype.json
+- https://github.com/Azure/azure-rest-api-specs/blob/f17b769690a46d858134ee68ef0d89635083b560/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/managedapplication.json
 
 tag: package-2024-06-preview
 output-folder: $(this-folder)/Generated
