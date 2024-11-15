@@ -8,7 +8,8 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/ai/
+    - sdk/ai/ci.inference.yml
+    - sdk/ai/Azure.AI.Inference
 
 pr:
   branches:
@@ -19,7 +20,8 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/ai/
+    - sdk/ai/ci.inference.yml
+    - sdk/ai/Azure.AI.Inference
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

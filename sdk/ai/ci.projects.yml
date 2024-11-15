@@ -9,7 +9,7 @@ trigger:
   paths:
     include:
     - sdk/ai/ci.projects.yml
-    - sdk/ai/Azure.AI.Project
+    - sdk/ai/Azure.AI.Projects
 
 pr:
   branches:
@@ -21,7 +21,7 @@ pr:
   paths:
     include:
     - sdk/ai/ci.projects.yml
-    - sdk/ai/Azure.AI.Project
+    - sdk/ai/Azure.AI.Projects
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
