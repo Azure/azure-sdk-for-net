@@ -395,15 +395,10 @@ namespace Azure.Storage.DataMovement
                     _cancellationToken).ConfigureAwait(false);
 
                 // The chunk handler may have been disposed in failure case
-                _downloadChunkHandler?.QueueChunk(new DownloadRangeEventArgs(
-                    transferId: _dataTransfer.Id,
-                    success: true,
+                _downloadChunkHandler?.QueueChunk(new QueueDownloadChunkArgs(
                     offset: range.Offset,
-                    bytesTransferred: (long)range.Length,
-                    result: result.Content,
-                    exception: default,
-                    false,
-                    _cancellationToken));
+                    length: (long)range.Length,
+                    result: result.Content));
             }
             catch (Exception ex)
             {

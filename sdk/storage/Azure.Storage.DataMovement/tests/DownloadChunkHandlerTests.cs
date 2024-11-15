@@ -196,15 +196,10 @@ namespace Azure.Storage.DataMovement.Tests
             PredictableStream content = new PredictableStream(blockSize);
 
             // Act - Make one chunk that would meet the expected length
-            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
-                transferId: "fake-id",
-                success: true,
+            downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: 0,
-                bytesTransferred: blockSize,
-                result: content,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                length: blockSize,
+                result: content));
 
             // Assert
             VerifyDelegateInvocations(
@@ -240,15 +235,10 @@ namespace Azure.Storage.DataMovement.Tests
             PredictableStream content = new PredictableStream(blockSize);
 
             // Act - Make one chunk that would update the bytes but not cause a commit block list to occur
-            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
-                transferId: "fake-id",
-                success: true,
+            downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: 0,
-                bytesTransferred: blockSize,
-                result: content,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                length: blockSize,
+                result: content));
 
             // Assert
             VerifyDelegateInvocations(
@@ -261,15 +251,10 @@ namespace Azure.Storage.DataMovement.Tests
             PredictableStream content2 = new PredictableStream(blockSize);
 
             // Act - Now add the last block to meet the required commited block amount.
-            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
-                transferId: "fake-id",
-                success: true,
+            downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: blockSize,
-                bytesTransferred: blockSize,
-                result: content2,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                length: blockSize,
+                result: content2));
 
             // Assert
             VerifyDelegateInvocations(
@@ -304,26 +289,16 @@ namespace Azure.Storage.DataMovement.Tests
             PredictableStream content = new PredictableStream(blockSize);
 
             // Make initial range event
-            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
-                transferId: "fake-id",
-                success: true,
+            downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: 0,
-                bytesTransferred: blockSize,
-                result: content,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                length: blockSize,
+                result: content));
 
             // Act - Make the repeat at the same offset to cause an error.
-            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
-                transferId: "fake-id",
-                success: true,
+            downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: 0,
-                bytesTransferred: blockSize,
-                result: content,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                length: blockSize,
+                result: content));
 
             // Assert
             VerifyDelegateInvocations(
@@ -360,15 +335,10 @@ namespace Azure.Storage.DataMovement.Tests
             PredictableStream content = new PredictableStream(blockSize);
 
             // Act - The second chunk returns first
-            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
-                transferId: "fake-id",
-                success: true,
+            downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: blockSize,
-                bytesTransferred: blockSize,
-                result: content,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                length: blockSize,
+                result: content));
 
             // Assert
             VerifyDelegateInvocations(
@@ -379,15 +349,10 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 0);
 
             // Act - The first chunk is then returned
-            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
-                transferId: "fake-id",
-                success: true,
+            downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: 0,
-                bytesTransferred: blockSize,
-                result: content,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                length: blockSize,
+                result: content));
 
             // Assert
             VerifyDelegateInvocations(
@@ -430,15 +395,10 @@ namespace Azure.Storage.DataMovement.Tests
                 PredictableStream content = new PredictableStream(blockSize);
 
                 long offset = i * blockSize;
-                Task task = Task.Run(() => downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
-                    transferId: "fake-id",
-                    success: true,
+                Task task = Task.Run(() => downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                     offset: offset,
-                    bytesTransferred: blockSize,
-                    result: content,
-                    exception: default,
-                    isRunningSynchronously: false,
-                    cancellationToken: CancellationToken.None)));
+                    length: blockSize,
+                    result: content)));
                 runningTasks.Add(task);
             }
 
@@ -481,15 +441,10 @@ namespace Azure.Storage.DataMovement.Tests
             PredictableStream content = new PredictableStream(blockSize);
 
             // Act
-            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
-                transferId: "fake-id",
-                success: true,
+            downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: 0,
-                bytesTransferred: blockSize,
-                result: content,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                length: blockSize,
+                result: content));
 
             // Assert
             VerifyDelegateInvocations(
@@ -525,15 +480,10 @@ namespace Azure.Storage.DataMovement.Tests
             PredictableStream content = new PredictableStream(blockSize);
 
             // Act
-            downloadChunkHandler.QueueChunk(new DownloadRangeEventArgs(
-                transferId: "fake-id",
-                success: true,
+            downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: 0,
-                bytesTransferred: blockSize,
-                result: content,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                length: blockSize,
+                result: content));
 
             // Assert
             VerifyDelegateInvocations(

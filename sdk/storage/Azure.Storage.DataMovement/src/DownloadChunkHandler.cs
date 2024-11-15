@@ -7,7 +7,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
@@ -35,10 +34,10 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Create channel of <see cref="DownloadRangeEventArgs"/> to keep track to handle
+        /// Create channel of <see cref="QueueDownloadChunkArgs"/> to keep track to handle
         /// writing downloaded chunks to the destination as well as tracking overall progress.
         /// </summary>
-        private readonly Channel<DownloadRangeEventArgs> _downloadRangeChannel;
+        private readonly Channel<QueueDownloadChunkArgs> _downloadRangeChannel;
         private readonly Task _processDownloadRangeEvents;
         private readonly CancellationToken _cancellationToken;
 
@@ -94,7 +93,7 @@ namespace Azure.Storage.DataMovement
 
             // The size of the channel should never exceed 50k (limit on blocks in a block blob).
             // and that's in the worst case that we never read from the channel and had a maximum chunk blob.
-            _downloadRangeChannel = Channel.CreateUnbounded<DownloadRangeEventArgs>(
+            _downloadRangeChannel = Channel.CreateUnbounded<QueueDownloadChunkArgs>(
                 new UnboundedChannelOptions()
                 {
                     // Single reader is required as we can only have one writer to the destination.
@@ -135,7 +134,7 @@ namespace Azure.Storage.DataMovement
             _downloadRangeChannel.Writer.TryComplete();
         }
 
-        public void QueueChunk(DownloadRangeEventArgs args)
+        public void QueueChunk(QueueDownloadChunkArgs args)
         {
             _downloadRangeChannel.Writer.TryWrite(args);
         }
@@ -147,7 +146,7 @@ namespace Azure.Storage.DataMovement
                 while (await _downloadRangeChannel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
                 {
                     // Read one event argument at a time.
-                    DownloadRangeEventArgs args = await _downloadRangeChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
+                    QueueDownloadChunkArgs args = await _downloadRangeChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
                     long currentRangeOffset = _ranges[_currentRangeIndex].Offset;
                     if (currentRangeOffset < args.Offset)
                     {
