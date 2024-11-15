@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2024-11-22)
 
 ### Features Added
 
@@ -14,7 +14,7 @@
 - Changed `outputPrefix` behavior from including `jobName` to prefix replacement method
 - Changed `Path` field to `Location` in `SourceStorageLocation` and `TargetStorageLocation`
 - Deprecated `DocumentDataType`
-- Deprecated `Path` and `Location` from `TaggerResult`
+- Deprecated `Path` and `Location` from `TaggerResult` model
 
 ### Bugs Fixed
 
