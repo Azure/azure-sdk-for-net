@@ -50,12 +50,12 @@ public class OpenAIModel : CloudMachineFeature
         };
 
         Debug.Assert(Account != null);
-        var emitted = Account!.Emited;
+        var emitted = Account!.Emitted;
         if (emitted == null)
         {
             Account.Emit(cm);
         }
-        CognitiveServicesAccount parent = (CognitiveServicesAccount)Account!.Emited;
+        CognitiveServicesAccount parent = (CognitiveServicesAccount)Account!.Emitted;
 
         CognitiveServicesAccountDeployment deployment = new($"openai_{name}", "2024-06-01-preview") {
             Parent = parent,

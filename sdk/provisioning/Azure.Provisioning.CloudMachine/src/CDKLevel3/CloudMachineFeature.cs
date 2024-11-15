@@ -15,13 +15,13 @@ public abstract class CloudMachineFeature
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Emit(CloudMachineInfrastructure cm)
     {
-        if (Emited != null) return;
+        if (Emitted != null) return;
         ProvisionableResource provisionable = EmitCore(cm);
-        Emited = provisionable;
+        Emitted = provisionable;
     }
 
     protected abstract ProvisionableResource EmitCore(CloudMachineInfrastructure cm);
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public ProvisionableResource Emited { get; protected set; } = default!;
+    public ProvisionableResource Emitted { get; protected set; } = default!;
 }

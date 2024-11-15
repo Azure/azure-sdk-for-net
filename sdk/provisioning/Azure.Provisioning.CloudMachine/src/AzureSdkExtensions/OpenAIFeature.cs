@@ -27,7 +27,7 @@ internal class OpenAIFeature : CloudMachineFeature
             cloudMachine.PrincipalIdParameter)
         );
 
-        Emited = cognitiveServices;
+        Emitted = cognitiveServices;
 
         OpenAIModel? previous = null;
         foreach (OpenAIModel model in _models)
@@ -35,7 +35,7 @@ internal class OpenAIFeature : CloudMachineFeature
             model.Emit(cloudMachine);
             if (previous != null)
             {
-                model.Emited.DependsOn.Add(previous.Emited);
+                model.Emitted.DependsOn.Add(previous.Emitted);
             }
             previous = model;
         }
