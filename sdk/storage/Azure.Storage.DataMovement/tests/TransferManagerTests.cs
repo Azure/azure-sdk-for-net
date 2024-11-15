@@ -357,6 +357,7 @@ public class TransferManagerTests
 
         Exception expectedException = new();
         Exception cleanupException = throwCleanup ? new() : null;
+        bool expectTransferInCheckpointer = failAt == 0 && throwCleanup;
         switch (failAt)
         {
             case 0:
@@ -396,7 +397,7 @@ public class TransferManagerTests
 
         Assert.That(transfer, Is.Null);
 
-        Assert.That(checkpointer.Object.Jobs.Count, Is.EqualTo(0));
+        Assert.That(checkpointer.Object.Jobs.Count, Is.EqualTo(expectTransferInCheckpointer ? 1 : 0));
         checkpointer.Verify(c => c.AddNewJobAsync(It.IsAny<string>(), It.IsAny<StorageResource>(),
             It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once);
         checkpointer.Verify(c => c.TryRemoveStoredTransferAsync(It.IsAny<string>(),
