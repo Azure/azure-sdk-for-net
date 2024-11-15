@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>net9.0;$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>SA1636</NoWarn>
   </PropertyGroup>
 
@@ -40,4 +40,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="8.0.7" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="9.0.0" />
+  </ItemGroup>
+  
 </Project>
