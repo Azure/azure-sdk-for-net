@@ -212,12 +212,13 @@ namespace Azure.Identity.Tests
 
             var mockTransport = MockTransport.FromMessageCallback(msg =>
             {
+                Task.Delay(1000).GetAwaiter().GetResult();
                 callCount++;
                 return CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json");
             });
 
             var options = new TokenCredentialOptions() { Transport = mockTransport };
-            options.Retry.MaxDelay = TimeSpan.Zero;
+            options.Retry.MaxDelay = TimeSpan.FromSeconds(1);
 
             var cred = new ManagedIdentityCredential(
                 "testCLientId", options);
