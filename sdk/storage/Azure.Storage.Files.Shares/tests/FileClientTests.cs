@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
@@ -17,6 +18,7 @@ using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
@@ -725,6 +727,46 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateAsync_NFS()
+        {
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+            ShareDirectoryClient directory = test.Directory;
+
+            // Arrange
+            string name = GetNewFileName();
+            ShareFileClient file = InstrumentClient(directory.GetFileClient(name));
+
+            string owner = "345";
+            string group = "123";
+            string fileMode = "7777";
+
+            ShareFileCreateOptions options = new ShareFileCreateOptions
+            {
+                NfsProperties = new FilePosixProperties
+                {
+                    Owner = owner,
+                    Group = group,
+                    FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
+                }
+            };
+
+            // Act
+            Response<ShareFileInfo> response = await file.CreateAsync(
+                maxSize: Constants.MB,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(NfsFileType.Regular, response.Value.NfsProperties.FileType);
+            Assert.AreEqual(owner, response.Value.NfsProperties.Owner);
+            Assert.AreEqual(group, response.Value.NfsProperties.Group);
+            Assert.AreEqual(fileMode, response.Value.NfsProperties.FileMode.ToOctalFileMode());
+
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+        }
+
+        [RecordedTest]
         public async Task ExistsAsync_Exists()
         {
             // Arrange
@@ -1326,6 +1368,26 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task GetProperties_NFS()
+        {
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(nfs: true);
+
+            // Act
+            Response<ShareFileProperties> response = await test.File.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(NfsFileType.Regular, response.Value.NfsProperties.FileType);
+            Assert.AreEqual("0", response.Value.NfsProperties.Owner);
+            Assert.AreEqual("0", response.Value.NfsProperties.Group);
+            Assert.AreEqual("0664", response.Value.NfsProperties.FileMode.ToOctalFileMode());
+            Assert.AreEqual(1, response.Value.NfsProperties.LinkCount);
+
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+        }
+
+        [RecordedTest]
         public async Task SetHttpHeadersAsync()
         {
             var constants = TestConstants.Create(this);
@@ -1710,6 +1772,39 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             Response<ShareFileInfo> response = await file.SetHttpHeadersAsync(setHttpHeadersOptions);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task SetHttpHeadersAsync_NFS()
+        {
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(nfs: true);
+
+            string owner = "345";
+            string group = "123";
+            string fileMode = "7777";
+
+            ShareFileSetHttpHeadersOptions options = new ShareFileSetHttpHeadersOptions
+            {
+                NfsProperties = new FilePosixProperties
+                {
+                    Owner = owner,
+                    Group = group,
+                    FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
+                }
+            };
+
+            // Act
+            Response<ShareFileInfo> response = await test.File.SetHttpHeadersAsync(options);
+
+            // Assert
+            Assert.AreEqual(owner, response.Value.NfsProperties.Owner);
+            Assert.AreEqual(group, response.Value.NfsProperties.Group);
+            Assert.AreEqual(fileMode, response.Value.NfsProperties.FileMode.ToOctalFileMode());
+            Assert.AreEqual(1, response.Value.NfsProperties.LinkCount);
+
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
         }
 
         [RecordedTest]
@@ -2447,6 +2542,59 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [TestCase(false)]
+        [TestCase(true)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task StartCopy_NFS(bool overwriteOwnerAndMode)
+        {
+            // Arrange
+            await using DisposingFile source = await SharesClientBuilder.GetTestFileAsync(nfs: true);
+            await using DisposingFile destination = await SharesClientBuilder.GetTestFileAsync(nfs: true);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await source.File.UploadRangeAsync(
+                range: new HttpRange(0, Constants.KB),
+                content: stream);
+
+            Response<ShareFileProperties> sourceProperties =  await source.File.GetPropertiesAsync();
+
+            string owner;
+            string group;
+            NfsFileMode fileMode;
+
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                NfsProperties = new FilePosixProperties()
+            };
+
+            if (overwriteOwnerAndMode)
+            {
+                owner = "54321";
+                group = "12345";
+                fileMode = NfsFileMode.ParseOctalFileMode("7777");
+                options.NfsProperties.Owner = owner;
+                options.NfsProperties.Group = group;
+                options.NfsProperties.FileMode = fileMode;
+            }
+            else
+            {
+                owner = sourceProperties.Value.NfsProperties.Owner;
+                fileMode = sourceProperties.Value.NfsProperties.FileMode;
+                group = sourceProperties.Value.NfsProperties.Group;
+            }
+
+            // Act
+            await destination.File.StartCopyAsync(source.File.Uri, options);
+            Response<ShareFileProperties> destinationProperties = await destination.File.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(owner, destinationProperties.Value.NfsProperties.Owner);
+            Assert.AreEqual(group, destinationProperties.Value.NfsProperties.Group);
+            Assert.AreEqual(fileMode.ToOctalFileMode(), destinationProperties.Value.NfsProperties.FileMode.ToOctalFileMode());
+        }
+
+        [RecordedTest]
         public async Task AbortCopyAsync()
         {
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
@@ -3071,6 +3219,37 @@ namespace Azure.Storage.Files.Shares.Tests
                 await downloadResponse.Value.Content.CopyToAsync(actual);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task DownloadAsync_NFS()
+        {
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(nfs: true);
+            ShareFileClient file = test.File;
+
+            using Stream stream = new MemoryStream(data);
+            await file.UploadRangeAsync(
+                range: new HttpRange(0, Constants.KB),
+                content: stream);
+
+            // Act
+            Response<ShareFileDownloadInfo> response = await file.DownloadAsync(new ShareFileDownloadOptions
+            {
+                Range = new HttpRange(0, Constants.KB)
+            });
+
+            // Assert
+            Assert.AreEqual("0", response.Value.Details.NfsProperties.Owner);
+            Assert.AreEqual("0", response.Value.Details.NfsProperties.Group);
+            Assert.AreEqual("0664", response.Value.Details.NfsProperties.FileMode.ToOctalFileMode());
+            Assert.AreEqual(1, response.Value.Details.NfsProperties.LinkCount);
+
+            Assert.IsNull(response.Value.Details.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.Details.SmbProperties.FilePermissionKey);
         }
 
         [RecordedTest]
@@ -6620,6 +6799,182 @@ namespace Azure.Storage.Files.Shares.Tests
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/46907")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateGetSymbolicLinkAsync()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient source = InstrumentClient(await directory.CreateFileAsync(GetNewFileName(), maxSize: Constants.KB));
+            ShareFileClient symlink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            IDictionary<string, string> metdata = BuildMetadata();
+            string owner = "345";
+            string group = "123";
+            DateTimeOffset fileCreatedOn = new DateTimeOffset(2024, 10, 15, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset fileLastWrittenOn = new DateTimeOffset(2025, 5, 2, 0, 0, 0, TimeSpan.Zero);
+
+            ShareFileCreateSymbolicLinkOptions options = new ShareFileCreateSymbolicLinkOptions
+            {
+                Metadata = metdata,
+                FileCreatedOn = fileCreatedOn,
+                FileLastWrittenOn = fileLastWrittenOn,
+                Owner = owner,
+                Group = group
+            };
+
+            // Act
+            Response<ShareFileInfo> response = await symlink.CreateSymbolicLinkAsync(
+                linkText: source.Uri.ToString(),
+                options: options);
+
+            // Assert
+            Assert.AreEqual(NfsFileType.Symlink, response.Value.NfsProperties.FileType);
+            Assert.AreEqual(owner, response.Value.NfsProperties.Owner);
+            Assert.AreEqual(group, response.Value.NfsProperties.Group);
+            Assert.AreEqual(fileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
+            Assert.AreEqual(fileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
+
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+
+            Assert.IsNotNull(response.Value.SmbProperties.FileId);
+            Assert.IsNotNull(response.Value.SmbProperties.ParentId);
+
+            // Act
+            Response<ShareFileSymbolicLinkInfo> getSymLinkResponse = await symlink.GetSymbolicLinkAsync();
+
+            // Assert
+            Assert.AreNotEqual(default, getSymLinkResponse.Value.ETag);
+            Assert.AreNotEqual(default, getSymLinkResponse.Value.LastModified);
+            Assert.AreEqual(source.Uri.ToString(), getSymLinkResponse.Value.LinkText);
+        }
+
+        [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/46907")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateGetSymbolicLinkAsync_Error()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync(nfs: true);
+            // Note that the parent directory was not created in this test case.
+            ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+
+            ShareFileClient source = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+            ShareFileClient symlink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                symlink.CreateSymbolicLinkAsync(linkText: source.Uri.ToString()),
+                e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
+
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                symlink.GetSymbolicLinkAsync(),
+                e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/46907")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateGetSymbolicLinkAsync_OAuth()
+        {
+            // Arrange
+            ShareServiceClient oauthServiceClient = GetServiceClient_PremiumFileOAuth();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
+                service: oauthServiceClient,
+                nfs: true);
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient source = InstrumentClient(await directory.CreateFileAsync(GetNewFileName(), maxSize: Constants.KB));
+            ShareFileClient symlink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            await symlink.CreateSymbolicLinkAsync(linkText: source.Uri.ToString());
+            await symlink.GetSymbolicLinkAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateHardLinkAsync()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient source = InstrumentClient(await directory.CreateFileAsync(GetNewFileName(), maxSize: Constants.KB));
+            ShareLeaseClient leaseClient = InstrumentClient(test.Share.GetShareLeaseClient(Recording.Random.NewGuid().ToString()));
+            ShareFileLease lease = await leaseClient.AcquireAsync();
+            try
+            {
+                ShareFileClient hardLink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+                // Act
+                Response<ShareFileInfo> response = await hardLink.CreateHardLinkAsync(
+                    targetFile: $"{directory.Name}/{source.Name}",
+                    conditions: new ShareFileRequestConditions() { LeaseId = lease.LeaseId });
+
+                // Assert
+                Assert.AreEqual(NfsFileType.Regular, response.Value.NfsProperties.FileType);
+                Assert.AreEqual("0", response.Value.NfsProperties.Owner);
+                Assert.AreEqual("0", response.Value.NfsProperties.Group);
+                Assert.AreEqual("0664", response.Value.NfsProperties.FileMode.ToOctalFileMode());
+                Assert.AreEqual(2, response.Value.NfsProperties.LinkCount);
+
+                Assert.IsNotNull(response.Value.SmbProperties.FileCreatedOn);
+                Assert.IsNotNull(response.Value.SmbProperties.FileLastWrittenOn);
+                Assert.IsNotNull(response.Value.SmbProperties.FileChangedOn);
+                Assert.IsNotNull(response.Value.SmbProperties.FileId);
+                Assert.IsNotNull(response.Value.SmbProperties.ParentId);
+
+                Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+                Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+            }
+            finally
+            {
+                await leaseClient.ReleaseAsync();
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateHardLinkAsync_OAuth()
+        {
+            // Arrange
+            ShareServiceClient oauthServiceClient = GetServiceClient_PremiumFileOAuth();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
+                service: oauthServiceClient,
+                nfs: true);
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient source = InstrumentClient(await directory.CreateFileAsync(GetNewFileName(), maxSize: Constants.KB));
+            ShareFileClient hardLink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            Response<ShareFileInfo> response = await hardLink.CreateHardLinkAsync(
+                targetFile: $"{directory.Name}/{source.Name}");
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateGetHardLinkAsync_Error()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync(nfs: true);
+            // Note that the parent directory was not created in this test case.
+            ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+
+            ShareFileClient source = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+            ShareFileClient hardLink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                hardLink.CreateHardLinkAsync(targetFile: $"{directory.Name}/{source.Name}"),
+                e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
         }
 
         #region GenerateSasTests

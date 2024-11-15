@@ -64,5 +64,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// SMB properties to copy from the source file.
         /// </summary>
         public CopyableFileSmbProperties SmbPropertiesToCopy { get; set; }
+
+        /// <summary>
+        /// Only applicable to NFS Files.  NFS properties to set on the destination file.
+        /// </summary>
+        public FilePosixProperties NfsProperties { get; set; }
     }
 }

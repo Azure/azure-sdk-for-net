@@ -11,10 +11,10 @@ using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal partial class DirectoryCreateHeaders
+    internal partial class FileCreateHardLinkHeaders
     {
         private readonly Response _response;
-        public DirectoryCreateHeaders(Response response)
+        public FileCreateHardLinkHeaders(Response response)
         {
             _response = response;
         }
@@ -22,22 +22,18 @@ namespace Azure.Storage.Files.Shares
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
         /// <summary> Indicates the version of the File service used to execute the request. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
-        /// <summary> The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise. </summary>
-        public bool? IsServerEncrypted => _response.Headers.TryGetValue("x-ms-request-server-encrypted", out bool? value) ? value : null;
-        /// <summary> Key of the permission set for the directory. </summary>
-        public string FilePermissionKey => _response.Headers.TryGetValue("x-ms-file-permission-key", out string value) ? value : null;
-        /// <summary> Attributes set for the directory. </summary>
-        public string FileAttributes => _response.Headers.TryGetValue("x-ms-file-attributes", out string value) ? value : null;
-        /// <summary> Creation time for the directory. </summary>
+        /// <summary> Creation time for the file. </summary>
         public DateTimeOffset? FileCreationTime => _response.Headers.TryGetValue("x-ms-file-creation-time", out DateTimeOffset? value) ? value : null;
-        /// <summary> Last write time for the directory. </summary>
+        /// <summary> Last write time for the file. </summary>
         public DateTimeOffset? FileLastWriteTime => _response.Headers.TryGetValue("x-ms-file-last-write-time", out DateTimeOffset? value) ? value : null;
-        /// <summary> Change time for the directory. </summary>
+        /// <summary> Change time for the file. </summary>
         public DateTimeOffset? FileChangeTime => _response.Headers.TryGetValue("x-ms-file-change-time", out DateTimeOffset? value) ? value : null;
-        /// <summary> The fileId of the directory. </summary>
+        /// <summary> The fileId of the file. </summary>
         public string FileId => _response.Headers.TryGetValue("x-ms-file-id", out string value) ? value : null;
         /// <summary> The parent fileId of the directory. </summary>
         public string FileParentId => _response.Headers.TryGetValue("x-ms-file-parent-id", out string value) ? value : null;
+        /// <summary> NFS only. The link count of the file or directory. </summary>
+        public long? LinkCount => _response.Headers.TryGetValue("x-ms-link-count", out long? value) ? value : null;
         /// <summary> NFS only. The mode of the file or directory. </summary>
         public string FileMode => _response.Headers.TryGetValue("x-ms-mode", out string value) ? value : null;
         /// <summary> NFS only. The owner of the file or directory. </summary>

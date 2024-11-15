@@ -586,6 +586,44 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateAsync_NFS()
+        {
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+            ShareClient share = test.Share;
+
+            // Arrange
+            var name = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
+
+            string owner = "345";
+            string group = "123";
+            string fileMode = "7777";
+
+            ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
+            {
+                NfsProperties = new FilePosixProperties
+                {
+                    Owner = owner,
+                    Group = group,
+                    FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
+                }
+            };
+
+            // Act
+            Response<ShareDirectoryInfo> response = await directory.CreateAsync(options);
+
+            // Assert
+            Assert.AreEqual(NfsFileType.Directory, response.Value.NfsProperties.FileType);
+            Assert.AreEqual(owner, response.Value.NfsProperties.Owner);
+            Assert.AreEqual(group, response.Value.NfsProperties.Group);
+            Assert.AreEqual(fileMode, response.Value.NfsProperties.FileMode.ToOctalFileMode());
+
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+        }
+
+        [RecordedTest]
         public async Task CreateIfNotExists_NotExists()
         {
             // Arrange
@@ -983,6 +1021,27 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task GetPropertiesAsync_NFS()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+
+            // Act
+            Response<ShareDirectoryProperties> response = await test.Directory.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(NfsFileType.Directory, response.Value.NfsProperties.FileType);
+            Assert.AreEqual("0", response.Value.NfsProperties.Owner);
+            Assert.AreEqual("0", response.Value.NfsProperties.Group);
+            Assert.AreEqual("0755", response.Value.NfsProperties.FileMode.ToOctalFileMode());
+
+            Assert.IsNull(response.Value.NfsProperties.LinkCount);
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+        }
+
+        [RecordedTest]
         public async Task SetHttpHeadersAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -1219,6 +1278,40 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             await directory.SetHttpHeadersAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task SetHttpHeadersAsync_NFS()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+
+            string owner = "345";
+            string group = "123";
+            string fileMode = "7777";
+
+            ShareDirectorySetHttpHeadersOptions options = new ShareDirectorySetHttpHeadersOptions
+            {
+                NfsProperties = new FilePosixProperties
+                {
+                    Owner = owner,
+                    Group = group,
+                    FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
+                }
+            };
+
+            // Act
+            Response<ShareDirectoryInfo> response = await test.Directory.SetHttpHeadersAsync(options);
+
+            // Assert
+            Assert.AreEqual(owner, response.Value.NfsProperties.Owner);
+            Assert.AreEqual(group, response.Value.NfsProperties.Group);
+            Assert.AreEqual(fileMode, response.Value.NfsProperties.FileMode.ToOctalFileMode());
+
+            Assert.IsNull(response.Value.NfsProperties.LinkCount);
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
         }
 
         [RecordedTest]
