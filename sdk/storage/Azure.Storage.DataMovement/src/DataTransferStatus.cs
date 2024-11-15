@@ -153,6 +153,12 @@ namespace Azure.Storage.DataMovement
             return hashCode;
         }
 
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"{{{nameof(State)}:{State},{nameof(HasFailedItems)}:{HasFailedItems},{nameof(HasSkippedItems)}:{HasSkippedItems}}}";
+        }
+
         /// <summary>
         /// Performs a Deep Copy of the <see cref="DataTransferStatus"/>.
         /// </summary>

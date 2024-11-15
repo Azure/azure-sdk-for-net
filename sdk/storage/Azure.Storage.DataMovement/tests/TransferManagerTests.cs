@@ -99,11 +99,7 @@ public class TransferManagerTests
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
-
-        Mock<ITransferCheckpointer> checkpointer = new();
-        List<string> capturedTransferIds = new();
-        checkpointer.Setup(c => c.AddNewJobAsync(Capture.In(capturedTransferIds),
-            It.IsAny<StorageResource>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()));
+        MemoryTransferCheckpointer checkpointer = new();
 
         var resources = Enumerable.Range(0, items).Select(_ =>
         {
@@ -120,7 +116,7 @@ public class TransferManagerTests
             partsProcessor,
             chunksProcessor,
             jobBuilder,
-            checkpointer.Object,
+            checkpointer,
             default);
 
         List<DataTransfer> transfers = new();
@@ -144,13 +140,7 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
-        Assert.That(capturedTransferIds.Count, Is.EqualTo(items));
-        foreach (string transferId in capturedTransferIds)
-        {
-            checkpointer.Verify(c => c.AddNewJobAsync(transferId, It.IsAny<StorageResource>(),
-                It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()));
-        }
-        checkpointer.VerifyNoOtherCalls();
+        Assert.That(checkpointer.Jobs.Count, Is.EqualTo(items), "Jobs not added to checkpointer.");
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(items), "Error during initial Job queueing.");
 
         // process jobs
@@ -164,17 +154,13 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
-        foreach (string transferId in capturedTransferIds)
+        foreach (MemoryTransferCheckpointer.Job job in checkpointer.Jobs.Values)
         {
-            checkpointer.Verify(c => c.SetJobStatusAsync(transferId,
-                Match.Create<DataTransferStatus>(status => status.State == DataTransferState.InProgress),
-                It.IsAny<CancellationToken>()));
-            checkpointer.Verify(c => c.AddNewJobPartAsync(transferId, 0,
-                It.IsAny<JobPartPlanHeader>(),
-                It.IsAny<CancellationToken>()));
-            checkpointer.Verify(c => c.SetEnumerationCompleteAsync(transferId, It.IsAny<CancellationToken>()));
+            Assert.That(job.Parts.Count, Is.EqualTo(1), "Items should be single-part.");
+            Assert.That(job.Parts.Keys.First(), Is.EqualTo(0), "Parts should be zero-indexed.");
+            Assert.That(job.EnumerationComplete, "Enumeration not marked comlete.");
+            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.InProgress), "Transfer state not updated.");
         }
-        checkpointer.VerifyNoOtherCalls();
 
         // process parts
         Assert.That(await partsProcessor.StepAll(), Is.EqualTo(items));
@@ -187,13 +173,13 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
-        foreach (string transferId in capturedTransferIds)
+        foreach (MemoryTransferCheckpointer.Job job in checkpointer.Jobs.Values)
         {
-            checkpointer.Verify(c => c.SetJobPartStatusAsync(transferId, 0,
-                Match.Create<DataTransferStatus>(status => status.State == DataTransferState.InProgress),
-                It.IsAny<CancellationToken>()));
+            foreach (MemoryTransferCheckpointer.JobPart part in job.Parts.Values)
+            {
+                Assert.That(part.Status.State, Is.EqualTo(DataTransferState.InProgress), "Part state not updated.");
+            }
         }
-        checkpointer.VerifyNoOtherCalls();
 
         // process chunks
         Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(expectedChunksInQueue));
@@ -212,16 +198,14 @@ public class TransferManagerTests
         {
             Assert.That(transfer.HasCompleted);
         }
-        foreach (string transferId in capturedTransferIds)
+        foreach (MemoryTransferCheckpointer.Job job in checkpointer.Jobs.Values)
         {
-            checkpointer.Verify(c => c.SetJobPartStatusAsync(transferId, 0,
-                Match.Create<DataTransferStatus>(status => status.State == DataTransferState.Completed),
-                It.IsAny<CancellationToken>()));
-            checkpointer.Verify(c => c.SetJobStatusAsync(transferId,
-                Match.Create<DataTransferStatus>(status => status.State == DataTransferState.Completed),
-                It.IsAny<CancellationToken>()));
+            foreach (MemoryTransferCheckpointer.JobPart part in job.Parts.Values)
+            {
+                Assert.That(part.Status.State, Is.EqualTo(DataTransferState.Completed), "Part state not updated.");
+            }
+            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.Completed), "Job state not updated.");
         }
-        checkpointer.VerifyNoOtherCalls();
     }
 
     [Test]
@@ -244,11 +228,7 @@ public class TransferManagerTests
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
-
-        Mock<ITransferCheckpointer> checkpointer = new();
-        List<string> capturedTransferIds = new();
-        checkpointer.Setup(c => c.AddNewJobAsync(Capture.In(capturedTransferIds),
-            It.IsAny<StorageResource>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()));
+        MemoryTransferCheckpointer checkpointer = new();
 
         var resources = Enumerable.Range(1, numJobs).Select(i =>
         {
@@ -263,7 +243,7 @@ public class TransferManagerTests
             partsProcessor,
             chunksProcessor,
             jobBuilder,
-            checkpointer.Object,
+            checkpointer,
             default);
 
         List<DataTransfer> transfers = new();
@@ -287,28 +267,12 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
-        Assert.That(capturedTransferIds.Count, Is.EqualTo(numJobs));
-        foreach (string transferId in capturedTransferIds)
-        {
-            checkpointer.Verify(c => c.AddNewJobAsync(transferId, It.IsAny<StorageResource>(),
-                It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()));
-        }
-        checkpointer.VerifyNoOtherCalls();
+        Assert.That(checkpointer.Jobs.Count, Is.EqualTo(numJobs), "Jobs not added to checkpointer.");
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error during initial Job queueing.");
 
-        Dictionary<string, int> jobToPartCount = new();
-        {
-            int i = 1;
-            foreach (string transferId in capturedTransferIds)
-            {
-                jobToPartCount.Add(transferId, GetItemCountFromContainerIndex(i));
-                i++;
-            }
-        }
-
         // process jobs
-        Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(numJobs));
-        Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(0));
+        Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(numJobs), "Failed to step through jobs queue.");
+        Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(0), "Failed to step through jobs queue.");
         Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(numJobParts), "Error during Job => Part processing.");
         foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
         {
@@ -317,44 +281,35 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
-        foreach (KeyValuePair<string, int> kvp in jobToPartCount)
+        foreach (MemoryTransferCheckpointer.Job job in checkpointer.Jobs.Values)
         {
-            checkpointer.Verify(c => c.SetJobStatusAsync(kvp.Key,
-                Match.Create<DataTransferStatus>(status => status.State == DataTransferState.InProgress),
-                It.IsAny<CancellationToken>()));
-            checkpointer.Verify(c => c.SetEnumerationCompleteAsync(kvp.Key, It.IsAny<CancellationToken>()));
-            foreach (int part in Enumerable.Range(0, kvp.Value))
-            {
-                checkpointer.Verify(c => c.AddNewJobPartAsync(kvp.Key, part,
-                    It.IsAny<JobPartPlanHeader>(),
-                    It.IsAny<CancellationToken>()));
-            }
+            Assert.That(job.Parts.Count, Is.GreaterThan(1), "Containers should have several parts.");
+            Assert.That(job.Parts.Keys, Is.EquivalentTo(Enumerable.Range(0, job.Parts.Count).ToList()),
+                "Part nums should be sequential and zero-indexed.");
+            Assert.That(job.EnumerationComplete, "Enumeration not marked comlete.");
+            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.InProgress), "Transfer state not updated.");
         }
-        checkpointer.VerifyNoOtherCalls();
 
         // process parts
-        Assert.That(await partsProcessor.StepAll(), Is.EqualTo(numJobParts));
-        Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(0));
+        Assert.That(await partsProcessor.StepAll(), Is.EqualTo(numJobParts), "Failed to step through parts queue.");
+        Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(0), "Failed to step through parts queue.");
         Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(numChunks), "Error during Part => Chunk processing.");
         foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
         {
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
-        foreach (KeyValuePair<string, int> kvp in jobToPartCount)
+        foreach (MemoryTransferCheckpointer.Job job in checkpointer.Jobs.Values)
         {
-            foreach (int part in Enumerable.Range(0, kvp.Value))
+            foreach (MemoryTransferCheckpointer.JobPart part in job.Parts.Values)
             {
-                checkpointer.Verify(c => c.SetJobPartStatusAsync(kvp.Key, part,
-                    Match.Create<DataTransferStatus>(status => status.State == DataTransferState.InProgress),
-                    It.IsAny<CancellationToken>()));
+                Assert.That(part.Status.State, Is.EqualTo(DataTransferState.InProgress), "Part state not updated.");
             }
         }
-        checkpointer.VerifyNoOtherCalls();
 
         // process chunks
-        Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(numChunks));
-        Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(0));
+        Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(numChunks), "Failed to step through chunks queue.");
+        Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(0), "Failed to step through chunks queue.");
         foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
         {
             srcResource.VerifyNoOtherCalls();
@@ -367,19 +322,14 @@ public class TransferManagerTests
         {
             Assert.That(transfer.HasCompleted);
         }
-        foreach (KeyValuePair<string, int> kvp in jobToPartCount)
+        foreach (MemoryTransferCheckpointer.Job job in checkpointer.Jobs.Values)
         {
-            foreach (int part in Enumerable.Range(0, kvp.Value))
+            foreach (MemoryTransferCheckpointer.JobPart part in job.Parts.Values)
             {
-                checkpointer.Verify(c => c.SetJobPartStatusAsync(kvp.Key, part,
-                    Match.Create<DataTransferStatus>(status => status.State == DataTransferState.Completed),
-                    It.IsAny<CancellationToken>()));
+                Assert.That(part.Status.State, Is.EqualTo(DataTransferState.Completed), "Part state not updated.");
             }
-            checkpointer.Verify(c => c.SetJobStatusAsync(kvp.Key,
-                Match.Create<DataTransferStatus>(status => status.State == DataTransferState.Completed),
-                It.IsAny<CancellationToken>()));
+            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.Completed), "Job state not updated.");
         }
-        checkpointer.VerifyNoOtherCalls();
     }
 
     [Test]
@@ -397,40 +347,35 @@ public class TransferManagerTests
         {
             CallBase = true,
         };
-        Mock<ITransferCheckpointer> checkpointer = new();
+        Mock<MemoryTransferCheckpointer> checkpointer = new()
+        {
+            CallBase = true,
+        };
 
         (StorageResource srcResource, StorageResource dstResource, Func<IDisposable> srcThrowScope, Func<IDisposable> dstThrowScope)
             = GetBasicSetupResources(isContainer, srcUri, dstUri);
 
         Exception expectedException = new();
         Exception cleanupException = throwCleanup ? new() : null;
-        List<string> capturedTransferIds = new();
+        switch (failAt)
         {
-            var checkpointerAddJob = checkpointer.Setup(c => c.AddNewJobAsync(Capture.In(capturedTransferIds),
-                It.IsAny<StorageResource>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()));
-            var checkpointerRemoveJob = checkpointer.Setup(c => c.TryRemoveStoredTransferAsync(
-                It.IsAny<string>(), It.IsAny<CancellationToken>()));
-
-            switch (failAt)
-            {
-                case 0:
-                    jobBuilder.Setup(b => b.BuildJobAsync(It.IsAny<StorageResource>(), It.IsAny<StorageResource>(),
-                        It.IsAny<DataTransferOptions>(), It.IsAny<ITransferCheckpointer>(), It.IsAny<string>(),
-                        It.IsAny<bool>(), It.IsAny<CancellationToken>())
-                    ).Throws(expectedException);
-                    break;
-                case 1:
-                    checkpointerAddJob.Throws(expectedException);
-                    break;
-            }
-            if (throwCleanup)
-            {
-                checkpointerRemoveJob.Throws(cleanupException);
-            }
-            else
-            {
-                checkpointerRemoveJob.Returns(Task.FromResult(true));
-            }
+            case 0:
+                jobBuilder.Setup(b => b.BuildJobAsync(It.IsAny<StorageResource>(), It.IsAny<StorageResource>(),
+                    It.IsAny<DataTransferOptions>(), It.IsAny<ITransferCheckpointer>(), It.IsAny<string>(),
+                    It.IsAny<bool>(), It.IsAny<CancellationToken>())
+                ).Throws(expectedException);
+                break;
+            case 1:
+                checkpointer.Setup(c => c.AddNewJobAsync(It.IsAny<string>(), It.IsAny<StorageResource>(),
+                    It.IsAny<StorageResource>(), It.IsAny<CancellationToken>())
+                ).Throws(expectedException);
+                break;
+        }
+        if (throwCleanup)
+        {
+            checkpointer.Setup(c => c.TryRemoveStoredTransferAsync(
+                It.IsAny<string>(), It.IsAny<CancellationToken>())
+            ).Throws(cleanupException);
         }
 
         await using TransferManager transferManager = new(
@@ -451,10 +396,10 @@ public class TransferManagerTests
 
         Assert.That(transfer, Is.Null);
 
-        Assert.That(capturedTransferIds.Count, Is.EqualTo(1));
-        checkpointer.Verify(c => c.AddNewJobAsync(capturedTransferIds.First(), It.IsAny<StorageResource>(),
+        Assert.That(checkpointer.Object.Jobs.Count, Is.EqualTo(0));
+        checkpointer.Verify(c => c.AddNewJobAsync(It.IsAny<string>(), It.IsAny<StorageResource>(),
             It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once);
-        checkpointer.Verify(c => c.TryRemoveStoredTransferAsync(capturedTransferIds.First(),
+        checkpointer.Verify(c => c.TryRemoveStoredTransferAsync(It.IsAny<string>(),
             It.IsAny<CancellationToken>()), Times.Once);
         checkpointer.VerifyNoOtherCalls();
     }
@@ -514,6 +459,8 @@ public class TransferManagerTests
         Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(DataTransferState.Stopping));
         Assert.That(capturedTransferStatuses[2].IsCompletedWithFailedItems);
         checkpointer.VerifyNoOtherCalls();
+
+        // TODO checkpointer probably shouldn't be in this state.
     }
 
     [Test]
