@@ -340,6 +340,10 @@ namespace Azure.Data.Tables.Tests
                         delay *= 2;
                     }
                 }
+                catch (RequestFailedException ex) when (ex.Status == 401 && ex.GetRawResponse().Content.ToString().Contains("Exceeded allowed aad token limit"))
+                {
+                    Assert.Ignore("Exceeded allowed aad token limit of Cosmos table API. See https://github.com/Azure/azure-sdk-for-net/issues/47191 for details.");
+                }
             }
         }
 
