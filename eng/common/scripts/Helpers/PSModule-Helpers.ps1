@@ -55,68 +55,74 @@ function Install-ModuleIfNotInstalled()
   param(
     [string]$moduleName,
     [string]$version,
-    [string]$repositoryUrl = $DefaultPSRepositoryUrl
+    [string]$repositoryUrl
   )
 
-  # Check installed modules
-  $modules = (Get-Module -ListAvailable $moduleName)
-  if ($version -as [Version]) {
-    $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
+  # List of modules+versions we want to replace with internal feed sources for reliability, security, etc.
+  $mirrorFeedOverrides = @{
+    'powershell-yaml;0.4.7' = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2'
   }
 
-  if ($modules.Count -eq 0)
-  {
-    # Use double-checked locking to avoid locking when module is already installed
+  try {
     $mutex = New-Object System.Threading.Mutex($false, "Install-ModuleIfNotInstalled")
     $null = $mutex.WaitOne()
 
-    try {
-      # Check installed modules again after acquiring lock
-      $modules = (Get-Module -ListAvailable $moduleName)
-      if ($version -as [Version]) {
-        $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
-      }
+    # Check installed modules again after acquiring lock
+    $modules = (Get-Module -ListAvailable $moduleName)
+    if ($version -as [Version]) {
+      $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
+    }
 
-      if ($modules.Count -eq 0)
-      {
-        $repositories = (Get-PSRepository).Where({ $_.SourceLocation -eq $repositoryUrl })
-        if ($repositories.Count -eq 0)
-        {
-          Register-PSRepository -Name $repositoryUrl -SourceLocation $repositoryUrl -InstallationPolicy Trusted
-          $repositories = (Get-PSRepository).Where({ $_.SourceLocation -eq $repositoryUrl })
-          if ($repositories.Count -eq 0) {
-            Write-Error "Failed to register package repository $repositoryUrl."
-            return
-          }
-        }
-        $repository = $repositories[0]
+    if ($modules.Count -gt 0)
+    {
+      Write-Host "Using module $($modules[0].Name) with version $($modules[0].Version)."
+      return $modules[0]
+    }
 
-        if ($repository.InstallationPolicy -ne "Trusted") {
-          Set-PSRepository -Name $repository.Name -InstallationPolicy "Trusted"
-        }
+    $repositoryUrl = if ($repositoryUrl) {
+      $repositoryUrl
+    } elseif ($mirrorFeedOverrides.Contains("${moduleName};${version}")) {
+      $mirrorFeedOverrides["${moduleName};${version}"]
+    } else {
+      $DefaultPSRepositoryUrl
+    }
 
-        Write-Host "Installing module $moduleName with min version $version from $repositoryUrl"
-        # Install under CurrentUser scope so that the end up under $CurrentUserModulePath for caching
-        Install-Module $moduleName -MinimumVersion $version -Repository $repository.Name -Scope CurrentUser -Force
-
-        # Ensure module installed
-        $modules = (Get-Module -ListAvailable $moduleName)
-        if ($version -as [Version]) {
-          $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
-        }
-
-        if ($modules.Count -eq 0) {
-          Write-Error "Failed to install module $moduleName with version $version"
-          return
-        }
+    $repositories = (Get-PSRepository).Where({ $_.SourceLocation -eq $repositoryUrl })
+    if ($repositories.Count -eq 0)
+    {
+      Register-PSRepository -Name $repositoryUrl -SourceLocation $repositoryUrl -InstallationPolicy Trusted
+      $repositories = (Get-PSRepository).Where({ $_.SourceLocation -eq $repositoryUrl })
+      if ($repositories.Count -eq 0) {
+        Write-Error "Failed to register package repository $repositoryUrl."
+        return
       }
     }
-    finally {
-      $mutex.ReleaseMutex()
+    $repository = $repositories[0]
+
+    if ($repository.InstallationPolicy -ne "Trusted") {
+      Set-PSRepository -Name $repository.Name -InstallationPolicy "Trusted"
     }
+
+    Write-Host "Installing module $moduleName with min version $version from $repositoryUrl"
+    # Install under CurrentUser scope so that the end up under $CurrentUserModulePath for caching
+    Install-Module $moduleName -MinimumVersion $version -Repository $repository.Name -Scope CurrentUser -Force
+
+    # Ensure module installed
+    $modules = (Get-Module -ListAvailable $moduleName)
+    if ($version -as [Version]) {
+      $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
+    }
+
+    if ($modules.Count -eq 0) {
+      Write-Error "Failed to install module $moduleName with version $version"
+      return
+    }
+
+    Write-Host "Using module $($modules[0].Name) with version $($modules[0].Version)."
+  } finally {
+    $mutex.ReleaseMutex()
   }
 
-  Write-Host "Using module $($modules[0].Name) with version $($modules[0].Version)."
   return $modules[0]
 }
 
