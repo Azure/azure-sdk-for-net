@@ -15,7 +15,7 @@ Azure.Health.Deidentification is a managed service that enables users to tag, re
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Health.Deidentification --prerelease
+dotnet add package Azure.Health.Deidentification
 ```
 
 ### Prerequisites
