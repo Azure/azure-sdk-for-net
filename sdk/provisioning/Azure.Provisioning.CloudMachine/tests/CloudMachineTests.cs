@@ -22,6 +22,7 @@ public class CloudMachineTests
         }, exitProcessIfHandled:false);
     }
 
+    [Ignore("no recordings yet")]
     [Test]
     public void ListModels()
     {
