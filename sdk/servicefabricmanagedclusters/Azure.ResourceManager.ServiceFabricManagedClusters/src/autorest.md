@@ -15,7 +15,7 @@ input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/f17b769690a46d858134ee68ef0d89635083b560/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/nodetype.json
 - https://github.com/Azure/azure-rest-api-specs/blob/f17b769690a46d858134ee68ef0d89635083b560/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/managedapplication.json
 
-tag: package-2024-06-preview
+tag: package-2024-09-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
